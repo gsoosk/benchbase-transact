@@ -1,33 +1,69 @@
-partition f(x: int) -> int { return x; }
+// Since the provided Java code is a generic query executor for a 'templated'
+// benchmark, the actual schema and transaction logic are not present.
+// The following is a hypothesized schema and set of transactions that such a
+// benchmark might use, inferred from the generic nature of the code.
 
-table GenericTable {
-    primary id: int;
-    node f(id);
-    data: float;
+// A simple partitioning function based on the primary key.
+partition f(x: int) -> int { return x % 128; }
+
+// A hypothesized table for a generic benchmark, containing various data types
+// that the Java code is capable of handling.
+table TEMPLATED_TABLE {
+    primary T_ID: int;
+    node f(T_ID);
+    T_INT_VAL: int;
+    T_FLOAT_VAL: float;
+    T_STRING_VAL: string;
 }
 
-// The provided Java code for GenericQuery is an abstract framework for executing
-// templated SQL queries. It does not contain concrete SQL statements or table
-// definitions. Therefore, it's impossible to infer specific tables, primary keys,
-// or the exact number and type of data accesses for a generic instance.
-//
-// This TransAct transaction, GenericQueryExample, represents a concrete
-// illustrative scenario of what a subclass of GenericQuery might execute.
-// It demonstrates rational chopping by simulating an operation that accesses
-// two distinct rows (identified by id1 and id2) which could reside on
-// different partitions, similar to the SendPayment example.
-//
-// We assume a simple GenericTable with an 'id' primary key and a 'data' column.
-// The partition function 'f' maps the 'id' directly to its partition.
-transaction GenericQueryExample(id1: int, id2: int, amount: float) {
+// Represents a templated query that reads a single record by its primary key.
+// This is a single-partition transaction and therefore requires only one hop.
+// Corresponds to a template like: "SELECT * FROM TEMPLATED_TABLE WHERE T_ID = ?"
+transaction GenericRead(key: int) {
     hop {
-        var r1: Row<GenericTable> = GenericTable[id: id1];
-        r1.data = r1.data + amount;
-        GenericTable[id: id1] = r1;
+        var r: Row<TEMPLATED_TABLE> = TEMPLATED_TABLE[T_ID: key];
+    }
+}
+
+// Represents a templated query that updates a single record.
+// This is also a single-partition transaction.
+// Corresponds to a template like: "UPDATE TEMPLATED_TABLE SET T_STRING_VAL = ? WHERE T_ID = ?"
+transaction GenericUpdate(key: int, new_string: string) {
+    hop {
+        var r: Row<TEMPLATED_TABLE> = TEMPLATED_TABLE[T_ID: key];
+        r.T_STRING_VAL = new_string;
+        TEMPLATED_TABLE[T_ID: key] = r;
+    }
+}
+
+// Represents a templated query that inserts a single record.
+// This is a single-partition transaction.
+// Corresponds to a template like: "INSERT INTO TEMPLATED_TABLE VALUES (?, ?, ?, ?)"
+transaction GenericInsert(key: int, int_val: int, float_val: float, string_val: string) {
+    hop {
+        var r: Row<TEMPLATED_TABLE> = new Row<TEMPLATED_TABLE>();
+        r.T_ID = key;
+        r.T_INT_VAL = int_val;
+        r.T_FLOAT_VAL = float_val;
+        r.T_STRING_VAL = string_val;
+        TEMPLATED_TABLE[T_ID: key] = r;
+    }
+}
+
+// Represents a more complex templated query that modifies two different records,
+// for example, transferring a value from one to another.
+// Since the two keys (key1, key2) can map to different partitions, this
+// transaction is split into two 'hop' blocks to demonstrate rational chopping.
+// This could correspond to a stored procedure executing two UPDATE statements.
+transaction GenericReadModifyWrite(key1: int, key2: int, amount: float) {
+    hop {
+        var r1: Row<TEMPLATED_TABLE> = TEMPLATED_TABLE[T_ID: key1];
+        r1.T_FLOAT_VAL = r1.T_FLOAT_VAL - amount;
+        TEMPLATED_TABLE[T_ID: key1] = r1;
     }
     hop {
-        var r2: Row<GenericTable> = GenericTable[id: id2];
-        r2.data = r2.data - amount;
-        GenericTable[id: id2] = r2;
+        var r2: Row<TEMPLATED_TABLE> = TEMPLATED_TABLE[T_ID: key2];
+        r2.T_FLOAT_VAL = r2.T_FLOAT_VAL + amount;
+        TEMPLATED_TABLE[T_ID: key2] = r2;
     }
 }

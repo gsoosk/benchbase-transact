@@ -1,0 +1,93 @@
+partition f(x: int) -> int { return x; }
+
+table cputable {
+    primary empid: int;
+    node f(empid);
+    passwd: string;
+}
+
+table locktable {
+    primary empid: int;
+    node f(empid);
+    salary: int;
+}
+
+// The number of 'data' columns in iotable is configurable in the benchmark.
+// We model it with two columns as an example.
+table iotable {
+    primary empid: int;
+    node f(empid);
+    data1: string;
+    data2: string;
+}
+
+table iotablesmallrow {
+    primary empid: int;
+    node f(empid);
+    flag1: int;
+}
+
+transaction CPU1() {
+    hop {
+        // This transaction performs a complex read-only query on a fixed range
+        // of keys (empid >= 0 AND empid < 100) from cputable.
+        // As it's a single read query, it's modeled as one hop.
+    }
+}
+
+transaction CPU2() {
+    hop {
+        // This transaction performs a complex read-only query on a fixed range
+        // of keys (empid >= 0 AND empid < 100) from cputable.
+        // As it's a single read query, it's modeled as one hop.
+    }
+}
+
+transaction Contention1(key1: int, key2: int, newSalary: int) {
+    hop {
+        var r1: Row<locktable> = locktable[empid: key1];
+        r1.salary = newSalary;
+        locktable[empid: key1] = r1;
+    }
+    hop {
+        var r2: Row<locktable> = locktable[empid: key2];
+        r2.salary = newSalary;
+        locktable[empid: key2] = r2;
+    }
+}
+
+transaction Contention2(leftKey: int, newSalary: int) {
+    hop {
+        var r1: Row<locktable> = locktable[empid: leftKey];
+        r1.salary = newSalary;
+        locktable[empid: leftKey] = r1;
+    }
+    hop {
+        var r2: Row<locktable> = locktable[empid: leftKey + 1];
+        r2.salary = newSalary;
+        locktable[empid: leftKey + 1] = r2;
+    }
+}
+
+transaction IO1(leftKey: int, newData1: string, newData2: string) {
+    hop {
+        var r1: Row<iotable> = iotable[empid: leftKey];
+        r1.data1 = newData1;
+        r1.data2 = newData2;
+        iotable[empid: leftKey] = r1;
+    }
+    hop {
+        var r2: Row<iotable> = iotable[empid: leftKey + 1];
+        r2.data1 = newData1;
+        r2.data2 = newData2;
+        iotable[empid: leftKey + 1] = r2;
+    }
+}
+
+transaction IO2(key: int, value: int) {
+    hop {
+        var r: Row<iotablesmallrow> = iotablesmallrow[empid: key];
+        r.flag1 = value;
+        iotablesmallrow[empid: key] = r;
+    }
+}

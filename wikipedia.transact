@@ -1,0 +1,224 @@
+partition f(x: int) -> int { return x; }
+
+// Inferred Tables for Wikipedia Benchmark
+
+table user {
+    primary user_id: int;
+    node f(user_id);
+    user_name: string;
+    user_touched: string;
+    user_editcount: int;
+}
+
+table watchlist {
+    primary wl_user: int, wl_namespace: int, wl_title: string;
+    node f(wl_user);
+    wl_notificationtimestamp: string;
+}
+
+table page {
+    primary page_id: int;
+    node f(page_id);
+    page_namespace: int;
+    page_title: string;
+    page_latest: int;
+    page_touched: string;
+    page_is_new: int;
+    page_is_redirect: int;
+    page_len: int;
+}
+
+table page_restrictions {
+    primary pr_page: int, pr_type: string;
+    node f(pr_page);
+    pr_level: string;
+}
+
+table ipblocks {
+    primary ipb_id: int;
+    node f(ipb_user); // Partitioned by user for GetPageAuthenticated
+    ipb_address: string;
+    ipb_user: int;
+    ipb_expiry: string;
+}
+
+table revision {
+    primary rev_id: int;
+    node f(rev_page);
+    rev_page: int;
+    rev_text_id: int;
+    rev_comment: string;
+    rev_user: int;
+    rev_user_text: string;
+    rev_timestamp: string;
+    rev_len: int;
+    rev_parent_id: int;
+}
+
+table text {
+    primary old_id: int;
+    node f(old_id); // Text is partitioned by its own ID
+    old_page: int;
+    old_text: string;
+    old_flags: string;
+}
+
+table user_groups {
+    primary ug_user: int, ug_group: string;
+    node f(ug_user);
+}
+
+table recentchanges {
+    primary rc_id: int;
+    node f(rc_cur_id);
+    rc_timestamp: string;
+    rc_cur_time: string;
+    rc_namespace: int;
+    rc_title: string;
+    rc_type: int;
+    rc_minor: int;
+    rc_cur_id: int;
+    rc_user: int;
+    rc_user_text: string;
+    rc_comment: string;
+    rc_this_oldid: int;
+    rc_last_oldid: int;
+    rc_bot: int;
+    rc_moved_to_ns: int;
+    rc_moved_to_title: string;
+    rc_ip: string;
+    rc_old_len: int;
+    rc_new_len: int;
+}
+
+table logging {
+    primary log_id: int;
+    node f(log_user);
+    log_type: string;
+    log_action: string;
+    log_timestamp: string;
+    log_user: int;
+    log_user_text: string;
+    log_namespace: int;
+    log_title: string;
+    log_page: int;
+    log_comment: string;
+    log_params: string;
+}
+
+// Converted Procedures
+
+transaction AddWatchList(userId: int, nameSpace: int, pageTitle: string) {
+    hop {
+        if (userId > 0) {
+            watchlist.insert(wl_user: userId, wl_namespace: nameSpace, wl_title: pageTitle, wl_notificationtimestamp: "NULL");
+            if (nameSpace == 0) {
+                watchlist.insert(wl_user: userId, wl_namespace: 1, wl_title: pageTitle, wl_notificationtimestamp: "NULL");
+            }
+            var u: Row<user> = user[user_id: userId];
+            u.user_touched = "now";
+            user[user_id: userId] = u;
+        }
+    }
+}
+
+transaction GetPageAnonymous(userIp: string, pageId: int) {
+    var textId: int;
+    hop {
+        var p: Row<page> = page[page_id: pageId];
+        var pr: Row<page_restrictions> = page_restrictions[pr_page: pageId];
+        var r: Row<revision> = revision[rev_page: pageId]; // Simplified from join
+        textId = r.rev_text_id;
+    }
+    hop {
+        // This hop assumes ipblocks is partitioned by ipb_address, which is different from GetPageAuthenticated
+        // For this model, we assume a different table or a secondary index lookup.
+        // var ip: Row<ipblocks> = ipblocks[ipb_address: userIp];
+    }
+    hop {
+        var t: Row<text> = text[old_id: textId];
+    }
+}
+
+transaction GetPageAuthenticated(userId: int, pageId: int) {
+    var textId: int;
+    hop {
+        if (userId > 0) {
+            var u: Row<user> = user[user_id: userId];
+            var ug: Row<user_groups> = user_groups[ug_user: userId];
+            var ip: Row<ipblocks> = ipblocks[ipb_user: userId];
+        }
+    }
+    hop {
+        var p: Row<page> = page[page_id: pageId];
+        var pr: Row<page_restrictions> = page_restrictions[pr_page: pageId];
+        var r: Row<revision> = revision[rev_page: pageId]; // Simplified from join
+        textId = r.rev_text_id;
+    }
+    hop {
+        var t: Row<text> = text[old_id: textId];
+    }
+}
+
+transaction RemoveWatchList(userId: int, nameSpace: int, pageTitle: string) {
+    hop {
+        if (userId > 0) {
+            watchlist.delete(wl_user: userId, wl_namespace: nameSpace, wl_title: pageTitle);
+            if (nameSpace == 0) {
+                watchlist.delete(wl_user: userId, wl_namespace: 1, wl_title: pageTitle);
+            }
+            var u: Row<user> = user[user_id: userId];
+            u.user_touched = "now";
+            user[user_id: userId] = u;
+        }
+    }
+}
+
+transaction UpdatePage(textId: int, pageId: int, pageTitle: string, pageText: string, pageNamespace: int, userId: int, userIp: string, userText: string, revisionId: int, revComment: string, revMinorEdit: int, otherUserId: int) {
+    var nextTextId: int;
+    var nextRevId: int;
+    hop {
+        // Operations on the page's partition
+        var new_text_row: Row<text>;
+        new_text_row.old_page = pageId;
+        new_text_row.old_text = pageText;
+        new_text_row.old_flags = "utf-8";
+        text.insert(new_text_row);
+        nextTextId = new_text_row.old_id;
+
+        var new_rev_row: Row<revision>;
+        new_rev_row.rev_page = pageId;
+        new_rev_row.rev_text_id = nextTextId;
+        new_rev_row.rev_comment = revComment;
+        new_rev_row.rev_user = userId;
+        new_rev_row.rev_user_text = userText;
+        new_rev_row.rev_timestamp = "now";
+        new_rev_row.rev_len = 0; // pageText.length()
+        new_rev_row.rev_parent_id = revisionId;
+        revision.insert(new_rev_row);
+        nextRevId = new_rev_row.rev_id;
+
+        var p: Row<page> = page[page_id: pageId];
+        p.page_latest = nextRevId;
+        p.page_touched = "now";
+        p.page_len = 0; // pageText.length()
+        page[page_id: pageId] = p;
+
+        recentchanges.insert(rc_timestamp: "now", rc_cur_time: "now", rc_namespace: pageNamespace, rc_title: pageTitle, rc_cur_id: pageId, rc_user: userId, rc_user_text: userText, rc_comment: revComment, rc_this_oldid: nextTextId, rc_last_oldid: textId, rc_ip: userIp, rc_old_len: 0, rc_new_len: 0);
+    }
+    hop {
+        // Representative hop for updating watching users (fan-out)
+        var wl: Row<watchlist> = watchlist[wl_user: otherUserId, wl_namespace: pageNamespace, wl_title: pageTitle];
+        wl.wl_notificationtimestamp = "now";
+        watchlist[wl_user: otherUserId, wl_namespace: pageNamespace, wl_title: pageTitle] = wl;
+    }
+    hop {
+        // Operations on the editing user's partition
+        logging.insert(log_type: "patrol", log_action: "patrol", log_timestamp: "now", log_user: userId, log_user_text: userText, log_namespace: pageNamespace, log_title: pageTitle, log_page: pageId, log_comment: "", log_params: "");
+
+        var u: Row<user> = user[user_id: userId];
+        u.user_editcount = u.user_editcount + 1;
+        u.user_touched = "now";
+        user[user_id: userId] = u;
+    }
+}

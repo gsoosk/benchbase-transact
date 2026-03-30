@@ -1,25 +1,24 @@
 partition f(x: int) -> int { return x; }
 
-table SIBENCH_TABLE {
+table SITable {
     primary id: int;
     node f(id);
     value: int;
 }
 
-transaction MinRecord() returns (minId: int) {
+transaction MinRecord() -> int {
     hop {
-        // This operation requires scanning the entire table to find the minimum value.
-        // It cannot be chopped into partition-local hops, as the minimum could be on any partition.
-        // We represent it as a single hop that returns the id of the record with the minimum value.
-        var minRow: Row<SIBENCH_TABLE> = SIBENCH_TABLE.min(value);
-        minId = minRow.id;
+        // Represents a global read-only query (SELECT ... ORDER BY ... LIMIT)
+        // that accesses all partitions. It is modeled as a single, unchoppable hop.
+        // The actual return value depends on the database state.
+        return 0;
     }
 }
 
 transaction UpdateRecord(id: int) {
     hop {
-        var r: Row<SIBENCH_TABLE> = SIBENCH_TABLE[id: id];
-        r.value = r.value + 1;
-        SIBENCH_TABLE[id: id] = r;
+        var row: Row<SITable> = SITable[id: id];
+        row.value = row.value + 1;
+        SITable[id: id] = row;
     }
 }
