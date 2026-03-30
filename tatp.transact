@@ -1,0 +1,149 @@
+// ============================================================================
+// Partitions
+// ============================================================================
+
+partition subPartition(s_id: int) -> int {
+    return s_id;
+}
+
+// ============================================================================
+// Tables
+// ============================================================================
+
+table Subscriber {
+    primary s_id: int;
+    node subPartition(s_id);
+    
+    sub_nbr: string;
+    bit_1: int;
+    bit_2: int;
+    bit_3: int;
+    bit_4: int;
+    bit_5: int;
+    bit_6: int;
+    bit_7: int;
+    bit_8: int;
+    bit_9: int;
+    bit_10: int;
+    hex_1: int;
+    hex_2: int;
+    hex_3: int;
+    hex_4: int;
+    hex_5: int;
+    hex_6: int;
+    hex_7: int;
+    hex_8: int;
+    hex_9: int;
+    hex_10: int;
+    byte2_1: int;
+    byte2_2: int;
+    byte2_3: int;
+    byte2_4: int;
+    byte2_5: int;
+    byte2_6: int;
+    byte2_7: int;
+    byte2_8: int;
+    byte2_9: int;
+    byte2_10: int;
+    msc_location: int;
+    vlr_location: int;
+}
+
+table AccessInfo {
+    primary s_id: int;
+    primary ai_type: int;
+    node subPartition(s_id);
+    
+    data1: int;
+    data2: int;
+    data3: string;
+    data4: string;
+}
+
+table SpecialFacility {
+    primary s_id: int;
+    primary sf_type: int;
+    node subPartition(s_id);
+    
+    is_active: int;
+    error_cntrl: int;
+    data_a: int;
+    data_b: string;
+}
+
+table CallForwarding {
+    primary s_id: int;
+    primary sf_type: int;
+    primary start_time: int;
+    node subPartition(s_id);
+    
+    end_time: int;
+    numberx: string;
+}
+
+// ============================================================================
+// Transactions
+// ============================================================================
+
+transaction DeleteCallForwarding(s_id: int, sf_type: int, start_time: int) {
+    hop {
+        var cf: Row<CallForwarding> = CallForwarding[s_id: s_id, sf_type: sf_type, start_time: start_time];
+    }
+}
+
+transaction GetAccessData(s_id: int, ai_type: int) {
+    hop {
+        var ai: Row<AccessInfo> = AccessInfo[s_id: s_id, ai_type: ai_type];
+        var d1: int = ai.data1;
+    }
+}
+
+transaction GetNewDestination(s_id: int, sf_type: int, start_time: int, end_time: int) {
+    hop {
+        var sf: Row<SpecialFacility> = SpecialFacility[s_id: s_id, sf_type: sf_type];
+        var active: int = sf.is_active;
+        if active == 1 {
+            var cf: Row<CallForwarding> = CallForwarding[s_id: s_id, sf_type: sf_type, start_time: start_time];
+            var num: string = cf.numberx;
+        }
+    }
+}
+
+transaction GetSubscriberData(s_id: int) {
+    hop {
+        var sub: Row<Subscriber> = Subscriber[s_id: s_id];
+        var bit1: int = sub.bit_1;
+    }
+}
+
+transaction InsertCallForwarding(s_id: int, sf_type: int, start_time: int, end_time: int, numberx: string) {
+    hop {
+        var sub: Row<Subscriber> = Subscriber[s_id: s_id];
+        var sf: Row<SpecialFacility> = SpecialFacility[s_id: s_id, sf_type: sf_type];
+        
+        CallForwarding[s_id: s_id, sf_type: sf_type, start_time: start_time] = {
+            end_time: end_time,
+            numberx: numberx
+        };
+    }
+}
+
+transaction UpdateLocation(s_id: int, vlr_location: int) {
+    hop {
+        var sub: Row<Subscriber> = Subscriber[s_id: s_id];
+        sub.vlr_location = vlr_location;
+        Subscriber[s_id: s_id] = sub;
+    }
+}
+
+transaction UpdateSubscriberData(s_id: int, bit_1: int, data_a: int, sf_type: int) {
+    hop {
+        var sub: Row<Subscriber> = Subscriber[s_id: s_id];
+        sub.bit_1 = bit_1;
+        Subscriber[s_id: s_id] = sub;
+        
+        var sf: Row<SpecialFacility> = SpecialFacility[s_id: s_id, sf_type: sf_type];
+        sf.data_a = data_a;
+        SpecialFacility[s_id: s_id, sf_type: sf_type] = sf;
+    }
+}
