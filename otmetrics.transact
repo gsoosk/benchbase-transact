@@ -1,0 +1,18 @@
+partition f(x: int) -> int { return x; }
+
+table observations {
+    primary source_id: int, session_id: int, created_time: timestamp;
+    node f(source_id);
+    type_id: int;
+}
+
+transaction GetSessionRange(source_id: int, session_low: int, session_high: int, type_ids: Array<int>) {
+    hop {
+        for (row in observations where row.source_id == source_id &&
+                                    row.session_id >= session_low &&
+                                    row.session_id <= session_high &&
+                                    contains(type_ids, row.type_id)) {
+            // This loop represents reading the result set from a single partition.
+        }
+    }
+}

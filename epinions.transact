@@ -1,0 +1,101 @@
+partition f_item(x: int) -> int { return x; }
+partition f_user(x: int) -> int { return x; }
+
+table item {
+    primary i_id: int;
+    node f_item(i_id);
+    title: string;
+}
+
+table useracct {
+    primary u_id: int;
+    node f_user(u_id);
+    name: string;
+}
+
+table review {
+    primary u_id: int, i_id: int;
+    node f_item(i_id);
+    rating: int;
+    creation_date: timestamp;
+}
+
+table trust {
+    primary source_u_id: int, target_u_id: int;
+    node f_user(source_u_id);
+    trust: int;
+}
+
+transaction GetAverageRatingByTrustedUser(iid: int, uid: int) {
+    hop {
+        // Access reviews for item iid
+        var r: Row<review> = review[i_id: iid];
+    }
+    hop {
+        // Access trust relationships for user uid
+        var t: Row<trust> = trust[source_u_id: uid];
+    }
+}
+
+transaction GetItemAverageRating(iid: int) {
+    hop {
+        // Access reviews for item iid
+        var r: Row<review> = review[i_id: iid];
+    }
+}
+
+transaction GetItemReviewsByTrustedUser(iid: int, uid: int) {
+    hop {
+        var r: Row<review> = review[i_id: iid];
+    }
+    hop {
+        var t: Row<trust> = trust[source_u_id: uid];
+    }
+}
+
+transaction GetReviewItemById(iid: int) {
+    hop {
+        var r: Row<review> = review[i_id: iid];
+        var i: Row<item> = item[i_id: iid];
+    }
+}
+
+transaction GetReviewsByUser(uid: int) {
+    hop {
+        var u: Row<useracct> = useracct[u_id: uid];
+        // The join with 'review' is a cross-partition query on a secondary key (r.u_id)
+        // and is conceptually part of this single logical step.
+    }
+}
+
+transaction UpdateItemTitle(iid: int, title: string) {
+    hop {
+        var i: Row<item> = item[i_id: iid];
+        i.title = title;
+        item[i_id: iid] = i;
+    }
+}
+
+transaction UpdateReviewRating(iid: int, uid: int, rating: int) {
+    hop {
+        var r: Row<review> = review[u_id: uid, i_id: iid];
+        r.rating = rating;
+        review[u_id: uid, i_id: iid] = r;
+    }
+}
+
+transaction UpdateTrustRating(source_uid: int, target_uid: int, trust_val: int) {
+    hop {
+        var t: Row<trust> = trust[source_u_id: source_uid, target_u_id: target_uid];
+        t.trust = trust_val;
+        trust[source_u_id: source_uid, target_u_id: target_uid] = t;
+    }
+}
+
+transaction UpdateUserName(uid: int, name: string) {
+    hop {
+        var u: Row<useracct> = useracct[u_id: uid];
+        u.name = name;
+        useracct[u_id: uid] = u;
+    }
+}

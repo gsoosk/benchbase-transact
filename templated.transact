@@ -1,0 +1,33 @@
+partition f(x: int) -> int { return x; }
+
+table GenericTable {
+    primary id: int;
+    node f(id);
+    data: float;
+}
+
+// The provided Java code for GenericQuery is an abstract framework for executing
+// templated SQL queries. It does not contain concrete SQL statements or table
+// definitions. Therefore, it's impossible to infer specific tables, primary keys,
+// or the exact number and type of data accesses for a generic instance.
+//
+// This TransAct transaction, GenericQueryExample, represents a concrete
+// illustrative scenario of what a subclass of GenericQuery might execute.
+// It demonstrates rational chopping by simulating an operation that accesses
+// two distinct rows (identified by id1 and id2) which could reside on
+// different partitions, similar to the SendPayment example.
+//
+// We assume a simple GenericTable with an 'id' primary key and a 'data' column.
+// The partition function 'f' maps the 'id' directly to its partition.
+transaction GenericQueryExample(id1: int, id2: int, amount: float) {
+    hop {
+        var r1: Row<GenericTable> = GenericTable[id: id1];
+        r1.data = r1.data + amount;
+        GenericTable[id: id1] = r1;
+    }
+    hop {
+        var r2: Row<GenericTable> = GenericTable[id: id2];
+        r2.data = r2.data - amount;
+        GenericTable[id: id2] = r2;
+    }
+}

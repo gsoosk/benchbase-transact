@@ -1,0 +1,79 @@
+partition f_contestant(id: int) -> int { return id; }
+partition f_voter(phone: long) -> long { return phone; }
+partition f_location(area: int) -> int { return area; }
+
+table Contestants {
+    primary contestant_number: int;
+    node f_contestant(contestant_number);
+}
+
+table Votes {
+    primary vote_id: long;
+    node f_voter(phone_number);
+    phone_number: long;
+    state: String;
+    contestant_number: int;
+    created: long;
+}
+
+table Locations {
+    primary area_code: int;
+    node f_location(area_code);
+    state: String;
+}
+
+transaction Vote(voteId: long, phoneNumber: long, contestantNumber: int, maxVotesPerPhoneNumber: long) {
+    // Potential return codes
+    var VOTE_SUCCESSFUL: long = 0;
+    var ERR_INVALID_CONTESTANT: long = 1;
+    var ERR_VOTER_OVER_VOTE_LIMIT: long = 2;
+
+    // Hop 1: Check if the vote is for a valid contestant
+    // Accesses Contestants table, partitioned by contestant_number
+    hop {
+        var c: Row<Contestants> = Contestants[contestant_number: contestantNumber];
+        if (c == null) {
+            return ERR_INVALID_CONTESTANT;
+        }
+    }
+
+    // Hop 2: Check an area code to retrieve the corresponding state
+    // The area code is derived from phoneNumber.
+    // Accesses Locations table, partitioned by area_code.
+    var areaCode: int = (int) (phoneNumber / 10000000L);
+    var state: String;
+    hop {
+        var l: Row<Locations> = Locations[area_code: areaCode];
+        // Handle the case where area code is not found, similar to Java's "XX"
+        if (l == null) {
+            state = "XX";
+        } else {
+            state = l.state;
+        }
+    }
+
+    // Hop 3: Check if the voter has exceeded their allowed number of votes and record the vote
+    // Accesses Votes table, partitioned by phone_number.
+    // Both the count and the insert for a given phone_number are co-located on the same partition.
+    hop {
+        // Count existing votes for the given phone_number
+        // Assuming 'count' is a function that returns the number of rows matching the key.
+        var currentVotes: long = count(Votes[phone_number: phoneNumber]);
+
+        if (currentVotes >= maxVotesPerPhoneNumber) {
+            return ERR_VOTER_OVER_VOTE_LIMIT;
+        }
+
+        // Record a new vote
+        var newVote: Row<Votes>;
+        newVote.vote_id = voteId;
+        newVote.phone_number = phoneNumber;
+        newVote.state = state; // 'state' is passed from the previous hop
+        newVote.contestant_number = contestantNumber;
+        newVote.created = NOW(); // Assuming NOW() is a system function for current timestamp
+        Votes[vote_id: voteId] = newVote;
+    }
+
+    // Set the return value to 0: successful vote
+    return VOTE_SUCCESSFUL;
+}

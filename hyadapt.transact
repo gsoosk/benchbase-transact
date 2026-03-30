@@ -1,0 +1,145 @@
+partition p_htable(key: int) -> int {
+    return key;
+}
+
+table htable {
+    primary FIELD1: int;
+    node p_htable(FIELD1);
+    FIELD2: int; FIELD3: int; FIELD4: int; FIELD5: int; FIELD6: int; FIELD7: int; FIELD8: int; FIELD9: int; FIELD10: int;
+    FIELD11: int; FIELD12: int; FIELD13: int; FIELD14: int; FIELD15: int; FIELD16: int; FIELD17: int; FIELD18: int; FIELD19: int; FIELD20: int;
+    FIELD21: int; FIELD22: int; FIELD23: int; FIELD24: int; FIELD25: int; FIELD26: int; FIELD27: int; FIELD28: int; FIELD29: int; FIELD30: int;
+    FIELD31: int; FIELD32: int; FIELD33: int; FIELD34: int; FIELD35: int; FIELD36: int; FIELD37: int; FIELD38: int; FIELD39: int; FIELD40: int;
+    FIELD41: int; FIELD42: int; FIELD43: int; FIELD44: int; FIELD45: int; FIELD46: int; FIELD47: int; FIELD48: int; FIELD49: int; FIELD50: int;
+    FIELD51: int; FIELD52: int; FIELD53: int; FIELD54: int; FIELD55: int; FIELD56: int; FIELD57: int; FIELD58: int; FIELD59: int; FIELD60: int;
+    FIELD61: int; FIELD62: int; FIELD63: int; FIELD64: int; FIELD65: int; FIELD66: int; FIELD67: int; FIELD68: int; FIELD69: int; FIELD70: int;
+    FIELD71: int; FIELD72: int; FIELD73: int; FIELD74: int; FIELD75: int; FIELD76: int; FIELD77: int; FIELD78: int; FIELD79: int; FIELD80: int;
+    FIELD81: int; FIELD82: int; FIELD83: int; FIELD84: int; FIELD85: int; FIELD86: int; FIELD87: int; FIELD88: int; FIELD89: int; FIELD90: int;
+    FIELD91: int; FIELD92: int; FIELD93: int; FIELD94: int; FIELD95: int; FIELD96: int; FIELD97: int; FIELD98: int; FIELD99: int; FIELD100: int;
+    FIELD101: int; FIELD102: int; FIELD103: int; FIELD104: int; FIELD105: int; FIELD106: int; FIELD107: int; FIELD108: int; FIELD109: int; FIELD110: int;
+    FIELD111: int; FIELD112: int; FIELD113: int; FIELD114: int; FIELD115: int; FIELD116: int; FIELD117: int; FIELD118: int; FIELD119: int; FIELD120: int;
+    FIELD121: int; FIELD122: int; FIELD123: int; FIELD124: int; FIELD125: int; FIELD126: int; FIELD127: int; FIELD128: int; FIELD129: int; FIELD130: int;
+    FIELD131: int; FIELD132: int; FIELD133: int; FIELD134: int; FIELD135: int; FIELD136: int; FIELD137: int; FIELD138: int; FIELD139: int; FIELD140: int;
+    FIELD141: int; FIELD142: int; FIELD143: int; FIELD144: int; FIELD145: int; FIELD146: int; FIELD147: int; FIELD148: int; FIELD149: int; FIELD150: int;
+    FIELD151: int; FIELD152: int; FIELD153: int; FIELD154: int; FIELD155: int; FIELD156: int; FIELD157: int; FIELD158: int; FIELD159: int; FIELD160: int;
+    FIELD161: int; FIELD162: int; FIELD163: int; FIELD164: int; FIELD165: int; FIELD166: int; FIELD167: int; FIELD168: int; FIELD169: int; FIELD170: int;
+    FIELD171: int; FIELD172: int; FIELD173: int; FIELD174: int; FIELD175: int; FIELD176: int; FIELD177: int; FIELD178: int; FIELD179: int; FIELD180: int;
+    FIELD181: int; FIELD182: int; FIELD183: int; FIELD184: int; FIELD185: int; FIELD186: int; FIELD187: int; FIELD188: int; FIELD189: int; FIELD190: int;
+    FIELD191: int; FIELD192: int; FIELD193: int; FIELD194: int; FIELD195: int; FIELD196: int; FIELD197: int; FIELD198: int; FIELD199: int; FIELD200: int;
+    FIELD201: int; FIELD202: int; FIELD203: int; FIELD204: int; FIELD205: int; FIELD206: int; FIELD207: int; FIELD208: int; FIELD209: int; FIELD210: int;
+    FIELD211: int; FIELD212: int; FIELD213: int; FIELD214: int; FIELD215: int; FIELD216: int; FIELD217: int; FIELD218: int; FIELD219: int; FIELD220: int;
+    FIELD221: int; FIELD222: int; FIELD223: int; FIELD224: int; FIELD225: int; FIELD226: int; FIELD227: int; FIELD228: int; FIELD229: int; FIELD230: int;
+    FIELD231: int; FIELD232: int; FIELD233: int; FIELD234: int; FIELD235: int; FIELD236: int; FIELD237: int; FIELD238: int; FIELD239: int; FIELD240: int;
+    FIELD241: int; FIELD242: int; FIELD243: int; FIELD244: int; FIELD245: int; FIELD246: int; FIELD247: int; FIELD248: int; FIELD249: int; FIELD250: int;
+}
+
+transaction MaxRecord1(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord10(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord2(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord3(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord4(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord5(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord6(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord7(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord8(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction MaxRecord9(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan with aggregation.
+        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction ReadRecord1(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan.
+        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction ReadRecord10(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan.
+        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction ReadRecord2(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan.
+        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction ReadRecord3(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan.
+        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction ReadRecord4(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan.
+        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}
+
+transaction ReadRecord5(keyname: int) {
+    hop {
+        // Represents a multi-partition range scan.
+        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    }
+}

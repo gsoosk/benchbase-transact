@@ -1,0 +1,25 @@
+partition f(x: int) -> int { return x; }
+
+table SIBENCH_TABLE {
+    primary id: int;
+    node f(id);
+    value: int;
+}
+
+transaction MinRecord() returns (minId: int) {
+    hop {
+        // This operation requires scanning the entire table to find the minimum value.
+        // It cannot be chopped into partition-local hops, as the minimum could be on any partition.
+        // We represent it as a single hop that returns the id of the record with the minimum value.
+        var minRow: Row<SIBENCH_TABLE> = SIBENCH_TABLE.min(value);
+        minId = minRow.id;
+    }
+}
+
+transaction UpdateRecord(id: int) {
+    hop {
+        var r: Row<SIBENCH_TABLE> = SIBENCH_TABLE[id: id];
+        r.value = r.value + 1;
+        SIBENCH_TABLE[id: id] = r;
+    }
+}

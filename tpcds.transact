@@ -1,0 +1,4 @@
+partition f(x: long) -> long { return x; }
+table Income { primary incomeID: long; node f(incomeID); value: float; }
+transaction Test(incomeID: long) {
+}

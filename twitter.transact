@@ -1,0 +1,96 @@
+partition f(id: long) -> long { return id; }
+
+table User {
+    primary uid: long;
+    node f(uid);
+    name: string;
+}
+
+table Followers {
+    primary f1: long, f2: long;
+    node f(f1);
+}
+
+table Follows {
+    primary f1: long, f2: long;
+    node f(f1);
+}
+
+table Tweets {
+    primary id: long;
+    node f(id);
+    uid: long;
+    text: string;
+    createdate: date;
+}
+
+table AddedTweets {
+    primary uid: long, createdate: date;
+    node f(uid);
+    text: string;
+}
+
+transaction GetFollowers(uid: long) {
+    var follower_ids: List<long>;
+    hop {
+        // SELECT f2 FROM FOLLOWERS WHERE f1 = ? LIMIT TwitterConstants.LIMIT_FOLLOWERS
+        // Read all followers for the given uid. This is a local read on the partition of 'uid'.
+        var followers_rows: List<Row<Followers>> = Followers.where(f1: uid).limit(TwitterConstants.LIMIT_FOLLOWERS);
+        for (var row : followers_rows) {
+            follower_ids.add(row.f2);
+        }
+    }
+    hop {
+        // SELECT uid, name FROM USER WHERE uid IN (??)
+        // Read user names for the collected follower_ids.
+        // These follower_ids can be on different partitions, so this is a new hop.
+        var user_names_rows: List<Row<User>> = User.where(uid: follower_ids);
+    }
+}
+
+transaction GetTweet(tweet_id: long) {
+    hop {
+        // SELECT * FROM TWEETS WHERE id = ?
+        // Read a single tweet by its ID. Since Tweets are partitioned by 'id', this is a local read.
+        var tweet_row: Row<Tweets> = Tweets[id: tweet_id];
+    }
+}
+
+transaction GetTweetsFromFollowing(uid: long) {
+    var followed_user_ids: List<long>;
+    hop {
+        // SELECT f2 FROM FOLLOWS WHERE f1 = ? LIMIT TwitterConstants.LIMIT_FOLLOWERS
+        // Read all users that 'uid' is following. This is a local read on the partition of 'uid'.
+        var follows_rows: List<Row<Follows>> = Follows.where(f1: uid).limit(TwitterConstants.LIMIT_FOLLOWERS);
+        for (var row : follows_rows) {
+            followed_user_ids.add(row.f2);
+        }
+    }
+    hop {
+        // SELECT * FROM TWEETS WHERE uid IN (??)
+        // Read tweets from the collected followed_user_ids.
+        // Since Tweets are partitioned by 'id', querying by 'uid' (even a list) means
+        // potentially accessing multiple partitions. This is a new hop.
+        var tweets_rows: List<Row<Tweets>> = Tweets.where(uid: followed_user_ids);
+    }
+}
+
+transaction GetUserTweets(uid: long) {
+    hop {
+        // SELECT * FROM TWEETS WHERE uid = ? LIMIT TwitterConstants.LIMIT_TWEETS_FOR_UID
+        // Read tweets for a specific user.
+        // Since Tweets are partitioned by 'id', querying by 'uid' means
+        // potentially accessing multiple partitions. This is a single hop for this query.
+        var tweets_rows: List<Row<Tweets>> = Tweets.where(uid: uid).limit(TwitterConstants.LIMIT_TWEETS_FOR_UID);
+    }
+}
+
+transaction InsertTweet(uid: long, text: string) {
+    hop {
+        // INSERT INTO ADDED_TWEETS (uid,text,createdate) VALUES (?, ?, ?)
+        // Insert a new tweet into the AddedTweets table.
+        // This is a local write to the partition of 'uid'.
+        var new_tweet: Row<AddedTweets> = { uid: uid, text: text, createdate: now() };
+        AddedTweets.insert(new_tweet);
+    }
+}
