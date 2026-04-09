@@ -1,9 +1,0 @@
-{
-  "key": "top:f21:h6:b6:commutative_f17_i1_h2_vs_f19_i1_h5:u12:t60:8f1363e395284df9696e444e9c9691eaa82df3bc4c7938e646d98005ae693217",
-  "result": "Pass",
-  "compiler_version": "0.1.0",
-  "solver_version": "Boogie program verifier version 3.5.6.0, Copyright (c) 2003-2014, Microsoft.",
-  "created_at": 1775760094,
-  "accessed_at": 1775760094,
-  "access_count": 1
-}
