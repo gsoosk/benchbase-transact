@@ -1,0 +1,712 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table Region[tab0] {
+  primary r_regionkey[f0]: int;
+  r_name[f1]: string;
+  r_comment[f2]: string;
+  node_partition: g[fn16](r_regionkey[f0]);
+}
+table Nation[tab1] {
+  primary n_nationkey[f3]: int;
+  n_name[f4]: string;
+  n_regionkey[f5]: int;
+  n_comment[f6]: string;
+  node_partition: g[fn16](n_nationkey[f3]);
+}
+table Part[tab2] {
+  primary p_partkey[f7]: int;
+  p_name[f8]: string;
+  p_mfgr[f9]: string;
+  p_brand[f10]: string;
+  p_type[f11]: string;
+  p_size[f12]: int;
+  p_container[f13]: string;
+  p_retailprice[f14]: float;
+  p_comment[f15]: string;
+  node_partition: f[fn15](p_partkey[f7]);
+}
+table Supplier[tab3] {
+  primary s_suppkey[f16]: int;
+  s_name[f17]: string;
+  s_address[f18]: string;
+  s_nationkey[f19]: int;
+  s_phone[f20]: string;
+  s_acctbal[f21]: float;
+  s_comment[f22]: string;
+  node_partition: f[fn15](s_suppkey[f16]);
+}
+table Partsupp[tab4] {
+  primary ps_partkey[f23]: int;
+  primary ps_suppkey[f24]: int;
+  ps_availqty[f25]: int;
+  ps_supplycost[f26]: float;
+  ps_comment[f27]: string;
+  node_partition: f[fn15](ps_partkey[f23]);
+}
+table Customer[tab5] {
+  primary c_custkey[f28]: int;
+  c_name[f29]: string;
+  c_address[f30]: string;
+  c_nationkey[f31]: int;
+  c_phone[f32]: string;
+  c_acctbal[f33]: float;
+  c_mktsegment[f34]: string;
+  c_comment[f35]: string;
+  node_partition: f[fn15](c_custkey[f28]);
+}
+table Orders[tab6] {
+  primary o_orderkey[f36]: int;
+  o_custkey[f37]: int;
+  o_orderstatus[f38]: string;
+  o_totalprice[f39]: float;
+  o_orderdate[f40]: int;
+  o_orderpriority[f41]: string;
+  o_clerk[f42]: string;
+  o_shippriority[f43]: int;
+  o_comment[f44]: string;
+  node_partition: f[fn15](o_orderkey[f36]);
+}
+table Lineitem[tab7] {
+  primary l_orderkey[f45]: int;
+  primary l_linenumber[f46]: int;
+  l_partkey[f47]: int;
+  l_suppkey[f48]: int;
+  l_quantity[f49]: float;
+  l_extendedprice[f50]: float;
+  l_discount[f51]: float;
+  l_tax[f52]: float;
+  l_returnflag[f53]: string;
+  l_linestatus[f54]: string;
+  l_shipdate[f55]: int;
+  l_commitdate[f56]: int;
+  l_receiptdate[f57]: int;
+  l_shipinstruct[f58]: string;
+  l_shipmode[f59]: string;
+  l_comment[f60]: string;
+  node_partition: f[fn15](l_orderkey[f45]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition f[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+partition g[fn16](x[v21]: int)
+
+  entry_block: bb1
+bb1:
+  livein: {}
+  return 0;
+  liveout: {}
+
+transaction Q1[fn17](orderkey[v22]: int, linenumber[v23]: int)
+ {
+  entry_hop: hop2
+
+  hop2 {
+    entry_block: bb2
+    bb2:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q2[fn18](partkey[v24]: int, suppkey[v25]: int, nationkey[v26]: int, regionkey[v27]: int)
+ {
+  entry_hop: hop3
+
+  hop3 {
+    entry_block: bb3
+    bb3:
+      livein: {}
+      hop_exit hop4;
+      liveout: {}
+  }
+
+  hop4 {
+    entry_block: bb4
+    bb4 (preds: bb3):
+      livein: {}
+      hop_exit hop5;
+      liveout: {}
+  }
+
+  hop5 {
+    entry_block: bb5
+    bb5 (preds: bb4):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q3[fn19](custkey[v28]: int, orderkey[v29]: int, linenumber[v30]: int)
+ {
+  entry_hop: hop6
+
+  hop6 {
+    entry_block: bb6
+    bb6:
+      livein: {}
+      hop_exit hop7;
+      liveout: {}
+  }
+
+  hop7 {
+    entry_block: bb7
+    bb7 (preds: bb6):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q4[fn20](orderkey[v31]: int, linenumber[v32]: int)
+ {
+  entry_hop: hop8
+
+  hop8 {
+    entry_block: bb8
+    bb8:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q5[fn21](custkey[v33]: int, orderkey[v34]: int, linenumber[v35]: int, suppkey[v36]: int, nationkey[v37]: int, regionkey[v38]: int)
+ {
+  entry_hop: hop9
+
+  hop9 {
+    entry_block: bb9
+    bb9:
+      livein: {}
+      hop_exit hop10;
+      liveout: {}
+  }
+
+  hop10 {
+    entry_block: bb10
+    bb10 (preds: bb9):
+      livein: {}
+      hop_exit hop11;
+      liveout: {}
+  }
+
+  hop11 {
+    entry_block: bb11
+    bb11 (preds: bb10):
+      livein: {}
+      hop_exit hop12;
+      liveout: {}
+  }
+
+  hop12 {
+    entry_block: bb12
+    bb12 (preds: bb11):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q10[fn22](custkey[v39]: int, orderkey[v40]: int, linenumber[v41]: int, nationkey[v42]: int)
+ {
+  entry_hop: hop13
+
+  hop13 {
+    entry_block: bb13
+    bb13:
+      livein: {}
+      hop_exit hop14;
+      liveout: {}
+  }
+
+  hop14 {
+    entry_block: bb14
+    bb14 (preds: bb13):
+      livein: {}
+      hop_exit hop15;
+      liveout: {}
+  }
+
+  hop15 {
+    entry_block: bb15
+    bb15 (preds: bb14):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q11[fn23](partkey[v43]: int, suppkey[v44]: int, nationkey[v45]: int)
+ {
+  entry_hop: hop16
+
+  hop16 {
+    entry_block: bb16
+    bb16:
+      livein: {suppkey[v44], partkey[v43]}
+        [stmt_in] livein: {suppkey[v44], partkey[v43]}
+      ps#ps_availqty[v335] = Partsupp[partkey[v43], suppkey[v44]].ps_availqty;
+        [stmt_out] liveout: {ps#ps_availqty[v335]}
+        [stmt_in] livein: {ps#ps_availqty[v335]}
+      #tmp30[v340] = float[fn5](ps#ps_availqty[v335]);
+        [stmt_out] liveout: {}
+      hop_exit hop17;
+      liveout: {}
+  }
+
+  hop17 {
+    entry_block: bb17
+    bb17 (preds: bb16):
+      livein: {}
+      hop_exit hop18;
+      liveout: {}
+  }
+
+  hop18 {
+    entry_block: bb18
+    bb18 (preds: bb17):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q12[fn24](orderkey[v46]: int, linenumber[v47]: int)
+ {
+  entry_hop: hop19
+
+  hop19 {
+    entry_block: bb19
+    bb19:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q13[fn25](custkey[v48]: int, orderkey[v49]: int)
+ {
+  entry_hop: hop20
+
+  hop20 {
+    entry_block: bb20
+    bb20:
+      livein: {}
+      hop_exit hop21;
+      liveout: {}
+  }
+
+  hop21 {
+    entry_block: bb21
+    bb21 (preds: bb20):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q14[fn26](orderkey[v50]: int, linenumber[v51]: int, partkey[v52]: int)
+ {
+  entry_hop: hop22
+
+  hop22 {
+    entry_block: bb22
+    bb22:
+      livein: {}
+      hop_exit hop23;
+      liveout: {}
+  }
+
+  hop23 {
+    entry_block: bb23
+    bb23 (preds: bb22):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q15[fn27](orderkey[v53]: int, linenumber[v54]: int, suppkey[v55]: int)
+ {
+  entry_hop: hop24
+
+  hop24 {
+    entry_block: bb24
+    bb24:
+      livein: {}
+      hop_exit hop25;
+      liveout: {}
+  }
+
+  hop25 {
+    entry_block: bb25
+    bb25 (preds: bb24):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q16[fn28](partkey[v56]: int, suppkey[v57]: int)
+ {
+  entry_hop: hop26
+
+  hop26 {
+    entry_block: bb26
+    bb26:
+      livein: {}
+      hop_exit hop27;
+      liveout: {}
+  }
+
+  hop27 {
+    entry_block: bb27
+    bb27 (preds: bb26):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q17[fn29](partkey[v58]: int, orderkey[v59]: int, linenumber[v60]: int)
+ {
+  entry_hop: hop28
+
+  hop28 {
+    entry_block: bb28
+    bb28:
+      livein: {}
+      hop_exit hop29;
+      liveout: {}
+  }
+
+  hop29 {
+    entry_block: bb29
+    bb29 (preds: bb28):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q18[fn30](custkey[v61]: int, orderkey[v62]: int, linenumber[v63]: int)
+ {
+  entry_hop: hop30
+
+  hop30 {
+    entry_block: bb30
+    bb30:
+      livein: {}
+      hop_exit hop31;
+      liveout: {}
+  }
+
+  hop31 {
+    entry_block: bb31
+    bb31 (preds: bb30):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q19[fn31](orderkey[v64]: int, linenumber[v65]: int, partkey[v66]: int)
+ {
+  entry_hop: hop32
+
+  hop32 {
+    entry_block: bb32
+    bb32:
+      livein: {}
+      hop_exit hop33;
+      liveout: {}
+  }
+
+  hop33 {
+    entry_block: bb33
+    bb33 (preds: bb32):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q20[fn32](partkey[v67]: int, suppkey[v68]: int, nationkey[v69]: int, orderkey[v70]: int, linenumber[v71]: int)
+ {
+  entry_hop: hop34
+
+  hop34 {
+    entry_block: bb34
+    bb34:
+      livein: {}
+      hop_exit hop35;
+      liveout: {}
+  }
+
+  hop35 {
+    entry_block: bb35
+    bb35 (preds: bb34):
+      livein: {}
+      hop_exit hop36;
+      liveout: {}
+  }
+
+  hop36 {
+    entry_block: bb36
+    bb36 (preds: bb35):
+      livein: {}
+      hop_exit hop37;
+      liveout: {}
+  }
+
+  hop37 {
+    entry_block: bb37
+    bb37 (preds: bb36):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q21[fn33](suppkey[v72]: int, orderkey[v73]: int, linenumber[v74]: int, nationkey[v75]: int)
+ {
+  entry_hop: hop38
+
+  hop38 {
+    entry_block: bb38
+    bb38:
+      livein: {}
+      hop_exit hop39;
+      liveout: {}
+  }
+
+  hop39 {
+    entry_block: bb39
+    bb39 (preds: bb38):
+      livein: {}
+      hop_exit hop40;
+      liveout: {}
+  }
+
+  hop40 {
+    entry_block: bb40
+    bb40 (preds: bb39):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q22[fn34](custkey[v76]: int, orderkey[v77]: int)
+ {
+  entry_hop: hop41
+
+  hop41 {
+    entry_block: bb41
+    bb41:
+      livein: {}
+      hop_exit hop42;
+      liveout: {}
+  }
+
+  hop42 {
+    entry_block: bb42
+    bb42 (preds: bb41):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_r_regionkey[fn35](iter[v78]: Iterator<table_Region>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_n_nationkey[fn36](iter[v79]: Iterator<table_Nation>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_p_partkey[fn37](iter[v80]: Iterator<table_Part>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_suppkey[fn38](iter[v81]: Iterator<table_Supplier>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ps_partkey[fn39](iter[v82]: Iterator<table_Partsupp>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ps_suppkey[fn40](iter[v83]: Iterator<table_Partsupp>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_c_custkey[fn41](iter[v84]: Iterator<table_Customer>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_o_orderkey[fn42](iter[v85]: Iterator<table_Orders>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_l_orderkey[fn43](iter[v86]: Iterator<table_Lineitem>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_l_linenumber[fn44](iter[v87]: Iterator<table_Lineitem>)
+
+

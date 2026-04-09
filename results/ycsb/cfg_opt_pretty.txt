@@ -1,0 +1,516 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+const YCSB_SCAN_SIZE[gc2]: int = 10;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table UserTable[tab0] {
+  primary ycsb_key[f0]: int;
+  field1[f1]: string;
+  field2[f2]: string;
+  field3[f3]: string;
+  field4[f4]: string;
+  field5[f5]: string;
+  field6[f6]: string;
+  field7[f7]: string;
+  field8[f8]: string;
+  field9[f9]: string;
+  field10[f10]: string;
+  node_partition: f[fn15](ycsb_key[f0]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition f[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+transaction ReadRecord[fn16](keyname[v21]: int)
+ {
+  entry_hop: hop1
+
+  hop1 {
+    entry_block: bb1
+    bb1:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction UpdateRecord[fn17](keyname[v22]: int, f1[v23]: string, f2[v24]: string, f3[v25]: string, f4[v26]: string, f5[v27]: string, f6[v28]: string, f7[v29]: string, f8[v30]: string, f9[v31]: string, f10[v32]: string)
+ {
+  entry_hop: hop2
+
+  hop2 {
+    entry_block: bb2
+    bb2:
+      livein: {f10[v32], f7[v29], f4[v26], keyname[v22], f9[v31], f5[v27], f8[v30], f3[v25], f2[v24], f1[v23], f6[v28]}
+        [stmt_in] livein: {keyname[v22], f5[v27], f1[v23], f3[v25], f2[v24], f6[v28], f10[v32], f7[v29], f4[v26], f9[v31], f8[v30]}
+      r#ycsb_key[v72] = UserTable[keyname[v22]].ycsb_key;
+        [stmt_out] liveout: {r#ycsb_key[v72], f1[v23], f7[v29], f8[v30], f2[v24], f10[v32], keyname[v22], f4[v26], f6[v28], f5[v27], f9[v31], f3[v25]}
+        [stmt_in] livein: {r#ycsb_key[v72], f1[v23], f7[v29], f8[v30], f2[v24], f10[v32], keyname[v22], f4[v26], f6[v28], f5[v27], f9[v31], f3[v25]}
+      r#field1[v73] = f1[v23];
+        [stmt_out] liveout: {f10[v32], r#ycsb_key[v72], f6[v28], f5[v27], f7[v29], keyname[v22], f3[v25], f2[v24], f8[v30], r#field1[v73], f4[v26], f9[v31]}
+        [stmt_in] livein: {f10[v32], r#ycsb_key[v72], f6[v28], f5[v27], f7[v29], keyname[v22], f3[v25], f2[v24], f8[v30], r#field1[v73], f4[v26], f9[v31]}
+      r#field2[v74] = f2[v24];
+        [stmt_out] liveout: {f6[v28], f5[v27], f3[v25], f10[v32], f7[v29], r#field1[v73], f9[v31], f8[v30], r#ycsb_key[v72], f4[v26], keyname[v22], r#field2[v74]}
+        [stmt_in] livein: {f6[v28], f5[v27], f3[v25], f10[v32], f7[v29], r#field1[v73], f9[v31], f8[v30], r#ycsb_key[v72], f4[v26], keyname[v22], r#field2[v74]}
+      r#field3[v75] = f3[v25];
+        [stmt_out] liveout: {f8[v30], f4[v26], keyname[v22], r#field2[v74], r#field1[v73], f6[v28], r#field3[v75], r#ycsb_key[v72], f9[v31], f5[v27], f7[v29], f10[v32]}
+        [stmt_in] livein: {f8[v30], f4[v26], keyname[v22], r#field2[v74], r#field1[v73], f6[v28], r#field3[v75], r#ycsb_key[v72], f9[v31], f5[v27], f7[v29], f10[v32]}
+      r#field4[v76] = f4[v26];
+        [stmt_out] liveout: {keyname[v22], f6[v28], f7[v29], r#field2[v74], r#field3[v75], r#ycsb_key[v72], f10[v32], f9[v31], f8[v30], r#field4[v76], r#field1[v73], f5[v27]}
+        [stmt_in] livein: {keyname[v22], f6[v28], f7[v29], r#field2[v74], r#field3[v75], r#ycsb_key[v72], f10[v32], f9[v31], f8[v30], r#field4[v76], r#field1[v73], f5[v27]}
+      r#field5[v77] = f5[v27];
+        [stmt_out] liveout: {r#field5[v77], r#field1[v73], f7[v29], r#field4[v76], r#field3[v75], f10[v32], r#ycsb_key[v72], f9[v31], r#field2[v74], f8[v30], keyname[v22], f6[v28]}
+        [stmt_in] livein: {r#field5[v77], r#field1[v73], f7[v29], r#field4[v76], r#field3[v75], f10[v32], r#ycsb_key[v72], f9[v31], r#field2[v74], f8[v30], keyname[v22], f6[v28]}
+      r#field6[v78] = f6[v28];
+        [stmt_out] liveout: {f10[v32], r#ycsb_key[v72], r#field4[v76], keyname[v22], r#field6[v78], f8[v30], f9[v31], r#field2[v74], r#field1[v73], r#field3[v75], r#field5[v77], f7[v29]}
+        [stmt_in] livein: {f10[v32], r#ycsb_key[v72], r#field4[v76], keyname[v22], r#field6[v78], f8[v30], f9[v31], r#field2[v74], r#field1[v73], r#field3[v75], r#field5[v77], f7[v29]}
+      r#field7[v79] = f7[v29];
+        [stmt_out] liveout: {r#field6[v78], r#field4[v76], r#field5[v77], r#ycsb_key[v72], f8[v30], keyname[v22], f10[v32], r#field2[v74], f9[v31], r#field7[v79], r#field1[v73], r#field3[v75]}
+        [stmt_in] livein: {r#field6[v78], r#field4[v76], r#field5[v77], r#ycsb_key[v72], f8[v30], keyname[v22], f10[v32], r#field2[v74], f9[v31], r#field7[v79], r#field1[v73], r#field3[v75]}
+      r#field8[v80] = f8[v30];
+        [stmt_out] liveout: {r#field2[v74], r#field8[v80], f10[v32], r#field6[v78], r#field7[v79], keyname[v22], r#field5[v77], f9[v31], r#field1[v73], r#field4[v76], r#ycsb_key[v72], r#field3[v75]}
+        [stmt_in] livein: {r#field2[v74], r#field8[v80], f10[v32], r#field6[v78], r#field7[v79], keyname[v22], r#field5[v77], f9[v31], r#field1[v73], r#field4[v76], r#ycsb_key[v72], r#field3[v75]}
+      r#field9[v81] = f9[v31];
+        [stmt_out] liveout: {r#field2[v74], r#field3[v75], keyname[v22], r#field1[v73], r#field6[v78], r#field7[v79], r#field5[v77], r#field4[v76], f10[v32], r#field8[v80], r#ycsb_key[v72], r#field9[v81]}
+        [stmt_in] livein: {r#field2[v74], r#field3[v75], keyname[v22], r#field1[v73], r#field6[v78], r#field7[v79], r#field5[v77], r#field4[v76], f10[v32], r#field8[v80], r#ycsb_key[v72], r#field9[v81]}
+      r#field10[v82] = f10[v32];
+        [stmt_out] liveout: {r#field4[v76], r#field10[v82], r#field7[v79], r#field3[v75], r#field6[v78], r#field2[v74], keyname[v22], r#ycsb_key[v72], r#field9[v81], r#field8[v80], r#field1[v73], r#field5[v77]}
+        [stmt_in] livein: {r#field4[v76], r#field10[v82], r#field7[v79], r#field3[v75], r#field6[v78], r#field2[v74], keyname[v22], r#ycsb_key[v72], r#field9[v81], r#field8[v80], r#field1[v73], r#field5[v77]}
+      UserTable[keyname[v22]].field1 = r#field1[v73];
+        [stmt_out] liveout: {r#field10[v82], r#field6[v78], r#field3[v75], r#ycsb_key[v72], r#field9[v81], r#field8[v80], r#field7[v79], r#field2[v74], r#field4[v76], r#field5[v77], keyname[v22]}
+        [stmt_in] livein: {r#field10[v82], r#field6[v78], r#field3[v75], r#ycsb_key[v72], r#field9[v81], r#field8[v80], r#field7[v79], r#field2[v74], r#field4[v76], r#field5[v77], keyname[v22]}
+      UserTable[keyname[v22]].field10 = r#field10[v82];
+        [stmt_out] liveout: {r#field3[v75], r#field5[v77], r#field8[v80], r#field7[v79], keyname[v22], r#field4[v76], r#field6[v78], r#ycsb_key[v72], r#field2[v74], r#field9[v81]}
+        [stmt_in] livein: {r#field3[v75], r#field5[v77], r#field8[v80], r#field7[v79], keyname[v22], r#field4[v76], r#field6[v78], r#ycsb_key[v72], r#field2[v74], r#field9[v81]}
+      UserTable[keyname[v22]].field2 = r#field2[v74];
+        [stmt_out] liveout: {r#field9[v81], r#field4[v76], r#field6[v78], r#field3[v75], r#field7[v79], r#ycsb_key[v72], r#field8[v80], keyname[v22], r#field5[v77]}
+        [stmt_in] livein: {r#field9[v81], r#field4[v76], r#field6[v78], r#field3[v75], r#field7[v79], r#ycsb_key[v72], r#field8[v80], keyname[v22], r#field5[v77]}
+      UserTable[keyname[v22]].field3 = r#field3[v75];
+        [stmt_out] liveout: {r#field4[v76], keyname[v22], r#field9[v81], r#ycsb_key[v72], r#field8[v80], r#field6[v78], r#field7[v79], r#field5[v77]}
+        [stmt_in] livein: {r#field4[v76], keyname[v22], r#field9[v81], r#ycsb_key[v72], r#field8[v80], r#field6[v78], r#field7[v79], r#field5[v77]}
+      UserTable[keyname[v22]].field4 = r#field4[v76];
+        [stmt_out] liveout: {keyname[v22], r#field8[v80], r#field6[v78], r#field5[v77], r#field7[v79], r#ycsb_key[v72], r#field9[v81]}
+        [stmt_in] livein: {keyname[v22], r#field8[v80], r#field6[v78], r#field5[v77], r#field7[v79], r#ycsb_key[v72], r#field9[v81]}
+      UserTable[keyname[v22]].field5 = r#field5[v77];
+        [stmt_out] liveout: {keyname[v22], r#field8[v80], r#ycsb_key[v72], r#field6[v78], r#field7[v79], r#field9[v81]}
+        [stmt_in] livein: {keyname[v22], r#field8[v80], r#ycsb_key[v72], r#field6[v78], r#field7[v79], r#field9[v81]}
+      UserTable[keyname[v22]].field6 = r#field6[v78];
+        [stmt_out] liveout: {r#field9[v81], r#field7[v79], keyname[v22], r#field8[v80], r#ycsb_key[v72]}
+        [stmt_in] livein: {r#field9[v81], r#field7[v79], keyname[v22], r#field8[v80], r#ycsb_key[v72]}
+      UserTable[keyname[v22]].field7 = r#field7[v79];
+        [stmt_out] liveout: {r#field8[v80], r#ycsb_key[v72], r#field9[v81], keyname[v22]}
+        [stmt_in] livein: {r#field8[v80], r#ycsb_key[v72], r#field9[v81], keyname[v22]}
+      UserTable[keyname[v22]].field8 = r#field8[v80];
+        [stmt_out] liveout: {r#ycsb_key[v72], r#field9[v81], keyname[v22]}
+        [stmt_in] livein: {r#ycsb_key[v72], r#field9[v81], keyname[v22]}
+      UserTable[keyname[v22]].field9 = r#field9[v81];
+        [stmt_out] liveout: {keyname[v22], r#ycsb_key[v72]}
+        [stmt_in] livein: {keyname[v22], r#ycsb_key[v72]}
+      UserTable[keyname[v22]].ycsb_key = r#ycsb_key[v72];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction InsertRecord[fn18](keyname[v33]: int, f1[v34]: string, f2[v35]: string, f3[v36]: string, f4[v37]: string, f5[v38]: string, f6[v39]: string, f7[v40]: string, f8[v41]: string, f9[v42]: string, f10[v43]: string)
+ {
+  entry_hop: hop3
+
+  hop3 {
+    entry_block: bb3
+    bb3:
+      livein: {f3[v36], f7[v40], f10[v43], f8[v41], f9[v42], f1[v34], f4[v37], f6[v39], f5[v38], f2[v35], keyname[v33]}
+        [stmt_in] livein: {f4[v37], f3[v36], f7[v40], f1[v34], f2[v35], f6[v39], f8[v41], keyname[v33], f5[v38], f10[v43], f9[v42]}
+      UserTable[keyname[v33]].field1 = f1[v34];
+        [stmt_out] liveout: {f6[v39], f8[v41], keyname[v33], f2[v35], f10[v43], f4[v37], f5[v38], f7[v40], f9[v42], f3[v36]}
+        [stmt_in] livein: {f6[v39], f8[v41], keyname[v33], f2[v35], f10[v43], f4[v37], f5[v38], f7[v40], f9[v42], f3[v36]}
+      UserTable[keyname[v33]].field2 = f2[v35];
+        [stmt_out] liveout: {f6[v39], f3[v36], keyname[v33], f10[v43], f8[v41], f4[v37], f5[v38], f7[v40], f9[v42]}
+        [stmt_in] livein: {f6[v39], f3[v36], keyname[v33], f10[v43], f8[v41], f4[v37], f5[v38], f7[v40], f9[v42]}
+      UserTable[keyname[v33]].field3 = f3[v36];
+        [stmt_out] liveout: {keyname[v33], f10[v43], f8[v41], f7[v40], f6[v39], f4[v37], f5[v38], f9[v42]}
+        [stmt_in] livein: {keyname[v33], f10[v43], f8[v41], f7[v40], f6[v39], f4[v37], f5[v38], f9[v42]}
+      UserTable[keyname[v33]].field4 = f4[v37];
+        [stmt_out] liveout: {f9[v42], f8[v41], f5[v38], f10[v43], f6[v39], f7[v40], keyname[v33]}
+        [stmt_in] livein: {f9[v42], f8[v41], f5[v38], f10[v43], f6[v39], f7[v40], keyname[v33]}
+      UserTable[keyname[v33]].field5 = f5[v38];
+        [stmt_out] liveout: {f8[v41], f10[v43], f6[v39], f7[v40], keyname[v33], f9[v42]}
+        [stmt_in] livein: {f8[v41], f10[v43], f6[v39], f7[v40], keyname[v33], f9[v42]}
+      UserTable[keyname[v33]].field6 = f6[v39];
+        [stmt_out] liveout: {f9[v42], f10[v43], keyname[v33], f7[v40], f8[v41]}
+        [stmt_in] livein: {f9[v42], f10[v43], keyname[v33], f7[v40], f8[v41]}
+      UserTable[keyname[v33]].field7 = f7[v40];
+        [stmt_out] liveout: {f9[v42], f10[v43], keyname[v33], f8[v41]}
+        [stmt_in] livein: {f9[v42], f10[v43], keyname[v33], f8[v41]}
+      UserTable[keyname[v33]].field8 = f8[v41];
+        [stmt_out] liveout: {f10[v43], keyname[v33], f9[v42]}
+        [stmt_in] livein: {f10[v43], keyname[v33], f9[v42]}
+      UserTable[keyname[v33]].field9 = f9[v42];
+        [stmt_out] liveout: {f10[v43], keyname[v33]}
+        [stmt_in] livein: {f10[v43], keyname[v33]}
+      UserTable[keyname[v33]].field10 = f10[v43];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction DeleteRecord[fn19](keyname[v44]: int)
+ {
+  entry_hop: hop4
+
+  hop4 {
+    entry_block: bb4
+    bb4:
+      livein: {keyname[v44]}
+        [stmt_in] livein: {keyname[v44]}
+      r#field1[v86] = UserTable[keyname[v44]].field1;
+        [stmt_out] liveout: {r#field1[v86], keyname[v44]}
+        [stmt_in] livein: {r#field1[v86], keyname[v44]}
+      r#field10[v95] = UserTable[keyname[v44]].field10;
+        [stmt_out] liveout: {r#field10[v95], r#field1[v86], keyname[v44]}
+        [stmt_in] livein: {r#field10[v95], r#field1[v86], keyname[v44]}
+      r#field2[v87] = UserTable[keyname[v44]].field2;
+        [stmt_out] liveout: {r#field2[v87], keyname[v44], r#field10[v95], r#field1[v86]}
+        [stmt_in] livein: {r#field2[v87], keyname[v44], r#field10[v95], r#field1[v86]}
+      r#field3[v88] = UserTable[keyname[v44]].field3;
+        [stmt_out] liveout: {r#field3[v88], keyname[v44], r#field1[v86], r#field2[v87], r#field10[v95]}
+        [stmt_in] livein: {r#field3[v88], keyname[v44], r#field1[v86], r#field2[v87], r#field10[v95]}
+      r#field4[v89] = UserTable[keyname[v44]].field4;
+        [stmt_out] liveout: {r#field4[v89], r#field1[v86], r#field3[v88], r#field10[v95], r#field2[v87], keyname[v44]}
+        [stmt_in] livein: {r#field4[v89], r#field1[v86], r#field3[v88], r#field10[v95], r#field2[v87], keyname[v44]}
+      r#field5[v90] = UserTable[keyname[v44]].field5;
+        [stmt_out] liveout: {r#field4[v89], r#field1[v86], keyname[v44], r#field5[v90], r#field3[v88], r#field10[v95], r#field2[v87]}
+        [stmt_in] livein: {r#field4[v89], r#field1[v86], keyname[v44], r#field5[v90], r#field3[v88], r#field10[v95], r#field2[v87]}
+      r#field6[v91] = UserTable[keyname[v44]].field6;
+        [stmt_out] liveout: {r#field4[v89], r#field5[v90], r#field1[v86], r#field6[v91], r#field3[v88], r#field10[v95], keyname[v44], r#field2[v87]}
+        [stmt_in] livein: {r#field4[v89], r#field5[v90], r#field1[v86], r#field6[v91], r#field3[v88], r#field10[v95], keyname[v44], r#field2[v87]}
+      r#field7[v92] = UserTable[keyname[v44]].field7;
+        [stmt_out] liveout: {keyname[v44], r#field6[v91], r#field1[v86], r#field3[v88], r#field5[v90], r#field2[v87], r#field7[v92], r#field10[v95], r#field4[v89]}
+        [stmt_in] livein: {keyname[v44], r#field6[v91], r#field1[v86], r#field3[v88], r#field5[v90], r#field2[v87], r#field7[v92], r#field10[v95], r#field4[v89]}
+      r#field8[v93] = UserTable[keyname[v44]].field8;
+        [stmt_out] liveout: {r#field10[v95], keyname[v44], r#field5[v90], r#field4[v89], r#field2[v87], r#field6[v91], r#field3[v88], r#field1[v86], r#field7[v92], r#field8[v93]}
+        [stmt_in] livein: {r#field10[v95], keyname[v44], r#field5[v90], r#field4[v89], r#field2[v87], r#field6[v91], r#field3[v88], r#field1[v86], r#field7[v92], r#field8[v93]}
+      r#field9[v94] = UserTable[keyname[v44]].field9;
+        [stmt_out] liveout: {r#field8[v93], r#field3[v88], keyname[v44], r#field7[v92], r#field2[v87], r#field5[v90], r#field9[v94], r#field6[v91], r#field10[v95], r#field4[v89], r#field1[v86]}
+        [stmt_in] livein: {r#field8[v93], r#field3[v88], keyname[v44], r#field7[v92], r#field2[v87], r#field5[v90], r#field9[v94], r#field6[v91], r#field10[v95], r#field4[v89], r#field1[v86]}
+      r#ycsb_key[v85] = UserTable[keyname[v44]].ycsb_key;
+        [stmt_out] liveout: {r#field8[v93], r#field5[v90], r#field9[v94], r#field4[v89], r#field10[v95], keyname[v44], r#field1[v86], r#field3[v88], r#field6[v91], r#ycsb_key[v85], r#field2[v87], r#field7[v92]}
+        [stmt_in] livein: {r#field8[v93], r#field5[v90], r#field9[v94], r#field4[v89], r#field10[v95], keyname[v44], r#field1[v86], r#field3[v88], r#field6[v91], r#ycsb_key[v85], r#field2[v87], r#field7[v92]}
+      UserTable[keyname[v44]].field1 = r#field1[v86];
+        [stmt_out] liveout: {r#field2[v87], r#field8[v93], keyname[v44], r#field10[v95], r#field5[v90], r#field4[v89], r#field3[v88], r#field6[v91], r#ycsb_key[v85], r#field7[v92], r#field9[v94]}
+        [stmt_in] livein: {r#field2[v87], r#field8[v93], keyname[v44], r#field10[v95], r#field5[v90], r#field4[v89], r#field3[v88], r#field6[v91], r#ycsb_key[v85], r#field7[v92], r#field9[v94]}
+      UserTable[keyname[v44]].field10 = r#field10[v95];
+        [stmt_out] liveout: {r#field8[v93], r#field6[v91], keyname[v44], r#field7[v92], r#field5[v90], r#field3[v88], r#field9[v94], r#ycsb_key[v85], r#field4[v89], r#field2[v87]}
+        [stmt_in] livein: {r#field8[v93], r#field6[v91], keyname[v44], r#field7[v92], r#field5[v90], r#field3[v88], r#field9[v94], r#ycsb_key[v85], r#field4[v89], r#field2[v87]}
+      UserTable[keyname[v44]].field2 = r#field2[v87];
+        [stmt_out] liveout: {r#field8[v93], r#field6[v91], r#field7[v92], r#field5[v90], r#field3[v88], keyname[v44], r#field4[v89], r#field9[v94], r#ycsb_key[v85]}
+        [stmt_in] livein: {r#field8[v93], r#field6[v91], r#field7[v92], r#field5[v90], r#field3[v88], keyname[v44], r#field4[v89], r#field9[v94], r#ycsb_key[v85]}
+      UserTable[keyname[v44]].field3 = r#field3[v88];
+        [stmt_out] liveout: {r#ycsb_key[v85], r#field6[v91], r#field8[v93], r#field5[v90], r#field7[v92], keyname[v44], r#field4[v89], r#field9[v94]}
+        [stmt_in] livein: {r#ycsb_key[v85], r#field6[v91], r#field8[v93], r#field5[v90], r#field7[v92], keyname[v44], r#field4[v89], r#field9[v94]}
+      UserTable[keyname[v44]].field4 = r#field4[v89];
+        [stmt_out] liveout: {r#ycsb_key[v85], r#field8[v93], r#field5[v90], keyname[v44], r#field6[v91], r#field7[v92], r#field9[v94]}
+        [stmt_in] livein: {r#ycsb_key[v85], r#field8[v93], r#field5[v90], keyname[v44], r#field6[v91], r#field7[v92], r#field9[v94]}
+      UserTable[keyname[v44]].field5 = r#field5[v90];
+        [stmt_out] liveout: {keyname[v44], r#field9[v94], r#field7[v92], r#ycsb_key[v85], r#field8[v93], r#field6[v91]}
+        [stmt_in] livein: {keyname[v44], r#field9[v94], r#field7[v92], r#ycsb_key[v85], r#field8[v93], r#field6[v91]}
+      UserTable[keyname[v44]].field6 = r#field6[v91];
+        [stmt_out] liveout: {keyname[v44], r#field9[v94], r#field8[v93], r#field7[v92], r#ycsb_key[v85]}
+        [stmt_in] livein: {keyname[v44], r#field9[v94], r#field8[v93], r#field7[v92], r#ycsb_key[v85]}
+      UserTable[keyname[v44]].field7 = r#field7[v92];
+        [stmt_out] liveout: {keyname[v44], r#ycsb_key[v85], r#field8[v93], r#field9[v94]}
+        [stmt_in] livein: {keyname[v44], r#ycsb_key[v85], r#field8[v93], r#field9[v94]}
+      UserTable[keyname[v44]].field8 = r#field8[v93];
+        [stmt_out] liveout: {r#field9[v94], keyname[v44], r#ycsb_key[v85]}
+        [stmt_in] livein: {r#field9[v94], keyname[v44], r#ycsb_key[v85]}
+      UserTable[keyname[v44]].field9 = r#field9[v94];
+        [stmt_out] liveout: {r#ycsb_key[v85], keyname[v44]}
+        [stmt_in] livein: {r#ycsb_key[v85], keyname[v44]}
+      UserTable[keyname[v44]].ycsb_key = r#ycsb_key[v85];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction ScanRecord[fn20](startKey[v45]: int)
+ {
+  entry_hop: hop5
+
+  hop5 {
+    entry_block: bb5
+    bb5:
+      livein: {}
+      hop_exit hop6;
+      liveout: {}
+  }
+
+  hop6 {
+    entry_block: bb6
+    bb6 (preds: bb5):
+      livein: {}
+      hop_exit hop7;
+      liveout: {}
+  }
+
+  hop7 {
+    entry_block: bb7
+    bb7 (preds: bb6):
+      livein: {}
+      hop_exit hop8;
+      liveout: {}
+  }
+
+  hop8 {
+    entry_block: bb8
+    bb8 (preds: bb7):
+      livein: {}
+      hop_exit hop9;
+      liveout: {}
+  }
+
+  hop9 {
+    entry_block: bb9
+    bb9 (preds: bb8):
+      livein: {}
+      hop_exit hop10;
+      liveout: {}
+  }
+
+  hop10 {
+    entry_block: bb10
+    bb10 (preds: bb9):
+      livein: {}
+      hop_exit hop11;
+      liveout: {}
+  }
+
+  hop11 {
+    entry_block: bb11
+    bb11 (preds: bb10):
+      livein: {}
+      hop_exit hop12;
+      liveout: {}
+  }
+
+  hop12 {
+    entry_block: bb12
+    bb12 (preds: bb11):
+      livein: {}
+      hop_exit hop13;
+      liveout: {}
+  }
+
+  hop13 {
+    entry_block: bb13
+    bb13 (preds: bb12):
+      livein: {}
+      hop_exit hop14;
+      liveout: {}
+  }
+
+  hop14 {
+    entry_block: bb14
+    bb14 (preds: bb13):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction ReadModifyWriteRecord[fn21](keyname[v46]: int, f1[v47]: string, f2[v48]: string, f3[v49]: string, f4[v50]: string, f5[v51]: string, f6[v52]: string, f7[v53]: string, f8[v54]: string, f9[v55]: string, f10[v56]: string)
+ {
+  entry_hop: hop15
+
+  hop15 {
+    entry_block: bb15
+    bb15:
+      livein: {f6[v52], f3[v49], f4[v50], f7[v53], f5[v51], keyname[v46], f8[v54], f2[v48], f10[v56], f9[v55]}
+        [stmt_in] livein: {f8[v54], f3[v49], f4[v50], f6[v52], keyname[v46], f9[v55], f7[v53], f2[v48], f5[v51], f10[v56]}
+      r#field1[v260] = UserTable[keyname[v46]].field1;
+        [stmt_out] liveout: {f4[v50], f8[v54], f3[v49], f6[v52], f9[v55], keyname[v46], f7[v53], f2[v48], r#field1[v260], f5[v51], f10[v56]}
+        [stmt_in] livein: {f4[v50], f8[v54], f3[v49], f6[v52], f9[v55], keyname[v46], f7[v53], f2[v48], r#field1[v260], f5[v51], f10[v56]}
+      r#ycsb_key[v259] = UserTable[keyname[v46]].ycsb_key;
+        [stmt_out] liveout: {f9[v55], f8[v54], f3[v49], f10[v56], keyname[v46], r#ycsb_key[v259], f4[v50], f6[v52], f7[v53], r#field1[v260], f2[v48], f5[v51]}
+        [stmt_in] livein: {f9[v55], f8[v54], f3[v49], f10[v56], keyname[v46], r#ycsb_key[v259], f4[v50], f6[v52], f7[v53], r#field1[v260], f2[v48], f5[v51]}
+      data[v271] = r#field1[v260];
+        [stmt_out] liveout: {f7[v53], f5[v51], f2[v48], keyname[v46], data[v271], f6[v52], f9[v55], f10[v56], f8[v54], f4[v50], r#ycsb_key[v259], f3[v49]}
+        [stmt_in] livein: {f7[v53], f5[v51], f2[v48], keyname[v46], data[v271], f6[v52], f9[v55], f10[v56], f8[v54], f4[v50], r#ycsb_key[v259], f3[v49]}
+      r#field2[v261] = f2[v48];
+        [stmt_out] liveout: {f7[v53], f3[v49], data[v271], r#field2[v261], f9[v55], f10[v56], f6[v52], keyname[v46], f4[v50], f5[v51], f8[v54], r#ycsb_key[v259]}
+        [stmt_in] livein: {f7[v53], f3[v49], data[v271], r#field2[v261], f9[v55], f10[v56], f6[v52], keyname[v46], f4[v50], f5[v51], f8[v54], r#ycsb_key[v259]}
+      r#field3[v262] = f3[v49];
+        [stmt_out] liveout: {f6[v52], f4[v50], r#field2[v261], r#field3[v262], f5[v51], f10[v56], keyname[v46], r#ycsb_key[v259], f8[v54], f9[v55], f7[v53], data[v271]}
+        [stmt_in] livein: {f6[v52], f4[v50], r#field2[v261], r#field3[v262], f5[v51], f10[v56], keyname[v46], r#ycsb_key[v259], f8[v54], f9[v55], f7[v53], data[v271]}
+      r#field4[v263] = f4[v50];
+        [stmt_out] liveout: {r#field2[v261], f7[v53], f8[v54], data[v271], f6[v52], r#field4[v263], r#field3[v262], f5[v51], r#ycsb_key[v259], keyname[v46], f9[v55], f10[v56]}
+        [stmt_in] livein: {r#field2[v261], f7[v53], f8[v54], data[v271], f6[v52], r#field4[v263], r#field3[v262], f5[v51], r#ycsb_key[v259], keyname[v46], f9[v55], f10[v56]}
+      r#field5[v264] = f5[v51];
+        [stmt_out] liveout: {f10[v56], f8[v54], keyname[v46], f7[v53], data[v271], r#field2[v261], f9[v55], f6[v52], r#field4[v263], r#field3[v262], r#field5[v264], r#ycsb_key[v259]}
+        [stmt_in] livein: {f10[v56], f8[v54], keyname[v46], f7[v53], data[v271], r#field2[v261], f9[v55], f6[v52], r#field4[v263], r#field3[v262], r#field5[v264], r#ycsb_key[v259]}
+      r#field6[v265] = f6[v52];
+        [stmt_out] liveout: {r#field2[v261], f8[v54], r#field5[v264], r#field6[v265], f7[v53], keyname[v46], f9[v55], r#field4[v263], data[v271], f10[v56], r#ycsb_key[v259], r#field3[v262]}
+        [stmt_in] livein: {r#field2[v261], f8[v54], r#field5[v264], r#field6[v265], f7[v53], keyname[v46], f9[v55], r#field4[v263], data[v271], f10[v56], r#ycsb_key[v259], r#field3[v262]}
+      r#field7[v266] = f7[v53];
+        [stmt_out] liveout: {r#field5[v264], r#field6[v265], f9[v55], r#field7[v266], f8[v54], data[v271], f10[v56], r#field3[v262], r#ycsb_key[v259], keyname[v46], r#field4[v263], r#field2[v261]}
+        [stmt_in] livein: {r#field5[v264], r#field6[v265], f9[v55], r#field7[v266], f8[v54], data[v271], f10[v56], r#field3[v262], r#ycsb_key[v259], keyname[v46], r#field4[v263], r#field2[v261]}
+      r#field8[v267] = f8[v54];
+        [stmt_out] liveout: {f10[v56], r#field7[v266], data[v271], r#field3[v262], r#ycsb_key[v259], r#field8[v267], r#field6[v265], keyname[v46], r#field2[v261], r#field5[v264], f9[v55], r#field4[v263]}
+        [stmt_in] livein: {f10[v56], r#field7[v266], data[v271], r#field3[v262], r#ycsb_key[v259], r#field8[v267], r#field6[v265], keyname[v46], r#field2[v261], r#field5[v264], f9[v55], r#field4[v263]}
+      r#field9[v268] = f9[v55];
+        [stmt_out] liveout: {r#field8[v267], r#ycsb_key[v259], r#field9[v268], r#field2[v261], keyname[v46], r#field6[v265], r#field5[v264], data[v271], r#field4[v263], f10[v56], r#field7[v266], r#field3[v262]}
+        [stmt_in] livein: {r#field8[v267], r#ycsb_key[v259], r#field9[v268], r#field2[v261], keyname[v46], r#field6[v265], r#field5[v264], data[v271], r#field4[v263], f10[v56], r#field7[v266], r#field3[v262]}
+      r#field10[v269] = f10[v56];
+        [stmt_out] liveout: {keyname[v46], r#ycsb_key[v259], r#field9[v268], r#field5[v264], r#field2[v261], r#field7[v266], r#field3[v262], r#field8[v267], r#field4[v263], r#field6[v265], r#field10[v269], data[v271]}
+        [stmt_in] livein: {keyname[v46], r#ycsb_key[v259], r#field9[v268], r#field5[v264], r#field2[v261], r#field7[v266], r#field3[v262], r#field8[v267], r#field4[v263], r#field6[v265], r#field10[v269], data[v271]}
+      UserTable[keyname[v46]].field1 = data[v271];
+        [stmt_out] liveout: {r#field8[v267], r#ycsb_key[v259], r#field9[v268], r#field4[v263], r#field3[v262], r#field10[v269], r#field7[v266], r#field6[v265], r#field5[v264], keyname[v46], r#field2[v261]}
+        [stmt_in] livein: {r#field8[v267], r#ycsb_key[v259], r#field9[v268], r#field4[v263], r#field3[v262], r#field10[v269], r#field7[v266], r#field6[v265], r#field5[v264], keyname[v46], r#field2[v261]}
+      UserTable[keyname[v46]].field10 = r#field10[v269];
+        [stmt_out] liveout: {r#field4[v263], r#field7[v266], r#field2[v261], r#field3[v262], r#field8[v267], keyname[v46], r#field6[v265], r#ycsb_key[v259], r#field5[v264], r#field9[v268]}
+        [stmt_in] livein: {r#field4[v263], r#field7[v266], r#field2[v261], r#field3[v262], r#field8[v267], keyname[v46], r#field6[v265], r#ycsb_key[v259], r#field5[v264], r#field9[v268]}
+      UserTable[keyname[v46]].field2 = r#field2[v261];
+        [stmt_out] liveout: {r#field3[v262], r#field4[v263], r#field5[v264], r#field8[v267], r#field9[v268], keyname[v46], r#field6[v265], r#field7[v266], r#ycsb_key[v259]}
+        [stmt_in] livein: {r#field3[v262], r#field4[v263], r#field5[v264], r#field8[v267], r#field9[v268], keyname[v46], r#field6[v265], r#field7[v266], r#ycsb_key[v259]}
+      UserTable[keyname[v46]].field3 = r#field3[v262];
+        [stmt_out] liveout: {r#field8[v267], r#ycsb_key[v259], r#field9[v268], r#field7[v266], keyname[v46], r#field6[v265], r#field4[v263], r#field5[v264]}
+        [stmt_in] livein: {r#field8[v267], r#ycsb_key[v259], r#field9[v268], r#field7[v266], keyname[v46], r#field6[v265], r#field4[v263], r#field5[v264]}
+      UserTable[keyname[v46]].field4 = r#field4[v263];
+        [stmt_out] liveout: {r#ycsb_key[v259], r#field7[v266], r#field6[v265], keyname[v46], r#field5[v264], r#field9[v268], r#field8[v267]}
+        [stmt_in] livein: {r#ycsb_key[v259], r#field7[v266], r#field6[v265], keyname[v46], r#field5[v264], r#field9[v268], r#field8[v267]}
+      UserTable[keyname[v46]].field5 = r#field5[v264];
+        [stmt_out] liveout: {r#field8[v267], keyname[v46], r#field9[v268], r#ycsb_key[v259], r#field7[v266], r#field6[v265]}
+        [stmt_in] livein: {r#field8[v267], keyname[v46], r#field9[v268], r#ycsb_key[v259], r#field7[v266], r#field6[v265]}
+      UserTable[keyname[v46]].field6 = r#field6[v265];
+        [stmt_out] liveout: {r#field7[v266], r#ycsb_key[v259], r#field8[v267], keyname[v46], r#field9[v268]}
+        [stmt_in] livein: {r#field7[v266], r#ycsb_key[v259], r#field8[v267], keyname[v46], r#field9[v268]}
+      UserTable[keyname[v46]].field7 = r#field7[v266];
+        [stmt_out] liveout: {r#ycsb_key[v259], r#field8[v267], keyname[v46], r#field9[v268]}
+        [stmt_in] livein: {r#ycsb_key[v259], r#field8[v267], keyname[v46], r#field9[v268]}
+      UserTable[keyname[v46]].field8 = r#field8[v267];
+        [stmt_out] liveout: {r#field9[v268], keyname[v46], r#ycsb_key[v259]}
+        [stmt_in] livein: {r#field9[v268], keyname[v46], r#ycsb_key[v259]}
+      UserTable[keyname[v46]].field9 = r#field9[v268];
+        [stmt_out] liveout: {keyname[v46], r#ycsb_key[v259]}
+        [stmt_in] livein: {keyname[v46], r#ycsb_key[v259]}
+      UserTable[keyname[v46]].ycsb_key = r#ycsb_key[v259];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ycsb_key[fn22](iter[v57]: Iterator<table_UserTable>)
+
+

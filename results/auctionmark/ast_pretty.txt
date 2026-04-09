@@ -1,0 +1,651 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition p_user[f45](x[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p77];
+}
+
+partition p_region[f46](x[p78]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p78];
+}
+
+const ITEM_STATUS_OPEN[c2]: int[t?] = 0[t1];
+
+const ITEM_STATUS_WAITING_FOR_PURCHASE[c3]: int[t?] = 1[t1];
+
+const ITEM_STATUS_CLOSED[c4]: int[t?] = 2[t1];
+
+table USERACCT[tab0] {
+  primary u_id[field0]: int[t1];
+  node p_user[f45](u_id[t1][field0]);
+  u_rating[field1]: int[t1];
+  u_balance[field2]: float[t4];
+  u_comments[field3]: int[t1];
+  u_r_id[field4]: int[t1];
+  u_sattr0[field5]: string[t3];
+  u_sattr1[field6]: string[t3];
+  u_sattr2[field7]: string[t3];
+  u_sattr3[field8]: string[t3];
+  u_sattr4[field9]: string[t3];
+}
+
+table REGION[tab1] {
+  primary r_id[field10]: int[t1];
+  node p_region[f46](r_id[t1][field10]);
+  r_name[field11]: string[t3];
+}
+
+table ITEM[tab2] {
+  primary i_id[field12]: int[t1];
+  primary i_u_id[field13]: int[t1];
+  node p_user[f45](i_u_id[t1][field13]);
+  i_name[field14]: string[t3];
+  i_initial_price[field15]: float[t4];
+  i_current_price[field16]: float[t4];
+  i_num_bids[field17]: int[t1];
+  i_end_date[field18]: int[t1];
+  i_start_date[field19]: int[t1];
+  i_status[field20]: int[t1];
+  i_num_comments[field21]: int[t1];
+  i_c_id[field22]: int[t1];
+}
+
+table ITEM_BID[tab3] {
+  primary ib_id[field23]: int[t1];
+  primary ib_i_id[field24]: int[t1];
+  primary ib_u_id[field25]: int[t1];
+  node p_user[f45](ib_u_id[t1][field25]);
+  ib_buyer_id[field26]: int[t1];
+  ib_bid[field27]: float[t4];
+  ib_max_bid[field28]: float[t4];
+}
+
+table ITEM_MAX_BID[tab4] {
+  primary imb_i_id[field29]: int[t1];
+  primary imb_u_id[field30]: int[t1];
+  node p_user[f45](imb_u_id[t1][field30]);
+  imb_ib_id[field31]: int[t1];
+  imb_ib_i_id[field32]: int[t1];
+  imb_ib_u_id[field33]: int[t1];
+}
+
+table ITEM_COMMENT[tab5] {
+  primary ic_id[field34]: int[t1];
+  primary ic_i_id[field35]: int[t1];
+  primary ic_u_id[field36]: int[t1];
+  node p_user[f45](ic_u_id[t1][field36]);
+  ic_buyer_id[field37]: int[t1];
+  ic_question[field38]: string[t3];
+  ic_response[field39]: string[t3];
+}
+
+table USERACCT_ITEM[tab6] {
+  primary ui_u_id[field40]: int[t1];
+  primary ui_i_id[field41]: int[t1];
+  primary ui_i_u_id[field42]: int[t1];
+  node p_user[f45](ui_u_id[t1][field40]);
+}
+
+table USERACCT_FEEDBACK[tab7] {
+  primary uf_u_id[field43]: int[t1];
+  primary uf_i_id[field44]: int[t1];
+  primary uf_i_u_id[field45]: int[t1];
+  primary uf_from_id[field46]: int[t1];
+  node p_user[f45](uf_u_id[t1][field43]);
+  uf_rating[field47]: int[t1];
+}
+
+table USERACCT_WATCH[tab8] {
+  primary uw_u_id[field48]: int[t1];
+  primary uw_i_id[field49]: int[t1];
+  primary uw_i_u_id[field50]: int[t1];
+  node p_user[f45](uw_u_id[t1][field48]);
+}
+
+transaction CloseAuctions[f47](item_id[p79]: int[t1], seller_id[p80]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let item[v0]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p79], i_u_id: seller_id[t1][p80]][t6<tab<ITEM>>];
+    item[t6<tab<ITEM>>][v0].i_status[field20][t1] = ITEM_STATUS_WAITING_FOR_PURCHASE[t1][c3][t0];
+    ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p79], i_u_id: seller_id[t1][p80]][t6<tab<ITEM>>] = item[t6<tab<ITEM>>][v0][t0];
+    let max_bid[v1]: Row<ITEM_MAX_BID>[t6<tab<ITEM_MAX_BID>>] = ITEM_MAX_BID[t7<tab<ITEM_MAX_BID>>][itab4][tab4][imb_i_id: item_id[t1][p79], imb_u_id: seller_id[t1][p80]][t6<tab<ITEM_MAX_BID>>];
+    let winning_bid[v2]: Row<ITEM_BID>[t6<tab<ITEM_BID>>] = ITEM_BID[t7<tab<ITEM_BID>>][itab3][tab3][ib_id: max_bid[t6<tab<ITEM_MAX_BID>>][v1].imb_ib_id[field31][t1], ib_i_id: item_id[t1][p79], ib_u_id: seller_id[t1][p80]][t6<tab<ITEM_BID>>];
+    let buyer_id[v3]: int[t1] = winning_bid[t6<tab<ITEM_BID>>][v2].ib_buyer_id[field26][t1];
+  }
+  hop
+  {
+    USERACCT_ITEM[t7<tab<USERACCT_ITEM>>][itab6][tab6][ui_u_id: buyer_id[t1][v3], ui_i_id: item_id[t1][p79], ui_i_u_id: seller_id[t1][p80]][t6<tab<USERACCT_ITEM>>] = {}[t6<tab<USERACCT_ITEM>>][t0];
+  }
+}
+
+transaction CloseAuctionsNoBids[f48](item_id[p81]: int[t1], seller_id[p82]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let item[v4]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p81], i_u_id: seller_id[t1][p82]][t6<tab<ITEM>>];
+    item[t6<tab<ITEM>>][v4].i_status[field20][t1] = ITEM_STATUS_CLOSED[t1][c4][t0];
+    ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p81], i_u_id: seller_id[t1][p82]][t6<tab<ITEM>>] = item[t6<tab<ITEM>>][v4][t0];
+  }
+}
+
+transaction GetItem[f49](item_id[p83]: int[t1], seller_id[p84]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let item[v5]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p83], i_u_id: seller_id[t1][p84]][t6<tab<ITEM>>];
+    let seller[v6]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p84]][t6<tab<USERACCT>>];
+    let region[v7]: Row<REGION>[t6<tab<REGION>>] = REGION[t7<tab<REGION>>][itab1][tab1][r_id: seller[t6<tab<USERACCT>>][v6].u_r_id[field4][t1]][t6<tab<REGION>>];
+  }
+}
+
+transaction GetUserInfo[f50](user_id[p85]: int[t1], other_user_id[p86]: int[t1], item_id[p87]: int[t1], comment_id[p88]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let u[v8]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: user_id[t1][p85]][t6<tab<USERACCT>>];
+    let feedback[v9]: Row<USERACCT_FEEDBACK>[t6<tab<USERACCT_FEEDBACK>>] = USERACCT_FEEDBACK[t7<tab<USERACCT_FEEDBACK>>][itab7][tab7][uf_u_id: user_id[t1][p85], uf_i_id: item_id[t1][p87], uf_i_u_id: other_user_id[t1][p86], uf_from_id: other_user_id[t1][p86]][t6<tab<USERACCT_FEEDBACK>>];
+    let comment[v10]: Row<ITEM_COMMENT>[t6<tab<ITEM_COMMENT>>] = ITEM_COMMENT[t7<tab<ITEM_COMMENT>>][itab5][tab5][ic_id: comment_id[t1][p88], ic_i_id: item_id[t1][p87], ic_u_id: user_id[t1][p85]][t6<tab<ITEM_COMMENT>>];
+    let item[v11]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p87], i_u_id: user_id[t1][p85]][t6<tab<ITEM>>];
+  }
+  hop
+  {
+    let purchase[v12]: Row<USERACCT_ITEM>[t6<tab<USERACCT_ITEM>>] = USERACCT_ITEM[t7<tab<USERACCT_ITEM>>][itab6][tab6][ui_u_id: user_id[t1][p85], ui_i_id: item_id[t1][p87], ui_i_u_id: other_user_id[t1][p86]][t6<tab<USERACCT_ITEM>>];
+    let watch[v13]: Row<USERACCT_WATCH>[t6<tab<USERACCT_WATCH>>] = USERACCT_WATCH[t7<tab<USERACCT_WATCH>>][itab8][tab8][uw_u_id: user_id[t1][p85], uw_i_id: item_id[t1][p87], uw_i_u_id: other_user_id[t1][p86]][t6<tab<USERACCT_WATCH>>];
+  }
+}
+
+transaction NewBid[f51](item_id[p89]: int[t1], seller_id[p90]: int[t1], buyer_id[p91]: int[t1], new_bid[p92]: float[t4], new_bid_id[p93]: int[t1]) : (t1, t1, t1, t4, t1) -> t0
+{
+  hop
+  {
+    let item[v14]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p89], i_u_id: seller_id[t1][p90]][t6<tab<ITEM>>];
+    let cur_price[v15]: float[t4] = item[t6<tab<ITEM>>][v14].i_current_price[field16][t4];
+    item[t6<tab<ITEM>>][v14].i_num_bids[field17][t1] = item[t6<tab<ITEM>>][v14].i_num_bids[field17][t1] + [f0]1[t1][t1][t0];
+    if (new_bid[t4][p92] > [f23]cur_price[t4][v15][t2])[t2]
+    {
+      item[t6<tab<ITEM>>][v14].i_current_price[field16][t4] = new_bid[t4][p92][t0];
+    }
+    ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p89], i_u_id: seller_id[t1][p90]][t6<tab<ITEM>>] = item[t6<tab<ITEM>>][v14][t0];
+    ITEM_BID[t7<tab<ITEM_BID>>][itab3][tab3][ib_id: new_bid_id[t1][p93], ib_i_id: item_id[t1][p89], ib_u_id: seller_id[t1][p90]][t6<tab<ITEM_BID>>] = {ib_buyer_id: buyer_id[t1][p91], ib_bid: new_bid[t4][p92], ib_max_bid: new_bid[t4][p92]}[t6<tab<ITEM_BID>>][t0];
+    if (new_bid[t4][p92] > [f23]cur_price[t4][v15][t2])[t2]
+    {
+      ITEM_MAX_BID[t7<tab<ITEM_MAX_BID>>][itab4][tab4][imb_i_id: item_id[t1][p89], imb_u_id: seller_id[t1][p90]][t6<tab<ITEM_MAX_BID>>] = {imb_ib_id: new_bid_id[t1][p93], imb_ib_i_id: item_id[t1][p89], imb_ib_u_id: seller_id[t1][p90]}[t6<tab<ITEM_MAX_BID>>][t0];
+    }
+  }
+}
+
+transaction NewComment[f52](item_id[p94]: int[t1], seller_id[p95]: int[t1], buyer_id[p96]: int[t1], comment_id[p97]: int[t1], question[p98]: string[t3]) : (t1, t1, t1, t1, t3) -> t0
+{
+  hop
+  {
+    let item[v16]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p94], i_u_id: seller_id[t1][p95]][t6<tab<ITEM>>];
+    item[t6<tab<ITEM>>][v16].i_num_comments[field21][t1] = item[t6<tab<ITEM>>][v16].i_num_comments[field21][t1] + [f0]1[t1][t1][t0];
+    ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p94], i_u_id: seller_id[t1][p95]][t6<tab<ITEM>>] = item[t6<tab<ITEM>>][v16][t0];
+    ITEM_COMMENT[t7<tab<ITEM_COMMENT>>][itab5][tab5][ic_id: comment_id[t1][p97], ic_i_id: item_id[t1][p94], ic_u_id: seller_id[t1][p95]][t6<tab<ITEM_COMMENT>>] = {ic_buyer_id: buyer_id[t1][p96], ic_question: question[t3][p98], ic_response: ""[t3]}[t6<tab<ITEM_COMMENT>>][t0];
+    let seller[v17]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p95]][t6<tab<USERACCT>>];
+    seller[t6<tab<USERACCT>>][v17].u_comments[field3][t1] = seller[t6<tab<USERACCT>>][v17].u_comments[field3][t1] + [f0]1[t1][t1][t0];
+    USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p95]][t6<tab<USERACCT>>] = seller[t6<tab<USERACCT>>][v17][t0];
+  }
+}
+
+transaction NewCommentResponse[f53](comment_id[p99]: int[t1], item_id[p100]: int[t1], seller_id[p101]: int[t1], response[p102]: string[t3]) : (t1, t1, t1, t3) -> t0
+{
+  hop
+  {
+    let c[v18]: Row<ITEM_COMMENT>[t6<tab<ITEM_COMMENT>>] = ITEM_COMMENT[t7<tab<ITEM_COMMENT>>][itab5][tab5][ic_id: comment_id[t1][p99], ic_i_id: item_id[t1][p100], ic_u_id: seller_id[t1][p101]][t6<tab<ITEM_COMMENT>>];
+    c[t6<tab<ITEM_COMMENT>>][v18].ic_response[field39][t3] = response[t3][p102][t0];
+    ITEM_COMMENT[t7<tab<ITEM_COMMENT>>][itab5][tab5][ic_id: comment_id[t1][p99], ic_i_id: item_id[t1][p100], ic_u_id: seller_id[t1][p101]][t6<tab<ITEM_COMMENT>>] = c[t6<tab<ITEM_COMMENT>>][v18][t0];
+    let seller[v19]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p101]][t6<tab<USERACCT>>];
+    seller[t6<tab<USERACCT>>][v19].u_comments[field3][t1] = seller[t6<tab<USERACCT>>][v19].u_comments[field3][t1] - [f1]1[t1][t1][t0];
+    USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p101]][t6<tab<USERACCT>>] = seller[t6<tab<USERACCT>>][v19][t0];
+  }
+}
+
+transaction NewFeedback[f54](from_id[p103]: int[t1], to_id[p104]: int[t1], item_id[p105]: int[t1], seller_id[p106]: int[t1], rating[p107]: int[t1]) : (t1, t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    USERACCT_FEEDBACK[t7<tab<USERACCT_FEEDBACK>>][itab7][tab7][uf_u_id: to_id[t1][p104], uf_i_id: item_id[t1][p105], uf_i_u_id: seller_id[t1][p106], uf_from_id: from_id[t1][p103]][t6<tab<USERACCT_FEEDBACK>>] = {uf_rating: rating[t1][p107]}[t6<tab<USERACCT_FEEDBACK>>][t0];
+    let u[v20]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: to_id[t1][p104]][t6<tab<USERACCT>>];
+    u[t6<tab<USERACCT>>][v20].u_rating[field1][t1] = u[t6<tab<USERACCT>>][v20].u_rating[field1][t1] + [f0]rating[t1][p107][t1][t0];
+    USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: to_id[t1][p104]][t6<tab<USERACCT>>] = u[t6<tab<USERACCT>>][v20][t0];
+  }
+}
+
+transaction NewItem[f55](item_id[p108]: int[t1], seller_id[p109]: int[t1], name[p110]: string[t3], initial_price[p111]: float[t4], end_date[p112]: int[t1], start_date[p113]: int[t1], c_id[p114]: int[t1]) : (t1, t1, t3, t4, t1, t1, t1) -> t0
+{
+  hop
+  {
+    ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p108], i_u_id: seller_id[t1][p109]][t6<tab<ITEM>>] = {i_name: name[t3][p110], i_initial_price: initial_price[t4][p111], i_current_price: initial_price[t4][p111], i_num_bids: 0[t1], i_end_date: end_date[t1][p112], i_start_date: start_date[t1][p113], i_status: ITEM_STATUS_OPEN[t1][c2], i_num_comments: 0[t1], i_c_id: c_id[t1][p114]}[t6<tab<ITEM>>][t0];
+    let seller[v21]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p109]][t6<tab<USERACCT>>];
+    seller[t6<tab<USERACCT>>][v21].u_balance[field2][t4] = seller[t6<tab<USERACCT>>][v21].u_balance[field2][t4] - [f6]initial_price[t4][p111][t4][t0];
+    USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p109]][t6<tab<USERACCT>>] = seller[t6<tab<USERACCT>>][v21][t0];
+  }
+}
+
+transaction NewPurchase[f56](item_id[p115]: int[t1], seller_id[p116]: int[t1], buyer_id[p117]: int[t1], buy_now_price[p118]: float[t4]) : (t1, t1, t1, t4) -> t0
+{
+  hop
+  {
+    let item[v22]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p115], i_u_id: seller_id[t1][p116]][t6<tab<ITEM>>];
+    item[t6<tab<ITEM>>][v22].i_status[field20][t1] = ITEM_STATUS_CLOSED[t1][c4][t0];
+    ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p115], i_u_id: seller_id[t1][p116]][t6<tab<ITEM>>] = item[t6<tab<ITEM>>][v22][t0];
+    let seller[v23]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p116]][t6<tab<USERACCT>>];
+    seller[t6<tab<USERACCT>>][v23].u_balance[field2][t4] = seller[t6<tab<USERACCT>>][v23].u_balance[field2][t4] + [f5]buy_now_price[t4][p118][t4][t0];
+    USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p116]][t6<tab<USERACCT>>] = seller[t6<tab<USERACCT>>][v23][t0];
+  }
+  hop
+  {
+    let buyer[v24]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: buyer_id[t1][p117]][t6<tab<USERACCT>>];
+    buyer[t6<tab<USERACCT>>][v24].u_balance[field2][t4] = buyer[t6<tab<USERACCT>>][v24].u_balance[field2][t4] - [f6]buy_now_price[t4][p118][t4][t0];
+    USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: buyer_id[t1][p117]][t6<tab<USERACCT>>] = buyer[t6<tab<USERACCT>>][v24][t0];
+  }
+}
+
+transaction UpdateItem[f57](item_id[p119]: int[t1], seller_id[p120]: int[t1], new_name[p121]: string[t3]) : (t1, t1, t3) -> t0
+{
+  hop
+  {
+    let item[v25]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p119], i_u_id: seller_id[t1][p120]][t6<tab<ITEM>>];
+    item[t6<tab<ITEM>>][v25].i_name[field14][t3] = new_name[t3][p121][t0];
+    ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p119], i_u_id: seller_id[t1][p120]][t6<tab<ITEM>>] = item[t6<tab<ITEM>>][v25][t0];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_u_id[f58](iter[p122]: Iterator<USERACCT>[t8<tab<USERACCT>>]) -> int[t1] : (t8<tab<USERACCT>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_r_id[f59](iter[p123]: Iterator<REGION>[t8<tab<REGION>>]) -> int[t1] : (t8<tab<REGION>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_id[f60](iter[p124]: Iterator<ITEM>[t8<tab<ITEM>>]) -> int[t1] : (t8<tab<ITEM>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_u_id[f61](iter[p125]: Iterator<ITEM>[t8<tab<ITEM>>]) -> int[t1] : (t8<tab<ITEM>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ib_id[f62](iter[p126]: Iterator<ITEM_BID>[t8<tab<ITEM_BID>>]) -> int[t1] : (t8<tab<ITEM_BID>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ib_i_id[f63](iter[p127]: Iterator<ITEM_BID>[t8<tab<ITEM_BID>>]) -> int[t1] : (t8<tab<ITEM_BID>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ib_u_id[f64](iter[p128]: Iterator<ITEM_BID>[t8<tab<ITEM_BID>>]) -> int[t1] : (t8<tab<ITEM_BID>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_imb_i_id[f65](iter[p129]: Iterator<ITEM_MAX_BID>[t8<tab<ITEM_MAX_BID>>]) -> int[t1] : (t8<tab<ITEM_MAX_BID>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_imb_u_id[f66](iter[p130]: Iterator<ITEM_MAX_BID>[t8<tab<ITEM_MAX_BID>>]) -> int[t1] : (t8<tab<ITEM_MAX_BID>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ic_id[f67](iter[p131]: Iterator<ITEM_COMMENT>[t8<tab<ITEM_COMMENT>>]) -> int[t1] : (t8<tab<ITEM_COMMENT>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ic_i_id[f68](iter[p132]: Iterator<ITEM_COMMENT>[t8<tab<ITEM_COMMENT>>]) -> int[t1] : (t8<tab<ITEM_COMMENT>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ic_u_id[f69](iter[p133]: Iterator<ITEM_COMMENT>[t8<tab<ITEM_COMMENT>>]) -> int[t1] : (t8<tab<ITEM_COMMENT>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ui_u_id[f70](iter[p134]: Iterator<USERACCT_ITEM>[t8<tab<USERACCT_ITEM>>]) -> int[t1] : (t8<tab<USERACCT_ITEM>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ui_i_id[f71](iter[p135]: Iterator<USERACCT_ITEM>[t8<tab<USERACCT_ITEM>>]) -> int[t1] : (t8<tab<USERACCT_ITEM>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ui_i_u_id[f72](iter[p136]: Iterator<USERACCT_ITEM>[t8<tab<USERACCT_ITEM>>]) -> int[t1] : (t8<tab<USERACCT_ITEM>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uf_u_id[f73](iter[p137]: Iterator<USERACCT_FEEDBACK>[t8<tab<USERACCT_FEEDBACK>>]) -> int[t1] : (t8<tab<USERACCT_FEEDBACK>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uf_i_id[f74](iter[p138]: Iterator<USERACCT_FEEDBACK>[t8<tab<USERACCT_FEEDBACK>>]) -> int[t1] : (t8<tab<USERACCT_FEEDBACK>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uf_i_u_id[f75](iter[p139]: Iterator<USERACCT_FEEDBACK>[t8<tab<USERACCT_FEEDBACK>>]) -> int[t1] : (t8<tab<USERACCT_FEEDBACK>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uf_from_id[f76](iter[p140]: Iterator<USERACCT_FEEDBACK>[t8<tab<USERACCT_FEEDBACK>>]) -> int[t1] : (t8<tab<USERACCT_FEEDBACK>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uw_u_id[f77](iter[p141]: Iterator<USERACCT_WATCH>[t8<tab<USERACCT_WATCH>>]) -> int[t1] : (t8<tab<USERACCT_WATCH>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uw_i_id[f78](iter[p142]: Iterator<USERACCT_WATCH>[t8<tab<USERACCT_WATCH>>]) -> int[t1] : (t8<tab<USERACCT_WATCH>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uw_i_u_id[f79](iter[p143]: Iterator<USERACCT_WATCH>[t8<tab<USERACCT_WATCH>>]) -> int[t1] : (t8<tab<USERACCT_WATCH>>) -> t1;
+

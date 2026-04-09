@@ -1,0 +1,7 @@
+digraph CombinedSCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  cv0 [label="GetSessionRange#0\nHop 1\n"];
+  cv1 [label="GetSessionRange#1\nHop 1\n"];
+}

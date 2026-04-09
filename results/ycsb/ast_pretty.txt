@@ -1,0 +1,365 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition f[f45](x[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p77];
+}
+
+table UserTable[tab0] {
+  primary ycsb_key[field0]: int[t1];
+  node f[f45](ycsb_key[t1][field0]);
+  field1[field1]: string[t3];
+  field2[field2]: string[t3];
+  field3[field3]: string[t3];
+  field4[field4]: string[t3];
+  field5[field5]: string[t3];
+  field6[field6]: string[t3];
+  field7[field7]: string[t3];
+  field8[field8]: string[t3];
+  field9[field9]: string[t3];
+  field10[field10]: string[t3];
+}
+
+transaction ReadRecord[f46](keyname[p78]: int[t1]) : (t1) -> t0
+{
+  hop
+  {
+    let r[v0]: Row<UserTable>[t6<tab<UserTable>>] = UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p78]][t6<tab<UserTable>>];
+  }
+}
+
+transaction UpdateRecord[f47](keyname[p79]: int[t1], f1[p80]: string[t3], f2[p81]: string[t3], f3[p82]: string[t3], f4[p83]: string[t3], f5[p84]: string[t3], f6[p85]: string[t3], f7[p86]: string[t3], f8[p87]: string[t3], f9[p88]: string[t3], f10[p89]: string[t3]) : (t1, t3, t3, t3, t3, t3, t3, t3, t3, t3, t3) -> t0
+{
+  hop
+  {
+    let r[v1]: Row<UserTable>[t6<tab<UserTable>>] = UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p79]][t6<tab<UserTable>>];
+    r[t6<tab<UserTable>>][v1].field1[field1][t3] = f1[t3][p80][t0];
+    r[t6<tab<UserTable>>][v1].field2[field2][t3] = f2[t3][p81][t0];
+    r[t6<tab<UserTable>>][v1].field3[field3][t3] = f3[t3][p82][t0];
+    r[t6<tab<UserTable>>][v1].field4[field4][t3] = f4[t3][p83][t0];
+    r[t6<tab<UserTable>>][v1].field5[field5][t3] = f5[t3][p84][t0];
+    r[t6<tab<UserTable>>][v1].field6[field6][t3] = f6[t3][p85][t0];
+    r[t6<tab<UserTable>>][v1].field7[field7][t3] = f7[t3][p86][t0];
+    r[t6<tab<UserTable>>][v1].field8[field8][t3] = f8[t3][p87][t0];
+    r[t6<tab<UserTable>>][v1].field9[field9][t3] = f9[t3][p88][t0];
+    r[t6<tab<UserTable>>][v1].field10[field10][t3] = f10[t3][p89][t0];
+    UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p79]][t6<tab<UserTable>>] = r[t6<tab<UserTable>>][v1][t0];
+  }
+}
+
+transaction InsertRecord[f48](keyname[p90]: int[t1], f1[p91]: string[t3], f2[p92]: string[t3], f3[p93]: string[t3], f4[p94]: string[t3], f5[p95]: string[t3], f6[p96]: string[t3], f7[p97]: string[t3], f8[p98]: string[t3], f9[p99]: string[t3], f10[p100]: string[t3]) : (t1, t3, t3, t3, t3, t3, t3, t3, t3, t3, t3) -> t0
+{
+  hop
+  {
+    UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p90]][t6<tab<UserTable>>] = {field1: f1[t3][p91], field2: f2[t3][p92], field3: f3[t3][p93], field4: f4[t3][p94], field5: f5[t3][p95], field6: f6[t3][p96], field7: f7[t3][p97], field8: f8[t3][p98], field9: f9[t3][p99], field10: f10[t3][p100]}[t6<tab<UserTable>>][t0];
+  }
+}
+
+transaction DeleteRecord[f49](keyname[p101]: int[t1]) : (t1) -> t0
+{
+  hop
+  {
+    let r[v2]: Row<UserTable>[t6<tab<UserTable>>] = UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p101]][t6<tab<UserTable>>];
+    UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p101]][t6<tab<UserTable>>] = r[t6<tab<UserTable>>][v2][t0];
+  }
+}
+
+const YCSB_SCAN_SIZE[c2]: int[t?] = 10[t1];
+
+transaction ScanRecord[f50](startKey[p102]: int[t1]) : (t1) -> t0
+{
+  hops for i[v4] in 0[t1]..YCSB_SCAN_SIZE[infer1][c2]
+  {
+    let r[v3]: Row<UserTable>[t6<tab<UserTable>>] = UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: startKey[t1][p102] + [f0]i[t1][v4][t1]][t6<tab<UserTable>>];
+  }
+}
+
+transaction ReadModifyWriteRecord[f51](keyname[p103]: int[t1], f1[p104]: string[t3], f2[p105]: string[t3], f3[p106]: string[t3], f4[p107]: string[t3], f5[p108]: string[t3], f6[p109]: string[t3], f7[p110]: string[t3], f8[p111]: string[t3], f9[p112]: string[t3], f10[p113]: string[t3]) : (t1, t3, t3, t3, t3, t3, t3, t3, t3, t3, t3) -> t0
+{
+  hop
+  {
+    let r[v5]: Row<UserTable>[t6<tab<UserTable>>] = UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p103]][t6<tab<UserTable>>];
+    let data[v6]: string[t3] = r[t6<tab<UserTable>>][v5].field1[field1][t3];
+    r[t6<tab<UserTable>>][v5].field1[field1][t3] = f1[t3][p104][t0];
+    r[t6<tab<UserTable>>][v5].field2[field2][t3] = f2[t3][p105][t0];
+    r[t6<tab<UserTable>>][v5].field3[field3][t3] = f3[t3][p106][t0];
+    r[t6<tab<UserTable>>][v5].field4[field4][t3] = f4[t3][p107][t0];
+    r[t6<tab<UserTable>>][v5].field5[field5][t3] = f5[t3][p108][t0];
+    r[t6<tab<UserTable>>][v5].field6[field6][t3] = f6[t3][p109][t0];
+    r[t6<tab<UserTable>>][v5].field7[field7][t3] = f7[t3][p110][t0];
+    r[t6<tab<UserTable>>][v5].field8[field8][t3] = f8[t3][p111][t0];
+    r[t6<tab<UserTable>>][v5].field9[field9][t3] = f9[t3][p112][t0];
+    r[t6<tab<UserTable>>][v5].field10[field10][t3] = f10[t3][p113][t0];
+    UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p103]][t6<tab<UserTable>>] = r[t6<tab<UserTable>>][v5][t0];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ycsb_key[f52](iter[p114]: Iterator<UserTable>[t8<tab<UserTable>>]) -> int[t1] : (t8<tab<UserTable>>) -> t1;
+

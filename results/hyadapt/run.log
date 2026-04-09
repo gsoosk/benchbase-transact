@@ -1,0 +1,22 @@
+Starting compilation pipeline
+[Stage 1/6] Frontend
+Done. 29ms
+[Stage 2/6] CFG Generation
+Done. 21399ms
+[Stage 3/6] Optimization
+Done. 30191ms
+[Stage 4/6] SC-Graph
+Done. 19ms
+[Stage 5/6] Verification
+Done. 1459ms
+[Stage 6/6] Codegen
+Done. 6ms
+Completed
+Summary
+  Functions: 37  Hops: 201  Instances: 2
+  C-edges (original): 0  C-edges (simplified): 0
+  Boogie loopUnroll: 12  Boogie timeLimit: 60s
+  Verifications: 0  Pass: 0  Errors: 0  Timeouts: 0  Boogie failures: 0
+  Cache hits: 0  Cache misses: 0  Cache stores: 0  Cache evictions: 0  Cache invalidations: 0  Root units: 20
+  Split total units: 20  Split root timeouts: 0  Split performed: 0  Split skipped depth: 0  Split skipped no cutpoint: 0  Split budget exhausted: 0
+  Split depth histogram: (empty)

@@ -1,0 +1,19 @@
+digraph CombinedSCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  cv0 [label="UpdateSubscriberData#1\nHop 7\n"];
+  cv1 [label="GetNewDestination#0\nHop 3\n"];
+  cv2 [label="UpdateLocation#0\nHop 6\n"];
+  cv3 [label="GetNewDestination#1\nHop 3\n"];
+  cv4 [label="DeleteCallForwarding#0\nHop 1\n"];
+  cv5 [label="GetAccessData#0\nHop 2\n"];
+  cv6 [label="InsertCallForwarding#0\nHop 5\n"];
+  cv7 [label="GetSubscriberData#0\nHop 4\n"];
+  cv8 [label="GetAccessData#1\nHop 2\n"];
+  cv9 [label="DeleteCallForwarding#1\nHop 1\n"];
+  cv10 [label="UpdateSubscriberData#0\nHop 7\n"];
+  cv11 [label="InsertCallForwarding#1\nHop 5\n"];
+  cv12 [label="GetSubscriberData#1\nHop 4\n"];
+  cv13 [label="UpdateLocation#1\nHop 6\n"];
+}

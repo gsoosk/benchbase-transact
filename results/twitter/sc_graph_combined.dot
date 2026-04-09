@@ -1,0 +1,24 @@
+digraph CombinedSCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  cv0 [label="GetUserTweets#0\nHop 6\n"];
+  cv1 [label="GetFollowers#1\nHop 1\n"];
+  cv2 [label="GetTweetsFromFollowing#1\nHop 4\n"];
+  cv3 [label="GetUserTweets#1\nHop 6\n"];
+  cv4 [label="GetTweet#1\nHop 3\n"];
+  cv5 [label="GetFollowers#0\nHop 1\n"];
+  cv6 [label="GetFollowers#0\nHop 2\n"];
+  cv7 [label="GetTweetsFromFollowing#0\nHop 4\n"];
+  cv8 [label="GetTweetsFromFollowing#0\nHop 5\n"];
+  cv9 [label="GetFollowers#1\nHop 2\n"];
+  cv10 [label="InsertTweet#0\nHop 7\n"];
+  cv11 [label="InsertTweet#1\nHop 7\n"];
+  cv12 [label="GetTweet#0\nHop 3\n"];
+  cv13 [label="GetTweetsFromFollowing#1\nHop 5\n"];
+  cv1 -> cv9 [color=black, label="S"];
+  cv2 -> cv13 [color=black, label="S"];
+  cv5 -> cv6 [color=black, label="S"];
+  cv7 -> cv8 [color=black, label="S"];
+  cv10 -> cv11 [dir=none, style=dashed, color=darkorange, label="C"];
+}

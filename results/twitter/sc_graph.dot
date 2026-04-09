@@ -1,0 +1,24 @@
+digraph SCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  f16_i0_h1 [label="GetFollowers#0\nHop 1\n"];
+  f16_i0_h2 [label="GetFollowers#0\nHop 2\n"];
+  f16_i1_h1 [label="GetFollowers#1\nHop 1\n"];
+  f16_i1_h2 [label="GetFollowers#1\nHop 2\n"];
+  f17_i0_h3 [label="GetTweet#0\nHop 3\n"];
+  f17_i1_h3 [label="GetTweet#1\nHop 3\n"];
+  f18_i0_h4 [label="GetTweetsFromFollowing#0\nHop 4\n"];
+  f18_i0_h5 [label="GetTweetsFromFollowing#0\nHop 5\n"];
+  f18_i1_h4 [label="GetTweetsFromFollowing#1\nHop 4\n"];
+  f18_i1_h5 [label="GetTweetsFromFollowing#1\nHop 5\n"];
+  f19_i0_h6 [label="GetUserTweets#0\nHop 6\n"];
+  f19_i1_h6 [label="GetUserTweets#1\nHop 6\n"];
+  f20_i0_h7 [label="InsertTweet#0\nHop 7\n"];
+  f20_i1_h7 [label="InsertTweet#1\nHop 7\n"];
+  f16_i0_h1 -> f16_i0_h2 [color=black, label="S"];
+  f16_i1_h1 -> f16_i1_h2 [color=black, label="S"];
+  f18_i0_h4 -> f18_i0_h5 [color=black, label="S"];
+  f18_i1_h4 -> f18_i1_h5 [color=black, label="S"];
+  f20_i0_h7 -> f20_i1_h7 [dir=none, style=dashed, color=darkorange, label="C"];
+}

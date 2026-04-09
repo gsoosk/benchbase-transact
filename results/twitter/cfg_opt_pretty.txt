@@ -1,0 +1,291 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table USER[tab0] {
+  primary uid[f0]: int;
+  name[f1]: string;
+  node_partition: p[fn15](uid[f0]);
+}
+table FOLLOWERS[tab1] {
+  primary f1[f2]: int;
+  primary f2[f3]: int;
+  node_partition: p[fn15](f1[f2]);
+}
+table FOLLOWS[tab2] {
+  primary f1[f4]: int;
+  primary f2[f5]: int;
+  node_partition: p[fn15](f1[f4]);
+}
+table TWEETS[tab3] {
+  primary uid[f6]: int;
+  primary id[f7]: int;
+  text[f8]: string;
+  createdate[f9]: int;
+  node_partition: p[fn15](uid[f6]);
+}
+table ADDED_TWEETS[tab4] {
+  primary uid[f10]: int;
+  primary id[f11]: int;
+  text[f12]: string;
+  createdate[f13]: int;
+  node_partition: p[fn15](uid[f10]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition p[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+transaction GetFollowers[fn16](uid[v21]: int, follower_uid[v22]: int)
+ {
+  entry_hop: hop1
+
+  hop1 {
+    entry_block: bb1
+    bb1:
+      livein: {}
+      hop_exit hop2;
+      liveout: {}
+  }
+
+  hop2 {
+    entry_block: bb2
+    bb2 (preds: bb1):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetTweet[fn17](author_uid[v23]: int, tweet_id[v24]: int)
+ {
+  entry_hop: hop3
+
+  hop3 {
+    entry_block: bb3
+    bb3:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetTweetsFromFollowing[fn18](uid[v25]: int, followed_uid[v26]: int, tweet_id[v27]: int)
+ {
+  entry_hop: hop4
+
+  hop4 {
+    entry_block: bb4
+    bb4:
+      livein: {}
+      hop_exit hop5;
+      liveout: {}
+  }
+
+  hop5 {
+    entry_block: bb5
+    bb5 (preds: bb4):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetUserTweets[fn19](uid[v28]: int, tweet_id[v29]: int)
+ {
+  entry_hop: hop6
+
+  hop6 {
+    entry_block: bb6
+    bb6:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction InsertTweet[fn20](uid[v30]: int, tweet_id[v31]: int, text[v32]: string, createdate[v33]: int)
+ {
+  entry_hop: hop7
+
+  hop7 {
+    entry_block: bb7
+    bb7:
+      livein: {uid[v30], createdate[v33], text[v32], tweet_id[v31]}
+        [stmt_in] livein: {tweet_id[v31], uid[v30], createdate[v33], text[v32]}
+      ADDED_TWEETS[uid[v30], tweet_id[v31]].text = text[v32];
+        [stmt_out] liveout: {tweet_id[v31], createdate[v33], uid[v30]}
+        [stmt_in] livein: {tweet_id[v31], createdate[v33], uid[v30]}
+      ADDED_TWEETS[uid[v30], tweet_id[v31]].createdate = createdate[v33];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uid[fn21](iter[v34]: Iterator<table_USER>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_f1[fn22](iter[v35]: Iterator<table_FOLLOWERS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_f2[fn23](iter[v36]: Iterator<table_FOLLOWERS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_f1[fn24](iter[v37]: Iterator<table_FOLLOWS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_f2[fn25](iter[v38]: Iterator<table_FOLLOWS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uid[fn26](iter[v39]: Iterator<table_TWEETS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_id[fn27](iter[v40]: Iterator<table_TWEETS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uid[fn28](iter[v41]: Iterator<table_ADDED_TWEETS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_id[fn29](iter[v42]: Iterator<table_ADDED_TWEETS>)
+
+

@@ -1,0 +1,729 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition f_item[f45](x[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p77];
+}
+
+partition f_cust[f46](x[p78]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p78];
+}
+
+partition f_store[f47](x[p79]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p79];
+}
+
+partition g[f48](x[p80]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return 0[t1];
+}
+
+table date_dim[tab0] {
+  primary d_date_sk[field0]: int[t1];
+  node g[f48](d_date_sk[t1][field0]);
+  d_date[field1]: int[t1];
+  d_year[field2]: int[t1];
+  d_month_seq[field3]: int[t1];
+  d_qoy[field4]: int[t1];
+  d_moy[field5]: int[t1];
+  d_day_name[field6]: string[t3];
+}
+
+table time_dim[tab1] {
+  primary t_time_sk[field7]: int[t1];
+  node g[f48](t_time_sk[t1][field7]);
+  t_hour[field8]: int[t1];
+  t_minute[field9]: int[t1];
+  t_am_pm[field10]: string[t3];
+}
+
+table promotion[tab2] {
+  primary p_promo_sk[field11]: int[t1];
+  node g[f48](p_promo_sk[t1][field11]);
+  p_promo_name[field12]: string[t3];
+  p_channel_email[field13]: string[t3];
+  p_channel_tv[field14]: string[t3];
+  p_channel_radio[field15]: string[t3];
+}
+
+table item[tab3] {
+  primary i_item_sk[field16]: int[t1];
+  node f_item[f45](i_item_sk[t1][field16]);
+  i_item_id[field17]: string[t3];
+  i_item_desc[field18]: string[t3];
+  i_current_price[field19]: float[t4];
+  i_class[field20]: string[t3];
+  i_category[field21]: string[t3];
+  i_manufact[field22]: string[t3];
+}
+
+table customer[tab4] {
+  primary c_customer_sk[field23]: int[t1];
+  node f_cust[f46](c_customer_sk[t1][field23]);
+  c_customer_id[field24]: string[t3];
+  c_first_name[field25]: string[t3];
+  c_last_name[field26]: string[t3];
+  c_birth_year[field27]: int[t1];
+  c_email_address[field28]: string[t3];
+}
+
+table customer_demographics[tab5] {
+  primary cd_demo_sk[field29]: int[t1];
+  node f_cust[f46](cd_demo_sk[t1][field29]);
+  cd_gender[field30]: string[t3];
+  cd_marital_status[field31]: string[t3];
+  cd_education_status[field32]: string[t3];
+  cd_purchase_estimate[field33]: int[t1];
+  cd_credit_rating[field34]: string[t3];
+}
+
+table customer_address[tab6] {
+  primary ca_address_sk[field35]: int[t1];
+  node f_cust[f46](ca_address_sk[t1][field35]);
+  ca_street_number[field36]: string[t3];
+  ca_street_name[field37]: string[t3];
+  ca_city[field38]: string[t3];
+  ca_state[field39]: string[t3];
+  ca_zip[field40]: string[t3];
+  ca_country[field41]: string[t3];
+  ca_gmt_offset[field42]: float[t4];
+}
+
+table store[tab7] {
+  primary s_store_sk[field43]: int[t1];
+  node f_store[f47](s_store_sk[t1][field43]);
+  s_store_id[field44]: string[t3];
+  s_store_name[field45]: string[t3];
+  s_number_employees[field46]: int[t1];
+  s_state[field47]: string[t3];
+  s_country[field48]: string[t3];
+}
+
+table warehouse[tab8] {
+  primary w_warehouse_sk[field49]: int[t1];
+  node f_store[f47](w_warehouse_sk[t1][field49]);
+  w_warehouse_name[field50]: string[t3];
+  w_state[field51]: string[t3];
+  w_country[field52]: string[t3];
+}
+
+table store_sales[tab9] {
+  primary ss_item_sk[field53]: int[t1];
+  primary ss_ticket_number[field54]: int[t1];
+  node f_item[f45](ss_item_sk[t1][field53]);
+  ss_sold_date_sk[field55]: int[t1];
+  ss_customer_sk[field56]: int[t1];
+  ss_store_sk[field57]: int[t1];
+  ss_promo_sk[field58]: int[t1];
+  ss_quantity[field59]: int[t1];
+  ss_list_price[field60]: float[t4];
+  ss_sales_price[field61]: float[t4];
+  ss_ext_sales_price[field62]: float[t4];
+  ss_net_paid[field63]: float[t4];
+  ss_net_profit[field64]: float[t4];
+}
+
+table store_returns[tab10] {
+  primary sr_item_sk[field65]: int[t1];
+  primary sr_ticket_number[field66]: int[t1];
+  node f_item[f45](sr_item_sk[t1][field65]);
+  sr_returned_date_sk[field67]: int[t1];
+  sr_customer_sk[field68]: int[t1];
+  sr_store_sk[field69]: int[t1];
+  sr_return_quantity[field70]: int[t1];
+  sr_return_amount[field71]: float[t4];
+  sr_net_loss[field72]: float[t4];
+}
+
+table catalog_sales[tab11] {
+  primary cs_item_sk[field73]: int[t1];
+  primary cs_order_number[field74]: int[t1];
+  node f_item[f45](cs_item_sk[t1][field73]);
+  cs_sold_date_sk[field75]: int[t1];
+  cs_bill_customer_sk[field76]: int[t1];
+  cs_ship_customer_sk[field77]: int[t1];
+  cs_quantity[field78]: int[t1];
+  cs_list_price[field79]: float[t4];
+  cs_sales_price[field80]: float[t4];
+  cs_ext_sales_price[field81]: float[t4];
+  cs_net_profit[field82]: float[t4];
+}
+
+table catalog_returns[tab12] {
+  primary cr_item_sk[field83]: int[t1];
+  primary cr_order_number[field84]: int[t1];
+  node f_item[f45](cr_item_sk[t1][field83]);
+  cr_returned_date_sk[field85]: int[t1];
+  cr_returning_customer_sk[field86]: int[t1];
+  cr_return_amount[field87]: float[t4];
+  cr_net_loss[field88]: float[t4];
+}
+
+table web_sales[tab13] {
+  primary ws_item_sk[field89]: int[t1];
+  primary ws_order_number[field90]: int[t1];
+  node f_item[f45](ws_item_sk[t1][field89]);
+  ws_sold_date_sk[field91]: int[t1];
+  ws_bill_customer_sk[field92]: int[t1];
+  ws_quantity[field93]: int[t1];
+  ws_list_price[field94]: float[t4];
+  ws_sales_price[field95]: float[t4];
+  ws_ext_sales_price[field96]: float[t4];
+  ws_net_profit[field97]: float[t4];
+}
+
+table web_returns[tab14] {
+  primary wr_item_sk[field98]: int[t1];
+  primary wr_order_number[field99]: int[t1];
+  node f_item[f45](wr_item_sk[t1][field98]);
+  wr_returned_date_sk[field100]: int[t1];
+  wr_returning_customer_sk[field101]: int[t1];
+  wr_return_amount[field102]: float[t4];
+  wr_net_loss[field103]: float[t4];
+}
+
+transaction Q1[f49](item_sk[p81]: int[t1], ticket_num[p82]: int[t1], store_sk[p83]: int[t1], cust_sk[p84]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let sr[v0]: Row<store_returns>[t6<tab<store_returns>>] = store_returns[t7<tab<store_returns>>][itab10][tab10][sr_item_sk: item_sk[t1][p81], sr_ticket_number: ticket_num[t1][p82]][t6<tab<store_returns>>];
+    let net_loss[v1]: float[t4] = sr[t6<tab<store_returns>>][v0].sr_net_loss[field72][t4];
+  }
+  hop
+  {
+    let s[v2]: Row<store>[t6<tab<store>>] = store[t7<tab<store>>][itab7][tab7][s_store_sk: store_sk[t1][p83]][t6<tab<store>>];
+    let sname[v3]: string[t3] = s[t6<tab<store>>][v2].s_store_name[field45][t3];
+  }
+  hop
+  {
+    let c[v4]: Row<customer>[t6<tab<customer>>] = customer[t7<tab<customer>>][itab4][tab4][c_customer_sk: cust_sk[t1][p84]][t6<tab<customer>>];
+    let cname[v5]: string[t3] = c[t6<tab<customer>>][v4].c_first_name[field25][t3];
+  }
+}
+
+transaction Q7[f50](item_sk[p85]: int[t1], ticket_num[p86]: int[t1], cd_demo_sk[p87]: int[t1], promo_sk[p88]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let ss[v6]: Row<store_sales>[t6<tab<store_sales>>] = store_sales[t7<tab<store_sales>>][itab9][tab9][ss_item_sk: item_sk[t1][p85], ss_ticket_number: ticket_num[t1][p86]][t6<tab<store_sales>>];
+    let i[v7]: Row<item>[t6<tab<item>>] = item[t7<tab<item>>][itab3][tab3][i_item_sk: item_sk[t1][p85]][t6<tab<item>>];
+    let qty[v8]: int[t1] = ss[t6<tab<store_sales>>][v6].ss_quantity[field59][t1];
+    let price[v9]: float[t4] = ss[t6<tab<store_sales>>][v6].ss_list_price[field60][t4];
+  }
+  hop
+  {
+    let cd[v10]: Row<customer_demographics>[t6<tab<customer_demographics>>] = customer_demographics[t7<tab<customer_demographics>>][itab5][tab5][cd_demo_sk: cd_demo_sk[t1][p87]][t6<tab<customer_demographics>>];
+    let gender[v11]: string[t3] = cd[t6<tab<customer_demographics>>][v10].cd_gender[field30][t3];
+  }
+  hop
+  {
+    let promo[v12]: Row<promotion>[t6<tab<promotion>>] = promotion[t7<tab<promotion>>][itab2][tab2][p_promo_sk: promo_sk[t1][p88]][t6<tab<promotion>>];
+    let pname[v13]: string[t3] = promo[t6<tab<promotion>>][v12].p_promo_name[field12][t3];
+  }
+}
+
+transaction Q12[f51](item_sk[p89]: int[t1], order_num[p90]: int[t1], date_sk[p91]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let ws[v14]: Row<web_sales>[t6<tab<web_sales>>] = web_sales[t7<tab<web_sales>>][itab13][tab13][ws_item_sk: item_sk[t1][p89], ws_order_number: order_num[t1][p90]][t6<tab<web_sales>>];
+    let i[v15]: Row<item>[t6<tab<item>>] = item[t7<tab<item>>][itab3][tab3][i_item_sk: item_sk[t1][p89]][t6<tab<item>>];
+    let revenue[v16]: float[t4] = ws[t6<tab<web_sales>>][v14].ws_ext_sales_price[field96][t4];
+  }
+  hop
+  {
+    let d[v17]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: date_sk[t1][p91]][t6<tab<date_dim>>];
+    let yr[v18]: int[t1] = d[t6<tab<date_dim>>][v17].d_year[field2][t1];
+  }
+}
+
+transaction Q19[f52](item_sk[p92]: int[t1], order_num[p93]: int[t1], cust_sk[p94]: int[t1], addr_sk[p95]: int[t1], date_sk[p96]: int[t1]) : (t1, t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let cs[v19]: Row<catalog_sales>[t6<tab<catalog_sales>>] = catalog_sales[t7<tab<catalog_sales>>][itab11][tab11][cs_item_sk: item_sk[t1][p92], cs_order_number: order_num[t1][p93]][t6<tab<catalog_sales>>];
+    let revenue[v20]: float[t4] = cs[t6<tab<catalog_sales>>][v19].cs_ext_sales_price[field81][t4];
+  }
+  hop
+  {
+    let i[v21]: Row<item>[t6<tab<item>>] = item[t7<tab<item>>][itab3][tab3][i_item_sk: item_sk[t1][p92]][t6<tab<item>>];
+    let brand[v22]: string[t3] = i[t6<tab<item>>][v21].i_manufact[field22][t3];
+  }
+  hop
+  {
+    let c[v23]: Row<customer>[t6<tab<customer>>] = customer[t7<tab<customer>>][itab4][tab4][c_customer_sk: cust_sk[t1][p94]][t6<tab<customer>>];
+  }
+  hop
+  {
+    let ca[v24]: Row<customer_address>[t6<tab<customer_address>>] = customer_address[t7<tab<customer_address>>][itab6][tab6][ca_address_sk: addr_sk[t1][p95]][t6<tab<customer_address>>];
+    let state[v25]: string[t3] = ca[t6<tab<customer_address>>][v24].ca_state[field39][t3];
+  }
+  hop
+  {
+    let d[v26]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: date_sk[t1][p96]][t6<tab<date_dim>>];
+  }
+}
+
+transaction Q34[f53](item_sk[p97]: int[t1], ticket_num[p98]: int[t1], cust_sk[p99]: int[t1], cd_sk[p100]: int[t1], store_sk[p101]: int[t1], date_sk[p102]: int[t1]) : (t1, t1, t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let ss[v27]: Row<store_sales>[t6<tab<store_sales>>] = store_sales[t7<tab<store_sales>>][itab9][tab9][ss_item_sk: item_sk[t1][p97], ss_ticket_number: ticket_num[t1][p98]][t6<tab<store_sales>>];
+    let qty[v28]: int[t1] = ss[t6<tab<store_sales>>][v27].ss_quantity[field59][t1];
+  }
+  hop
+  {
+    let c[v29]: Row<customer>[t6<tab<customer>>] = customer[t7<tab<customer>>][itab4][tab4][c_customer_sk: cust_sk[t1][p99]][t6<tab<customer>>];
+  }
+  hop
+  {
+    let cd[v30]: Row<customer_demographics>[t6<tab<customer_demographics>>] = customer_demographics[t7<tab<customer_demographics>>][itab5][tab5][cd_demo_sk: cd_sk[t1][p100]][t6<tab<customer_demographics>>];
+    let marital[v31]: string[t3] = cd[t6<tab<customer_demographics>>][v30].cd_marital_status[field31][t3];
+  }
+  hop
+  {
+    let s[v32]: Row<store>[t6<tab<store>>] = store[t7<tab<store>>][itab7][tab7][s_store_sk: store_sk[t1][p101]][t6<tab<store>>];
+  }
+  hop
+  {
+    let d[v33]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: date_sk[t1][p102]][t6<tab<date_dim>>];
+    let yr[v34]: int[t1] = d[t6<tab<date_dim>>][v33].d_year[field2][t1];
+  }
+}
+
+transaction Q50[f54](item_sk[p103]: int[t1], ticket_num[p104]: int[t1], ret_date_sk[p105]: int[t1], store_sk[p106]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let sr[v35]: Row<store_returns>[t6<tab<store_returns>>] = store_returns[t7<tab<store_returns>>][itab10][tab10][sr_item_sk: item_sk[t1][p103], sr_ticket_number: ticket_num[t1][p104]][t6<tab<store_returns>>];
+    let ss[v36]: Row<store_sales>[t6<tab<store_sales>>] = store_sales[t7<tab<store_sales>>][itab9][tab9][ss_item_sk: item_sk[t1][p103], ss_ticket_number: ticket_num[t1][p104]][t6<tab<store_sales>>];
+    let ret_amt[v37]: float[t4] = sr[t6<tab<store_returns>>][v35].sr_return_amount[field71][t4];
+    let sale_amt[v38]: float[t4] = ss[t6<tab<store_sales>>][v36].ss_net_paid[field63][t4];
+  }
+  hop
+  {
+    let s[v39]: Row<store>[t6<tab<store>>] = store[t7<tab<store>>][itab7][tab7][s_store_sk: store_sk[t1][p106]][t6<tab<store>>];
+    let sname[v40]: string[t3] = s[t6<tab<store>>][v39].s_store_name[field45][t3];
+  }
+  hop
+  {
+    let d[v41]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: ret_date_sk[t1][p105]][t6<tab<date_dim>>];
+    let yr[v42]: int[t1] = d[t6<tab<date_dim>>][v41].d_year[field2][t1];
+  }
+}
+
+transaction Q96[f55](item_sk[p107]: int[t1], order_num[p108]: int[t1], warehouse_sk[p109]: int[t1], time_sk[p110]: int[t1], date_sk[p111]: int[t1]) : (t1, t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let ws[v43]: Row<web_sales>[t6<tab<web_sales>>] = web_sales[t7<tab<web_sales>>][itab13][tab13][ws_item_sk: item_sk[t1][p107], ws_order_number: order_num[t1][p108]][t6<tab<web_sales>>];
+    let qty[v44]: int[t1] = ws[t6<tab<web_sales>>][v43].ws_quantity[field93][t1];
+  }
+  hop
+  {
+    let w[v45]: Row<warehouse>[t6<tab<warehouse>>] = warehouse[t7<tab<warehouse>>][itab8][tab8][w_warehouse_sk: warehouse_sk[t1][p109]][t6<tab<warehouse>>];
+    let wname[v46]: string[t3] = w[t6<tab<warehouse>>][v45].w_warehouse_name[field50][t3];
+  }
+  hop
+  {
+    let t[v47]: Row<time_dim>[t6<tab<time_dim>>] = time_dim[t7<tab<time_dim>>][itab1][tab1][t_time_sk: time_sk[t1][p110]][t6<tab<time_dim>>];
+    let hr[v48]: int[t1] = t[t6<tab<time_dim>>][v47].t_hour[field8][t1];
+  }
+  hop
+  {
+    let d[v49]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: date_sk[t1][p111]][t6<tab<date_dim>>];
+    let yr[v50]: int[t1] = d[t6<tab<date_dim>>][v49].d_year[field2][t1];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_d_date_sk[f56](iter[p112]: Iterator<date_dim>[t8<tab<date_dim>>]) -> int[t1] : (t8<tab<date_dim>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_t_time_sk[f57](iter[p113]: Iterator<time_dim>[t8<tab<time_dim>>]) -> int[t1] : (t8<tab<time_dim>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_p_promo_sk[f58](iter[p114]: Iterator<promotion>[t8<tab<promotion>>]) -> int[t1] : (t8<tab<promotion>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_item_sk[f59](iter[p115]: Iterator<item>[t8<tab<item>>]) -> int[t1] : (t8<tab<item>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_c_customer_sk[f60](iter[p116]: Iterator<customer>[t8<tab<customer>>]) -> int[t1] : (t8<tab<customer>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cd_demo_sk[f61](iter[p117]: Iterator<customer_demographics>[t8<tab<customer_demographics>>]) -> int[t1] : (t8<tab<customer_demographics>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ca_address_sk[f62](iter[p118]: Iterator<customer_address>[t8<tab<customer_address>>]) -> int[t1] : (t8<tab<customer_address>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_store_sk[f63](iter[p119]: Iterator<store>[t8<tab<store>>]) -> int[t1] : (t8<tab<store>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_w_warehouse_sk[f64](iter[p120]: Iterator<warehouse>[t8<tab<warehouse>>]) -> int[t1] : (t8<tab<warehouse>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ss_item_sk[f65](iter[p121]: Iterator<store_sales>[t8<tab<store_sales>>]) -> int[t1] : (t8<tab<store_sales>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ss_ticket_number[f66](iter[p122]: Iterator<store_sales>[t8<tab<store_sales>>]) -> int[t1] : (t8<tab<store_sales>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_sr_item_sk[f67](iter[p123]: Iterator<store_returns>[t8<tab<store_returns>>]) -> int[t1] : (t8<tab<store_returns>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_sr_ticket_number[f68](iter[p124]: Iterator<store_returns>[t8<tab<store_returns>>]) -> int[t1] : (t8<tab<store_returns>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cs_item_sk[f69](iter[p125]: Iterator<catalog_sales>[t8<tab<catalog_sales>>]) -> int[t1] : (t8<tab<catalog_sales>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cs_order_number[f70](iter[p126]: Iterator<catalog_sales>[t8<tab<catalog_sales>>]) -> int[t1] : (t8<tab<catalog_sales>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cr_item_sk[f71](iter[p127]: Iterator<catalog_returns>[t8<tab<catalog_returns>>]) -> int[t1] : (t8<tab<catalog_returns>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cr_order_number[f72](iter[p128]: Iterator<catalog_returns>[t8<tab<catalog_returns>>]) -> int[t1] : (t8<tab<catalog_returns>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ws_item_sk[f73](iter[p129]: Iterator<web_sales>[t8<tab<web_sales>>]) -> int[t1] : (t8<tab<web_sales>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ws_order_number[f74](iter[p130]: Iterator<web_sales>[t8<tab<web_sales>>]) -> int[t1] : (t8<tab<web_sales>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wr_item_sk[f75](iter[p131]: Iterator<web_returns>[t8<tab<web_returns>>]) -> int[t1] : (t8<tab<web_returns>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wr_order_number[f76](iter[p132]: Iterator<web_returns>[t8<tab<web_returns>>]) -> int[t1] : (t8<tab<web_returns>>) -> t1;
+

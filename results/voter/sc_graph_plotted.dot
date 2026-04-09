@@ -1,0 +1,30 @@
+digraph SCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  // Legend for C-edge coloring
+  subgraph cluster_legend {
+    label="Verification Time (ms)";
+    style=dashed;
+    legend_0 [label="308.7 (Light Blue)", color="#87CEEB", style=filled, shape=box];
+    legend_1 [label="308.7 (Yellow)", color="#FFFF00", style=filled, shape=box];
+    legend_2 [label="308.7 (Orange)", color="#FFA500", style=filled, shape=box];
+    legend_3 [label="308.7 (Red)", color="#FF0000", style=filled, shape=box];
+    legend_4 [label="308.7 (Deep Red)", color="#8B0000", style=filled, shape=box];
+    legend_0 -> legend_1 -> legend_2 -> legend_3 -> legend_4 [style=invis];
+    legend_eliminated [label="Eliminated", style="dotted,bold", shape=box];
+    legend_remaining [label="Remaining", style=dashed, shape=box];
+    legend_eliminated -> legend_remaining [style=invis];
+  }
+  f18_i0_h3 [label="Vote#0\nHop 3\n"];
+  f18_i0_h4 [label="Vote#0\nHop 4\n"];
+  f18_i0_h5 [label="Vote#0\nHop 5\n", style=filled, fillcolor="#FFA500"];
+  f18_i1_h3 [label="Vote#1\nHop 3\n"];
+  f18_i1_h4 [label="Vote#1\nHop 4\n"];
+  f18_i1_h5 [label="Vote#1\nHop 5\n", style=filled, fillcolor="#FFA500"];
+  f18_i0_h3 -> f18_i0_h4 [color=black, label="S"];
+  f18_i0_h4 -> f18_i0_h5 [color=black, label="S"];
+  f18_i1_h3 -> f18_i1_h4 [color=black, label="S"];
+  f18_i1_h4 -> f18_i1_h5 [color=black, label="S"];
+  f18_i0_h5 -> f18_i1_h5 [dir=none, style="dotted,bold", color="#FFA500", label="C (308.7ms)",penwidth=2.0];
+}

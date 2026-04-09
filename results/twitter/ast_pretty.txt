@@ -1,0 +1,410 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition p[f45](x[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p77];
+}
+
+table USER[tab0] {
+  primary uid[field0]: int[t1];
+  node p[f45](uid[t1][field0]);
+  name[field1]: string[t3];
+}
+
+table FOLLOWERS[tab1] {
+  primary f1[field2]: int[t1];
+  primary f2[field3]: int[t1];
+  node p[f45](f1[t1][field2]);
+}
+
+table FOLLOWS[tab2] {
+  primary f1[field4]: int[t1];
+  primary f2[field5]: int[t1];
+  node p[f45](f1[t1][field4]);
+}
+
+table TWEETS[tab3] {
+  primary uid[field6]: int[t1];
+  primary id[field7]: int[t1];
+  node p[f45](uid[t1][field6]);
+  text[field8]: string[t3];
+  createdate[field9]: int[t1];
+}
+
+table ADDED_TWEETS[tab4] {
+  primary uid[field10]: int[t1];
+  primary id[field11]: int[t1];
+  node p[f45](uid[t1][field10]);
+  text[field12]: string[t3];
+  createdate[field13]: int[t1];
+}
+
+transaction GetFollowers[f46](uid[p78]: int[t1], follower_uid[p79]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let f[v0]: Row<FOLLOWERS>[t6<tab<FOLLOWERS>>] = FOLLOWERS[t7<tab<FOLLOWERS>>][itab1][tab1][f1: uid[t1][p78], f2: follower_uid[t1][p79]][t6<tab<FOLLOWERS>>];
+  }
+  hop
+  {
+    let u[v1]: Row<USER>[t6<tab<USER>>] = USER[t7<tab<USER>>][itab0][tab0][uid: follower_uid[t1][p79]][t6<tab<USER>>];
+    let uname[v2]: string[t3] = u[t6<tab<USER>>][v1].name[field1][t3];
+  }
+}
+
+transaction GetTweet[f47](author_uid[p80]: int[t1], tweet_id[p81]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let t[v3]: Row<TWEETS>[t6<tab<TWEETS>>] = TWEETS[t7<tab<TWEETS>>][itab3][tab3][uid: author_uid[t1][p80], id: tweet_id[t1][p81]][t6<tab<TWEETS>>];
+    let txt[v4]: string[t3] = t[t6<tab<TWEETS>>][v3].text[field8][t3];
+  }
+}
+
+transaction GetTweetsFromFollowing[f48](uid[p82]: int[t1], followed_uid[p83]: int[t1], tweet_id[p84]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let f[v5]: Row<FOLLOWS>[t6<tab<FOLLOWS>>] = FOLLOWS[t7<tab<FOLLOWS>>][itab2][tab2][f1: uid[t1][p82], f2: followed_uid[t1][p83]][t6<tab<FOLLOWS>>];
+  }
+  hop
+  {
+    let t[v6]: Row<TWEETS>[t6<tab<TWEETS>>] = TWEETS[t7<tab<TWEETS>>][itab3][tab3][uid: followed_uid[t1][p83], id: tweet_id[t1][p84]][t6<tab<TWEETS>>];
+    let txt[v7]: string[t3] = t[t6<tab<TWEETS>>][v6].text[field8][t3];
+  }
+}
+
+transaction GetUserTweets[f49](uid[p85]: int[t1], tweet_id[p86]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let t[v8]: Row<TWEETS>[t6<tab<TWEETS>>] = TWEETS[t7<tab<TWEETS>>][itab3][tab3][uid: uid[t1][p85], id: tweet_id[t1][p86]][t6<tab<TWEETS>>];
+    let txt[v9]: string[t3] = t[t6<tab<TWEETS>>][v8].text[field8][t3];
+  }
+}
+
+transaction InsertTweet[f50](uid[p87]: int[t1], tweet_id[p88]: int[t1], text[p89]: string[t3], createdate[p90]: int[t1]) : (t1, t1, t3, t1) -> t0
+{
+  hop
+  {
+    ADDED_TWEETS[t7<tab<ADDED_TWEETS>>][itab4][tab4][uid: uid[t1][p87], id: tweet_id[t1][p88]][t6<tab<ADDED_TWEETS>>] = {text: text[t3][p89], createdate: createdate[t1][p90]}[t6<tab<ADDED_TWEETS>>][t0];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uid[f51](iter[p91]: Iterator<USER>[t8<tab<USER>>]) -> int[t1] : (t8<tab<USER>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_f1[f52](iter[p92]: Iterator<FOLLOWERS>[t8<tab<FOLLOWERS>>]) -> int[t1] : (t8<tab<FOLLOWERS>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_f2[f53](iter[p93]: Iterator<FOLLOWERS>[t8<tab<FOLLOWERS>>]) -> int[t1] : (t8<tab<FOLLOWERS>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_f1[f54](iter[p94]: Iterator<FOLLOWS>[t8<tab<FOLLOWS>>]) -> int[t1] : (t8<tab<FOLLOWS>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_f2[f55](iter[p95]: Iterator<FOLLOWS>[t8<tab<FOLLOWS>>]) -> int[t1] : (t8<tab<FOLLOWS>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uid[f56](iter[p96]: Iterator<TWEETS>[t8<tab<TWEETS>>]) -> int[t1] : (t8<tab<TWEETS>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_id[f57](iter[p97]: Iterator<TWEETS>[t8<tab<TWEETS>>]) -> int[t1] : (t8<tab<TWEETS>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uid[f58](iter[p98]: Iterator<ADDED_TWEETS>[t8<tab<ADDED_TWEETS>>]) -> int[t1] : (t8<tab<ADDED_TWEETS>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_id[f59](iter[p99]: Iterator<ADDED_TWEETS>[t8<tab<ADDED_TWEETS>>]) -> int[t1] : (t8<tab<ADDED_TWEETS>>) -> t1;
+

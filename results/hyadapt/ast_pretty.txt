@@ -1,0 +1,952 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition p_htable[f45](key[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return key[t1][p77];
+}
+
+const SCAN_SIZE[c2]: int[t?] = 10[t1];
+
+table htable[tab0] {
+  primary FIELD1[field0]: int[t1];
+  node p_htable[f45](FIELD1[t1][field0]);
+  FIELD2[field1]: int[t1];
+  FIELD3[field2]: int[t1];
+  FIELD4[field3]: int[t1];
+  FIELD5[field4]: int[t1];
+  FIELD6[field5]: int[t1];
+  FIELD7[field6]: int[t1];
+  FIELD8[field7]: int[t1];
+  FIELD9[field8]: int[t1];
+  FIELD10[field9]: int[t1];
+  FIELD11[field10]: int[t1];
+  FIELD12[field11]: int[t1];
+  FIELD13[field12]: int[t1];
+  FIELD14[field13]: int[t1];
+  FIELD15[field14]: int[t1];
+  FIELD16[field15]: int[t1];
+  FIELD17[field16]: int[t1];
+  FIELD18[field17]: int[t1];
+  FIELD19[field18]: int[t1];
+  FIELD20[field19]: int[t1];
+  FIELD21[field20]: int[t1];
+  FIELD22[field21]: int[t1];
+  FIELD23[field22]: int[t1];
+  FIELD24[field23]: int[t1];
+  FIELD25[field24]: int[t1];
+  FIELD26[field25]: int[t1];
+  FIELD27[field26]: int[t1];
+  FIELD28[field27]: int[t1];
+  FIELD29[field28]: int[t1];
+  FIELD30[field29]: int[t1];
+  FIELD31[field30]: int[t1];
+  FIELD32[field31]: int[t1];
+  FIELD33[field32]: int[t1];
+  FIELD34[field33]: int[t1];
+  FIELD35[field34]: int[t1];
+  FIELD36[field35]: int[t1];
+  FIELD37[field36]: int[t1];
+  FIELD38[field37]: int[t1];
+  FIELD39[field38]: int[t1];
+  FIELD40[field39]: int[t1];
+  FIELD41[field40]: int[t1];
+  FIELD42[field41]: int[t1];
+  FIELD43[field42]: int[t1];
+  FIELD44[field43]: int[t1];
+  FIELD45[field44]: int[t1];
+  FIELD46[field45]: int[t1];
+  FIELD47[field46]: int[t1];
+  FIELD48[field47]: int[t1];
+  FIELD49[field48]: int[t1];
+  FIELD50[field49]: int[t1];
+  FIELD51[field50]: int[t1];
+  FIELD52[field51]: int[t1];
+  FIELD53[field52]: int[t1];
+  FIELD54[field53]: int[t1];
+  FIELD55[field54]: int[t1];
+  FIELD56[field55]: int[t1];
+  FIELD57[field56]: int[t1];
+  FIELD58[field57]: int[t1];
+  FIELD59[field58]: int[t1];
+  FIELD60[field59]: int[t1];
+  FIELD61[field60]: int[t1];
+  FIELD62[field61]: int[t1];
+  FIELD63[field62]: int[t1];
+  FIELD64[field63]: int[t1];
+  FIELD65[field64]: int[t1];
+  FIELD66[field65]: int[t1];
+  FIELD67[field66]: int[t1];
+  FIELD68[field67]: int[t1];
+  FIELD69[field68]: int[t1];
+  FIELD70[field69]: int[t1];
+  FIELD71[field70]: int[t1];
+  FIELD72[field71]: int[t1];
+  FIELD73[field72]: int[t1];
+  FIELD74[field73]: int[t1];
+  FIELD75[field74]: int[t1];
+  FIELD76[field75]: int[t1];
+  FIELD77[field76]: int[t1];
+  FIELD78[field77]: int[t1];
+  FIELD79[field78]: int[t1];
+  FIELD80[field79]: int[t1];
+  FIELD81[field80]: int[t1];
+  FIELD82[field81]: int[t1];
+  FIELD83[field82]: int[t1];
+  FIELD84[field83]: int[t1];
+  FIELD85[field84]: int[t1];
+  FIELD86[field85]: int[t1];
+  FIELD87[field86]: int[t1];
+  FIELD88[field87]: int[t1];
+  FIELD89[field88]: int[t1];
+  FIELD90[field89]: int[t1];
+  FIELD91[field90]: int[t1];
+  FIELD92[field91]: int[t1];
+  FIELD93[field92]: int[t1];
+  FIELD94[field93]: int[t1];
+  FIELD95[field94]: int[t1];
+  FIELD96[field95]: int[t1];
+  FIELD97[field96]: int[t1];
+  FIELD98[field97]: int[t1];
+  FIELD99[field98]: int[t1];
+  FIELD100[field99]: int[t1];
+  FIELD101[field100]: int[t1];
+  FIELD102[field101]: int[t1];
+  FIELD103[field102]: int[t1];
+  FIELD104[field103]: int[t1];
+  FIELD105[field104]: int[t1];
+  FIELD106[field105]: int[t1];
+  FIELD107[field106]: int[t1];
+  FIELD108[field107]: int[t1];
+  FIELD109[field108]: int[t1];
+  FIELD110[field109]: int[t1];
+  FIELD111[field110]: int[t1];
+  FIELD112[field111]: int[t1];
+  FIELD113[field112]: int[t1];
+  FIELD114[field113]: int[t1];
+  FIELD115[field114]: int[t1];
+  FIELD116[field115]: int[t1];
+  FIELD117[field116]: int[t1];
+  FIELD118[field117]: int[t1];
+  FIELD119[field118]: int[t1];
+  FIELD120[field119]: int[t1];
+  FIELD121[field120]: int[t1];
+  FIELD122[field121]: int[t1];
+  FIELD123[field122]: int[t1];
+  FIELD124[field123]: int[t1];
+  FIELD125[field124]: int[t1];
+  FIELD126[field125]: int[t1];
+  FIELD127[field126]: int[t1];
+  FIELD128[field127]: int[t1];
+  FIELD129[field128]: int[t1];
+  FIELD130[field129]: int[t1];
+  FIELD131[field130]: int[t1];
+  FIELD132[field131]: int[t1];
+  FIELD133[field132]: int[t1];
+  FIELD134[field133]: int[t1];
+  FIELD135[field134]: int[t1];
+  FIELD136[field135]: int[t1];
+  FIELD137[field136]: int[t1];
+  FIELD138[field137]: int[t1];
+  FIELD139[field138]: int[t1];
+  FIELD140[field139]: int[t1];
+  FIELD141[field140]: int[t1];
+  FIELD142[field141]: int[t1];
+  FIELD143[field142]: int[t1];
+  FIELD144[field143]: int[t1];
+  FIELD145[field144]: int[t1];
+  FIELD146[field145]: int[t1];
+  FIELD147[field146]: int[t1];
+  FIELD148[field147]: int[t1];
+  FIELD149[field148]: int[t1];
+  FIELD150[field149]: int[t1];
+  FIELD151[field150]: int[t1];
+  FIELD152[field151]: int[t1];
+  FIELD153[field152]: int[t1];
+  FIELD154[field153]: int[t1];
+  FIELD155[field154]: int[t1];
+  FIELD156[field155]: int[t1];
+  FIELD157[field156]: int[t1];
+  FIELD158[field157]: int[t1];
+  FIELD159[field158]: int[t1];
+  FIELD160[field159]: int[t1];
+  FIELD161[field160]: int[t1];
+  FIELD162[field161]: int[t1];
+  FIELD163[field162]: int[t1];
+  FIELD164[field163]: int[t1];
+  FIELD165[field164]: int[t1];
+  FIELD166[field165]: int[t1];
+  FIELD167[field166]: int[t1];
+  FIELD168[field167]: int[t1];
+  FIELD169[field168]: int[t1];
+  FIELD170[field169]: int[t1];
+  FIELD171[field170]: int[t1];
+  FIELD172[field171]: int[t1];
+  FIELD173[field172]: int[t1];
+  FIELD174[field173]: int[t1];
+  FIELD175[field174]: int[t1];
+  FIELD176[field175]: int[t1];
+  FIELD177[field176]: int[t1];
+  FIELD178[field177]: int[t1];
+  FIELD179[field178]: int[t1];
+  FIELD180[field179]: int[t1];
+  FIELD181[field180]: int[t1];
+  FIELD182[field181]: int[t1];
+  FIELD183[field182]: int[t1];
+  FIELD184[field183]: int[t1];
+  FIELD185[field184]: int[t1];
+  FIELD186[field185]: int[t1];
+  FIELD187[field186]: int[t1];
+  FIELD188[field187]: int[t1];
+  FIELD189[field188]: int[t1];
+  FIELD190[field189]: int[t1];
+  FIELD191[field190]: int[t1];
+  FIELD192[field191]: int[t1];
+  FIELD193[field192]: int[t1];
+  FIELD194[field193]: int[t1];
+  FIELD195[field194]: int[t1];
+  FIELD196[field195]: int[t1];
+  FIELD197[field196]: int[t1];
+  FIELD198[field197]: int[t1];
+  FIELD199[field198]: int[t1];
+  FIELD200[field199]: int[t1];
+  FIELD201[field200]: int[t1];
+  FIELD202[field201]: int[t1];
+  FIELD203[field202]: int[t1];
+  FIELD204[field203]: int[t1];
+  FIELD205[field204]: int[t1];
+  FIELD206[field205]: int[t1];
+  FIELD207[field206]: int[t1];
+  FIELD208[field207]: int[t1];
+  FIELD209[field208]: int[t1];
+  FIELD210[field209]: int[t1];
+  FIELD211[field210]: int[t1];
+  FIELD212[field211]: int[t1];
+  FIELD213[field212]: int[t1];
+  FIELD214[field213]: int[t1];
+  FIELD215[field214]: int[t1];
+  FIELD216[field215]: int[t1];
+  FIELD217[field216]: int[t1];
+  FIELD218[field217]: int[t1];
+  FIELD219[field218]: int[t1];
+  FIELD220[field219]: int[t1];
+  FIELD221[field220]: int[t1];
+  FIELD222[field221]: int[t1];
+  FIELD223[field222]: int[t1];
+  FIELD224[field223]: int[t1];
+  FIELD225[field224]: int[t1];
+  FIELD226[field225]: int[t1];
+  FIELD227[field226]: int[t1];
+  FIELD228[field227]: int[t1];
+  FIELD229[field228]: int[t1];
+  FIELD230[field229]: int[t1];
+  FIELD231[field230]: int[t1];
+  FIELD232[field231]: int[t1];
+  FIELD233[field232]: int[t1];
+  FIELD234[field233]: int[t1];
+  FIELD235[field234]: int[t1];
+  FIELD236[field235]: int[t1];
+  FIELD237[field236]: int[t1];
+  FIELD238[field237]: int[t1];
+  FIELD239[field238]: int[t1];
+  FIELD240[field239]: int[t1];
+  FIELD241[field240]: int[t1];
+  FIELD242[field241]: int[t1];
+  FIELD243[field242]: int[t1];
+  FIELD244[field243]: int[t1];
+  FIELD245[field244]: int[t1];
+  FIELD246[field245]: int[t1];
+  FIELD247[field246]: int[t1];
+  FIELD248[field247]: int[t1];
+  FIELD249[field248]: int[t1];
+  FIELD250[field249]: int[t1];
+}
+
+transaction MaxRecord1[f46](keyname[p78]: int[t1]) : (t1) -> t0
+{
+  hops for i[v2] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v0]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p78] + [f0]i[t1][v2][t1]][t6<tab<htable>>];
+    let v2[v1]: int[t1] = r[t6<tab<htable>>][v0].FIELD2[field1][t1];
+  }
+}
+
+transaction MaxRecord2[f47](keyname[p79]: int[t1]) : (t1) -> t0
+{
+  hops for i[v9] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v3]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p79] + [f0]i[t1][v9][t1]][t6<tab<htable>>];
+    let v2[v4]: int[t1] = r[t6<tab<htable>>][v3].FIELD2[field1][t1];
+    let v27[v5]: int[t1] = r[t6<tab<htable>>][v3].FIELD27[field26][t1];
+    let v52[v6]: int[t1] = r[t6<tab<htable>>][v3].FIELD52[field51][t1];
+    let v77[v7]: int[t1] = r[t6<tab<htable>>][v3].FIELD77[field76][t1];
+    let v102[v8]: int[t1] = r[t6<tab<htable>>][v3].FIELD102[field101][t1];
+  }
+}
+
+transaction MaxRecord3[f48](keyname[p80]: int[t1]) : (t1) -> t0
+{
+  hops for i[v21] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v10]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p80] + [f0]i[t1][v21][t1]][t6<tab<htable>>];
+    let v2[v11]: int[t1] = r[t6<tab<htable>>][v10].FIELD2[field1][t1];
+    let v7[v12]: int[t1] = r[t6<tab<htable>>][v10].FIELD7[field6][t1];
+    let v12[v13]: int[t1] = r[t6<tab<htable>>][v10].FIELD12[field11][t1];
+    let v17[v14]: int[t1] = r[t6<tab<htable>>][v10].FIELD17[field16][t1];
+    let v22[v15]: int[t1] = r[t6<tab<htable>>][v10].FIELD22[field21][t1];
+    let v27[v16]: int[t1] = r[t6<tab<htable>>][v10].FIELD27[field26][t1];
+    let v52[v17]: int[t1] = r[t6<tab<htable>>][v10].FIELD52[field51][t1];
+    let v77[v18]: int[t1] = r[t6<tab<htable>>][v10].FIELD77[field76][t1];
+    let v102[v19]: int[t1] = r[t6<tab<htable>>][v10].FIELD102[field101][t1];
+    let v127[v20]: int[t1] = r[t6<tab<htable>>][v10].FIELD127[field126][t1];
+  }
+}
+
+transaction MaxRecord4[f49](keyname[p81]: int[t1]) : (t1) -> t0
+{
+  hops for i[v38] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v22]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p81] + [f0]i[t1][v38][t1]][t6<tab<htable>>];
+    let v2[v23]: int[t1] = r[t6<tab<htable>>][v22].FIELD2[field1][t1];
+    let v6[v24]: int[t1] = r[t6<tab<htable>>][v22].FIELD6[field5][t1];
+    let v10[v25]: int[t1] = r[t6<tab<htable>>][v22].FIELD10[field9][t1];
+    let v14[v26]: int[t1] = r[t6<tab<htable>>][v22].FIELD14[field13][t1];
+    let v18[v27]: int[t1] = r[t6<tab<htable>>][v22].FIELD18[field17][t1];
+    let v22[v28]: int[t1] = r[t6<tab<htable>>][v22].FIELD22[field21][t1];
+    let v26[v29]: int[t1] = r[t6<tab<htable>>][v22].FIELD26[field25][t1];
+    let v52[v30]: int[t1] = r[t6<tab<htable>>][v22].FIELD52[field51][t1];
+    let v78[v31]: int[t1] = r[t6<tab<htable>>][v22].FIELD78[field77][t1];
+    let v104[v32]: int[t1] = r[t6<tab<htable>>][v22].FIELD104[field103][t1];
+    let v130[v33]: int[t1] = r[t6<tab<htable>>][v22].FIELD130[field129][t1];
+    let v156[v34]: int[t1] = r[t6<tab<htable>>][v22].FIELD156[field155][t1];
+    let v182[v35]: int[t1] = r[t6<tab<htable>>][v22].FIELD182[field181][t1];
+    let v208[v36]: int[t1] = r[t6<tab<htable>>][v22].FIELD208[field207][t1];
+    let v234[v37]: int[t1] = r[t6<tab<htable>>][v22].FIELD234[field233][t1];
+  }
+}
+
+transaction MaxRecord5[f50](keyname[p82]: int[t1]) : (t1) -> t0
+{
+  hops for i[v56] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v39]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p82] + [f0]i[t1][v56][t1]][t6<tab<htable>>];
+    let v2[v40]: int[t1] = r[t6<tab<htable>>][v39].FIELD2[field1][t1];
+    let v5[v41]: int[t1] = r[t6<tab<htable>>][v39].FIELD5[field4][t1];
+    let v8[v42]: int[t1] = r[t6<tab<htable>>][v39].FIELD8[field7][t1];
+    let v11[v43]: int[t1] = r[t6<tab<htable>>][v39].FIELD11[field10][t1];
+    let v14[v44]: int[t1] = r[t6<tab<htable>>][v39].FIELD14[field13][t1];
+    let v17[v45]: int[t1] = r[t6<tab<htable>>][v39].FIELD17[field16][t1];
+    let v20[v46]: int[t1] = r[t6<tab<htable>>][v39].FIELD20[field19][t1];
+    let v50[v47]: int[t1] = r[t6<tab<htable>>][v39].FIELD50[field49][t1];
+    let v75[v48]: int[t1] = r[t6<tab<htable>>][v39].FIELD75[field74][t1];
+    let v100[v49]: int[t1] = r[t6<tab<htable>>][v39].FIELD100[field99][t1];
+    let v125[v50]: int[t1] = r[t6<tab<htable>>][v39].FIELD125[field124][t1];
+    let v150[v51]: int[t1] = r[t6<tab<htable>>][v39].FIELD150[field149][t1];
+    let v175[v52]: int[t1] = r[t6<tab<htable>>][v39].FIELD175[field174][t1];
+    let v200[v53]: int[t1] = r[t6<tab<htable>>][v39].FIELD200[field199][t1];
+    let v225[v54]: int[t1] = r[t6<tab<htable>>][v39].FIELD225[field224][t1];
+    let v250[v55]: int[t1] = r[t6<tab<htable>>][v39].FIELD250[field249][t1];
+  }
+}
+
+transaction MaxRecord6[f51](keyname[p83]: int[t1]) : (t1) -> t0
+{
+  hops for i[v73] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v57]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p83] + [f0]i[t1][v73][t1]][t6<tab<htable>>];
+    let v2[v58]: int[t1] = r[t6<tab<htable>>][v57].FIELD2[field1][t1];
+    let v4[v59]: int[t1] = r[t6<tab<htable>>][v57].FIELD4[field3][t1];
+    let v6[v60]: int[t1] = r[t6<tab<htable>>][v57].FIELD6[field5][t1];
+    let v8[v61]: int[t1] = r[t6<tab<htable>>][v57].FIELD8[field7][t1];
+    let v10[v62]: int[t1] = r[t6<tab<htable>>][v57].FIELD10[field9][t1];
+    let v12[v63]: int[t1] = r[t6<tab<htable>>][v57].FIELD12[field11][t1];
+    let v50[v64]: int[t1] = r[t6<tab<htable>>][v57].FIELD50[field49][t1];
+    let v100[v65]: int[t1] = r[t6<tab<htable>>][v57].FIELD100[field99][t1];
+    let v125[v66]: int[t1] = r[t6<tab<htable>>][v57].FIELD125[field124][t1];
+    let v150[v67]: int[t1] = r[t6<tab<htable>>][v57].FIELD150[field149][t1];
+    let v175[v68]: int[t1] = r[t6<tab<htable>>][v57].FIELD175[field174][t1];
+    let v200[v69]: int[t1] = r[t6<tab<htable>>][v57].FIELD200[field199][t1];
+    let v225[v70]: int[t1] = r[t6<tab<htable>>][v57].FIELD225[field224][t1];
+    let v248[v71]: int[t1] = r[t6<tab<htable>>][v57].FIELD248[field247][t1];
+    let v250[v72]: int[t1] = r[t6<tab<htable>>][v57].FIELD250[field249][t1];
+  }
+}
+
+transaction MaxRecord7[f52](keyname[p84]: int[t1]) : (t1) -> t0
+{
+  hops for i[v91] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v74]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p84] + [f0]i[t1][v91][t1]][t6<tab<htable>>];
+    let v2[v75]: int[t1] = r[t6<tab<htable>>][v74].FIELD2[field1][t1];
+    let v4[v76]: int[t1] = r[t6<tab<htable>>][v74].FIELD4[field3][t1];
+    let v6[v77]: int[t1] = r[t6<tab<htable>>][v74].FIELD6[field5][t1];
+    let v8[v78]: int[t1] = r[t6<tab<htable>>][v74].FIELD8[field7][t1];
+    let v10[v79]: int[t1] = r[t6<tab<htable>>][v74].FIELD10[field9][t1];
+    let v25[v80]: int[t1] = r[t6<tab<htable>>][v74].FIELD25[field24][t1];
+    let v50[v81]: int[t1] = r[t6<tab<htable>>][v74].FIELD50[field49][t1];
+    let v75[v82]: int[t1] = r[t6<tab<htable>>][v74].FIELD75[field74][t1];
+    let v100[v83]: int[t1] = r[t6<tab<htable>>][v74].FIELD100[field99][t1];
+    let v125[v84]: int[t1] = r[t6<tab<htable>>][v74].FIELD125[field124][t1];
+    let v150[v85]: int[t1] = r[t6<tab<htable>>][v74].FIELD150[field149][t1];
+    let v175[v86]: int[t1] = r[t6<tab<htable>>][v74].FIELD175[field174][t1];
+    let v200[v87]: int[t1] = r[t6<tab<htable>>][v74].FIELD200[field199][t1];
+    let v225[v88]: int[t1] = r[t6<tab<htable>>][v74].FIELD225[field224][t1];
+    let v240[v89]: int[t1] = r[t6<tab<htable>>][v74].FIELD240[field239][t1];
+    let v250[v90]: int[t1] = r[t6<tab<htable>>][v74].FIELD250[field249][t1];
+  }
+}
+
+transaction MaxRecord8[f53](keyname[p85]: int[t1]) : (t1) -> t0
+{
+  hops for i[v110] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v92]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p85] + [f0]i[t1][v110][t1]][t6<tab<htable>>];
+    let v2[v93]: int[t1] = r[t6<tab<htable>>][v92].FIELD2[field1][t1];
+    let v3[v94]: int[t1] = r[t6<tab<htable>>][v92].FIELD3[field2][t1];
+    let v5[v95]: int[t1] = r[t6<tab<htable>>][v92].FIELD5[field4][t1];
+    let v7[v96]: int[t1] = r[t6<tab<htable>>][v92].FIELD7[field6][t1];
+    let v9[v97]: int[t1] = r[t6<tab<htable>>][v92].FIELD9[field8][t1];
+    let v11[v98]: int[t1] = r[t6<tab<htable>>][v92].FIELD11[field10][t1];
+    let v25[v99]: int[t1] = r[t6<tab<htable>>][v92].FIELD25[field24][t1];
+    let v50[v100]: int[t1] = r[t6<tab<htable>>][v92].FIELD50[field49][t1];
+    let v75[v101]: int[t1] = r[t6<tab<htable>>][v92].FIELD75[field74][t1];
+    let v100[v102]: int[t1] = r[t6<tab<htable>>][v92].FIELD100[field99][t1];
+    let v125[v103]: int[t1] = r[t6<tab<htable>>][v92].FIELD125[field124][t1];
+    let v150[v104]: int[t1] = r[t6<tab<htable>>][v92].FIELD150[field149][t1];
+    let v175[v105]: int[t1] = r[t6<tab<htable>>][v92].FIELD175[field174][t1];
+    let v200[v106]: int[t1] = r[t6<tab<htable>>][v92].FIELD200[field199][t1];
+    let v225[v107]: int[t1] = r[t6<tab<htable>>][v92].FIELD225[field224][t1];
+    let v245[v108]: int[t1] = r[t6<tab<htable>>][v92].FIELD245[field244][t1];
+    let v250[v109]: int[t1] = r[t6<tab<htable>>][v92].FIELD250[field249][t1];
+  }
+}
+
+transaction MaxRecord9[f54](keyname[p86]: int[t1]) : (t1) -> t0
+{
+  hops for i[v131] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v111]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p86] + [f0]i[t1][v131][t1]][t6<tab<htable>>];
+    let v2[v112]: int[t1] = r[t6<tab<htable>>][v111].FIELD2[field1][t1];
+    let v3[v113]: int[t1] = r[t6<tab<htable>>][v111].FIELD3[field2][t1];
+    let v4[v114]: int[t1] = r[t6<tab<htable>>][v111].FIELD4[field3][t1];
+    let v5[v115]: int[t1] = r[t6<tab<htable>>][v111].FIELD5[field4][t1];
+    let v6[v116]: int[t1] = r[t6<tab<htable>>][v111].FIELD6[field5][t1];
+    let v7[v117]: int[t1] = r[t6<tab<htable>>][v111].FIELD7[field6][t1];
+    let v25[v118]: int[t1] = r[t6<tab<htable>>][v111].FIELD25[field24][t1];
+    let v50[v119]: int[t1] = r[t6<tab<htable>>][v111].FIELD50[field49][t1];
+    let v75[v120]: int[t1] = r[t6<tab<htable>>][v111].FIELD75[field74][t1];
+    let v100[v121]: int[t1] = r[t6<tab<htable>>][v111].FIELD100[field99][t1];
+    let v125[v122]: int[t1] = r[t6<tab<htable>>][v111].FIELD125[field124][t1];
+    let v150[v123]: int[t1] = r[t6<tab<htable>>][v111].FIELD150[field149][t1];
+    let v175[v124]: int[t1] = r[t6<tab<htable>>][v111].FIELD175[field174][t1];
+    let v200[v125]: int[t1] = r[t6<tab<htable>>][v111].FIELD200[field199][t1];
+    let v225[v126]: int[t1] = r[t6<tab<htable>>][v111].FIELD225[field224][t1];
+    let v240[v127]: int[t1] = r[t6<tab<htable>>][v111].FIELD240[field239][t1];
+    let v245[v128]: int[t1] = r[t6<tab<htable>>][v111].FIELD245[field244][t1];
+    let v248[v129]: int[t1] = r[t6<tab<htable>>][v111].FIELD248[field247][t1];
+    let v250[v130]: int[t1] = r[t6<tab<htable>>][v111].FIELD250[field249][t1];
+  }
+}
+
+transaction MaxRecord10[f55](keyname[p87]: int[t1]) : (t1) -> t0
+{
+  hops for i[v149] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v132]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p87] + [f0]i[t1][v149][t1]][t6<tab<htable>>];
+    let v2[v133]: int[t1] = r[t6<tab<htable>>][v132].FIELD2[field1][t1];
+    let v3[v134]: int[t1] = r[t6<tab<htable>>][v132].FIELD3[field2][t1];
+    let v4[v135]: int[t1] = r[t6<tab<htable>>][v132].FIELD4[field3][t1];
+    let v5[v136]: int[t1] = r[t6<tab<htable>>][v132].FIELD5[field4][t1];
+    let v10[v137]: int[t1] = r[t6<tab<htable>>][v132].FIELD10[field9][t1];
+    let v25[v138]: int[t1] = r[t6<tab<htable>>][v132].FIELD25[field24][t1];
+    let v50[v139]: int[t1] = r[t6<tab<htable>>][v132].FIELD50[field49][t1];
+    let v75[v140]: int[t1] = r[t6<tab<htable>>][v132].FIELD75[field74][t1];
+    let v100[v141]: int[t1] = r[t6<tab<htable>>][v132].FIELD100[field99][t1];
+    let v125[v142]: int[t1] = r[t6<tab<htable>>][v132].FIELD125[field124][t1];
+    let v150[v143]: int[t1] = r[t6<tab<htable>>][v132].FIELD150[field149][t1];
+    let v175[v144]: int[t1] = r[t6<tab<htable>>][v132].FIELD175[field174][t1];
+    let v200[v145]: int[t1] = r[t6<tab<htable>>][v132].FIELD200[field199][t1];
+    let v225[v146]: int[t1] = r[t6<tab<htable>>][v132].FIELD225[field224][t1];
+    let v249[v147]: int[t1] = r[t6<tab<htable>>][v132].FIELD249[field248][t1];
+    let v250[v148]: int[t1] = r[t6<tab<htable>>][v132].FIELD250[field249][t1];
+  }
+}
+
+transaction ReadRecord1[f56](keyname[p88]: int[t1]) : (t1) -> t0
+{
+  hops for i[v152] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v150]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p88] + [f0]i[t1][v152][t1]][t6<tab<htable>>];
+    let v2[v151]: int[t1] = r[t6<tab<htable>>][v150].FIELD2[field1][t1];
+  }
+}
+
+transaction ReadRecord2[f57](keyname[p89]: int[t1]) : (t1) -> t0
+{
+  hops for i[v159] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v153]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p89] + [f0]i[t1][v159][t1]][t6<tab<htable>>];
+    let v2[v154]: int[t1] = r[t6<tab<htable>>][v153].FIELD2[field1][t1];
+    let v27[v155]: int[t1] = r[t6<tab<htable>>][v153].FIELD27[field26][t1];
+    let v52[v156]: int[t1] = r[t6<tab<htable>>][v153].FIELD52[field51][t1];
+    let v77[v157]: int[t1] = r[t6<tab<htable>>][v153].FIELD77[field76][t1];
+    let v102[v158]: int[t1] = r[t6<tab<htable>>][v153].FIELD102[field101][t1];
+  }
+}
+
+transaction ReadRecord3[f58](keyname[p90]: int[t1]) : (t1) -> t0
+{
+  hops for i[v171] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v160]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p90] + [f0]i[t1][v171][t1]][t6<tab<htable>>];
+    let v2[v161]: int[t1] = r[t6<tab<htable>>][v160].FIELD2[field1][t1];
+    let v7[v162]: int[t1] = r[t6<tab<htable>>][v160].FIELD7[field6][t1];
+    let v12[v163]: int[t1] = r[t6<tab<htable>>][v160].FIELD12[field11][t1];
+    let v17[v164]: int[t1] = r[t6<tab<htable>>][v160].FIELD17[field16][t1];
+    let v22[v165]: int[t1] = r[t6<tab<htable>>][v160].FIELD22[field21][t1];
+    let v27[v166]: int[t1] = r[t6<tab<htable>>][v160].FIELD27[field26][t1];
+    let v52[v167]: int[t1] = r[t6<tab<htable>>][v160].FIELD52[field51][t1];
+    let v77[v168]: int[t1] = r[t6<tab<htable>>][v160].FIELD77[field76][t1];
+    let v102[v169]: int[t1] = r[t6<tab<htable>>][v160].FIELD102[field101][t1];
+    let v127[v170]: int[t1] = r[t6<tab<htable>>][v160].FIELD127[field126][t1];
+  }
+}
+
+transaction ReadRecord4[f59](keyname[p91]: int[t1]) : (t1) -> t0
+{
+  hops for i[v188] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v172]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p91] + [f0]i[t1][v188][t1]][t6<tab<htable>>];
+    let v2[v173]: int[t1] = r[t6<tab<htable>>][v172].FIELD2[field1][t1];
+    let v6[v174]: int[t1] = r[t6<tab<htable>>][v172].FIELD6[field5][t1];
+    let v10[v175]: int[t1] = r[t6<tab<htable>>][v172].FIELD10[field9][t1];
+    let v14[v176]: int[t1] = r[t6<tab<htable>>][v172].FIELD14[field13][t1];
+    let v18[v177]: int[t1] = r[t6<tab<htable>>][v172].FIELD18[field17][t1];
+    let v22[v178]: int[t1] = r[t6<tab<htable>>][v172].FIELD22[field21][t1];
+    let v26[v179]: int[t1] = r[t6<tab<htable>>][v172].FIELD26[field25][t1];
+    let v52[v180]: int[t1] = r[t6<tab<htable>>][v172].FIELD52[field51][t1];
+    let v78[v181]: int[t1] = r[t6<tab<htable>>][v172].FIELD78[field77][t1];
+    let v104[v182]: int[t1] = r[t6<tab<htable>>][v172].FIELD104[field103][t1];
+    let v130[v183]: int[t1] = r[t6<tab<htable>>][v172].FIELD130[field129][t1];
+    let v156[v184]: int[t1] = r[t6<tab<htable>>][v172].FIELD156[field155][t1];
+    let v182[v185]: int[t1] = r[t6<tab<htable>>][v172].FIELD182[field181][t1];
+    let v208[v186]: int[t1] = r[t6<tab<htable>>][v172].FIELD208[field207][t1];
+    let v234[v187]: int[t1] = r[t6<tab<htable>>][v172].FIELD234[field233][t1];
+  }
+}
+
+transaction ReadRecord5[f60](keyname[p92]: int[t1]) : (t1) -> t0
+{
+  hops for i[v206] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v189]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p92] + [f0]i[t1][v206][t1]][t6<tab<htable>>];
+    let v2[v190]: int[t1] = r[t6<tab<htable>>][v189].FIELD2[field1][t1];
+    let v5[v191]: int[t1] = r[t6<tab<htable>>][v189].FIELD5[field4][t1];
+    let v8[v192]: int[t1] = r[t6<tab<htable>>][v189].FIELD8[field7][t1];
+    let v11[v193]: int[t1] = r[t6<tab<htable>>][v189].FIELD11[field10][t1];
+    let v14[v194]: int[t1] = r[t6<tab<htable>>][v189].FIELD14[field13][t1];
+    let v17[v195]: int[t1] = r[t6<tab<htable>>][v189].FIELD17[field16][t1];
+    let v20[v196]: int[t1] = r[t6<tab<htable>>][v189].FIELD20[field19][t1];
+    let v50[v197]: int[t1] = r[t6<tab<htable>>][v189].FIELD50[field49][t1];
+    let v75[v198]: int[t1] = r[t6<tab<htable>>][v189].FIELD75[field74][t1];
+    let v100[v199]: int[t1] = r[t6<tab<htable>>][v189].FIELD100[field99][t1];
+    let v125[v200]: int[t1] = r[t6<tab<htable>>][v189].FIELD125[field124][t1];
+    let v150[v201]: int[t1] = r[t6<tab<htable>>][v189].FIELD150[field149][t1];
+    let v175[v202]: int[t1] = r[t6<tab<htable>>][v189].FIELD175[field174][t1];
+    let v200[v203]: int[t1] = r[t6<tab<htable>>][v189].FIELD200[field199][t1];
+    let v225[v204]: int[t1] = r[t6<tab<htable>>][v189].FIELD225[field224][t1];
+    let v250[v205]: int[t1] = r[t6<tab<htable>>][v189].FIELD250[field249][t1];
+  }
+}
+
+transaction ReadRecord6[f61](keyname[p93]: int[t1]) : (t1) -> t0
+{
+  hops for i[v223] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v207]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p93] + [f0]i[t1][v223][t1]][t6<tab<htable>>];
+    let v2[v208]: int[t1] = r[t6<tab<htable>>][v207].FIELD2[field1][t1];
+    let v4[v209]: int[t1] = r[t6<tab<htable>>][v207].FIELD4[field3][t1];
+    let v6[v210]: int[t1] = r[t6<tab<htable>>][v207].FIELD6[field5][t1];
+    let v8[v211]: int[t1] = r[t6<tab<htable>>][v207].FIELD8[field7][t1];
+    let v10[v212]: int[t1] = r[t6<tab<htable>>][v207].FIELD10[field9][t1];
+    let v12[v213]: int[t1] = r[t6<tab<htable>>][v207].FIELD12[field11][t1];
+    let v50[v214]: int[t1] = r[t6<tab<htable>>][v207].FIELD50[field49][t1];
+    let v100[v215]: int[t1] = r[t6<tab<htable>>][v207].FIELD100[field99][t1];
+    let v125[v216]: int[t1] = r[t6<tab<htable>>][v207].FIELD125[field124][t1];
+    let v150[v217]: int[t1] = r[t6<tab<htable>>][v207].FIELD150[field149][t1];
+    let v175[v218]: int[t1] = r[t6<tab<htable>>][v207].FIELD175[field174][t1];
+    let v200[v219]: int[t1] = r[t6<tab<htable>>][v207].FIELD200[field199][t1];
+    let v225[v220]: int[t1] = r[t6<tab<htable>>][v207].FIELD225[field224][t1];
+    let v248[v221]: int[t1] = r[t6<tab<htable>>][v207].FIELD248[field247][t1];
+    let v250[v222]: int[t1] = r[t6<tab<htable>>][v207].FIELD250[field249][t1];
+  }
+}
+
+transaction ReadRecord7[f62](keyname[p94]: int[t1]) : (t1) -> t0
+{
+  hops for i[v241] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v224]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p94] + [f0]i[t1][v241][t1]][t6<tab<htable>>];
+    let v2[v225]: int[t1] = r[t6<tab<htable>>][v224].FIELD2[field1][t1];
+    let v4[v226]: int[t1] = r[t6<tab<htable>>][v224].FIELD4[field3][t1];
+    let v6[v227]: int[t1] = r[t6<tab<htable>>][v224].FIELD6[field5][t1];
+    let v8[v228]: int[t1] = r[t6<tab<htable>>][v224].FIELD8[field7][t1];
+    let v10[v229]: int[t1] = r[t6<tab<htable>>][v224].FIELD10[field9][t1];
+    let v25[v230]: int[t1] = r[t6<tab<htable>>][v224].FIELD25[field24][t1];
+    let v50[v231]: int[t1] = r[t6<tab<htable>>][v224].FIELD50[field49][t1];
+    let v75[v232]: int[t1] = r[t6<tab<htable>>][v224].FIELD75[field74][t1];
+    let v100[v233]: int[t1] = r[t6<tab<htable>>][v224].FIELD100[field99][t1];
+    let v125[v234]: int[t1] = r[t6<tab<htable>>][v224].FIELD125[field124][t1];
+    let v150[v235]: int[t1] = r[t6<tab<htable>>][v224].FIELD150[field149][t1];
+    let v175[v236]: int[t1] = r[t6<tab<htable>>][v224].FIELD175[field174][t1];
+    let v200[v237]: int[t1] = r[t6<tab<htable>>][v224].FIELD200[field199][t1];
+    let v225[v238]: int[t1] = r[t6<tab<htable>>][v224].FIELD225[field224][t1];
+    let v240[v239]: int[t1] = r[t6<tab<htable>>][v224].FIELD240[field239][t1];
+    let v250[v240]: int[t1] = r[t6<tab<htable>>][v224].FIELD250[field249][t1];
+  }
+}
+
+transaction ReadRecord8[f63](keyname[p95]: int[t1]) : (t1) -> t0
+{
+  hops for i[v260] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v242]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p95] + [f0]i[t1][v260][t1]][t6<tab<htable>>];
+    let v2[v243]: int[t1] = r[t6<tab<htable>>][v242].FIELD2[field1][t1];
+    let v3[v244]: int[t1] = r[t6<tab<htable>>][v242].FIELD3[field2][t1];
+    let v5[v245]: int[t1] = r[t6<tab<htable>>][v242].FIELD5[field4][t1];
+    let v7[v246]: int[t1] = r[t6<tab<htable>>][v242].FIELD7[field6][t1];
+    let v9[v247]: int[t1] = r[t6<tab<htable>>][v242].FIELD9[field8][t1];
+    let v11[v248]: int[t1] = r[t6<tab<htable>>][v242].FIELD11[field10][t1];
+    let v25[v249]: int[t1] = r[t6<tab<htable>>][v242].FIELD25[field24][t1];
+    let v50[v250]: int[t1] = r[t6<tab<htable>>][v242].FIELD50[field49][t1];
+    let v75[v251]: int[t1] = r[t6<tab<htable>>][v242].FIELD75[field74][t1];
+    let v100[v252]: int[t1] = r[t6<tab<htable>>][v242].FIELD100[field99][t1];
+    let v125[v253]: int[t1] = r[t6<tab<htable>>][v242].FIELD125[field124][t1];
+    let v150[v254]: int[t1] = r[t6<tab<htable>>][v242].FIELD150[field149][t1];
+    let v175[v255]: int[t1] = r[t6<tab<htable>>][v242].FIELD175[field174][t1];
+    let v200[v256]: int[t1] = r[t6<tab<htable>>][v242].FIELD200[field199][t1];
+    let v225[v257]: int[t1] = r[t6<tab<htable>>][v242].FIELD225[field224][t1];
+    let v245[v258]: int[t1] = r[t6<tab<htable>>][v242].FIELD245[field244][t1];
+    let v250[v259]: int[t1] = r[t6<tab<htable>>][v242].FIELD250[field249][t1];
+  }
+}
+
+transaction ReadRecord9[f64](keyname[p96]: int[t1]) : (t1) -> t0
+{
+  hops for i[v281] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v261]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p96] + [f0]i[t1][v281][t1]][t6<tab<htable>>];
+    let v2[v262]: int[t1] = r[t6<tab<htable>>][v261].FIELD2[field1][t1];
+    let v3[v263]: int[t1] = r[t6<tab<htable>>][v261].FIELD3[field2][t1];
+    let v4[v264]: int[t1] = r[t6<tab<htable>>][v261].FIELD4[field3][t1];
+    let v5[v265]: int[t1] = r[t6<tab<htable>>][v261].FIELD5[field4][t1];
+    let v6[v266]: int[t1] = r[t6<tab<htable>>][v261].FIELD6[field5][t1];
+    let v7[v267]: int[t1] = r[t6<tab<htable>>][v261].FIELD7[field6][t1];
+    let v25[v268]: int[t1] = r[t6<tab<htable>>][v261].FIELD25[field24][t1];
+    let v50[v269]: int[t1] = r[t6<tab<htable>>][v261].FIELD50[field49][t1];
+    let v75[v270]: int[t1] = r[t6<tab<htable>>][v261].FIELD75[field74][t1];
+    let v100[v271]: int[t1] = r[t6<tab<htable>>][v261].FIELD100[field99][t1];
+    let v125[v272]: int[t1] = r[t6<tab<htable>>][v261].FIELD125[field124][t1];
+    let v150[v273]: int[t1] = r[t6<tab<htable>>][v261].FIELD150[field149][t1];
+    let v175[v274]: int[t1] = r[t6<tab<htable>>][v261].FIELD175[field174][t1];
+    let v200[v275]: int[t1] = r[t6<tab<htable>>][v261].FIELD200[field199][t1];
+    let v225[v276]: int[t1] = r[t6<tab<htable>>][v261].FIELD225[field224][t1];
+    let v240[v277]: int[t1] = r[t6<tab<htable>>][v261].FIELD240[field239][t1];
+    let v245[v278]: int[t1] = r[t6<tab<htable>>][v261].FIELD245[field244][t1];
+    let v248[v279]: int[t1] = r[t6<tab<htable>>][v261].FIELD248[field247][t1];
+    let v250[v280]: int[t1] = r[t6<tab<htable>>][v261].FIELD250[field249][t1];
+  }
+}
+
+transaction ReadRecord10[f65](keyname[p97]: int[t1]) : (t1) -> t0
+{
+  hops for i[v299] in 0[t1]..SCAN_SIZE[infer1][c2]
+  {
+    let r[v282]: Row<htable>[t6<tab<htable>>] = htable[t7<tab<htable>>][itab0][tab0][FIELD1: keyname[t1][p97] + [f0]i[t1][v299][t1]][t6<tab<htable>>];
+    let v2[v283]: int[t1] = r[t6<tab<htable>>][v282].FIELD2[field1][t1];
+    let v3[v284]: int[t1] = r[t6<tab<htable>>][v282].FIELD3[field2][t1];
+    let v4[v285]: int[t1] = r[t6<tab<htable>>][v282].FIELD4[field3][t1];
+    let v5[v286]: int[t1] = r[t6<tab<htable>>][v282].FIELD5[field4][t1];
+    let v10[v287]: int[t1] = r[t6<tab<htable>>][v282].FIELD10[field9][t1];
+    let v25[v288]: int[t1] = r[t6<tab<htable>>][v282].FIELD25[field24][t1];
+    let v50[v289]: int[t1] = r[t6<tab<htable>>][v282].FIELD50[field49][t1];
+    let v75[v290]: int[t1] = r[t6<tab<htable>>][v282].FIELD75[field74][t1];
+    let v100[v291]: int[t1] = r[t6<tab<htable>>][v282].FIELD100[field99][t1];
+    let v125[v292]: int[t1] = r[t6<tab<htable>>][v282].FIELD125[field124][t1];
+    let v150[v293]: int[t1] = r[t6<tab<htable>>][v282].FIELD150[field149][t1];
+    let v175[v294]: int[t1] = r[t6<tab<htable>>][v282].FIELD175[field174][t1];
+    let v200[v295]: int[t1] = r[t6<tab<htable>>][v282].FIELD200[field199][t1];
+    let v225[v296]: int[t1] = r[t6<tab<htable>>][v282].FIELD225[field224][t1];
+    let v249[v297]: int[t1] = r[t6<tab<htable>>][v282].FIELD249[field248][t1];
+    let v250[v298]: int[t1] = r[t6<tab<htable>>][v282].FIELD250[field249][t1];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_FIELD1[f66](iter[p98]: Iterator<htable>[t8<tab<htable>>]) -> int[t1] : (t8<tab<htable>>) -> t1;
+

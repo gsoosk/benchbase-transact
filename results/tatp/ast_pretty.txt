@@ -1,0 +1,458 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition subPartition[f45](s_id[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return s_id[t1][p77];
+}
+
+table Subscriber[tab0] {
+  primary s_id[field0]: int[t1];
+  node subPartition[f45](s_id[t1][field0]);
+  sub_nbr[field1]: string[t3];
+  bit_1[field2]: int[t1];
+  bit_2[field3]: int[t1];
+  bit_3[field4]: int[t1];
+  bit_4[field5]: int[t1];
+  bit_5[field6]: int[t1];
+  bit_6[field7]: int[t1];
+  bit_7[field8]: int[t1];
+  bit_8[field9]: int[t1];
+  bit_9[field10]: int[t1];
+  bit_10[field11]: int[t1];
+  hex_1[field12]: int[t1];
+  hex_2[field13]: int[t1];
+  hex_3[field14]: int[t1];
+  hex_4[field15]: int[t1];
+  hex_5[field16]: int[t1];
+  hex_6[field17]: int[t1];
+  hex_7[field18]: int[t1];
+  hex_8[field19]: int[t1];
+  hex_9[field20]: int[t1];
+  hex_10[field21]: int[t1];
+  byte2_1[field22]: int[t1];
+  byte2_2[field23]: int[t1];
+  byte2_3[field24]: int[t1];
+  byte2_4[field25]: int[t1];
+  byte2_5[field26]: int[t1];
+  byte2_6[field27]: int[t1];
+  byte2_7[field28]: int[t1];
+  byte2_8[field29]: int[t1];
+  byte2_9[field30]: int[t1];
+  byte2_10[field31]: int[t1];
+  msc_location[field32]: int[t1];
+  vlr_location[field33]: int[t1];
+}
+
+table AccessInfo[tab1] {
+  primary s_id[field34]: int[t1];
+  primary ai_type[field35]: int[t1];
+  node subPartition[f45](s_id[t1][field34]);
+  data1[field36]: int[t1];
+  data2[field37]: int[t1];
+  data3[field38]: string[t3];
+  data4[field39]: string[t3];
+}
+
+table SpecialFacility[tab2] {
+  primary s_id[field40]: int[t1];
+  primary sf_type[field41]: int[t1];
+  node subPartition[f45](s_id[t1][field40]);
+  is_active[field42]: int[t1];
+  error_cntrl[field43]: int[t1];
+  data_a[field44]: int[t1];
+  data_b[field45]: string[t3];
+}
+
+table CallForwarding[tab3] {
+  primary s_id[field46]: int[t1];
+  primary sf_type[field47]: int[t1];
+  primary start_time[field48]: int[t1];
+  node subPartition[f45](s_id[t1][field46]);
+  end_time[field49]: int[t1];
+  numberx[field50]: string[t3];
+}
+
+transaction DeleteCallForwarding[f46](s_id[p78]: int[t1], sf_type[p79]: int[t1], start_time[p80]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let cf[v0]: Row<CallForwarding>[t6<tab<CallForwarding>>] = CallForwarding[t7<tab<CallForwarding>>][itab3][tab3][s_id: s_id[t1][p78], sf_type: sf_type[t1][p79], start_time: start_time[t1][p80]][t6<tab<CallForwarding>>];
+  }
+}
+
+transaction GetAccessData[f47](s_id[p81]: int[t1], ai_type[p82]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let ai[v1]: Row<AccessInfo>[t6<tab<AccessInfo>>] = AccessInfo[t7<tab<AccessInfo>>][itab1][tab1][s_id: s_id[t1][p81], ai_type: ai_type[t1][p82]][t6<tab<AccessInfo>>];
+    let d1[v2]: int[t1] = ai[t6<tab<AccessInfo>>][v1].data1[field36][t1];
+  }
+}
+
+transaction GetNewDestination[f48](s_id[p83]: int[t1], sf_type[p84]: int[t1], start_time[p85]: int[t1], end_time[p86]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let sf[v3]: Row<SpecialFacility>[t6<tab<SpecialFacility>>] = SpecialFacility[t7<tab<SpecialFacility>>][itab2][tab2][s_id: s_id[t1][p83], sf_type: sf_type[t1][p84]][t6<tab<SpecialFacility>>];
+    let sf_active[v4]: int[t1] = sf[t6<tab<SpecialFacility>>][v3].is_active[field42][t1];
+    if sf_active[t1][v4] == [f11]1[t1][t2]
+    {
+      let cf[v5]: Row<CallForwarding>[t6<tab<CallForwarding>>] = CallForwarding[t7<tab<CallForwarding>>][itab3][tab3][s_id: s_id[t1][p83], sf_type: sf_type[t1][p84], start_time: start_time[t1][p85]][t6<tab<CallForwarding>>];
+      let num[v6]: string[t3] = cf[t6<tab<CallForwarding>>][v5].numberx[field50][t3];
+    }
+  }
+}
+
+transaction GetSubscriberData[f49](s_id[p87]: int[t1]) : (t1) -> t0
+{
+  hop
+  {
+    let sub[v7]: Row<Subscriber>[t6<tab<Subscriber>>] = Subscriber[t7<tab<Subscriber>>][itab0][tab0][s_id: s_id[t1][p87]][t6<tab<Subscriber>>];
+    let bit1[v8]: int[t1] = sub[t6<tab<Subscriber>>][v7].bit_1[field2][t1];
+  }
+}
+
+transaction InsertCallForwarding[f50](s_id[p88]: int[t1], sf_type[p89]: int[t1], start_time[p90]: int[t1], end_time[p91]: int[t1], numberx[p92]: string[t3]) : (t1, t1, t1, t1, t3) -> t0
+{
+  hop
+  {
+    let sub[v9]: Row<Subscriber>[t6<tab<Subscriber>>] = Subscriber[t7<tab<Subscriber>>][itab0][tab0][s_id: s_id[t1][p88]][t6<tab<Subscriber>>];
+    let sf[v10]: Row<SpecialFacility>[t6<tab<SpecialFacility>>] = SpecialFacility[t7<tab<SpecialFacility>>][itab2][tab2][s_id: s_id[t1][p88], sf_type: sf_type[t1][p89]][t6<tab<SpecialFacility>>];
+    CallForwarding[t7<tab<CallForwarding>>][itab3][tab3][s_id: s_id[t1][p88], sf_type: sf_type[t1][p89], start_time: start_time[t1][p90]][t6<tab<CallForwarding>>] = {end_time: end_time[t1][p91], numberx: numberx[t3][p92]}[t6<tab<CallForwarding>>][t0];
+  }
+}
+
+transaction UpdateLocation[f51](s_id[p93]: int[t1], vlr_location[p94]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let sub[v11]: Row<Subscriber>[t6<tab<Subscriber>>] = Subscriber[t7<tab<Subscriber>>][itab0][tab0][s_id: s_id[t1][p93]][t6<tab<Subscriber>>];
+    sub[t6<tab<Subscriber>>][v11].vlr_location[field33][t1] = vlr_location[t1][p94][t0];
+    Subscriber[t7<tab<Subscriber>>][itab0][tab0][s_id: s_id[t1][p93]][t6<tab<Subscriber>>] = sub[t6<tab<Subscriber>>][v11][t0];
+  }
+}
+
+transaction UpdateSubscriberData[f52](s_id[p95]: int[t1], bit_1[p96]: int[t1], data_a[p97]: int[t1], sf_type[p98]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let sub[v12]: Row<Subscriber>[t6<tab<Subscriber>>] = Subscriber[t7<tab<Subscriber>>][itab0][tab0][s_id: s_id[t1][p95]][t6<tab<Subscriber>>];
+    sub[t6<tab<Subscriber>>][v12].bit_1[field2][t1] = bit_1[t1][p96][t0];
+    Subscriber[t7<tab<Subscriber>>][itab0][tab0][s_id: s_id[t1][p95]][t6<tab<Subscriber>>] = sub[t6<tab<Subscriber>>][v12][t0];
+    let sf[v13]: Row<SpecialFacility>[t6<tab<SpecialFacility>>] = SpecialFacility[t7<tab<SpecialFacility>>][itab2][tab2][s_id: s_id[t1][p95], sf_type: sf_type[t1][p98]][t6<tab<SpecialFacility>>];
+    sf[t6<tab<SpecialFacility>>][v13].data_a[field44][t1] = data_a[t1][p97][t0];
+    SpecialFacility[t7<tab<SpecialFacility>>][itab2][tab2][s_id: s_id[t1][p95], sf_type: sf_type[t1][p98]][t6<tab<SpecialFacility>>] = sf[t6<tab<SpecialFacility>>][v13][t0];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_id[f53](iter[p99]: Iterator<Subscriber>[t8<tab<Subscriber>>]) -> int[t1] : (t8<tab<Subscriber>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_id[f54](iter[p100]: Iterator<AccessInfo>[t8<tab<AccessInfo>>]) -> int[t1] : (t8<tab<AccessInfo>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ai_type[f55](iter[p101]: Iterator<AccessInfo>[t8<tab<AccessInfo>>]) -> int[t1] : (t8<tab<AccessInfo>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_id[f56](iter[p102]: Iterator<SpecialFacility>[t8<tab<SpecialFacility>>]) -> int[t1] : (t8<tab<SpecialFacility>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_sf_type[f57](iter[p103]: Iterator<SpecialFacility>[t8<tab<SpecialFacility>>]) -> int[t1] : (t8<tab<SpecialFacility>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_id[f58](iter[p104]: Iterator<CallForwarding>[t8<tab<CallForwarding>>]) -> int[t1] : (t8<tab<CallForwarding>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_sf_type[f59](iter[p105]: Iterator<CallForwarding>[t8<tab<CallForwarding>>]) -> int[t1] : (t8<tab<CallForwarding>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_start_time[f60](iter[p106]: Iterator<CallForwarding>[t8<tab<CallForwarding>>]) -> int[t1] : (t8<tab<CallForwarding>>) -> t1;
+

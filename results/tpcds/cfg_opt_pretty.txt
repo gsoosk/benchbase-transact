@@ -1,0 +1,669 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table date_dim[tab0] {
+  primary d_date_sk[f0]: int;
+  d_date[f1]: int;
+  d_year[f2]: int;
+  d_month_seq[f3]: int;
+  d_qoy[f4]: int;
+  d_moy[f5]: int;
+  d_day_name[f6]: string;
+  node_partition: g[fn18](d_date_sk[f0]);
+}
+table time_dim[tab1] {
+  primary t_time_sk[f7]: int;
+  t_hour[f8]: int;
+  t_minute[f9]: int;
+  t_am_pm[f10]: string;
+  node_partition: g[fn18](t_time_sk[f7]);
+}
+table promotion[tab2] {
+  primary p_promo_sk[f11]: int;
+  p_promo_name[f12]: string;
+  p_channel_email[f13]: string;
+  p_channel_tv[f14]: string;
+  p_channel_radio[f15]: string;
+  node_partition: g[fn18](p_promo_sk[f11]);
+}
+table item[tab3] {
+  primary i_item_sk[f16]: int;
+  i_item_id[f17]: string;
+  i_item_desc[f18]: string;
+  i_current_price[f19]: float;
+  i_class[f20]: string;
+  i_category[f21]: string;
+  i_manufact[f22]: string;
+  node_partition: f_item[fn15](i_item_sk[f16]);
+}
+table customer[tab4] {
+  primary c_customer_sk[f23]: int;
+  c_customer_id[f24]: string;
+  c_first_name[f25]: string;
+  c_last_name[f26]: string;
+  c_birth_year[f27]: int;
+  c_email_address[f28]: string;
+  node_partition: f_cust[fn16](c_customer_sk[f23]);
+}
+table customer_demographics[tab5] {
+  primary cd_demo_sk[f29]: int;
+  cd_gender[f30]: string;
+  cd_marital_status[f31]: string;
+  cd_education_status[f32]: string;
+  cd_purchase_estimate[f33]: int;
+  cd_credit_rating[f34]: string;
+  node_partition: f_cust[fn16](cd_demo_sk[f29]);
+}
+table customer_address[tab6] {
+  primary ca_address_sk[f35]: int;
+  ca_street_number[f36]: string;
+  ca_street_name[f37]: string;
+  ca_city[f38]: string;
+  ca_state[f39]: string;
+  ca_zip[f40]: string;
+  ca_country[f41]: string;
+  ca_gmt_offset[f42]: float;
+  node_partition: f_cust[fn16](ca_address_sk[f35]);
+}
+table store[tab7] {
+  primary s_store_sk[f43]: int;
+  s_store_id[f44]: string;
+  s_store_name[f45]: string;
+  s_number_employees[f46]: int;
+  s_state[f47]: string;
+  s_country[f48]: string;
+  node_partition: f_store[fn17](s_store_sk[f43]);
+}
+table warehouse[tab8] {
+  primary w_warehouse_sk[f49]: int;
+  w_warehouse_name[f50]: string;
+  w_state[f51]: string;
+  w_country[f52]: string;
+  node_partition: f_store[fn17](w_warehouse_sk[f49]);
+}
+table store_sales[tab9] {
+  primary ss_item_sk[f53]: int;
+  primary ss_ticket_number[f54]: int;
+  ss_sold_date_sk[f55]: int;
+  ss_customer_sk[f56]: int;
+  ss_store_sk[f57]: int;
+  ss_promo_sk[f58]: int;
+  ss_quantity[f59]: int;
+  ss_list_price[f60]: float;
+  ss_sales_price[f61]: float;
+  ss_ext_sales_price[f62]: float;
+  ss_net_paid[f63]: float;
+  ss_net_profit[f64]: float;
+  node_partition: f_item[fn15](ss_item_sk[f53]);
+}
+table store_returns[tab10] {
+  primary sr_item_sk[f65]: int;
+  primary sr_ticket_number[f66]: int;
+  sr_returned_date_sk[f67]: int;
+  sr_customer_sk[f68]: int;
+  sr_store_sk[f69]: int;
+  sr_return_quantity[f70]: int;
+  sr_return_amount[f71]: float;
+  sr_net_loss[f72]: float;
+  node_partition: f_item[fn15](sr_item_sk[f65]);
+}
+table catalog_sales[tab11] {
+  primary cs_item_sk[f73]: int;
+  primary cs_order_number[f74]: int;
+  cs_sold_date_sk[f75]: int;
+  cs_bill_customer_sk[f76]: int;
+  cs_ship_customer_sk[f77]: int;
+  cs_quantity[f78]: int;
+  cs_list_price[f79]: float;
+  cs_sales_price[f80]: float;
+  cs_ext_sales_price[f81]: float;
+  cs_net_profit[f82]: float;
+  node_partition: f_item[fn15](cs_item_sk[f73]);
+}
+table catalog_returns[tab12] {
+  primary cr_item_sk[f83]: int;
+  primary cr_order_number[f84]: int;
+  cr_returned_date_sk[f85]: int;
+  cr_returning_customer_sk[f86]: int;
+  cr_return_amount[f87]: float;
+  cr_net_loss[f88]: float;
+  node_partition: f_item[fn15](cr_item_sk[f83]);
+}
+table web_sales[tab13] {
+  primary ws_item_sk[f89]: int;
+  primary ws_order_number[f90]: int;
+  ws_sold_date_sk[f91]: int;
+  ws_bill_customer_sk[f92]: int;
+  ws_quantity[f93]: int;
+  ws_list_price[f94]: float;
+  ws_sales_price[f95]: float;
+  ws_ext_sales_price[f96]: float;
+  ws_net_profit[f97]: float;
+  node_partition: f_item[fn15](ws_item_sk[f89]);
+}
+table web_returns[tab14] {
+  primary wr_item_sk[f98]: int;
+  primary wr_order_number[f99]: int;
+  wr_returned_date_sk[f100]: int;
+  wr_returning_customer_sk[f101]: int;
+  wr_return_amount[f102]: float;
+  wr_net_loss[f103]: float;
+  node_partition: f_item[fn15](wr_item_sk[f98]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition f_item[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+partition f_cust[fn16](x[v21]: int)
+
+  entry_block: bb1
+bb1:
+  livein: {x[v21]}
+  return x[v21];
+  liveout: {x[v21]}
+
+partition f_store[fn17](x[v22]: int)
+
+  entry_block: bb2
+bb2:
+  livein: {x[v22]}
+  return x[v22];
+  liveout: {x[v22]}
+
+partition g[fn18](x[v23]: int)
+
+  entry_block: bb3
+bb3:
+  livein: {}
+  return 0;
+  liveout: {}
+
+transaction Q1[fn19](item_sk[v24]: int, ticket_num[v25]: int, store_sk[v26]: int, cust_sk[v27]: int)
+ {
+  entry_hop: hop4
+
+  hop4 {
+    entry_block: bb4
+    bb4:
+      livein: {}
+      hop_exit hop5;
+      liveout: {}
+  }
+
+  hop5 {
+    entry_block: bb5
+    bb5 (preds: bb4):
+      livein: {}
+      hop_exit hop6;
+      liveout: {}
+  }
+
+  hop6 {
+    entry_block: bb6
+    bb6 (preds: bb5):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q7[fn20](item_sk[v28]: int, ticket_num[v29]: int, cd_demo_sk[v30]: int, promo_sk[v31]: int)
+ {
+  entry_hop: hop7
+
+  hop7 {
+    entry_block: bb7
+    bb7:
+      livein: {}
+      hop_exit hop8;
+      liveout: {}
+  }
+
+  hop8 {
+    entry_block: bb8
+    bb8 (preds: bb7):
+      livein: {}
+      hop_exit hop9;
+      liveout: {}
+  }
+
+  hop9 {
+    entry_block: bb9
+    bb9 (preds: bb8):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q12[fn21](item_sk[v32]: int, order_num[v33]: int, date_sk[v34]: int)
+ {
+  entry_hop: hop10
+
+  hop10 {
+    entry_block: bb10
+    bb10:
+      livein: {}
+      hop_exit hop11;
+      liveout: {}
+  }
+
+  hop11 {
+    entry_block: bb11
+    bb11 (preds: bb10):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q19[fn22](item_sk[v35]: int, order_num[v36]: int, cust_sk[v37]: int, addr_sk[v38]: int, date_sk[v39]: int)
+ {
+  entry_hop: hop12
+
+  hop12 {
+    entry_block: bb12
+    bb12:
+      livein: {}
+      hop_exit hop13;
+      liveout: {}
+  }
+
+  hop13 {
+    entry_block: bb13
+    bb13 (preds: bb12):
+      livein: {}
+      hop_exit hop14;
+      liveout: {}
+  }
+
+  hop14 {
+    entry_block: bb14
+    bb14 (preds: bb13):
+      livein: {}
+      hop_exit hop15;
+      liveout: {}
+  }
+
+  hop15 {
+    entry_block: bb15
+    bb15 (preds: bb14):
+      livein: {}
+      hop_exit hop16;
+      liveout: {}
+  }
+
+  hop16 {
+    entry_block: bb16
+    bb16 (preds: bb15):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q34[fn23](item_sk[v40]: int, ticket_num[v41]: int, cust_sk[v42]: int, cd_sk[v43]: int, store_sk[v44]: int, date_sk[v45]: int)
+ {
+  entry_hop: hop17
+
+  hop17 {
+    entry_block: bb17
+    bb17:
+      livein: {}
+      hop_exit hop18;
+      liveout: {}
+  }
+
+  hop18 {
+    entry_block: bb18
+    bb18 (preds: bb17):
+      livein: {}
+      hop_exit hop19;
+      liveout: {}
+  }
+
+  hop19 {
+    entry_block: bb19
+    bb19 (preds: bb18):
+      livein: {}
+      hop_exit hop20;
+      liveout: {}
+  }
+
+  hop20 {
+    entry_block: bb20
+    bb20 (preds: bb19):
+      livein: {}
+      hop_exit hop21;
+      liveout: {}
+  }
+
+  hop21 {
+    entry_block: bb21
+    bb21 (preds: bb20):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q50[fn24](item_sk[v46]: int, ticket_num[v47]: int, ret_date_sk[v48]: int, store_sk[v49]: int)
+ {
+  entry_hop: hop22
+
+  hop22 {
+    entry_block: bb22
+    bb22:
+      livein: {}
+      hop_exit hop23;
+      liveout: {}
+  }
+
+  hop23 {
+    entry_block: bb23
+    bb23 (preds: bb22):
+      livein: {}
+      hop_exit hop24;
+      liveout: {}
+  }
+
+  hop24 {
+    entry_block: bb24
+    bb24 (preds: bb23):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q96[fn25](item_sk[v50]: int, order_num[v51]: int, warehouse_sk[v52]: int, time_sk[v53]: int, date_sk[v54]: int)
+ {
+  entry_hop: hop25
+
+  hop25 {
+    entry_block: bb25
+    bb25:
+      livein: {}
+      hop_exit hop26;
+      liveout: {}
+  }
+
+  hop26 {
+    entry_block: bb26
+    bb26 (preds: bb25):
+      livein: {}
+      hop_exit hop27;
+      liveout: {}
+  }
+
+  hop27 {
+    entry_block: bb27
+    bb27 (preds: bb26):
+      livein: {}
+      hop_exit hop28;
+      liveout: {}
+  }
+
+  hop28 {
+    entry_block: bb28
+    bb28 (preds: bb27):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_d_date_sk[fn26](iter[v55]: Iterator<table_date_dim>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_t_time_sk[fn27](iter[v56]: Iterator<table_time_dim>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_p_promo_sk[fn28](iter[v57]: Iterator<table_promotion>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_item_sk[fn29](iter[v58]: Iterator<table_item>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_c_customer_sk[fn30](iter[v59]: Iterator<table_customer>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cd_demo_sk[fn31](iter[v60]: Iterator<table_customer_demographics>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ca_address_sk[fn32](iter[v61]: Iterator<table_customer_address>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_store_sk[fn33](iter[v62]: Iterator<table_store>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_w_warehouse_sk[fn34](iter[v63]: Iterator<table_warehouse>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ss_item_sk[fn35](iter[v64]: Iterator<table_store_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ss_ticket_number[fn36](iter[v65]: Iterator<table_store_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_sr_item_sk[fn37](iter[v66]: Iterator<table_store_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_sr_ticket_number[fn38](iter[v67]: Iterator<table_store_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cs_item_sk[fn39](iter[v68]: Iterator<table_catalog_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cs_order_number[fn40](iter[v69]: Iterator<table_catalog_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cr_item_sk[fn41](iter[v70]: Iterator<table_catalog_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cr_order_number[fn42](iter[v71]: Iterator<table_catalog_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ws_item_sk[fn43](iter[v72]: Iterator<table_web_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ws_order_number[fn44](iter[v73]: Iterator<table_web_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wr_item_sk[fn45](iter[v74]: Iterator<table_web_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wr_order_number[fn46](iter[v75]: Iterator<table_web_returns>)
+
+

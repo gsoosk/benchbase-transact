@@ -1,0 +1,16 @@
+digraph SCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  f18_i0_h3 [label="Vote#0\nHop 3\n"];
+  f18_i0_h4 [label="Vote#0\nHop 4\n"];
+  f18_i0_h5 [label="Vote#0\nHop 5\n"];
+  f18_i1_h3 [label="Vote#1\nHop 3\n"];
+  f18_i1_h4 [label="Vote#1\nHop 4\n"];
+  f18_i1_h5 [label="Vote#1\nHop 5\n"];
+  f18_i0_h3 -> f18_i0_h4 [color=black, label="S"];
+  f18_i0_h4 -> f18_i0_h5 [color=black, label="S"];
+  f18_i1_h3 -> f18_i1_h4 [color=black, label="S"];
+  f18_i1_h4 -> f18_i1_h5 [color=black, label="S"];
+  f18_i0_h5 -> f18_i1_h5 [dir=none, style=dashed, color=darkorange, label="C"];
+}

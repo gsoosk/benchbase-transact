@@ -1,0 +1,1521 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table date_dim[tab0] {
+  primary d_date_sk[f0]: int;
+  d_date[f1]: int;
+  d_year[f2]: int;
+  d_month_seq[f3]: int;
+  d_qoy[f4]: int;
+  d_moy[f5]: int;
+  d_day_name[f6]: string;
+  node_partition: g[fn18](d_date_sk[f0]);
+}
+table time_dim[tab1] {
+  primary t_time_sk[f7]: int;
+  t_hour[f8]: int;
+  t_minute[f9]: int;
+  t_am_pm[f10]: string;
+  node_partition: g[fn18](t_time_sk[f7]);
+}
+table promotion[tab2] {
+  primary p_promo_sk[f11]: int;
+  p_promo_name[f12]: string;
+  p_channel_email[f13]: string;
+  p_channel_tv[f14]: string;
+  p_channel_radio[f15]: string;
+  node_partition: g[fn18](p_promo_sk[f11]);
+}
+table item[tab3] {
+  primary i_item_sk[f16]: int;
+  i_item_id[f17]: string;
+  i_item_desc[f18]: string;
+  i_current_price[f19]: float;
+  i_class[f20]: string;
+  i_category[f21]: string;
+  i_manufact[f22]: string;
+  node_partition: f_item[fn15](i_item_sk[f16]);
+}
+table customer[tab4] {
+  primary c_customer_sk[f23]: int;
+  c_customer_id[f24]: string;
+  c_first_name[f25]: string;
+  c_last_name[f26]: string;
+  c_birth_year[f27]: int;
+  c_email_address[f28]: string;
+  node_partition: f_cust[fn16](c_customer_sk[f23]);
+}
+table customer_demographics[tab5] {
+  primary cd_demo_sk[f29]: int;
+  cd_gender[f30]: string;
+  cd_marital_status[f31]: string;
+  cd_education_status[f32]: string;
+  cd_purchase_estimate[f33]: int;
+  cd_credit_rating[f34]: string;
+  node_partition: f_cust[fn16](cd_demo_sk[f29]);
+}
+table customer_address[tab6] {
+  primary ca_address_sk[f35]: int;
+  ca_street_number[f36]: string;
+  ca_street_name[f37]: string;
+  ca_city[f38]: string;
+  ca_state[f39]: string;
+  ca_zip[f40]: string;
+  ca_country[f41]: string;
+  ca_gmt_offset[f42]: float;
+  node_partition: f_cust[fn16](ca_address_sk[f35]);
+}
+table store[tab7] {
+  primary s_store_sk[f43]: int;
+  s_store_id[f44]: string;
+  s_store_name[f45]: string;
+  s_number_employees[f46]: int;
+  s_state[f47]: string;
+  s_country[f48]: string;
+  node_partition: f_store[fn17](s_store_sk[f43]);
+}
+table warehouse[tab8] {
+  primary w_warehouse_sk[f49]: int;
+  w_warehouse_name[f50]: string;
+  w_state[f51]: string;
+  w_country[f52]: string;
+  node_partition: f_store[fn17](w_warehouse_sk[f49]);
+}
+table store_sales[tab9] {
+  primary ss_item_sk[f53]: int;
+  primary ss_ticket_number[f54]: int;
+  ss_sold_date_sk[f55]: int;
+  ss_customer_sk[f56]: int;
+  ss_store_sk[f57]: int;
+  ss_promo_sk[f58]: int;
+  ss_quantity[f59]: int;
+  ss_list_price[f60]: float;
+  ss_sales_price[f61]: float;
+  ss_ext_sales_price[f62]: float;
+  ss_net_paid[f63]: float;
+  ss_net_profit[f64]: float;
+  node_partition: f_item[fn15](ss_item_sk[f53]);
+}
+table store_returns[tab10] {
+  primary sr_item_sk[f65]: int;
+  primary sr_ticket_number[f66]: int;
+  sr_returned_date_sk[f67]: int;
+  sr_customer_sk[f68]: int;
+  sr_store_sk[f69]: int;
+  sr_return_quantity[f70]: int;
+  sr_return_amount[f71]: float;
+  sr_net_loss[f72]: float;
+  node_partition: f_item[fn15](sr_item_sk[f65]);
+}
+table catalog_sales[tab11] {
+  primary cs_item_sk[f73]: int;
+  primary cs_order_number[f74]: int;
+  cs_sold_date_sk[f75]: int;
+  cs_bill_customer_sk[f76]: int;
+  cs_ship_customer_sk[f77]: int;
+  cs_quantity[f78]: int;
+  cs_list_price[f79]: float;
+  cs_sales_price[f80]: float;
+  cs_ext_sales_price[f81]: float;
+  cs_net_profit[f82]: float;
+  node_partition: f_item[fn15](cs_item_sk[f73]);
+}
+table catalog_returns[tab12] {
+  primary cr_item_sk[f83]: int;
+  primary cr_order_number[f84]: int;
+  cr_returned_date_sk[f85]: int;
+  cr_returning_customer_sk[f86]: int;
+  cr_return_amount[f87]: float;
+  cr_net_loss[f88]: float;
+  node_partition: f_item[fn15](cr_item_sk[f83]);
+}
+table web_sales[tab13] {
+  primary ws_item_sk[f89]: int;
+  primary ws_order_number[f90]: int;
+  ws_sold_date_sk[f91]: int;
+  ws_bill_customer_sk[f92]: int;
+  ws_quantity[f93]: int;
+  ws_list_price[f94]: float;
+  ws_sales_price[f95]: float;
+  ws_ext_sales_price[f96]: float;
+  ws_net_profit[f97]: float;
+  node_partition: f_item[fn15](ws_item_sk[f89]);
+}
+table web_returns[tab14] {
+  primary wr_item_sk[f98]: int;
+  primary wr_order_number[f99]: int;
+  wr_returned_date_sk[f100]: int;
+  wr_returning_customer_sk[f101]: int;
+  wr_return_amount[f102]: float;
+  wr_net_loss[f103]: float;
+  node_partition: f_item[fn15](wr_item_sk[f98]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition f_item[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+partition f_cust[fn16](x[v21]: int)
+
+  entry_block: bb1
+bb1:
+  livein: {x[v21]}
+  return x[v21];
+  liveout: {x[v21]}
+
+partition f_store[fn17](x[v22]: int)
+
+  entry_block: bb2
+bb2:
+  livein: {x[v22]}
+  return x[v22];
+  liveout: {x[v22]}
+
+partition g[fn18](x[v23]: int)
+
+  entry_block: bb3
+bb3:
+  livein: {}
+  return 0;
+  liveout: {}
+
+transaction Q1[fn19](item_sk[v24]: int, ticket_num[v25]: int, store_sk[v26]: int, cust_sk[v27]: int)
+ {
+  entry_hop: hop4
+
+  hop4 {
+    entry_block: bb4
+    bb4:
+      livein: {cust_sk[v27], item_sk[v24], ticket_num[v25], store_sk[v26]}
+        [stmt_in] livein: {store_sk[v26], item_sk[v24], ticket_num[v25], cust_sk[v27]}
+      #tmp0[v85] = store_returns[item_sk[v24], ticket_num[v25]];
+        [stmt_out] liveout: {store_sk[v26], cust_sk[v27], ticket_num[v25], item_sk[v24], #tmp0[v85]}
+        [stmt_in] livein: {store_sk[v26], cust_sk[v27], ticket_num[v25], item_sk[v24], #tmp0[v85]}
+      sr[v76] = #tmp0[v85];
+        [stmt_out] liveout: {ticket_num[v25], store_sk[v26], cust_sk[v27], item_sk[v24]}
+        [stmt_in] livein: {ticket_num[v25], store_sk[v26], cust_sk[v27], item_sk[v24]}
+      sr#sr_customer_sk[v80] = store_returns[item_sk[v24], ticket_num[v25]].sr_customer_sk;
+        [stmt_out] liveout: {item_sk[v24], ticket_num[v25], store_sk[v26], cust_sk[v27]}
+        [stmt_in] livein: {item_sk[v24], ticket_num[v25], store_sk[v26], cust_sk[v27]}
+      sr#sr_item_sk[v77] = store_returns[item_sk[v24], ticket_num[v25]].sr_item_sk;
+        [stmt_out] liveout: {cust_sk[v27], item_sk[v24], store_sk[v26], ticket_num[v25]}
+        [stmt_in] livein: {cust_sk[v27], item_sk[v24], store_sk[v26], ticket_num[v25]}
+      sr#sr_net_loss[v84] = store_returns[item_sk[v24], ticket_num[v25]].sr_net_loss;
+        [stmt_out] liveout: {cust_sk[v27], ticket_num[v25], item_sk[v24], sr#sr_net_loss[v84], store_sk[v26]}
+        [stmt_in] livein: {cust_sk[v27], ticket_num[v25], item_sk[v24], sr#sr_net_loss[v84], store_sk[v26]}
+      sr#sr_return_amount[v83] = store_returns[item_sk[v24], ticket_num[v25]].sr_return_amount;
+        [stmt_out] liveout: {cust_sk[v27], ticket_num[v25], item_sk[v24], sr#sr_net_loss[v84], store_sk[v26]}
+        [stmt_in] livein: {cust_sk[v27], ticket_num[v25], item_sk[v24], sr#sr_net_loss[v84], store_sk[v26]}
+      sr#sr_return_quantity[v82] = store_returns[item_sk[v24], ticket_num[v25]].sr_return_quantity;
+        [stmt_out] liveout: {ticket_num[v25], cust_sk[v27], item_sk[v24], sr#sr_net_loss[v84], store_sk[v26]}
+        [stmt_in] livein: {ticket_num[v25], cust_sk[v27], item_sk[v24], sr#sr_net_loss[v84], store_sk[v26]}
+      sr#sr_returned_date_sk[v79] = store_returns[item_sk[v24], ticket_num[v25]].sr_returned_date_sk;
+        [stmt_out] liveout: {store_sk[v26], cust_sk[v27], ticket_num[v25], item_sk[v24], sr#sr_net_loss[v84]}
+        [stmt_in] livein: {store_sk[v26], cust_sk[v27], ticket_num[v25], item_sk[v24], sr#sr_net_loss[v84]}
+      sr#sr_store_sk[v81] = store_returns[item_sk[v24], ticket_num[v25]].sr_store_sk;
+        [stmt_out] liveout: {store_sk[v26], ticket_num[v25], cust_sk[v27], item_sk[v24], sr#sr_net_loss[v84]}
+        [stmt_in] livein: {store_sk[v26], ticket_num[v25], cust_sk[v27], item_sk[v24], sr#sr_net_loss[v84]}
+      sr#sr_ticket_number[v78] = store_returns[item_sk[v24], ticket_num[v25]].sr_ticket_number;
+        [stmt_out] liveout: {cust_sk[v27], store_sk[v26], sr#sr_net_loss[v84]}
+        [stmt_in] livein: {cust_sk[v27], store_sk[v26], sr#sr_net_loss[v84]}
+      net_loss[v86] = sr#sr_net_loss[v84];
+        [stmt_out] liveout: {cust_sk[v27], store_sk[v26]}
+      hop_exit hop5;
+      liveout: {cust_sk[v27], store_sk[v26]}
+  }
+
+  hop5 {
+    entry_block: bb5
+    bb5 (preds: bb4):
+      livein: {cust_sk[v27], store_sk[v26]}
+        [stmt_in] livein: {store_sk[v26], cust_sk[v27]}
+      #tmp1[v94] = store[store_sk[v26]];
+        [stmt_out] liveout: {store_sk[v26], cust_sk[v27], #tmp1[v94]}
+        [stmt_in] livein: {store_sk[v26], cust_sk[v27], #tmp1[v94]}
+      s[v87] = #tmp1[v94];
+        [stmt_out] liveout: {store_sk[v26], cust_sk[v27]}
+        [stmt_in] livein: {store_sk[v26], cust_sk[v27]}
+      s#s_country[v93] = store[store_sk[v26]].s_country;
+        [stmt_out] liveout: {store_sk[v26], cust_sk[v27]}
+        [stmt_in] livein: {store_sk[v26], cust_sk[v27]}
+      s#s_number_employees[v91] = store[store_sk[v26]].s_number_employees;
+        [stmt_out] liveout: {cust_sk[v27], store_sk[v26]}
+        [stmt_in] livein: {cust_sk[v27], store_sk[v26]}
+      s#s_state[v92] = store[store_sk[v26]].s_state;
+        [stmt_out] liveout: {store_sk[v26], cust_sk[v27]}
+        [stmt_in] livein: {store_sk[v26], cust_sk[v27]}
+      s#s_store_id[v89] = store[store_sk[v26]].s_store_id;
+        [stmt_out] liveout: {cust_sk[v27], store_sk[v26]}
+        [stmt_in] livein: {cust_sk[v27], store_sk[v26]}
+      s#s_store_name[v90] = store[store_sk[v26]].s_store_name;
+        [stmt_out] liveout: {s#s_store_name[v90], cust_sk[v27], store_sk[v26]}
+        [stmt_in] livein: {s#s_store_name[v90], cust_sk[v27], store_sk[v26]}
+      s#s_store_sk[v88] = store[store_sk[v26]].s_store_sk;
+        [stmt_out] liveout: {cust_sk[v27], s#s_store_name[v90]}
+        [stmt_in] livein: {cust_sk[v27], s#s_store_name[v90]}
+      sname[v95] = s#s_store_name[v90];
+        [stmt_out] liveout: {cust_sk[v27]}
+      hop_exit hop6;
+      liveout: {cust_sk[v27]}
+  }
+
+  hop6 {
+    entry_block: bb6
+    bb6 (preds: bb5):
+      livein: {cust_sk[v27]}
+        [stmt_in] livein: {cust_sk[v27]}
+      #tmp2[v103] = customer[cust_sk[v27]];
+        [stmt_out] liveout: {#tmp2[v103], cust_sk[v27]}
+        [stmt_in] livein: {#tmp2[v103], cust_sk[v27]}
+      c[v96] = #tmp2[v103];
+        [stmt_out] liveout: {cust_sk[v27]}
+        [stmt_in] livein: {cust_sk[v27]}
+      c#c_birth_year[v101] = customer[cust_sk[v27]].c_birth_year;
+        [stmt_out] liveout: {cust_sk[v27]}
+        [stmt_in] livein: {cust_sk[v27]}
+      c#c_customer_id[v98] = customer[cust_sk[v27]].c_customer_id;
+        [stmt_out] liveout: {cust_sk[v27]}
+        [stmt_in] livein: {cust_sk[v27]}
+      c#c_customer_sk[v97] = customer[cust_sk[v27]].c_customer_sk;
+        [stmt_out] liveout: {cust_sk[v27]}
+        [stmt_in] livein: {cust_sk[v27]}
+      c#c_email_address[v102] = customer[cust_sk[v27]].c_email_address;
+        [stmt_out] liveout: {cust_sk[v27]}
+        [stmt_in] livein: {cust_sk[v27]}
+      c#c_first_name[v99] = customer[cust_sk[v27]].c_first_name;
+        [stmt_out] liveout: {c#c_first_name[v99], cust_sk[v27]}
+        [stmt_in] livein: {c#c_first_name[v99], cust_sk[v27]}
+      c#c_last_name[v100] = customer[cust_sk[v27]].c_last_name;
+        [stmt_out] liveout: {c#c_first_name[v99]}
+        [stmt_in] livein: {c#c_first_name[v99]}
+      cname[v104] = c#c_first_name[v99];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q7[fn20](item_sk[v28]: int, ticket_num[v29]: int, cd_demo_sk[v30]: int, promo_sk[v31]: int)
+ {
+  entry_hop: hop7
+
+  hop7 {
+    entry_block: bb7
+    bb7:
+      livein: {cd_demo_sk[v30], promo_sk[v31], item_sk[v28], ticket_num[v29]}
+        [stmt_in] livein: {cd_demo_sk[v30], promo_sk[v31], item_sk[v28], ticket_num[v29]}
+      #tmp3[v118] = store_sales[item_sk[v28], ticket_num[v29]];
+        [stmt_out] liveout: {promo_sk[v31], cd_demo_sk[v30], ticket_num[v29], #tmp3[v118], item_sk[v28]}
+        [stmt_in] livein: {promo_sk[v31], cd_demo_sk[v30], ticket_num[v29], #tmp3[v118], item_sk[v28]}
+      ss[v105] = #tmp3[v118];
+        [stmt_out] liveout: {cd_demo_sk[v30], item_sk[v28], ticket_num[v29], promo_sk[v31]}
+        [stmt_in] livein: {cd_demo_sk[v30], item_sk[v28], ticket_num[v29], promo_sk[v31]}
+      ss#ss_customer_sk[v109] = store_sales[item_sk[v28], ticket_num[v29]].ss_customer_sk;
+        [stmt_out] liveout: {cd_demo_sk[v30], item_sk[v28], ticket_num[v29], promo_sk[v31]}
+        [stmt_in] livein: {cd_demo_sk[v30], item_sk[v28], ticket_num[v29], promo_sk[v31]}
+      ss#ss_ext_sales_price[v115] = store_sales[item_sk[v28], ticket_num[v29]].ss_ext_sales_price;
+        [stmt_out] liveout: {promo_sk[v31], item_sk[v28], cd_demo_sk[v30], ticket_num[v29]}
+        [stmt_in] livein: {promo_sk[v31], item_sk[v28], cd_demo_sk[v30], ticket_num[v29]}
+      ss#ss_item_sk[v106] = store_sales[item_sk[v28], ticket_num[v29]].ss_item_sk;
+        [stmt_out] liveout: {ticket_num[v29], cd_demo_sk[v30], promo_sk[v31], item_sk[v28]}
+        [stmt_in] livein: {ticket_num[v29], cd_demo_sk[v30], promo_sk[v31], item_sk[v28]}
+      ss#ss_list_price[v113] = store_sales[item_sk[v28], ticket_num[v29]].ss_list_price;
+        [stmt_out] liveout: {ss#ss_list_price[v113], promo_sk[v31], item_sk[v28], cd_demo_sk[v30], ticket_num[v29]}
+        [stmt_in] livein: {ss#ss_list_price[v113], promo_sk[v31], item_sk[v28], cd_demo_sk[v30], ticket_num[v29]}
+      ss#ss_net_paid[v116] = store_sales[item_sk[v28], ticket_num[v29]].ss_net_paid;
+        [stmt_out] liveout: {ss#ss_list_price[v113], item_sk[v28], ticket_num[v29], cd_demo_sk[v30], promo_sk[v31]}
+        [stmt_in] livein: {ss#ss_list_price[v113], item_sk[v28], ticket_num[v29], cd_demo_sk[v30], promo_sk[v31]}
+      ss#ss_net_profit[v117] = store_sales[item_sk[v28], ticket_num[v29]].ss_net_profit;
+        [stmt_out] liveout: {ss#ss_list_price[v113], item_sk[v28], ticket_num[v29], promo_sk[v31], cd_demo_sk[v30]}
+        [stmt_in] livein: {ss#ss_list_price[v113], item_sk[v28], ticket_num[v29], promo_sk[v31], cd_demo_sk[v30]}
+      ss#ss_promo_sk[v111] = store_sales[item_sk[v28], ticket_num[v29]].ss_promo_sk;
+        [stmt_out] liveout: {ticket_num[v29], cd_demo_sk[v30], item_sk[v28], promo_sk[v31], ss#ss_list_price[v113]}
+        [stmt_in] livein: {ticket_num[v29], cd_demo_sk[v30], item_sk[v28], promo_sk[v31], ss#ss_list_price[v113]}
+      ss#ss_quantity[v112] = store_sales[item_sk[v28], ticket_num[v29]].ss_quantity;
+        [stmt_out] liveout: {ss#ss_quantity[v112], ticket_num[v29], cd_demo_sk[v30], promo_sk[v31], item_sk[v28], ss#ss_list_price[v113]}
+        [stmt_in] livein: {ss#ss_quantity[v112], ticket_num[v29], cd_demo_sk[v30], promo_sk[v31], item_sk[v28], ss#ss_list_price[v113]}
+      ss#ss_sales_price[v114] = store_sales[item_sk[v28], ticket_num[v29]].ss_sales_price;
+        [stmt_out] liveout: {cd_demo_sk[v30], item_sk[v28], ticket_num[v29], ss#ss_list_price[v113], ss#ss_quantity[v112], promo_sk[v31]}
+        [stmt_in] livein: {cd_demo_sk[v30], item_sk[v28], ticket_num[v29], ss#ss_list_price[v113], ss#ss_quantity[v112], promo_sk[v31]}
+      ss#ss_sold_date_sk[v108] = store_sales[item_sk[v28], ticket_num[v29]].ss_sold_date_sk;
+        [stmt_out] liveout: {ss#ss_quantity[v112], cd_demo_sk[v30], ticket_num[v29], ss#ss_list_price[v113], promo_sk[v31], item_sk[v28]}
+        [stmt_in] livein: {ss#ss_quantity[v112], cd_demo_sk[v30], ticket_num[v29], ss#ss_list_price[v113], promo_sk[v31], item_sk[v28]}
+      ss#ss_store_sk[v110] = store_sales[item_sk[v28], ticket_num[v29]].ss_store_sk;
+        [stmt_out] liveout: {promo_sk[v31], ticket_num[v29], ss#ss_list_price[v113], ss#ss_quantity[v112], item_sk[v28], cd_demo_sk[v30]}
+        [stmt_in] livein: {promo_sk[v31], ticket_num[v29], ss#ss_list_price[v113], ss#ss_quantity[v112], item_sk[v28], cd_demo_sk[v30]}
+      ss#ss_ticket_number[v107] = store_sales[item_sk[v28], ticket_num[v29]].ss_ticket_number;
+        [stmt_out] liveout: {promo_sk[v31], item_sk[v28], cd_demo_sk[v30], ss#ss_list_price[v113], ss#ss_quantity[v112]}
+        [stmt_in] livein: {promo_sk[v31], item_sk[v28], cd_demo_sk[v30], ss#ss_list_price[v113], ss#ss_quantity[v112]}
+      #tmp4[v127] = item[item_sk[v28]];
+        [stmt_out] liveout: {cd_demo_sk[v30], item_sk[v28], ss#ss_quantity[v112], ss#ss_list_price[v113], promo_sk[v31], #tmp4[v127]}
+        [stmt_in] livein: {cd_demo_sk[v30], item_sk[v28], ss#ss_quantity[v112], ss#ss_list_price[v113], promo_sk[v31], #tmp4[v127]}
+      i[v119] = #tmp4[v127];
+        [stmt_out] liveout: {ss#ss_quantity[v112], cd_demo_sk[v30], promo_sk[v31], ss#ss_list_price[v113], item_sk[v28]}
+        [stmt_in] livein: {ss#ss_quantity[v112], cd_demo_sk[v30], promo_sk[v31], ss#ss_list_price[v113], item_sk[v28]}
+      i#i_category[v125] = item[item_sk[v28]].i_category;
+        [stmt_out] liveout: {ss#ss_list_price[v113], item_sk[v28], cd_demo_sk[v30], ss#ss_quantity[v112], promo_sk[v31]}
+        [stmt_in] livein: {ss#ss_list_price[v113], item_sk[v28], cd_demo_sk[v30], ss#ss_quantity[v112], promo_sk[v31]}
+      i#i_class[v124] = item[item_sk[v28]].i_class;
+        [stmt_out] liveout: {cd_demo_sk[v30], ss#ss_quantity[v112], promo_sk[v31], item_sk[v28], ss#ss_list_price[v113]}
+        [stmt_in] livein: {cd_demo_sk[v30], ss#ss_quantity[v112], promo_sk[v31], item_sk[v28], ss#ss_list_price[v113]}
+      i#i_current_price[v123] = item[item_sk[v28]].i_current_price;
+        [stmt_out] liveout: {promo_sk[v31], cd_demo_sk[v30], item_sk[v28], ss#ss_list_price[v113], ss#ss_quantity[v112]}
+        [stmt_in] livein: {promo_sk[v31], cd_demo_sk[v30], item_sk[v28], ss#ss_list_price[v113], ss#ss_quantity[v112]}
+      i#i_item_desc[v122] = item[item_sk[v28]].i_item_desc;
+        [stmt_out] liveout: {ss#ss_quantity[v112], promo_sk[v31], cd_demo_sk[v30], item_sk[v28], ss#ss_list_price[v113]}
+        [stmt_in] livein: {ss#ss_quantity[v112], promo_sk[v31], cd_demo_sk[v30], item_sk[v28], ss#ss_list_price[v113]}
+      i#i_item_id[v121] = item[item_sk[v28]].i_item_id;
+        [stmt_out] liveout: {ss#ss_quantity[v112], promo_sk[v31], item_sk[v28], ss#ss_list_price[v113], cd_demo_sk[v30]}
+        [stmt_in] livein: {ss#ss_quantity[v112], promo_sk[v31], item_sk[v28], ss#ss_list_price[v113], cd_demo_sk[v30]}
+      i#i_item_sk[v120] = item[item_sk[v28]].i_item_sk;
+        [stmt_out] liveout: {promo_sk[v31], item_sk[v28], ss#ss_list_price[v113], ss#ss_quantity[v112], cd_demo_sk[v30]}
+        [stmt_in] livein: {promo_sk[v31], item_sk[v28], ss#ss_list_price[v113], ss#ss_quantity[v112], cd_demo_sk[v30]}
+      i#i_manufact[v126] = item[item_sk[v28]].i_manufact;
+        [stmt_out] liveout: {promo_sk[v31], cd_demo_sk[v30], ss#ss_quantity[v112], ss#ss_list_price[v113]}
+        [stmt_in] livein: {promo_sk[v31], cd_demo_sk[v30], ss#ss_quantity[v112], ss#ss_list_price[v113]}
+      qty[v128] = ss#ss_quantity[v112];
+        [stmt_out] liveout: {promo_sk[v31], cd_demo_sk[v30], ss#ss_list_price[v113]}
+        [stmt_in] livein: {promo_sk[v31], cd_demo_sk[v30], ss#ss_list_price[v113]}
+      price[v129] = ss#ss_list_price[v113];
+        [stmt_out] liveout: {cd_demo_sk[v30], promo_sk[v31]}
+      hop_exit hop8;
+      liveout: {cd_demo_sk[v30], promo_sk[v31]}
+  }
+
+  hop8 {
+    entry_block: bb8
+    bb8 (preds: bb7):
+      livein: {promo_sk[v31], cd_demo_sk[v30]}
+        [stmt_in] livein: {cd_demo_sk[v30], promo_sk[v31]}
+      #tmp5[v137] = customer_demographics[cd_demo_sk[v30]];
+        [stmt_out] liveout: {cd_demo_sk[v30], #tmp5[v137], promo_sk[v31]}
+        [stmt_in] livein: {cd_demo_sk[v30], #tmp5[v137], promo_sk[v31]}
+      cd[v130] = #tmp5[v137];
+        [stmt_out] liveout: {cd_demo_sk[v30], promo_sk[v31]}
+        [stmt_in] livein: {cd_demo_sk[v30], promo_sk[v31]}
+      cd#cd_credit_rating[v136] = customer_demographics[cd_demo_sk[v30]].cd_credit_rating;
+        [stmt_out] liveout: {cd_demo_sk[v30], promo_sk[v31]}
+        [stmt_in] livein: {cd_demo_sk[v30], promo_sk[v31]}
+      cd#cd_demo_sk[v131] = customer_demographics[cd_demo_sk[v30]].cd_demo_sk;
+        [stmt_out] liveout: {cd_demo_sk[v30], promo_sk[v31]}
+        [stmt_in] livein: {cd_demo_sk[v30], promo_sk[v31]}
+      cd#cd_education_status[v134] = customer_demographics[cd_demo_sk[v30]].cd_education_status;
+        [stmt_out] liveout: {promo_sk[v31], cd_demo_sk[v30]}
+        [stmt_in] livein: {promo_sk[v31], cd_demo_sk[v30]}
+      cd#cd_gender[v132] = customer_demographics[cd_demo_sk[v30]].cd_gender;
+        [stmt_out] liveout: {promo_sk[v31], cd#cd_gender[v132], cd_demo_sk[v30]}
+        [stmt_in] livein: {promo_sk[v31], cd#cd_gender[v132], cd_demo_sk[v30]}
+      cd#cd_marital_status[v133] = customer_demographics[cd_demo_sk[v30]].cd_marital_status;
+        [stmt_out] liveout: {promo_sk[v31], cd_demo_sk[v30], cd#cd_gender[v132]}
+        [stmt_in] livein: {promo_sk[v31], cd_demo_sk[v30], cd#cd_gender[v132]}
+      cd#cd_purchase_estimate[v135] = customer_demographics[cd_demo_sk[v30]].cd_purchase_estimate;
+        [stmt_out] liveout: {cd#cd_gender[v132], promo_sk[v31]}
+        [stmt_in] livein: {cd#cd_gender[v132], promo_sk[v31]}
+      gender[v138] = cd#cd_gender[v132];
+        [stmt_out] liveout: {promo_sk[v31]}
+      hop_exit hop9;
+      liveout: {promo_sk[v31]}
+  }
+
+  hop9 {
+    entry_block: bb9
+    bb9 (preds: bb8):
+      livein: {promo_sk[v31]}
+        [stmt_in] livein: {promo_sk[v31]}
+      #tmp6[v145] = promotion[promo_sk[v31]];
+        [stmt_out] liveout: {#tmp6[v145], promo_sk[v31]}
+        [stmt_in] livein: {#tmp6[v145], promo_sk[v31]}
+      promo[v139] = #tmp6[v145];
+        [stmt_out] liveout: {promo_sk[v31]}
+        [stmt_in] livein: {promo_sk[v31]}
+      promo#p_channel_email[v142] = promotion[promo_sk[v31]].p_channel_email;
+        [stmt_out] liveout: {promo_sk[v31]}
+        [stmt_in] livein: {promo_sk[v31]}
+      promo#p_channel_radio[v144] = promotion[promo_sk[v31]].p_channel_radio;
+        [stmt_out] liveout: {promo_sk[v31]}
+        [stmt_in] livein: {promo_sk[v31]}
+      promo#p_channel_tv[v143] = promotion[promo_sk[v31]].p_channel_tv;
+        [stmt_out] liveout: {promo_sk[v31]}
+        [stmt_in] livein: {promo_sk[v31]}
+      promo#p_promo_name[v141] = promotion[promo_sk[v31]].p_promo_name;
+        [stmt_out] liveout: {promo_sk[v31], promo#p_promo_name[v141]}
+        [stmt_in] livein: {promo_sk[v31], promo#p_promo_name[v141]}
+      promo#p_promo_sk[v140] = promotion[promo_sk[v31]].p_promo_sk;
+        [stmt_out] liveout: {promo#p_promo_name[v141]}
+        [stmt_in] livein: {promo#p_promo_name[v141]}
+      pname[v146] = promo#p_promo_name[v141];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q12[fn21](item_sk[v32]: int, order_num[v33]: int, date_sk[v34]: int)
+ {
+  entry_hop: hop10
+
+  hop10 {
+    entry_block: bb10
+    bb10:
+      livein: {order_num[v33], item_sk[v32], date_sk[v34]}
+        [stmt_in] livein: {item_sk[v32], order_num[v33], date_sk[v34]}
+      #tmp7[v157] = web_sales[item_sk[v32], order_num[v33]];
+        [stmt_out] liveout: {date_sk[v34], item_sk[v32], #tmp7[v157], order_num[v33]}
+        [stmt_in] livein: {date_sk[v34], item_sk[v32], #tmp7[v157], order_num[v33]}
+      ws[v147] = #tmp7[v157];
+        [stmt_out] liveout: {date_sk[v34], item_sk[v32], order_num[v33]}
+        [stmt_in] livein: {date_sk[v34], item_sk[v32], order_num[v33]}
+      ws#ws_bill_customer_sk[v151] = web_sales[item_sk[v32], order_num[v33]].ws_bill_customer_sk;
+        [stmt_out] liveout: {item_sk[v32], order_num[v33], date_sk[v34]}
+        [stmt_in] livein: {item_sk[v32], order_num[v33], date_sk[v34]}
+      ws#ws_ext_sales_price[v155] = web_sales[item_sk[v32], order_num[v33]].ws_ext_sales_price;
+        [stmt_out] liveout: {item_sk[v32], order_num[v33], ws#ws_ext_sales_price[v155], date_sk[v34]}
+        [stmt_in] livein: {item_sk[v32], order_num[v33], ws#ws_ext_sales_price[v155], date_sk[v34]}
+      ws#ws_item_sk[v148] = web_sales[item_sk[v32], order_num[v33]].ws_item_sk;
+        [stmt_out] liveout: {order_num[v33], date_sk[v34], item_sk[v32], ws#ws_ext_sales_price[v155]}
+        [stmt_in] livein: {order_num[v33], date_sk[v34], item_sk[v32], ws#ws_ext_sales_price[v155]}
+      ws#ws_list_price[v153] = web_sales[item_sk[v32], order_num[v33]].ws_list_price;
+        [stmt_out] liveout: {order_num[v33], item_sk[v32], ws#ws_ext_sales_price[v155], date_sk[v34]}
+        [stmt_in] livein: {order_num[v33], item_sk[v32], ws#ws_ext_sales_price[v155], date_sk[v34]}
+      ws#ws_net_profit[v156] = web_sales[item_sk[v32], order_num[v33]].ws_net_profit;
+        [stmt_out] liveout: {order_num[v33], date_sk[v34], ws#ws_ext_sales_price[v155], item_sk[v32]}
+        [stmt_in] livein: {order_num[v33], date_sk[v34], ws#ws_ext_sales_price[v155], item_sk[v32]}
+      ws#ws_order_number[v149] = web_sales[item_sk[v32], order_num[v33]].ws_order_number;
+        [stmt_out] liveout: {order_num[v33], ws#ws_ext_sales_price[v155], date_sk[v34], item_sk[v32]}
+        [stmt_in] livein: {order_num[v33], ws#ws_ext_sales_price[v155], date_sk[v34], item_sk[v32]}
+      ws#ws_quantity[v152] = web_sales[item_sk[v32], order_num[v33]].ws_quantity;
+        [stmt_out] liveout: {item_sk[v32], order_num[v33], ws#ws_ext_sales_price[v155], date_sk[v34]}
+        [stmt_in] livein: {item_sk[v32], order_num[v33], ws#ws_ext_sales_price[v155], date_sk[v34]}
+      ws#ws_sales_price[v154] = web_sales[item_sk[v32], order_num[v33]].ws_sales_price;
+        [stmt_out] liveout: {date_sk[v34], item_sk[v32], order_num[v33], ws#ws_ext_sales_price[v155]}
+        [stmt_in] livein: {date_sk[v34], item_sk[v32], order_num[v33], ws#ws_ext_sales_price[v155]}
+      ws#ws_sold_date_sk[v150] = web_sales[item_sk[v32], order_num[v33]].ws_sold_date_sk;
+        [stmt_out] liveout: {date_sk[v34], item_sk[v32], ws#ws_ext_sales_price[v155]}
+        [stmt_in] livein: {date_sk[v34], item_sk[v32], ws#ws_ext_sales_price[v155]}
+      #tmp8[v166] = item[item_sk[v32]];
+        [stmt_out] liveout: {item_sk[v32], ws#ws_ext_sales_price[v155], date_sk[v34], #tmp8[v166]}
+        [stmt_in] livein: {item_sk[v32], ws#ws_ext_sales_price[v155], date_sk[v34], #tmp8[v166]}
+      i[v158] = #tmp8[v166];
+        [stmt_out] liveout: {ws#ws_ext_sales_price[v155], date_sk[v34], item_sk[v32]}
+        [stmt_in] livein: {ws#ws_ext_sales_price[v155], date_sk[v34], item_sk[v32]}
+      i#i_category[v164] = item[item_sk[v32]].i_category;
+        [stmt_out] liveout: {ws#ws_ext_sales_price[v155], date_sk[v34], item_sk[v32]}
+        [stmt_in] livein: {ws#ws_ext_sales_price[v155], date_sk[v34], item_sk[v32]}
+      i#i_class[v163] = item[item_sk[v32]].i_class;
+        [stmt_out] liveout: {ws#ws_ext_sales_price[v155], date_sk[v34], item_sk[v32]}
+        [stmt_in] livein: {ws#ws_ext_sales_price[v155], date_sk[v34], item_sk[v32]}
+      i#i_current_price[v162] = item[item_sk[v32]].i_current_price;
+        [stmt_out] liveout: {ws#ws_ext_sales_price[v155], item_sk[v32], date_sk[v34]}
+        [stmt_in] livein: {ws#ws_ext_sales_price[v155], item_sk[v32], date_sk[v34]}
+      i#i_item_desc[v161] = item[item_sk[v32]].i_item_desc;
+        [stmt_out] liveout: {date_sk[v34], ws#ws_ext_sales_price[v155], item_sk[v32]}
+        [stmt_in] livein: {date_sk[v34], ws#ws_ext_sales_price[v155], item_sk[v32]}
+      i#i_item_id[v160] = item[item_sk[v32]].i_item_id;
+        [stmt_out] liveout: {date_sk[v34], ws#ws_ext_sales_price[v155], item_sk[v32]}
+        [stmt_in] livein: {date_sk[v34], ws#ws_ext_sales_price[v155], item_sk[v32]}
+      i#i_item_sk[v159] = item[item_sk[v32]].i_item_sk;
+        [stmt_out] liveout: {date_sk[v34], ws#ws_ext_sales_price[v155], item_sk[v32]}
+        [stmt_in] livein: {date_sk[v34], ws#ws_ext_sales_price[v155], item_sk[v32]}
+      i#i_manufact[v165] = item[item_sk[v32]].i_manufact;
+        [stmt_out] liveout: {date_sk[v34], ws#ws_ext_sales_price[v155]}
+        [stmt_in] livein: {date_sk[v34], ws#ws_ext_sales_price[v155]}
+      revenue[v167] = ws#ws_ext_sales_price[v155];
+        [stmt_out] liveout: {date_sk[v34]}
+      hop_exit hop11;
+      liveout: {date_sk[v34]}
+  }
+
+  hop11 {
+    entry_block: bb11
+    bb11 (preds: bb10):
+      livein: {date_sk[v34]}
+        [stmt_in] livein: {date_sk[v34]}
+      #tmp9[v176] = date_dim[date_sk[v34]];
+        [stmt_out] liveout: {#tmp9[v176], date_sk[v34]}
+        [stmt_in] livein: {#tmp9[v176], date_sk[v34]}
+      d[v168] = #tmp9[v176];
+        [stmt_out] liveout: {date_sk[v34]}
+        [stmt_in] livein: {date_sk[v34]}
+      d#d_date[v170] = date_dim[date_sk[v34]].d_date;
+        [stmt_out] liveout: {date_sk[v34]}
+        [stmt_in] livein: {date_sk[v34]}
+      d#d_date_sk[v169] = date_dim[date_sk[v34]].d_date_sk;
+        [stmt_out] liveout: {date_sk[v34]}
+        [stmt_in] livein: {date_sk[v34]}
+      d#d_day_name[v175] = date_dim[date_sk[v34]].d_day_name;
+        [stmt_out] liveout: {date_sk[v34]}
+        [stmt_in] livein: {date_sk[v34]}
+      d#d_month_seq[v172] = date_dim[date_sk[v34]].d_month_seq;
+        [stmt_out] liveout: {date_sk[v34]}
+        [stmt_in] livein: {date_sk[v34]}
+      d#d_moy[v174] = date_dim[date_sk[v34]].d_moy;
+        [stmt_out] liveout: {date_sk[v34]}
+        [stmt_in] livein: {date_sk[v34]}
+      d#d_qoy[v173] = date_dim[date_sk[v34]].d_qoy;
+        [stmt_out] liveout: {date_sk[v34]}
+        [stmt_in] livein: {date_sk[v34]}
+      d#d_year[v171] = date_dim[date_sk[v34]].d_year;
+        [stmt_out] liveout: {d#d_year[v171]}
+        [stmt_in] livein: {d#d_year[v171]}
+      yr[v177] = d#d_year[v171];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q19[fn22](item_sk[v35]: int, order_num[v36]: int, cust_sk[v37]: int, addr_sk[v38]: int, date_sk[v39]: int)
+ {
+  entry_hop: hop12
+
+  hop12 {
+    entry_block: bb12
+    bb12:
+      livein: {date_sk[v39], order_num[v36], addr_sk[v38], item_sk[v35], cust_sk[v37]}
+        [stmt_in] livein: {cust_sk[v37], addr_sk[v38], order_num[v36], item_sk[v35], date_sk[v39]}
+      #tmp10[v189] = catalog_sales[item_sk[v35], order_num[v36]];
+        [stmt_out] liveout: {date_sk[v39], cust_sk[v37], item_sk[v35], addr_sk[v38], order_num[v36], #tmp10[v189]}
+        [stmt_in] livein: {date_sk[v39], cust_sk[v37], item_sk[v35], addr_sk[v38], order_num[v36], #tmp10[v189]}
+      cs[v178] = #tmp10[v189];
+        [stmt_out] liveout: {date_sk[v39], order_num[v36], cust_sk[v37], item_sk[v35], addr_sk[v38]}
+        [stmt_in] livein: {date_sk[v39], order_num[v36], cust_sk[v37], item_sk[v35], addr_sk[v38]}
+      cs#cs_bill_customer_sk[v182] = catalog_sales[item_sk[v35], order_num[v36]].cs_bill_customer_sk;
+        [stmt_out] liveout: {item_sk[v35], addr_sk[v38], date_sk[v39], order_num[v36], cust_sk[v37]}
+        [stmt_in] livein: {item_sk[v35], addr_sk[v38], date_sk[v39], order_num[v36], cust_sk[v37]}
+      cs#cs_ext_sales_price[v187] = catalog_sales[item_sk[v35], order_num[v36]].cs_ext_sales_price;
+        [stmt_out] liveout: {item_sk[v35], date_sk[v39], addr_sk[v38], order_num[v36], cust_sk[v37], cs#cs_ext_sales_price[v187]}
+        [stmt_in] livein: {item_sk[v35], date_sk[v39], addr_sk[v38], order_num[v36], cust_sk[v37], cs#cs_ext_sales_price[v187]}
+      cs#cs_item_sk[v179] = catalog_sales[item_sk[v35], order_num[v36]].cs_item_sk;
+        [stmt_out] liveout: {addr_sk[v38], cust_sk[v37], date_sk[v39], item_sk[v35], order_num[v36], cs#cs_ext_sales_price[v187]}
+        [stmt_in] livein: {addr_sk[v38], cust_sk[v37], date_sk[v39], item_sk[v35], order_num[v36], cs#cs_ext_sales_price[v187]}
+      cs#cs_list_price[v185] = catalog_sales[item_sk[v35], order_num[v36]].cs_list_price;
+        [stmt_out] liveout: {date_sk[v39], order_num[v36], addr_sk[v38], cs#cs_ext_sales_price[v187], item_sk[v35], cust_sk[v37]}
+        [stmt_in] livein: {date_sk[v39], order_num[v36], addr_sk[v38], cs#cs_ext_sales_price[v187], item_sk[v35], cust_sk[v37]}
+      cs#cs_net_profit[v188] = catalog_sales[item_sk[v35], order_num[v36]].cs_net_profit;
+        [stmt_out] liveout: {cs#cs_ext_sales_price[v187], order_num[v36], cust_sk[v37], addr_sk[v38], item_sk[v35], date_sk[v39]}
+        [stmt_in] livein: {cs#cs_ext_sales_price[v187], order_num[v36], cust_sk[v37], addr_sk[v38], item_sk[v35], date_sk[v39]}
+      cs#cs_order_number[v180] = catalog_sales[item_sk[v35], order_num[v36]].cs_order_number;
+        [stmt_out] liveout: {item_sk[v35], addr_sk[v38], order_num[v36], cust_sk[v37], date_sk[v39], cs#cs_ext_sales_price[v187]}
+        [stmt_in] livein: {item_sk[v35], addr_sk[v38], order_num[v36], cust_sk[v37], date_sk[v39], cs#cs_ext_sales_price[v187]}
+      cs#cs_quantity[v184] = catalog_sales[item_sk[v35], order_num[v36]].cs_quantity;
+        [stmt_out] liveout: {date_sk[v39], addr_sk[v38], cs#cs_ext_sales_price[v187], item_sk[v35], cust_sk[v37], order_num[v36]}
+        [stmt_in] livein: {date_sk[v39], addr_sk[v38], cs#cs_ext_sales_price[v187], item_sk[v35], cust_sk[v37], order_num[v36]}
+      cs#cs_sales_price[v186] = catalog_sales[item_sk[v35], order_num[v36]].cs_sales_price;
+        [stmt_out] liveout: {cs#cs_ext_sales_price[v187], addr_sk[v38], item_sk[v35], cust_sk[v37], date_sk[v39], order_num[v36]}
+        [stmt_in] livein: {cs#cs_ext_sales_price[v187], addr_sk[v38], item_sk[v35], cust_sk[v37], date_sk[v39], order_num[v36]}
+      cs#cs_ship_customer_sk[v183] = catalog_sales[item_sk[v35], order_num[v36]].cs_ship_customer_sk;
+        [stmt_out] liveout: {addr_sk[v38], date_sk[v39], order_num[v36], cust_sk[v37], cs#cs_ext_sales_price[v187], item_sk[v35]}
+        [stmt_in] livein: {addr_sk[v38], date_sk[v39], order_num[v36], cust_sk[v37], cs#cs_ext_sales_price[v187], item_sk[v35]}
+      cs#cs_sold_date_sk[v181] = catalog_sales[item_sk[v35], order_num[v36]].cs_sold_date_sk;
+        [stmt_out] liveout: {addr_sk[v38], cust_sk[v37], item_sk[v35], cs#cs_ext_sales_price[v187], date_sk[v39]}
+        [stmt_in] livein: {addr_sk[v38], cust_sk[v37], item_sk[v35], cs#cs_ext_sales_price[v187], date_sk[v39]}
+      revenue[v190] = cs#cs_ext_sales_price[v187];
+        [stmt_out] liveout: {item_sk[v35], date_sk[v39], cust_sk[v37], addr_sk[v38]}
+      hop_exit hop13;
+      liveout: {addr_sk[v38], cust_sk[v37], item_sk[v35], date_sk[v39]}
+  }
+
+  hop13 {
+    entry_block: bb13
+    bb13 (preds: bb12):
+      livein: {date_sk[v39], addr_sk[v38], cust_sk[v37], item_sk[v35]}
+        [stmt_in] livein: {addr_sk[v38], cust_sk[v37], item_sk[v35], date_sk[v39]}
+      #tmp11[v199] = item[item_sk[v35]];
+        [stmt_out] liveout: {#tmp11[v199], date_sk[v39], cust_sk[v37], addr_sk[v38], item_sk[v35]}
+        [stmt_in] livein: {#tmp11[v199], date_sk[v39], cust_sk[v37], addr_sk[v38], item_sk[v35]}
+      i[v191] = #tmp11[v199];
+        [stmt_out] liveout: {cust_sk[v37], item_sk[v35], addr_sk[v38], date_sk[v39]}
+        [stmt_in] livein: {cust_sk[v37], item_sk[v35], addr_sk[v38], date_sk[v39]}
+      i#i_category[v197] = item[item_sk[v35]].i_category;
+        [stmt_out] liveout: {cust_sk[v37], date_sk[v39], addr_sk[v38], item_sk[v35]}
+        [stmt_in] livein: {cust_sk[v37], date_sk[v39], addr_sk[v38], item_sk[v35]}
+      i#i_class[v196] = item[item_sk[v35]].i_class;
+        [stmt_out] liveout: {date_sk[v39], cust_sk[v37], addr_sk[v38], item_sk[v35]}
+        [stmt_in] livein: {date_sk[v39], cust_sk[v37], addr_sk[v38], item_sk[v35]}
+      i#i_current_price[v195] = item[item_sk[v35]].i_current_price;
+        [stmt_out] liveout: {addr_sk[v38], item_sk[v35], date_sk[v39], cust_sk[v37]}
+        [stmt_in] livein: {addr_sk[v38], item_sk[v35], date_sk[v39], cust_sk[v37]}
+      i#i_item_desc[v194] = item[item_sk[v35]].i_item_desc;
+        [stmt_out] liveout: {addr_sk[v38], cust_sk[v37], date_sk[v39], item_sk[v35]}
+        [stmt_in] livein: {addr_sk[v38], cust_sk[v37], date_sk[v39], item_sk[v35]}
+      i#i_item_id[v193] = item[item_sk[v35]].i_item_id;
+        [stmt_out] liveout: {cust_sk[v37], addr_sk[v38], date_sk[v39], item_sk[v35]}
+        [stmt_in] livein: {cust_sk[v37], addr_sk[v38], date_sk[v39], item_sk[v35]}
+      i#i_item_sk[v192] = item[item_sk[v35]].i_item_sk;
+        [stmt_out] liveout: {item_sk[v35], date_sk[v39], cust_sk[v37], addr_sk[v38]}
+        [stmt_in] livein: {item_sk[v35], date_sk[v39], cust_sk[v37], addr_sk[v38]}
+      i#i_manufact[v198] = item[item_sk[v35]].i_manufact;
+        [stmt_out] liveout: {date_sk[v39], i#i_manufact[v198], addr_sk[v38], cust_sk[v37]}
+        [stmt_in] livein: {date_sk[v39], i#i_manufact[v198], addr_sk[v38], cust_sk[v37]}
+      brand[v200] = i#i_manufact[v198];
+        [stmt_out] liveout: {addr_sk[v38], date_sk[v39], cust_sk[v37]}
+      hop_exit hop14;
+      liveout: {addr_sk[v38], date_sk[v39], cust_sk[v37]}
+  }
+
+  hop14 {
+    entry_block: bb14
+    bb14 (preds: bb13):
+      livein: {date_sk[v39], addr_sk[v38], cust_sk[v37]}
+        [stmt_in] livein: {cust_sk[v37], addr_sk[v38], date_sk[v39]}
+      #tmp12[v208] = customer[cust_sk[v37]];
+        [stmt_out] liveout: {#tmp12[v208], addr_sk[v38], date_sk[v39], cust_sk[v37]}
+        [stmt_in] livein: {#tmp12[v208], addr_sk[v38], date_sk[v39], cust_sk[v37]}
+      c[v201] = #tmp12[v208];
+        [stmt_out] liveout: {addr_sk[v38], cust_sk[v37], date_sk[v39]}
+        [stmt_in] livein: {addr_sk[v38], cust_sk[v37], date_sk[v39]}
+      c#c_birth_year[v206] = customer[cust_sk[v37]].c_birth_year;
+        [stmt_out] liveout: {addr_sk[v38], date_sk[v39], cust_sk[v37]}
+        [stmt_in] livein: {addr_sk[v38], date_sk[v39], cust_sk[v37]}
+      c#c_customer_id[v203] = customer[cust_sk[v37]].c_customer_id;
+        [stmt_out] liveout: {cust_sk[v37], addr_sk[v38], date_sk[v39]}
+        [stmt_in] livein: {cust_sk[v37], addr_sk[v38], date_sk[v39]}
+      c#c_customer_sk[v202] = customer[cust_sk[v37]].c_customer_sk;
+        [stmt_out] liveout: {addr_sk[v38], cust_sk[v37], date_sk[v39]}
+        [stmt_in] livein: {addr_sk[v38], cust_sk[v37], date_sk[v39]}
+      c#c_email_address[v207] = customer[cust_sk[v37]].c_email_address;
+        [stmt_out] liveout: {cust_sk[v37], date_sk[v39], addr_sk[v38]}
+        [stmt_in] livein: {cust_sk[v37], date_sk[v39], addr_sk[v38]}
+      c#c_first_name[v204] = customer[cust_sk[v37]].c_first_name;
+        [stmt_out] liveout: {cust_sk[v37], date_sk[v39], addr_sk[v38]}
+        [stmt_in] livein: {cust_sk[v37], date_sk[v39], addr_sk[v38]}
+      c#c_last_name[v205] = customer[cust_sk[v37]].c_last_name;
+        [stmt_out] liveout: {date_sk[v39], addr_sk[v38]}
+      hop_exit hop15;
+      liveout: {addr_sk[v38], date_sk[v39]}
+  }
+
+  hop15 {
+    entry_block: bb15
+    bb15 (preds: bb14):
+      livein: {addr_sk[v38], date_sk[v39]}
+        [stmt_in] livein: {addr_sk[v38], date_sk[v39]}
+      #tmp13[v218] = customer_address[addr_sk[v38]];
+        [stmt_out] liveout: {date_sk[v39], #tmp13[v218], addr_sk[v38]}
+        [stmt_in] livein: {date_sk[v39], #tmp13[v218], addr_sk[v38]}
+      ca[v209] = #tmp13[v218];
+        [stmt_out] liveout: {addr_sk[v38], date_sk[v39]}
+        [stmt_in] livein: {addr_sk[v38], date_sk[v39]}
+      ca#ca_address_sk[v210] = customer_address[addr_sk[v38]].ca_address_sk;
+        [stmt_out] liveout: {date_sk[v39], addr_sk[v38]}
+        [stmt_in] livein: {date_sk[v39], addr_sk[v38]}
+      ca#ca_city[v213] = customer_address[addr_sk[v38]].ca_city;
+        [stmt_out] liveout: {addr_sk[v38], date_sk[v39]}
+        [stmt_in] livein: {addr_sk[v38], date_sk[v39]}
+      ca#ca_country[v216] = customer_address[addr_sk[v38]].ca_country;
+        [stmt_out] liveout: {date_sk[v39], addr_sk[v38]}
+        [stmt_in] livein: {date_sk[v39], addr_sk[v38]}
+      ca#ca_gmt_offset[v217] = customer_address[addr_sk[v38]].ca_gmt_offset;
+        [stmt_out] liveout: {date_sk[v39], addr_sk[v38]}
+        [stmt_in] livein: {date_sk[v39], addr_sk[v38]}
+      ca#ca_state[v214] = customer_address[addr_sk[v38]].ca_state;
+        [stmt_out] liveout: {ca#ca_state[v214], date_sk[v39], addr_sk[v38]}
+        [stmt_in] livein: {ca#ca_state[v214], date_sk[v39], addr_sk[v38]}
+      ca#ca_street_name[v212] = customer_address[addr_sk[v38]].ca_street_name;
+        [stmt_out] liveout: {ca#ca_state[v214], date_sk[v39], addr_sk[v38]}
+        [stmt_in] livein: {ca#ca_state[v214], date_sk[v39], addr_sk[v38]}
+      ca#ca_street_number[v211] = customer_address[addr_sk[v38]].ca_street_number;
+        [stmt_out] liveout: {addr_sk[v38], date_sk[v39], ca#ca_state[v214]}
+        [stmt_in] livein: {addr_sk[v38], date_sk[v39], ca#ca_state[v214]}
+      ca#ca_zip[v215] = customer_address[addr_sk[v38]].ca_zip;
+        [stmt_out] liveout: {date_sk[v39], ca#ca_state[v214]}
+        [stmt_in] livein: {date_sk[v39], ca#ca_state[v214]}
+      state[v219] = ca#ca_state[v214];
+        [stmt_out] liveout: {date_sk[v39]}
+      hop_exit hop16;
+      liveout: {date_sk[v39]}
+  }
+
+  hop16 {
+    entry_block: bb16
+    bb16 (preds: bb15):
+      livein: {date_sk[v39]}
+        [stmt_in] livein: {date_sk[v39]}
+      #tmp14[v228] = date_dim[date_sk[v39]];
+        [stmt_out] liveout: {date_sk[v39], #tmp14[v228]}
+        [stmt_in] livein: {date_sk[v39], #tmp14[v228]}
+      d[v220] = #tmp14[v228];
+        [stmt_out] liveout: {date_sk[v39]}
+        [stmt_in] livein: {date_sk[v39]}
+      d#d_date[v222] = date_dim[date_sk[v39]].d_date;
+        [stmt_out] liveout: {date_sk[v39]}
+        [stmt_in] livein: {date_sk[v39]}
+      d#d_date_sk[v221] = date_dim[date_sk[v39]].d_date_sk;
+        [stmt_out] liveout: {date_sk[v39]}
+        [stmt_in] livein: {date_sk[v39]}
+      d#d_day_name[v227] = date_dim[date_sk[v39]].d_day_name;
+        [stmt_out] liveout: {date_sk[v39]}
+        [stmt_in] livein: {date_sk[v39]}
+      d#d_month_seq[v224] = date_dim[date_sk[v39]].d_month_seq;
+        [stmt_out] liveout: {date_sk[v39]}
+        [stmt_in] livein: {date_sk[v39]}
+      d#d_moy[v226] = date_dim[date_sk[v39]].d_moy;
+        [stmt_out] liveout: {date_sk[v39]}
+        [stmt_in] livein: {date_sk[v39]}
+      d#d_qoy[v225] = date_dim[date_sk[v39]].d_qoy;
+        [stmt_out] liveout: {date_sk[v39]}
+        [stmt_in] livein: {date_sk[v39]}
+      d#d_year[v223] = date_dim[date_sk[v39]].d_year;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q34[fn23](item_sk[v40]: int, ticket_num[v41]: int, cust_sk[v42]: int, cd_sk[v43]: int, store_sk[v44]: int, date_sk[v45]: int)
+ {
+  entry_hop: hop17
+
+  hop17 {
+    entry_block: bb17
+    bb17:
+      livein: {store_sk[v44], date_sk[v45], ticket_num[v41], cd_sk[v43], cust_sk[v42], item_sk[v40]}
+        [stmt_in] livein: {item_sk[v40], cd_sk[v43], store_sk[v44], date_sk[v45], ticket_num[v41], cust_sk[v42]}
+      #tmp15[v242] = store_sales[item_sk[v40], ticket_num[v41]];
+        [stmt_out] liveout: {cd_sk[v43], item_sk[v40], #tmp15[v242], store_sk[v44], date_sk[v45], cust_sk[v42], ticket_num[v41]}
+        [stmt_in] livein: {cd_sk[v43], item_sk[v40], #tmp15[v242], store_sk[v44], date_sk[v45], cust_sk[v42], ticket_num[v41]}
+      ss[v229] = #tmp15[v242];
+        [stmt_out] liveout: {date_sk[v45], cust_sk[v42], ticket_num[v41], store_sk[v44], cd_sk[v43], item_sk[v40]}
+        [stmt_in] livein: {date_sk[v45], cust_sk[v42], ticket_num[v41], store_sk[v44], cd_sk[v43], item_sk[v40]}
+      ss#ss_customer_sk[v233] = store_sales[item_sk[v40], ticket_num[v41]].ss_customer_sk;
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44], cd_sk[v43], ticket_num[v41], item_sk[v40], cust_sk[v42]}
+        [stmt_in] livein: {date_sk[v45], store_sk[v44], cd_sk[v43], ticket_num[v41], item_sk[v40], cust_sk[v42]}
+      ss#ss_ext_sales_price[v239] = store_sales[item_sk[v40], ticket_num[v41]].ss_ext_sales_price;
+        [stmt_out] liveout: {item_sk[v40], cust_sk[v42], date_sk[v45], cd_sk[v43], store_sk[v44], ticket_num[v41]}
+        [stmt_in] livein: {item_sk[v40], cust_sk[v42], date_sk[v45], cd_sk[v43], store_sk[v44], ticket_num[v41]}
+      ss#ss_item_sk[v230] = store_sales[item_sk[v40], ticket_num[v41]].ss_item_sk;
+        [stmt_out] liveout: {ticket_num[v41], item_sk[v40], cd_sk[v43], date_sk[v45], cust_sk[v42], store_sk[v44]}
+        [stmt_in] livein: {ticket_num[v41], item_sk[v40], cd_sk[v43], date_sk[v45], cust_sk[v42], store_sk[v44]}
+      ss#ss_list_price[v237] = store_sales[item_sk[v40], ticket_num[v41]].ss_list_price;
+        [stmt_out] liveout: {item_sk[v40], cust_sk[v42], store_sk[v44], cd_sk[v43], ticket_num[v41], date_sk[v45]}
+        [stmt_in] livein: {item_sk[v40], cust_sk[v42], store_sk[v44], cd_sk[v43], ticket_num[v41], date_sk[v45]}
+      ss#ss_net_paid[v240] = store_sales[item_sk[v40], ticket_num[v41]].ss_net_paid;
+        [stmt_out] liveout: {cust_sk[v42], store_sk[v44], ticket_num[v41], cd_sk[v43], item_sk[v40], date_sk[v45]}
+        [stmt_in] livein: {cust_sk[v42], store_sk[v44], ticket_num[v41], cd_sk[v43], item_sk[v40], date_sk[v45]}
+      ss#ss_net_profit[v241] = store_sales[item_sk[v40], ticket_num[v41]].ss_net_profit;
+        [stmt_out] liveout: {store_sk[v44], date_sk[v45], cust_sk[v42], ticket_num[v41], item_sk[v40], cd_sk[v43]}
+        [stmt_in] livein: {store_sk[v44], date_sk[v45], cust_sk[v42], ticket_num[v41], item_sk[v40], cd_sk[v43]}
+      ss#ss_promo_sk[v235] = store_sales[item_sk[v40], ticket_num[v41]].ss_promo_sk;
+        [stmt_out] liveout: {ticket_num[v41], item_sk[v40], cd_sk[v43], store_sk[v44], date_sk[v45], cust_sk[v42]}
+        [stmt_in] livein: {ticket_num[v41], item_sk[v40], cd_sk[v43], store_sk[v44], date_sk[v45], cust_sk[v42]}
+      ss#ss_quantity[v236] = store_sales[item_sk[v40], ticket_num[v41]].ss_quantity;
+        [stmt_out] liveout: {ss#ss_quantity[v236], store_sk[v44], date_sk[v45], item_sk[v40], ticket_num[v41], cust_sk[v42], cd_sk[v43]}
+        [stmt_in] livein: {ss#ss_quantity[v236], store_sk[v44], date_sk[v45], item_sk[v40], ticket_num[v41], cust_sk[v42], cd_sk[v43]}
+      ss#ss_sales_price[v238] = store_sales[item_sk[v40], ticket_num[v41]].ss_sales_price;
+        [stmt_out] liveout: {ss#ss_quantity[v236], cd_sk[v43], date_sk[v45], item_sk[v40], ticket_num[v41], cust_sk[v42], store_sk[v44]}
+        [stmt_in] livein: {ss#ss_quantity[v236], cd_sk[v43], date_sk[v45], item_sk[v40], ticket_num[v41], cust_sk[v42], store_sk[v44]}
+      ss#ss_sold_date_sk[v232] = store_sales[item_sk[v40], ticket_num[v41]].ss_sold_date_sk;
+        [stmt_out] liveout: {item_sk[v40], date_sk[v45], store_sk[v44], cd_sk[v43], ticket_num[v41], cust_sk[v42], ss#ss_quantity[v236]}
+        [stmt_in] livein: {item_sk[v40], date_sk[v45], store_sk[v44], cd_sk[v43], ticket_num[v41], cust_sk[v42], ss#ss_quantity[v236]}
+      ss#ss_store_sk[v234] = store_sales[item_sk[v40], ticket_num[v41]].ss_store_sk;
+        [stmt_out] liveout: {cd_sk[v43], ticket_num[v41], cust_sk[v42], date_sk[v45], store_sk[v44], item_sk[v40], ss#ss_quantity[v236]}
+        [stmt_in] livein: {cd_sk[v43], ticket_num[v41], cust_sk[v42], date_sk[v45], store_sk[v44], item_sk[v40], ss#ss_quantity[v236]}
+      ss#ss_ticket_number[v231] = store_sales[item_sk[v40], ticket_num[v41]].ss_ticket_number;
+        [stmt_out] liveout: {cd_sk[v43], date_sk[v45], ss#ss_quantity[v236], cust_sk[v42], store_sk[v44]}
+        [stmt_in] livein: {cd_sk[v43], date_sk[v45], ss#ss_quantity[v236], cust_sk[v42], store_sk[v44]}
+      qty[v243] = ss#ss_quantity[v236];
+        [stmt_out] liveout: {cust_sk[v42], cd_sk[v43], store_sk[v44], date_sk[v45]}
+      hop_exit hop18;
+      liveout: {date_sk[v45], cust_sk[v42], store_sk[v44], cd_sk[v43]}
+  }
+
+  hop18 {
+    entry_block: bb18
+    bb18 (preds: bb17):
+      livein: {cd_sk[v43], date_sk[v45], cust_sk[v42], store_sk[v44]}
+        [stmt_in] livein: {cd_sk[v43], cust_sk[v42], date_sk[v45], store_sk[v44]}
+      #tmp16[v251] = customer[cust_sk[v42]];
+        [stmt_out] liveout: {cust_sk[v42], store_sk[v44], date_sk[v45], cd_sk[v43], #tmp16[v251]}
+        [stmt_in] livein: {cust_sk[v42], store_sk[v44], date_sk[v45], cd_sk[v43], #tmp16[v251]}
+      c[v244] = #tmp16[v251];
+        [stmt_out] liveout: {store_sk[v44], cust_sk[v42], date_sk[v45], cd_sk[v43]}
+        [stmt_in] livein: {store_sk[v44], cust_sk[v42], date_sk[v45], cd_sk[v43]}
+      c#c_birth_year[v249] = customer[cust_sk[v42]].c_birth_year;
+        [stmt_out] liveout: {store_sk[v44], cust_sk[v42], cd_sk[v43], date_sk[v45]}
+        [stmt_in] livein: {store_sk[v44], cust_sk[v42], cd_sk[v43], date_sk[v45]}
+      c#c_customer_id[v246] = customer[cust_sk[v42]].c_customer_id;
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44], cust_sk[v42], cd_sk[v43]}
+        [stmt_in] livein: {date_sk[v45], store_sk[v44], cust_sk[v42], cd_sk[v43]}
+      c#c_customer_sk[v245] = customer[cust_sk[v42]].c_customer_sk;
+        [stmt_out] liveout: {cust_sk[v42], cd_sk[v43], store_sk[v44], date_sk[v45]}
+        [stmt_in] livein: {cust_sk[v42], cd_sk[v43], store_sk[v44], date_sk[v45]}
+      c#c_email_address[v250] = customer[cust_sk[v42]].c_email_address;
+        [stmt_out] liveout: {cust_sk[v42], cd_sk[v43], date_sk[v45], store_sk[v44]}
+        [stmt_in] livein: {cust_sk[v42], cd_sk[v43], date_sk[v45], store_sk[v44]}
+      c#c_first_name[v247] = customer[cust_sk[v42]].c_first_name;
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44], cd_sk[v43], cust_sk[v42]}
+        [stmt_in] livein: {date_sk[v45], store_sk[v44], cd_sk[v43], cust_sk[v42]}
+      c#c_last_name[v248] = customer[cust_sk[v42]].c_last_name;
+        [stmt_out] liveout: {store_sk[v44], cd_sk[v43], date_sk[v45]}
+      hop_exit hop19;
+      liveout: {cd_sk[v43], store_sk[v44], date_sk[v45]}
+  }
+
+  hop19 {
+    entry_block: bb19
+    bb19 (preds: bb18):
+      livein: {date_sk[v45], cd_sk[v43], store_sk[v44]}
+        [stmt_in] livein: {store_sk[v44], date_sk[v45], cd_sk[v43]}
+      #tmp17[v259] = customer_demographics[cd_sk[v43]];
+        [stmt_out] liveout: {#tmp17[v259], date_sk[v45], cd_sk[v43], store_sk[v44]}
+        [stmt_in] livein: {#tmp17[v259], date_sk[v45], cd_sk[v43], store_sk[v44]}
+      cd[v252] = #tmp17[v259];
+        [stmt_out] liveout: {cd_sk[v43], date_sk[v45], store_sk[v44]}
+        [stmt_in] livein: {cd_sk[v43], date_sk[v45], store_sk[v44]}
+      cd#cd_credit_rating[v258] = customer_demographics[cd_sk[v43]].cd_credit_rating;
+        [stmt_out] liveout: {store_sk[v44], date_sk[v45], cd_sk[v43]}
+        [stmt_in] livein: {store_sk[v44], date_sk[v45], cd_sk[v43]}
+      cd#cd_demo_sk[v253] = customer_demographics[cd_sk[v43]].cd_demo_sk;
+        [stmt_out] liveout: {store_sk[v44], date_sk[v45], cd_sk[v43]}
+        [stmt_in] livein: {store_sk[v44], date_sk[v45], cd_sk[v43]}
+      cd#cd_education_status[v256] = customer_demographics[cd_sk[v43]].cd_education_status;
+        [stmt_out] liveout: {cd_sk[v43], store_sk[v44], date_sk[v45]}
+        [stmt_in] livein: {cd_sk[v43], store_sk[v44], date_sk[v45]}
+      cd#cd_gender[v254] = customer_demographics[cd_sk[v43]].cd_gender;
+        [stmt_out] liveout: {store_sk[v44], date_sk[v45], cd_sk[v43]}
+        [stmt_in] livein: {store_sk[v44], date_sk[v45], cd_sk[v43]}
+      cd#cd_marital_status[v255] = customer_demographics[cd_sk[v43]].cd_marital_status;
+        [stmt_out] liveout: {cd_sk[v43], store_sk[v44], date_sk[v45], cd#cd_marital_status[v255]}
+        [stmt_in] livein: {cd_sk[v43], store_sk[v44], date_sk[v45], cd#cd_marital_status[v255]}
+      cd#cd_purchase_estimate[v257] = customer_demographics[cd_sk[v43]].cd_purchase_estimate;
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44], cd#cd_marital_status[v255]}
+        [stmt_in] livein: {date_sk[v45], store_sk[v44], cd#cd_marital_status[v255]}
+      marital[v260] = cd#cd_marital_status[v255];
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44]}
+      hop_exit hop20;
+      liveout: {date_sk[v45], store_sk[v44]}
+  }
+
+  hop20 {
+    entry_block: bb20
+    bb20 (preds: bb19):
+      livein: {date_sk[v45], store_sk[v44]}
+        [stmt_in] livein: {store_sk[v44], date_sk[v45]}
+      #tmp18[v268] = store[store_sk[v44]];
+        [stmt_out] liveout: {store_sk[v44], #tmp18[v268], date_sk[v45]}
+        [stmt_in] livein: {store_sk[v44], #tmp18[v268], date_sk[v45]}
+      s[v261] = #tmp18[v268];
+        [stmt_out] liveout: {store_sk[v44], date_sk[v45]}
+        [stmt_in] livein: {store_sk[v44], date_sk[v45]}
+      s#s_country[v267] = store[store_sk[v44]].s_country;
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44]}
+        [stmt_in] livein: {date_sk[v45], store_sk[v44]}
+      s#s_number_employees[v265] = store[store_sk[v44]].s_number_employees;
+        [stmt_out] liveout: {store_sk[v44], date_sk[v45]}
+        [stmt_in] livein: {store_sk[v44], date_sk[v45]}
+      s#s_state[v266] = store[store_sk[v44]].s_state;
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44]}
+        [stmt_in] livein: {date_sk[v45], store_sk[v44]}
+      s#s_store_id[v263] = store[store_sk[v44]].s_store_id;
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44]}
+        [stmt_in] livein: {date_sk[v45], store_sk[v44]}
+      s#s_store_name[v264] = store[store_sk[v44]].s_store_name;
+        [stmt_out] liveout: {date_sk[v45], store_sk[v44]}
+        [stmt_in] livein: {date_sk[v45], store_sk[v44]}
+      s#s_store_sk[v262] = store[store_sk[v44]].s_store_sk;
+        [stmt_out] liveout: {date_sk[v45]}
+      hop_exit hop21;
+      liveout: {date_sk[v45]}
+  }
+
+  hop21 {
+    entry_block: bb21
+    bb21 (preds: bb20):
+      livein: {date_sk[v45]}
+        [stmt_in] livein: {date_sk[v45]}
+      #tmp19[v277] = date_dim[date_sk[v45]];
+        [stmt_out] liveout: {date_sk[v45], #tmp19[v277]}
+        [stmt_in] livein: {date_sk[v45], #tmp19[v277]}
+      d[v269] = #tmp19[v277];
+        [stmt_out] liveout: {date_sk[v45]}
+        [stmt_in] livein: {date_sk[v45]}
+      d#d_date[v271] = date_dim[date_sk[v45]].d_date;
+        [stmt_out] liveout: {date_sk[v45]}
+        [stmt_in] livein: {date_sk[v45]}
+      d#d_date_sk[v270] = date_dim[date_sk[v45]].d_date_sk;
+        [stmt_out] liveout: {date_sk[v45]}
+        [stmt_in] livein: {date_sk[v45]}
+      d#d_day_name[v276] = date_dim[date_sk[v45]].d_day_name;
+        [stmt_out] liveout: {date_sk[v45]}
+        [stmt_in] livein: {date_sk[v45]}
+      d#d_month_seq[v273] = date_dim[date_sk[v45]].d_month_seq;
+        [stmt_out] liveout: {date_sk[v45]}
+        [stmt_in] livein: {date_sk[v45]}
+      d#d_moy[v275] = date_dim[date_sk[v45]].d_moy;
+        [stmt_out] liveout: {date_sk[v45]}
+        [stmt_in] livein: {date_sk[v45]}
+      d#d_qoy[v274] = date_dim[date_sk[v45]].d_qoy;
+        [stmt_out] liveout: {date_sk[v45]}
+        [stmt_in] livein: {date_sk[v45]}
+      d#d_year[v272] = date_dim[date_sk[v45]].d_year;
+        [stmt_out] liveout: {d#d_year[v272]}
+        [stmt_in] livein: {d#d_year[v272]}
+      yr[v278] = d#d_year[v272];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q50[fn24](item_sk[v46]: int, ticket_num[v47]: int, ret_date_sk[v48]: int, store_sk[v49]: int)
+ {
+  entry_hop: hop22
+
+  hop22 {
+    entry_block: bb22
+    bb22:
+      livein: {ticket_num[v47], store_sk[v49], item_sk[v46], ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48], item_sk[v46], ticket_num[v47], store_sk[v49]}
+      #tmp20[v288] = store_returns[item_sk[v46], ticket_num[v47]];
+        [stmt_out] liveout: {store_sk[v49], ret_date_sk[v48], #tmp20[v288], item_sk[v46], ticket_num[v47]}
+        [stmt_in] livein: {store_sk[v49], ret_date_sk[v48], #tmp20[v288], item_sk[v46], ticket_num[v47]}
+      sr[v279] = #tmp20[v288];
+        [stmt_out] liveout: {item_sk[v46], store_sk[v49], ret_date_sk[v48], ticket_num[v47]}
+        [stmt_in] livein: {item_sk[v46], store_sk[v49], ret_date_sk[v48], ticket_num[v47]}
+      sr#sr_customer_sk[v283] = store_returns[item_sk[v46], ticket_num[v47]].sr_customer_sk;
+        [stmt_out] liveout: {ticket_num[v47], store_sk[v49], item_sk[v46], ret_date_sk[v48]}
+        [stmt_in] livein: {ticket_num[v47], store_sk[v49], item_sk[v46], ret_date_sk[v48]}
+      sr#sr_item_sk[v280] = store_returns[item_sk[v46], ticket_num[v47]].sr_item_sk;
+        [stmt_out] liveout: {ret_date_sk[v48], item_sk[v46], store_sk[v49], ticket_num[v47]}
+        [stmt_in] livein: {ret_date_sk[v48], item_sk[v46], store_sk[v49], ticket_num[v47]}
+      sr#sr_net_loss[v287] = store_returns[item_sk[v46], ticket_num[v47]].sr_net_loss;
+        [stmt_out] liveout: {store_sk[v49], item_sk[v46], ret_date_sk[v48], ticket_num[v47]}
+        [stmt_in] livein: {store_sk[v49], item_sk[v46], ret_date_sk[v48], ticket_num[v47]}
+      sr#sr_return_amount[v286] = store_returns[item_sk[v46], ticket_num[v47]].sr_return_amount;
+        [stmt_out] liveout: {ticket_num[v47], store_sk[v49], item_sk[v46], ret_date_sk[v48], sr#sr_return_amount[v286]}
+        [stmt_in] livein: {ticket_num[v47], store_sk[v49], item_sk[v46], ret_date_sk[v48], sr#sr_return_amount[v286]}
+      sr#sr_return_quantity[v285] = store_returns[item_sk[v46], ticket_num[v47]].sr_return_quantity;
+        [stmt_out] liveout: {ret_date_sk[v48], item_sk[v46], ticket_num[v47], store_sk[v49], sr#sr_return_amount[v286]}
+        [stmt_in] livein: {ret_date_sk[v48], item_sk[v46], ticket_num[v47], store_sk[v49], sr#sr_return_amount[v286]}
+      sr#sr_returned_date_sk[v282] = store_returns[item_sk[v46], ticket_num[v47]].sr_returned_date_sk;
+        [stmt_out] liveout: {ret_date_sk[v48], ticket_num[v47], store_sk[v49], sr#sr_return_amount[v286], item_sk[v46]}
+        [stmt_in] livein: {ret_date_sk[v48], ticket_num[v47], store_sk[v49], sr#sr_return_amount[v286], item_sk[v46]}
+      sr#sr_store_sk[v284] = store_returns[item_sk[v46], ticket_num[v47]].sr_store_sk;
+        [stmt_out] liveout: {ticket_num[v47], store_sk[v49], sr#sr_return_amount[v286], ret_date_sk[v48], item_sk[v46]}
+        [stmt_in] livein: {ticket_num[v47], store_sk[v49], sr#sr_return_amount[v286], ret_date_sk[v48], item_sk[v46]}
+      sr#sr_ticket_number[v281] = store_returns[item_sk[v46], ticket_num[v47]].sr_ticket_number;
+        [stmt_out] liveout: {store_sk[v49], ticket_num[v47], item_sk[v46], sr#sr_return_amount[v286], ret_date_sk[v48]}
+        [stmt_in] livein: {store_sk[v49], ticket_num[v47], item_sk[v46], sr#sr_return_amount[v286], ret_date_sk[v48]}
+      #tmp21[v302] = store_sales[item_sk[v46], ticket_num[v47]];
+        [stmt_out] liveout: {store_sk[v49], ticket_num[v47], #tmp21[v302], ret_date_sk[v48], item_sk[v46], sr#sr_return_amount[v286]}
+        [stmt_in] livein: {store_sk[v49], ticket_num[v47], #tmp21[v302], ret_date_sk[v48], item_sk[v46], sr#sr_return_amount[v286]}
+      ss[v289] = #tmp21[v302];
+        [stmt_out] liveout: {item_sk[v46], sr#sr_return_amount[v286], ticket_num[v47], ret_date_sk[v48], store_sk[v49]}
+        [stmt_in] livein: {item_sk[v46], sr#sr_return_amount[v286], ticket_num[v47], ret_date_sk[v48], store_sk[v49]}
+      ss#ss_customer_sk[v293] = store_sales[item_sk[v46], ticket_num[v47]].ss_customer_sk;
+        [stmt_out] liveout: {ret_date_sk[v48], item_sk[v46], sr#sr_return_amount[v286], store_sk[v49], ticket_num[v47]}
+        [stmt_in] livein: {ret_date_sk[v48], item_sk[v46], sr#sr_return_amount[v286], store_sk[v49], ticket_num[v47]}
+      ss#ss_ext_sales_price[v299] = store_sales[item_sk[v46], ticket_num[v47]].ss_ext_sales_price;
+        [stmt_out] liveout: {sr#sr_return_amount[v286], ret_date_sk[v48], store_sk[v49], ticket_num[v47], item_sk[v46]}
+        [stmt_in] livein: {sr#sr_return_amount[v286], ret_date_sk[v48], store_sk[v49], ticket_num[v47], item_sk[v46]}
+      ss#ss_item_sk[v290] = store_sales[item_sk[v46], ticket_num[v47]].ss_item_sk;
+        [stmt_out] liveout: {ticket_num[v47], item_sk[v46], store_sk[v49], sr#sr_return_amount[v286], ret_date_sk[v48]}
+        [stmt_in] livein: {ticket_num[v47], item_sk[v46], store_sk[v49], sr#sr_return_amount[v286], ret_date_sk[v48]}
+      ss#ss_list_price[v297] = store_sales[item_sk[v46], ticket_num[v47]].ss_list_price;
+        [stmt_out] liveout: {ret_date_sk[v48], item_sk[v46], store_sk[v49], ticket_num[v47], sr#sr_return_amount[v286]}
+        [stmt_in] livein: {ret_date_sk[v48], item_sk[v46], store_sk[v49], ticket_num[v47], sr#sr_return_amount[v286]}
+      ss#ss_net_paid[v300] = store_sales[item_sk[v46], ticket_num[v47]].ss_net_paid;
+        [stmt_out] liveout: {item_sk[v46], ticket_num[v47], sr#sr_return_amount[v286], store_sk[v49], ss#ss_net_paid[v300], ret_date_sk[v48]}
+        [stmt_in] livein: {item_sk[v46], ticket_num[v47], sr#sr_return_amount[v286], store_sk[v49], ss#ss_net_paid[v300], ret_date_sk[v48]}
+      ss#ss_net_profit[v301] = store_sales[item_sk[v46], ticket_num[v47]].ss_net_profit;
+        [stmt_out] liveout: {ss#ss_net_paid[v300], store_sk[v49], item_sk[v46], ret_date_sk[v48], ticket_num[v47], sr#sr_return_amount[v286]}
+        [stmt_in] livein: {ss#ss_net_paid[v300], store_sk[v49], item_sk[v46], ret_date_sk[v48], ticket_num[v47], sr#sr_return_amount[v286]}
+      ss#ss_promo_sk[v295] = store_sales[item_sk[v46], ticket_num[v47]].ss_promo_sk;
+        [stmt_out] liveout: {item_sk[v46], ret_date_sk[v48], store_sk[v49], sr#sr_return_amount[v286], ss#ss_net_paid[v300], ticket_num[v47]}
+        [stmt_in] livein: {item_sk[v46], ret_date_sk[v48], store_sk[v49], sr#sr_return_amount[v286], ss#ss_net_paid[v300], ticket_num[v47]}
+      ss#ss_quantity[v296] = store_sales[item_sk[v46], ticket_num[v47]].ss_quantity;
+        [stmt_out] liveout: {ss#ss_net_paid[v300], item_sk[v46], ticket_num[v47], store_sk[v49], sr#sr_return_amount[v286], ret_date_sk[v48]}
+        [stmt_in] livein: {ss#ss_net_paid[v300], item_sk[v46], ticket_num[v47], store_sk[v49], sr#sr_return_amount[v286], ret_date_sk[v48]}
+      ss#ss_sales_price[v298] = store_sales[item_sk[v46], ticket_num[v47]].ss_sales_price;
+        [stmt_out] liveout: {item_sk[v46], store_sk[v49], ret_date_sk[v48], ss#ss_net_paid[v300], ticket_num[v47], sr#sr_return_amount[v286]}
+        [stmt_in] livein: {item_sk[v46], store_sk[v49], ret_date_sk[v48], ss#ss_net_paid[v300], ticket_num[v47], sr#sr_return_amount[v286]}
+      ss#ss_sold_date_sk[v292] = store_sales[item_sk[v46], ticket_num[v47]].ss_sold_date_sk;
+        [stmt_out] liveout: {ticket_num[v47], ret_date_sk[v48], sr#sr_return_amount[v286], item_sk[v46], store_sk[v49], ss#ss_net_paid[v300]}
+        [stmt_in] livein: {ticket_num[v47], ret_date_sk[v48], sr#sr_return_amount[v286], item_sk[v46], store_sk[v49], ss#ss_net_paid[v300]}
+      ss#ss_store_sk[v294] = store_sales[item_sk[v46], ticket_num[v47]].ss_store_sk;
+        [stmt_out] liveout: {ret_date_sk[v48], item_sk[v46], ss#ss_net_paid[v300], store_sk[v49], sr#sr_return_amount[v286], ticket_num[v47]}
+        [stmt_in] livein: {ret_date_sk[v48], item_sk[v46], ss#ss_net_paid[v300], store_sk[v49], sr#sr_return_amount[v286], ticket_num[v47]}
+      ss#ss_ticket_number[v291] = store_sales[item_sk[v46], ticket_num[v47]].ss_ticket_number;
+        [stmt_out] liveout: {store_sk[v49], ss#ss_net_paid[v300], ret_date_sk[v48], sr#sr_return_amount[v286]}
+        [stmt_in] livein: {store_sk[v49], ss#ss_net_paid[v300], ret_date_sk[v48], sr#sr_return_amount[v286]}
+      ret_amt[v303] = sr#sr_return_amount[v286];
+        [stmt_out] liveout: {store_sk[v49], ss#ss_net_paid[v300], ret_date_sk[v48]}
+        [stmt_in] livein: {store_sk[v49], ss#ss_net_paid[v300], ret_date_sk[v48]}
+      sale_amt[v304] = ss#ss_net_paid[v300];
+        [stmt_out] liveout: {store_sk[v49], ret_date_sk[v48]}
+      hop_exit hop23;
+      liveout: {ret_date_sk[v48], store_sk[v49]}
+  }
+
+  hop23 {
+    entry_block: bb23
+    bb23 (preds: bb22):
+      livein: {store_sk[v49], ret_date_sk[v48]}
+        [stmt_in] livein: {store_sk[v49], ret_date_sk[v48]}
+      #tmp22[v312] = store[store_sk[v49]];
+        [stmt_out] liveout: {ret_date_sk[v48], store_sk[v49], #tmp22[v312]}
+        [stmt_in] livein: {ret_date_sk[v48], store_sk[v49], #tmp22[v312]}
+      s[v305] = #tmp22[v312];
+        [stmt_out] liveout: {store_sk[v49], ret_date_sk[v48]}
+        [stmt_in] livein: {store_sk[v49], ret_date_sk[v48]}
+      s#s_country[v311] = store[store_sk[v49]].s_country;
+        [stmt_out] liveout: {store_sk[v49], ret_date_sk[v48]}
+        [stmt_in] livein: {store_sk[v49], ret_date_sk[v48]}
+      s#s_number_employees[v309] = store[store_sk[v49]].s_number_employees;
+        [stmt_out] liveout: {ret_date_sk[v48], store_sk[v49]}
+        [stmt_in] livein: {ret_date_sk[v48], store_sk[v49]}
+      s#s_state[v310] = store[store_sk[v49]].s_state;
+        [stmt_out] liveout: {ret_date_sk[v48], store_sk[v49]}
+        [stmt_in] livein: {ret_date_sk[v48], store_sk[v49]}
+      s#s_store_id[v307] = store[store_sk[v49]].s_store_id;
+        [stmt_out] liveout: {store_sk[v49], ret_date_sk[v48]}
+        [stmt_in] livein: {store_sk[v49], ret_date_sk[v48]}
+      s#s_store_name[v308] = store[store_sk[v49]].s_store_name;
+        [stmt_out] liveout: {s#s_store_name[v308], ret_date_sk[v48], store_sk[v49]}
+        [stmt_in] livein: {s#s_store_name[v308], ret_date_sk[v48], store_sk[v49]}
+      s#s_store_sk[v306] = store[store_sk[v49]].s_store_sk;
+        [stmt_out] liveout: {s#s_store_name[v308], ret_date_sk[v48]}
+        [stmt_in] livein: {s#s_store_name[v308], ret_date_sk[v48]}
+      sname[v313] = s#s_store_name[v308];
+        [stmt_out] liveout: {ret_date_sk[v48]}
+      hop_exit hop24;
+      liveout: {ret_date_sk[v48]}
+  }
+
+  hop24 {
+    entry_block: bb24
+    bb24 (preds: bb23):
+      livein: {ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48]}
+      #tmp23[v322] = date_dim[ret_date_sk[v48]];
+        [stmt_out] liveout: {#tmp23[v322], ret_date_sk[v48]}
+        [stmt_in] livein: {#tmp23[v322], ret_date_sk[v48]}
+      d[v314] = #tmp23[v322];
+        [stmt_out] liveout: {ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48]}
+      d#d_date[v316] = date_dim[ret_date_sk[v48]].d_date;
+        [stmt_out] liveout: {ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48]}
+      d#d_date_sk[v315] = date_dim[ret_date_sk[v48]].d_date_sk;
+        [stmt_out] liveout: {ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48]}
+      d#d_day_name[v321] = date_dim[ret_date_sk[v48]].d_day_name;
+        [stmt_out] liveout: {ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48]}
+      d#d_month_seq[v318] = date_dim[ret_date_sk[v48]].d_month_seq;
+        [stmt_out] liveout: {ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48]}
+      d#d_moy[v320] = date_dim[ret_date_sk[v48]].d_moy;
+        [stmt_out] liveout: {ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48]}
+      d#d_qoy[v319] = date_dim[ret_date_sk[v48]].d_qoy;
+        [stmt_out] liveout: {ret_date_sk[v48]}
+        [stmt_in] livein: {ret_date_sk[v48]}
+      d#d_year[v317] = date_dim[ret_date_sk[v48]].d_year;
+        [stmt_out] liveout: {d#d_year[v317]}
+        [stmt_in] livein: {d#d_year[v317]}
+      yr[v323] = d#d_year[v317];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q96[fn25](item_sk[v50]: int, order_num[v51]: int, warehouse_sk[v52]: int, time_sk[v53]: int, date_sk[v54]: int)
+ {
+  entry_hop: hop25
+
+  hop25 {
+    entry_block: bb25
+    bb25:
+      livein: {item_sk[v50], date_sk[v54], warehouse_sk[v52], time_sk[v53], order_num[v51]}
+        [stmt_in] livein: {time_sk[v53], order_num[v51], date_sk[v54], warehouse_sk[v52], item_sk[v50]}
+      #tmp24[v334] = web_sales[item_sk[v50], order_num[v51]];
+        [stmt_out] liveout: {#tmp24[v334], time_sk[v53], warehouse_sk[v52], order_num[v51], item_sk[v50], date_sk[v54]}
+        [stmt_in] livein: {#tmp24[v334], time_sk[v53], warehouse_sk[v52], order_num[v51], item_sk[v50], date_sk[v54]}
+      ws[v324] = #tmp24[v334];
+        [stmt_out] liveout: {item_sk[v50], time_sk[v53], warehouse_sk[v52], date_sk[v54], order_num[v51]}
+        [stmt_in] livein: {item_sk[v50], time_sk[v53], warehouse_sk[v52], date_sk[v54], order_num[v51]}
+      ws#ws_bill_customer_sk[v328] = web_sales[item_sk[v50], order_num[v51]].ws_bill_customer_sk;
+        [stmt_out] liveout: {order_num[v51], date_sk[v54], time_sk[v53], item_sk[v50], warehouse_sk[v52]}
+        [stmt_in] livein: {order_num[v51], date_sk[v54], time_sk[v53], item_sk[v50], warehouse_sk[v52]}
+      ws#ws_ext_sales_price[v332] = web_sales[item_sk[v50], order_num[v51]].ws_ext_sales_price;
+        [stmt_out] liveout: {time_sk[v53], warehouse_sk[v52], order_num[v51], date_sk[v54], item_sk[v50]}
+        [stmt_in] livein: {time_sk[v53], warehouse_sk[v52], order_num[v51], date_sk[v54], item_sk[v50]}
+      ws#ws_item_sk[v325] = web_sales[item_sk[v50], order_num[v51]].ws_item_sk;
+        [stmt_out] liveout: {item_sk[v50], date_sk[v54], order_num[v51], time_sk[v53], warehouse_sk[v52]}
+        [stmt_in] livein: {item_sk[v50], date_sk[v54], order_num[v51], time_sk[v53], warehouse_sk[v52]}
+      ws#ws_list_price[v330] = web_sales[item_sk[v50], order_num[v51]].ws_list_price;
+        [stmt_out] liveout: {item_sk[v50], time_sk[v53], warehouse_sk[v52], date_sk[v54], order_num[v51]}
+        [stmt_in] livein: {item_sk[v50], time_sk[v53], warehouse_sk[v52], date_sk[v54], order_num[v51]}
+      ws#ws_net_profit[v333] = web_sales[item_sk[v50], order_num[v51]].ws_net_profit;
+        [stmt_out] liveout: {order_num[v51], date_sk[v54], item_sk[v50], time_sk[v53], warehouse_sk[v52]}
+        [stmt_in] livein: {order_num[v51], date_sk[v54], item_sk[v50], time_sk[v53], warehouse_sk[v52]}
+      ws#ws_order_number[v326] = web_sales[item_sk[v50], order_num[v51]].ws_order_number;
+        [stmt_out] liveout: {item_sk[v50], order_num[v51], time_sk[v53], warehouse_sk[v52], date_sk[v54]}
+        [stmt_in] livein: {item_sk[v50], order_num[v51], time_sk[v53], warehouse_sk[v52], date_sk[v54]}
+      ws#ws_quantity[v329] = web_sales[item_sk[v50], order_num[v51]].ws_quantity;
+        [stmt_out] liveout: {item_sk[v50], ws#ws_quantity[v329], order_num[v51], warehouse_sk[v52], time_sk[v53], date_sk[v54]}
+        [stmt_in] livein: {item_sk[v50], ws#ws_quantity[v329], order_num[v51], warehouse_sk[v52], time_sk[v53], date_sk[v54]}
+      ws#ws_sales_price[v331] = web_sales[item_sk[v50], order_num[v51]].ws_sales_price;
+        [stmt_out] liveout: {time_sk[v53], ws#ws_quantity[v329], warehouse_sk[v52], date_sk[v54], item_sk[v50], order_num[v51]}
+        [stmt_in] livein: {time_sk[v53], ws#ws_quantity[v329], warehouse_sk[v52], date_sk[v54], item_sk[v50], order_num[v51]}
+      ws#ws_sold_date_sk[v327] = web_sales[item_sk[v50], order_num[v51]].ws_sold_date_sk;
+        [stmt_out] liveout: {date_sk[v54], warehouse_sk[v52], time_sk[v53], ws#ws_quantity[v329]}
+        [stmt_in] livein: {date_sk[v54], warehouse_sk[v52], time_sk[v53], ws#ws_quantity[v329]}
+      qty[v335] = ws#ws_quantity[v329];
+        [stmt_out] liveout: {time_sk[v53], date_sk[v54], warehouse_sk[v52]}
+      hop_exit hop26;
+      liveout: {date_sk[v54], time_sk[v53], warehouse_sk[v52]}
+  }
+
+  hop26 {
+    entry_block: bb26
+    bb26 (preds: bb25):
+      livein: {warehouse_sk[v52], date_sk[v54], time_sk[v53]}
+        [stmt_in] livein: {warehouse_sk[v52], time_sk[v53], date_sk[v54]}
+      #tmp25[v341] = warehouse[warehouse_sk[v52]];
+        [stmt_out] liveout: {warehouse_sk[v52], #tmp25[v341], time_sk[v53], date_sk[v54]}
+        [stmt_in] livein: {warehouse_sk[v52], #tmp25[v341], time_sk[v53], date_sk[v54]}
+      w[v336] = #tmp25[v341];
+        [stmt_out] liveout: {time_sk[v53], date_sk[v54], warehouse_sk[v52]}
+        [stmt_in] livein: {time_sk[v53], date_sk[v54], warehouse_sk[v52]}
+      w#w_country[v340] = warehouse[warehouse_sk[v52]].w_country;
+        [stmt_out] liveout: {warehouse_sk[v52], date_sk[v54], time_sk[v53]}
+        [stmt_in] livein: {warehouse_sk[v52], date_sk[v54], time_sk[v53]}
+      w#w_state[v339] = warehouse[warehouse_sk[v52]].w_state;
+        [stmt_out] liveout: {date_sk[v54], time_sk[v53], warehouse_sk[v52]}
+        [stmt_in] livein: {date_sk[v54], time_sk[v53], warehouse_sk[v52]}
+      w#w_warehouse_name[v338] = warehouse[warehouse_sk[v52]].w_warehouse_name;
+        [stmt_out] liveout: {warehouse_sk[v52], w#w_warehouse_name[v338], date_sk[v54], time_sk[v53]}
+        [stmt_in] livein: {warehouse_sk[v52], w#w_warehouse_name[v338], date_sk[v54], time_sk[v53]}
+      w#w_warehouse_sk[v337] = warehouse[warehouse_sk[v52]].w_warehouse_sk;
+        [stmt_out] liveout: {w#w_warehouse_name[v338], date_sk[v54], time_sk[v53]}
+        [stmt_in] livein: {w#w_warehouse_name[v338], date_sk[v54], time_sk[v53]}
+      wname[v342] = w#w_warehouse_name[v338];
+        [stmt_out] liveout: {time_sk[v53], date_sk[v54]}
+      hop_exit hop27;
+      liveout: {time_sk[v53], date_sk[v54]}
+  }
+
+  hop27 {
+    entry_block: bb27
+    bb27 (preds: bb26):
+      livein: {time_sk[v53], date_sk[v54]}
+        [stmt_in] livein: {time_sk[v53], date_sk[v54]}
+      #tmp26[v348] = time_dim[time_sk[v53]];
+        [stmt_out] liveout: {#tmp26[v348], time_sk[v53], date_sk[v54]}
+        [stmt_in] livein: {#tmp26[v348], time_sk[v53], date_sk[v54]}
+      t[v343] = #tmp26[v348];
+        [stmt_out] liveout: {time_sk[v53], date_sk[v54]}
+        [stmt_in] livein: {time_sk[v53], date_sk[v54]}
+      t#t_am_pm[v347] = time_dim[time_sk[v53]].t_am_pm;
+        [stmt_out] liveout: {date_sk[v54], time_sk[v53]}
+        [stmt_in] livein: {date_sk[v54], time_sk[v53]}
+      t#t_hour[v345] = time_dim[time_sk[v53]].t_hour;
+        [stmt_out] liveout: {t#t_hour[v345], time_sk[v53], date_sk[v54]}
+        [stmt_in] livein: {t#t_hour[v345], time_sk[v53], date_sk[v54]}
+      t#t_minute[v346] = time_dim[time_sk[v53]].t_minute;
+        [stmt_out] liveout: {date_sk[v54], time_sk[v53], t#t_hour[v345]}
+        [stmt_in] livein: {date_sk[v54], time_sk[v53], t#t_hour[v345]}
+      t#t_time_sk[v344] = time_dim[time_sk[v53]].t_time_sk;
+        [stmt_out] liveout: {t#t_hour[v345], date_sk[v54]}
+        [stmt_in] livein: {t#t_hour[v345], date_sk[v54]}
+      hr[v349] = t#t_hour[v345];
+        [stmt_out] liveout: {date_sk[v54]}
+      hop_exit hop28;
+      liveout: {date_sk[v54]}
+  }
+
+  hop28 {
+    entry_block: bb28
+    bb28 (preds: bb27):
+      livein: {date_sk[v54]}
+        [stmt_in] livein: {date_sk[v54]}
+      #tmp27[v358] = date_dim[date_sk[v54]];
+        [stmt_out] liveout: {#tmp27[v358], date_sk[v54]}
+        [stmt_in] livein: {#tmp27[v358], date_sk[v54]}
+      d[v350] = #tmp27[v358];
+        [stmt_out] liveout: {date_sk[v54]}
+        [stmt_in] livein: {date_sk[v54]}
+      d#d_date[v352] = date_dim[date_sk[v54]].d_date;
+        [stmt_out] liveout: {date_sk[v54]}
+        [stmt_in] livein: {date_sk[v54]}
+      d#d_date_sk[v351] = date_dim[date_sk[v54]].d_date_sk;
+        [stmt_out] liveout: {date_sk[v54]}
+        [stmt_in] livein: {date_sk[v54]}
+      d#d_day_name[v357] = date_dim[date_sk[v54]].d_day_name;
+        [stmt_out] liveout: {date_sk[v54]}
+        [stmt_in] livein: {date_sk[v54]}
+      d#d_month_seq[v354] = date_dim[date_sk[v54]].d_month_seq;
+        [stmt_out] liveout: {date_sk[v54]}
+        [stmt_in] livein: {date_sk[v54]}
+      d#d_moy[v356] = date_dim[date_sk[v54]].d_moy;
+        [stmt_out] liveout: {date_sk[v54]}
+        [stmt_in] livein: {date_sk[v54]}
+      d#d_qoy[v355] = date_dim[date_sk[v54]].d_qoy;
+        [stmt_out] liveout: {date_sk[v54]}
+        [stmt_in] livein: {date_sk[v54]}
+      d#d_year[v353] = date_dim[date_sk[v54]].d_year;
+        [stmt_out] liveout: {d#d_year[v353]}
+        [stmt_in] livein: {d#d_year[v353]}
+      yr[v359] = d#d_year[v353];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_d_date_sk[fn26](iter[v55]: Iterator<table_date_dim>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_t_time_sk[fn27](iter[v56]: Iterator<table_time_dim>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_p_promo_sk[fn28](iter[v57]: Iterator<table_promotion>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_item_sk[fn29](iter[v58]: Iterator<table_item>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_c_customer_sk[fn30](iter[v59]: Iterator<table_customer>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cd_demo_sk[fn31](iter[v60]: Iterator<table_customer_demographics>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ca_address_sk[fn32](iter[v61]: Iterator<table_customer_address>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_store_sk[fn33](iter[v62]: Iterator<table_store>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_w_warehouse_sk[fn34](iter[v63]: Iterator<table_warehouse>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ss_item_sk[fn35](iter[v64]: Iterator<table_store_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ss_ticket_number[fn36](iter[v65]: Iterator<table_store_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_sr_item_sk[fn37](iter[v66]: Iterator<table_store_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_sr_ticket_number[fn38](iter[v67]: Iterator<table_store_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cs_item_sk[fn39](iter[v68]: Iterator<table_catalog_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cs_order_number[fn40](iter[v69]: Iterator<table_catalog_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cr_item_sk[fn41](iter[v70]: Iterator<table_catalog_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_cr_order_number[fn42](iter[v71]: Iterator<table_catalog_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ws_item_sk[fn43](iter[v72]: Iterator<table_web_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ws_order_number[fn44](iter[v73]: Iterator<table_web_sales>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wr_item_sk[fn45](iter[v74]: Iterator<table_web_returns>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wr_order_number[fn46](iter[v75]: Iterator<table_web_returns>)
+
+

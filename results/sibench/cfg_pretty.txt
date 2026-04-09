@@ -1,0 +1,186 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table SITable[tab0] {
+  primary id[f0]: int;
+  value[f1]: int;
+  node_partition: f[fn15](id[f0]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition f[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+transaction MinRecord[fn16](representative_id[v21]: int)
+ {
+  entry_hop: hop1
+
+  hop1 {
+    entry_block: bb1
+    bb1:
+      livein: {representative_id[v21]}
+        [stmt_in] livein: {representative_id[v21]}
+      #tmp0[v27] = SITable[representative_id[v21]];
+        [stmt_out] liveout: {representative_id[v21], #tmp0[v27]}
+        [stmt_in] livein: {representative_id[v21], #tmp0[v27]}
+      r[v24] = #tmp0[v27];
+        [stmt_out] liveout: {representative_id[v21]}
+        [stmt_in] livein: {representative_id[v21]}
+      r#id[v25] = SITable[representative_id[v21]].id;
+        [stmt_out] liveout: {representative_id[v21]}
+        [stmt_in] livein: {representative_id[v21]}
+      r#value[v26] = SITable[representative_id[v21]].value;
+        [stmt_out] liveout: {r#value[v26]}
+        [stmt_in] livein: {r#value[v26]}
+      v[v28] = r#value[v26];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction UpdateRecord[fn17](id[v22]: int)
+ {
+  entry_hop: hop2
+
+  hop2 {
+    entry_block: bb2
+    bb2:
+      livein: {id[v22]}
+        [stmt_in] livein: {id[v22]}
+      #tmp1[v32] = SITable[id[v22]];
+        [stmt_out] liveout: {id[v22], #tmp1[v32]}
+        [stmt_in] livein: {id[v22], #tmp1[v32]}
+      row[v29] = #tmp1[v32];
+        [stmt_out] liveout: {id[v22]}
+        [stmt_in] livein: {id[v22]}
+      row#id[v30] = SITable[id[v22]].id;
+        [stmt_out] liveout: {row#id[v30], id[v22]}
+        [stmt_in] livein: {row#id[v30], id[v22]}
+      row#value[v31] = SITable[id[v22]].value;
+        [stmt_out] liveout: {row#value[v31], row#id[v30], id[v22]}
+        [stmt_in] livein: {row#value[v31], row#id[v30], id[v22]}
+      #tmp2[v33] = row#value[v31] + 1;
+        [stmt_out] liveout: {#tmp2[v33], id[v22], row#id[v30]}
+        [stmt_in] livein: {#tmp2[v33], id[v22], row#id[v30]}
+      row#value[v31] = #tmp2[v33];
+        [stmt_out] liveout: {row#value[v31], row#id[v30], id[v22]}
+        [stmt_in] livein: {row#value[v31], row#id[v30], id[v22]}
+      SITable[id[v22]].id = row#id[v30];
+        [stmt_out] liveout: {id[v22], row#value[v31]}
+        [stmt_in] livein: {id[v22], row#value[v31]}
+      SITable[id[v22]].value = row#value[v31];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_id[fn18](iter[v23]: Iterator<table_SITable>)
+
+

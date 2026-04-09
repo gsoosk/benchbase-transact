@@ -1,0 +1,281 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table TEMPLATED_TABLE[tab0] {
+  primary T_ID[f0]: int;
+  T_INT_VAL[f1]: int;
+  T_FLOAT_VAL[f2]: float;
+  T_STRING_VAL[f3]: string;
+  node_partition: f[fn15](T_ID[f0]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition f[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+    [stmt_in] livein: {x[v20]}
+  #tmp0[v32] = x[v20] % 128;
+    [stmt_out] liveout: {#tmp0[v32]}
+  return #tmp0[v32];
+  liveout: {#tmp0[v32]}
+
+transaction GenericRead[fn16](key[v21]: int)
+ {
+  entry_hop: hop1
+
+  hop1 {
+    entry_block: bb1
+    bb1:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GenericUpdate[fn17](key[v22]: int, new_string[v23]: string)
+ {
+  entry_hop: hop2
+
+  hop2 {
+    entry_block: bb2
+    bb2:
+      livein: {new_string[v23], key[v22]}
+        [stmt_in] livein: {key[v22], new_string[v23]}
+      r#T_FLOAT_VAL[v42] = TEMPLATED_TABLE[key[v22]].T_FLOAT_VAL;
+        [stmt_out] liveout: {new_string[v23], key[v22], r#T_FLOAT_VAL[v42]}
+        [stmt_in] livein: {new_string[v23], key[v22], r#T_FLOAT_VAL[v42]}
+      r#T_ID[v40] = TEMPLATED_TABLE[key[v22]].T_ID;
+        [stmt_out] liveout: {key[v22], r#T_ID[v40], r#T_FLOAT_VAL[v42], new_string[v23]}
+        [stmt_in] livein: {key[v22], r#T_ID[v40], r#T_FLOAT_VAL[v42], new_string[v23]}
+      r#T_INT_VAL[v41] = TEMPLATED_TABLE[key[v22]].T_INT_VAL;
+        [stmt_out] liveout: {r#T_FLOAT_VAL[v42], r#T_ID[v40], r#T_INT_VAL[v41], new_string[v23], key[v22]}
+        [stmt_in] livein: {r#T_FLOAT_VAL[v42], r#T_ID[v40], r#T_INT_VAL[v41], new_string[v23], key[v22]}
+      r#T_STRING_VAL[v43] = new_string[v23];
+        [stmt_out] liveout: {r#T_ID[v40], r#T_INT_VAL[v41], r#T_FLOAT_VAL[v42], key[v22], r#T_STRING_VAL[v43]}
+        [stmt_in] livein: {r#T_ID[v40], r#T_INT_VAL[v41], r#T_FLOAT_VAL[v42], key[v22], r#T_STRING_VAL[v43]}
+      TEMPLATED_TABLE[key[v22]].T_FLOAT_VAL = r#T_FLOAT_VAL[v42];
+        [stmt_out] liveout: {key[v22], r#T_ID[v40], r#T_STRING_VAL[v43], r#T_INT_VAL[v41]}
+        [stmt_in] livein: {key[v22], r#T_ID[v40], r#T_STRING_VAL[v43], r#T_INT_VAL[v41]}
+      TEMPLATED_TABLE[key[v22]].T_ID = r#T_ID[v40];
+        [stmt_out] liveout: {key[v22], r#T_STRING_VAL[v43], r#T_INT_VAL[v41]}
+        [stmt_in] livein: {key[v22], r#T_STRING_VAL[v43], r#T_INT_VAL[v41]}
+      TEMPLATED_TABLE[key[v22]].T_INT_VAL = r#T_INT_VAL[v41];
+        [stmt_out] liveout: {key[v22], r#T_STRING_VAL[v43]}
+        [stmt_in] livein: {key[v22], r#T_STRING_VAL[v43]}
+      TEMPLATED_TABLE[key[v22]].T_STRING_VAL = r#T_STRING_VAL[v43];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GenericInsert[fn18](key[v24]: int, int_val[v25]: int, float_val[v26]: float, string_val[v27]: string)
+ {
+  entry_hop: hop3
+
+  hop3 {
+    entry_block: bb3
+    bb3:
+      livein: {key[v24], float_val[v26], int_val[v25], string_val[v27]}
+        [stmt_in] livein: {key[v24], int_val[v25], float_val[v26], string_val[v27]}
+      TEMPLATED_TABLE[key[v24]].T_INT_VAL = int_val[v25];
+        [stmt_out] liveout: {string_val[v27], float_val[v26], key[v24]}
+        [stmt_in] livein: {string_val[v27], float_val[v26], key[v24]}
+      TEMPLATED_TABLE[key[v24]].T_FLOAT_VAL = float_val[v26];
+        [stmt_out] liveout: {string_val[v27], key[v24]}
+        [stmt_in] livein: {string_val[v27], key[v24]}
+      TEMPLATED_TABLE[key[v24]].T_STRING_VAL = string_val[v27];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GenericReadModifyWrite[fn19](key1[v28]: int, key2[v29]: int, amount[v30]: float)
+ {
+  entry_hop: hop4
+
+  hop4 {
+    entry_block: bb4
+    bb4:
+      livein: {amount[v30], key1[v28], key2[v29]}
+        [stmt_in] livein: {amount[v30], key2[v29], key1[v28]}
+      r1#T_FLOAT_VAL[v48] = TEMPLATED_TABLE[key1[v28]].T_FLOAT_VAL;
+        [stmt_out] liveout: {r1#T_FLOAT_VAL[v48], key2[v29], key1[v28], amount[v30]}
+        [stmt_in] livein: {r1#T_FLOAT_VAL[v48], key2[v29], key1[v28], amount[v30]}
+      r1#T_ID[v46] = TEMPLATED_TABLE[key1[v28]].T_ID;
+        [stmt_out] liveout: {key1[v28], amount[v30], r1#T_FLOAT_VAL[v48], r1#T_ID[v46], key2[v29]}
+        [stmt_in] livein: {key1[v28], amount[v30], r1#T_FLOAT_VAL[v48], r1#T_ID[v46], key2[v29]}
+      r1#T_INT_VAL[v47] = TEMPLATED_TABLE[key1[v28]].T_INT_VAL;
+        [stmt_out] liveout: {key2[v29], key1[v28], r1#T_FLOAT_VAL[v48], amount[v30], r1#T_INT_VAL[v47], r1#T_ID[v46]}
+        [stmt_in] livein: {key2[v29], key1[v28], r1#T_FLOAT_VAL[v48], amount[v30], r1#T_INT_VAL[v47], r1#T_ID[v46]}
+      r1#T_STRING_VAL[v49] = TEMPLATED_TABLE[key1[v28]].T_STRING_VAL;
+        [stmt_out] liveout: {key2[v29], r1#T_INT_VAL[v47], key1[v28], r1#T_ID[v46], r1#T_FLOAT_VAL[v48], amount[v30], r1#T_STRING_VAL[v49]}
+        [stmt_in] livein: {key2[v29], r1#T_INT_VAL[v47], key1[v28], r1#T_ID[v46], r1#T_FLOAT_VAL[v48], amount[v30], r1#T_STRING_VAL[v49]}
+      #tmp4[v51] = r1#T_FLOAT_VAL[v48] - amount[v30];
+        [stmt_out] liveout: {key2[v29], key1[v28], r1#T_INT_VAL[v47], r1#T_STRING_VAL[v49], r1#T_ID[v46], #tmp4[v51], amount[v30]}
+        [stmt_in] livein: {key2[v29], key1[v28], r1#T_INT_VAL[v47], r1#T_STRING_VAL[v49], r1#T_ID[v46], #tmp4[v51], amount[v30]}
+      r1#T_FLOAT_VAL[v48] = #tmp4[v51];
+        [stmt_out] liveout: {key2[v29], r1#T_INT_VAL[v47], r1#T_ID[v46], r1#T_STRING_VAL[v49], r1#T_FLOAT_VAL[v48], key1[v28], amount[v30]}
+        [stmt_in] livein: {key2[v29], r1#T_INT_VAL[v47], r1#T_ID[v46], r1#T_STRING_VAL[v49], r1#T_FLOAT_VAL[v48], key1[v28], amount[v30]}
+      TEMPLATED_TABLE[key1[v28]].T_FLOAT_VAL = r1#T_FLOAT_VAL[v48];
+        [stmt_out] liveout: {amount[v30], key1[v28], key2[v29], r1#T_INT_VAL[v47], r1#T_ID[v46], r1#T_STRING_VAL[v49]}
+        [stmt_in] livein: {amount[v30], key1[v28], key2[v29], r1#T_INT_VAL[v47], r1#T_ID[v46], r1#T_STRING_VAL[v49]}
+      TEMPLATED_TABLE[key1[v28]].T_ID = r1#T_ID[v46];
+        [stmt_out] liveout: {r1#T_STRING_VAL[v49], key2[v29], key1[v28], r1#T_INT_VAL[v47], amount[v30]}
+        [stmt_in] livein: {r1#T_STRING_VAL[v49], key2[v29], key1[v28], r1#T_INT_VAL[v47], amount[v30]}
+      TEMPLATED_TABLE[key1[v28]].T_INT_VAL = r1#T_INT_VAL[v47];
+        [stmt_out] liveout: {key2[v29], key1[v28], r1#T_STRING_VAL[v49], amount[v30]}
+        [stmt_in] livein: {key2[v29], key1[v28], r1#T_STRING_VAL[v49], amount[v30]}
+      TEMPLATED_TABLE[key1[v28]].T_STRING_VAL = r1#T_STRING_VAL[v49];
+        [stmt_out] liveout: {key2[v29], amount[v30]}
+      hop_exit hop5;
+      liveout: {key2[v29], amount[v30]}
+  }
+
+  hop5 {
+    entry_block: bb5
+    bb5 (preds: bb4):
+      livein: {amount[v30], key2[v29]}
+        [stmt_in] livein: {key2[v29], amount[v30]}
+      r2#T_FLOAT_VAL[v55] = TEMPLATED_TABLE[key2[v29]].T_FLOAT_VAL;
+        [stmt_out] liveout: {amount[v30], r2#T_FLOAT_VAL[v55], key2[v29]}
+        [stmt_in] livein: {amount[v30], r2#T_FLOAT_VAL[v55], key2[v29]}
+      r2#T_ID[v53] = TEMPLATED_TABLE[key2[v29]].T_ID;
+        [stmt_out] liveout: {r2#T_ID[v53], key2[v29], r2#T_FLOAT_VAL[v55], amount[v30]}
+        [stmt_in] livein: {r2#T_ID[v53], key2[v29], r2#T_FLOAT_VAL[v55], amount[v30]}
+      r2#T_INT_VAL[v54] = TEMPLATED_TABLE[key2[v29]].T_INT_VAL;
+        [stmt_out] liveout: {amount[v30], r2#T_ID[v53], r2#T_INT_VAL[v54], key2[v29], r2#T_FLOAT_VAL[v55]}
+        [stmt_in] livein: {amount[v30], r2#T_ID[v53], r2#T_INT_VAL[v54], key2[v29], r2#T_FLOAT_VAL[v55]}
+      r2#T_STRING_VAL[v56] = TEMPLATED_TABLE[key2[v29]].T_STRING_VAL;
+        [stmt_out] liveout: {key2[v29], amount[v30], r2#T_FLOAT_VAL[v55], r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56], r2#T_ID[v53]}
+        [stmt_in] livein: {key2[v29], amount[v30], r2#T_FLOAT_VAL[v55], r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56], r2#T_ID[v53]}
+      #tmp6[v58] = r2#T_FLOAT_VAL[v55] + amount[v30];
+        [stmt_out] liveout: {r2#T_INT_VAL[v54], #tmp6[v58], r2#T_STRING_VAL[v56], r2#T_ID[v53], key2[v29]}
+        [stmt_in] livein: {r2#T_INT_VAL[v54], #tmp6[v58], r2#T_STRING_VAL[v56], r2#T_ID[v53], key2[v29]}
+      r2#T_FLOAT_VAL[v55] = #tmp6[v58];
+        [stmt_out] liveout: {r2#T_STRING_VAL[v56], r2#T_FLOAT_VAL[v55], r2#T_ID[v53], r2#T_INT_VAL[v54], key2[v29]}
+        [stmt_in] livein: {r2#T_STRING_VAL[v56], r2#T_FLOAT_VAL[v55], r2#T_ID[v53], r2#T_INT_VAL[v54], key2[v29]}
+      TEMPLATED_TABLE[key2[v29]].T_FLOAT_VAL = r2#T_FLOAT_VAL[v55];
+        [stmt_out] liveout: {r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56], key2[v29], r2#T_ID[v53]}
+        [stmt_in] livein: {r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56], key2[v29], r2#T_ID[v53]}
+      TEMPLATED_TABLE[key2[v29]].T_ID = r2#T_ID[v53];
+        [stmt_out] liveout: {key2[v29], r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56]}
+        [stmt_in] livein: {key2[v29], r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56]}
+      TEMPLATED_TABLE[key2[v29]].T_INT_VAL = r2#T_INT_VAL[v54];
+        [stmt_out] liveout: {key2[v29], r2#T_STRING_VAL[v56]}
+        [stmt_in] livein: {key2[v29], r2#T_STRING_VAL[v56]}
+      TEMPLATED_TABLE[key2[v29]].T_STRING_VAL = r2#T_STRING_VAL[v56];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_T_ID[fn20](iter[v31]: Iterator<table_TEMPLATED_TABLE>)
+
+

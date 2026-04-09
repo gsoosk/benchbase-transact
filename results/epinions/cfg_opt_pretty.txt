@@ -1,0 +1,396 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table item[tab0] {
+  primary i_id[f0]: int;
+  title[f1]: string;
+  node_partition: f_item[fn15](i_id[f0]);
+}
+table useracct[tab1] {
+  primary u_id[f2]: int;
+  name[f3]: string;
+  node_partition: f_user[fn16](u_id[f2]);
+}
+table review[tab2] {
+  primary u_id[f4]: int;
+  primary i_id[f5]: int;
+  rating[f6]: int;
+  creation_date[f7]: int;
+  node_partition: f_item[fn15](i_id[f5]);
+}
+table trust[tab3] {
+  primary source_u_id[f8]: int;
+  primary target_u_id[f9]: int;
+  trust[f10]: int;
+  node_partition: f_user[fn16](source_u_id[f8]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition f_item[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+partition f_user[fn16](x[v21]: int)
+
+  entry_block: bb1
+bb1:
+  livein: {x[v21]}
+  return x[v21];
+  liveout: {x[v21]}
+
+transaction GetAverageRatingByTrustedUser[fn17](iid[v22]: int, uid[v23]: int, reviewer_uid[v24]: int)
+ {
+  entry_hop: hop2
+
+  hop2 {
+    entry_block: bb2
+    bb2:
+      livein: {}
+      hop_exit hop3;
+      liveout: {}
+  }
+
+  hop3 {
+    entry_block: bb3
+    bb3 (preds: bb2):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetItemAverageRating[fn18](iid[v25]: int, reviewer_uid[v26]: int)
+ {
+  entry_hop: hop4
+
+  hop4 {
+    entry_block: bb4
+    bb4:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetItemReviewsByTrustedUser[fn19](iid[v27]: int, uid[v28]: int, reviewer_uid[v29]: int)
+ {
+  entry_hop: hop5
+
+  hop5 {
+    entry_block: bb5
+    bb5:
+      livein: {}
+      hop_exit hop6;
+      liveout: {}
+  }
+
+  hop6 {
+    entry_block: bb6
+    bb6 (preds: bb5):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetReviewItemById[fn20](iid[v30]: int, reviewer_uid[v31]: int)
+ {
+  entry_hop: hop7
+
+  hop7 {
+    entry_block: bb7
+    bb7:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetReviewsByUser[fn21](uid[v32]: int, iid[v33]: int)
+ {
+  entry_hop: hop8
+
+  hop8 {
+    entry_block: bb8
+    bb8:
+      livein: {}
+      hop_exit hop9;
+      liveout: {}
+  }
+
+  hop9 {
+    entry_block: bb9
+    bb9 (preds: bb8):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction UpdateItemTitle[fn22](iid[v34]: int, title[v35]: string)
+ {
+  entry_hop: hop10
+
+  hop10 {
+    entry_block: bb10
+    bb10:
+      livein: {iid[v34], title[v35]}
+        [stmt_in] livein: {title[v35], iid[v34]}
+      i#i_id[v102] = item[iid[v34]].i_id;
+        [stmt_out] liveout: {iid[v34], title[v35], i#i_id[v102]}
+        [stmt_in] livein: {iid[v34], title[v35], i#i_id[v102]}
+      i#title[v103] = title[v35];
+        [stmt_out] liveout: {i#i_id[v102], i#title[v103], iid[v34]}
+        [stmt_in] livein: {i#i_id[v102], i#title[v103], iid[v34]}
+      item[iid[v34]].i_id = i#i_id[v102];
+        [stmt_out] liveout: {i#title[v103], iid[v34]}
+        [stmt_in] livein: {i#title[v103], iid[v34]}
+      item[iid[v34]].title = i#title[v103];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction UpdateReviewRating[fn23](iid[v36]: int, uid[v37]: int, rating[v38]: int)
+ {
+  entry_hop: hop11
+
+  hop11 {
+    entry_block: bb11
+    bb11:
+      livein: {rating[v38], iid[v36], uid[v37]}
+        [stmt_in] livein: {iid[v36], uid[v37], rating[v38]}
+      r#creation_date[v109] = review[uid[v37], iid[v36]].creation_date;
+        [stmt_out] liveout: {iid[v36], r#creation_date[v109], uid[v37], rating[v38]}
+        [stmt_in] livein: {iid[v36], r#creation_date[v109], uid[v37], rating[v38]}
+      r#i_id[v107] = review[uid[v37], iid[v36]].i_id;
+        [stmt_out] liveout: {iid[v36], r#creation_date[v109], uid[v37], r#i_id[v107], rating[v38]}
+        [stmt_in] livein: {iid[v36], r#creation_date[v109], uid[v37], r#i_id[v107], rating[v38]}
+      r#u_id[v106] = review[uid[v37], iid[v36]].u_id;
+        [stmt_out] liveout: {rating[v38], r#i_id[v107], iid[v36], r#creation_date[v109], uid[v37], r#u_id[v106]}
+        [stmt_in] livein: {rating[v38], r#i_id[v107], iid[v36], r#creation_date[v109], uid[v37], r#u_id[v106]}
+      r#rating[v108] = rating[v38];
+        [stmt_out] liveout: {r#u_id[v106], uid[v37], r#rating[v108], r#creation_date[v109], r#i_id[v107], iid[v36]}
+        [stmt_in] livein: {r#u_id[v106], uid[v37], r#rating[v108], r#creation_date[v109], r#i_id[v107], iid[v36]}
+      review[uid[v37], iid[v36]].creation_date = r#creation_date[v109];
+        [stmt_out] liveout: {r#i_id[v107], r#u_id[v106], r#rating[v108], uid[v37], iid[v36]}
+        [stmt_in] livein: {r#i_id[v107], r#u_id[v106], r#rating[v108], uid[v37], iid[v36]}
+      review[uid[v37], iid[v36]].i_id = r#i_id[v107];
+        [stmt_out] liveout: {iid[v36], r#rating[v108], uid[v37], r#u_id[v106]}
+        [stmt_in] livein: {iid[v36], r#rating[v108], uid[v37], r#u_id[v106]}
+      review[uid[v37], iid[v36]].rating = r#rating[v108];
+        [stmt_out] liveout: {r#u_id[v106], iid[v36], uid[v37]}
+        [stmt_in] livein: {r#u_id[v106], iid[v36], uid[v37]}
+      review[uid[v37], iid[v36]].u_id = r#u_id[v106];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction UpdateTrustRating[fn24](source_uid[v39]: int, target_uid[v40]: int, trust_val[v41]: int)
+ {
+  entry_hop: hop12
+
+  hop12 {
+    entry_block: bb12
+    bb12:
+      livein: {target_uid[v40], trust_val[v41], source_uid[v39]}
+        [stmt_in] livein: {source_uid[v39], target_uid[v40], trust_val[v41]}
+      t#source_u_id[v112] = trust[source_uid[v39], target_uid[v40]].source_u_id;
+        [stmt_out] liveout: {source_uid[v39], trust_val[v41], target_uid[v40], t#source_u_id[v112]}
+        [stmt_in] livein: {source_uid[v39], trust_val[v41], target_uid[v40], t#source_u_id[v112]}
+      t#target_u_id[v113] = trust[source_uid[v39], target_uid[v40]].target_u_id;
+        [stmt_out] liveout: {source_uid[v39], t#target_u_id[v113], target_uid[v40], trust_val[v41], t#source_u_id[v112]}
+        [stmt_in] livein: {source_uid[v39], t#target_u_id[v113], target_uid[v40], trust_val[v41], t#source_u_id[v112]}
+      t#trust[v114] = trust_val[v41];
+        [stmt_out] liveout: {source_uid[v39], t#target_u_id[v113], target_uid[v40], t#source_u_id[v112], t#trust[v114]}
+        [stmt_in] livein: {source_uid[v39], t#target_u_id[v113], target_uid[v40], t#source_u_id[v112], t#trust[v114]}
+      trust[source_uid[v39], target_uid[v40]].source_u_id = t#source_u_id[v112];
+        [stmt_out] liveout: {target_uid[v40], source_uid[v39], t#target_u_id[v113], t#trust[v114]}
+        [stmt_in] livein: {target_uid[v40], source_uid[v39], t#target_u_id[v113], t#trust[v114]}
+      trust[source_uid[v39], target_uid[v40]].target_u_id = t#target_u_id[v113];
+        [stmt_out] liveout: {t#trust[v114], target_uid[v40], source_uid[v39]}
+        [stmt_in] livein: {t#trust[v114], target_uid[v40], source_uid[v39]}
+      trust[source_uid[v39], target_uid[v40]].trust = t#trust[v114];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction UpdateUserName[fn25](uid[v42]: int, name[v43]: string)
+ {
+  entry_hop: hop13
+
+  hop13 {
+    entry_block: bb13
+    bb13:
+      livein: {name[v43], uid[v42]}
+        [stmt_in] livein: {name[v43], uid[v42]}
+      u#u_id[v117] = useracct[uid[v42]].u_id;
+        [stmt_out] liveout: {name[v43], uid[v42], u#u_id[v117]}
+        [stmt_in] livein: {name[v43], uid[v42], u#u_id[v117]}
+      u#name[v118] = name[v43];
+        [stmt_out] liveout: {u#u_id[v117], u#name[v118], uid[v42]}
+        [stmt_in] livein: {u#u_id[v117], u#name[v118], uid[v42]}
+      useracct[uid[v42]].name = u#name[v118];
+        [stmt_out] liveout: {uid[v42], u#u_id[v117]}
+        [stmt_in] livein: {uid[v42], u#u_id[v117]}
+      useracct[uid[v42]].u_id = u#u_id[v117];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_id[fn26](iter[v44]: Iterator<table_item>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_u_id[fn27](iter[v45]: Iterator<table_useracct>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_u_id[fn28](iter[v46]: Iterator<table_review>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_id[fn29](iter[v47]: Iterator<table_review>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_source_u_id[fn30](iter[v48]: Iterator<table_trust>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_target_u_id[fn31](iter[v49]: Iterator<table_trust>)
+
+

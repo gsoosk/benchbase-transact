@@ -1,0 +1,39 @@
+===== Compiler run started =====
+Boogie configuration: loopUnroll = 12, timeLimit = 60s
+Verification features: cache=true, split=true, split_max_depth=5, split_strategy=balanced, split_debug=false
+[Stage 1/6] Frontend - start
+📄 AST file written to: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/ast_pretty.txt
+📄 CFG file written to: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/cfg_pretty.txt
+📄 CFG file written to: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/cfg_opt_pretty.txt
+📄 SC Graph DOT files written: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/sc_graph.dot, /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/sc_graph_combined.dot
+===== Boogie run for hop_partition_MinRecord.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for hop_partition_UpdateRecord.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f17_i0_h2_vs_f17_i1_h2.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+📄 SC Graph DOT files written: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/simplified_sc_graph.dot, /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/simplified_sc_graph_combined.dot
+📄 Go code written to: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/go
+Summary:
+  Functions: 19  Hops: 3  Instances: 2
+  C-edges (original): 1  C-edges (simplified): 0
+  Boogie loopUnroll: 12  Boogie timeLimit: 60s
+  Verifications: 1  Pass: 1  Errors: 0  Timeouts: 0  Boogie failures: 0
+  Cache hits: 0  Cache misses: 1  Cache stores: 1  Cache evictions: 0  Cache invalidations: 0  Root units: 3
+  Split total units: 3  Split root timeouts: 0  Split performed: 0  Split skipped depth: 0  Split skipped no cutpoint: 0  Split budget exhausted: 0
+  Split depth histogram: depth 0: 1  Max depth used: 0
+📄 Benchmark data written: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/data.json
+📄 Verification time histogram written: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/verification_time_histogram.png
+📄 Plotted SC-graph DOT file written: /Users/farzad/Desktop/Research/benchbase-transact/results/sibench/sc_graph_plotted.dot

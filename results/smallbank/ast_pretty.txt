@@ -1,0 +1,394 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition f[f45](x[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p77];
+}
+
+table Accounts[tab0] {
+  primary custid[field0]: int[t1];
+  node f[f45](custid[t1][field0]);
+  name[field1]: string[t3];
+}
+
+table Savings[tab1] {
+  primary custid[field2]: int[t1];
+  node f[f45](custid[t1][field2]);
+  bal[field3]: float[t4];
+}
+
+table Checking[tab2] {
+  primary custid[field4]: int[t1];
+  node f[f45](custid[t1][field4]);
+  bal[field5]: float[t4];
+}
+
+transaction Amalgamate[f46](custId0[p78]: int[t1], custId1[p79]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let s0[v0]: Row<Savings>[t6<tab<Savings>>] = Savings[t7<tab<Savings>>][itab1][tab1][custid: custId0[t1][p78]][t6<tab<Savings>>];
+    let c0[v1]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: custId0[t1][p78]][t6<tab<Checking>>];
+    let total[v2]: float[t4] = s0[t6<tab<Savings>>][v0].bal[field3][t4] + [f5]c0[t6<tab<Checking>>][v1].bal[field5][t4][t4];
+    s0[t6<tab<Savings>>][v0].bal[field3][t4] = 0.0[t4][t0];
+    c0[t6<tab<Checking>>][v1].bal[field5][t4] = 0.0[t4][t0];
+    Savings[t7<tab<Savings>>][itab1][tab1][custid: custId0[t1][p78]][t6<tab<Savings>>] = s0[t6<tab<Savings>>][v0][t0];
+    Checking[t7<tab<Checking>>][itab2][tab2][custid: custId0[t1][p78]][t6<tab<Checking>>] = c0[t6<tab<Checking>>][v1][t0];
+  }
+  hop
+  {
+    let c1[v3]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: custId1[t1][p79]][t6<tab<Checking>>];
+    c1[t6<tab<Checking>>][v3].bal[field5][t4] = c1[t6<tab<Checking>>][v3].bal[field5][t4] + [f5]total[t4][v2][t4][t0];
+    Checking[t7<tab<Checking>>][itab2][tab2][custid: custId1[t1][p79]][t6<tab<Checking>>] = c1[t6<tab<Checking>>][v3][t0];
+  }
+}
+
+transaction Balance[f47](custId[p80]: int[t1]) : (t1) -> t0
+{
+  hop
+  {
+    let a[v4]: Row<Accounts>[t6<tab<Accounts>>] = Accounts[t7<tab<Accounts>>][itab0][tab0][custid: custId[t1][p80]][t6<tab<Accounts>>];
+    let s[v5]: Row<Savings>[t6<tab<Savings>>] = Savings[t7<tab<Savings>>][itab1][tab1][custid: custId[t1][p80]][t6<tab<Savings>>];
+    let c[v6]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: custId[t1][p80]][t6<tab<Checking>>];
+    let total[v7]: float[t4] = s[t6<tab<Savings>>][v5].bal[field3][t4] + [f5]c[t6<tab<Checking>>][v6].bal[field5][t4][t4];
+  }
+}
+
+transaction DepositChecking[f48](custId[p81]: int[t1], amount[p82]: float[t4]) : (t1, t4) -> t0
+{
+  hop
+  {
+    let a[v8]: Row<Accounts>[t6<tab<Accounts>>] = Accounts[t7<tab<Accounts>>][itab0][tab0][custid: custId[t1][p81]][t6<tab<Accounts>>];
+    let c[v9]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: custId[t1][p81]][t6<tab<Checking>>];
+    c[t6<tab<Checking>>][v9].bal[field5][t4] = c[t6<tab<Checking>>][v9].bal[field5][t4] + [f5]amount[t4][p82][t4][t0];
+    Checking[t7<tab<Checking>>][itab2][tab2][custid: custId[t1][p81]][t6<tab<Checking>>] = c[t6<tab<Checking>>][v9][t0];
+  }
+}
+
+transaction SendPayment[f49](sendAcct[p83]: int[t1], destAcct[p84]: int[t1], amount[p85]: float[t4]) : (t1, t1, t4) -> t0
+{
+  hop
+  {
+    let c0[v10]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: sendAcct[t1][p83]][t6<tab<Checking>>];
+    c0[t6<tab<Checking>>][v10].bal[field5][t4] = c0[t6<tab<Checking>>][v10].bal[field5][t4] - [f6]amount[t4][p85][t4][t0];
+    Checking[t7<tab<Checking>>][itab2][tab2][custid: sendAcct[t1][p83]][t6<tab<Checking>>] = c0[t6<tab<Checking>>][v10][t0];
+  }
+  hop
+  {
+    let c1[v11]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: destAcct[t1][p84]][t6<tab<Checking>>];
+    c1[t6<tab<Checking>>][v11].bal[field5][t4] = c1[t6<tab<Checking>>][v11].bal[field5][t4] + [f5]amount[t4][p85][t4][t0];
+    Checking[t7<tab<Checking>>][itab2][tab2][custid: destAcct[t1][p84]][t6<tab<Checking>>] = c1[t6<tab<Checking>>][v11][t0];
+  }
+}
+
+transaction TransactSavings[f50](custId[p86]: int[t1], amount[p87]: float[t4]) : (t1, t4) -> t0
+{
+  hop
+  {
+    let a[v12]: Row<Accounts>[t6<tab<Accounts>>] = Accounts[t7<tab<Accounts>>][itab0][tab0][custid: custId[t1][p86]][t6<tab<Accounts>>];
+    let s[v13]: Row<Savings>[t6<tab<Savings>>] = Savings[t7<tab<Savings>>][itab1][tab1][custid: custId[t1][p86]][t6<tab<Savings>>];
+    s[t6<tab<Savings>>][v13].bal[field3][t4] = s[t6<tab<Savings>>][v13].bal[field3][t4] - [f6]amount[t4][p87][t4][t0];
+    Savings[t7<tab<Savings>>][itab1][tab1][custid: custId[t1][p86]][t6<tab<Savings>>] = s[t6<tab<Savings>>][v13][t0];
+  }
+}
+
+transaction WriteCheck[f51](custId[p88]: int[t1], amount[p89]: float[t4]) : (t1, t4) -> t0
+{
+  hop
+  {
+    let s[v14]: Row<Savings>[t6<tab<Savings>>] = Savings[t7<tab<Savings>>][itab1][tab1][custid: custId[t1][p88]][t6<tab<Savings>>];
+    let c[v15]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: custId[t1][p88]][t6<tab<Checking>>];
+    let total[v16]: float[t4] = s[t6<tab<Savings>>][v14].bal[field3][t4] + [f5]c[t6<tab<Checking>>][v15].bal[field5][t4][t4];
+    if total[t4][v16] < [f21]amount[t4][p89][t2]
+    {
+      c[t6<tab<Checking>>][v15].bal[field5][t4] = c[t6<tab<Checking>>][v15].bal[field5][t4] - [f6]amount[t4][p89][t4] - [f6]1.0[t4][t4][t0];
+    }
+    else
+    {
+      c[t6<tab<Checking>>][v15].bal[field5][t4] = c[t6<tab<Checking>>][v15].bal[field5][t4] - [f6]amount[t4][p89][t4][t0];
+    }
+    Checking[t7<tab<Checking>>][itab2][tab2][custid: custId[t1][p88]][t6<tab<Checking>>] = c[t6<tab<Checking>>][v15][t0];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_custid[f52](iter[p90]: Iterator<Accounts>[t8<tab<Accounts>>]) -> int[t1] : (t8<tab<Accounts>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_custid[f53](iter[p91]: Iterator<Savings>[t8<tab<Savings>>]) -> int[t1] : (t8<tab<Savings>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_custid[f54](iter[p92]: Iterator<Checking>[t8<tab<Checking>>]) -> int[t1] : (t8<tab<Checking>>) -> t1;
+

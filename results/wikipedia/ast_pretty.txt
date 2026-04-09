@@ -1,0 +1,573 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition f[f45](x[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p77];
+}
+
+table user[tab0] {
+  primary user_id[field0]: int[t1];
+  node f[f45](user_id[t1][field0]);
+  user_name[field1]: string[t3];
+  user_touched[field2]: int[t1];
+  user_editcount[field3]: int[t1];
+}
+
+table watchlist[tab1] {
+  primary wl_user[field4]: int[t1];
+  primary wl_namespace[field5]: int[t1];
+  primary wl_title[field6]: string[t3];
+  node f[f45](wl_user[t1][field4]);
+  wl_notificationtimestamp[field7]: int[t1];
+}
+
+table page[tab2] {
+  primary page_id[field8]: int[t1];
+  node f[f45](page_id[t1][field8]);
+  page_namespace[field9]: int[t1];
+  page_title[field10]: string[t3];
+  page_latest[field11]: int[t1];
+  page_touched[field12]: int[t1];
+  page_is_new[field13]: int[t1];
+  page_is_redirect[field14]: int[t1];
+  page_len[field15]: int[t1];
+}
+
+table page_restrictions[tab3] {
+  primary pr_page[field16]: int[t1];
+  primary pr_type[field17]: string[t3];
+  node f[f45](pr_page[t1][field16]);
+  pr_level[field18]: string[t3];
+}
+
+table ipblocks[tab4] {
+  primary ipb_user[field19]: int[t1];
+  primary ipb_id[field20]: int[t1];
+  node f[f45](ipb_user[t1][field19]);
+  ipb_address[field21]: string[t3];
+  ipb_expiry[field22]: int[t1];
+}
+
+table revision[tab5] {
+  primary rev_page[field23]: int[t1];
+  primary rev_id[field24]: int[t1];
+  node f[f45](rev_page[t1][field23]);
+  rev_text_id[field25]: int[t1];
+  rev_comment[field26]: string[t3];
+  rev_user[field27]: int[t1];
+  rev_user_text[field28]: string[t3];
+  rev_timestamp[field29]: int[t1];
+  rev_len[field30]: int[t1];
+  rev_parent_id[field31]: int[t1];
+}
+
+table text[tab6] {
+  primary old_id[field32]: int[t1];
+  node f[f45](old_id[t1][field32]);
+  old_page[field33]: int[t1];
+  old_text[field34]: string[t3];
+  old_flags[field35]: string[t3];
+}
+
+table user_groups[tab7] {
+  primary ug_user[field36]: int[t1];
+  primary ug_group[field37]: string[t3];
+  node f[f45](ug_user[t1][field36]);
+}
+
+table recentchanges[tab8] {
+  primary rc_id[field38]: int[t1];
+  node f[f45](rc_id[t1][field38]);
+  rc_timestamp[field39]: int[t1];
+  rc_namespace[field40]: int[t1];
+  rc_title[field41]: string[t3];
+  rc_cur_id[field42]: int[t1];
+  rc_user[field43]: int[t1];
+  rc_user_text[field44]: string[t3];
+  rc_comment[field45]: string[t3];
+  rc_this_oldid[field46]: int[t1];
+  rc_last_oldid[field47]: int[t1];
+  rc_ip[field48]: string[t3];
+  rc_old_len[field49]: int[t1];
+  rc_new_len[field50]: int[t1];
+}
+
+table logging[tab9] {
+  primary log_user[field51]: int[t1];
+  primary log_id[field52]: int[t1];
+  node f[f45](log_user[t1][field51]);
+  log_type[field53]: string[t3];
+  log_action[field54]: string[t3];
+  log_timestamp[field55]: int[t1];
+  log_user_text[field56]: string[t3];
+  log_namespace[field57]: int[t1];
+  log_title[field58]: string[t3];
+  log_page[field59]: int[t1];
+  log_comment[field60]: string[t3];
+  log_params[field61]: string[t3];
+}
+
+transaction AddWatchList[f46](userId[p78]: int[t1], nameSpace[p79]: int[t1], pageTitle[p80]: string[t3]) : (t1, t1, t3) -> t0
+{
+  hop
+  {
+    watchlist[t7<tab<watchlist>>][itab1][tab1][wl_user: userId[t1][p78], wl_namespace: nameSpace[t1][p79], wl_title: pageTitle[t3][p80]][t6<tab<watchlist>>] = {wl_notificationtimestamp: 0[t1]}[t6<tab<watchlist>>][t0];
+    if (nameSpace[t1][p79] == [f11]0[t1][t2])[t2]
+    {
+      watchlist[t7<tab<watchlist>>][itab1][tab1][wl_user: userId[t1][p78], wl_namespace: 1[t1], wl_title: pageTitle[t3][p80]][t6<tab<watchlist>>] = {wl_notificationtimestamp: 0[t1]}[t6<tab<watchlist>>][t0];
+    }
+    let u[v0]: Row<user>[t6<tab<user>>] = user[t7<tab<user>>][itab0][tab0][user_id: userId[t1][p78]][t6<tab<user>>];
+    u[t6<tab<user>>][v0].user_touched[field2][t1] = 1[t1][t0];
+    user[t7<tab<user>>][itab0][tab0][user_id: userId[t1][p78]][t6<tab<user>>] = u[t6<tab<user>>][v0][t0];
+  }
+}
+
+transaction GetPageAnonymous[f47](pageId[p81]: int[t1], pr_type[p82]: string[t3], latest_rev_id[p83]: int[t1], text_id[p84]: int[t1]) : (t1, t3, t1, t1) -> t0
+{
+  hop
+  {
+    let p[v1]: Row<page>[t6<tab<page>>] = page[t7<tab<page>>][itab2][tab2][page_id: pageId[t1][p81]][t6<tab<page>>];
+    let pr[v2]: Row<page_restrictions>[t6<tab<page_restrictions>>] = page_restrictions[t7<tab<page_restrictions>>][itab3][tab3][pr_page: pageId[t1][p81], pr_type: pr_type[t3][p82]][t6<tab<page_restrictions>>];
+    let r[v3]: Row<revision>[t6<tab<revision>>] = revision[t7<tab<revision>>][itab5][tab5][rev_page: pageId[t1][p81], rev_id: latest_rev_id[t1][p83]][t6<tab<revision>>];
+    let textId[v4]: int[t1] = r[t6<tab<revision>>][v3].rev_text_id[field25][t1];
+  }
+  hop
+  {
+    let t[v5]: Row<text>[t6<tab<text>>] = text[t7<tab<text>>][itab6][tab6][old_id: textId[t1][v4]][t6<tab<text>>];
+    let content[v6]: string[t3] = t[t6<tab<text>>][v5].old_text[field34][t3];
+  }
+}
+
+transaction GetPageAuthenticated[f48](userId[p85]: int[t1], pageId[p86]: int[t1], ug_group[p87]: string[t3], pr_type[p88]: string[t3], latest_rev_id[p89]: int[t1], text_id[p90]: int[t1], ipb_id[p91]: int[t1]) : (t1, t1, t3, t3, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let u[v7]: Row<user>[t6<tab<user>>] = user[t7<tab<user>>][itab0][tab0][user_id: userId[t1][p85]][t6<tab<user>>];
+    let ug[v8]: Row<user_groups>[t6<tab<user_groups>>] = user_groups[t7<tab<user_groups>>][itab7][tab7][ug_user: userId[t1][p85], ug_group: ug_group[t3][p87]][t6<tab<user_groups>>];
+    let ip[v9]: Row<ipblocks>[t6<tab<ipblocks>>] = ipblocks[t7<tab<ipblocks>>][itab4][tab4][ipb_user: userId[t1][p85], ipb_id: ipb_id[t1][p91]][t6<tab<ipblocks>>];
+  }
+  hop
+  {
+    let p[v10]: Row<page>[t6<tab<page>>] = page[t7<tab<page>>][itab2][tab2][page_id: pageId[t1][p86]][t6<tab<page>>];
+    let pr[v11]: Row<page_restrictions>[t6<tab<page_restrictions>>] = page_restrictions[t7<tab<page_restrictions>>][itab3][tab3][pr_page: pageId[t1][p86], pr_type: pr_type[t3][p88]][t6<tab<page_restrictions>>];
+    let r[v12]: Row<revision>[t6<tab<revision>>] = revision[t7<tab<revision>>][itab5][tab5][rev_page: pageId[t1][p86], rev_id: latest_rev_id[t1][p89]][t6<tab<revision>>];
+    let textId[v13]: int[t1] = r[t6<tab<revision>>][v12].rev_text_id[field25][t1];
+  }
+  hop
+  {
+    let t[v14]: Row<text>[t6<tab<text>>] = text[t7<tab<text>>][itab6][tab6][old_id: textId[t1][v13]][t6<tab<text>>];
+    let content[v15]: string[t3] = t[t6<tab<text>>][v14].old_text[field34][t3];
+  }
+}
+
+transaction RemoveWatchList[f49](userId[p92]: int[t1], nameSpace[p93]: int[t1], pageTitle[p94]: string[t3]) : (t1, t1, t3) -> t0
+{
+  hop
+  {
+    let wl[v16]: Row<watchlist>[t6<tab<watchlist>>] = watchlist[t7<tab<watchlist>>][itab1][tab1][wl_user: userId[t1][p92], wl_namespace: nameSpace[t1][p93], wl_title: pageTitle[t3][p94]][t6<tab<watchlist>>];
+    watchlist[t7<tab<watchlist>>][itab1][tab1][wl_user: userId[t1][p92], wl_namespace: nameSpace[t1][p93], wl_title: pageTitle[t3][p94]][t6<tab<watchlist>>] = wl[t6<tab<watchlist>>][v16][t0];
+    if (nameSpace[t1][p93] == [f11]0[t1][t2])[t2]
+    {
+      let wl2[v17]: Row<watchlist>[t6<tab<watchlist>>] = watchlist[t7<tab<watchlist>>][itab1][tab1][wl_user: userId[t1][p92], wl_namespace: 1[t1], wl_title: pageTitle[t3][p94]][t6<tab<watchlist>>];
+      watchlist[t7<tab<watchlist>>][itab1][tab1][wl_user: userId[t1][p92], wl_namespace: 1[t1], wl_title: pageTitle[t3][p94]][t6<tab<watchlist>>] = wl2[t6<tab<watchlist>>][v17][t0];
+    }
+    let u[v18]: Row<user>[t6<tab<user>>] = user[t7<tab<user>>][itab0][tab0][user_id: userId[t1][p92]][t6<tab<user>>];
+    u[t6<tab<user>>][v18].user_touched[field2][t1] = 0[t1][t0];
+    user[t7<tab<user>>][itab0][tab0][user_id: userId[t1][p92]][t6<tab<user>>] = u[t6<tab<user>>][v18][t0];
+  }
+}
+
+transaction UpdatePage[f50](nextTextId[p95]: int[t1], nextRevId[p96]: int[t1], rcId[p97]: int[t1], pageId[p98]: int[t1], pageTitle[p99]: string[t3], pageText[p100]: string[t3], pageNamespace[p101]: int[t1], pageLen[p102]: int[t1], userId[p103]: int[t1], userText[p104]: string[t3], revisionId[p105]: int[t1], revComment[p106]: string[t3], otherUserId[p107]: int[t1]) : (t1, t1, t1, t1, t3, t3, t1, t1, t1, t3, t1, t3, t1) -> t0
+{
+  hop
+  {
+    text[t7<tab<text>>][itab6][tab6][old_id: nextTextId[t1][p95]][t6<tab<text>>] = {old_page: pageId[t1][p98], old_text: pageText[t3][p100], old_flags: "utf-8"[t3]}[t6<tab<text>>][t0];
+    revision[t7<tab<revision>>][itab5][tab5][rev_page: pageId[t1][p98], rev_id: nextRevId[t1][p96]][t6<tab<revision>>] = {rev_text_id: nextTextId[t1][p95], rev_comment: revComment[t3][p106], rev_user: userId[t1][p103], rev_user_text: userText[t3][p104], rev_timestamp: 1[t1], rev_len: pageLen[t1][p102], rev_parent_id: revisionId[t1][p105]}[t6<tab<revision>>][t0];
+    let p[v19]: Row<page>[t6<tab<page>>] = page[t7<tab<page>>][itab2][tab2][page_id: pageId[t1][p98]][t6<tab<page>>];
+    p[t6<tab<page>>][v19].page_latest[field11][t1] = nextRevId[t1][p96][t0];
+    p[t6<tab<page>>][v19].page_touched[field12][t1] = 1[t1][t0];
+    p[t6<tab<page>>][v19].page_len[field15][t1] = pageLen[t1][p102][t0];
+    page[t7<tab<page>>][itab2][tab2][page_id: pageId[t1][p98]][t6<tab<page>>] = p[t6<tab<page>>][v19][t0];
+    recentchanges[t7<tab<recentchanges>>][itab8][tab8][rc_id: rcId[t1][p97]][t6<tab<recentchanges>>] = {rc_timestamp: 1[t1], rc_namespace: pageNamespace[t1][p101], rc_title: pageTitle[t3][p99], rc_cur_id: pageId[t1][p98], rc_user: userId[t1][p103], rc_user_text: userText[t3][p104], rc_comment: revComment[t3][p106], rc_this_oldid: nextTextId[t1][p95], rc_last_oldid: revisionId[t1][p105], rc_ip: ""[t3], rc_old_len: 0[t1], rc_new_len: pageLen[t1][p102]}[t6<tab<recentchanges>>][t0];
+  }
+  hop
+  {
+    let wl[v20]: Row<watchlist>[t6<tab<watchlist>>] = watchlist[t7<tab<watchlist>>][itab1][tab1][wl_user: otherUserId[t1][p107], wl_namespace: pageNamespace[t1][p101], wl_title: pageTitle[t3][p99]][t6<tab<watchlist>>];
+    wl[t6<tab<watchlist>>][v20].wl_notificationtimestamp[field7][t1] = 1[t1][t0];
+    watchlist[t7<tab<watchlist>>][itab1][tab1][wl_user: otherUserId[t1][p107], wl_namespace: pageNamespace[t1][p101], wl_title: pageTitle[t3][p99]][t6<tab<watchlist>>] = wl[t6<tab<watchlist>>][v20][t0];
+  }
+  hop
+  {
+    logging[t7<tab<logging>>][itab9][tab9][log_user: userId[t1][p103], log_id: nextRevId[t1][p96]][t6<tab<logging>>] = {log_type: "patrol"[t3], log_action: "patrol"[t3], log_timestamp: 1[t1], log_user_text: userText[t3][p104], log_namespace: pageNamespace[t1][p101], log_title: pageTitle[t3][p99], log_page: pageId[t1][p98], log_comment: ""[t3], log_params: ""[t3]}[t6<tab<logging>>][t0];
+    let u[v21]: Row<user>[t6<tab<user>>] = user[t7<tab<user>>][itab0][tab0][user_id: userId[t1][p103]][t6<tab<user>>];
+    u[t6<tab<user>>][v21].user_editcount[field3][t1] = u[t6<tab<user>>][v21].user_editcount[field3][t1] + [f0]1[t1][t1][t0];
+    u[t6<tab<user>>][v21].user_touched[field2][t1] = 1[t1][t0];
+    user[t7<tab<user>>][itab0][tab0][user_id: userId[t1][p103]][t6<tab<user>>] = u[t6<tab<user>>][v21][t0];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_user_id[f51](iter[p108]: Iterator<user>[t8<tab<user>>]) -> int[t1] : (t8<tab<user>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wl_user[f52](iter[p109]: Iterator<watchlist>[t8<tab<watchlist>>]) -> int[t1] : (t8<tab<watchlist>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wl_namespace[f53](iter[p110]: Iterator<watchlist>[t8<tab<watchlist>>]) -> int[t1] : (t8<tab<watchlist>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_wl_title[f54](iter[p111]: Iterator<watchlist>[t8<tab<watchlist>>]) -> string[t3] : (t8<tab<watchlist>>) -> t3;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_page_id[f55](iter[p112]: Iterator<page>[t8<tab<page>>]) -> int[t1] : (t8<tab<page>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_pr_page[f56](iter[p113]: Iterator<page_restrictions>[t8<tab<page_restrictions>>]) -> int[t1] : (t8<tab<page_restrictions>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_pr_type[f57](iter[p114]: Iterator<page_restrictions>[t8<tab<page_restrictions>>]) -> string[t3] : (t8<tab<page_restrictions>>) -> t3;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ipb_user[f58](iter[p115]: Iterator<ipblocks>[t8<tab<ipblocks>>]) -> int[t1] : (t8<tab<ipblocks>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ipb_id[f59](iter[p116]: Iterator<ipblocks>[t8<tab<ipblocks>>]) -> int[t1] : (t8<tab<ipblocks>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_rev_page[f60](iter[p117]: Iterator<revision>[t8<tab<revision>>]) -> int[t1] : (t8<tab<revision>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_rev_id[f61](iter[p118]: Iterator<revision>[t8<tab<revision>>]) -> int[t1] : (t8<tab<revision>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_old_id[f62](iter[p119]: Iterator<text>[t8<tab<text>>]) -> int[t1] : (t8<tab<text>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ug_user[f63](iter[p120]: Iterator<user_groups>[t8<tab<user_groups>>]) -> int[t1] : (t8<tab<user_groups>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ug_group[f64](iter[p121]: Iterator<user_groups>[t8<tab<user_groups>>]) -> string[t3] : (t8<tab<user_groups>>) -> t3;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_rc_id[f65](iter[p122]: Iterator<recentchanges>[t8<tab<recentchanges>>]) -> int[t1] : (t8<tab<recentchanges>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_log_user[f66](iter[p123]: Iterator<logging>[t8<tab<logging>>]) -> int[t1] : (t8<tab<logging>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_log_id[f67](iter[p124]: Iterator<logging>[t8<tab<logging>>]) -> int[t1] : (t8<tab<logging>>) -> t1;
+

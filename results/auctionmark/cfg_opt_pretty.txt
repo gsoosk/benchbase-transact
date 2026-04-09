@@ -1,0 +1,1453 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+const ITEM_STATUS_OPEN[gc2]: int = 0;
+const ITEM_STATUS_WAITING_FOR_PURCHASE[gc3]: int = 1;
+const ITEM_STATUS_CLOSED[gc4]: int = 2;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table USERACCT[tab0] {
+  primary u_id[f0]: int;
+  u_rating[f1]: int;
+  u_balance[f2]: float;
+  u_comments[f3]: int;
+  u_r_id[f4]: int;
+  u_sattr0[f5]: string;
+  u_sattr1[f6]: string;
+  u_sattr2[f7]: string;
+  u_sattr3[f8]: string;
+  u_sattr4[f9]: string;
+  node_partition: p_user[fn15](u_id[f0]);
+}
+table REGION[tab1] {
+  primary r_id[f10]: int;
+  r_name[f11]: string;
+  node_partition: p_region[fn16](r_id[f10]);
+}
+table ITEM[tab2] {
+  primary i_id[f12]: int;
+  primary i_u_id[f13]: int;
+  i_name[f14]: string;
+  i_initial_price[f15]: float;
+  i_current_price[f16]: float;
+  i_num_bids[f17]: int;
+  i_end_date[f18]: int;
+  i_start_date[f19]: int;
+  i_status[f20]: int;
+  i_num_comments[f21]: int;
+  i_c_id[f22]: int;
+  node_partition: p_user[fn15](i_u_id[f13]);
+}
+table ITEM_BID[tab3] {
+  primary ib_id[f23]: int;
+  primary ib_i_id[f24]: int;
+  primary ib_u_id[f25]: int;
+  ib_buyer_id[f26]: int;
+  ib_bid[f27]: float;
+  ib_max_bid[f28]: float;
+  node_partition: p_user[fn15](ib_u_id[f25]);
+}
+table ITEM_MAX_BID[tab4] {
+  primary imb_i_id[f29]: int;
+  primary imb_u_id[f30]: int;
+  imb_ib_id[f31]: int;
+  imb_ib_i_id[f32]: int;
+  imb_ib_u_id[f33]: int;
+  node_partition: p_user[fn15](imb_u_id[f30]);
+}
+table ITEM_COMMENT[tab5] {
+  primary ic_id[f34]: int;
+  primary ic_i_id[f35]: int;
+  primary ic_u_id[f36]: int;
+  ic_buyer_id[f37]: int;
+  ic_question[f38]: string;
+  ic_response[f39]: string;
+  node_partition: p_user[fn15](ic_u_id[f36]);
+}
+table USERACCT_ITEM[tab6] {
+  primary ui_u_id[f40]: int;
+  primary ui_i_id[f41]: int;
+  primary ui_i_u_id[f42]: int;
+  node_partition: p_user[fn15](ui_u_id[f40]);
+}
+table USERACCT_FEEDBACK[tab7] {
+  primary uf_u_id[f43]: int;
+  primary uf_i_id[f44]: int;
+  primary uf_i_u_id[f45]: int;
+  primary uf_from_id[f46]: int;
+  uf_rating[f47]: int;
+  node_partition: p_user[fn15](uf_u_id[f43]);
+}
+table USERACCT_WATCH[tab8] {
+  primary uw_u_id[f48]: int;
+  primary uw_i_id[f49]: int;
+  primary uw_i_u_id[f50]: int;
+  node_partition: p_user[fn15](uw_u_id[f48]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition p_user[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+partition p_region[fn16](x[v21]: int)
+
+  entry_block: bb1
+bb1:
+  livein: {x[v21]}
+  return x[v21];
+  liveout: {x[v21]}
+
+transaction CloseAuctions[fn17](item_id[v22]: int, seller_id[v23]: int)
+ {
+  entry_hop: hop2
+
+  hop2 {
+    entry_block: bb2
+    bb2:
+      livein: {seller_id[v23], item_id[v22]}
+        [stmt_in] livein: {seller_id[v23], item_id[v22]}
+      item#i_c_id[v98] = ITEM[item_id[v22], seller_id[v23]].i_c_id;
+        [stmt_out] liveout: {item_id[v22], seller_id[v23], item#i_c_id[v98]}
+        [stmt_in] livein: {item_id[v22], seller_id[v23], item#i_c_id[v98]}
+      item#i_current_price[v92] = ITEM[item_id[v22], seller_id[v23]].i_current_price;
+        [stmt_out] liveout: {item#i_current_price[v92], item_id[v22], seller_id[v23], item#i_c_id[v98]}
+        [stmt_in] livein: {item#i_current_price[v92], item_id[v22], seller_id[v23], item#i_c_id[v98]}
+      item#i_end_date[v94] = ITEM[item_id[v22], seller_id[v23]].i_end_date;
+        [stmt_out] liveout: {item#i_current_price[v92], item_id[v22], item#i_end_date[v94], seller_id[v23], item#i_c_id[v98]}
+        [stmt_in] livein: {item#i_current_price[v92], item_id[v22], item#i_end_date[v94], seller_id[v23], item#i_c_id[v98]}
+      item#i_id[v88] = ITEM[item_id[v22], seller_id[v23]].i_id;
+        [stmt_out] liveout: {item#i_end_date[v94], seller_id[v23], item_id[v22], item#i_c_id[v98], item#i_current_price[v92], item#i_id[v88]}
+        [stmt_in] livein: {item#i_end_date[v94], seller_id[v23], item_id[v22], item#i_c_id[v98], item#i_current_price[v92], item#i_id[v88]}
+      item#i_initial_price[v91] = ITEM[item_id[v22], seller_id[v23]].i_initial_price;
+        [stmt_out] liveout: {seller_id[v23], item_id[v22], item#i_c_id[v98], item#i_id[v88], item#i_end_date[v94], item#i_initial_price[v91], item#i_current_price[v92]}
+        [stmt_in] livein: {seller_id[v23], item_id[v22], item#i_c_id[v98], item#i_id[v88], item#i_end_date[v94], item#i_initial_price[v91], item#i_current_price[v92]}
+      item#i_name[v90] = ITEM[item_id[v22], seller_id[v23]].i_name;
+        [stmt_out] liveout: {seller_id[v23], item_id[v22], item#i_name[v90], item#i_c_id[v98], item#i_id[v88], item#i_end_date[v94], item#i_initial_price[v91], item#i_current_price[v92]}
+        [stmt_in] livein: {seller_id[v23], item_id[v22], item#i_name[v90], item#i_c_id[v98], item#i_id[v88], item#i_end_date[v94], item#i_initial_price[v91], item#i_current_price[v92]}
+      item#i_num_bids[v93] = ITEM[item_id[v22], seller_id[v23]].i_num_bids;
+        [stmt_out] liveout: {item#i_end_date[v94], item#i_c_id[v98], seller_id[v23], item#i_initial_price[v91], item#i_id[v88], item#i_current_price[v92], item#i_name[v90], item_id[v22], item#i_num_bids[v93]}
+        [stmt_in] livein: {item#i_end_date[v94], item#i_c_id[v98], seller_id[v23], item#i_initial_price[v91], item#i_id[v88], item#i_current_price[v92], item#i_name[v90], item_id[v22], item#i_num_bids[v93]}
+      item#i_num_comments[v97] = ITEM[item_id[v22], seller_id[v23]].i_num_comments;
+        [stmt_out] liveout: {item#i_c_id[v98], item#i_end_date[v94], item_id[v22], seller_id[v23], item#i_num_comments[v97], item#i_name[v90], item#i_num_bids[v93], item#i_initial_price[v91], item#i_id[v88], item#i_current_price[v92]}
+        [stmt_in] livein: {item#i_c_id[v98], item#i_end_date[v94], item_id[v22], seller_id[v23], item#i_num_comments[v97], item#i_name[v90], item#i_num_bids[v93], item#i_initial_price[v91], item#i_id[v88], item#i_current_price[v92]}
+      item#i_start_date[v95] = ITEM[item_id[v22], seller_id[v23]].i_start_date;
+        [stmt_out] liveout: {seller_id[v23], item#i_end_date[v94], item#i_name[v90], item#i_c_id[v98], item#i_initial_price[v91], item#i_num_comments[v97], item#i_current_price[v92], item#i_num_bids[v93], item#i_id[v88], item#i_start_date[v95], item_id[v22]}
+        [stmt_in] livein: {seller_id[v23], item#i_end_date[v94], item#i_name[v90], item#i_c_id[v98], item#i_initial_price[v91], item#i_num_comments[v97], item#i_current_price[v92], item#i_num_bids[v93], item#i_id[v88], item#i_start_date[v95], item_id[v22]}
+      item#i_u_id[v89] = ITEM[item_id[v22], seller_id[v23]].i_u_id;
+        [stmt_out] liveout: {item#i_num_bids[v93], item#i_num_comments[v97], item#i_id[v88], item#i_u_id[v89], item#i_name[v90], item#i_initial_price[v91], item#i_c_id[v98], item#i_end_date[v94], seller_id[v23], item#i_start_date[v95], item#i_current_price[v92], item_id[v22]}
+        [stmt_in] livein: {item#i_num_bids[v93], item#i_num_comments[v97], item#i_id[v88], item#i_u_id[v89], item#i_name[v90], item#i_initial_price[v91], item#i_c_id[v98], item#i_end_date[v94], seller_id[v23], item#i_start_date[v95], item#i_current_price[v92], item_id[v22]}
+      item#i_status[v96] = ITEM_STATUS_WAITING_FOR_PURCHASE[gc3];
+        [stmt_out] liveout: {item#i_num_bids[v93], item#i_id[v88], item#i_num_comments[v97], item#i_end_date[v94], item#i_initial_price[v91], item#i_c_id[v98], item#i_start_date[v95], item#i_name[v90], item#i_status[v96], seller_id[v23], item_id[v22], item#i_u_id[v89], item#i_current_price[v92]}
+        [stmt_in] livein: {item#i_num_bids[v93], item#i_id[v88], item#i_num_comments[v97], item#i_end_date[v94], item#i_initial_price[v91], item#i_c_id[v98], item#i_start_date[v95], item#i_name[v90], item#i_status[v96], seller_id[v23], item_id[v22], item#i_u_id[v89], item#i_current_price[v92]}
+      ITEM[item_id[v22], seller_id[v23]].i_c_id = item#i_c_id[v98];
+        [stmt_out] liveout: {item#i_initial_price[v91], item#i_name[v90], item#i_status[v96], item#i_end_date[v94], item#i_id[v88], item#i_num_bids[v93], item_id[v22], item#i_start_date[v95], seller_id[v23], item#i_u_id[v89], item#i_num_comments[v97], item#i_current_price[v92]}
+        [stmt_in] livein: {item#i_initial_price[v91], item#i_name[v90], item#i_status[v96], item#i_end_date[v94], item#i_id[v88], item#i_num_bids[v93], item_id[v22], item#i_start_date[v95], seller_id[v23], item#i_u_id[v89], item#i_num_comments[v97], item#i_current_price[v92]}
+      ITEM[item_id[v22], seller_id[v23]].i_current_price = item#i_current_price[v92];
+        [stmt_out] liveout: {item#i_num_bids[v93], item#i_num_comments[v97], seller_id[v23], item#i_initial_price[v91], item#i_start_date[v95], item#i_name[v90], item#i_status[v96], item#i_u_id[v89], item#i_end_date[v94], item#i_id[v88], item_id[v22]}
+        [stmt_in] livein: {item#i_num_bids[v93], item#i_num_comments[v97], seller_id[v23], item#i_initial_price[v91], item#i_start_date[v95], item#i_name[v90], item#i_status[v96], item#i_u_id[v89], item#i_end_date[v94], item#i_id[v88], item_id[v22]}
+      ITEM[item_id[v22], seller_id[v23]].i_end_date = item#i_end_date[v94];
+        [stmt_out] liveout: {item#i_u_id[v89], item#i_num_bids[v93], item#i_initial_price[v91], seller_id[v23], item#i_start_date[v95], item#i_id[v88], item_id[v22], item#i_num_comments[v97], item#i_status[v96], item#i_name[v90]}
+        [stmt_in] livein: {item#i_u_id[v89], item#i_num_bids[v93], item#i_initial_price[v91], seller_id[v23], item#i_start_date[v95], item#i_id[v88], item_id[v22], item#i_num_comments[v97], item#i_status[v96], item#i_name[v90]}
+      ITEM[item_id[v22], seller_id[v23]].i_id = item#i_id[v88];
+        [stmt_out] liveout: {item#i_status[v96], item_id[v22], item#i_name[v90], item#i_initial_price[v91], seller_id[v23], item#i_start_date[v95], item#i_u_id[v89], item#i_num_comments[v97], item#i_num_bids[v93]}
+        [stmt_in] livein: {item#i_status[v96], item_id[v22], item#i_name[v90], item#i_initial_price[v91], seller_id[v23], item#i_start_date[v95], item#i_u_id[v89], item#i_num_comments[v97], item#i_num_bids[v93]}
+      ITEM[item_id[v22], seller_id[v23]].i_initial_price = item#i_initial_price[v91];
+        [stmt_out] liveout: {item#i_u_id[v89], item#i_status[v96], item#i_num_comments[v97], item#i_num_bids[v93], item#i_start_date[v95], item#i_name[v90], seller_id[v23], item_id[v22]}
+        [stmt_in] livein: {item#i_u_id[v89], item#i_status[v96], item#i_num_comments[v97], item#i_num_bids[v93], item#i_start_date[v95], item#i_name[v90], seller_id[v23], item_id[v22]}
+      ITEM[item_id[v22], seller_id[v23]].i_name = item#i_name[v90];
+        [stmt_out] liveout: {seller_id[v23], item_id[v22], item#i_u_id[v89], item#i_num_comments[v97], item#i_num_bids[v93], item#i_start_date[v95], item#i_status[v96]}
+        [stmt_in] livein: {seller_id[v23], item_id[v22], item#i_u_id[v89], item#i_num_comments[v97], item#i_num_bids[v93], item#i_start_date[v95], item#i_status[v96]}
+      ITEM[item_id[v22], seller_id[v23]].i_num_bids = item#i_num_bids[v93];
+        [stmt_out] liveout: {item#i_status[v96], seller_id[v23], item_id[v22], item#i_u_id[v89], item#i_start_date[v95], item#i_num_comments[v97]}
+        [stmt_in] livein: {item#i_status[v96], seller_id[v23], item_id[v22], item#i_u_id[v89], item#i_start_date[v95], item#i_num_comments[v97]}
+      ITEM[item_id[v22], seller_id[v23]].i_num_comments = item#i_num_comments[v97];
+        [stmt_out] liveout: {item#i_start_date[v95], item#i_status[v96], seller_id[v23], item_id[v22], item#i_u_id[v89]}
+        [stmt_in] livein: {item#i_start_date[v95], item#i_status[v96], seller_id[v23], item_id[v22], item#i_u_id[v89]}
+      ITEM[item_id[v22], seller_id[v23]].i_start_date = item#i_start_date[v95];
+        [stmt_out] liveout: {item_id[v22], item#i_u_id[v89], item#i_status[v96], seller_id[v23]}
+        [stmt_in] livein: {item_id[v22], item#i_u_id[v89], item#i_status[v96], seller_id[v23]}
+      ITEM[item_id[v22], seller_id[v23]].i_status = item#i_status[v96];
+        [stmt_out] liveout: {item#i_u_id[v89], item_id[v22], seller_id[v23]}
+        [stmt_in] livein: {item#i_u_id[v89], item_id[v22], seller_id[v23]}
+      ITEM[item_id[v22], seller_id[v23]].i_u_id = item#i_u_id[v89];
+        [stmt_out] liveout: {}
+      hop_exit hop3;
+      liveout: {}
+  }
+
+  hop3 {
+    entry_block: bb3
+    bb3 (preds: bb2):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction CloseAuctionsNoBids[fn18](item_id[v24]: int, seller_id[v25]: int)
+ {
+  entry_hop: hop4
+
+  hop4 {
+    entry_block: bb4
+    bb4:
+      livein: {item_id[v24], seller_id[v25]}
+        [stmt_in] livein: {item_id[v24], seller_id[v25]}
+      item#i_c_id[v127] = ITEM[item_id[v24], seller_id[v25]].i_c_id;
+        [stmt_out] liveout: {item#i_c_id[v127], seller_id[v25], item_id[v24]}
+        [stmt_in] livein: {item#i_c_id[v127], seller_id[v25], item_id[v24]}
+      item#i_current_price[v121] = ITEM[item_id[v24], seller_id[v25]].i_current_price;
+        [stmt_out] liveout: {item#i_current_price[v121], item#i_c_id[v127], seller_id[v25], item_id[v24]}
+        [stmt_in] livein: {item#i_current_price[v121], item#i_c_id[v127], seller_id[v25], item_id[v24]}
+      item#i_end_date[v123] = ITEM[item_id[v24], seller_id[v25]].i_end_date;
+        [stmt_out] liveout: {item#i_c_id[v127], item#i_end_date[v123], item#i_current_price[v121], seller_id[v25], item_id[v24]}
+        [stmt_in] livein: {item#i_c_id[v127], item#i_end_date[v123], item#i_current_price[v121], seller_id[v25], item_id[v24]}
+      item#i_id[v117] = ITEM[item_id[v24], seller_id[v25]].i_id;
+        [stmt_out] liveout: {item#i_id[v117], item#i_current_price[v121], item#i_c_id[v127], seller_id[v25], item#i_end_date[v123], item_id[v24]}
+        [stmt_in] livein: {item#i_id[v117], item#i_current_price[v121], item#i_c_id[v127], seller_id[v25], item#i_end_date[v123], item_id[v24]}
+      item#i_initial_price[v120] = ITEM[item_id[v24], seller_id[v25]].i_initial_price;
+        [stmt_out] liveout: {seller_id[v25], item#i_initial_price[v120], item#i_id[v117], item#i_current_price[v121], item#i_c_id[v127], item#i_end_date[v123], item_id[v24]}
+        [stmt_in] livein: {seller_id[v25], item#i_initial_price[v120], item#i_id[v117], item#i_current_price[v121], item#i_c_id[v127], item#i_end_date[v123], item_id[v24]}
+      item#i_name[v119] = ITEM[item_id[v24], seller_id[v25]].i_name;
+        [stmt_out] liveout: {item#i_id[v117], seller_id[v25], item#i_current_price[v121], item#i_c_id[v127], item#i_end_date[v123], item#i_initial_price[v120], item_id[v24], item#i_name[v119]}
+        [stmt_in] livein: {item#i_id[v117], seller_id[v25], item#i_current_price[v121], item#i_c_id[v127], item#i_end_date[v123], item#i_initial_price[v120], item_id[v24], item#i_name[v119]}
+      item#i_num_bids[v122] = ITEM[item_id[v24], seller_id[v25]].i_num_bids;
+        [stmt_out] liveout: {item#i_initial_price[v120], seller_id[v25], item#i_id[v117], item#i_num_bids[v122], item_id[v24], item#i_c_id[v127], item#i_current_price[v121], item#i_end_date[v123], item#i_name[v119]}
+        [stmt_in] livein: {item#i_initial_price[v120], seller_id[v25], item#i_id[v117], item#i_num_bids[v122], item_id[v24], item#i_c_id[v127], item#i_current_price[v121], item#i_end_date[v123], item#i_name[v119]}
+      item#i_num_comments[v126] = ITEM[item_id[v24], seller_id[v25]].i_num_comments;
+        [stmt_out] liveout: {item#i_name[v119], item#i_current_price[v121], item#i_num_bids[v122], seller_id[v25], item#i_initial_price[v120], item#i_num_comments[v126], item_id[v24], item#i_end_date[v123], item#i_c_id[v127], item#i_id[v117]}
+        [stmt_in] livein: {item#i_name[v119], item#i_current_price[v121], item#i_num_bids[v122], seller_id[v25], item#i_initial_price[v120], item#i_num_comments[v126], item_id[v24], item#i_end_date[v123], item#i_c_id[v127], item#i_id[v117]}
+      item#i_start_date[v124] = ITEM[item_id[v24], seller_id[v25]].i_start_date;
+        [stmt_out] liveout: {item#i_current_price[v121], item#i_end_date[v123], item#i_c_id[v127], item#i_initial_price[v120], item#i_id[v117], item#i_num_comments[v126], item#i_name[v119], item#i_start_date[v124], item#i_num_bids[v122], item_id[v24], seller_id[v25]}
+        [stmt_in] livein: {item#i_current_price[v121], item#i_end_date[v123], item#i_c_id[v127], item#i_initial_price[v120], item#i_id[v117], item#i_num_comments[v126], item#i_name[v119], item#i_start_date[v124], item#i_num_bids[v122], item_id[v24], seller_id[v25]}
+      item#i_u_id[v118] = ITEM[item_id[v24], seller_id[v25]].i_u_id;
+        [stmt_out] liveout: {item#i_start_date[v124], item#i_initial_price[v120], item#i_name[v119], item#i_id[v117], item#i_num_bids[v122], item_id[v24], seller_id[v25], item#i_u_id[v118], item#i_c_id[v127], item#i_current_price[v121], item#i_num_comments[v126], item#i_end_date[v123]}
+        [stmt_in] livein: {item#i_start_date[v124], item#i_initial_price[v120], item#i_name[v119], item#i_id[v117], item#i_num_bids[v122], item_id[v24], seller_id[v25], item#i_u_id[v118], item#i_c_id[v127], item#i_current_price[v121], item#i_num_comments[v126], item#i_end_date[v123]}
+      item#i_status[v125] = ITEM_STATUS_CLOSED[gc4];
+        [stmt_out] liveout: {seller_id[v25], item#i_name[v119], item#i_start_date[v124], item#i_id[v117], item#i_u_id[v118], item#i_initial_price[v120], item#i_c_id[v127], item#i_num_bids[v122], item#i_status[v125], item#i_current_price[v121], item#i_num_comments[v126], item_id[v24], item#i_end_date[v123]}
+        [stmt_in] livein: {seller_id[v25], item#i_name[v119], item#i_start_date[v124], item#i_id[v117], item#i_u_id[v118], item#i_initial_price[v120], item#i_c_id[v127], item#i_num_bids[v122], item#i_status[v125], item#i_current_price[v121], item#i_num_comments[v126], item_id[v24], item#i_end_date[v123]}
+      ITEM[item_id[v24], seller_id[v25]].i_c_id = item#i_c_id[v127];
+        [stmt_out] liveout: {item#i_end_date[v123], item#i_start_date[v124], item_id[v24], seller_id[v25], item#i_id[v117], item#i_num_comments[v126], item#i_name[v119], item#i_status[v125], item#i_u_id[v118], item#i_current_price[v121], item#i_initial_price[v120], item#i_num_bids[v122]}
+        [stmt_in] livein: {item#i_end_date[v123], item#i_start_date[v124], item_id[v24], seller_id[v25], item#i_id[v117], item#i_num_comments[v126], item#i_name[v119], item#i_status[v125], item#i_u_id[v118], item#i_current_price[v121], item#i_initial_price[v120], item#i_num_bids[v122]}
+      ITEM[item_id[v24], seller_id[v25]].i_current_price = item#i_current_price[v121];
+        [stmt_out] liveout: {seller_id[v25], item#i_u_id[v118], item#i_num_bids[v122], item#i_id[v117], item#i_status[v125], item#i_name[v119], item_id[v24], item#i_num_comments[v126], item#i_end_date[v123], item#i_initial_price[v120], item#i_start_date[v124]}
+        [stmt_in] livein: {seller_id[v25], item#i_u_id[v118], item#i_num_bids[v122], item#i_id[v117], item#i_status[v125], item#i_name[v119], item_id[v24], item#i_num_comments[v126], item#i_end_date[v123], item#i_initial_price[v120], item#i_start_date[v124]}
+      ITEM[item_id[v24], seller_id[v25]].i_end_date = item#i_end_date[v123];
+        [stmt_out] liveout: {seller_id[v25], item_id[v24], item#i_id[v117], item#i_name[v119], item#i_status[v125], item#i_num_comments[v126], item#i_start_date[v124], item#i_u_id[v118], item#i_num_bids[v122], item#i_initial_price[v120]}
+        [stmt_in] livein: {seller_id[v25], item_id[v24], item#i_id[v117], item#i_name[v119], item#i_status[v125], item#i_num_comments[v126], item#i_start_date[v124], item#i_u_id[v118], item#i_num_bids[v122], item#i_initial_price[v120]}
+      ITEM[item_id[v24], seller_id[v25]].i_id = item#i_id[v117];
+        [stmt_out] liveout: {item_id[v24], item#i_num_comments[v126], item#i_name[v119], item#i_start_date[v124], item#i_u_id[v118], item#i_status[v125], item#i_num_bids[v122], item#i_initial_price[v120], seller_id[v25]}
+        [stmt_in] livein: {item_id[v24], item#i_num_comments[v126], item#i_name[v119], item#i_start_date[v124], item#i_u_id[v118], item#i_status[v125], item#i_num_bids[v122], item#i_initial_price[v120], seller_id[v25]}
+      ITEM[item_id[v24], seller_id[v25]].i_initial_price = item#i_initial_price[v120];
+        [stmt_out] liveout: {item#i_start_date[v124], item_id[v24], item#i_u_id[v118], seller_id[v25], item#i_status[v125], item#i_name[v119], item#i_num_comments[v126], item#i_num_bids[v122]}
+        [stmt_in] livein: {item#i_start_date[v124], item_id[v24], item#i_u_id[v118], seller_id[v25], item#i_status[v125], item#i_name[v119], item#i_num_comments[v126], item#i_num_bids[v122]}
+      ITEM[item_id[v24], seller_id[v25]].i_name = item#i_name[v119];
+        [stmt_out] liveout: {item#i_start_date[v124], item_id[v24], item#i_u_id[v118], item#i_num_bids[v122], item#i_num_comments[v126], seller_id[v25], item#i_status[v125]}
+        [stmt_in] livein: {item#i_start_date[v124], item_id[v24], item#i_u_id[v118], item#i_num_bids[v122], item#i_num_comments[v126], seller_id[v25], item#i_status[v125]}
+      ITEM[item_id[v24], seller_id[v25]].i_num_bids = item#i_num_bids[v122];
+        [stmt_out] liveout: {item#i_num_comments[v126], seller_id[v25], item#i_status[v125], item#i_start_date[v124], item_id[v24], item#i_u_id[v118]}
+        [stmt_in] livein: {item#i_num_comments[v126], seller_id[v25], item#i_status[v125], item#i_start_date[v124], item_id[v24], item#i_u_id[v118]}
+      ITEM[item_id[v24], seller_id[v25]].i_num_comments = item#i_num_comments[v126];
+        [stmt_out] liveout: {item#i_start_date[v124], seller_id[v25], item_id[v24], item#i_status[v125], item#i_u_id[v118]}
+        [stmt_in] livein: {item#i_start_date[v124], seller_id[v25], item_id[v24], item#i_status[v125], item#i_u_id[v118]}
+      ITEM[item_id[v24], seller_id[v25]].i_start_date = item#i_start_date[v124];
+        [stmt_out] liveout: {item_id[v24], item#i_u_id[v118], seller_id[v25], item#i_status[v125]}
+        [stmt_in] livein: {item_id[v24], item#i_u_id[v118], seller_id[v25], item#i_status[v125]}
+      ITEM[item_id[v24], seller_id[v25]].i_status = item#i_status[v125];
+        [stmt_out] liveout: {seller_id[v25], item_id[v24], item#i_u_id[v118]}
+        [stmt_in] livein: {seller_id[v25], item_id[v24], item#i_u_id[v118]}
+      ITEM[item_id[v24], seller_id[v25]].i_u_id = item#i_u_id[v118];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetItem[fn19](item_id[v26]: int, seller_id[v27]: int)
+ {
+  entry_hop: hop5
+
+  hop5 {
+    entry_block: bb5
+    bb5:
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction GetUserInfo[fn20](user_id[v28]: int, other_user_id[v29]: int, item_id[v30]: int, comment_id[v31]: int)
+ {
+  entry_hop: hop6
+
+  hop6 {
+    entry_block: bb6
+    bb6:
+      livein: {}
+      hop_exit hop7;
+      liveout: {}
+  }
+
+  hop7 {
+    entry_block: bb7
+    bb7 (preds: bb6):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction NewBid[fn21](item_id[v32]: int, seller_id[v33]: int, buyer_id[v34]: int, new_bid[v35]: float, new_bid_id[v36]: int)
+ {
+  entry_hop: hop8
+
+  hop8 {
+    entry_block: bb8
+    bb8:
+      livein: {seller_id[v33], buyer_id[v34], new_bid_id[v36], new_bid[v35], item_id[v32]}
+        [stmt_in] livein: {seller_id[v33], buyer_id[v34], new_bid[v35], item_id[v32], new_bid_id[v36]}
+      item#i_c_id[v219] = ITEM[item_id[v32], seller_id[v33]].i_c_id;
+        [stmt_out] liveout: {item_id[v32], new_bid_id[v36], seller_id[v33], new_bid[v35], item#i_c_id[v219], buyer_id[v34]}
+        [stmt_in] livein: {item_id[v32], new_bid_id[v36], seller_id[v33], new_bid[v35], item#i_c_id[v219], buyer_id[v34]}
+      item#i_current_price[v213] = ITEM[item_id[v32], seller_id[v33]].i_current_price;
+        [stmt_out] liveout: {new_bid[v35], item#i_current_price[v213], new_bid_id[v36], item_id[v32], item#i_c_id[v219], seller_id[v33], buyer_id[v34]}
+        [stmt_in] livein: {new_bid[v35], item#i_current_price[v213], new_bid_id[v36], item_id[v32], item#i_c_id[v219], seller_id[v33], buyer_id[v34]}
+      item#i_end_date[v215] = ITEM[item_id[v32], seller_id[v33]].i_end_date;
+        [stmt_out] liveout: {item#i_end_date[v215], seller_id[v33], item#i_c_id[v219], buyer_id[v34], item_id[v32], new_bid[v35], new_bid_id[v36], item#i_current_price[v213]}
+        [stmt_in] livein: {item#i_end_date[v215], seller_id[v33], item#i_c_id[v219], buyer_id[v34], item_id[v32], new_bid[v35], new_bid_id[v36], item#i_current_price[v213]}
+      item#i_id[v209] = ITEM[item_id[v32], seller_id[v33]].i_id;
+        [stmt_out] liveout: {item#i_current_price[v213], item#i_c_id[v219], item_id[v32], buyer_id[v34], new_bid_id[v36], item#i_end_date[v215], seller_id[v33], item#i_id[v209], new_bid[v35]}
+        [stmt_in] livein: {item#i_current_price[v213], item#i_c_id[v219], item_id[v32], buyer_id[v34], new_bid_id[v36], item#i_end_date[v215], seller_id[v33], item#i_id[v209], new_bid[v35]}
+      item#i_initial_price[v212] = ITEM[item_id[v32], seller_id[v33]].i_initial_price;
+        [stmt_out] liveout: {item#i_current_price[v213], new_bid_id[v36], item#i_c_id[v219], item#i_initial_price[v212], item_id[v32], new_bid[v35], buyer_id[v34], item#i_id[v209], item#i_end_date[v215], seller_id[v33]}
+        [stmt_in] livein: {item#i_current_price[v213], new_bid_id[v36], item#i_c_id[v219], item#i_initial_price[v212], item_id[v32], new_bid[v35], buyer_id[v34], item#i_id[v209], item#i_end_date[v215], seller_id[v33]}
+      item#i_name[v211] = ITEM[item_id[v32], seller_id[v33]].i_name;
+        [stmt_out] liveout: {item#i_end_date[v215], new_bid[v35], item#i_current_price[v213], item#i_name[v211], item#i_initial_price[v212], new_bid_id[v36], buyer_id[v34], item#i_c_id[v219], item_id[v32], seller_id[v33], item#i_id[v209]}
+        [stmt_in] livein: {item#i_end_date[v215], new_bid[v35], item#i_current_price[v213], item#i_name[v211], item#i_initial_price[v212], new_bid_id[v36], buyer_id[v34], item#i_c_id[v219], item_id[v32], seller_id[v33], item#i_id[v209]}
+      item#i_num_bids[v214] = ITEM[item_id[v32], seller_id[v33]].i_num_bids;
+        [stmt_out] liveout: {item_id[v32], new_bid_id[v36], item#i_initial_price[v212], new_bid[v35], item#i_name[v211], buyer_id[v34], item#i_end_date[v215], seller_id[v33], item#i_c_id[v219], item#i_num_bids[v214], item#i_id[v209], item#i_current_price[v213]}
+        [stmt_in] livein: {item_id[v32], new_bid_id[v36], item#i_initial_price[v212], new_bid[v35], item#i_name[v211], buyer_id[v34], item#i_end_date[v215], seller_id[v33], item#i_c_id[v219], item#i_num_bids[v214], item#i_id[v209], item#i_current_price[v213]}
+      item#i_num_comments[v218] = ITEM[item_id[v32], seller_id[v33]].i_num_comments;
+        [stmt_out] liveout: {item#i_end_date[v215], new_bid[v35], item#i_c_id[v219], item#i_current_price[v213], item#i_id[v209], item#i_num_comments[v218], item#i_name[v211], item#i_initial_price[v212], buyer_id[v34], item_id[v32], new_bid_id[v36], item#i_num_bids[v214], seller_id[v33]}
+        [stmt_in] livein: {item#i_end_date[v215], new_bid[v35], item#i_c_id[v219], item#i_current_price[v213], item#i_id[v209], item#i_num_comments[v218], item#i_name[v211], item#i_initial_price[v212], buyer_id[v34], item_id[v32], new_bid_id[v36], item#i_num_bids[v214], seller_id[v33]}
+      item#i_start_date[v216] = ITEM[item_id[v32], seller_id[v33]].i_start_date;
+        [stmt_out] liveout: {seller_id[v33], item#i_c_id[v219], item#i_current_price[v213], item#i_name[v211], item#i_start_date[v216], item#i_id[v209], item#i_initial_price[v212], item#i_num_comments[v218], new_bid_id[v36], new_bid[v35], buyer_id[v34], item#i_end_date[v215], item#i_num_bids[v214], item_id[v32]}
+        [stmt_in] livein: {seller_id[v33], item#i_c_id[v219], item#i_current_price[v213], item#i_name[v211], item#i_start_date[v216], item#i_id[v209], item#i_initial_price[v212], item#i_num_comments[v218], new_bid_id[v36], new_bid[v35], buyer_id[v34], item#i_end_date[v215], item#i_num_bids[v214], item_id[v32]}
+      item#i_status[v217] = ITEM[item_id[v32], seller_id[v33]].i_status;
+        [stmt_out] liveout: {item#i_c_id[v219], item#i_name[v211], item#i_num_bids[v214], new_bid_id[v36], item#i_num_comments[v218], buyer_id[v34], item_id[v32], item#i_status[v217], item#i_current_price[v213], new_bid[v35], seller_id[v33], item#i_end_date[v215], item#i_start_date[v216], item#i_id[v209], item#i_initial_price[v212]}
+        [stmt_in] livein: {item#i_c_id[v219], item#i_name[v211], item#i_num_bids[v214], new_bid_id[v36], item#i_num_comments[v218], buyer_id[v34], item_id[v32], item#i_status[v217], item#i_current_price[v213], new_bid[v35], seller_id[v33], item#i_end_date[v215], item#i_start_date[v216], item#i_id[v209], item#i_initial_price[v212]}
+      item#i_u_id[v210] = ITEM[item_id[v32], seller_id[v33]].i_u_id;
+        [stmt_out] liveout: {item#i_end_date[v215], new_bid[v35], seller_id[v33], item#i_num_bids[v214], new_bid_id[v36], item#i_num_comments[v218], item#i_current_price[v213], item#i_u_id[v210], item#i_c_id[v219], item#i_name[v211], item#i_status[v217], buyer_id[v34], item#i_start_date[v216], item_id[v32], item#i_initial_price[v212], item#i_id[v209]}
+        [stmt_in] livein: {item#i_end_date[v215], new_bid[v35], seller_id[v33], item#i_num_bids[v214], new_bid_id[v36], item#i_num_comments[v218], item#i_current_price[v213], item#i_u_id[v210], item#i_c_id[v219], item#i_name[v211], item#i_status[v217], buyer_id[v34], item#i_start_date[v216], item_id[v32], item#i_initial_price[v212], item#i_id[v209]}
+      cur_price[v221] = item#i_current_price[v213];
+        [stmt_out] liveout: {item#i_name[v211], item#i_num_bids[v214], new_bid_id[v36], item#i_status[v217], item#i_u_id[v210], new_bid[v35], item#i_id[v209], cur_price[v221], seller_id[v33], item#i_num_comments[v218], buyer_id[v34], item#i_start_date[v216], item#i_c_id[v219], item#i_initial_price[v212], item#i_end_date[v215], item_id[v32], item#i_current_price[v213]}
+        [stmt_in] livein: {item#i_name[v211], item#i_num_bids[v214], new_bid_id[v36], item#i_status[v217], item#i_u_id[v210], new_bid[v35], item#i_id[v209], cur_price[v221], seller_id[v33], item#i_num_comments[v218], buyer_id[v34], item#i_start_date[v216], item#i_c_id[v219], item#i_initial_price[v212], item#i_end_date[v215], item_id[v32], item#i_current_price[v213]}
+      #tmp14[v222] = item#i_num_bids[v214] + 1;
+        [stmt_out] liveout: {item#i_id[v209], item#i_initial_price[v212], cur_price[v221], buyer_id[v34], item#i_current_price[v213], item#i_name[v211], new_bid[v35], item#i_start_date[v216], seller_id[v33], new_bid_id[v36], item#i_status[v217], item#i_end_date[v215], item#i_c_id[v219], item_id[v32], item#i_u_id[v210], item#i_num_comments[v218], #tmp14[v222]}
+        [stmt_in] livein: {item#i_id[v209], item#i_initial_price[v212], cur_price[v221], buyer_id[v34], item#i_current_price[v213], item#i_name[v211], new_bid[v35], item#i_start_date[v216], seller_id[v33], new_bid_id[v36], item#i_status[v217], item#i_end_date[v215], item#i_c_id[v219], item_id[v32], item#i_u_id[v210], item#i_num_comments[v218], #tmp14[v222]}
+      item#i_num_bids[v214] = #tmp14[v222];
+        [stmt_out] liveout: {seller_id[v33], item#i_end_date[v215], item#i_start_date[v216], item#i_c_id[v219], item#i_id[v209], new_bid_id[v36], item#i_num_bids[v214], item_id[v32], item#i_current_price[v213], item#i_u_id[v210], item#i_name[v211], item#i_initial_price[v212], item#i_status[v217], item#i_num_comments[v218], new_bid[v35], cur_price[v221], buyer_id[v34]}
+        [stmt_in] livein: {seller_id[v33], item#i_end_date[v215], item#i_start_date[v216], item#i_c_id[v219], item#i_id[v209], new_bid_id[v36], item#i_num_bids[v214], item_id[v32], item#i_current_price[v213], item#i_u_id[v210], item#i_name[v211], item#i_initial_price[v212], item#i_status[v217], item#i_num_comments[v218], new_bid[v35], cur_price[v221], buyer_id[v34]}
+      #tmp15[v223] = new_bid[v35] > cur_price[v221];
+        [stmt_out] liveout: {item#i_num_bids[v214], item#i_c_id[v219], item#i_end_date[v215], buyer_id[v34], item#i_u_id[v210], new_bid_id[v36], item_id[v32], item#i_status[v217], item#i_current_price[v213], item#i_start_date[v216], cur_price[v221], item#i_id[v209], #tmp15[v223], seller_id[v33], item#i_num_comments[v218], item#i_name[v211], new_bid[v35], item#i_initial_price[v212]}
+      branch #tmp15[v223] ? bb9 : bb10;
+      liveout: {seller_id[v33], buyer_id[v34], item#i_status[v217], cur_price[v221], item#i_current_price[v213], new_bid[v35], item#i_c_id[v219], item#i_u_id[v210], item#i_name[v211], item#i_num_bids[v214], item#i_start_date[v216], item_id[v32], item#i_end_date[v215], new_bid_id[v36], item#i_num_comments[v218], item#i_id[v209], item#i_initial_price[v212]}
+    bb9 (preds: bb8):
+      livein: {item#i_num_bids[v214], item#i_num_comments[v218], buyer_id[v34], cur_price[v221], item#i_status[v217], item_id[v32], seller_id[v33], item#i_u_id[v210], item#i_name[v211], item#i_id[v209], item#i_end_date[v215], item#i_c_id[v219], item#i_initial_price[v212], new_bid[v35], item#i_start_date[v216], new_bid_id[v36]}
+        [stmt_in] livein: {item#i_num_bids[v214], new_bid[v35], item#i_id[v209], item#i_c_id[v219], seller_id[v33], item_id[v32], item#i_num_comments[v218], item#i_name[v211], item#i_start_date[v216], item#i_status[v217], item#i_initial_price[v212], new_bid_id[v36], buyer_id[v34], item#i_end_date[v215], item#i_u_id[v210], cur_price[v221]}
+      item#i_current_price[v213] = new_bid[v35];
+        [stmt_out] liveout: {item_id[v32], seller_id[v33], item#i_num_comments[v218], item#i_status[v217], buyer_id[v34], new_bid_id[v36], item#i_start_date[v216], cur_price[v221], item#i_num_bids[v214], item#i_name[v211], item#i_id[v209], item#i_u_id[v210], item#i_current_price[v213], item#i_initial_price[v212], item#i_c_id[v219], new_bid[v35], item#i_end_date[v215]}
+      jump bb10;
+      liveout: {item#i_initial_price[v212], item#i_u_id[v210], item#i_id[v209], buyer_id[v34], item#i_c_id[v219], item#i_end_date[v215], new_bid[v35], item#i_start_date[v216], new_bid_id[v36], item#i_num_comments[v218], seller_id[v33], item_id[v32], item#i_current_price[v213], item#i_status[v217], cur_price[v221], item#i_num_bids[v214], item#i_name[v211]}
+    bb10 (preds: bb8, bb9):
+      livein: {buyer_id[v34], item#i_u_id[v210], item#i_current_price[v213], new_bid_id[v36], item#i_num_comments[v218], item#i_c_id[v219], item#i_status[v217], cur_price[v221], new_bid[v35], item#i_start_date[v216], seller_id[v33], item#i_num_bids[v214], item_id[v32], item#i_name[v211], item#i_id[v209], item#i_end_date[v215], item#i_initial_price[v212]}
+        [stmt_in] livein: {buyer_id[v34], cur_price[v221], item#i_current_price[v213], item#i_c_id[v219], item_id[v32], new_bid[v35], item#i_initial_price[v212], item#i_u_id[v210], item#i_num_comments[v218], item#i_num_bids[v214], seller_id[v33], item#i_status[v217], item#i_start_date[v216], new_bid_id[v36], item#i_name[v211], item#i_end_date[v215], item#i_id[v209]}
+      ITEM[item_id[v32], seller_id[v33]].i_c_id = item#i_c_id[v219];
+        [stmt_out] liveout: {item#i_end_date[v215], item#i_u_id[v210], new_bid_id[v36], item#i_name[v211], item#i_current_price[v213], item#i_status[v217], seller_id[v33], item#i_id[v209], item#i_num_bids[v214], item#i_start_date[v216], item#i_num_comments[v218], new_bid[v35], cur_price[v221], item_id[v32], buyer_id[v34], item#i_initial_price[v212]}
+        [stmt_in] livein: {item#i_end_date[v215], item#i_u_id[v210], new_bid_id[v36], item#i_name[v211], item#i_current_price[v213], item#i_status[v217], seller_id[v33], item#i_id[v209], item#i_num_bids[v214], item#i_start_date[v216], item#i_num_comments[v218], new_bid[v35], cur_price[v221], item_id[v32], buyer_id[v34], item#i_initial_price[v212]}
+      ITEM[item_id[v32], seller_id[v33]].i_current_price = item#i_current_price[v213];
+        [stmt_out] liveout: {item#i_end_date[v215], item_id[v32], item#i_initial_price[v212], item#i_u_id[v210], item#i_status[v217], item#i_name[v211], buyer_id[v34], item#i_num_comments[v218], new_bid_id[v36], new_bid[v35], item#i_id[v209], seller_id[v33], item#i_start_date[v216], item#i_num_bids[v214], cur_price[v221]}
+        [stmt_in] livein: {item#i_end_date[v215], item_id[v32], item#i_initial_price[v212], item#i_u_id[v210], item#i_status[v217], item#i_name[v211], buyer_id[v34], item#i_num_comments[v218], new_bid_id[v36], new_bid[v35], item#i_id[v209], seller_id[v33], item#i_start_date[v216], item#i_num_bids[v214], cur_price[v221]}
+      ITEM[item_id[v32], seller_id[v33]].i_end_date = item#i_end_date[v215];
+        [stmt_out] liveout: {item#i_num_comments[v218], item_id[v32], cur_price[v221], new_bid[v35], item#i_start_date[v216], item#i_u_id[v210], new_bid_id[v36], item#i_status[v217], item#i_initial_price[v212], buyer_id[v34], item#i_name[v211], item#i_num_bids[v214], item#i_id[v209], seller_id[v33]}
+        [stmt_in] livein: {item#i_num_comments[v218], item_id[v32], cur_price[v221], new_bid[v35], item#i_start_date[v216], item#i_u_id[v210], new_bid_id[v36], item#i_status[v217], item#i_initial_price[v212], buyer_id[v34], item#i_name[v211], item#i_num_bids[v214], item#i_id[v209], seller_id[v33]}
+      ITEM[item_id[v32], seller_id[v33]].i_id = item#i_id[v209];
+        [stmt_out] liveout: {item#i_num_comments[v218], new_bid_id[v36], cur_price[v221], item#i_u_id[v210], item#i_status[v217], item_id[v32], item#i_name[v211], new_bid[v35], seller_id[v33], buyer_id[v34], item#i_num_bids[v214], item#i_initial_price[v212], item#i_start_date[v216]}
+        [stmt_in] livein: {item#i_num_comments[v218], new_bid_id[v36], cur_price[v221], item#i_u_id[v210], item#i_status[v217], item_id[v32], item#i_name[v211], new_bid[v35], seller_id[v33], buyer_id[v34], item#i_num_bids[v214], item#i_initial_price[v212], item#i_start_date[v216]}
+      ITEM[item_id[v32], seller_id[v33]].i_initial_price = item#i_initial_price[v212];
+        [stmt_out] liveout: {seller_id[v33], cur_price[v221], new_bid_id[v36], item#i_status[v217], item#i_start_date[v216], new_bid[v35], item_id[v32], item#i_num_comments[v218], item#i_name[v211], buyer_id[v34], item#i_u_id[v210], item#i_num_bids[v214]}
+        [stmt_in] livein: {seller_id[v33], cur_price[v221], new_bid_id[v36], item#i_status[v217], item#i_start_date[v216], new_bid[v35], item_id[v32], item#i_num_comments[v218], item#i_name[v211], buyer_id[v34], item#i_u_id[v210], item#i_num_bids[v214]}
+      ITEM[item_id[v32], seller_id[v33]].i_name = item#i_name[v211];
+        [stmt_out] liveout: {buyer_id[v34], item#i_status[v217], item_id[v32], new_bid[v35], cur_price[v221], seller_id[v33], item#i_u_id[v210], item#i_num_comments[v218], item#i_num_bids[v214], new_bid_id[v36], item#i_start_date[v216]}
+        [stmt_in] livein: {buyer_id[v34], item#i_status[v217], item_id[v32], new_bid[v35], cur_price[v221], seller_id[v33], item#i_u_id[v210], item#i_num_comments[v218], item#i_num_bids[v214], new_bid_id[v36], item#i_start_date[v216]}
+      ITEM[item_id[v32], seller_id[v33]].i_num_bids = item#i_num_bids[v214];
+        [stmt_out] liveout: {item#i_u_id[v210], seller_id[v33], item#i_start_date[v216], item_id[v32], buyer_id[v34], new_bid[v35], new_bid_id[v36], item#i_status[v217], cur_price[v221], item#i_num_comments[v218]}
+        [stmt_in] livein: {item#i_u_id[v210], seller_id[v33], item#i_start_date[v216], item_id[v32], buyer_id[v34], new_bid[v35], new_bid_id[v36], item#i_status[v217], cur_price[v221], item#i_num_comments[v218]}
+      ITEM[item_id[v32], seller_id[v33]].i_num_comments = item#i_num_comments[v218];
+        [stmt_out] liveout: {item_id[v32], buyer_id[v34], new_bid[v35], seller_id[v33], item#i_start_date[v216], item#i_status[v217], cur_price[v221], new_bid_id[v36], item#i_u_id[v210]}
+        [stmt_in] livein: {item_id[v32], buyer_id[v34], new_bid[v35], seller_id[v33], item#i_start_date[v216], item#i_status[v217], cur_price[v221], new_bid_id[v36], item#i_u_id[v210]}
+      ITEM[item_id[v32], seller_id[v33]].i_start_date = item#i_start_date[v216];
+        [stmt_out] liveout: {item_id[v32], buyer_id[v34], cur_price[v221], new_bid[v35], new_bid_id[v36], item#i_u_id[v210], seller_id[v33], item#i_status[v217]}
+        [stmt_in] livein: {item_id[v32], buyer_id[v34], cur_price[v221], new_bid[v35], new_bid_id[v36], item#i_u_id[v210], seller_id[v33], item#i_status[v217]}
+      ITEM[item_id[v32], seller_id[v33]].i_status = item#i_status[v217];
+        [stmt_out] liveout: {item#i_u_id[v210], seller_id[v33], cur_price[v221], new_bid_id[v36], new_bid[v35], item_id[v32], buyer_id[v34]}
+        [stmt_in] livein: {item#i_u_id[v210], seller_id[v33], cur_price[v221], new_bid_id[v36], new_bid[v35], item_id[v32], buyer_id[v34]}
+      ITEM[item_id[v32], seller_id[v33]].i_u_id = item#i_u_id[v210];
+        [stmt_out] liveout: {new_bid_id[v36], cur_price[v221], seller_id[v33], new_bid[v35], item_id[v32], buyer_id[v34]}
+        [stmt_in] livein: {new_bid_id[v36], cur_price[v221], seller_id[v33], new_bid[v35], item_id[v32], buyer_id[v34]}
+      ITEM_BID[new_bid_id[v36], item_id[v32], seller_id[v33]].ib_buyer_id = buyer_id[v34];
+        [stmt_out] liveout: {cur_price[v221], item_id[v32], new_bid[v35], new_bid_id[v36], seller_id[v33]}
+        [stmt_in] livein: {cur_price[v221], item_id[v32], new_bid[v35], new_bid_id[v36], seller_id[v33]}
+      ITEM_BID[new_bid_id[v36], item_id[v32], seller_id[v33]].ib_bid = new_bid[v35];
+        [stmt_out] liveout: {new_bid[v35], new_bid_id[v36], seller_id[v33], item_id[v32], cur_price[v221]}
+        [stmt_in] livein: {new_bid[v35], new_bid_id[v36], seller_id[v33], item_id[v32], cur_price[v221]}
+      ITEM_BID[new_bid_id[v36], item_id[v32], seller_id[v33]].ib_max_bid = new_bid[v35];
+        [stmt_out] liveout: {new_bid_id[v36], new_bid[v35], seller_id[v33], cur_price[v221], item_id[v32]}
+        [stmt_in] livein: {new_bid_id[v36], new_bid[v35], seller_id[v33], cur_price[v221], item_id[v32]}
+      #tmp16[v224] = new_bid[v35] > cur_price[v221];
+        [stmt_out] liveout: {item_id[v32], seller_id[v33], #tmp16[v224], new_bid_id[v36]}
+      branch #tmp16[v224] ? bb11 : bb12;
+      liveout: {new_bid_id[v36], item_id[v32], seller_id[v33]}
+    bb11 (preds: bb10):
+      livein: {seller_id[v33], item_id[v32], new_bid_id[v36]}
+        [stmt_in] livein: {new_bid_id[v36], item_id[v32], seller_id[v33]}
+      ITEM_MAX_BID[item_id[v32], seller_id[v33]].imb_ib_id = new_bid_id[v36];
+        [stmt_out] liveout: {item_id[v32], seller_id[v33]}
+        [stmt_in] livein: {item_id[v32], seller_id[v33]}
+      ITEM_MAX_BID[item_id[v32], seller_id[v33]].imb_ib_i_id = item_id[v32];
+        [stmt_out] liveout: {item_id[v32], seller_id[v33]}
+        [stmt_in] livein: {item_id[v32], seller_id[v33]}
+      ITEM_MAX_BID[item_id[v32], seller_id[v33]].imb_ib_u_id = seller_id[v33];
+        [stmt_out] liveout: {}
+      jump bb12;
+      liveout: {}
+    bb12 (preds: bb10, bb11):
+      livein: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction NewComment[fn22](item_id[v37]: int, seller_id[v38]: int, buyer_id[v39]: int, comment_id[v40]: int, question[v41]: string)
+ {
+  entry_hop: hop9
+
+  hop9 {
+    entry_block: bb13
+    bb13:
+      livein: {seller_id[v38], comment_id[v40], buyer_id[v39], item_id[v37], question[v41]}
+        [stmt_in] livein: {question[v41], item_id[v37], seller_id[v38], comment_id[v40], buyer_id[v39]}
+      item#i_c_id[v236] = ITEM[item_id[v37], seller_id[v38]].i_c_id;
+        [stmt_out] liveout: {item#i_c_id[v236], question[v41], seller_id[v38], comment_id[v40], item_id[v37], buyer_id[v39]}
+        [stmt_in] livein: {item#i_c_id[v236], question[v41], seller_id[v38], comment_id[v40], item_id[v37], buyer_id[v39]}
+      item#i_current_price[v230] = ITEM[item_id[v37], seller_id[v38]].i_current_price;
+        [stmt_out] liveout: {item#i_c_id[v236], item_id[v37], buyer_id[v39], seller_id[v38], comment_id[v40], question[v41], item#i_current_price[v230]}
+        [stmt_in] livein: {item#i_c_id[v236], item_id[v37], buyer_id[v39], seller_id[v38], comment_id[v40], question[v41], item#i_current_price[v230]}
+      item#i_end_date[v232] = ITEM[item_id[v37], seller_id[v38]].i_end_date;
+        [stmt_out] liveout: {buyer_id[v39], comment_id[v40], item#i_current_price[v230], question[v41], item#i_c_id[v236], item_id[v37], item#i_end_date[v232], seller_id[v38]}
+        [stmt_in] livein: {buyer_id[v39], comment_id[v40], item#i_current_price[v230], question[v41], item#i_c_id[v236], item_id[v37], item#i_end_date[v232], seller_id[v38]}
+      item#i_id[v226] = ITEM[item_id[v37], seller_id[v38]].i_id;
+        [stmt_out] liveout: {comment_id[v40], item#i_c_id[v236], seller_id[v38], buyer_id[v39], item#i_current_price[v230], item_id[v37], question[v41], item#i_id[v226], item#i_end_date[v232]}
+        [stmt_in] livein: {comment_id[v40], item#i_c_id[v236], seller_id[v38], buyer_id[v39], item#i_current_price[v230], item_id[v37], question[v41], item#i_id[v226], item#i_end_date[v232]}
+      item#i_initial_price[v229] = ITEM[item_id[v37], seller_id[v38]].i_initial_price;
+        [stmt_out] liveout: {item#i_c_id[v236], item_id[v37], item#i_end_date[v232], comment_id[v40], seller_id[v38], buyer_id[v39], item#i_current_price[v230], question[v41], item#i_id[v226], item#i_initial_price[v229]}
+        [stmt_in] livein: {item#i_c_id[v236], item_id[v37], item#i_end_date[v232], comment_id[v40], seller_id[v38], buyer_id[v39], item#i_current_price[v230], question[v41], item#i_id[v226], item#i_initial_price[v229]}
+      item#i_name[v228] = ITEM[item_id[v37], seller_id[v38]].i_name;
+        [stmt_out] liveout: {buyer_id[v39], item#i_current_price[v230], comment_id[v40], item#i_name[v228], item_id[v37], item#i_initial_price[v229], item#i_id[v226], seller_id[v38], item#i_end_date[v232], question[v41], item#i_c_id[v236]}
+        [stmt_in] livein: {buyer_id[v39], item#i_current_price[v230], comment_id[v40], item#i_name[v228], item_id[v37], item#i_initial_price[v229], item#i_id[v226], seller_id[v38], item#i_end_date[v232], question[v41], item#i_c_id[v236]}
+      item#i_num_bids[v231] = ITEM[item_id[v37], seller_id[v38]].i_num_bids;
+        [stmt_out] liveout: {item_id[v37], item#i_name[v228], item#i_initial_price[v229], buyer_id[v39], item#i_num_bids[v231], seller_id[v38], item#i_end_date[v232], question[v41], item#i_id[v226], comment_id[v40], item#i_current_price[v230], item#i_c_id[v236]}
+        [stmt_in] livein: {item_id[v37], item#i_name[v228], item#i_initial_price[v229], buyer_id[v39], item#i_num_bids[v231], seller_id[v38], item#i_end_date[v232], question[v41], item#i_id[v226], comment_id[v40], item#i_current_price[v230], item#i_c_id[v236]}
+      item#i_num_comments[v235] = ITEM[item_id[v37], seller_id[v38]].i_num_comments;
+        [stmt_out] liveout: {item#i_c_id[v236], item#i_num_comments[v235], comment_id[v40], item#i_name[v228], item#i_id[v226], item#i_num_bids[v231], item#i_current_price[v230], seller_id[v38], item#i_end_date[v232], item_id[v37], item#i_initial_price[v229], question[v41], buyer_id[v39]}
+        [stmt_in] livein: {item#i_c_id[v236], item#i_num_comments[v235], comment_id[v40], item#i_name[v228], item#i_id[v226], item#i_num_bids[v231], item#i_current_price[v230], seller_id[v38], item#i_end_date[v232], item_id[v37], item#i_initial_price[v229], question[v41], buyer_id[v39]}
+      item#i_start_date[v233] = ITEM[item_id[v37], seller_id[v38]].i_start_date;
+        [stmt_out] liveout: {item#i_start_date[v233], item#i_end_date[v232], item#i_num_bids[v231], item#i_num_comments[v235], question[v41], buyer_id[v39], item_id[v37], item#i_id[v226], item#i_c_id[v236], item#i_initial_price[v229], item#i_current_price[v230], item#i_name[v228], comment_id[v40], seller_id[v38]}
+        [stmt_in] livein: {item#i_start_date[v233], item#i_end_date[v232], item#i_num_bids[v231], item#i_num_comments[v235], question[v41], buyer_id[v39], item_id[v37], item#i_id[v226], item#i_c_id[v236], item#i_initial_price[v229], item#i_current_price[v230], item#i_name[v228], comment_id[v40], seller_id[v38]}
+      item#i_status[v234] = ITEM[item_id[v37], seller_id[v38]].i_status;
+        [stmt_out] liveout: {item#i_id[v226], item#i_start_date[v233], item#i_current_price[v230], item#i_initial_price[v229], item#i_num_bids[v231], question[v41], item#i_end_date[v232], item#i_name[v228], item#i_status[v234], item#i_c_id[v236], buyer_id[v39], comment_id[v40], seller_id[v38], item_id[v37], item#i_num_comments[v235]}
+        [stmt_in] livein: {item#i_id[v226], item#i_start_date[v233], item#i_current_price[v230], item#i_initial_price[v229], item#i_num_bids[v231], question[v41], item#i_end_date[v232], item#i_name[v228], item#i_status[v234], item#i_c_id[v236], buyer_id[v39], comment_id[v40], seller_id[v38], item_id[v37], item#i_num_comments[v235]}
+      item#i_u_id[v227] = ITEM[item_id[v37], seller_id[v38]].i_u_id;
+        [stmt_out] liveout: {question[v41], item#i_name[v228], item#i_end_date[v232], seller_id[v38], item#i_u_id[v227], item#i_c_id[v236], comment_id[v40], item#i_id[v226], item#i_status[v234], item_id[v37], buyer_id[v39], item#i_start_date[v233], item#i_num_comments[v235], item#i_num_bids[v231], item#i_current_price[v230], item#i_initial_price[v229]}
+        [stmt_in] livein: {question[v41], item#i_name[v228], item#i_end_date[v232], seller_id[v38], item#i_u_id[v227], item#i_c_id[v236], comment_id[v40], item#i_id[v226], item#i_status[v234], item_id[v37], buyer_id[v39], item#i_start_date[v233], item#i_num_comments[v235], item#i_num_bids[v231], item#i_current_price[v230], item#i_initial_price[v229]}
+      #tmp18[v238] = item#i_num_comments[v235] + 1;
+        [stmt_out] liveout: {seller_id[v38], item#i_status[v234], #tmp18[v238], item#i_end_date[v232], item#i_initial_price[v229], buyer_id[v39], item#i_u_id[v227], item#i_name[v228], item#i_id[v226], item_id[v37], item#i_start_date[v233], item#i_num_bids[v231], item#i_current_price[v230], question[v41], item#i_c_id[v236], comment_id[v40]}
+        [stmt_in] livein: {seller_id[v38], item#i_status[v234], #tmp18[v238], item#i_end_date[v232], item#i_initial_price[v229], buyer_id[v39], item#i_u_id[v227], item#i_name[v228], item#i_id[v226], item_id[v37], item#i_start_date[v233], item#i_num_bids[v231], item#i_current_price[v230], question[v41], item#i_c_id[v236], comment_id[v40]}
+      item#i_num_comments[v235] = #tmp18[v238];
+        [stmt_out] liveout: {item#i_num_comments[v235], item_id[v37], item#i_current_price[v230], item#i_u_id[v227], item#i_initial_price[v229], item#i_num_bids[v231], item#i_id[v226], buyer_id[v39], item#i_status[v234], seller_id[v38], item#i_name[v228], question[v41], item#i_end_date[v232], item#i_c_id[v236], item#i_start_date[v233], comment_id[v40]}
+        [stmt_in] livein: {item#i_num_comments[v235], item_id[v37], item#i_current_price[v230], item#i_u_id[v227], item#i_initial_price[v229], item#i_num_bids[v231], item#i_id[v226], buyer_id[v39], item#i_status[v234], seller_id[v38], item#i_name[v228], question[v41], item#i_end_date[v232], item#i_c_id[v236], item#i_start_date[v233], comment_id[v40]}
+      ITEM[item_id[v37], seller_id[v38]].i_c_id = item#i_c_id[v236];
+        [stmt_out] liveout: {item#i_num_comments[v235], item#i_id[v226], buyer_id[v39], item#i_status[v234], item#i_num_bids[v231], question[v41], item#i_start_date[v233], item_id[v37], item#i_current_price[v230], item#i_name[v228], item#i_end_date[v232], comment_id[v40], item#i_initial_price[v229], seller_id[v38], item#i_u_id[v227]}
+        [stmt_in] livein: {item#i_num_comments[v235], item#i_id[v226], buyer_id[v39], item#i_status[v234], item#i_num_bids[v231], question[v41], item#i_start_date[v233], item_id[v37], item#i_current_price[v230], item#i_name[v228], item#i_end_date[v232], comment_id[v40], item#i_initial_price[v229], seller_id[v38], item#i_u_id[v227]}
+      ITEM[item_id[v37], seller_id[v38]].i_current_price = item#i_current_price[v230];
+        [stmt_out] liveout: {item#i_start_date[v233], item#i_id[v226], buyer_id[v39], item#i_name[v228], comment_id[v40], item#i_end_date[v232], item#i_u_id[v227], question[v41], item_id[v37], seller_id[v38], item#i_status[v234], item#i_num_bids[v231], item#i_initial_price[v229], item#i_num_comments[v235]}
+        [stmt_in] livein: {item#i_start_date[v233], item#i_id[v226], buyer_id[v39], item#i_name[v228], comment_id[v40], item#i_end_date[v232], item#i_u_id[v227], question[v41], item_id[v37], seller_id[v38], item#i_status[v234], item#i_num_bids[v231], item#i_initial_price[v229], item#i_num_comments[v235]}
+      ITEM[item_id[v37], seller_id[v38]].i_end_date = item#i_end_date[v232];
+        [stmt_out] liveout: {item#i_id[v226], item_id[v37], item#i_num_bids[v231], seller_id[v38], item#i_u_id[v227], question[v41], item#i_initial_price[v229], item#i_num_comments[v235], item#i_start_date[v233], item#i_status[v234], buyer_id[v39], item#i_name[v228], comment_id[v40]}
+        [stmt_in] livein: {item#i_id[v226], item_id[v37], item#i_num_bids[v231], seller_id[v38], item#i_u_id[v227], question[v41], item#i_initial_price[v229], item#i_num_comments[v235], item#i_start_date[v233], item#i_status[v234], buyer_id[v39], item#i_name[v228], comment_id[v40]}
+      ITEM[item_id[v37], seller_id[v38]].i_id = item#i_id[v226];
+        [stmt_out] liveout: {item#i_num_bids[v231], seller_id[v38], item#i_u_id[v227], item#i_status[v234], buyer_id[v39], item#i_initial_price[v229], comment_id[v40], question[v41], item#i_num_comments[v235], item#i_name[v228], item#i_start_date[v233], item_id[v37]}
+        [stmt_in] livein: {item#i_num_bids[v231], seller_id[v38], item#i_u_id[v227], item#i_status[v234], buyer_id[v39], item#i_initial_price[v229], comment_id[v40], question[v41], item#i_num_comments[v235], item#i_name[v228], item#i_start_date[v233], item_id[v37]}
+      ITEM[item_id[v37], seller_id[v38]].i_initial_price = item#i_initial_price[v229];
+        [stmt_out] liveout: {item_id[v37], seller_id[v38], item#i_name[v228], item#i_status[v234], item#i_start_date[v233], comment_id[v40], item#i_u_id[v227], buyer_id[v39], item#i_num_bids[v231], question[v41], item#i_num_comments[v235]}
+        [stmt_in] livein: {item_id[v37], seller_id[v38], item#i_name[v228], item#i_status[v234], item#i_start_date[v233], comment_id[v40], item#i_u_id[v227], buyer_id[v39], item#i_num_bids[v231], question[v41], item#i_num_comments[v235]}
+      ITEM[item_id[v37], seller_id[v38]].i_name = item#i_name[v228];
+        [stmt_out] liveout: {question[v41], item#i_start_date[v233], comment_id[v40], item_id[v37], buyer_id[v39], item#i_u_id[v227], item#i_num_bids[v231], seller_id[v38], item#i_num_comments[v235], item#i_status[v234]}
+        [stmt_in] livein: {question[v41], item#i_start_date[v233], comment_id[v40], item_id[v37], buyer_id[v39], item#i_u_id[v227], item#i_num_bids[v231], seller_id[v38], item#i_num_comments[v235], item#i_status[v234]}
+      ITEM[item_id[v37], seller_id[v38]].i_num_bids = item#i_num_bids[v231];
+        [stmt_out] liveout: {item#i_status[v234], item_id[v37], comment_id[v40], item#i_start_date[v233], buyer_id[v39], question[v41], item#i_u_id[v227], item#i_num_comments[v235], seller_id[v38]}
+        [stmt_in] livein: {item#i_status[v234], item_id[v37], comment_id[v40], item#i_start_date[v233], buyer_id[v39], question[v41], item#i_u_id[v227], item#i_num_comments[v235], seller_id[v38]}
+      ITEM[item_id[v37], seller_id[v38]].i_num_comments = item#i_num_comments[v235];
+        [stmt_out] liveout: {item_id[v37], comment_id[v40], seller_id[v38], item#i_status[v234], item#i_u_id[v227], question[v41], buyer_id[v39], item#i_start_date[v233]}
+        [stmt_in] livein: {item_id[v37], comment_id[v40], seller_id[v38], item#i_status[v234], item#i_u_id[v227], question[v41], buyer_id[v39], item#i_start_date[v233]}
+      ITEM[item_id[v37], seller_id[v38]].i_start_date = item#i_start_date[v233];
+        [stmt_out] liveout: {item#i_u_id[v227], item#i_status[v234], item_id[v37], question[v41], comment_id[v40], buyer_id[v39], seller_id[v38]}
+        [stmt_in] livein: {item#i_u_id[v227], item#i_status[v234], item_id[v37], question[v41], comment_id[v40], buyer_id[v39], seller_id[v38]}
+      ITEM[item_id[v37], seller_id[v38]].i_status = item#i_status[v234];
+        [stmt_out] liveout: {seller_id[v38], question[v41], item_id[v37], buyer_id[v39], comment_id[v40], item#i_u_id[v227]}
+        [stmt_in] livein: {seller_id[v38], question[v41], item_id[v37], buyer_id[v39], comment_id[v40], item#i_u_id[v227]}
+      ITEM[item_id[v37], seller_id[v38]].i_u_id = item#i_u_id[v227];
+        [stmt_out] liveout: {item_id[v37], buyer_id[v39], seller_id[v38], comment_id[v40], question[v41]}
+        [stmt_in] livein: {item_id[v37], buyer_id[v39], seller_id[v38], comment_id[v40], question[v41]}
+      ITEM_COMMENT[comment_id[v40], item_id[v37], seller_id[v38]].ic_buyer_id = buyer_id[v39];
+        [stmt_out] liveout: {seller_id[v38], comment_id[v40], question[v41], item_id[v37]}
+        [stmt_in] livein: {seller_id[v38], comment_id[v40], question[v41], item_id[v37]}
+      ITEM_COMMENT[comment_id[v40], item_id[v37], seller_id[v38]].ic_question = question[v41];
+        [stmt_out] liveout: {item_id[v37], seller_id[v38], comment_id[v40]}
+        [stmt_in] livein: {item_id[v37], seller_id[v38], comment_id[v40]}
+      ITEM_COMMENT[comment_id[v40], item_id[v37], seller_id[v38]].ic_response = "";
+        [stmt_out] liveout: {seller_id[v38]}
+        [stmt_in] livein: {seller_id[v38]}
+      seller#u_balance[v242] = USERACCT[seller_id[v38]].u_balance;
+        [stmt_out] liveout: {seller#u_balance[v242], seller_id[v38]}
+        [stmt_in] livein: {seller#u_balance[v242], seller_id[v38]}
+      seller#u_comments[v243] = USERACCT[seller_id[v38]].u_comments;
+        [stmt_out] liveout: {seller#u_comments[v243], seller#u_balance[v242], seller_id[v38]}
+        [stmt_in] livein: {seller#u_comments[v243], seller#u_balance[v242], seller_id[v38]}
+      seller#u_id[v240] = USERACCT[seller_id[v38]].u_id;
+        [stmt_out] liveout: {seller#u_id[v240], seller_id[v38], seller#u_comments[v243], seller#u_balance[v242]}
+        [stmt_in] livein: {seller#u_id[v240], seller_id[v38], seller#u_comments[v243], seller#u_balance[v242]}
+      seller#u_r_id[v244] = USERACCT[seller_id[v38]].u_r_id;
+        [stmt_out] liveout: {seller#u_r_id[v244], seller#u_comments[v243], seller#u_balance[v242], seller_id[v38], seller#u_id[v240]}
+        [stmt_in] livein: {seller#u_r_id[v244], seller#u_comments[v243], seller#u_balance[v242], seller_id[v38], seller#u_id[v240]}
+      seller#u_rating[v241] = USERACCT[seller_id[v38]].u_rating;
+        [stmt_out] liveout: {seller#u_comments[v243], seller#u_id[v240], seller_id[v38], seller#u_rating[v241], seller#u_r_id[v244], seller#u_balance[v242]}
+        [stmt_in] livein: {seller#u_comments[v243], seller#u_id[v240], seller_id[v38], seller#u_rating[v241], seller#u_r_id[v244], seller#u_balance[v242]}
+      seller#u_sattr0[v245] = USERACCT[seller_id[v38]].u_sattr0;
+        [stmt_out] liveout: {seller#u_id[v240], seller#u_rating[v241], seller#u_r_id[v244], seller_id[v38], seller#u_balance[v242], seller#u_sattr0[v245], seller#u_comments[v243]}
+        [stmt_in] livein: {seller#u_id[v240], seller#u_rating[v241], seller#u_r_id[v244], seller_id[v38], seller#u_balance[v242], seller#u_sattr0[v245], seller#u_comments[v243]}
+      seller#u_sattr1[v246] = USERACCT[seller_id[v38]].u_sattr1;
+        [stmt_out] liveout: {seller#u_id[v240], seller#u_sattr1[v246], seller_id[v38], seller#u_balance[v242], seller#u_r_id[v244], seller#u_sattr0[v245], seller#u_comments[v243], seller#u_rating[v241]}
+        [stmt_in] livein: {seller#u_id[v240], seller#u_sattr1[v246], seller_id[v38], seller#u_balance[v242], seller#u_r_id[v244], seller#u_sattr0[v245], seller#u_comments[v243], seller#u_rating[v241]}
+      seller#u_sattr2[v247] = USERACCT[seller_id[v38]].u_sattr2;
+        [stmt_out] liveout: {seller#u_balance[v242], seller#u_sattr0[v245], seller#u_comments[v243], seller#u_sattr1[v246], seller#u_sattr2[v247], seller#u_id[v240], seller#u_r_id[v244], seller#u_rating[v241], seller_id[v38]}
+        [stmt_in] livein: {seller#u_balance[v242], seller#u_sattr0[v245], seller#u_comments[v243], seller#u_sattr1[v246], seller#u_sattr2[v247], seller#u_id[v240], seller#u_r_id[v244], seller#u_rating[v241], seller_id[v38]}
+      seller#u_sattr3[v248] = USERACCT[seller_id[v38]].u_sattr3;
+        [stmt_out] liveout: {seller#u_r_id[v244], seller#u_balance[v242], seller#u_id[v240], seller#u_comments[v243], seller#u_sattr2[v247], seller#u_sattr0[v245], seller#u_sattr1[v246], seller#u_sattr3[v248], seller_id[v38], seller#u_rating[v241]}
+        [stmt_in] livein: {seller#u_r_id[v244], seller#u_balance[v242], seller#u_id[v240], seller#u_comments[v243], seller#u_sattr2[v247], seller#u_sattr0[v245], seller#u_sattr1[v246], seller#u_sattr3[v248], seller_id[v38], seller#u_rating[v241]}
+      seller#u_sattr4[v249] = USERACCT[seller_id[v38]].u_sattr4;
+        [stmt_out] liveout: {seller#u_sattr2[v247], seller#u_balance[v242], seller#u_sattr1[v246], seller#u_sattr3[v248], seller#u_comments[v243], seller#u_r_id[v244], seller#u_sattr4[v249], seller#u_id[v240], seller_id[v38], seller#u_rating[v241], seller#u_sattr0[v245]}
+        [stmt_in] livein: {seller#u_sattr2[v247], seller#u_balance[v242], seller#u_sattr1[v246], seller#u_sattr3[v248], seller#u_comments[v243], seller#u_r_id[v244], seller#u_sattr4[v249], seller#u_id[v240], seller_id[v38], seller#u_rating[v241], seller#u_sattr0[v245]}
+      #tmp20[v251] = seller#u_comments[v243] + 1;
+        [stmt_out] liveout: {seller#u_id[v240], seller#u_sattr4[v249], seller_id[v38], #tmp20[v251], seller#u_sattr0[v245], seller#u_sattr1[v246], seller#u_sattr3[v248], seller#u_r_id[v244], seller#u_rating[v241], seller#u_sattr2[v247], seller#u_balance[v242]}
+        [stmt_in] livein: {seller#u_id[v240], seller#u_sattr4[v249], seller_id[v38], #tmp20[v251], seller#u_sattr0[v245], seller#u_sattr1[v246], seller#u_sattr3[v248], seller#u_r_id[v244], seller#u_rating[v241], seller#u_sattr2[v247], seller#u_balance[v242]}
+      seller#u_comments[v243] = #tmp20[v251];
+        [stmt_out] liveout: {seller#u_r_id[v244], seller#u_rating[v241], seller_id[v38], seller#u_sattr0[v245], seller#u_sattr2[v247], seller#u_comments[v243], seller#u_sattr3[v248], seller#u_id[v240], seller#u_balance[v242], seller#u_sattr4[v249], seller#u_sattr1[v246]}
+        [stmt_in] livein: {seller#u_r_id[v244], seller#u_rating[v241], seller_id[v38], seller#u_sattr0[v245], seller#u_sattr2[v247], seller#u_comments[v243], seller#u_sattr3[v248], seller#u_id[v240], seller#u_balance[v242], seller#u_sattr4[v249], seller#u_sattr1[v246]}
+      USERACCT[seller_id[v38]].u_balance = seller#u_balance[v242];
+        [stmt_out] liveout: {seller#u_sattr1[v246], seller#u_sattr3[v248], seller#u_sattr4[v249], seller#u_sattr2[v247], seller#u_comments[v243], seller#u_id[v240], seller#u_r_id[v244], seller#u_sattr0[v245], seller#u_rating[v241], seller_id[v38]}
+        [stmt_in] livein: {seller#u_sattr1[v246], seller#u_sattr3[v248], seller#u_sattr4[v249], seller#u_sattr2[v247], seller#u_comments[v243], seller#u_id[v240], seller#u_r_id[v244], seller#u_sattr0[v245], seller#u_rating[v241], seller_id[v38]}
+      USERACCT[seller_id[v38]].u_comments = seller#u_comments[v243];
+        [stmt_out] liveout: {seller#u_sattr4[v249], seller#u_id[v240], seller#u_sattr0[v245], seller#u_rating[v241], seller#u_r_id[v244], seller#u_sattr1[v246], seller_id[v38], seller#u_sattr3[v248], seller#u_sattr2[v247]}
+        [stmt_in] livein: {seller#u_sattr4[v249], seller#u_id[v240], seller#u_sattr0[v245], seller#u_rating[v241], seller#u_r_id[v244], seller#u_sattr1[v246], seller_id[v38], seller#u_sattr3[v248], seller#u_sattr2[v247]}
+      USERACCT[seller_id[v38]].u_id = seller#u_id[v240];
+        [stmt_out] liveout: {seller#u_sattr1[v246], seller#u_sattr3[v248], seller#u_r_id[v244], seller_id[v38], seller#u_rating[v241], seller#u_sattr0[v245], seller#u_sattr2[v247], seller#u_sattr4[v249]}
+        [stmt_in] livein: {seller#u_sattr1[v246], seller#u_sattr3[v248], seller#u_r_id[v244], seller_id[v38], seller#u_rating[v241], seller#u_sattr0[v245], seller#u_sattr2[v247], seller#u_sattr4[v249]}
+      USERACCT[seller_id[v38]].u_r_id = seller#u_r_id[v244];
+        [stmt_out] liveout: {seller#u_sattr0[v245], seller#u_sattr4[v249], seller#u_sattr3[v248], seller_id[v38], seller#u_sattr1[v246], seller#u_rating[v241], seller#u_sattr2[v247]}
+        [stmt_in] livein: {seller#u_sattr0[v245], seller#u_sattr4[v249], seller#u_sattr3[v248], seller_id[v38], seller#u_sattr1[v246], seller#u_rating[v241], seller#u_sattr2[v247]}
+      USERACCT[seller_id[v38]].u_rating = seller#u_rating[v241];
+        [stmt_out] liveout: {seller#u_sattr1[v246], seller#u_sattr3[v248], seller_id[v38], seller#u_sattr4[v249], seller#u_sattr0[v245], seller#u_sattr2[v247]}
+        [stmt_in] livein: {seller#u_sattr1[v246], seller#u_sattr3[v248], seller_id[v38], seller#u_sattr4[v249], seller#u_sattr0[v245], seller#u_sattr2[v247]}
+      USERACCT[seller_id[v38]].u_sattr0 = seller#u_sattr0[v245];
+        [stmt_out] liveout: {seller#u_sattr1[v246], seller#u_sattr2[v247], seller#u_sattr4[v249], seller#u_sattr3[v248], seller_id[v38]}
+        [stmt_in] livein: {seller#u_sattr1[v246], seller#u_sattr2[v247], seller#u_sattr4[v249], seller#u_sattr3[v248], seller_id[v38]}
+      USERACCT[seller_id[v38]].u_sattr1 = seller#u_sattr1[v246];
+        [stmt_out] liveout: {seller#u_sattr4[v249], seller#u_sattr3[v248], seller_id[v38], seller#u_sattr2[v247]}
+        [stmt_in] livein: {seller#u_sattr4[v249], seller#u_sattr3[v248], seller_id[v38], seller#u_sattr2[v247]}
+      USERACCT[seller_id[v38]].u_sattr2 = seller#u_sattr2[v247];
+        [stmt_out] liveout: {seller_id[v38], seller#u_sattr3[v248], seller#u_sattr4[v249]}
+        [stmt_in] livein: {seller_id[v38], seller#u_sattr3[v248], seller#u_sattr4[v249]}
+      USERACCT[seller_id[v38]].u_sattr3 = seller#u_sattr3[v248];
+        [stmt_out] liveout: {seller_id[v38], seller#u_sattr4[v249]}
+        [stmt_in] livein: {seller_id[v38], seller#u_sattr4[v249]}
+      USERACCT[seller_id[v38]].u_sattr4 = seller#u_sattr4[v249];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction NewCommentResponse[fn23](comment_id[v42]: int, item_id[v43]: int, seller_id[v44]: int, response[v45]: string)
+ {
+  entry_hop: hop10
+
+  hop10 {
+    entry_block: bb14
+    bb14:
+      livein: {response[v45], comment_id[v42], seller_id[v44], item_id[v43]}
+        [stmt_in] livein: {item_id[v43], seller_id[v44], response[v45], comment_id[v42]}
+      c#ic_buyer_id[v256] = ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_buyer_id;
+        [stmt_out] liveout: {response[v45], item_id[v43], seller_id[v44], c#ic_buyer_id[v256], comment_id[v42]}
+        [stmt_in] livein: {response[v45], item_id[v43], seller_id[v44], c#ic_buyer_id[v256], comment_id[v42]}
+      c#ic_i_id[v254] = ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_i_id;
+        [stmt_out] liveout: {response[v45], seller_id[v44], c#ic_buyer_id[v256], comment_id[v42], item_id[v43], c#ic_i_id[v254]}
+        [stmt_in] livein: {response[v45], seller_id[v44], c#ic_buyer_id[v256], comment_id[v42], item_id[v43], c#ic_i_id[v254]}
+      c#ic_id[v253] = ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_id;
+        [stmt_out] liveout: {seller_id[v44], response[v45], c#ic_id[v253], comment_id[v42], item_id[v43], c#ic_buyer_id[v256], c#ic_i_id[v254]}
+        [stmt_in] livein: {seller_id[v44], response[v45], c#ic_id[v253], comment_id[v42], item_id[v43], c#ic_buyer_id[v256], c#ic_i_id[v254]}
+      c#ic_question[v257] = ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_question;
+        [stmt_out] liveout: {c#ic_id[v253], c#ic_i_id[v254], item_id[v43], c#ic_question[v257], c#ic_buyer_id[v256], seller_id[v44], response[v45], comment_id[v42]}
+        [stmt_in] livein: {c#ic_id[v253], c#ic_i_id[v254], item_id[v43], c#ic_question[v257], c#ic_buyer_id[v256], seller_id[v44], response[v45], comment_id[v42]}
+      c#ic_u_id[v255] = ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_u_id;
+        [stmt_out] liveout: {item_id[v43], seller_id[v44], c#ic_i_id[v254], response[v45], comment_id[v42], c#ic_buyer_id[v256], c#ic_id[v253], c#ic_u_id[v255], c#ic_question[v257]}
+        [stmt_in] livein: {item_id[v43], seller_id[v44], c#ic_i_id[v254], response[v45], comment_id[v42], c#ic_buyer_id[v256], c#ic_id[v253], c#ic_u_id[v255], c#ic_question[v257]}
+      c#ic_response[v258] = response[v45];
+        [stmt_out] liveout: {comment_id[v42], seller_id[v44], c#ic_id[v253], c#ic_u_id[v255], c#ic_buyer_id[v256], c#ic_i_id[v254], item_id[v43], c#ic_response[v258], c#ic_question[v257]}
+        [stmt_in] livein: {comment_id[v42], seller_id[v44], c#ic_id[v253], c#ic_u_id[v255], c#ic_buyer_id[v256], c#ic_i_id[v254], item_id[v43], c#ic_response[v258], c#ic_question[v257]}
+      ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_buyer_id = c#ic_buyer_id[v256];
+        [stmt_out] liveout: {c#ic_u_id[v255], seller_id[v44], c#ic_question[v257], c#ic_id[v253], c#ic_i_id[v254], comment_id[v42], c#ic_response[v258], item_id[v43]}
+        [stmt_in] livein: {c#ic_u_id[v255], seller_id[v44], c#ic_question[v257], c#ic_id[v253], c#ic_i_id[v254], comment_id[v42], c#ic_response[v258], item_id[v43]}
+      ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_i_id = c#ic_i_id[v254];
+        [stmt_out] liveout: {comment_id[v42], c#ic_question[v257], c#ic_response[v258], c#ic_id[v253], c#ic_u_id[v255], item_id[v43], seller_id[v44]}
+        [stmt_in] livein: {comment_id[v42], c#ic_question[v257], c#ic_response[v258], c#ic_id[v253], c#ic_u_id[v255], item_id[v43], seller_id[v44]}
+      ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_id = c#ic_id[v253];
+        [stmt_out] liveout: {seller_id[v44], c#ic_question[v257], item_id[v43], c#ic_response[v258], comment_id[v42], c#ic_u_id[v255]}
+        [stmt_in] livein: {seller_id[v44], c#ic_question[v257], item_id[v43], c#ic_response[v258], comment_id[v42], c#ic_u_id[v255]}
+      ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_question = c#ic_question[v257];
+        [stmt_out] liveout: {comment_id[v42], item_id[v43], c#ic_response[v258], c#ic_u_id[v255], seller_id[v44]}
+        [stmt_in] livein: {comment_id[v42], item_id[v43], c#ic_response[v258], c#ic_u_id[v255], seller_id[v44]}
+      ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_response = c#ic_response[v258];
+        [stmt_out] liveout: {comment_id[v42], seller_id[v44], item_id[v43], c#ic_u_id[v255]}
+        [stmt_in] livein: {comment_id[v42], seller_id[v44], item_id[v43], c#ic_u_id[v255]}
+      ITEM_COMMENT[comment_id[v42], item_id[v43], seller_id[v44]].ic_u_id = c#ic_u_id[v255];
+        [stmt_out] liveout: {seller_id[v44]}
+        [stmt_in] livein: {seller_id[v44]}
+      seller#u_balance[v263] = USERACCT[seller_id[v44]].u_balance;
+        [stmt_out] liveout: {seller#u_balance[v263], seller_id[v44]}
+        [stmt_in] livein: {seller#u_balance[v263], seller_id[v44]}
+      seller#u_comments[v264] = USERACCT[seller_id[v44]].u_comments;
+        [stmt_out] liveout: {seller_id[v44], seller#u_balance[v263], seller#u_comments[v264]}
+        [stmt_in] livein: {seller_id[v44], seller#u_balance[v263], seller#u_comments[v264]}
+      seller#u_id[v261] = USERACCT[seller_id[v44]].u_id;
+        [stmt_out] liveout: {seller#u_id[v261], seller#u_balance[v263], seller#u_comments[v264], seller_id[v44]}
+        [stmt_in] livein: {seller#u_id[v261], seller#u_balance[v263], seller#u_comments[v264], seller_id[v44]}
+      seller#u_r_id[v265] = USERACCT[seller_id[v44]].u_r_id;
+        [stmt_out] liveout: {seller#u_comments[v264], seller_id[v44], seller#u_id[v261], seller#u_r_id[v265], seller#u_balance[v263]}
+        [stmt_in] livein: {seller#u_comments[v264], seller_id[v44], seller#u_id[v261], seller#u_r_id[v265], seller#u_balance[v263]}
+      seller#u_rating[v262] = USERACCT[seller_id[v44]].u_rating;
+        [stmt_out] liveout: {seller#u_comments[v264], seller_id[v44], seller#u_id[v261], seller#u_rating[v262], seller#u_r_id[v265], seller#u_balance[v263]}
+        [stmt_in] livein: {seller#u_comments[v264], seller_id[v44], seller#u_id[v261], seller#u_rating[v262], seller#u_r_id[v265], seller#u_balance[v263]}
+      seller#u_sattr0[v266] = USERACCT[seller_id[v44]].u_sattr0;
+        [stmt_out] liveout: {seller#u_r_id[v265], seller_id[v44], seller#u_id[v261], seller#u_rating[v262], seller#u_balance[v263], seller#u_comments[v264], seller#u_sattr0[v266]}
+        [stmt_in] livein: {seller#u_r_id[v265], seller_id[v44], seller#u_id[v261], seller#u_rating[v262], seller#u_balance[v263], seller#u_comments[v264], seller#u_sattr0[v266]}
+      seller#u_sattr1[v267] = USERACCT[seller_id[v44]].u_sattr1;
+        [stmt_out] liveout: {seller_id[v44], seller#u_comments[v264], seller#u_id[v261], seller#u_sattr0[v266], seller#u_r_id[v265], seller#u_rating[v262], seller#u_balance[v263], seller#u_sattr1[v267]}
+        [stmt_in] livein: {seller_id[v44], seller#u_comments[v264], seller#u_id[v261], seller#u_sattr0[v266], seller#u_r_id[v265], seller#u_rating[v262], seller#u_balance[v263], seller#u_sattr1[v267]}
+      seller#u_sattr2[v268] = USERACCT[seller_id[v44]].u_sattr2;
+        [stmt_out] liveout: {seller#u_id[v261], seller#u_sattr0[v266], seller#u_r_id[v265], seller#u_rating[v262], seller#u_sattr1[v267], seller#u_sattr2[v268], seller#u_comments[v264], seller#u_balance[v263], seller_id[v44]}
+        [stmt_in] livein: {seller#u_id[v261], seller#u_sattr0[v266], seller#u_r_id[v265], seller#u_rating[v262], seller#u_sattr1[v267], seller#u_sattr2[v268], seller#u_comments[v264], seller#u_balance[v263], seller_id[v44]}
+      seller#u_sattr3[v269] = USERACCT[seller_id[v44]].u_sattr3;
+        [stmt_out] liveout: {seller#u_sattr0[v266], seller#u_balance[v263], seller#u_r_id[v265], seller#u_sattr2[v268], seller#u_sattr3[v269], seller#u_rating[v262], seller#u_id[v261], seller_id[v44], seller#u_comments[v264], seller#u_sattr1[v267]}
+        [stmt_in] livein: {seller#u_sattr0[v266], seller#u_balance[v263], seller#u_r_id[v265], seller#u_sattr2[v268], seller#u_sattr3[v269], seller#u_rating[v262], seller#u_id[v261], seller_id[v44], seller#u_comments[v264], seller#u_sattr1[v267]}
+      seller#u_sattr4[v270] = USERACCT[seller_id[v44]].u_sattr4;
+        [stmt_out] liveout: {seller#u_sattr1[v267], seller#u_sattr0[v266], seller#u_sattr4[v270], seller#u_balance[v263], seller#u_r_id[v265], seller#u_sattr2[v268], seller#u_sattr3[v269], seller#u_rating[v262], seller#u_comments[v264], seller#u_id[v261], seller_id[v44]}
+        [stmt_in] livein: {seller#u_sattr1[v267], seller#u_sattr0[v266], seller#u_sattr4[v270], seller#u_balance[v263], seller#u_r_id[v265], seller#u_sattr2[v268], seller#u_sattr3[v269], seller#u_rating[v262], seller#u_comments[v264], seller#u_id[v261], seller_id[v44]}
+      #tmp23[v272] = seller#u_comments[v264] - 1;
+        [stmt_out] liveout: {seller#u_balance[v263], seller#u_id[v261], seller#u_sattr4[v270], seller_id[v44], seller#u_r_id[v265], seller#u_sattr3[v269], seller#u_sattr2[v268], seller#u_sattr1[v267], seller#u_rating[v262], #tmp23[v272], seller#u_sattr0[v266]}
+        [stmt_in] livein: {seller#u_balance[v263], seller#u_id[v261], seller#u_sattr4[v270], seller_id[v44], seller#u_r_id[v265], seller#u_sattr3[v269], seller#u_sattr2[v268], seller#u_sattr1[v267], seller#u_rating[v262], #tmp23[v272], seller#u_sattr0[v266]}
+      seller#u_comments[v264] = #tmp23[v272];
+        [stmt_out] liveout: {seller_id[v44], seller#u_sattr0[v266], seller#u_balance[v263], seller#u_r_id[v265], seller#u_sattr3[v269], seller#u_sattr2[v268], seller#u_comments[v264], seller#u_rating[v262], seller#u_id[v261], seller#u_sattr4[v270], seller#u_sattr1[v267]}
+        [stmt_in] livein: {seller_id[v44], seller#u_sattr0[v266], seller#u_balance[v263], seller#u_r_id[v265], seller#u_sattr3[v269], seller#u_sattr2[v268], seller#u_comments[v264], seller#u_rating[v262], seller#u_id[v261], seller#u_sattr4[v270], seller#u_sattr1[v267]}
+      USERACCT[seller_id[v44]].u_balance = seller#u_balance[v263];
+        [stmt_out] liveout: {seller#u_id[v261], seller#u_sattr4[v270], seller_id[v44], seller#u_r_id[v265], seller#u_comments[v264], seller#u_sattr3[v269], seller#u_sattr0[v266], seller#u_sattr2[v268], seller#u_sattr1[v267], seller#u_rating[v262]}
+        [stmt_in] livein: {seller#u_id[v261], seller#u_sattr4[v270], seller_id[v44], seller#u_r_id[v265], seller#u_comments[v264], seller#u_sattr3[v269], seller#u_sattr0[v266], seller#u_sattr2[v268], seller#u_sattr1[v267], seller#u_rating[v262]}
+      USERACCT[seller_id[v44]].u_comments = seller#u_comments[v264];
+        [stmt_out] liveout: {seller#u_sattr0[v266], seller#u_sattr2[v268], seller#u_sattr3[v269], seller#u_sattr4[v270], seller#u_rating[v262], seller_id[v44], seller#u_r_id[v265], seller#u_id[v261], seller#u_sattr1[v267]}
+        [stmt_in] livein: {seller#u_sattr0[v266], seller#u_sattr2[v268], seller#u_sattr3[v269], seller#u_sattr4[v270], seller#u_rating[v262], seller_id[v44], seller#u_r_id[v265], seller#u_id[v261], seller#u_sattr1[v267]}
+      USERACCT[seller_id[v44]].u_id = seller#u_id[v261];
+        [stmt_out] liveout: {seller#u_sattr2[v268], seller#u_sattr4[v270], seller#u_sattr3[v269], seller#u_rating[v262], seller#u_sattr1[v267], seller_id[v44], seller#u_r_id[v265], seller#u_sattr0[v266]}
+        [stmt_in] livein: {seller#u_sattr2[v268], seller#u_sattr4[v270], seller#u_sattr3[v269], seller#u_rating[v262], seller#u_sattr1[v267], seller_id[v44], seller#u_r_id[v265], seller#u_sattr0[v266]}
+      USERACCT[seller_id[v44]].u_r_id = seller#u_r_id[v265];
+        [stmt_out] liveout: {seller#u_sattr4[v270], seller_id[v44], seller#u_sattr0[v266], seller#u_sattr2[v268], seller#u_sattr1[v267], seller#u_rating[v262], seller#u_sattr3[v269]}
+        [stmt_in] livein: {seller#u_sattr4[v270], seller_id[v44], seller#u_sattr0[v266], seller#u_sattr2[v268], seller#u_sattr1[v267], seller#u_rating[v262], seller#u_sattr3[v269]}
+      USERACCT[seller_id[v44]].u_rating = seller#u_rating[v262];
+        [stmt_out] liveout: {seller#u_sattr4[v270], seller#u_sattr0[v266], seller#u_sattr3[v269], seller#u_sattr2[v268], seller_id[v44], seller#u_sattr1[v267]}
+        [stmt_in] livein: {seller#u_sattr4[v270], seller#u_sattr0[v266], seller#u_sattr3[v269], seller#u_sattr2[v268], seller_id[v44], seller#u_sattr1[v267]}
+      USERACCT[seller_id[v44]].u_sattr0 = seller#u_sattr0[v266];
+        [stmt_out] liveout: {seller_id[v44], seller#u_sattr1[v267], seller#u_sattr4[v270], seller#u_sattr2[v268], seller#u_sattr3[v269]}
+        [stmt_in] livein: {seller_id[v44], seller#u_sattr1[v267], seller#u_sattr4[v270], seller#u_sattr2[v268], seller#u_sattr3[v269]}
+      USERACCT[seller_id[v44]].u_sattr1 = seller#u_sattr1[v267];
+        [stmt_out] liveout: {seller#u_sattr4[v270], seller#u_sattr2[v268], seller_id[v44], seller#u_sattr3[v269]}
+        [stmt_in] livein: {seller#u_sattr4[v270], seller#u_sattr2[v268], seller_id[v44], seller#u_sattr3[v269]}
+      USERACCT[seller_id[v44]].u_sattr2 = seller#u_sattr2[v268];
+        [stmt_out] liveout: {seller#u_sattr4[v270], seller_id[v44], seller#u_sattr3[v269]}
+        [stmt_in] livein: {seller#u_sattr4[v270], seller_id[v44], seller#u_sattr3[v269]}
+      USERACCT[seller_id[v44]].u_sattr3 = seller#u_sattr3[v269];
+        [stmt_out] liveout: {seller#u_sattr4[v270], seller_id[v44]}
+        [stmt_in] livein: {seller#u_sattr4[v270], seller_id[v44]}
+      USERACCT[seller_id[v44]].u_sattr4 = seller#u_sattr4[v270];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction NewFeedback[fn24](from_id[v46]: int, to_id[v47]: int, item_id[v48]: int, seller_id[v49]: int, rating[v50]: int)
+ {
+  entry_hop: hop11
+
+  hop11 {
+    entry_block: bb15
+    bb15:
+      livein: {to_id[v47], rating[v50], item_id[v48], seller_id[v49], from_id[v46]}
+        [stmt_in] livein: {from_id[v46], item_id[v48], to_id[v47], seller_id[v49], rating[v50]}
+      USERACCT_FEEDBACK[to_id[v47], item_id[v48], seller_id[v49], from_id[v46]].uf_rating = rating[v50];
+        [stmt_out] liveout: {to_id[v47], rating[v50]}
+        [stmt_in] livein: {to_id[v47], rating[v50]}
+      u#u_balance[v276] = USERACCT[to_id[v47]].u_balance;
+        [stmt_out] liveout: {to_id[v47], u#u_balance[v276], rating[v50]}
+        [stmt_in] livein: {to_id[v47], u#u_balance[v276], rating[v50]}
+      u#u_comments[v277] = USERACCT[to_id[v47]].u_comments;
+        [stmt_out] liveout: {u#u_comments[v277], rating[v50], u#u_balance[v276], to_id[v47]}
+        [stmt_in] livein: {u#u_comments[v277], rating[v50], u#u_balance[v276], to_id[v47]}
+      u#u_id[v274] = USERACCT[to_id[v47]].u_id;
+        [stmt_out] liveout: {rating[v50], u#u_id[v274], u#u_balance[v276], to_id[v47], u#u_comments[v277]}
+        [stmt_in] livein: {rating[v50], u#u_id[v274], u#u_balance[v276], to_id[v47], u#u_comments[v277]}
+      u#u_r_id[v278] = USERACCT[to_id[v47]].u_r_id;
+        [stmt_out] liveout: {u#u_r_id[v278], to_id[v47], u#u_comments[v277], rating[v50], u#u_balance[v276], u#u_id[v274]}
+        [stmt_in] livein: {u#u_r_id[v278], to_id[v47], u#u_comments[v277], rating[v50], u#u_balance[v276], u#u_id[v274]}
+      u#u_rating[v275] = USERACCT[to_id[v47]].u_rating;
+        [stmt_out] liveout: {u#u_rating[v275], u#u_id[v274], u#u_comments[v277], rating[v50], u#u_balance[v276], u#u_r_id[v278], to_id[v47]}
+        [stmt_in] livein: {u#u_rating[v275], u#u_id[v274], u#u_comments[v277], rating[v50], u#u_balance[v276], u#u_r_id[v278], to_id[v47]}
+      u#u_sattr0[v279] = USERACCT[to_id[v47]].u_sattr0;
+        [stmt_out] liveout: {to_id[v47], u#u_id[v274], u#u_rating[v275], u#u_r_id[v278], u#u_comments[v277], rating[v50], u#u_balance[v276], u#u_sattr0[v279]}
+        [stmt_in] livein: {to_id[v47], u#u_id[v274], u#u_rating[v275], u#u_r_id[v278], u#u_comments[v277], rating[v50], u#u_balance[v276], u#u_sattr0[v279]}
+      u#u_sattr1[v280] = USERACCT[to_id[v47]].u_sattr1;
+        [stmt_out] liveout: {to_id[v47], u#u_comments[v277], u#u_r_id[v278], rating[v50], u#u_sattr1[v280], u#u_sattr0[v279], u#u_balance[v276], u#u_id[v274], u#u_rating[v275]}
+        [stmt_in] livein: {to_id[v47], u#u_comments[v277], u#u_r_id[v278], rating[v50], u#u_sattr1[v280], u#u_sattr0[v279], u#u_balance[v276], u#u_id[v274], u#u_rating[v275]}
+      u#u_sattr2[v281] = USERACCT[to_id[v47]].u_sattr2;
+        [stmt_out] liveout: {to_id[v47], u#u_balance[v276], u#u_sattr0[v279], u#u_r_id[v278], u#u_id[v274], u#u_sattr2[v281], rating[v50], u#u_sattr1[v280], u#u_comments[v277], u#u_rating[v275]}
+        [stmt_in] livein: {to_id[v47], u#u_balance[v276], u#u_sattr0[v279], u#u_r_id[v278], u#u_id[v274], u#u_sattr2[v281], rating[v50], u#u_sattr1[v280], u#u_comments[v277], u#u_rating[v275]}
+      u#u_sattr3[v282] = USERACCT[to_id[v47]].u_sattr3;
+        [stmt_out] liveout: {u#u_sattr2[v281], to_id[v47], u#u_sattr0[v279], rating[v50], u#u_rating[v275], u#u_balance[v276], u#u_id[v274], u#u_r_id[v278], u#u_sattr1[v280], u#u_comments[v277], u#u_sattr3[v282]}
+        [stmt_in] livein: {u#u_sattr2[v281], to_id[v47], u#u_sattr0[v279], rating[v50], u#u_rating[v275], u#u_balance[v276], u#u_id[v274], u#u_r_id[v278], u#u_sattr1[v280], u#u_comments[v277], u#u_sattr3[v282]}
+      u#u_sattr4[v283] = USERACCT[to_id[v47]].u_sattr4;
+        [stmt_out] liveout: {u#u_sattr4[v283], u#u_sattr2[v281], u#u_sattr0[v279], to_id[v47], u#u_sattr3[v282], rating[v50], u#u_rating[v275], u#u_comments[v277], u#u_r_id[v278], u#u_sattr1[v280], u#u_balance[v276], u#u_id[v274]}
+        [stmt_in] livein: {u#u_sattr4[v283], u#u_sattr2[v281], u#u_sattr0[v279], to_id[v47], u#u_sattr3[v282], rating[v50], u#u_rating[v275], u#u_comments[v277], u#u_r_id[v278], u#u_sattr1[v280], u#u_balance[v276], u#u_id[v274]}
+      #tmp25[v285] = u#u_rating[v275] + rating[v50];
+        [stmt_out] liveout: {u#u_sattr1[v280], u#u_comments[v277], u#u_sattr4[v283], #tmp25[v285], u#u_id[v274], to_id[v47], u#u_sattr2[v281], u#u_sattr3[v282], u#u_sattr0[v279], u#u_balance[v276], u#u_r_id[v278]}
+        [stmt_in] livein: {u#u_sattr1[v280], u#u_comments[v277], u#u_sattr4[v283], #tmp25[v285], u#u_id[v274], to_id[v47], u#u_sattr2[v281], u#u_sattr3[v282], u#u_sattr0[v279], u#u_balance[v276], u#u_r_id[v278]}
+      u#u_rating[v275] = #tmp25[v285];
+        [stmt_out] liveout: {u#u_sattr2[v281], u#u_r_id[v278], u#u_sattr3[v282], u#u_balance[v276], u#u_rating[v275], to_id[v47], u#u_id[v274], u#u_sattr0[v279], u#u_sattr1[v280], u#u_comments[v277], u#u_sattr4[v283]}
+        [stmt_in] livein: {u#u_sattr2[v281], u#u_r_id[v278], u#u_sattr3[v282], u#u_balance[v276], u#u_rating[v275], to_id[v47], u#u_id[v274], u#u_sattr0[v279], u#u_sattr1[v280], u#u_comments[v277], u#u_sattr4[v283]}
+      USERACCT[to_id[v47]].u_balance = u#u_balance[v276];
+        [stmt_out] liveout: {u#u_rating[v275], to_id[v47], u#u_comments[v277], u#u_sattr0[v279], u#u_sattr1[v280], u#u_sattr4[v283], u#u_sattr2[v281], u#u_r_id[v278], u#u_sattr3[v282], u#u_id[v274]}
+        [stmt_in] livein: {u#u_rating[v275], to_id[v47], u#u_comments[v277], u#u_sattr0[v279], u#u_sattr1[v280], u#u_sattr4[v283], u#u_sattr2[v281], u#u_r_id[v278], u#u_sattr3[v282], u#u_id[v274]}
+      USERACCT[to_id[v47]].u_comments = u#u_comments[v277];
+        [stmt_out] liveout: {u#u_sattr0[v279], u#u_r_id[v278], u#u_sattr2[v281], u#u_sattr3[v282], u#u_id[v274], to_id[v47], u#u_rating[v275], u#u_sattr1[v280], u#u_sattr4[v283]}
+        [stmt_in] livein: {u#u_sattr0[v279], u#u_r_id[v278], u#u_sattr2[v281], u#u_sattr3[v282], u#u_id[v274], to_id[v47], u#u_rating[v275], u#u_sattr1[v280], u#u_sattr4[v283]}
+      USERACCT[to_id[v47]].u_id = u#u_id[v274];
+        [stmt_out] liveout: {u#u_sattr2[v281], to_id[v47], u#u_rating[v275], u#u_sattr0[v279], u#u_sattr3[v282], u#u_sattr4[v283], u#u_sattr1[v280], u#u_r_id[v278]}
+        [stmt_in] livein: {u#u_sattr2[v281], to_id[v47], u#u_rating[v275], u#u_sattr0[v279], u#u_sattr3[v282], u#u_sattr4[v283], u#u_sattr1[v280], u#u_r_id[v278]}
+      USERACCT[to_id[v47]].u_r_id = u#u_r_id[v278];
+        [stmt_out] liveout: {u#u_sattr3[v282], u#u_sattr0[v279], u#u_sattr2[v281], u#u_rating[v275], u#u_sattr4[v283], u#u_sattr1[v280], to_id[v47]}
+        [stmt_in] livein: {u#u_sattr3[v282], u#u_sattr0[v279], u#u_sattr2[v281], u#u_rating[v275], u#u_sattr4[v283], u#u_sattr1[v280], to_id[v47]}
+      USERACCT[to_id[v47]].u_rating = u#u_rating[v275];
+        [stmt_out] liveout: {u#u_sattr4[v283], to_id[v47], u#u_sattr3[v282], u#u_sattr1[v280], u#u_sattr0[v279], u#u_sattr2[v281]}
+        [stmt_in] livein: {u#u_sattr4[v283], to_id[v47], u#u_sattr3[v282], u#u_sattr1[v280], u#u_sattr0[v279], u#u_sattr2[v281]}
+      USERACCT[to_id[v47]].u_sattr0 = u#u_sattr0[v279];
+        [stmt_out] liveout: {u#u_sattr4[v283], u#u_sattr2[v281], u#u_sattr1[v280], to_id[v47], u#u_sattr3[v282]}
+        [stmt_in] livein: {u#u_sattr4[v283], u#u_sattr2[v281], u#u_sattr1[v280], to_id[v47], u#u_sattr3[v282]}
+      USERACCT[to_id[v47]].u_sattr1 = u#u_sattr1[v280];
+        [stmt_out] liveout: {to_id[v47], u#u_sattr2[v281], u#u_sattr4[v283], u#u_sattr3[v282]}
+        [stmt_in] livein: {to_id[v47], u#u_sattr2[v281], u#u_sattr4[v283], u#u_sattr3[v282]}
+      USERACCT[to_id[v47]].u_sattr2 = u#u_sattr2[v281];
+        [stmt_out] liveout: {to_id[v47], u#u_sattr4[v283], u#u_sattr3[v282]}
+        [stmt_in] livein: {to_id[v47], u#u_sattr4[v283], u#u_sattr3[v282]}
+      USERACCT[to_id[v47]].u_sattr3 = u#u_sattr3[v282];
+        [stmt_out] liveout: {to_id[v47], u#u_sattr4[v283]}
+        [stmt_in] livein: {to_id[v47], u#u_sattr4[v283]}
+      USERACCT[to_id[v47]].u_sattr4 = u#u_sattr4[v283];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction NewItem[fn25](item_id[v51]: int, seller_id[v52]: int, name[v53]: string, initial_price[v54]: float, end_date[v55]: int, start_date[v56]: int, c_id[v57]: int)
+ {
+  entry_hop: hop12
+
+  hop12 {
+    entry_block: bb16
+    bb16:
+      livein: {seller_id[v52], name[v53], c_id[v57], start_date[v56], item_id[v51], initial_price[v54], end_date[v55]}
+        [stmt_in] livein: {start_date[v56], c_id[v57], end_date[v55], initial_price[v54], item_id[v51], name[v53], seller_id[v52]}
+      ITEM[item_id[v51], seller_id[v52]].i_name = name[v53];
+        [stmt_out] liveout: {c_id[v57], seller_id[v52], initial_price[v54], end_date[v55], start_date[v56], item_id[v51]}
+        [stmt_in] livein: {c_id[v57], seller_id[v52], initial_price[v54], end_date[v55], start_date[v56], item_id[v51]}
+      ITEM[item_id[v51], seller_id[v52]].i_initial_price = initial_price[v54];
+        [stmt_out] liveout: {seller_id[v52], c_id[v57], start_date[v56], initial_price[v54], end_date[v55], item_id[v51]}
+        [stmt_in] livein: {seller_id[v52], c_id[v57], start_date[v56], initial_price[v54], end_date[v55], item_id[v51]}
+      ITEM[item_id[v51], seller_id[v52]].i_current_price = initial_price[v54];
+        [stmt_out] liveout: {item_id[v51], end_date[v55], seller_id[v52], c_id[v57], start_date[v56], initial_price[v54]}
+        [stmt_in] livein: {item_id[v51], end_date[v55], seller_id[v52], c_id[v57], start_date[v56], initial_price[v54]}
+      ITEM[item_id[v51], seller_id[v52]].i_num_bids = 0;
+        [stmt_out] liveout: {start_date[v56], end_date[v55], item_id[v51], seller_id[v52], c_id[v57], initial_price[v54]}
+        [stmt_in] livein: {start_date[v56], end_date[v55], item_id[v51], seller_id[v52], c_id[v57], initial_price[v54]}
+      ITEM[item_id[v51], seller_id[v52]].i_end_date = end_date[v55];
+        [stmt_out] liveout: {initial_price[v54], seller_id[v52], c_id[v57], item_id[v51], start_date[v56]}
+        [stmt_in] livein: {initial_price[v54], seller_id[v52], c_id[v57], item_id[v51], start_date[v56]}
+      ITEM[item_id[v51], seller_id[v52]].i_start_date = start_date[v56];
+        [stmt_out] liveout: {item_id[v51], initial_price[v54], seller_id[v52], c_id[v57]}
+        [stmt_in] livein: {item_id[v51], initial_price[v54], seller_id[v52], c_id[v57]}
+      ITEM[item_id[v51], seller_id[v52]].i_status = ITEM_STATUS_OPEN[gc2];
+        [stmt_out] liveout: {c_id[v57], seller_id[v52], initial_price[v54], item_id[v51]}
+        [stmt_in] livein: {c_id[v57], seller_id[v52], initial_price[v54], item_id[v51]}
+      ITEM[item_id[v51], seller_id[v52]].i_num_comments = 0;
+        [stmt_out] liveout: {initial_price[v54], item_id[v51], seller_id[v52], c_id[v57]}
+        [stmt_in] livein: {initial_price[v54], item_id[v51], seller_id[v52], c_id[v57]}
+      ITEM[item_id[v51], seller_id[v52]].i_c_id = c_id[v57];
+        [stmt_out] liveout: {initial_price[v54], seller_id[v52]}
+        [stmt_in] livein: {initial_price[v54], seller_id[v52]}
+      seller#u_balance[v289] = USERACCT[seller_id[v52]].u_balance;
+        [stmt_out] liveout: {initial_price[v54], seller_id[v52], seller#u_balance[v289]}
+        [stmt_in] livein: {initial_price[v54], seller_id[v52], seller#u_balance[v289]}
+      seller#u_comments[v290] = USERACCT[seller_id[v52]].u_comments;
+        [stmt_out] liveout: {seller#u_balance[v289], initial_price[v54], seller#u_comments[v290], seller_id[v52]}
+        [stmt_in] livein: {seller#u_balance[v289], initial_price[v54], seller#u_comments[v290], seller_id[v52]}
+      seller#u_id[v287] = USERACCT[seller_id[v52]].u_id;
+        [stmt_out] liveout: {seller_id[v52], seller#u_balance[v289], seller#u_id[v287], initial_price[v54], seller#u_comments[v290]}
+        [stmt_in] livein: {seller_id[v52], seller#u_balance[v289], seller#u_id[v287], initial_price[v54], seller#u_comments[v290]}
+      seller#u_r_id[v291] = USERACCT[seller_id[v52]].u_r_id;
+        [stmt_out] liveout: {initial_price[v54], seller#u_comments[v290], seller_id[v52], seller#u_balance[v289], seller#u_r_id[v291], seller#u_id[v287]}
+        [stmt_in] livein: {initial_price[v54], seller#u_comments[v290], seller_id[v52], seller#u_balance[v289], seller#u_r_id[v291], seller#u_id[v287]}
+      seller#u_rating[v288] = USERACCT[seller_id[v52]].u_rating;
+        [stmt_out] liveout: {seller#u_r_id[v291], seller#u_id[v287], seller#u_rating[v288], seller_id[v52], seller#u_balance[v289], initial_price[v54], seller#u_comments[v290]}
+        [stmt_in] livein: {seller#u_r_id[v291], seller#u_id[v287], seller#u_rating[v288], seller_id[v52], seller#u_balance[v289], initial_price[v54], seller#u_comments[v290]}
+      seller#u_sattr0[v292] = USERACCT[seller_id[v52]].u_sattr0;
+        [stmt_out] liveout: {seller#u_comments[v290], seller#u_id[v287], seller#u_balance[v289], seller#u_rating[v288], seller#u_sattr0[v292], seller#u_r_id[v291], initial_price[v54], seller_id[v52]}
+        [stmt_in] livein: {seller#u_comments[v290], seller#u_id[v287], seller#u_balance[v289], seller#u_rating[v288], seller#u_sattr0[v292], seller#u_r_id[v291], initial_price[v54], seller_id[v52]}
+      seller#u_sattr1[v293] = USERACCT[seller_id[v52]].u_sattr1;
+        [stmt_out] liveout: {seller#u_rating[v288], seller_id[v52], seller#u_id[v287], seller#u_sattr0[v292], initial_price[v54], seller#u_balance[v289], seller#u_comments[v290], seller#u_sattr1[v293], seller#u_r_id[v291]}
+        [stmt_in] livein: {seller#u_rating[v288], seller_id[v52], seller#u_id[v287], seller#u_sattr0[v292], initial_price[v54], seller#u_balance[v289], seller#u_comments[v290], seller#u_sattr1[v293], seller#u_r_id[v291]}
+      seller#u_sattr2[v294] = USERACCT[seller_id[v52]].u_sattr2;
+        [stmt_out] liveout: {seller#u_r_id[v291], seller#u_rating[v288], seller#u_sattr2[v294], seller#u_comments[v290], seller_id[v52], seller#u_sattr1[v293], seller#u_id[v287], initial_price[v54], seller#u_balance[v289], seller#u_sattr0[v292]}
+        [stmt_in] livein: {seller#u_r_id[v291], seller#u_rating[v288], seller#u_sattr2[v294], seller#u_comments[v290], seller_id[v52], seller#u_sattr1[v293], seller#u_id[v287], initial_price[v54], seller#u_balance[v289], seller#u_sattr0[v292]}
+      seller#u_sattr3[v295] = USERACCT[seller_id[v52]].u_sattr3;
+        [stmt_out] liveout: {seller#u_sattr0[v292], seller#u_comments[v290], seller#u_id[v287], seller#u_sattr3[v295], seller#u_rating[v288], seller_id[v52], seller#u_sattr2[v294], initial_price[v54], seller#u_r_id[v291], seller#u_balance[v289], seller#u_sattr1[v293]}
+        [stmt_in] livein: {seller#u_sattr0[v292], seller#u_comments[v290], seller#u_id[v287], seller#u_sattr3[v295], seller#u_rating[v288], seller_id[v52], seller#u_sattr2[v294], initial_price[v54], seller#u_r_id[v291], seller#u_balance[v289], seller#u_sattr1[v293]}
+      seller#u_sattr4[v296] = USERACCT[seller_id[v52]].u_sattr4;
+        [stmt_out] liveout: {initial_price[v54], seller#u_sattr3[v295], seller#u_sattr1[v293], seller#u_sattr0[v292], seller#u_comments[v290], seller#u_id[v287], seller#u_rating[v288], seller#u_sattr4[v296], seller#u_sattr2[v294], seller#u_balance[v289], seller#u_r_id[v291], seller_id[v52]}
+        [stmt_in] livein: {initial_price[v54], seller#u_sattr3[v295], seller#u_sattr1[v293], seller#u_sattr0[v292], seller#u_comments[v290], seller#u_id[v287], seller#u_rating[v288], seller#u_sattr4[v296], seller#u_sattr2[v294], seller#u_balance[v289], seller#u_r_id[v291], seller_id[v52]}
+      #tmp27[v298] = seller#u_balance[v289] - initial_price[v54];
+        [stmt_out] liveout: {seller#u_sattr3[v295], seller#u_sattr1[v293], #tmp27[v298], seller#u_sattr0[v292], seller#u_comments[v290], seller#u_id[v287], seller#u_rating[v288], seller#u_sattr2[v294], seller#u_sattr4[v296], seller_id[v52], seller#u_r_id[v291]}
+        [stmt_in] livein: {seller#u_sattr3[v295], seller#u_sattr1[v293], #tmp27[v298], seller#u_sattr0[v292], seller#u_comments[v290], seller#u_id[v287], seller#u_rating[v288], seller#u_sattr2[v294], seller#u_sattr4[v296], seller_id[v52], seller#u_r_id[v291]}
+      seller#u_balance[v289] = #tmp27[v298];
+        [stmt_out] liveout: {seller#u_sattr4[v296], seller#u_sattr2[v294], seller#u_sattr0[v292], seller#u_sattr3[v295], seller#u_comments[v290], seller#u_id[v287], seller#u_sattr1[v293], seller#u_r_id[v291], seller#u_balance[v289], seller#u_rating[v288], seller_id[v52]}
+        [stmt_in] livein: {seller#u_sattr4[v296], seller#u_sattr2[v294], seller#u_sattr0[v292], seller#u_sattr3[v295], seller#u_comments[v290], seller#u_id[v287], seller#u_sattr1[v293], seller#u_r_id[v291], seller#u_balance[v289], seller#u_rating[v288], seller_id[v52]}
+      USERACCT[seller_id[v52]].u_balance = seller#u_balance[v289];
+        [stmt_out] liveout: {seller#u_sattr1[v293], seller#u_comments[v290], seller#u_id[v287], seller#u_sattr0[v292], seller#u_r_id[v291], seller#u_sattr3[v295], seller#u_rating[v288], seller#u_sattr4[v296], seller_id[v52], seller#u_sattr2[v294]}
+        [stmt_in] livein: {seller#u_sattr1[v293], seller#u_comments[v290], seller#u_id[v287], seller#u_sattr0[v292], seller#u_r_id[v291], seller#u_sattr3[v295], seller#u_rating[v288], seller#u_sattr4[v296], seller_id[v52], seller#u_sattr2[v294]}
+      USERACCT[seller_id[v52]].u_comments = seller#u_comments[v290];
+        [stmt_out] liveout: {seller#u_sattr0[v292], seller#u_r_id[v291], seller#u_sattr3[v295], seller#u_rating[v288], seller#u_sattr4[v296], seller_id[v52], seller#u_id[v287], seller#u_sattr1[v293], seller#u_sattr2[v294]}
+        [stmt_in] livein: {seller#u_sattr0[v292], seller#u_r_id[v291], seller#u_sattr3[v295], seller#u_rating[v288], seller#u_sattr4[v296], seller_id[v52], seller#u_id[v287], seller#u_sattr1[v293], seller#u_sattr2[v294]}
+      USERACCT[seller_id[v52]].u_id = seller#u_id[v287];
+        [stmt_out] liveout: {seller#u_sattr1[v293], seller#u_rating[v288], seller#u_sattr4[v296], seller#u_sattr2[v294], seller#u_sattr3[v295], seller#u_sattr0[v292], seller#u_r_id[v291], seller_id[v52]}
+        [stmt_in] livein: {seller#u_sattr1[v293], seller#u_rating[v288], seller#u_sattr4[v296], seller#u_sattr2[v294], seller#u_sattr3[v295], seller#u_sattr0[v292], seller#u_r_id[v291], seller_id[v52]}
+      USERACCT[seller_id[v52]].u_r_id = seller#u_r_id[v291];
+        [stmt_out] liveout: {seller#u_sattr4[v296], seller#u_rating[v288], seller_id[v52], seller#u_sattr2[v294], seller#u_sattr1[v293], seller#u_sattr0[v292], seller#u_sattr3[v295]}
+        [stmt_in] livein: {seller#u_sattr4[v296], seller#u_rating[v288], seller_id[v52], seller#u_sattr2[v294], seller#u_sattr1[v293], seller#u_sattr0[v292], seller#u_sattr3[v295]}
+      USERACCT[seller_id[v52]].u_rating = seller#u_rating[v288];
+        [stmt_out] liveout: {seller#u_sattr1[v293], seller#u_sattr4[v296], seller#u_sattr0[v292], seller_id[v52], seller#u_sattr3[v295], seller#u_sattr2[v294]}
+        [stmt_in] livein: {seller#u_sattr1[v293], seller#u_sattr4[v296], seller#u_sattr0[v292], seller_id[v52], seller#u_sattr3[v295], seller#u_sattr2[v294]}
+      USERACCT[seller_id[v52]].u_sattr0 = seller#u_sattr0[v292];
+        [stmt_out] liveout: {seller#u_sattr2[v294], seller#u_sattr3[v295], seller#u_sattr1[v293], seller_id[v52], seller#u_sattr4[v296]}
+        [stmt_in] livein: {seller#u_sattr2[v294], seller#u_sattr3[v295], seller#u_sattr1[v293], seller_id[v52], seller#u_sattr4[v296]}
+      USERACCT[seller_id[v52]].u_sattr1 = seller#u_sattr1[v293];
+        [stmt_out] liveout: {seller#u_sattr2[v294], seller#u_sattr4[v296], seller_id[v52], seller#u_sattr3[v295]}
+        [stmt_in] livein: {seller#u_sattr2[v294], seller#u_sattr4[v296], seller_id[v52], seller#u_sattr3[v295]}
+      USERACCT[seller_id[v52]].u_sattr2 = seller#u_sattr2[v294];
+        [stmt_out] liveout: {seller#u_sattr4[v296], seller_id[v52], seller#u_sattr3[v295]}
+        [stmt_in] livein: {seller#u_sattr4[v296], seller_id[v52], seller#u_sattr3[v295]}
+      USERACCT[seller_id[v52]].u_sattr3 = seller#u_sattr3[v295];
+        [stmt_out] liveout: {seller_id[v52], seller#u_sattr4[v296]}
+        [stmt_in] livein: {seller_id[v52], seller#u_sattr4[v296]}
+      USERACCT[seller_id[v52]].u_sattr4 = seller#u_sattr4[v296];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction NewPurchase[fn26](item_id[v58]: int, seller_id[v59]: int, buyer_id[v60]: int, buy_now_price[v61]: float)
+ {
+  entry_hop: hop13
+
+  hop13 {
+    entry_block: bb17
+    bb17:
+      livein: {buyer_id[v60], seller_id[v59], buy_now_price[v61], item_id[v58]}
+        [stmt_in] livein: {buyer_id[v60], buy_now_price[v61], item_id[v58], seller_id[v59]}
+      item#i_c_id[v310] = ITEM[item_id[v58], seller_id[v59]].i_c_id;
+        [stmt_out] liveout: {item_id[v58], buyer_id[v60], item#i_c_id[v310], buy_now_price[v61], seller_id[v59]}
+        [stmt_in] livein: {item_id[v58], buyer_id[v60], item#i_c_id[v310], buy_now_price[v61], seller_id[v59]}
+      item#i_current_price[v304] = ITEM[item_id[v58], seller_id[v59]].i_current_price;
+        [stmt_out] liveout: {item#i_c_id[v310], item#i_current_price[v304], seller_id[v59], buy_now_price[v61], buyer_id[v60], item_id[v58]}
+        [stmt_in] livein: {item#i_c_id[v310], item#i_current_price[v304], seller_id[v59], buy_now_price[v61], buyer_id[v60], item_id[v58]}
+      item#i_end_date[v306] = ITEM[item_id[v58], seller_id[v59]].i_end_date;
+        [stmt_out] liveout: {item#i_current_price[v304], item#i_end_date[v306], item_id[v58], buyer_id[v60], seller_id[v59], item#i_c_id[v310], buy_now_price[v61]}
+        [stmt_in] livein: {item#i_current_price[v304], item#i_end_date[v306], item_id[v58], buyer_id[v60], seller_id[v59], item#i_c_id[v310], buy_now_price[v61]}
+      item#i_id[v300] = ITEM[item_id[v58], seller_id[v59]].i_id;
+        [stmt_out] liveout: {item#i_end_date[v306], buyer_id[v60], item#i_current_price[v304], item_id[v58], seller_id[v59], item#i_c_id[v310], item#i_id[v300], buy_now_price[v61]}
+        [stmt_in] livein: {item#i_end_date[v306], buyer_id[v60], item#i_current_price[v304], item_id[v58], seller_id[v59], item#i_c_id[v310], item#i_id[v300], buy_now_price[v61]}
+      item#i_initial_price[v303] = ITEM[item_id[v58], seller_id[v59]].i_initial_price;
+        [stmt_out] liveout: {seller_id[v59], item_id[v58], item#i_end_date[v306], item#i_c_id[v310], buyer_id[v60], item#i_initial_price[v303], buy_now_price[v61], item#i_current_price[v304], item#i_id[v300]}
+        [stmt_in] livein: {seller_id[v59], item_id[v58], item#i_end_date[v306], item#i_c_id[v310], buyer_id[v60], item#i_initial_price[v303], buy_now_price[v61], item#i_current_price[v304], item#i_id[v300]}
+      item#i_name[v302] = ITEM[item_id[v58], seller_id[v59]].i_name;
+        [stmt_out] liveout: {item_id[v58], seller_id[v59], item#i_name[v302], buy_now_price[v61], item#i_end_date[v306], item#i_current_price[v304], item#i_id[v300], buyer_id[v60], item#i_initial_price[v303], item#i_c_id[v310]}
+        [stmt_in] livein: {item_id[v58], seller_id[v59], item#i_name[v302], buy_now_price[v61], item#i_end_date[v306], item#i_current_price[v304], item#i_id[v300], buyer_id[v60], item#i_initial_price[v303], item#i_c_id[v310]}
+      item#i_num_bids[v305] = ITEM[item_id[v58], seller_id[v59]].i_num_bids;
+        [stmt_out] liveout: {seller_id[v59], item#i_end_date[v306], buyer_id[v60], item#i_num_bids[v305], item#i_c_id[v310], buy_now_price[v61], item_id[v58], item#i_current_price[v304], item#i_initial_price[v303], item#i_id[v300], item#i_name[v302]}
+        [stmt_in] livein: {seller_id[v59], item#i_end_date[v306], buyer_id[v60], item#i_num_bids[v305], item#i_c_id[v310], buy_now_price[v61], item_id[v58], item#i_current_price[v304], item#i_initial_price[v303], item#i_id[v300], item#i_name[v302]}
+      item#i_num_comments[v309] = ITEM[item_id[v58], seller_id[v59]].i_num_comments;
+        [stmt_out] liveout: {item#i_initial_price[v303], item#i_current_price[v304], item#i_end_date[v306], item#i_num_bids[v305], item#i_id[v300], item#i_c_id[v310], seller_id[v59], buy_now_price[v61], item_id[v58], item#i_num_comments[v309], buyer_id[v60], item#i_name[v302]}
+        [stmt_in] livein: {item#i_initial_price[v303], item#i_current_price[v304], item#i_end_date[v306], item#i_num_bids[v305], item#i_id[v300], item#i_c_id[v310], seller_id[v59], buy_now_price[v61], item_id[v58], item#i_num_comments[v309], buyer_id[v60], item#i_name[v302]}
+      item#i_start_date[v307] = ITEM[item_id[v58], seller_id[v59]].i_start_date;
+        [stmt_out] liveout: {item#i_num_bids[v305], buyer_id[v60], item#i_initial_price[v303], item#i_c_id[v310], seller_id[v59], item#i_num_comments[v309], item#i_current_price[v304], buy_now_price[v61], item_id[v58], item#i_name[v302], item#i_start_date[v307], item#i_end_date[v306], item#i_id[v300]}
+        [stmt_in] livein: {item#i_num_bids[v305], buyer_id[v60], item#i_initial_price[v303], item#i_c_id[v310], seller_id[v59], item#i_num_comments[v309], item#i_current_price[v304], buy_now_price[v61], item_id[v58], item#i_name[v302], item#i_start_date[v307], item#i_end_date[v306], item#i_id[v300]}
+      item#i_u_id[v301] = ITEM[item_id[v58], seller_id[v59]].i_u_id;
+        [stmt_out] liveout: {item#i_end_date[v306], item#i_id[v300], item#i_num_bids[v305], item#i_num_comments[v309], item_id[v58], buyer_id[v60], item#i_c_id[v310], buy_now_price[v61], item#i_initial_price[v303], seller_id[v59], item#i_u_id[v301], item#i_current_price[v304], item#i_start_date[v307], item#i_name[v302]}
+        [stmt_in] livein: {item#i_end_date[v306], item#i_id[v300], item#i_num_bids[v305], item#i_num_comments[v309], item_id[v58], buyer_id[v60], item#i_c_id[v310], buy_now_price[v61], item#i_initial_price[v303], seller_id[v59], item#i_u_id[v301], item#i_current_price[v304], item#i_start_date[v307], item#i_name[v302]}
+      item#i_status[v308] = ITEM_STATUS_CLOSED[gc4];
+        [stmt_out] liveout: {item#i_status[v308], item#i_name[v302], item#i_c_id[v310], item#i_id[v300], buy_now_price[v61], item#i_initial_price[v303], item_id[v58], item#i_u_id[v301], item#i_num_comments[v309], item#i_current_price[v304], item#i_end_date[v306], seller_id[v59], buyer_id[v60], item#i_num_bids[v305], item#i_start_date[v307]}
+        [stmt_in] livein: {item#i_status[v308], item#i_name[v302], item#i_c_id[v310], item#i_id[v300], buy_now_price[v61], item#i_initial_price[v303], item_id[v58], item#i_u_id[v301], item#i_num_comments[v309], item#i_current_price[v304], item#i_end_date[v306], seller_id[v59], buyer_id[v60], item#i_num_bids[v305], item#i_start_date[v307]}
+      ITEM[item_id[v58], seller_id[v59]].i_c_id = item#i_c_id[v310];
+        [stmt_out] liveout: {buy_now_price[v61], seller_id[v59], item_id[v58], item#i_status[v308], item#i_current_price[v304], item#i_id[v300], buyer_id[v60], item#i_start_date[v307], item#i_name[v302], item#i_initial_price[v303], item#i_end_date[v306], item#i_u_id[v301], item#i_num_comments[v309], item#i_num_bids[v305]}
+        [stmt_in] livein: {buy_now_price[v61], seller_id[v59], item_id[v58], item#i_status[v308], item#i_current_price[v304], item#i_id[v300], buyer_id[v60], item#i_start_date[v307], item#i_name[v302], item#i_initial_price[v303], item#i_end_date[v306], item#i_u_id[v301], item#i_num_comments[v309], item#i_num_bids[v305]}
+      ITEM[item_id[v58], seller_id[v59]].i_current_price = item#i_current_price[v304];
+        [stmt_out] liveout: {item#i_start_date[v307], buy_now_price[v61], item#i_u_id[v301], item_id[v58], item#i_num_comments[v309], item#i_id[v300], item#i_initial_price[v303], item#i_name[v302], item#i_end_date[v306], buyer_id[v60], seller_id[v59], item#i_num_bids[v305], item#i_status[v308]}
+        [stmt_in] livein: {item#i_start_date[v307], buy_now_price[v61], item#i_u_id[v301], item_id[v58], item#i_num_comments[v309], item#i_id[v300], item#i_initial_price[v303], item#i_name[v302], item#i_end_date[v306], buyer_id[v60], seller_id[v59], item#i_num_bids[v305], item#i_status[v308]}
+      ITEM[item_id[v58], seller_id[v59]].i_end_date = item#i_end_date[v306];
+        [stmt_out] liveout: {item#i_name[v302], item#i_num_comments[v309], item#i_id[v300], item#i_status[v308], item_id[v58], item#i_initial_price[v303], seller_id[v59], item#i_start_date[v307], buyer_id[v60], item#i_num_bids[v305], buy_now_price[v61], item#i_u_id[v301]}
+        [stmt_in] livein: {item#i_name[v302], item#i_num_comments[v309], item#i_id[v300], item#i_status[v308], item_id[v58], item#i_initial_price[v303], seller_id[v59], item#i_start_date[v307], buyer_id[v60], item#i_num_bids[v305], buy_now_price[v61], item#i_u_id[v301]}
+      ITEM[item_id[v58], seller_id[v59]].i_id = item#i_id[v300];
+        [stmt_out] liveout: {item#i_status[v308], item_id[v58], item#i_num_bids[v305], item#i_start_date[v307], item#i_num_comments[v309], item#i_u_id[v301], buyer_id[v60], item#i_name[v302], buy_now_price[v61], item#i_initial_price[v303], seller_id[v59]}
+        [stmt_in] livein: {item#i_status[v308], item_id[v58], item#i_num_bids[v305], item#i_start_date[v307], item#i_num_comments[v309], item#i_u_id[v301], buyer_id[v60], item#i_name[v302], buy_now_price[v61], item#i_initial_price[v303], seller_id[v59]}
+      ITEM[item_id[v58], seller_id[v59]].i_initial_price = item#i_initial_price[v303];
+        [stmt_out] liveout: {buyer_id[v60], item#i_name[v302], item#i_num_comments[v309], item#i_u_id[v301], item#i_start_date[v307], item#i_num_bids[v305], item_id[v58], item#i_status[v308], buy_now_price[v61], seller_id[v59]}
+        [stmt_in] livein: {buyer_id[v60], item#i_name[v302], item#i_num_comments[v309], item#i_u_id[v301], item#i_start_date[v307], item#i_num_bids[v305], item_id[v58], item#i_status[v308], buy_now_price[v61], seller_id[v59]}
+      ITEM[item_id[v58], seller_id[v59]].i_name = item#i_name[v302];
+        [stmt_out] liveout: {buy_now_price[v61], item#i_status[v308], buyer_id[v60], item#i_u_id[v301], item_id[v58], seller_id[v59], item#i_num_bids[v305], item#i_start_date[v307], item#i_num_comments[v309]}
+        [stmt_in] livein: {buy_now_price[v61], item#i_status[v308], buyer_id[v60], item#i_u_id[v301], item_id[v58], seller_id[v59], item#i_num_bids[v305], item#i_start_date[v307], item#i_num_comments[v309]}
+      ITEM[item_id[v58], seller_id[v59]].i_num_bids = item#i_num_bids[v305];
+        [stmt_out] liveout: {buyer_id[v60], item#i_start_date[v307], item#i_u_id[v301], item#i_num_comments[v309], seller_id[v59], item_id[v58], buy_now_price[v61], item#i_status[v308]}
+        [stmt_in] livein: {buyer_id[v60], item#i_start_date[v307], item#i_u_id[v301], item#i_num_comments[v309], seller_id[v59], item_id[v58], buy_now_price[v61], item#i_status[v308]}
+      ITEM[item_id[v58], seller_id[v59]].i_num_comments = item#i_num_comments[v309];
+        [stmt_out] liveout: {item#i_start_date[v307], buy_now_price[v61], seller_id[v59], item_id[v58], item#i_u_id[v301], buyer_id[v60], item#i_status[v308]}
+        [stmt_in] livein: {item#i_start_date[v307], buy_now_price[v61], seller_id[v59], item_id[v58], item#i_u_id[v301], buyer_id[v60], item#i_status[v308]}
+      ITEM[item_id[v58], seller_id[v59]].i_start_date = item#i_start_date[v307];
+        [stmt_out] liveout: {buyer_id[v60], seller_id[v59], item_id[v58], buy_now_price[v61], item#i_u_id[v301], item#i_status[v308]}
+        [stmt_in] livein: {buyer_id[v60], seller_id[v59], item_id[v58], buy_now_price[v61], item#i_u_id[v301], item#i_status[v308]}
+      ITEM[item_id[v58], seller_id[v59]].i_status = item#i_status[v308];
+        [stmt_out] liveout: {seller_id[v59], buy_now_price[v61], item_id[v58], item#i_u_id[v301], buyer_id[v60]}
+        [stmt_in] livein: {seller_id[v59], buy_now_price[v61], item_id[v58], item#i_u_id[v301], buyer_id[v60]}
+      ITEM[item_id[v58], seller_id[v59]].i_u_id = item#i_u_id[v301];
+        [stmt_out] liveout: {seller_id[v59], buy_now_price[v61], buyer_id[v60]}
+        [stmt_in] livein: {seller_id[v59], buy_now_price[v61], buyer_id[v60]}
+      seller#u_balance[v315] = USERACCT[seller_id[v59]].u_balance;
+        [stmt_out] liveout: {seller_id[v59], seller#u_balance[v315], buyer_id[v60], buy_now_price[v61]}
+        [stmt_in] livein: {seller_id[v59], seller#u_balance[v315], buyer_id[v60], buy_now_price[v61]}
+      seller#u_comments[v316] = USERACCT[seller_id[v59]].u_comments;
+        [stmt_out] liveout: {seller_id[v59], seller#u_balance[v315], buyer_id[v60], buy_now_price[v61], seller#u_comments[v316]}
+        [stmt_in] livein: {seller_id[v59], seller#u_balance[v315], buyer_id[v60], buy_now_price[v61], seller#u_comments[v316]}
+      seller#u_id[v313] = USERACCT[seller_id[v59]].u_id;
+        [stmt_out] liveout: {buyer_id[v60], seller#u_comments[v316], seller_id[v59], seller#u_balance[v315], seller#u_id[v313], buy_now_price[v61]}
+        [stmt_in] livein: {buyer_id[v60], seller#u_comments[v316], seller_id[v59], seller#u_balance[v315], seller#u_id[v313], buy_now_price[v61]}
+      seller#u_r_id[v317] = USERACCT[seller_id[v59]].u_r_id;
+        [stmt_out] liveout: {buyer_id[v60], seller#u_comments[v316], seller#u_id[v313], seller_id[v59], seller#u_balance[v315], buy_now_price[v61], seller#u_r_id[v317]}
+        [stmt_in] livein: {buyer_id[v60], seller#u_comments[v316], seller#u_id[v313], seller_id[v59], seller#u_balance[v315], buy_now_price[v61], seller#u_r_id[v317]}
+      seller#u_rating[v314] = USERACCT[seller_id[v59]].u_rating;
+        [stmt_out] liveout: {seller#u_rating[v314], seller#u_comments[v316], buy_now_price[v61], seller#u_r_id[v317], buyer_id[v60], seller#u_balance[v315], seller_id[v59], seller#u_id[v313]}
+        [stmt_in] livein: {seller#u_rating[v314], seller#u_comments[v316], buy_now_price[v61], seller#u_r_id[v317], buyer_id[v60], seller#u_balance[v315], seller_id[v59], seller#u_id[v313]}
+      seller#u_sattr0[v318] = USERACCT[seller_id[v59]].u_sattr0;
+        [stmt_out] liveout: {seller#u_rating[v314], seller_id[v59], seller#u_sattr0[v318], buy_now_price[v61], seller#u_id[v313], seller#u_r_id[v317], seller#u_balance[v315], buyer_id[v60], seller#u_comments[v316]}
+        [stmt_in] livein: {seller#u_rating[v314], seller_id[v59], seller#u_sattr0[v318], buy_now_price[v61], seller#u_id[v313], seller#u_r_id[v317], seller#u_balance[v315], buyer_id[v60], seller#u_comments[v316]}
+      seller#u_sattr1[v319] = USERACCT[seller_id[v59]].u_sattr1;
+        [stmt_out] liveout: {seller_id[v59], seller#u_comments[v316], seller#u_id[v313], seller#u_rating[v314], seller#u_sattr0[v318], seller#u_sattr1[v319], seller#u_balance[v315], buyer_id[v60], seller#u_r_id[v317], buy_now_price[v61]}
+        [stmt_in] livein: {seller_id[v59], seller#u_comments[v316], seller#u_id[v313], seller#u_rating[v314], seller#u_sattr0[v318], seller#u_sattr1[v319], seller#u_balance[v315], buyer_id[v60], seller#u_r_id[v317], buy_now_price[v61]}
+      seller#u_sattr2[v320] = USERACCT[seller_id[v59]].u_sattr2;
+        [stmt_out] liveout: {seller#u_id[v313], seller_id[v59], seller#u_rating[v314], seller#u_sattr2[v320], seller#u_sattr0[v318], seller#u_sattr1[v319], seller#u_r_id[v317], buy_now_price[v61], seller#u_balance[v315], buyer_id[v60], seller#u_comments[v316]}
+        [stmt_in] livein: {seller#u_id[v313], seller_id[v59], seller#u_rating[v314], seller#u_sattr2[v320], seller#u_sattr0[v318], seller#u_sattr1[v319], seller#u_r_id[v317], buy_now_price[v61], seller#u_balance[v315], buyer_id[v60], seller#u_comments[v316]}
+      seller#u_sattr3[v321] = USERACCT[seller_id[v59]].u_sattr3;
+        [stmt_out] liveout: {seller#u_r_id[v317], buy_now_price[v61], seller#u_balance[v315], buyer_id[v60], seller#u_sattr3[v321], seller#u_comments[v316], seller#u_sattr1[v319], seller#u_id[v313], seller#u_sattr0[v318], seller_id[v59], seller#u_rating[v314], seller#u_sattr2[v320]}
+        [stmt_in] livein: {seller#u_r_id[v317], buy_now_price[v61], seller#u_balance[v315], buyer_id[v60], seller#u_sattr3[v321], seller#u_comments[v316], seller#u_sattr1[v319], seller#u_id[v313], seller#u_sattr0[v318], seller_id[v59], seller#u_rating[v314], seller#u_sattr2[v320]}
+      seller#u_sattr4[v322] = USERACCT[seller_id[v59]].u_sattr4;
+        [stmt_out] liveout: {seller#u_sattr2[v320], seller#u_sattr3[v321], seller#u_comments[v316], seller#u_r_id[v317], seller_id[v59], seller#u_balance[v315], seller#u_sattr1[v319], seller#u_rating[v314], seller#u_sattr4[v322], buyer_id[v60], seller#u_id[v313], seller#u_sattr0[v318], buy_now_price[v61]}
+        [stmt_in] livein: {seller#u_sattr2[v320], seller#u_sattr3[v321], seller#u_comments[v316], seller#u_r_id[v317], seller_id[v59], seller#u_balance[v315], seller#u_sattr1[v319], seller#u_rating[v314], seller#u_sattr4[v322], buyer_id[v60], seller#u_id[v313], seller#u_sattr0[v318], buy_now_price[v61]}
+      #tmp30[v324] = seller#u_balance[v315] + buy_now_price[v61];
+        [stmt_out] liveout: {buyer_id[v60], seller#u_sattr2[v320], seller#u_sattr1[v319], seller#u_r_id[v317], seller#u_rating[v314], seller#u_id[v313], seller#u_sattr0[v318], seller#u_sattr4[v322], buy_now_price[v61], seller_id[v59], seller#u_sattr3[v321], #tmp30[v324], seller#u_comments[v316]}
+        [stmt_in] livein: {buyer_id[v60], seller#u_sattr2[v320], seller#u_sattr1[v319], seller#u_r_id[v317], seller#u_rating[v314], seller#u_id[v313], seller#u_sattr0[v318], seller#u_sattr4[v322], buy_now_price[v61], seller_id[v59], seller#u_sattr3[v321], #tmp30[v324], seller#u_comments[v316]}
+      seller#u_balance[v315] = #tmp30[v324];
+        [stmt_out] liveout: {seller#u_rating[v314], seller#u_sattr3[v321], seller#u_r_id[v317], seller#u_sattr1[v319], seller#u_comments[v316], seller#u_sattr4[v322], seller#u_id[v313], seller#u_balance[v315], seller#u_sattr0[v318], buy_now_price[v61], seller_id[v59], buyer_id[v60], seller#u_sattr2[v320]}
+        [stmt_in] livein: {seller#u_rating[v314], seller#u_sattr3[v321], seller#u_r_id[v317], seller#u_sattr1[v319], seller#u_comments[v316], seller#u_sattr4[v322], seller#u_id[v313], seller#u_balance[v315], seller#u_sattr0[v318], buy_now_price[v61], seller_id[v59], buyer_id[v60], seller#u_sattr2[v320]}
+      USERACCT[seller_id[v59]].u_balance = seller#u_balance[v315];
+        [stmt_out] liveout: {seller#u_sattr4[v322], seller#u_sattr0[v318], seller#u_id[v313], buyer_id[v60], seller#u_comments[v316], buy_now_price[v61], seller#u_sattr2[v320], seller#u_sattr3[v321], seller#u_sattr1[v319], seller#u_rating[v314], seller_id[v59], seller#u_r_id[v317]}
+        [stmt_in] livein: {seller#u_sattr4[v322], seller#u_sattr0[v318], seller#u_id[v313], buyer_id[v60], seller#u_comments[v316], buy_now_price[v61], seller#u_sattr2[v320], seller#u_sattr3[v321], seller#u_sattr1[v319], seller#u_rating[v314], seller_id[v59], seller#u_r_id[v317]}
+      USERACCT[seller_id[v59]].u_comments = seller#u_comments[v316];
+        [stmt_out] liveout: {seller#u_r_id[v317], seller#u_rating[v314], seller_id[v59], seller#u_sattr4[v322], seller#u_sattr3[v321], seller#u_sattr0[v318], seller#u_sattr2[v320], seller#u_sattr1[v319], seller#u_id[v313], buyer_id[v60], buy_now_price[v61]}
+        [stmt_in] livein: {seller#u_r_id[v317], seller#u_rating[v314], seller_id[v59], seller#u_sattr4[v322], seller#u_sattr3[v321], seller#u_sattr0[v318], seller#u_sattr2[v320], seller#u_sattr1[v319], seller#u_id[v313], buyer_id[v60], buy_now_price[v61]}
+      USERACCT[seller_id[v59]].u_id = seller#u_id[v313];
+        [stmt_out] liveout: {seller#u_sattr0[v318], seller_id[v59], seller#u_sattr4[v322], seller#u_sattr1[v319], seller#u_sattr2[v320], seller#u_r_id[v317], buyer_id[v60], buy_now_price[v61], seller#u_rating[v314], seller#u_sattr3[v321]}
+        [stmt_in] livein: {seller#u_sattr0[v318], seller_id[v59], seller#u_sattr4[v322], seller#u_sattr1[v319], seller#u_sattr2[v320], seller#u_r_id[v317], buyer_id[v60], buy_now_price[v61], seller#u_rating[v314], seller#u_sattr3[v321]}
+      USERACCT[seller_id[v59]].u_r_id = seller#u_r_id[v317];
+        [stmt_out] liveout: {seller#u_sattr2[v320], buyer_id[v60], buy_now_price[v61], seller#u_rating[v314], seller#u_sattr4[v322], seller#u_sattr3[v321], seller#u_sattr0[v318], seller#u_sattr1[v319], seller_id[v59]}
+        [stmt_in] livein: {seller#u_sattr2[v320], buyer_id[v60], buy_now_price[v61], seller#u_rating[v314], seller#u_sattr4[v322], seller#u_sattr3[v321], seller#u_sattr0[v318], seller#u_sattr1[v319], seller_id[v59]}
+      USERACCT[seller_id[v59]].u_rating = seller#u_rating[v314];
+        [stmt_out] liveout: {buyer_id[v60], seller#u_sattr0[v318], seller#u_sattr3[v321], seller#u_sattr1[v319], seller#u_sattr2[v320], buy_now_price[v61], seller_id[v59], seller#u_sattr4[v322]}
+        [stmt_in] livein: {buyer_id[v60], seller#u_sattr0[v318], seller#u_sattr3[v321], seller#u_sattr1[v319], seller#u_sattr2[v320], buy_now_price[v61], seller_id[v59], seller#u_sattr4[v322]}
+      USERACCT[seller_id[v59]].u_sattr0 = seller#u_sattr0[v318];
+        [stmt_out] liveout: {buy_now_price[v61], seller#u_sattr4[v322], seller#u_sattr2[v320], seller#u_sattr1[v319], buyer_id[v60], seller#u_sattr3[v321], seller_id[v59]}
+        [stmt_in] livein: {buy_now_price[v61], seller#u_sattr4[v322], seller#u_sattr2[v320], seller#u_sattr1[v319], buyer_id[v60], seller#u_sattr3[v321], seller_id[v59]}
+      USERACCT[seller_id[v59]].u_sattr1 = seller#u_sattr1[v319];
+        [stmt_out] liveout: {buyer_id[v60], seller#u_sattr3[v321], seller_id[v59], buy_now_price[v61], seller#u_sattr4[v322], seller#u_sattr2[v320]}
+        [stmt_in] livein: {buyer_id[v60], seller#u_sattr3[v321], seller_id[v59], buy_now_price[v61], seller#u_sattr4[v322], seller#u_sattr2[v320]}
+      USERACCT[seller_id[v59]].u_sattr2 = seller#u_sattr2[v320];
+        [stmt_out] liveout: {seller#u_sattr4[v322], seller_id[v59], seller#u_sattr3[v321], buy_now_price[v61], buyer_id[v60]}
+        [stmt_in] livein: {seller#u_sattr4[v322], seller_id[v59], seller#u_sattr3[v321], buy_now_price[v61], buyer_id[v60]}
+      USERACCT[seller_id[v59]].u_sattr3 = seller#u_sattr3[v321];
+        [stmt_out] liveout: {seller_id[v59], seller#u_sattr4[v322], buyer_id[v60], buy_now_price[v61]}
+        [stmt_in] livein: {seller_id[v59], seller#u_sattr4[v322], buyer_id[v60], buy_now_price[v61]}
+      USERACCT[seller_id[v59]].u_sattr4 = seller#u_sattr4[v322];
+        [stmt_out] liveout: {buyer_id[v60], buy_now_price[v61]}
+      hop_exit hop14;
+      liveout: {buy_now_price[v61], buyer_id[v60]}
+  }
+
+  hop14 {
+    entry_block: bb18
+    bb18 (preds: bb17):
+      livein: {buy_now_price[v61], buyer_id[v60]}
+        [stmt_in] livein: {buyer_id[v60], buy_now_price[v61]}
+      buyer#u_balance[v328] = USERACCT[buyer_id[v60]].u_balance;
+        [stmt_out] liveout: {buyer_id[v60], buyer#u_balance[v328], buy_now_price[v61]}
+        [stmt_in] livein: {buyer_id[v60], buyer#u_balance[v328], buy_now_price[v61]}
+      buyer#u_comments[v329] = USERACCT[buyer_id[v60]].u_comments;
+        [stmt_out] liveout: {buyer_id[v60], buy_now_price[v61], buyer#u_comments[v329], buyer#u_balance[v328]}
+        [stmt_in] livein: {buyer_id[v60], buy_now_price[v61], buyer#u_comments[v329], buyer#u_balance[v328]}
+      buyer#u_id[v326] = USERACCT[buyer_id[v60]].u_id;
+        [stmt_out] liveout: {buyer#u_id[v326], buy_now_price[v61], buyer#u_balance[v328], buyer_id[v60], buyer#u_comments[v329]}
+        [stmt_in] livein: {buyer#u_id[v326], buy_now_price[v61], buyer#u_balance[v328], buyer_id[v60], buyer#u_comments[v329]}
+      buyer#u_r_id[v330] = USERACCT[buyer_id[v60]].u_r_id;
+        [stmt_out] liveout: {buyer#u_balance[v328], buyer#u_r_id[v330], buyer#u_comments[v329], buyer#u_id[v326], buyer_id[v60], buy_now_price[v61]}
+        [stmt_in] livein: {buyer#u_balance[v328], buyer#u_r_id[v330], buyer#u_comments[v329], buyer#u_id[v326], buyer_id[v60], buy_now_price[v61]}
+      buyer#u_rating[v327] = USERACCT[buyer_id[v60]].u_rating;
+        [stmt_out] liveout: {buyer_id[v60], buyer#u_balance[v328], buyer#u_id[v326], buyer#u_rating[v327], buy_now_price[v61], buyer#u_comments[v329], buyer#u_r_id[v330]}
+        [stmt_in] livein: {buyer_id[v60], buyer#u_balance[v328], buyer#u_id[v326], buyer#u_rating[v327], buy_now_price[v61], buyer#u_comments[v329], buyer#u_r_id[v330]}
+      buyer#u_sattr0[v331] = USERACCT[buyer_id[v60]].u_sattr0;
+        [stmt_out] liveout: {buyer#u_r_id[v330], buyer_id[v60], buy_now_price[v61], buyer#u_rating[v327], buyer#u_balance[v328], buyer#u_sattr0[v331], buyer#u_id[v326], buyer#u_comments[v329]}
+        [stmt_in] livein: {buyer#u_r_id[v330], buyer_id[v60], buy_now_price[v61], buyer#u_rating[v327], buyer#u_balance[v328], buyer#u_sattr0[v331], buyer#u_id[v326], buyer#u_comments[v329]}
+      buyer#u_sattr1[v332] = USERACCT[buyer_id[v60]].u_sattr1;
+        [stmt_out] liveout: {buyer#u_balance[v328], buyer#u_id[v326], buyer#u_rating[v327], buyer_id[v60], buy_now_price[v61], buyer#u_sattr0[v331], buyer#u_r_id[v330], buyer#u_comments[v329], buyer#u_sattr1[v332]}
+        [stmt_in] livein: {buyer#u_balance[v328], buyer#u_id[v326], buyer#u_rating[v327], buyer_id[v60], buy_now_price[v61], buyer#u_sattr0[v331], buyer#u_r_id[v330], buyer#u_comments[v329], buyer#u_sattr1[v332]}
+      buyer#u_sattr2[v333] = USERACCT[buyer_id[v60]].u_sattr2;
+        [stmt_out] liveout: {buyer#u_id[v326], buyer#u_sattr1[v332], buyer_id[v60], buyer#u_sattr2[v333], buyer#u_rating[v327], buyer#u_balance[v328], buy_now_price[v61], buyer#u_sattr0[v331], buyer#u_r_id[v330], buyer#u_comments[v329]}
+        [stmt_in] livein: {buyer#u_id[v326], buyer#u_sattr1[v332], buyer_id[v60], buyer#u_sattr2[v333], buyer#u_rating[v327], buyer#u_balance[v328], buy_now_price[v61], buyer#u_sattr0[v331], buyer#u_r_id[v330], buyer#u_comments[v329]}
+      buyer#u_sattr3[v334] = USERACCT[buyer_id[v60]].u_sattr3;
+        [stmt_out] liveout: {buyer#u_balance[v328], buy_now_price[v61], buyer_id[v60], buyer#u_sattr3[v334], buyer#u_sattr2[v333], buyer#u_rating[v327], buyer#u_id[v326], buyer#u_sattr0[v331], buyer#u_comments[v329], buyer#u_r_id[v330], buyer#u_sattr1[v332]}
+        [stmt_in] livein: {buyer#u_balance[v328], buy_now_price[v61], buyer_id[v60], buyer#u_sattr3[v334], buyer#u_sattr2[v333], buyer#u_rating[v327], buyer#u_id[v326], buyer#u_sattr0[v331], buyer#u_comments[v329], buyer#u_r_id[v330], buyer#u_sattr1[v332]}
+      buyer#u_sattr4[v335] = USERACCT[buyer_id[v60]].u_sattr4;
+        [stmt_out] liveout: {buy_now_price[v61], buyer#u_comments[v329], buyer#u_sattr0[v331], buyer#u_sattr1[v332], buyer#u_sattr3[v334], buyer#u_r_id[v330], buyer#u_rating[v327], buyer_id[v60], buyer#u_balance[v328], buyer#u_id[v326], buyer#u_sattr2[v333], buyer#u_sattr4[v335]}
+        [stmt_in] livein: {buy_now_price[v61], buyer#u_comments[v329], buyer#u_sattr0[v331], buyer#u_sattr1[v332], buyer#u_sattr3[v334], buyer#u_r_id[v330], buyer#u_rating[v327], buyer_id[v60], buyer#u_balance[v328], buyer#u_id[v326], buyer#u_sattr2[v333], buyer#u_sattr4[v335]}
+      #tmp32[v337] = buyer#u_balance[v328] - buy_now_price[v61];
+        [stmt_out] liveout: {buyer#u_rating[v327], buyer#u_sattr0[v331], #tmp32[v337], buyer#u_sattr4[v335], buyer#u_sattr3[v334], buyer#u_sattr1[v332], buyer_id[v60], buyer#u_comments[v329], buyer#u_id[v326], buyer#u_r_id[v330], buyer#u_sattr2[v333]}
+        [stmt_in] livein: {buyer#u_rating[v327], buyer#u_sattr0[v331], #tmp32[v337], buyer#u_sattr4[v335], buyer#u_sattr3[v334], buyer#u_sattr1[v332], buyer_id[v60], buyer#u_comments[v329], buyer#u_id[v326], buyer#u_r_id[v330], buyer#u_sattr2[v333]}
+      buyer#u_balance[v328] = #tmp32[v337];
+        [stmt_out] liveout: {buyer#u_rating[v327], buyer#u_sattr2[v333], buyer#u_id[v326], buyer#u_sattr0[v331], buyer#u_sattr4[v335], buyer#u_r_id[v330], buyer#u_sattr3[v334], buyer#u_sattr1[v332], buyer_id[v60], buyer#u_balance[v328], buyer#u_comments[v329]}
+        [stmt_in] livein: {buyer#u_rating[v327], buyer#u_sattr2[v333], buyer#u_id[v326], buyer#u_sattr0[v331], buyer#u_sattr4[v335], buyer#u_r_id[v330], buyer#u_sattr3[v334], buyer#u_sattr1[v332], buyer_id[v60], buyer#u_balance[v328], buyer#u_comments[v329]}
+      USERACCT[buyer_id[v60]].u_balance = buyer#u_balance[v328];
+        [stmt_out] liveout: {buyer#u_sattr1[v332], buyer#u_sattr4[v335], buyer_id[v60], buyer#u_sattr0[v331], buyer#u_comments[v329], buyer#u_r_id[v330], buyer#u_id[v326], buyer#u_sattr3[v334], buyer#u_rating[v327], buyer#u_sattr2[v333]}
+        [stmt_in] livein: {buyer#u_sattr1[v332], buyer#u_sattr4[v335], buyer_id[v60], buyer#u_sattr0[v331], buyer#u_comments[v329], buyer#u_r_id[v330], buyer#u_id[v326], buyer#u_sattr3[v334], buyer#u_rating[v327], buyer#u_sattr2[v333]}
+      USERACCT[buyer_id[v60]].u_comments = buyer#u_comments[v329];
+        [stmt_out] liveout: {buyer#u_rating[v327], buyer#u_sattr3[v334], buyer#u_sattr0[v331], buyer#u_sattr1[v332], buyer#u_sattr4[v335], buyer#u_r_id[v330], buyer#u_sattr2[v333], buyer_id[v60], buyer#u_id[v326]}
+        [stmt_in] livein: {buyer#u_rating[v327], buyer#u_sattr3[v334], buyer#u_sattr0[v331], buyer#u_sattr1[v332], buyer#u_sattr4[v335], buyer#u_r_id[v330], buyer#u_sattr2[v333], buyer_id[v60], buyer#u_id[v326]}
+      USERACCT[buyer_id[v60]].u_id = buyer#u_id[v326];
+        [stmt_out] liveout: {buyer#u_rating[v327], buyer_id[v60], buyer#u_sattr3[v334], buyer#u_r_id[v330], buyer#u_sattr4[v335], buyer#u_sattr2[v333], buyer#u_sattr0[v331], buyer#u_sattr1[v332]}
+        [stmt_in] livein: {buyer#u_rating[v327], buyer_id[v60], buyer#u_sattr3[v334], buyer#u_r_id[v330], buyer#u_sattr4[v335], buyer#u_sattr2[v333], buyer#u_sattr0[v331], buyer#u_sattr1[v332]}
+      USERACCT[buyer_id[v60]].u_r_id = buyer#u_r_id[v330];
+        [stmt_out] liveout: {buyer#u_sattr3[v334], buyer#u_sattr1[v332], buyer#u_sattr4[v335], buyer#u_sattr0[v331], buyer#u_sattr2[v333], buyer_id[v60], buyer#u_rating[v327]}
+        [stmt_in] livein: {buyer#u_sattr3[v334], buyer#u_sattr1[v332], buyer#u_sattr4[v335], buyer#u_sattr0[v331], buyer#u_sattr2[v333], buyer_id[v60], buyer#u_rating[v327]}
+      USERACCT[buyer_id[v60]].u_rating = buyer#u_rating[v327];
+        [stmt_out] liveout: {buyer#u_sattr1[v332], buyer#u_sattr3[v334], buyer#u_sattr0[v331], buyer#u_sattr4[v335], buyer#u_sattr2[v333], buyer_id[v60]}
+        [stmt_in] livein: {buyer#u_sattr1[v332], buyer#u_sattr3[v334], buyer#u_sattr0[v331], buyer#u_sattr4[v335], buyer#u_sattr2[v333], buyer_id[v60]}
+      USERACCT[buyer_id[v60]].u_sattr0 = buyer#u_sattr0[v331];
+        [stmt_out] liveout: {buyer#u_sattr3[v334], buyer#u_sattr2[v333], buyer#u_sattr4[v335], buyer#u_sattr1[v332], buyer_id[v60]}
+        [stmt_in] livein: {buyer#u_sattr3[v334], buyer#u_sattr2[v333], buyer#u_sattr4[v335], buyer#u_sattr1[v332], buyer_id[v60]}
+      USERACCT[buyer_id[v60]].u_sattr1 = buyer#u_sattr1[v332];
+        [stmt_out] liveout: {buyer_id[v60], buyer#u_sattr3[v334], buyer#u_sattr4[v335], buyer#u_sattr2[v333]}
+        [stmt_in] livein: {buyer_id[v60], buyer#u_sattr3[v334], buyer#u_sattr4[v335], buyer#u_sattr2[v333]}
+      USERACCT[buyer_id[v60]].u_sattr2 = buyer#u_sattr2[v333];
+        [stmt_out] liveout: {buyer#u_sattr4[v335], buyer_id[v60], buyer#u_sattr3[v334]}
+        [stmt_in] livein: {buyer#u_sattr4[v335], buyer_id[v60], buyer#u_sattr3[v334]}
+      USERACCT[buyer_id[v60]].u_sattr3 = buyer#u_sattr3[v334];
+        [stmt_out] liveout: {buyer_id[v60], buyer#u_sattr4[v335]}
+        [stmt_in] livein: {buyer_id[v60], buyer#u_sattr4[v335]}
+      USERACCT[buyer_id[v60]].u_sattr4 = buyer#u_sattr4[v335];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction UpdateItem[fn27](item_id[v62]: int, seller_id[v63]: int, new_name[v64]: string)
+ {
+  entry_hop: hop15
+
+  hop15 {
+    entry_block: bb19
+    bb19:
+      livein: {item_id[v62], new_name[v64], seller_id[v63]}
+        [stmt_in] livein: {item_id[v62], seller_id[v63], new_name[v64]}
+      item#i_c_id[v349] = ITEM[item_id[v62], seller_id[v63]].i_c_id;
+        [stmt_out] liveout: {new_name[v64], item#i_c_id[v349], item_id[v62], seller_id[v63]}
+        [stmt_in] livein: {new_name[v64], item#i_c_id[v349], item_id[v62], seller_id[v63]}
+      item#i_current_price[v343] = ITEM[item_id[v62], seller_id[v63]].i_current_price;
+        [stmt_out] liveout: {new_name[v64], item#i_c_id[v349], item#i_current_price[v343], item_id[v62], seller_id[v63]}
+        [stmt_in] livein: {new_name[v64], item#i_c_id[v349], item#i_current_price[v343], item_id[v62], seller_id[v63]}
+      item#i_end_date[v345] = ITEM[item_id[v62], seller_id[v63]].i_end_date;
+        [stmt_out] liveout: {item_id[v62], item#i_c_id[v349], item#i_current_price[v343], seller_id[v63], new_name[v64], item#i_end_date[v345]}
+        [stmt_in] livein: {item_id[v62], item#i_c_id[v349], item#i_current_price[v343], seller_id[v63], new_name[v64], item#i_end_date[v345]}
+      item#i_id[v339] = ITEM[item_id[v62], seller_id[v63]].i_id;
+        [stmt_out] liveout: {seller_id[v63], new_name[v64], item#i_end_date[v345], item_id[v62], item#i_c_id[v349], item#i_id[v339], item#i_current_price[v343]}
+        [stmt_in] livein: {seller_id[v63], new_name[v64], item#i_end_date[v345], item_id[v62], item#i_c_id[v349], item#i_id[v339], item#i_current_price[v343]}
+      item#i_initial_price[v342] = ITEM[item_id[v62], seller_id[v63]].i_initial_price;
+        [stmt_out] liveout: {item#i_c_id[v349], new_name[v64], item_id[v62], item#i_initial_price[v342], seller_id[v63], item#i_id[v339], item#i_current_price[v343], item#i_end_date[v345]}
+        [stmt_in] livein: {item#i_c_id[v349], new_name[v64], item_id[v62], item#i_initial_price[v342], seller_id[v63], item#i_id[v339], item#i_current_price[v343], item#i_end_date[v345]}
+      item#i_num_bids[v344] = ITEM[item_id[v62], seller_id[v63]].i_num_bids;
+        [stmt_out] liveout: {new_name[v64], item#i_c_id[v349], item#i_initial_price[v342], item#i_id[v339], item_id[v62], item#i_current_price[v343], item#i_num_bids[v344], item#i_end_date[v345], seller_id[v63]}
+        [stmt_in] livein: {new_name[v64], item#i_c_id[v349], item#i_initial_price[v342], item#i_id[v339], item_id[v62], item#i_current_price[v343], item#i_num_bids[v344], item#i_end_date[v345], seller_id[v63]}
+      item#i_num_comments[v348] = ITEM[item_id[v62], seller_id[v63]].i_num_comments;
+        [stmt_out] liveout: {new_name[v64], item_id[v62], item#i_id[v339], item#i_num_bids[v344], item#i_num_comments[v348], item#i_initial_price[v342], item#i_c_id[v349], item#i_current_price[v343], item#i_end_date[v345], seller_id[v63]}
+        [stmt_in] livein: {new_name[v64], item_id[v62], item#i_id[v339], item#i_num_bids[v344], item#i_num_comments[v348], item#i_initial_price[v342], item#i_c_id[v349], item#i_current_price[v343], item#i_end_date[v345], seller_id[v63]}
+      item#i_start_date[v346] = ITEM[item_id[v62], seller_id[v63]].i_start_date;
+        [stmt_out] liveout: {new_name[v64], item#i_current_price[v343], item#i_num_bids[v344], item#i_end_date[v345], item_id[v62], item#i_id[v339], item#i_num_comments[v348], item#i_initial_price[v342], item#i_c_id[v349], item#i_start_date[v346], seller_id[v63]}
+        [stmt_in] livein: {new_name[v64], item#i_current_price[v343], item#i_num_bids[v344], item#i_end_date[v345], item_id[v62], item#i_id[v339], item#i_num_comments[v348], item#i_initial_price[v342], item#i_c_id[v349], item#i_start_date[v346], seller_id[v63]}
+      item#i_status[v347] = ITEM[item_id[v62], seller_id[v63]].i_status;
+        [stmt_out] liveout: {item#i_num_bids[v344], item#i_num_comments[v348], new_name[v64], item#i_end_date[v345], item#i_id[v339], item#i_status[v347], item#i_current_price[v343], seller_id[v63], item#i_initial_price[v342], item#i_start_date[v346], item#i_c_id[v349], item_id[v62]}
+        [stmt_in] livein: {item#i_num_bids[v344], item#i_num_comments[v348], new_name[v64], item#i_end_date[v345], item#i_id[v339], item#i_status[v347], item#i_current_price[v343], seller_id[v63], item#i_initial_price[v342], item#i_start_date[v346], item#i_c_id[v349], item_id[v62]}
+      item#i_u_id[v340] = ITEM[item_id[v62], seller_id[v63]].i_u_id;
+        [stmt_out] liveout: {item#i_current_price[v343], item#i_start_date[v346], item#i_id[v339], item_id[v62], item#i_status[v347], item#i_initial_price[v342], item#i_c_id[v349], item#i_num_bids[v344], item#i_num_comments[v348], seller_id[v63], new_name[v64], item#i_end_date[v345], item#i_u_id[v340]}
+        [stmt_in] livein: {item#i_current_price[v343], item#i_start_date[v346], item#i_id[v339], item_id[v62], item#i_status[v347], item#i_initial_price[v342], item#i_c_id[v349], item#i_num_bids[v344], item#i_num_comments[v348], seller_id[v63], new_name[v64], item#i_end_date[v345], item#i_u_id[v340]}
+      item#i_name[v341] = new_name[v64];
+        [stmt_out] liveout: {item#i_start_date[v346], item#i_num_bids[v344], item#i_end_date[v345], seller_id[v63], item#i_id[v339], item#i_current_price[v343], item_id[v62], item#i_status[v347], item#i_name[v341], item#i_initial_price[v342], item#i_u_id[v340], item#i_c_id[v349], item#i_num_comments[v348]}
+        [stmt_in] livein: {item#i_start_date[v346], item#i_num_bids[v344], item#i_end_date[v345], seller_id[v63], item#i_id[v339], item#i_current_price[v343], item_id[v62], item#i_status[v347], item#i_name[v341], item#i_initial_price[v342], item#i_u_id[v340], item#i_c_id[v349], item#i_num_comments[v348]}
+      ITEM[item_id[v62], seller_id[v63]].i_c_id = item#i_c_id[v349];
+        [stmt_out] liveout: {item#i_initial_price[v342], item#i_num_bids[v344], item#i_id[v339], item#i_current_price[v343], item_id[v62], item#i_end_date[v345], item#i_status[v347], item#i_name[v341], item#i_start_date[v346], seller_id[v63], item#i_u_id[v340], item#i_num_comments[v348]}
+        [stmt_in] livein: {item#i_initial_price[v342], item#i_num_bids[v344], item#i_id[v339], item#i_current_price[v343], item_id[v62], item#i_end_date[v345], item#i_status[v347], item#i_name[v341], item#i_start_date[v346], seller_id[v63], item#i_u_id[v340], item#i_num_comments[v348]}
+      ITEM[item_id[v62], seller_id[v63]].i_current_price = item#i_current_price[v343];
+        [stmt_out] liveout: {item#i_num_bids[v344], item#i_start_date[v346], seller_id[v63], item#i_num_comments[v348], item#i_u_id[v340], item_id[v62], item#i_name[v341], item#i_status[v347], item#i_initial_price[v342], item#i_id[v339], item#i_end_date[v345]}
+        [stmt_in] livein: {item#i_num_bids[v344], item#i_start_date[v346], seller_id[v63], item#i_num_comments[v348], item#i_u_id[v340], item_id[v62], item#i_name[v341], item#i_status[v347], item#i_initial_price[v342], item#i_id[v339], item#i_end_date[v345]}
+      ITEM[item_id[v62], seller_id[v63]].i_end_date = item#i_end_date[v345];
+        [stmt_out] liveout: {item#i_num_bids[v344], item#i_id[v339], item#i_start_date[v346], seller_id[v63], item#i_num_comments[v348], item#i_u_id[v340], item#i_initial_price[v342], item_id[v62], item#i_status[v347], item#i_name[v341]}
+        [stmt_in] livein: {item#i_num_bids[v344], item#i_id[v339], item#i_start_date[v346], seller_id[v63], item#i_num_comments[v348], item#i_u_id[v340], item#i_initial_price[v342], item_id[v62], item#i_status[v347], item#i_name[v341]}
+      ITEM[item_id[v62], seller_id[v63]].i_id = item#i_id[v339];
+        [stmt_out] liveout: {item#i_initial_price[v342], item#i_num_bids[v344], item#i_status[v347], item#i_start_date[v346], item_id[v62], seller_id[v63], item#i_u_id[v340], item#i_name[v341], item#i_num_comments[v348]}
+        [stmt_in] livein: {item#i_initial_price[v342], item#i_num_bids[v344], item#i_status[v347], item#i_start_date[v346], item_id[v62], seller_id[v63], item#i_u_id[v340], item#i_name[v341], item#i_num_comments[v348]}
+      ITEM[item_id[v62], seller_id[v63]].i_initial_price = item#i_initial_price[v342];
+        [stmt_out] liveout: {seller_id[v63], item#i_u_id[v340], item#i_name[v341], item#i_start_date[v346], item#i_num_comments[v348], item_id[v62], item#i_num_bids[v344], item#i_status[v347]}
+        [stmt_in] livein: {seller_id[v63], item#i_u_id[v340], item#i_name[v341], item#i_start_date[v346], item#i_num_comments[v348], item_id[v62], item#i_num_bids[v344], item#i_status[v347]}
+      ITEM[item_id[v62], seller_id[v63]].i_name = item#i_name[v341];
+        [stmt_out] liveout: {item#i_u_id[v340], item#i_status[v347], item#i_num_comments[v348], seller_id[v63], item#i_num_bids[v344], item#i_start_date[v346], item_id[v62]}
+        [stmt_in] livein: {item#i_u_id[v340], item#i_status[v347], item#i_num_comments[v348], seller_id[v63], item#i_num_bids[v344], item#i_start_date[v346], item_id[v62]}
+      ITEM[item_id[v62], seller_id[v63]].i_num_bids = item#i_num_bids[v344];
+        [stmt_out] liveout: {item#i_status[v347], item#i_start_date[v346], item_id[v62], item#i_u_id[v340], item#i_num_comments[v348], seller_id[v63]}
+        [stmt_in] livein: {item#i_status[v347], item#i_start_date[v346], item_id[v62], item#i_u_id[v340], item#i_num_comments[v348], seller_id[v63]}
+      ITEM[item_id[v62], seller_id[v63]].i_num_comments = item#i_num_comments[v348];
+        [stmt_out] liveout: {item#i_start_date[v346], item_id[v62], item#i_u_id[v340], seller_id[v63], item#i_status[v347]}
+        [stmt_in] livein: {item#i_start_date[v346], item_id[v62], item#i_u_id[v340], seller_id[v63], item#i_status[v347]}
+      ITEM[item_id[v62], seller_id[v63]].i_start_date = item#i_start_date[v346];
+        [stmt_out] liveout: {seller_id[v63], item_id[v62], item#i_status[v347], item#i_u_id[v340]}
+        [stmt_in] livein: {seller_id[v63], item_id[v62], item#i_status[v347], item#i_u_id[v340]}
+      ITEM[item_id[v62], seller_id[v63]].i_status = item#i_status[v347];
+        [stmt_out] liveout: {item#i_u_id[v340], item_id[v62], seller_id[v63]}
+        [stmt_in] livein: {item#i_u_id[v340], item_id[v62], seller_id[v63]}
+      ITEM[item_id[v62], seller_id[v63]].i_u_id = item#i_u_id[v340];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_u_id[fn28](iter[v65]: Iterator<table_USERACCT>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_r_id[fn29](iter[v66]: Iterator<table_REGION>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_id[fn30](iter[v67]: Iterator<table_ITEM>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_i_u_id[fn31](iter[v68]: Iterator<table_ITEM>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ib_id[fn32](iter[v69]: Iterator<table_ITEM_BID>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ib_i_id[fn33](iter[v70]: Iterator<table_ITEM_BID>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ib_u_id[fn34](iter[v71]: Iterator<table_ITEM_BID>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_imb_i_id[fn35](iter[v72]: Iterator<table_ITEM_MAX_BID>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_imb_u_id[fn36](iter[v73]: Iterator<table_ITEM_MAX_BID>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ic_id[fn37](iter[v74]: Iterator<table_ITEM_COMMENT>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ic_i_id[fn38](iter[v75]: Iterator<table_ITEM_COMMENT>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ic_u_id[fn39](iter[v76]: Iterator<table_ITEM_COMMENT>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ui_u_id[fn40](iter[v77]: Iterator<table_USERACCT_ITEM>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ui_i_id[fn41](iter[v78]: Iterator<table_USERACCT_ITEM>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ui_i_u_id[fn42](iter[v79]: Iterator<table_USERACCT_ITEM>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uf_u_id[fn43](iter[v80]: Iterator<table_USERACCT_FEEDBACK>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uf_i_id[fn44](iter[v81]: Iterator<table_USERACCT_FEEDBACK>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uf_i_u_id[fn45](iter[v82]: Iterator<table_USERACCT_FEEDBACK>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uf_from_id[fn46](iter[v83]: Iterator<table_USERACCT_FEEDBACK>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uw_u_id[fn47](iter[v84]: Iterator<table_USERACCT_WATCH>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uw_i_id[fn48](iter[v85]: Iterator<table_USERACCT_WATCH>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_uw_i_u_id[fn49](iter[v86]: Iterator<table_USERACCT_WATCH>)
+
+

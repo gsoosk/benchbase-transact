@@ -1,0 +1,240 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table CONTESTANTS[tab0] {
+  primary contestant_number[f0]: int;
+  contestant_name[f1]: string;
+  node_partition: p_contestant[fn15](contestant_number[f0]);
+}
+table LOCATIONS[tab1] {
+  primary area_code[f2]: int;
+  state[f3]: string;
+  node_partition: p_location[fn16](area_code[f2]);
+}
+table VOTES[tab2] {
+  primary phone_number[f4]: int;
+  primary vote_id[f5]: int;
+  state[f6]: string;
+  contestant_number[f7]: int;
+  node_partition: p_phone[fn17](phone_number[f4]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition p_contestant[fn15](key[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {key[v20]}
+  return key[v20];
+  liveout: {key[v20]}
+
+partition p_location[fn16](key[v21]: int)
+
+  entry_block: bb1
+bb1:
+  livein: {key[v21]}
+  return key[v21];
+  liveout: {key[v21]}
+
+partition p_phone[fn17](key[v22]: int)
+
+  entry_block: bb2
+bb2:
+  livein: {key[v22]}
+  return key[v22];
+  liveout: {key[v22]}
+
+transaction Vote[fn18](voteId[v23]: int, phoneNumber[v24]: int, contestantNumber[v25]: int)
+ {
+  entry_hop: hop3
+
+  hop3 {
+    entry_block: bb3
+    bb3:
+      livein: {voteId[v23], contestantNumber[v25], phoneNumber[v24]}
+        [stmt_in] livein: {phoneNumber[v24], voteId[v23], contestantNumber[v25]}
+      #tmp0[v33] = CONTESTANTS[contestantNumber[v25]];
+        [stmt_out] liveout: {#tmp0[v33], phoneNumber[v24], contestantNumber[v25], voteId[v23]}
+        [stmt_in] livein: {#tmp0[v33], phoneNumber[v24], contestantNumber[v25], voteId[v23]}
+      c[v30] = #tmp0[v33];
+        [stmt_out] liveout: {contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+        [stmt_in] livein: {contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+      c#contestant_name[v32] = CONTESTANTS[contestantNumber[v25]].contestant_name;
+        [stmt_out] liveout: {contestantNumber[v25], phoneNumber[v24], c#contestant_name[v32], voteId[v23]}
+        [stmt_in] livein: {contestantNumber[v25], phoneNumber[v24], c#contestant_name[v32], voteId[v23]}
+      c#contestant_number[v31] = CONTESTANTS[contestantNumber[v25]].contestant_number;
+        [stmt_out] liveout: {voteId[v23], phoneNumber[v24], c#contestant_name[v32], contestantNumber[v25]}
+        [stmt_in] livein: {voteId[v23], phoneNumber[v24], c#contestant_name[v32], contestantNumber[v25]}
+      cname[v34] = c#contestant_name[v32];
+        [stmt_out] liveout: {phoneNumber[v24], voteId[v23], contestantNumber[v25]}
+      hop_exit hop4;
+      liveout: {contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+  }
+
+  hop4 {
+    entry_block: bb4
+    bb4 (preds: bb3):
+      livein: {contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+        [stmt_in] livein: {contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+      #tmp1[v36] = phoneNumber[v24] / 10000000;
+        [stmt_out] liveout: {#tmp1[v36], contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+        [stmt_in] livein: {#tmp1[v36], contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+      area_code[v35] = #tmp1[v36];
+        [stmt_out] liveout: {area_code[v35], voteId[v23], phoneNumber[v24], contestantNumber[v25]}
+        [stmt_in] livein: {area_code[v35], voteId[v23], phoneNumber[v24], contestantNumber[v25]}
+      #tmp2[v40] = LOCATIONS[area_code[v35]];
+        [stmt_out] liveout: {area_code[v35], #tmp2[v40], voteId[v23], phoneNumber[v24], contestantNumber[v25]}
+        [stmt_in] livein: {area_code[v35], #tmp2[v40], voteId[v23], phoneNumber[v24], contestantNumber[v25]}
+      loc[v37] = #tmp2[v40];
+        [stmt_out] liveout: {voteId[v23], phoneNumber[v24], contestantNumber[v25], area_code[v35]}
+        [stmt_in] livein: {voteId[v23], phoneNumber[v24], contestantNumber[v25], area_code[v35]}
+      loc#area_code[v38] = LOCATIONS[area_code[v35]].area_code;
+        [stmt_out] liveout: {voteId[v23], contestantNumber[v25], phoneNumber[v24], area_code[v35]}
+        [stmt_in] livein: {voteId[v23], contestantNumber[v25], phoneNumber[v24], area_code[v35]}
+      loc#state[v39] = LOCATIONS[area_code[v35]].state;
+        [stmt_out] liveout: {voteId[v23], contestantNumber[v25], phoneNumber[v24], loc#state[v39]}
+        [stmt_in] livein: {voteId[v23], contestantNumber[v25], phoneNumber[v24], loc#state[v39]}
+      state[v41] = loc#state[v39];
+        [stmt_out] liveout: {contestantNumber[v25], state[v41], voteId[v23], phoneNumber[v24]}
+      hop_exit hop5;
+      liveout: {state[v41], voteId[v23], phoneNumber[v24], contestantNumber[v25]}
+  }
+
+  hop5 {
+    entry_block: bb5
+    bb5 (preds: bb4):
+      livein: {state[v41], contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+        [stmt_in] livein: {phoneNumber[v24], state[v41], contestantNumber[v25], voteId[v23]}
+      VOTES[phoneNumber[v24], voteId[v23]].state = state[v41];
+        [stmt_out] liveout: {voteId[v23], contestantNumber[v25], phoneNumber[v24]}
+        [stmt_in] livein: {voteId[v23], contestantNumber[v25], phoneNumber[v24]}
+      VOTES[phoneNumber[v24], voteId[v23]].contestant_number = contestantNumber[v25];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_contestant_number[fn19](iter[v26]: Iterator<table_CONTESTANTS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_area_code[fn20](iter[v27]: Iterator<table_LOCATIONS>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_phone_number[fn21](iter[v28]: Iterator<table_VOTES>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_vote_id[fn22](iter[v29]: Iterator<table_VOTES>)
+
+

@@ -1,0 +1,10 @@
+digraph SCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  f16_i0_h1 [label="MinRecord#0\nHop 1\n"];
+  f16_i1_h1 [label="MinRecord#1\nHop 1\n"];
+  f17_i0_h2 [label="UpdateRecord#0\nHop 2\n"];
+  f17_i1_h2 [label="UpdateRecord#1\nHop 2\n"];
+  f17_i0_h2 -> f17_i1_h2 [dir=none, style=dashed, color=darkorange, label="C"];
+}

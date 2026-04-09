@@ -1,0 +1,44 @@
+digraph SCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  // Legend for C-edge coloring
+  subgraph cluster_legend {
+    label="Verification Time (ms)";
+    style=dashed;
+    legend_0 [label="504.5 (Light Blue)", color="#87CEEB", style=filled, shape=box];
+    legend_1 [label="865.1 (Yellow)", color="#FFFF00", style=filled, shape=box];
+    legend_2 [label="1225.7 (Orange)", color="#FFA500", style=filled, shape=box];
+    legend_3 [label="1586.3 (Red)", color="#FF0000", style=filled, shape=box];
+    legend_4 [label="1946.8 (Deep Red)", color="#8B0000", style=filled, shape=box];
+    legend_0 -> legend_1 -> legend_2 -> legend_3 -> legend_4 [style=invis];
+    legend_eliminated [label="Eliminated", style="dotted,bold", shape=box];
+    legend_remaining [label="Remaining", style=dashed, shape=box];
+    legend_eliminated -> legend_remaining [style=invis];
+  }
+  f16_i0_h1 [label="DeleteCallForwarding#0\nHop 1\n"];
+  f16_i1_h1 [label="DeleteCallForwarding#1\nHop 1\n"];
+  f17_i0_h2 [label="GetAccessData#0\nHop 2\n"];
+  f17_i1_h2 [label="GetAccessData#1\nHop 2\n"];
+  f18_i0_h3 [label="GetNewDestination#0\nHop 3\n", style=filled, fillcolor="#FFD900"];
+  f18_i1_h3 [label="GetNewDestination#1\nHop 3\n", style=filled, fillcolor="#FF6100"];
+  f19_i0_h4 [label="GetSubscriberData#0\nHop 4\n"];
+  f19_i1_h4 [label="GetSubscriberData#1\nHop 4\n"];
+  f20_i0_h5 [label="InsertCallForwarding#0\nHop 5\n", style=filled, fillcolor="#FF8C00"];
+  f20_i1_h5 [label="InsertCallForwarding#1\nHop 5\n", style=filled, fillcolor="#FF8C00"];
+  f21_i0_h6 [label="UpdateLocation#0\nHop 6\n", style=filled, fillcolor="#FF9E00"];
+  f21_i1_h6 [label="UpdateLocation#1\nHop 6\n", style=filled, fillcolor="#FFC100"];
+  f22_i0_h7 [label="UpdateSubscriberData#0\nHop 7\n", style=filled, fillcolor="#FF1000"];
+  f22_i1_h7 [label="UpdateSubscriberData#1\nHop 7\n", style=filled, fillcolor="#FFE800"];
+  f18_i0_h3 -> f22_i0_h7 [dir=none, style="dotted,bold", color="#FF8900", label="C (1286.2ms)",penwidth=2.0];
+  f18_i0_h3 -> f22_i1_h7 [dir=none, style="dotted,bold", color="#D7EE4C", label="C (747.1ms)",penwidth=2.0];
+  f18_i1_h3 -> f22_i0_h7 [dir=none, style="dotted,bold", color="#900000", label="C (1930.1ms)",penwidth=2.0];
+  f18_i1_h3 -> f22_i1_h7 [dir=none, style="dotted,bold", color="#EEF820", label="C (814.9ms)",penwidth=2.0];
+  f20_i0_h5 -> f20_i1_h5 [dir=none, style="dotted,bold", color="#FF8C00", label="C (1278.8ms)",penwidth=2.0];
+  f21_i0_h6 -> f21_i1_h6 [dir=none, style="dotted,bold", color="#87CEEB", label="C (504.5ms)",penwidth=2.0];
+  f21_i0_h6 -> f22_i0_h7 [dir=none, style="dotted,bold", color="#8B0000", label="C (1946.8ms)",penwidth=2.0];
+  f21_i0_h6 -> f22_i1_h7 [dir=none, style="dotted,bold", color="#FF9200", label="C (1265.6ms)",penwidth=2.0];
+  f21_i1_h6 -> f22_i0_h7 [dir=none, style="dotted,bold", color="#D00000", label="C (1731.5ms)",penwidth=2.0];
+  f21_i1_h6 -> f22_i1_h7 [dir=none, style="dotted,bold", color="#FFC500", label="C (1093.6ms)",penwidth=2.0];
+  f22_i0_h7 -> f22_i1_h7 [dir=none, style="dotted,bold", color="#FCFD05", label="C (856.8ms)",penwidth=2.0];
+}

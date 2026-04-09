@@ -1,0 +1,18 @@
+benchmark	total_time_s	functions	hops	c_edges_original	c_edges_simplified	verifications	pass	errors	timeouts	boogie_failures
+smallbank	.78									
+tatp	1.43									
+ycsb	.03									
+tpcc	25.40									
+voter	.46									
+twitter	.63									
+wikipedia	2.11									
+auctionmark	12.47									
+epinions	1.08									
+hyadapt	238.37									
+noop	1.11									
+otmetrics	1.21									
+resourcestresser	3.53									
+sibench	.53									
+templated	2.91									
+tpch	1.70									
+tpcds	.75									

@@ -1,0 +1,35 @@
+digraph CombinedSCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  cv0 [label="GetItemAverageRating#0\nHop 4\n"];
+  cv1 [label="GetItemReviewsByTrustedUser#1\nHop 5\n"];
+  cv2 [label="GetReviewItemById#1\nHop 7\n"];
+  cv3 [label="UpdateUserName#0\nHop 13\n"];
+  cv4 [label="GetItemReviewsByTrustedUser#1\nHop 6\n"];
+  cv5 [label="UpdateTrustRating#0\nHop 12\n"];
+  cv6 [label="GetReviewsByUser#1\nHop 8\n"];
+  cv7 [label="GetAverageRatingByTrustedUser#1\nHop 2\n"];
+  cv8 [label="GetAverageRatingByTrustedUser#1\nHop 3\n"];
+  cv9 [label="GetReviewItemById#0\nHop 7\n"];
+  cv10 [label="UpdateReviewRating#0\nHop 11\n"];
+  cv11 [label="UpdateItemTitle#0\nHop 10\n"];
+  cv12 [label="GetItemReviewsByTrustedUser#0\nHop 5\n"];
+  cv13 [label="UpdateReviewRating#1\nHop 11\n"];
+  cv14 [label="UpdateTrustRating#1\nHop 12\n"];
+  cv15 [label="GetItemReviewsByTrustedUser#0\nHop 6\n"];
+  cv16 [label="UpdateUserName#1\nHop 13\n"];
+  cv17 [label="GetAverageRatingByTrustedUser#0\nHop 2\n"];
+  cv18 [label="GetAverageRatingByTrustedUser#0\nHop 3\n"];
+  cv19 [label="GetReviewsByUser#0\nHop 8\n"];
+  cv20 [label="GetReviewsByUser#0\nHop 9\n"];
+  cv21 [label="GetItemAverageRating#1\nHop 4\n"];
+  cv22 [label="GetReviewsByUser#1\nHop 9\n"];
+  cv23 [label="UpdateItemTitle#1\nHop 10\n"];
+  cv1 -> cv4 [color=black, label="S"];
+  cv6 -> cv22 [color=black, label="S"];
+  cv7 -> cv8 [color=black, label="S"];
+  cv12 -> cv15 [color=black, label="S"];
+  cv17 -> cv18 [color=black, label="S"];
+  cv19 -> cv20 [color=black, label="S"];
+}

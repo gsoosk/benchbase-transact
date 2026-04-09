@@ -1,0 +1,699 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition f[f45](x[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return x[t1][p77];
+}
+
+partition g[f46](x[p78]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return 0[t1];
+}
+
+table Region[tab0] {
+  primary r_regionkey[field0]: int[t1];
+  node g[f46](r_regionkey[t1][field0]);
+  r_name[field1]: string[t3];
+  r_comment[field2]: string[t3];
+}
+
+table Nation[tab1] {
+  primary n_nationkey[field3]: int[t1];
+  node g[f46](n_nationkey[t1][field3]);
+  n_name[field4]: string[t3];
+  n_regionkey[field5]: int[t1];
+  n_comment[field6]: string[t3];
+}
+
+table Part[tab2] {
+  primary p_partkey[field7]: int[t1];
+  node f[f45](p_partkey[t1][field7]);
+  p_name[field8]: string[t3];
+  p_mfgr[field9]: string[t3];
+  p_brand[field10]: string[t3];
+  p_type[field11]: string[t3];
+  p_size[field12]: int[t1];
+  p_container[field13]: string[t3];
+  p_retailprice[field14]: float[t4];
+  p_comment[field15]: string[t3];
+}
+
+table Supplier[tab3] {
+  primary s_suppkey[field16]: int[t1];
+  node f[f45](s_suppkey[t1][field16]);
+  s_name[field17]: string[t3];
+  s_address[field18]: string[t3];
+  s_nationkey[field19]: int[t1];
+  s_phone[field20]: string[t3];
+  s_acctbal[field21]: float[t4];
+  s_comment[field22]: string[t3];
+}
+
+table Partsupp[tab4] {
+  primary ps_partkey[field23]: int[t1];
+  primary ps_suppkey[field24]: int[t1];
+  node f[f45](ps_partkey[t1][field23]);
+  ps_availqty[field25]: int[t1];
+  ps_supplycost[field26]: float[t4];
+  ps_comment[field27]: string[t3];
+}
+
+table Customer[tab5] {
+  primary c_custkey[field28]: int[t1];
+  node f[f45](c_custkey[t1][field28]);
+  c_name[field29]: string[t3];
+  c_address[field30]: string[t3];
+  c_nationkey[field31]: int[t1];
+  c_phone[field32]: string[t3];
+  c_acctbal[field33]: float[t4];
+  c_mktsegment[field34]: string[t3];
+  c_comment[field35]: string[t3];
+}
+
+table Orders[tab6] {
+  primary o_orderkey[field36]: int[t1];
+  node f[f45](o_orderkey[t1][field36]);
+  o_custkey[field37]: int[t1];
+  o_orderstatus[field38]: string[t3];
+  o_totalprice[field39]: float[t4];
+  o_orderdate[field40]: int[t1];
+  o_orderpriority[field41]: string[t3];
+  o_clerk[field42]: string[t3];
+  o_shippriority[field43]: int[t1];
+  o_comment[field44]: string[t3];
+}
+
+table Lineitem[tab7] {
+  primary l_orderkey[field45]: int[t1];
+  primary l_linenumber[field46]: int[t1];
+  node f[f45](l_orderkey[t1][field45]);
+  l_partkey[field47]: int[t1];
+  l_suppkey[field48]: int[t1];
+  l_quantity[field49]: float[t4];
+  l_extendedprice[field50]: float[t4];
+  l_discount[field51]: float[t4];
+  l_tax[field52]: float[t4];
+  l_returnflag[field53]: string[t3];
+  l_linestatus[field54]: string[t3];
+  l_shipdate[field55]: int[t1];
+  l_commitdate[field56]: int[t1];
+  l_receiptdate[field57]: int[t1];
+  l_shipinstruct[field58]: string[t3];
+  l_shipmode[field59]: string[t3];
+  l_comment[field60]: string[t3];
+}
+
+transaction Q1[f47](orderkey[p79]: int[t1], linenumber[p80]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let l[v0]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p79], l_linenumber: linenumber[t1][p80]][t6<tab<Lineitem>>];
+    let revenue[v1]: float[t4] = l[t6<tab<Lineitem>>][v0].l_extendedprice[field50][t4] * [f7](1.0[t4] - [f6]l[t6<tab<Lineitem>>][v0].l_discount[field51][t4][t4])[t4][t4];
+  }
+}
+
+transaction Q2[f48](partkey[p81]: int[t1], suppkey[p82]: int[t1], nationkey[p83]: int[t1], regionkey[p84]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let ps[v2]: Row<Partsupp>[t6<tab<Partsupp>>] = Partsupp[t7<tab<Partsupp>>][itab4][tab4][ps_partkey: partkey[t1][p81], ps_suppkey: suppkey[t1][p82]][t6<tab<Partsupp>>];
+    let p[v3]: Row<Part>[t6<tab<Part>>] = Part[t7<tab<Part>>][itab2][tab2][p_partkey: partkey[t1][p81]][t6<tab<Part>>];
+    let cost[v4]: float[t4] = ps[t6<tab<Partsupp>>][v2].ps_supplycost[field26][t4];
+  }
+  hop
+  {
+    let s[v5]: Row<Supplier>[t6<tab<Supplier>>] = Supplier[t7<tab<Supplier>>][itab3][tab3][s_suppkey: suppkey[t1][p82]][t6<tab<Supplier>>];
+    let sname[v6]: string[t3] = s[t6<tab<Supplier>>][v5].s_name[field17][t3];
+  }
+  hop
+  {
+    let n[v7]: Row<Nation>[t6<tab<Nation>>] = Nation[t7<tab<Nation>>][itab1][tab1][n_nationkey: nationkey[t1][p83]][t6<tab<Nation>>];
+    let r[v8]: Row<Region>[t6<tab<Region>>] = Region[t7<tab<Region>>][itab0][tab0][r_regionkey: regionkey[t1][p84]][t6<tab<Region>>];
+  }
+}
+
+transaction Q3[f49](custkey[p85]: int[t1], orderkey[p86]: int[t1], linenumber[p87]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let c[v9]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab5][tab5][c_custkey: custkey[t1][p85]][t6<tab<Customer>>];
+    let seg[v10]: string[t3] = c[t6<tab<Customer>>][v9].c_mktsegment[field34][t3];
+  }
+  hop
+  {
+    let o[v11]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p86]][t6<tab<Orders>>];
+    let l[v12]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p86], l_linenumber: linenumber[t1][p87]][t6<tab<Lineitem>>];
+    let revenue[v13]: float[t4] = l[t6<tab<Lineitem>>][v12].l_extendedprice[field50][t4] * [f7](1.0[t4] - [f6]l[t6<tab<Lineitem>>][v12].l_discount[field51][t4][t4])[t4][t4];
+  }
+}
+
+transaction Q4[f50](orderkey[p88]: int[t1], linenumber[p89]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let o[v14]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p88]][t6<tab<Orders>>];
+    let l[v15]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p88], l_linenumber: linenumber[t1][p89]][t6<tab<Lineitem>>];
+    let priority[v16]: string[t3] = o[t6<tab<Orders>>][v14].o_orderpriority[field41][t3];
+  }
+}
+
+transaction Q5[f51](custkey[p90]: int[t1], orderkey[p91]: int[t1], linenumber[p92]: int[t1], suppkey[p93]: int[t1], nationkey[p94]: int[t1], regionkey[p95]: int[t1]) : (t1, t1, t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let c[v17]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab5][tab5][c_custkey: custkey[t1][p90]][t6<tab<Customer>>];
+  }
+  hop
+  {
+    let o[v18]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p91]][t6<tab<Orders>>];
+    let l[v19]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p91], l_linenumber: linenumber[t1][p92]][t6<tab<Lineitem>>];
+    let revenue[v20]: float[t4] = l[t6<tab<Lineitem>>][v19].l_extendedprice[field50][t4] * [f7](1.0[t4] - [f6]l[t6<tab<Lineitem>>][v19].l_discount[field51][t4][t4])[t4][t4];
+  }
+  hop
+  {
+    let s[v21]: Row<Supplier>[t6<tab<Supplier>>] = Supplier[t7<tab<Supplier>>][itab3][tab3][s_suppkey: suppkey[t1][p93]][t6<tab<Supplier>>];
+  }
+  hop
+  {
+    let n[v22]: Row<Nation>[t6<tab<Nation>>] = Nation[t7<tab<Nation>>][itab1][tab1][n_nationkey: nationkey[t1][p94]][t6<tab<Nation>>];
+    let r[v23]: Row<Region>[t6<tab<Region>>] = Region[t7<tab<Region>>][itab0][tab0][r_regionkey: regionkey[t1][p95]][t6<tab<Region>>];
+  }
+}
+
+transaction Q10[f52](custkey[p96]: int[t1], orderkey[p97]: int[t1], linenumber[p98]: int[t1], nationkey[p99]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let c[v24]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab5][tab5][c_custkey: custkey[t1][p96]][t6<tab<Customer>>];
+    let revenue[v25]: float[t4] = 0.0[t4];
+  }
+  hop
+  {
+    let o[v26]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p97]][t6<tab<Orders>>];
+    let l[v27]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p97], l_linenumber: linenumber[t1][p98]][t6<tab<Lineitem>>];
+    revenue[t4][v25] = l[t6<tab<Lineitem>>][v27].l_extendedprice[field50][t4] * [f7](1.0[t4] - [f6]l[t6<tab<Lineitem>>][v27].l_discount[field51][t4][t4])[t4][t4][t0];
+  }
+  hop
+  {
+    let n[v28]: Row<Nation>[t6<tab<Nation>>] = Nation[t7<tab<Nation>>][itab1][tab1][n_nationkey: nationkey[t1][p99]][t6<tab<Nation>>];
+  }
+}
+
+transaction Q11[f53](partkey[p100]: int[t1], suppkey[p101]: int[t1], nationkey[p102]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let ps[v29]: Row<Partsupp>[t6<tab<Partsupp>>] = Partsupp[t7<tab<Partsupp>>][itab4][tab4][ps_partkey: partkey[t1][p100], ps_suppkey: suppkey[t1][p101]][t6<tab<Partsupp>>];
+    let value[v30]: float[t4] = float[(t1) -> t4][f35,it4][f35](ps[t6<tab<Partsupp>>][v29].ps_availqty[field25][t1])[t4] * [f7]ps[t6<tab<Partsupp>>][v29].ps_supplycost[field26][t4][t4];
+  }
+  hop
+  {
+    let s[v31]: Row<Supplier>[t6<tab<Supplier>>] = Supplier[t7<tab<Supplier>>][itab3][tab3][s_suppkey: suppkey[t1][p101]][t6<tab<Supplier>>];
+  }
+  hop
+  {
+    let n[v32]: Row<Nation>[t6<tab<Nation>>] = Nation[t7<tab<Nation>>][itab1][tab1][n_nationkey: nationkey[t1][p102]][t6<tab<Nation>>];
+  }
+}
+
+transaction Q12[f54](orderkey[p103]: int[t1], linenumber[p104]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let o[v33]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p103]][t6<tab<Orders>>];
+    let l[v34]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p103], l_linenumber: linenumber[t1][p104]][t6<tab<Lineitem>>];
+    let mode[v35]: string[t3] = l[t6<tab<Lineitem>>][v34].l_shipmode[field59][t3];
+    let priority[v36]: string[t3] = o[t6<tab<Orders>>][v33].o_orderpriority[field41][t3];
+  }
+}
+
+transaction Q13[f55](custkey[p105]: int[t1], orderkey[p106]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let c[v37]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab5][tab5][c_custkey: custkey[t1][p105]][t6<tab<Customer>>];
+  }
+  hop
+  {
+    let o[v38]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p106]][t6<tab<Orders>>];
+  }
+}
+
+transaction Q14[f56](orderkey[p107]: int[t1], linenumber[p108]: int[t1], partkey[p109]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let l[v39]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p107], l_linenumber: linenumber[t1][p108]][t6<tab<Lineitem>>];
+    let ep[v40]: float[t4] = l[t6<tab<Lineitem>>][v39].l_extendedprice[field50][t4];
+  }
+  hop
+  {
+    let p[v41]: Row<Part>[t6<tab<Part>>] = Part[t7<tab<Part>>][itab2][tab2][p_partkey: partkey[t1][p109]][t6<tab<Part>>];
+    let ptype[v42]: string[t3] = p[t6<tab<Part>>][v41].p_type[field11][t3];
+  }
+}
+
+transaction Q15[f57](orderkey[p110]: int[t1], linenumber[p111]: int[t1], suppkey[p112]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let l[v43]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p110], l_linenumber: linenumber[t1][p111]][t6<tab<Lineitem>>];
+    let revenue[v44]: float[t4] = l[t6<tab<Lineitem>>][v43].l_extendedprice[field50][t4] * [f7](1.0[t4] - [f6]l[t6<tab<Lineitem>>][v43].l_discount[field51][t4][t4])[t4][t4];
+  }
+  hop
+  {
+    let s[v45]: Row<Supplier>[t6<tab<Supplier>>] = Supplier[t7<tab<Supplier>>][itab3][tab3][s_suppkey: suppkey[t1][p112]][t6<tab<Supplier>>];
+    let sname[v46]: string[t3] = s[t6<tab<Supplier>>][v45].s_name[field17][t3];
+  }
+}
+
+transaction Q16[f58](partkey[p113]: int[t1], suppkey[p114]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let p[v47]: Row<Part>[t6<tab<Part>>] = Part[t7<tab<Part>>][itab2][tab2][p_partkey: partkey[t1][p113]][t6<tab<Part>>];
+    let ps[v48]: Row<Partsupp>[t6<tab<Partsupp>>] = Partsupp[t7<tab<Partsupp>>][itab4][tab4][ps_partkey: partkey[t1][p113], ps_suppkey: suppkey[t1][p114]][t6<tab<Partsupp>>];
+  }
+  hop
+  {
+    let s[v49]: Row<Supplier>[t6<tab<Supplier>>] = Supplier[t7<tab<Supplier>>][itab3][tab3][s_suppkey: suppkey[t1][p114]][t6<tab<Supplier>>];
+  }
+}
+
+transaction Q17[f59](partkey[p115]: int[t1], orderkey[p116]: int[t1], linenumber[p117]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let p[v50]: Row<Part>[t6<tab<Part>>] = Part[t7<tab<Part>>][itab2][tab2][p_partkey: partkey[t1][p115]][t6<tab<Part>>];
+    let brand[v51]: string[t3] = p[t6<tab<Part>>][v50].p_brand[field10][t3];
+  }
+  hop
+  {
+    let l[v52]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p116], l_linenumber: linenumber[t1][p117]][t6<tab<Lineitem>>];
+    let qty[v53]: float[t4] = l[t6<tab<Lineitem>>][v52].l_quantity[field49][t4];
+  }
+}
+
+transaction Q18[f60](custkey[p118]: int[t1], orderkey[p119]: int[t1], linenumber[p120]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let c[v54]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab5][tab5][c_custkey: custkey[t1][p118]][t6<tab<Customer>>];
+  }
+  hop
+  {
+    let o[v55]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p119]][t6<tab<Orders>>];
+    let l[v56]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p119], l_linenumber: linenumber[t1][p120]][t6<tab<Lineitem>>];
+    let qty[v57]: float[t4] = l[t6<tab<Lineitem>>][v56].l_quantity[field49][t4];
+  }
+}
+
+transaction Q19[f61](orderkey[p121]: int[t1], linenumber[p122]: int[t1], partkey[p123]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hop
+  {
+    let l[v58]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p121], l_linenumber: linenumber[t1][p122]][t6<tab<Lineitem>>];
+    let revenue[v59]: float[t4] = l[t6<tab<Lineitem>>][v58].l_extendedprice[field50][t4] * [f7](1.0[t4] - [f6]l[t6<tab<Lineitem>>][v58].l_discount[field51][t4][t4])[t4][t4];
+  }
+  hop
+  {
+    let p[v60]: Row<Part>[t6<tab<Part>>] = Part[t7<tab<Part>>][itab2][tab2][p_partkey: partkey[t1][p123]][t6<tab<Part>>];
+  }
+}
+
+transaction Q20[f62](partkey[p124]: int[t1], suppkey[p125]: int[t1], nationkey[p126]: int[t1], orderkey[p127]: int[t1], linenumber[p128]: int[t1]) : (t1, t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let p[v61]: Row<Part>[t6<tab<Part>>] = Part[t7<tab<Part>>][itab2][tab2][p_partkey: partkey[t1][p124]][t6<tab<Part>>];
+    let ps[v62]: Row<Partsupp>[t6<tab<Partsupp>>] = Partsupp[t7<tab<Partsupp>>][itab4][tab4][ps_partkey: partkey[t1][p124], ps_suppkey: suppkey[t1][p125]][t6<tab<Partsupp>>];
+  }
+  hop
+  {
+    let s[v63]: Row<Supplier>[t6<tab<Supplier>>] = Supplier[t7<tab<Supplier>>][itab3][tab3][s_suppkey: suppkey[t1][p125]][t6<tab<Supplier>>];
+  }
+  hop
+  {
+    let n[v64]: Row<Nation>[t6<tab<Nation>>] = Nation[t7<tab<Nation>>][itab1][tab1][n_nationkey: nationkey[t1][p126]][t6<tab<Nation>>];
+  }
+  hop
+  {
+    let l[v65]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p127], l_linenumber: linenumber[t1][p128]][t6<tab<Lineitem>>];
+    let qty[v66]: float[t4] = l[t6<tab<Lineitem>>][v65].l_quantity[field49][t4];
+  }
+}
+
+transaction Q21[f63](suppkey[p129]: int[t1], orderkey[p130]: int[t1], linenumber[p131]: int[t1], nationkey[p132]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let s[v67]: Row<Supplier>[t6<tab<Supplier>>] = Supplier[t7<tab<Supplier>>][itab3][tab3][s_suppkey: suppkey[t1][p129]][t6<tab<Supplier>>];
+  }
+  hop
+  {
+    let l[v68]: Row<Lineitem>[t6<tab<Lineitem>>] = Lineitem[t7<tab<Lineitem>>][itab7][tab7][l_orderkey: orderkey[t1][p130], l_linenumber: linenumber[t1][p131]][t6<tab<Lineitem>>];
+    let o[v69]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p130]][t6<tab<Orders>>];
+  }
+  hop
+  {
+    let n[v70]: Row<Nation>[t6<tab<Nation>>] = Nation[t7<tab<Nation>>][itab1][tab1][n_nationkey: nationkey[t1][p132]][t6<tab<Nation>>];
+  }
+}
+
+transaction Q22[f64](custkey[p133]: int[t1], orderkey[p134]: int[t1]) : (t1, t1) -> t0
+{
+  hop
+  {
+    let c[v71]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab5][tab5][c_custkey: custkey[t1][p133]][t6<tab<Customer>>];
+    let acctbal[v72]: float[t4] = c[t6<tab<Customer>>][v71].c_acctbal[field33][t4];
+    let phone[v73]: string[t3] = c[t6<tab<Customer>>][v71].c_phone[field32][t3];
+  }
+  hop
+  {
+    let o[v74]: Row<Orders>[t6<tab<Orders>>] = Orders[t7<tab<Orders>>][itab6][tab6][o_orderkey: orderkey[t1][p134]][t6<tab<Orders>>];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_r_regionkey[f65](iter[p135]: Iterator<Region>[t8<tab<Region>>]) -> int[t1] : (t8<tab<Region>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_n_nationkey[f66](iter[p136]: Iterator<Nation>[t8<tab<Nation>>]) -> int[t1] : (t8<tab<Nation>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_p_partkey[f67](iter[p137]: Iterator<Part>[t8<tab<Part>>]) -> int[t1] : (t8<tab<Part>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_suppkey[f68](iter[p138]: Iterator<Supplier>[t8<tab<Supplier>>]) -> int[t1] : (t8<tab<Supplier>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ps_partkey[f69](iter[p139]: Iterator<Partsupp>[t8<tab<Partsupp>>]) -> int[t1] : (t8<tab<Partsupp>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ps_suppkey[f70](iter[p140]: Iterator<Partsupp>[t8<tab<Partsupp>>]) -> int[t1] : (t8<tab<Partsupp>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_c_custkey[f71](iter[p141]: Iterator<Customer>[t8<tab<Customer>>]) -> int[t1] : (t8<tab<Customer>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_o_orderkey[f72](iter[p142]: Iterator<Orders>[t8<tab<Orders>>]) -> int[t1] : (t8<tab<Orders>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_l_orderkey[f73](iter[p143]: Iterator<Lineitem>[t8<tab<Lineitem>>]) -> int[t1] : (t8<tab<Lineitem>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_l_linenumber[f74](iter[p144]: Iterator<Lineitem>[t8<tab<Lineitem>>]) -> int[t1] : (t8<tab<Lineitem>>) -> t1;
+

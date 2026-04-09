@@ -1,0 +1,648 @@
+@intrinsic
+@builtin
+type void[t0];
+
+@intrinsic
+@builtin
+type int[t1];
+
+@intrinsic
+@builtin
+type bool[t2];
+
+@intrinsic
+@builtin
+type string[t3];
+
+@intrinsic
+@builtin
+type float[t4];
+
+@intrinsic
+@builtin
+type List[t5]<T[g0]>;
+
+@intrinsic
+@builtin
+type Row[t6]<T[g1]>;
+
+@intrinsic
+@builtin
+type Table[t7]<T[g2]>;
+
+@intrinsic
+type Iterator[t8]<T[g3]>;
+
+@intrinsic
+type UUID[t9];
+
+@intrinsic
+type unit[t10];
+
+@intrinsic
+@infix
+@builtinop
+operator +[f0](a[p0]: int[t1], b[p1]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f1](a[p2]: int[t1], b[p3]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f2](a[p4]: int[t1], b[p5]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f3](a[p6]: int[t1], b[p7]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator %[f4](a[p8]: int[t1], b[p9]: int[t1]) -> int[t1] : (t1, t1) -> t1;
+
+@intrinsic
+@infix
+@builtinop
+operator +[f5](a[p10]: float[t4], b[p11]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator -[f6](a[p12]: float[t4], b[p13]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator *[f7](a[p14]: float[t4], b[p15]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator /[f8](a[p16]: float[t4], b[p17]: float[t4]) -> float[t4] : (t4, t4) -> t4;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f9](a[p18]: int[t1]) -> int[t1] : (t1) -> t1;
+
+@intrinsic
+@prefix
+@builtinop
+operator -[f10](a[p19]: float[t4]) -> float[t4] : (t4) -> t4;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f11](a[p20]: int[t1], b[p21]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f12](a[p22]: int[t1], b[p23]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f13](a[p24]: int[t1], b[p25]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f14](a[p26]: int[t1], b[p27]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f15](a[p28]: int[t1], b[p29]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f16](a[p30]: int[t1], b[p31]: int[t1]) -> bool[t2] : (t1, t1) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f17](a[p32]: bool[t2], b[p33]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f18](a[p34]: bool[t2], b[p35]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ==[f19](a[p36]: float[t4], b[p37]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !=[f20](a[p38]: float[t4], b[p39]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <[f21](a[p40]: float[t4], b[p41]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator <=[f22](a[p42]: float[t4], b[p43]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >[f23](a[p44]: float[t4], b[p45]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator >=[f24](a[p46]: float[t4], b[p47]: float[t4]) -> bool[t2] : (t4, t4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator &&[f25](a[p48]: bool[t2], b[p49]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator ||[f26](a[p50]: bool[t2], b[p51]: bool[t2]) -> bool[t2] : (t2, t2) -> t2;
+
+@intrinsic
+@prefix
+@builtinop
+operator ![f27](a[p52]: bool[t2]) -> bool[t2] : (t2) -> t2;
+
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[f28](a[p53]: string[t3], b[p54]: string[t3]) -> string[t3] : (t3, t3) -> t3;
+
+@intrinsic
+@infix
+@builtinop
+operator ===[f29]<T[g4]>(a[p55]: T[gp4], b[p56]: T[gp4]) -> bool[t2] : gp4 => (gp4, gp4) -> t2;
+
+@intrinsic
+@infix
+@builtinop
+operator !==[f30]<T[g5]>(a[p57]: T[gp5], b[p58]: T[gp5]) -> bool[t2] : gp5 => (gp5, gp5) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function length[f31]<T[g6]>(list[p59]: List<T>[t5<gp6>]) -> int[t1] : gp6 => (t5<gp6>) -> t1;
+
+@intrinsic
+@Boogie
+@go
+function get[f32]<T[g7]>(list[p60]: List<T>[t5<gp7>], idx[p61]: int[t1]) -> T[gp7] : gp7 => (t5<gp7>, t1) -> gp7;
+
+@intrinsic
+@Boogie
+@go
+function append[f33]<T[g8]>(list[p62]: List<T>[t5<gp8>], elem[p63]: T[gp8]) -> List<T>[t5<gp8>] : gp8 => (t5<gp8>, gp8) -> t5<gp8>;
+
+@intrinsic
+@Boogie
+@go
+function emptyList[f34]<T[g9]>() -> List<T>[t5<gp9>] : gp9 => () -> t5<gp9>;
+
+@intrinsic
+@Boogie
+@go
+function float[f35](x[p64]: int[t1]) -> float[t4] : (t1) -> t4;
+
+@intrinsic
+@Boogie
+@go
+function int[f36](x[p65]: float[t4]) -> int[t1] : (t4) -> t1;
+
+@intrinsic
+@Boogie
+function str[f37]<T[g10]>(x[p66]: T[gp10]) -> string[t3] : gp10 => (gp10) -> t3;
+
+const __slice__[c0]: int[t?] = 0[t1];
+
+const __shards__[c1]: int[t?] = 1[t1];
+
+@intrinsic
+@go
+function UUID_to_int[f38](u[p67]: UUID[t9]) -> int[t1] : (t9) -> t1;
+
+@intrinsic
+@Boogie
+function genUUID[f39](n[p68]: int[t1], m[p69]: int[t1]) -> UUID[t9] : (t1, t1) -> t9;
+
+@intrinsic
+@global
+@Boogie
+function scan[f40]<T[g11]>(t[p70]: Table<T>[t7<gp11>], n[p71]: int[t1], m[p72]: int[t1]) -> Iterator<T>[t8<gp11>] : gp11 => (t7<gp11>, t1, t1) -> t8<gp11>;
+
+@intrinsic
+@Boogie
+function next[f41]<T[g12]>(iter[p73]: Iterator<T>[t8<gp12>]) -> Iterator<T>[t8<gp12>] : gp12 => (t8<gp12>) -> t8<gp12>;
+
+@intrinsic
+@Boogie
+function hasNext[f42]<T[g13]>(iter[p74]: Iterator<T>[t8<gp13>]) -> bool[t2] : gp13 => (t8<gp13>) -> t2;
+
+@intrinsic
+@Boogie
+@go
+function to_unit[f43]<T[g14]>(x[p75]: T[gp14]) -> unit[t10] : gp14 => (gp14) -> t10;
+
+@intrinsic
+@go
+function hashStr[f44](s[p76]: string[t3]) -> int[t1] : (t3) -> t1;
+
+partition f[f45](x[p77]: int[t1]) -> int[t1] : (t1) -> t1
+{
+  return 10[t1] * [f2]x[t1][p77][t1];
+}
+
+partition g[f46](x[p78]: int[t1], y[p79]: int[t1]) -> int[t1] : (t1, t1) -> t1
+{
+  return 10[t1] * [f2]x[t1][p78][t1] + [f0]y[t1][p79][t1];
+}
+
+partition h[f47](x[p80]: int[t1], y[p81]: int[t1]) -> int[t1] : (t1, t1) -> t1
+{
+  return 10[t1] * [f2]x[t1][p80][t1] + [f0](y[t1][p81] % [f4]10[t1][t1])[t1][t1];
+}
+
+table Warehouse[tab0] {
+  primary W_ID[field0]: int[t1];
+  node f[f45](W_ID[t1][field0]);
+  W_NAME[field1]: string[t3];
+  W_STREET_1[field2]: string[t3];
+  W_STREET_2[field3]: string[t3];
+  W_CITY[field4]: string[t3];
+  W_STATE[field5]: string[t3];
+  W_ZIP[field6]: string[t3];
+  W_TAX[field7]: float[t4];
+  W_YTD[field8]: float[t4];
+}
+
+table District[tab1] {
+  primary D_W_ID[field9]: int[t1];
+  primary D_ID[field10]: int[t1];
+  node g[f46](D_W_ID[t1][field9], D_ID[t1][field10]);
+  D_NAME[field11]: string[t3];
+  D_STREET_1[field12]: string[t3];
+  D_STREET_2[field13]: string[t3];
+  D_CITY[field14]: string[t3];
+  D_STATE[field15]: string[t3];
+  D_ZIP[field16]: string[t3];
+  D_TAX[field17]: float[t4];
+  D_YTD[field18]: float[t4];
+  D_NEXT_O_ID[field19]: int[t1];
+  D_NEXT_NO_ID[field20]: int[t1];
+}
+
+table Customer[tab2] {
+  primary C_W_ID[field21]: int[t1];
+  primary C_D_ID[field22]: int[t1];
+  primary C_ID[field23]: int[t1];
+  node g[f46](C_W_ID[t1][field21], C_D_ID[t1][field22]);
+  C_FIRST[field24]: string[t3];
+  C_MIDDLE[field25]: string[t3];
+  C_LAST[field26]: string[t3];
+  C_STREET_1[field27]: string[t3];
+  C_STREET_2[field28]: string[t3];
+  C_CITY[field29]: string[t3];
+  C_STATE[field30]: string[t3];
+  C_ZIP[field31]: string[t3];
+  C_PHONE[field32]: string[t3];
+  C_SINCE[field33]: int[t1];
+  C_CREDIT[field34]: string[t3];
+  C_CREDIT_LIMIT[field35]: float[t4];
+  C_DISCOUNT[field36]: float[t4];
+  C_BALANCE[field37]: float[t4];
+  C_YTD_PAYMENT[field38]: float[t4];
+  C_PAYMENT_CNT[field39]: float[t4];
+  C_DELIVERY_CNT[field40]: float[t4];
+  C_DATA[field41]: string[t3];
+}
+
+table New_Order[tab3] {
+  primary NO_W_ID[field42]: int[t1];
+  primary NO_D_ID[field43]: int[t1];
+  primary NO_O_ID[field44]: int[t1];
+  node g[f46](NO_W_ID[t1][field42], NO_D_ID[t1][field43]);
+}
+
+table Order[tab4] {
+  primary O_W_ID[field45]: int[t1];
+  primary O_D_ID[field46]: int[t1];
+  primary O_ID[field47]: int[t1];
+  node g[f46](O_W_ID[t1][field45], O_D_ID[t1][field46]);
+  O_C_ID[field48]: int[t1];
+  O_ENTRY_DATE[field49]: int[t1];
+  O_CARRIER_ID[field50]: int[t1];
+  O_OL_CNT[field51]: int[t1];
+  O_ALL_LOCAL[field52]: int[t1];
+}
+
+table Order_Line[tab5] {
+  primary OL_W_ID[field53]: int[t1];
+  primary OL_D_ID[field54]: int[t1];
+  primary OL_O_ID[field55]: int[t1];
+  primary OL_NUMBER[field56]: int[t1];
+  node g[f46](OL_W_ID[t1][field53], OL_D_ID[t1][field54]);
+  OL_I_ID[field57]: int[t1];
+  OL_SUPPLY_W_ID[field58]: int[t1];
+  OL_DELIVERY_DATE[field59]: int[t1];
+  OL_QUANTITY[field60]: int[t1];
+  OL_AMOUNT[field61]: int[t1];
+  OL_DIST_INTO[field62]: string[t3];
+}
+
+table Item[tab6] {
+  primary I_ID[field63]: int[t1];
+  primary W_ID[field64]: int[t1];
+  node h[f47](W_ID[t1][field64], I_ID[t1][field63]);
+  I_IM_ID[field65]: int[t1];
+  I_NAME[field66]: string[t3];
+  I_PRICE[field67]: float[t4];
+  I_DATA[field68]: string[t3];
+}
+
+table Stock[tab7] {
+  primary S_W_ID[field69]: int[t1];
+  primary S_I_ID[field70]: int[t1];
+  node h[f47](S_W_ID[t1][field69], S_I_ID[t1][field70]);
+  S_QUANTITY[field71]: int[t1];
+  S_YTD[field72]: float[t4];
+  S_ORDER_CNT[field73]: int[t1];
+  S_REMOTE_CNT[field74]: int[t1];
+  S_DATA[field75]: string[t3];
+}
+
+const O_OL_CNT[c2]: int[t?] = 10[t1];
+
+transaction newOrder[f48](w_id[p82]: int[t1], d_id[p83]: int[t1], c_id[p84]: int[t1], o_all_local[p85]: int[t1], date[p86]: int[t1], itemIDs[p87]: List<int>[t5<t1>], supplierWarehouseIDs[p88]: List<int>[t5<t1>], orderQuantities[p89]: List<int>[t5<t1>]) : (t1, t1, t1, t1, t1, t5<t1>, t5<t1>, t5<t1>) -> t0
+requires length[(t5<infer41>) -> t1][f31][f31](itemIDs[t5<t1>][p87])[t1] == [f11]O_OL_CNT[t1][c2][t2]
+requires length[(t5<infer44>) -> t1][f31][f31](supplierWarehouseIDs[t5<t1>][p88])[t1] == [f11]O_OL_CNT[t1][c2][t2]
+requires length[(t5<infer47>) -> t1][f31][f31](orderQuantities[t5<t1>][p89])[t1] == [f11]O_OL_CNT[t1][c2][t2]
+requires get[(t5<infer50>, t1) -> infer50][f32][f32](orderQuantities[t5<t1>][p89], 0[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer52>, t1) -> infer52][f32][f32](orderQuantities[t5<t1>][p89], 0[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer54>, t1) -> infer54][f32][f32](orderQuantities[t5<t1>][p89], 1[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer56>, t1) -> infer56][f32][f32](orderQuantities[t5<t1>][p89], 1[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer58>, t1) -> infer58][f32][f32](orderQuantities[t5<t1>][p89], 2[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer60>, t1) -> infer60][f32][f32](orderQuantities[t5<t1>][p89], 2[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer62>, t1) -> infer62][f32][f32](orderQuantities[t5<t1>][p89], 3[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer64>, t1) -> infer64][f32][f32](orderQuantities[t5<t1>][p89], 3[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer66>, t1) -> infer66][f32][f32](orderQuantities[t5<t1>][p89], 4[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer68>, t1) -> infer68][f32][f32](orderQuantities[t5<t1>][p89], 4[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer70>, t1) -> infer70][f32][f32](orderQuantities[t5<t1>][p89], 5[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer72>, t1) -> infer72][f32][f32](orderQuantities[t5<t1>][p89], 5[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer74>, t1) -> infer74][f32][f32](orderQuantities[t5<t1>][p89], 6[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer76>, t1) -> infer76][f32][f32](orderQuantities[t5<t1>][p89], 6[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer78>, t1) -> infer78][f32][f32](orderQuantities[t5<t1>][p89], 7[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer80>, t1) -> infer80][f32][f32](orderQuantities[t5<t1>][p89], 7[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer82>, t1) -> infer82][f32][f32](orderQuantities[t5<t1>][p89], 8[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer84>, t1) -> infer84][f32][f32](orderQuantities[t5<t1>][p89], 8[t1])[t1] <= [f14]10[t1][t2][t2]
+requires get[(t5<infer86>, t1) -> infer86][f32][f32](orderQuantities[t5<t1>][p89], 9[t1])[t1] >= [f16]0[t1][t2] && [f25]get[(t5<infer88>, t1) -> infer88][f32][f32](orderQuantities[t5<t1>][p89], 9[t1])[t1] <= [f14]10[t1][t2][t2]
+{
+  hop
+  {
+    let w_tax[v0]: float[t4] = Warehouse[t7<tab<Warehouse>>][itab0][tab0][W_ID: w_id[t1][p82]][t6<tab<Warehouse>>].W_TAX[field7][t4];
+    let prices[v1]: List<float>[t5<t4>] = emptyList[() -> t5<infer2>][f34][f34]()[t5<t4>];
+  }
+  hops for ol_number[v7] in 0[t1]..O_OL_CNT[infer5][c2]
+  {
+    let i_id[v2]: int[t1] = get[(t5<infer7>, t1) -> infer7][f32][f32](itemIDs[t5<t1>][p87], ol_number[t1][v7])[t1];
+    let sup_w_id[v3]: int[t1] = get[(t5<infer10>, t1) -> infer10][f32][f32](supplierWarehouseIDs[t5<t1>][p88], ol_number[t1][v7])[t1];
+    let qty[v4]: int[t1] = get[(t5<infer13>, t1) -> infer13][f32][f32](orderQuantities[t5<t1>][p89], ol_number[t1][v7])[t1];
+    assert qty[t1][v4] >= [f16]0[t1][t2] && [f25]qty[t1][v4] <= [f14]10[t1][t2][t2];
+    let s[v5]: Row<Stock>[t6<tab<Stock>>] = Stock[t7<tab<Stock>>][itab7][tab7][S_W_ID: sup_w_id[t1][v3], S_I_ID: i_id[t1][v2]][t6<tab<Stock>>];
+    let price[v6]: float[t4] = Item[t7<tab<Item>>][itab6][tab6][I_ID: i_id[t1][v2], W_ID: sup_w_id[t1][v3]][t6<tab<Item>>].I_PRICE[field67][t4];
+    prices[t5<t4>][v1] = append[(t5<infer17>, infer17) -> t5<infer17>][f33][f33](prices[t5<t4>][v1], price[t4][v6])[t5<t4>][t0];
+    if s[t6<tab<Stock>>][v5].S_QUANTITY[field71][t1] - [f1]qty[t1][v4][t1] >= [f16]10[t1][t2]
+    {
+      s[t6<tab<Stock>>][v5].S_QUANTITY[field71][t1] = s[t6<tab<Stock>>][v5].S_QUANTITY[field71][t1] - [f1]qty[t1][v4][t1][t0];
+    }
+    else
+    {
+      s[t6<tab<Stock>>][v5].S_QUANTITY[field71][t1] = s[t6<tab<Stock>>][v5].S_QUANTITY[field71][t1] + [f0]91[t1][t1] - [f1]qty[t1][v4][t1][t0];
+    }
+    if sup_w_id[t1][v3] != [f12]w_id[t1][p82][t2]
+    {
+      s[t6<tab<Stock>>][v5].S_REMOTE_CNT[field74][t1] = s[t6<tab<Stock>>][v5].S_REMOTE_CNT[field74][t1] + [f0]1[t1][t1][t0];
+    }
+    s[t6<tab<Stock>>][v5].S_ORDER_CNT[field73][t1] = s[t6<tab<Stock>>][v5].S_ORDER_CNT[field73][t1] + [f0]1[t1][t1][t0];
+    s[t6<tab<Stock>>][v5].S_YTD[field72][t4] = s[t6<tab<Stock>>][v5].S_YTD[field72][t4] + [f5]float[(t1) -> t4][f35,it4][f35](qty[t1][v4])[t4][t4][t0];
+    Stock[t7<tab<Stock>>][itab7][tab7][S_W_ID: sup_w_id[t1][v3], S_I_ID: i_id[t1][v2]][t6<tab<Stock>>] = s[t6<tab<Stock>>][v5][t0];
+  }
+  hop
+  {
+    let d_next_oid[v8]: int[t1] = District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p82], D_ID: d_id[t1][p83]][t6<tab<District>>].D_NEXT_O_ID[field19][t1];
+    let d_tax[v9]: float[t4] = District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p82], D_ID: d_id[t1][p83]][t6<tab<District>>].D_TAX[field17][t4];
+    District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p82], D_ID: d_id[t1][p83]][t6<tab<District>>].D_NEXT_O_ID[field19][t1] = d_next_oid[t1][v8] + [f0]1[t1][t1][t0];
+    Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p82], O_D_ID: d_id[t1][p83], O_ID: d_next_oid[t1][v8]][t6<tab<Order>>] = {O_C_ID: c_id[t1][p84], O_ENTRY_DATE: date[t1][p86], O_OL_CNT: O_OL_CNT[t1][c2], O_ALL_LOCAL: o_all_local[t1][p85]}[t6<tab<Order>>][t0];
+    New_Order[t7<tab<New_Order>>][itab3][tab3][NO_W_ID: w_id[t1][p82], NO_D_ID: d_id[t1][p83], NO_O_ID: d_next_oid[t1][v8]][t6<tab<New_Order>>] = {}[t6<tab<New_Order>>][t0];
+    for (let ol_number[v10]: int[t1] = 0[t1]; ol_number[t1][v10] < [f13]O_OL_CNT[t1][c2][t2]; ol_number[t1][v10] = ol_number[t1][v10] + [f0]1[t1][t1][t0])
+    {
+      let i_id[v11]: int[t1] = get[(t5<infer27>, t1) -> infer27][f32][f32](itemIDs[t5<t1>][p87], ol_number[t1][v10])[t1];
+      let sup_w_id[v12]: int[t1] = get[(t5<infer30>, t1) -> infer30][f32][f32](supplierWarehouseIDs[t5<t1>][p88], ol_number[t1][v10])[t1];
+      let qty[v13]: int[t1] = get[(t5<infer33>, t1) -> infer33][f32][f32](orderQuantities[t5<t1>][p89], ol_number[t1][v10])[t1];
+      let price[v14]: float[t4] = get[(t5<infer36>, t1) -> infer36][f32][f32](prices[t5<t4>][v1], ol_number[t1][v10])[t4];
+      Order_Line[t7<tab<Order_Line>>][itab5][tab5][OL_W_ID: w_id[t1][p82], OL_D_ID: d_id[t1][p83], OL_O_ID: d_next_oid[t1][v8], OL_NUMBER: ol_number[t1][v10]][t6<tab<Order_Line>>] = {OL_I_ID: i_id[t1][v11], OL_SUPPLY_W_ID: sup_w_id[t1][v12], OL_QUANTITY: qty[t1][v13], OL_AMOUNT: int[(t4) -> t1][f36,it1][f36](price[t4][v14] * [f7]float[(t1) -> t4][f35,it4][f35](qty[t1][v13])[t4][t4])[t1]}[t6<tab<Order_Line>>][t0];
+    }
+    to_unit[(infer39) -> t10][f43][f43](w_tax[t4][v0])[t10];
+  }
+}
+
+transaction Delivery[f49](w_id[p90]: int[t1], o_carrier_id[p91]: int[t1], date[p92]: int[t1]) : (t1, t1, t1) -> t0
+{
+  hops for d_id[v20] in 0[t1]..10[t1]
+  {
+    let no_o_id[v15]: int[t1] = District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p90], D_ID: d_id[t1][v20]][t6<tab<District>>].D_NEXT_NO_ID[field20][t1];
+    District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p90], D_ID: d_id[t1][v20]][t6<tab<District>>].D_NEXT_NO_ID[field20][t1] = no_o_id[t1][v15] + [f0]1[t1][t1][t0];
+    let c_id[v16]: int[t1] = Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p90], O_D_ID: d_id[t1][v20], O_ID: no_o_id[t1][v15]][t6<tab<Order>>].O_C_ID[field48][t1];
+    let ol_cnt[v17]: int[t1] = Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p90], O_D_ID: d_id[t1][v20], O_ID: no_o_id[t1][v15]][t6<tab<Order>>].O_OL_CNT[field51][t1];
+    Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p90], O_D_ID: d_id[t1][v20], O_ID: no_o_id[t1][v15]][t6<tab<Order>>].O_CARRIER_ID[field50][t1] = o_carrier_id[t1][p91][t0];
+    let ol_total[v18]: float[t4] = 0.0[t4];
+    for (let ol_number[v19]: int[t1] = 0[t1]; ol_number[t1][v19] < [f13]O_OL_CNT[t1][c2][t2]; ol_number[t1][v19] = ol_number[t1][v19] + [f0]1[t1][t1][t0])
+    {
+      Order_Line[t7<tab<Order_Line>>][itab5][tab5][OL_W_ID: w_id[t1][p90], OL_D_ID: d_id[t1][v20], OL_O_ID: no_o_id[t1][v15], OL_NUMBER: ol_number[t1][v19]][t6<tab<Order_Line>>].OL_DELIVERY_DATE[field59][t1] = date[t1][p92][t0];
+      ol_total[t4][v18] = ol_total[t4][v18] + [f5]float[(t1) -> t4][f35,it4][f35](Order_Line[t7<tab<Order_Line>>][itab5][tab5][OL_W_ID: w_id[t1][p90], OL_D_ID: d_id[t1][v20], OL_O_ID: no_o_id[t1][v15], OL_NUMBER: ol_number[t1][v19]][t6<tab<Order_Line>>].OL_AMOUNT[field61][t1])[t4][t4][t0];
+    }
+    Customer[t7<tab<Customer>>][itab2][tab2][C_W_ID: w_id[t1][p90], C_D_ID: d_id[t1][v20], C_ID: c_id[t1][v16]][t6<tab<Customer>>].C_BALANCE[field37][t4] = Customer[t7<tab<Customer>>][itab2][tab2][C_W_ID: w_id[t1][p90], C_D_ID: d_id[t1][v20], C_ID: c_id[t1][v16]][t6<tab<Customer>>].C_BALANCE[field37][t4] + [f5]ol_total[t4][v18][t4][t0];
+    Customer[t7<tab<Customer>>][itab2][tab2][C_W_ID: w_id[t1][p90], C_D_ID: d_id[t1][v20], C_ID: c_id[t1][v16]][t6<tab<Customer>>].C_DELIVERY_CNT[field40][t4] = Customer[t7<tab<Customer>>][itab2][tab2][C_W_ID: w_id[t1][p90], C_D_ID: d_id[t1][v20], C_ID: c_id[t1][v16]][t6<tab<Customer>>].C_DELIVERY_CNT[field40][t4] + [f5]1.0[t4][t4][t0];
+  }
+}
+
+transaction OrderStatus[f50](w_id[p93]: int[t1], d_id[p94]: int[t1], c_id[p95]: int[t1], o_id[p96]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let c[v21]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab2][tab2][C_W_ID: w_id[t1][p93], C_D_ID: d_id[t1][p94], C_ID: c_id[t1][p95]][t6<tab<Customer>>];
+    let o[v22]: Row<Order>[t6<tab<Order>>] = Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p93], O_D_ID: d_id[t1][p94], O_ID: o_id[t1][p96]][t6<tab<Order>>];
+    for (let ol_number[v23]: int[t1] = 0[t1]; ol_number[t1][v23] < [f13]O_OL_CNT[t1][c2][t2]; ol_number[t1][v23] = ol_number[t1][v23] + [f0]1[t1][t1][t0])
+    {
+      let ol[v24]: Row<Order_Line>[t6<tab<Order_Line>>] = Order_Line[t7<tab<Order_Line>>][itab5][tab5][OL_W_ID: w_id[t1][p93], OL_D_ID: d_id[t1][p94], OL_O_ID: o_id[t1][p96], OL_NUMBER: ol_number[t1][v23]][t6<tab<Order_Line>>];
+    }
+  }
+}
+
+transaction StockLevel[f51](w_id[p97]: int[t1], d_id[p98]: int[t1], threshold[p99]: int[t1], rep_i_id[p100]: int[t1]) : (t1, t1, t1, t1) -> t0
+{
+  hop
+  {
+    let next_o_id[v25]: int[t1] = District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p97], D_ID: d_id[t1][p98]][t6<tab<District>>].D_NEXT_O_ID[field19][t1];
+    for (let ol_number[v26]: int[t1] = 0[t1]; ol_number[t1][v26] < [f13]O_OL_CNT[t1][c2][t2]; ol_number[t1][v26] = ol_number[t1][v26] + [f0]1[t1][t1][t0])
+    {
+      let ol[v27]: Row<Order_Line>[t6<tab<Order_Line>>] = Order_Line[t7<tab<Order_Line>>][itab5][tab5][OL_W_ID: w_id[t1][p97], OL_D_ID: d_id[t1][p98], OL_O_ID: next_o_id[t1][v25], OL_NUMBER: ol_number[t1][v26]][t6<tab<Order_Line>>];
+    }
+  }
+  hop
+  {
+    let s[v28]: Row<Stock>[t6<tab<Stock>>] = Stock[t7<tab<Stock>>][itab7][tab7][S_W_ID: w_id[t1][p97], S_I_ID: rep_i_id[t1][p100]][t6<tab<Stock>>];
+    let low_stock[v29]: bool[t2] = s[t6<tab<Stock>>][v28].S_QUANTITY[field71][t1] < [f13]threshold[t1][p99][t2];
+  }
+}
+
+transaction Payment[f52](w_id[p101]: int[t1], d_id[p102]: int[t1], c_w_id[p103]: int[t1], c_d_id[p104]: int[t1], c_id[p105]: int[t1], amount[p106]: float[t4]) : (t1, t1, t1, t1, t1, t4) -> t0
+{
+  hop
+  {
+    Warehouse[t7<tab<Warehouse>>][itab0][tab0][W_ID: w_id[t1][p101]][t6<tab<Warehouse>>].W_YTD[field8][t4] = Warehouse[t7<tab<Warehouse>>][itab0][tab0][W_ID: w_id[t1][p101]][t6<tab<Warehouse>>].W_YTD[field8][t4] + [f5]amount[t4][p106][t4][t0];
+  }
+  hop
+  {
+    District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p101], D_ID: d_id[t1][p102]][t6<tab<District>>].D_YTD[field18][t4] = District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p101], D_ID: d_id[t1][p102]][t6<tab<District>>].D_YTD[field18][t4] + [f5]amount[t4][p106][t4][t0];
+  }
+  hop
+  {
+    let c[v30]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab2][tab2][C_W_ID: c_w_id[t1][p103], C_D_ID: c_d_id[t1][p104], C_ID: c_id[t1][p105]][t6<tab<Customer>>];
+    c[t6<tab<Customer>>][v30].C_BALANCE[field37][t4] = c[t6<tab<Customer>>][v30].C_BALANCE[field37][t4] - [f6]amount[t4][p106][t4][t0];
+    c[t6<tab<Customer>>][v30].C_YTD_PAYMENT[field38][t4] = c[t6<tab<Customer>>][v30].C_YTD_PAYMENT[field38][t4] + [f5]amount[t4][p106][t4][t0];
+    c[t6<tab<Customer>>][v30].C_PAYMENT_CNT[field39][t4] = c[t6<tab<Customer>>][v30].C_PAYMENT_CNT[field39][t4] + [f5]1.0[t4][t4][t0];
+    if c[t6<tab<Customer>>][v30].C_CREDIT[field34][t3] === [f29]"BC"[t3][t2]
+    {
+      c[t6<tab<Customer>>][v30].C_DATA[field41][t3] = str[(infer2) -> t3][f37][f37](c[t6<tab<Customer>>][v30].C_ID[field23][t1])[t3] + [f28]" "[t3][t3] + [f28]str[(infer4) -> t3][f37][f37](c[t6<tab<Customer>>][v30].C_D_ID[field22][t1])[t3][t3] + [f28]" "[t3][t3] + [f28]str[(infer6) -> t3][f37][f37](c[t6<tab<Customer>>][v30].C_W_ID[field21][t1])[t3][t3] + [f28]" "[t3][t3] + [f28]str[(infer8) -> t3][f37][f37](d_id[t1][p102])[t3][t3] + [f28]" "[t3][t3] + [f28]str[(infer10) -> t3][f37][f37](w_id[t1][p101])[t3][t3] + [f28]" "[t3][t3] + [f28]str[(infer12) -> t3][f37][f37](amount[t4][p106])[t3][t3] + [f28]" | "[t3][t3] + [f28]c[t6<tab<Customer>>][v30].C_DATA[field41][t3][t3][t0];
+    }
+    Customer[t7<tab<Customer>>][itab2][tab2][C_W_ID: c_w_id[t1][p103], C_D_ID: c_d_id[t1][p104], C_ID: c_id[t1][p105]][t6<tab<Customer>>] = c[t6<tab<Customer>>][v30][t0];
+  }
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_W_ID[f53](iter[p107]: Iterator<Warehouse>[t8<tab<Warehouse>>]) -> int[t1] : (t8<tab<Warehouse>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_D_W_ID[f54](iter[p108]: Iterator<District>[t8<tab<District>>]) -> int[t1] : (t8<tab<District>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_D_ID[f55](iter[p109]: Iterator<District>[t8<tab<District>>]) -> int[t1] : (t8<tab<District>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_C_W_ID[f56](iter[p110]: Iterator<Customer>[t8<tab<Customer>>]) -> int[t1] : (t8<tab<Customer>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_C_D_ID[f57](iter[p111]: Iterator<Customer>[t8<tab<Customer>>]) -> int[t1] : (t8<tab<Customer>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_C_ID[f58](iter[p112]: Iterator<Customer>[t8<tab<Customer>>]) -> int[t1] : (t8<tab<Customer>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_NO_W_ID[f59](iter[p113]: Iterator<New_Order>[t8<tab<New_Order>>]) -> int[t1] : (t8<tab<New_Order>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_NO_D_ID[f60](iter[p114]: Iterator<New_Order>[t8<tab<New_Order>>]) -> int[t1] : (t8<tab<New_Order>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_NO_O_ID[f61](iter[p115]: Iterator<New_Order>[t8<tab<New_Order>>]) -> int[t1] : (t8<tab<New_Order>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_O_W_ID[f62](iter[p116]: Iterator<Order>[t8<tab<Order>>]) -> int[t1] : (t8<tab<Order>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_O_D_ID[f63](iter[p117]: Iterator<Order>[t8<tab<Order>>]) -> int[t1] : (t8<tab<Order>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_O_ID[f64](iter[p118]: Iterator<Order>[t8<tab<Order>>]) -> int[t1] : (t8<tab<Order>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_OL_W_ID[f65](iter[p119]: Iterator<Order_Line>[t8<tab<Order_Line>>]) -> int[t1] : (t8<tab<Order_Line>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_OL_D_ID[f66](iter[p120]: Iterator<Order_Line>[t8<tab<Order_Line>>]) -> int[t1] : (t8<tab<Order_Line>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_OL_O_ID[f67](iter[p121]: Iterator<Order_Line>[t8<tab<Order_Line>>]) -> int[t1] : (t8<tab<Order_Line>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_OL_NUMBER[f68](iter[p122]: Iterator<Order_Line>[t8<tab<Order_Line>>]) -> int[t1] : (t8<tab<Order_Line>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_I_ID[f69](iter[p123]: Iterator<Item>[t8<tab<Item>>]) -> int[t1] : (t8<tab<Item>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_W_ID[f70](iter[p124]: Iterator<Item>[t8<tab<Item>>]) -> int[t1] : (t8<tab<Item>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_S_W_ID[f71](iter[p125]: Iterator<Stock>[t8<tab<Stock>>]) -> int[t1] : (t8<tab<Stock>>) -> t1;
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_S_I_ID[f72](iter[p126]: Iterator<Stock>[t8<tab<Stock>>]) -> int[t1] : (t8<tab<Stock>>) -> t1;
+

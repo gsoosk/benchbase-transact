@@ -1,0 +1,35 @@
+digraph CombinedSCGraph {
+  graph [rankdir=LR];
+  node  [shape=record, fontsize=10, fontname=Helvetica];
+  edge  [fontname=Helvetica];
+  cv0 [label="UpdatePage#1\nHop 8\n"];
+  cv1 [label="GetPageAuthenticated#0\nHop 4\n"];
+  cv2 [label="GetPageAuthenticated#0\nHop 5\n"];
+  cv3 [label="AddWatchList#1\nHop 1\n"];
+  cv4 [label="GetPageAnonymous#1\nHop 2\n"];
+  cv5 [label="GetPageAnonymous#1\nHop 3\n"];
+  cv6 [label="GetPageAuthenticated#0\nHop 6\n"];
+  cv7 [label="AddWatchList#0\nHop 1\n"];
+  cv8 [label="GetPageAnonymous#0\nHop 2\n"];
+  cv9 [label="UpdatePage#1\nHop 9\n"];
+  cv10 [label="UpdatePage#1\nHop 10\n"];
+  cv11 [label="UpdatePage#0\nHop 8\n"];
+  cv12 [label="UpdatePage#0\nHop 9\n"];
+  cv13 [label="RemoveWatchList#1\nHop 7\n"];
+  cv14 [label="UpdatePage#0\nHop 10\n"];
+  cv15 [label="GetPageAnonymous#0\nHop 3\n"];
+  cv16 [label="RemoveWatchList#0\nHop 7\n"];
+  cv17 [label="GetPageAuthenticated#1\nHop 4\n"];
+  cv18 [label="GetPageAuthenticated#1\nHop 5\n"];
+  cv19 [label="GetPageAuthenticated#1\nHop 6\n"];
+  cv0 -> cv9 [color=black, label="S"];
+  cv1 -> cv2 [color=black, label="S"];
+  cv2 -> cv6 [color=black, label="S"];
+  cv4 -> cv5 [color=black, label="S"];
+  cv8 -> cv15 [color=black, label="S"];
+  cv9 -> cv10 [color=black, label="S"];
+  cv11 -> cv12 [color=black, label="S"];
+  cv12 -> cv14 [color=black, label="S"];
+  cv17 -> cv18 [color=black, label="S"];
+  cv18 -> cv19 [color=black, label="S"];
+}

@@ -1,0 +1,2605 @@
+=== CFG Program ===
+
+=== Global Constants ===
+const __slice__[gc0]: int = 0;
+const __shards__[gc1]: int = 1;
+
+=== User-Defined Types ===
+type Iterator[udt0]<T[gp0]>;
+type UUID[udt1];
+type unit[udt2];
+
+=== Tables ===
+table Region[tab0] {
+  primary r_regionkey[f0]: int;
+  r_name[f1]: string;
+  r_comment[f2]: string;
+  node_partition: g[fn16](r_regionkey[f0]);
+}
+table Nation[tab1] {
+  primary n_nationkey[f3]: int;
+  n_name[f4]: string;
+  n_regionkey[f5]: int;
+  n_comment[f6]: string;
+  node_partition: g[fn16](n_nationkey[f3]);
+}
+table Part[tab2] {
+  primary p_partkey[f7]: int;
+  p_name[f8]: string;
+  p_mfgr[f9]: string;
+  p_brand[f10]: string;
+  p_type[f11]: string;
+  p_size[f12]: int;
+  p_container[f13]: string;
+  p_retailprice[f14]: float;
+  p_comment[f15]: string;
+  node_partition: f[fn15](p_partkey[f7]);
+}
+table Supplier[tab3] {
+  primary s_suppkey[f16]: int;
+  s_name[f17]: string;
+  s_address[f18]: string;
+  s_nationkey[f19]: int;
+  s_phone[f20]: string;
+  s_acctbal[f21]: float;
+  s_comment[f22]: string;
+  node_partition: f[fn15](s_suppkey[f16]);
+}
+table Partsupp[tab4] {
+  primary ps_partkey[f23]: int;
+  primary ps_suppkey[f24]: int;
+  ps_availqty[f25]: int;
+  ps_supplycost[f26]: float;
+  ps_comment[f27]: string;
+  node_partition: f[fn15](ps_partkey[f23]);
+}
+table Customer[tab5] {
+  primary c_custkey[f28]: int;
+  c_name[f29]: string;
+  c_address[f30]: string;
+  c_nationkey[f31]: int;
+  c_phone[f32]: string;
+  c_acctbal[f33]: float;
+  c_mktsegment[f34]: string;
+  c_comment[f35]: string;
+  node_partition: f[fn15](c_custkey[f28]);
+}
+table Orders[tab6] {
+  primary o_orderkey[f36]: int;
+  o_custkey[f37]: int;
+  o_orderstatus[f38]: string;
+  o_totalprice[f39]: float;
+  o_orderdate[f40]: int;
+  o_orderpriority[f41]: string;
+  o_clerk[f42]: string;
+  o_shippriority[f43]: int;
+  o_comment[f44]: string;
+  node_partition: f[fn15](o_orderkey[f36]);
+}
+table Lineitem[tab7] {
+  primary l_orderkey[f45]: int;
+  primary l_linenumber[f46]: int;
+  l_partkey[f47]: int;
+  l_suppkey[f48]: int;
+  l_quantity[f49]: float;
+  l_extendedprice[f50]: float;
+  l_discount[f51]: float;
+  l_tax[f52]: float;
+  l_returnflag[f53]: string;
+  l_linestatus[f54]: string;
+  l_shipdate[f55]: int;
+  l_commitdate[f56]: int;
+  l_receiptdate[f57]: int;
+  l_shipinstruct[f58]: string;
+  l_shipmode[f59]: string;
+  l_comment[f60]: string;
+  node_partition: f[fn15](l_orderkey[f45]);
+}
+
+=== Functions ===
+@intrinsic
+@infix
+@Boogie
+@go
+operator +[fn0](a[v0]: string, b[v1]: string)
+
+
+@intrinsic
+@Boogie
+@go
+function length[fn1]<T[gp1]>(list[v2]: [T])
+
+
+@intrinsic
+@Boogie
+@go
+function get[fn2]<T[gp2]>(list[v3]: [T], idx[v4]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function append[fn3]<T[gp3]>(list[v5]: [T], elem[v6]: T)
+
+
+@intrinsic
+@Boogie
+@go
+function emptyList[fn4]<T[gp4]>()
+
+
+@intrinsic
+@Boogie
+@go
+function float[fn5](x[v7]: int)
+
+
+@intrinsic
+@Boogie
+@go
+function int[fn6](x[v8]: float)
+
+
+@intrinsic
+@Boogie
+function str[fn7]<T[gp5]>(x[v9]: T)
+
+
+@intrinsic
+@go
+function UUID_to_int[fn8](u[v10]: UUID)
+
+
+@intrinsic
+@Boogie
+function genUUID[fn9](n[v11]: int, m[v12]: int)
+
+
+@intrinsic
+@global
+@Boogie
+function scan[fn10]<T[gp6]>(t[v13]: T, n[v14]: int, m[v15]: int)
+
+
+@intrinsic
+@Boogie
+function next[fn11]<T[gp7]>(iter[v16]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+function hasNext[fn12]<T[gp8]>(iter[v17]: Iterator<T>)
+
+
+@intrinsic
+@Boogie
+@go
+function to_unit[fn13]<T[gp9]>(x[v18]: T)
+
+
+@intrinsic
+@go
+function hashStr[fn14](s[v19]: string)
+
+
+partition f[fn15](x[v20]: int)
+
+  entry_block: bb0
+bb0:
+  livein: {x[v20]}
+  return x[v20];
+  liveout: {x[v20]}
+
+partition g[fn16](x[v21]: int)
+
+  entry_block: bb1
+bb1:
+  livein: {}
+  return 0;
+  liveout: {}
+
+transaction Q1[fn17](orderkey[v22]: int, linenumber[v23]: int)
+ {
+  entry_hop: hop2
+
+  hop2 {
+    entry_block: bb2
+    bb2:
+      livein: {orderkey[v22], linenumber[v23]}
+        [stmt_in] livein: {orderkey[v22], linenumber[v23]}
+      #tmp0[v105] = Lineitem[orderkey[v22], linenumber[v23]];
+        [stmt_out] liveout: {#tmp0[v105], orderkey[v22], linenumber[v23]}
+        [stmt_in] livein: {#tmp0[v105], orderkey[v22], linenumber[v23]}
+      l[v88] = #tmp0[v105];
+        [stmt_out] liveout: {orderkey[v22], linenumber[v23]}
+        [stmt_in] livein: {orderkey[v22], linenumber[v23]}
+      l#l_comment[v104] = Lineitem[orderkey[v22], linenumber[v23]].l_comment;
+        [stmt_out] liveout: {orderkey[v22], linenumber[v23]}
+        [stmt_in] livein: {orderkey[v22], linenumber[v23]}
+      l#l_commitdate[v100] = Lineitem[orderkey[v22], linenumber[v23]].l_commitdate;
+        [stmt_out] liveout: {orderkey[v22], linenumber[v23]}
+        [stmt_in] livein: {orderkey[v22], linenumber[v23]}
+      l#l_discount[v95] = Lineitem[orderkey[v22], linenumber[v23]].l_discount;
+        [stmt_out] liveout: {orderkey[v22], linenumber[v23], l#l_discount[v95]}
+        [stmt_in] livein: {orderkey[v22], linenumber[v23], l#l_discount[v95]}
+      l#l_extendedprice[v94] = Lineitem[orderkey[v22], linenumber[v23]].l_extendedprice;
+        [stmt_out] liveout: {l#l_discount[v95], orderkey[v22], linenumber[v23], l#l_extendedprice[v94]}
+        [stmt_in] livein: {l#l_discount[v95], orderkey[v22], linenumber[v23], l#l_extendedprice[v94]}
+      l#l_linenumber[v90] = Lineitem[orderkey[v22], linenumber[v23]].l_linenumber;
+        [stmt_out] liveout: {l#l_discount[v95], linenumber[v23], orderkey[v22], l#l_extendedprice[v94]}
+        [stmt_in] livein: {l#l_discount[v95], linenumber[v23], orderkey[v22], l#l_extendedprice[v94]}
+      l#l_linestatus[v98] = Lineitem[orderkey[v22], linenumber[v23]].l_linestatus;
+        [stmt_out] liveout: {orderkey[v22], l#l_discount[v95], l#l_extendedprice[v94], linenumber[v23]}
+        [stmt_in] livein: {orderkey[v22], l#l_discount[v95], l#l_extendedprice[v94], linenumber[v23]}
+      l#l_orderkey[v89] = Lineitem[orderkey[v22], linenumber[v23]].l_orderkey;
+        [stmt_out] liveout: {linenumber[v23], orderkey[v22], l#l_discount[v95], l#l_extendedprice[v94]}
+        [stmt_in] livein: {linenumber[v23], orderkey[v22], l#l_discount[v95], l#l_extendedprice[v94]}
+      l#l_partkey[v91] = Lineitem[orderkey[v22], linenumber[v23]].l_partkey;
+        [stmt_out] liveout: {l#l_extendedprice[v94], linenumber[v23], l#l_discount[v95], orderkey[v22]}
+        [stmt_in] livein: {l#l_extendedprice[v94], linenumber[v23], l#l_discount[v95], orderkey[v22]}
+      l#l_quantity[v93] = Lineitem[orderkey[v22], linenumber[v23]].l_quantity;
+        [stmt_out] liveout: {l#l_discount[v95], linenumber[v23], orderkey[v22], l#l_extendedprice[v94]}
+        [stmt_in] livein: {l#l_discount[v95], linenumber[v23], orderkey[v22], l#l_extendedprice[v94]}
+      l#l_receiptdate[v101] = Lineitem[orderkey[v22], linenumber[v23]].l_receiptdate;
+        [stmt_out] liveout: {orderkey[v22], l#l_extendedprice[v94], linenumber[v23], l#l_discount[v95]}
+        [stmt_in] livein: {orderkey[v22], l#l_extendedprice[v94], linenumber[v23], l#l_discount[v95]}
+      l#l_returnflag[v97] = Lineitem[orderkey[v22], linenumber[v23]].l_returnflag;
+        [stmt_out] liveout: {l#l_extendedprice[v94], linenumber[v23], orderkey[v22], l#l_discount[v95]}
+        [stmt_in] livein: {l#l_extendedprice[v94], linenumber[v23], orderkey[v22], l#l_discount[v95]}
+      l#l_shipdate[v99] = Lineitem[orderkey[v22], linenumber[v23]].l_shipdate;
+        [stmt_out] liveout: {l#l_extendedprice[v94], orderkey[v22], l#l_discount[v95], linenumber[v23]}
+        [stmt_in] livein: {l#l_extendedprice[v94], orderkey[v22], l#l_discount[v95], linenumber[v23]}
+      l#l_shipinstruct[v102] = Lineitem[orderkey[v22], linenumber[v23]].l_shipinstruct;
+        [stmt_out] liveout: {orderkey[v22], l#l_discount[v95], linenumber[v23], l#l_extendedprice[v94]}
+        [stmt_in] livein: {orderkey[v22], l#l_discount[v95], linenumber[v23], l#l_extendedprice[v94]}
+      l#l_shipmode[v103] = Lineitem[orderkey[v22], linenumber[v23]].l_shipmode;
+        [stmt_out] liveout: {orderkey[v22], linenumber[v23], l#l_extendedprice[v94], l#l_discount[v95]}
+        [stmt_in] livein: {orderkey[v22], linenumber[v23], l#l_extendedprice[v94], l#l_discount[v95]}
+      l#l_suppkey[v92] = Lineitem[orderkey[v22], linenumber[v23]].l_suppkey;
+        [stmt_out] liveout: {l#l_extendedprice[v94], l#l_discount[v95], orderkey[v22], linenumber[v23]}
+        [stmt_in] livein: {l#l_extendedprice[v94], l#l_discount[v95], orderkey[v22], linenumber[v23]}
+      l#l_tax[v96] = Lineitem[orderkey[v22], linenumber[v23]].l_tax;
+        [stmt_out] liveout: {l#l_extendedprice[v94], l#l_discount[v95]}
+        [stmt_in] livein: {l#l_extendedprice[v94], l#l_discount[v95]}
+      #tmp1[v107] = 1 - l#l_discount[v95];
+        [stmt_out] liveout: {l#l_extendedprice[v94], #tmp1[v107]}
+        [stmt_in] livein: {l#l_extendedprice[v94], #tmp1[v107]}
+      #tmp2[v108] = l#l_extendedprice[v94] * #tmp1[v107];
+        [stmt_out] liveout: {#tmp2[v108]}
+        [stmt_in] livein: {#tmp2[v108]}
+      revenue[v106] = #tmp2[v108];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q2[fn18](partkey[v24]: int, suppkey[v25]: int, nationkey[v26]: int, regionkey[v27]: int)
+ {
+  entry_hop: hop3
+
+  hop3 {
+    entry_block: bb3
+    bb3:
+      livein: {partkey[v24], suppkey[v25], nationkey[v26], regionkey[v27]}
+        [stmt_in] livein: {regionkey[v27], suppkey[v25], partkey[v24], nationkey[v26]}
+      #tmp3[v115] = Partsupp[partkey[v24], suppkey[v25]];
+        [stmt_out] liveout: {#tmp3[v115], regionkey[v27], suppkey[v25], partkey[v24], nationkey[v26]}
+        [stmt_in] livein: {#tmp3[v115], regionkey[v27], suppkey[v25], partkey[v24], nationkey[v26]}
+      ps[v109] = #tmp3[v115];
+        [stmt_out] liveout: {partkey[v24], nationkey[v26], regionkey[v27], suppkey[v25]}
+        [stmt_in] livein: {partkey[v24], nationkey[v26], regionkey[v27], suppkey[v25]}
+      ps#ps_availqty[v112] = Partsupp[partkey[v24], suppkey[v25]].ps_availqty;
+        [stmt_out] liveout: {nationkey[v26], partkey[v24], suppkey[v25], regionkey[v27]}
+        [stmt_in] livein: {nationkey[v26], partkey[v24], suppkey[v25], regionkey[v27]}
+      ps#ps_comment[v114] = Partsupp[partkey[v24], suppkey[v25]].ps_comment;
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26], partkey[v24], suppkey[v25]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26], partkey[v24], suppkey[v25]}
+      ps#ps_partkey[v110] = Partsupp[partkey[v24], suppkey[v25]].ps_partkey;
+        [stmt_out] liveout: {partkey[v24], suppkey[v25], regionkey[v27], nationkey[v26]}
+        [stmt_in] livein: {partkey[v24], suppkey[v25], regionkey[v27], nationkey[v26]}
+      ps#ps_suppkey[v111] = Partsupp[partkey[v24], suppkey[v25]].ps_suppkey;
+        [stmt_out] liveout: {partkey[v24], suppkey[v25], regionkey[v27], nationkey[v26]}
+        [stmt_in] livein: {partkey[v24], suppkey[v25], regionkey[v27], nationkey[v26]}
+      ps#ps_supplycost[v113] = Partsupp[partkey[v24], suppkey[v25]].ps_supplycost;
+        [stmt_out] liveout: {nationkey[v26], partkey[v24], suppkey[v25], ps#ps_supplycost[v113], regionkey[v27]}
+        [stmt_in] livein: {nationkey[v26], partkey[v24], suppkey[v25], ps#ps_supplycost[v113], regionkey[v27]}
+      #tmp4[v126] = Part[partkey[v24]];
+        [stmt_out] liveout: {#tmp4[v126], partkey[v24], suppkey[v25], ps#ps_supplycost[v113], nationkey[v26], regionkey[v27]}
+        [stmt_in] livein: {#tmp4[v126], partkey[v24], suppkey[v25], ps#ps_supplycost[v113], nationkey[v26], regionkey[v27]}
+      p[v116] = #tmp4[v126];
+        [stmt_out] liveout: {suppkey[v25], ps#ps_supplycost[v113], partkey[v24], nationkey[v26], regionkey[v27]}
+        [stmt_in] livein: {suppkey[v25], ps#ps_supplycost[v113], partkey[v24], nationkey[v26], regionkey[v27]}
+      p#p_brand[v120] = Part[partkey[v24]].p_brand;
+        [stmt_out] liveout: {nationkey[v26], regionkey[v27], partkey[v24], suppkey[v25], ps#ps_supplycost[v113]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27], partkey[v24], suppkey[v25], ps#ps_supplycost[v113]}
+      p#p_comment[v125] = Part[partkey[v24]].p_comment;
+        [stmt_out] liveout: {regionkey[v27], suppkey[v25], ps#ps_supplycost[v113], nationkey[v26], partkey[v24]}
+        [stmt_in] livein: {regionkey[v27], suppkey[v25], ps#ps_supplycost[v113], nationkey[v26], partkey[v24]}
+      p#p_container[v123] = Part[partkey[v24]].p_container;
+        [stmt_out] liveout: {partkey[v24], nationkey[v26], suppkey[v25], ps#ps_supplycost[v113], regionkey[v27]}
+        [stmt_in] livein: {partkey[v24], nationkey[v26], suppkey[v25], ps#ps_supplycost[v113], regionkey[v27]}
+      p#p_mfgr[v119] = Part[partkey[v24]].p_mfgr;
+        [stmt_out] liveout: {nationkey[v26], suppkey[v25], ps#ps_supplycost[v113], regionkey[v27], partkey[v24]}
+        [stmt_in] livein: {nationkey[v26], suppkey[v25], ps#ps_supplycost[v113], regionkey[v27], partkey[v24]}
+      p#p_name[v118] = Part[partkey[v24]].p_name;
+        [stmt_out] liveout: {partkey[v24], regionkey[v27], nationkey[v26], suppkey[v25], ps#ps_supplycost[v113]}
+        [stmt_in] livein: {partkey[v24], regionkey[v27], nationkey[v26], suppkey[v25], ps#ps_supplycost[v113]}
+      p#p_partkey[v117] = Part[partkey[v24]].p_partkey;
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26], partkey[v24], suppkey[v25], ps#ps_supplycost[v113]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26], partkey[v24], suppkey[v25], ps#ps_supplycost[v113]}
+      p#p_retailprice[v124] = Part[partkey[v24]].p_retailprice;
+        [stmt_out] liveout: {suppkey[v25], nationkey[v26], partkey[v24], ps#ps_supplycost[v113], regionkey[v27]}
+        [stmt_in] livein: {suppkey[v25], nationkey[v26], partkey[v24], ps#ps_supplycost[v113], regionkey[v27]}
+      p#p_size[v122] = Part[partkey[v24]].p_size;
+        [stmt_out] liveout: {ps#ps_supplycost[v113], suppkey[v25], regionkey[v27], partkey[v24], nationkey[v26]}
+        [stmt_in] livein: {ps#ps_supplycost[v113], suppkey[v25], regionkey[v27], partkey[v24], nationkey[v26]}
+      p#p_type[v121] = Part[partkey[v24]].p_type;
+        [stmt_out] liveout: {ps#ps_supplycost[v113], suppkey[v25], regionkey[v27], nationkey[v26]}
+        [stmt_in] livein: {ps#ps_supplycost[v113], suppkey[v25], regionkey[v27], nationkey[v26]}
+      cost[v127] = ps#ps_supplycost[v113];
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26], suppkey[v25]}
+      hop_exit hop4;
+      liveout: {suppkey[v25], nationkey[v26], regionkey[v27]}
+  }
+
+  hop4 {
+    entry_block: bb4
+    bb4 (preds: bb3):
+      livein: {regionkey[v27], nationkey[v26], suppkey[v25]}
+        [stmt_in] livein: {suppkey[v25], regionkey[v27], nationkey[v26]}
+      #tmp5[v136] = Supplier[suppkey[v25]];
+        [stmt_out] liveout: {nationkey[v26], suppkey[v25], #tmp5[v136], regionkey[v27]}
+        [stmt_in] livein: {nationkey[v26], suppkey[v25], #tmp5[v136], regionkey[v27]}
+      s[v128] = #tmp5[v136];
+        [stmt_out] liveout: {nationkey[v26], regionkey[v27], suppkey[v25]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27], suppkey[v25]}
+      s#s_acctbal[v134] = Supplier[suppkey[v25]].s_acctbal;
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26], suppkey[v25]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26], suppkey[v25]}
+      s#s_address[v131] = Supplier[suppkey[v25]].s_address;
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26], suppkey[v25]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26], suppkey[v25]}
+      s#s_comment[v135] = Supplier[suppkey[v25]].s_comment;
+        [stmt_out] liveout: {nationkey[v26], regionkey[v27], suppkey[v25]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27], suppkey[v25]}
+      s#s_name[v130] = Supplier[suppkey[v25]].s_name;
+        [stmt_out] liveout: {nationkey[v26], regionkey[v27], s#s_name[v130], suppkey[v25]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27], s#s_name[v130], suppkey[v25]}
+      s#s_nationkey[v132] = Supplier[suppkey[v25]].s_nationkey;
+        [stmt_out] liveout: {nationkey[v26], s#s_name[v130], suppkey[v25], regionkey[v27]}
+        [stmt_in] livein: {nationkey[v26], s#s_name[v130], suppkey[v25], regionkey[v27]}
+      s#s_phone[v133] = Supplier[suppkey[v25]].s_phone;
+        [stmt_out] liveout: {s#s_name[v130], regionkey[v27], nationkey[v26], suppkey[v25]}
+        [stmt_in] livein: {s#s_name[v130], regionkey[v27], nationkey[v26], suppkey[v25]}
+      s#s_suppkey[v129] = Supplier[suppkey[v25]].s_suppkey;
+        [stmt_out] liveout: {s#s_name[v130], regionkey[v27], nationkey[v26]}
+        [stmt_in] livein: {s#s_name[v130], regionkey[v27], nationkey[v26]}
+      sname[v137] = s#s_name[v130];
+        [stmt_out] liveout: {nationkey[v26], regionkey[v27]}
+      hop_exit hop5;
+      liveout: {regionkey[v27], nationkey[v26]}
+  }
+
+  hop5 {
+    entry_block: bb5
+    bb5 (preds: bb4):
+      livein: {nationkey[v26], regionkey[v27]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27]}
+      #tmp6[v143] = Nation[nationkey[v26]];
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26], #tmp6[v143]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26], #tmp6[v143]}
+      n[v138] = #tmp6[v143];
+        [stmt_out] liveout: {nationkey[v26], regionkey[v27]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27]}
+      n#n_comment[v142] = Nation[nationkey[v26]].n_comment;
+        [stmt_out] liveout: {nationkey[v26], regionkey[v27]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27]}
+      n#n_name[v140] = Nation[nationkey[v26]].n_name;
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26]}
+      n#n_nationkey[v139] = Nation[nationkey[v26]].n_nationkey;
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26]}
+      n#n_regionkey[v141] = Nation[nationkey[v26]].n_regionkey;
+        [stmt_out] liveout: {regionkey[v27]}
+        [stmt_in] livein: {regionkey[v27]}
+      #tmp7[v148] = Region[regionkey[v27]];
+        [stmt_out] liveout: {#tmp7[v148], regionkey[v27]}
+        [stmt_in] livein: {#tmp7[v148], regionkey[v27]}
+      r[v144] = #tmp7[v148];
+        [stmt_out] liveout: {regionkey[v27]}
+        [stmt_in] livein: {regionkey[v27]}
+      r#r_comment[v147] = Region[regionkey[v27]].r_comment;
+        [stmt_out] liveout: {regionkey[v27]}
+        [stmt_in] livein: {regionkey[v27]}
+      r#r_name[v146] = Region[regionkey[v27]].r_name;
+        [stmt_out] liveout: {regionkey[v27]}
+        [stmt_in] livein: {regionkey[v27]}
+      r#r_regionkey[v145] = Region[regionkey[v27]].r_regionkey;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q3[fn19](custkey[v28]: int, orderkey[v29]: int, linenumber[v30]: int)
+ {
+  entry_hop: hop6
+
+  hop6 {
+    entry_block: bb6
+    bb6:
+      livein: {linenumber[v30], orderkey[v29], custkey[v28]}
+        [stmt_in] livein: {custkey[v28], orderkey[v29], linenumber[v30]}
+      #tmp8[v158] = Customer[custkey[v28]];
+        [stmt_out] liveout: {linenumber[v30], custkey[v28], #tmp8[v158], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], custkey[v28], #tmp8[v158], orderkey[v29]}
+      c[v149] = #tmp8[v158];
+        [stmt_out] liveout: {orderkey[v29], custkey[v28], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], custkey[v28], linenumber[v30]}
+      c#c_acctbal[v155] = Customer[custkey[v28]].c_acctbal;
+        [stmt_out] liveout: {linenumber[v30], custkey[v28], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], custkey[v28], orderkey[v29]}
+      c#c_address[v152] = Customer[custkey[v28]].c_address;
+        [stmt_out] liveout: {custkey[v28], orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {custkey[v28], orderkey[v29], linenumber[v30]}
+      c#c_comment[v157] = Customer[custkey[v28]].c_comment;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29], custkey[v28]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29], custkey[v28]}
+      c#c_custkey[v150] = Customer[custkey[v28]].c_custkey;
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30], custkey[v28]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30], custkey[v28]}
+      c#c_mktsegment[v156] = Customer[custkey[v28]].c_mktsegment;
+        [stmt_out] liveout: {orderkey[v29], custkey[v28], linenumber[v30], c#c_mktsegment[v156]}
+        [stmt_in] livein: {orderkey[v29], custkey[v28], linenumber[v30], c#c_mktsegment[v156]}
+      c#c_name[v151] = Customer[custkey[v28]].c_name;
+        [stmt_out] liveout: {custkey[v28], c#c_mktsegment[v156], linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {custkey[v28], c#c_mktsegment[v156], linenumber[v30], orderkey[v29]}
+      c#c_nationkey[v153] = Customer[custkey[v28]].c_nationkey;
+        [stmt_out] liveout: {linenumber[v30], c#c_mktsegment[v156], orderkey[v29], custkey[v28]}
+        [stmt_in] livein: {linenumber[v30], c#c_mktsegment[v156], orderkey[v29], custkey[v28]}
+      c#c_phone[v154] = Customer[custkey[v28]].c_phone;
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30], c#c_mktsegment[v156]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30], c#c_mktsegment[v156]}
+      seg[v159] = c#c_mktsegment[v156];
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+      hop_exit hop7;
+      liveout: {orderkey[v29], linenumber[v30]}
+  }
+
+  hop7 {
+    entry_block: bb7
+    bb7 (preds: bb6):
+      livein: {orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      #tmp9[v170] = Orders[orderkey[v29]];
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29], #tmp9[v170]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29], #tmp9[v170]}
+      o[v160] = #tmp9[v170];
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      o#o_clerk[v167] = Orders[orderkey[v29]].o_clerk;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      o#o_comment[v169] = Orders[orderkey[v29]].o_comment;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      o#o_custkey[v162] = Orders[orderkey[v29]].o_custkey;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      o#o_orderdate[v165] = Orders[orderkey[v29]].o_orderdate;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      o#o_orderkey[v161] = Orders[orderkey[v29]].o_orderkey;
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30]}
+      o#o_orderpriority[v166] = Orders[orderkey[v29]].o_orderpriority;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      o#o_orderstatus[v163] = Orders[orderkey[v29]].o_orderstatus;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      o#o_shippriority[v168] = Orders[orderkey[v29]].o_shippriority;
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30]}
+      o#o_totalprice[v164] = Orders[orderkey[v29]].o_totalprice;
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30]}
+      #tmp10[v188] = Lineitem[orderkey[v29], linenumber[v30]];
+        [stmt_out] liveout: {linenumber[v30], #tmp10[v188], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], #tmp10[v188], orderkey[v29]}
+      l[v171] = #tmp10[v188];
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30]}
+      l#l_comment[v187] = Lineitem[orderkey[v29], linenumber[v30]].l_comment;
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30]}
+      l#l_commitdate[v183] = Lineitem[orderkey[v29], linenumber[v30]].l_commitdate;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29]}
+      l#l_discount[v178] = Lineitem[orderkey[v29], linenumber[v30]].l_discount;
+        [stmt_out] liveout: {l#l_discount[v178], linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {l#l_discount[v178], linenumber[v30], orderkey[v29]}
+      l#l_extendedprice[v177] = Lineitem[orderkey[v29], linenumber[v30]].l_extendedprice;
+        [stmt_out] liveout: {linenumber[v30], l#l_extendedprice[v177], orderkey[v29], l#l_discount[v178]}
+        [stmt_in] livein: {linenumber[v30], l#l_extendedprice[v177], orderkey[v29], l#l_discount[v178]}
+      l#l_linenumber[v173] = Lineitem[orderkey[v29], linenumber[v30]].l_linenumber;
+        [stmt_out] liveout: {orderkey[v29], l#l_discount[v178], linenumber[v30], l#l_extendedprice[v177]}
+        [stmt_in] livein: {orderkey[v29], l#l_discount[v178], linenumber[v30], l#l_extendedprice[v177]}
+      l#l_linestatus[v181] = Lineitem[orderkey[v29], linenumber[v30]].l_linestatus;
+        [stmt_out] liveout: {l#l_discount[v178], linenumber[v30], l#l_extendedprice[v177], orderkey[v29]}
+        [stmt_in] livein: {l#l_discount[v178], linenumber[v30], l#l_extendedprice[v177], orderkey[v29]}
+      l#l_orderkey[v172] = Lineitem[orderkey[v29], linenumber[v30]].l_orderkey;
+        [stmt_out] liveout: {orderkey[v29], l#l_extendedprice[v177], l#l_discount[v178], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], l#l_extendedprice[v177], l#l_discount[v178], linenumber[v30]}
+      l#l_partkey[v174] = Lineitem[orderkey[v29], linenumber[v30]].l_partkey;
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29], l#l_extendedprice[v177], l#l_discount[v178]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29], l#l_extendedprice[v177], l#l_discount[v178]}
+      l#l_quantity[v176] = Lineitem[orderkey[v29], linenumber[v30]].l_quantity;
+        [stmt_out] liveout: {l#l_discount[v178], orderkey[v29], l#l_extendedprice[v177], linenumber[v30]}
+        [stmt_in] livein: {l#l_discount[v178], orderkey[v29], l#l_extendedprice[v177], linenumber[v30]}
+      l#l_receiptdate[v184] = Lineitem[orderkey[v29], linenumber[v30]].l_receiptdate;
+        [stmt_out] liveout: {orderkey[v29], l#l_extendedprice[v177], l#l_discount[v178], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], l#l_extendedprice[v177], l#l_discount[v178], linenumber[v30]}
+      l#l_returnflag[v180] = Lineitem[orderkey[v29], linenumber[v30]].l_returnflag;
+        [stmt_out] liveout: {l#l_extendedprice[v177], l#l_discount[v178], orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {l#l_extendedprice[v177], l#l_discount[v178], orderkey[v29], linenumber[v30]}
+      l#l_shipdate[v182] = Lineitem[orderkey[v29], linenumber[v30]].l_shipdate;
+        [stmt_out] liveout: {l#l_discount[v178], orderkey[v29], linenumber[v30], l#l_extendedprice[v177]}
+        [stmt_in] livein: {l#l_discount[v178], orderkey[v29], linenumber[v30], l#l_extendedprice[v177]}
+      l#l_shipinstruct[v185] = Lineitem[orderkey[v29], linenumber[v30]].l_shipinstruct;
+        [stmt_out] liveout: {orderkey[v29], l#l_extendedprice[v177], linenumber[v30], l#l_discount[v178]}
+        [stmt_in] livein: {orderkey[v29], l#l_extendedprice[v177], linenumber[v30], l#l_discount[v178]}
+      l#l_shipmode[v186] = Lineitem[orderkey[v29], linenumber[v30]].l_shipmode;
+        [stmt_out] liveout: {l#l_discount[v178], orderkey[v29], l#l_extendedprice[v177], linenumber[v30]}
+        [stmt_in] livein: {l#l_discount[v178], orderkey[v29], l#l_extendedprice[v177], linenumber[v30]}
+      l#l_suppkey[v175] = Lineitem[orderkey[v29], linenumber[v30]].l_suppkey;
+        [stmt_out] liveout: {l#l_extendedprice[v177], orderkey[v29], l#l_discount[v178], linenumber[v30]}
+        [stmt_in] livein: {l#l_extendedprice[v177], orderkey[v29], l#l_discount[v178], linenumber[v30]}
+      l#l_tax[v179] = Lineitem[orderkey[v29], linenumber[v30]].l_tax;
+        [stmt_out] liveout: {l#l_discount[v178], l#l_extendedprice[v177]}
+        [stmt_in] livein: {l#l_discount[v178], l#l_extendedprice[v177]}
+      #tmp11[v190] = 1 - l#l_discount[v178];
+        [stmt_out] liveout: {l#l_extendedprice[v177], #tmp11[v190]}
+        [stmt_in] livein: {l#l_extendedprice[v177], #tmp11[v190]}
+      #tmp12[v191] = l#l_extendedprice[v177] * #tmp11[v190];
+        [stmt_out] liveout: {#tmp12[v191]}
+        [stmt_in] livein: {#tmp12[v191]}
+      revenue[v189] = #tmp12[v191];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q4[fn20](orderkey[v31]: int, linenumber[v32]: int)
+ {
+  entry_hop: hop8
+
+  hop8 {
+    entry_block: bb8
+    bb8:
+      livein: {orderkey[v31], linenumber[v32]}
+        [stmt_in] livein: {orderkey[v31], linenumber[v32]}
+      #tmp13[v202] = Orders[orderkey[v31]];
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31], #tmp13[v202]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31], #tmp13[v202]}
+      o[v192] = #tmp13[v202];
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31]}
+      o#o_clerk[v199] = Orders[orderkey[v31]].o_clerk;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31]}
+      o#o_comment[v201] = Orders[orderkey[v31]].o_comment;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31]}
+      o#o_custkey[v194] = Orders[orderkey[v31]].o_custkey;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31]}
+      o#o_orderdate[v197] = Orders[orderkey[v31]].o_orderdate;
+        [stmt_out] liveout: {orderkey[v31], linenumber[v32]}
+        [stmt_in] livein: {orderkey[v31], linenumber[v32]}
+      o#o_orderkey[v193] = Orders[orderkey[v31]].o_orderkey;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31]}
+      o#o_orderpriority[v198] = Orders[orderkey[v31]].o_orderpriority;
+        [stmt_out] liveout: {o#o_orderpriority[v198], linenumber[v32], orderkey[v31]}
+        [stmt_in] livein: {o#o_orderpriority[v198], linenumber[v32], orderkey[v31]}
+      o#o_orderstatus[v195] = Orders[orderkey[v31]].o_orderstatus;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+      o#o_shippriority[v200] = Orders[orderkey[v31]].o_shippriority;
+        [stmt_out] liveout: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+        [stmt_in] livein: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+      o#o_totalprice[v196] = Orders[orderkey[v31]].o_totalprice;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+      #tmp14[v220] = Lineitem[orderkey[v31], linenumber[v32]];
+        [stmt_out] liveout: {o#o_orderpriority[v198], linenumber[v32], #tmp14[v220], orderkey[v31]}
+        [stmt_in] livein: {o#o_orderpriority[v198], linenumber[v32], #tmp14[v220], orderkey[v31]}
+      l[v203] = #tmp14[v220];
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+      l#l_comment[v219] = Lineitem[orderkey[v31], linenumber[v32]].l_comment;
+        [stmt_out] liveout: {o#o_orderpriority[v198], linenumber[v32], orderkey[v31]}
+        [stmt_in] livein: {o#o_orderpriority[v198], linenumber[v32], orderkey[v31]}
+      l#l_commitdate[v215] = Lineitem[orderkey[v31], linenumber[v32]].l_commitdate;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+      l#l_discount[v210] = Lineitem[orderkey[v31], linenumber[v32]].l_discount;
+        [stmt_out] liveout: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+        [stmt_in] livein: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+      l#l_extendedprice[v209] = Lineitem[orderkey[v31], linenumber[v32]].l_extendedprice;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+      l#l_linenumber[v205] = Lineitem[orderkey[v31], linenumber[v32]].l_linenumber;
+        [stmt_out] liveout: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+        [stmt_in] livein: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+      l#l_linestatus[v213] = Lineitem[orderkey[v31], linenumber[v32]].l_linestatus;
+        [stmt_out] liveout: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+        [stmt_in] livein: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+      l#l_orderkey[v204] = Lineitem[orderkey[v31], linenumber[v32]].l_orderkey;
+        [stmt_out] liveout: {linenumber[v32], o#o_orderpriority[v198], orderkey[v31]}
+        [stmt_in] livein: {linenumber[v32], o#o_orderpriority[v198], orderkey[v31]}
+      l#l_partkey[v206] = Lineitem[orderkey[v31], linenumber[v32]].l_partkey;
+        [stmt_out] liveout: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+        [stmt_in] livein: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+      l#l_quantity[v208] = Lineitem[orderkey[v31], linenumber[v32]].l_quantity;
+        [stmt_out] liveout: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+        [stmt_in] livein: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+      l#l_receiptdate[v216] = Lineitem[orderkey[v31], linenumber[v32]].l_receiptdate;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+      l#l_returnflag[v212] = Lineitem[orderkey[v31], linenumber[v32]].l_returnflag;
+        [stmt_out] liveout: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+        [stmt_in] livein: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+      l#l_shipdate[v214] = Lineitem[orderkey[v31], linenumber[v32]].l_shipdate;
+        [stmt_out] liveout: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+        [stmt_in] livein: {orderkey[v31], o#o_orderpriority[v198], linenumber[v32]}
+      l#l_shipinstruct[v217] = Lineitem[orderkey[v31], linenumber[v32]].l_shipinstruct;
+        [stmt_out] liveout: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31], o#o_orderpriority[v198]}
+      l#l_shipmode[v218] = Lineitem[orderkey[v31], linenumber[v32]].l_shipmode;
+        [stmt_out] liveout: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+        [stmt_in] livein: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+      l#l_suppkey[v207] = Lineitem[orderkey[v31], linenumber[v32]].l_suppkey;
+        [stmt_out] liveout: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+        [stmt_in] livein: {orderkey[v31], linenumber[v32], o#o_orderpriority[v198]}
+      l#l_tax[v211] = Lineitem[orderkey[v31], linenumber[v32]].l_tax;
+        [stmt_out] liveout: {o#o_orderpriority[v198]}
+        [stmt_in] livein: {o#o_orderpriority[v198]}
+      priority[v221] = o#o_orderpriority[v198];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q5[fn21](custkey[v33]: int, orderkey[v34]: int, linenumber[v35]: int, suppkey[v36]: int, nationkey[v37]: int, regionkey[v38]: int)
+ {
+  entry_hop: hop9
+
+  hop9 {
+    entry_block: bb9
+    bb9:
+      livein: {suppkey[v36], custkey[v33], orderkey[v34], linenumber[v35], regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {custkey[v33], linenumber[v35], orderkey[v34], suppkey[v36], regionkey[v38], nationkey[v37]}
+      #tmp15[v231] = Customer[custkey[v33]];
+        [stmt_out] liveout: {orderkey[v34], custkey[v33], regionkey[v38], linenumber[v35], suppkey[v36], #tmp15[v231], nationkey[v37]}
+        [stmt_in] livein: {orderkey[v34], custkey[v33], regionkey[v38], linenumber[v35], suppkey[v36], #tmp15[v231], nationkey[v37]}
+      c[v222] = #tmp15[v231];
+        [stmt_out] liveout: {custkey[v33], linenumber[v35], orderkey[v34], suppkey[v36], nationkey[v37], regionkey[v38]}
+        [stmt_in] livein: {custkey[v33], linenumber[v35], orderkey[v34], suppkey[v36], nationkey[v37], regionkey[v38]}
+      c#c_acctbal[v228] = Customer[custkey[v33]].c_acctbal;
+        [stmt_out] liveout: {regionkey[v38], linenumber[v35], nationkey[v37], custkey[v33], orderkey[v34], suppkey[v36]}
+        [stmt_in] livein: {regionkey[v38], linenumber[v35], nationkey[v37], custkey[v33], orderkey[v34], suppkey[v36]}
+      c#c_address[v225] = Customer[custkey[v33]].c_address;
+        [stmt_out] liveout: {linenumber[v35], orderkey[v34], nationkey[v37], suppkey[v36], custkey[v33], regionkey[v38]}
+        [stmt_in] livein: {linenumber[v35], orderkey[v34], nationkey[v37], suppkey[v36], custkey[v33], regionkey[v38]}
+      c#c_comment[v230] = Customer[custkey[v33]].c_comment;
+        [stmt_out] liveout: {nationkey[v37], suppkey[v36], regionkey[v38], orderkey[v34], custkey[v33], linenumber[v35]}
+        [stmt_in] livein: {nationkey[v37], suppkey[v36], regionkey[v38], orderkey[v34], custkey[v33], linenumber[v35]}
+      c#c_custkey[v223] = Customer[custkey[v33]].c_custkey;
+        [stmt_out] liveout: {orderkey[v34], custkey[v33], regionkey[v38], suppkey[v36], nationkey[v37], linenumber[v35]}
+        [stmt_in] livein: {orderkey[v34], custkey[v33], regionkey[v38], suppkey[v36], nationkey[v37], linenumber[v35]}
+      c#c_mktsegment[v229] = Customer[custkey[v33]].c_mktsegment;
+        [stmt_out] liveout: {custkey[v33], linenumber[v35], orderkey[v34], regionkey[v38], suppkey[v36], nationkey[v37]}
+        [stmt_in] livein: {custkey[v33], linenumber[v35], orderkey[v34], regionkey[v38], suppkey[v36], nationkey[v37]}
+      c#c_name[v224] = Customer[custkey[v33]].c_name;
+        [stmt_out] liveout: {regionkey[v38], orderkey[v34], linenumber[v35], suppkey[v36], nationkey[v37], custkey[v33]}
+        [stmt_in] livein: {regionkey[v38], orderkey[v34], linenumber[v35], suppkey[v36], nationkey[v37], custkey[v33]}
+      c#c_nationkey[v226] = Customer[custkey[v33]].c_nationkey;
+        [stmt_out] liveout: {orderkey[v34], linenumber[v35], custkey[v33], nationkey[v37], regionkey[v38], suppkey[v36]}
+        [stmt_in] livein: {orderkey[v34], linenumber[v35], custkey[v33], nationkey[v37], regionkey[v38], suppkey[v36]}
+      c#c_phone[v227] = Customer[custkey[v33]].c_phone;
+        [stmt_out] liveout: {suppkey[v36], regionkey[v38], nationkey[v37], orderkey[v34], linenumber[v35]}
+      hop_exit hop10;
+      liveout: {nationkey[v37], orderkey[v34], linenumber[v35], regionkey[v38], suppkey[v36]}
+  }
+
+  hop10 {
+    entry_block: bb10
+    bb10 (preds: bb9):
+      livein: {orderkey[v34], nationkey[v37], suppkey[v36], linenumber[v35], regionkey[v38]}
+        [stmt_in] livein: {orderkey[v34], regionkey[v38], linenumber[v35], nationkey[v37], suppkey[v36]}
+      #tmp16[v242] = Orders[orderkey[v34]];
+        [stmt_out] liveout: {suppkey[v36], linenumber[v35], #tmp16[v242], orderkey[v34], regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {suppkey[v36], linenumber[v35], #tmp16[v242], orderkey[v34], regionkey[v38], nationkey[v37]}
+      o[v232] = #tmp16[v242];
+        [stmt_out] liveout: {suppkey[v36], nationkey[v37], linenumber[v35], orderkey[v34], regionkey[v38]}
+        [stmt_in] livein: {suppkey[v36], nationkey[v37], linenumber[v35], orderkey[v34], regionkey[v38]}
+      o#o_clerk[v239] = Orders[orderkey[v34]].o_clerk;
+        [stmt_out] liveout: {regionkey[v38], nationkey[v37], orderkey[v34], linenumber[v35], suppkey[v36]}
+        [stmt_in] livein: {regionkey[v38], nationkey[v37], orderkey[v34], linenumber[v35], suppkey[v36]}
+      o#o_comment[v241] = Orders[orderkey[v34]].o_comment;
+        [stmt_out] liveout: {regionkey[v38], nationkey[v37], linenumber[v35], suppkey[v36], orderkey[v34]}
+        [stmt_in] livein: {regionkey[v38], nationkey[v37], linenumber[v35], suppkey[v36], orderkey[v34]}
+      o#o_custkey[v234] = Orders[orderkey[v34]].o_custkey;
+        [stmt_out] liveout: {suppkey[v36], regionkey[v38], nationkey[v37], orderkey[v34], linenumber[v35]}
+        [stmt_in] livein: {suppkey[v36], regionkey[v38], nationkey[v37], orderkey[v34], linenumber[v35]}
+      o#o_orderdate[v237] = Orders[orderkey[v34]].o_orderdate;
+        [stmt_out] liveout: {regionkey[v38], suppkey[v36], orderkey[v34], linenumber[v35], nationkey[v37]}
+        [stmt_in] livein: {regionkey[v38], suppkey[v36], orderkey[v34], linenumber[v35], nationkey[v37]}
+      o#o_orderkey[v233] = Orders[orderkey[v34]].o_orderkey;
+        [stmt_out] liveout: {regionkey[v38], linenumber[v35], suppkey[v36], orderkey[v34], nationkey[v37]}
+        [stmt_in] livein: {regionkey[v38], linenumber[v35], suppkey[v36], orderkey[v34], nationkey[v37]}
+      o#o_orderpriority[v238] = Orders[orderkey[v34]].o_orderpriority;
+        [stmt_out] liveout: {regionkey[v38], suppkey[v36], nationkey[v37], orderkey[v34], linenumber[v35]}
+        [stmt_in] livein: {regionkey[v38], suppkey[v36], nationkey[v37], orderkey[v34], linenumber[v35]}
+      o#o_orderstatus[v235] = Orders[orderkey[v34]].o_orderstatus;
+        [stmt_out] liveout: {orderkey[v34], nationkey[v37], regionkey[v38], suppkey[v36], linenumber[v35]}
+        [stmt_in] livein: {orderkey[v34], nationkey[v37], regionkey[v38], suppkey[v36], linenumber[v35]}
+      o#o_shippriority[v240] = Orders[orderkey[v34]].o_shippriority;
+        [stmt_out] liveout: {suppkey[v36], linenumber[v35], nationkey[v37], orderkey[v34], regionkey[v38]}
+        [stmt_in] livein: {suppkey[v36], linenumber[v35], nationkey[v37], orderkey[v34], regionkey[v38]}
+      o#o_totalprice[v236] = Orders[orderkey[v34]].o_totalprice;
+        [stmt_out] liveout: {linenumber[v35], nationkey[v37], suppkey[v36], regionkey[v38], orderkey[v34]}
+        [stmt_in] livein: {linenumber[v35], nationkey[v37], suppkey[v36], regionkey[v38], orderkey[v34]}
+      #tmp17[v260] = Lineitem[orderkey[v34], linenumber[v35]];
+        [stmt_out] liveout: {regionkey[v38], suppkey[v36], orderkey[v34], linenumber[v35], #tmp17[v260], nationkey[v37]}
+        [stmt_in] livein: {regionkey[v38], suppkey[v36], orderkey[v34], linenumber[v35], #tmp17[v260], nationkey[v37]}
+      l[v243] = #tmp17[v260];
+        [stmt_out] liveout: {regionkey[v38], suppkey[v36], orderkey[v34], linenumber[v35], nationkey[v37]}
+        [stmt_in] livein: {regionkey[v38], suppkey[v36], orderkey[v34], linenumber[v35], nationkey[v37]}
+      l#l_comment[v259] = Lineitem[orderkey[v34], linenumber[v35]].l_comment;
+        [stmt_out] liveout: {regionkey[v38], orderkey[v34], nationkey[v37], suppkey[v36], linenumber[v35]}
+        [stmt_in] livein: {regionkey[v38], orderkey[v34], nationkey[v37], suppkey[v36], linenumber[v35]}
+      l#l_commitdate[v255] = Lineitem[orderkey[v34], linenumber[v35]].l_commitdate;
+        [stmt_out] liveout: {orderkey[v34], regionkey[v38], suppkey[v36], linenumber[v35], nationkey[v37]}
+        [stmt_in] livein: {orderkey[v34], regionkey[v38], suppkey[v36], linenumber[v35], nationkey[v37]}
+      l#l_discount[v250] = Lineitem[orderkey[v34], linenumber[v35]].l_discount;
+        [stmt_out] liveout: {l#l_discount[v250], linenumber[v35], nationkey[v37], orderkey[v34], regionkey[v38], suppkey[v36]}
+        [stmt_in] livein: {l#l_discount[v250], linenumber[v35], nationkey[v37], orderkey[v34], regionkey[v38], suppkey[v36]}
+      l#l_extendedprice[v249] = Lineitem[orderkey[v34], linenumber[v35]].l_extendedprice;
+        [stmt_out] liveout: {regionkey[v38], suppkey[v36], orderkey[v34], l#l_extendedprice[v249], nationkey[v37], l#l_discount[v250], linenumber[v35]}
+        [stmt_in] livein: {regionkey[v38], suppkey[v36], orderkey[v34], l#l_extendedprice[v249], nationkey[v37], l#l_discount[v250], linenumber[v35]}
+      l#l_linenumber[v245] = Lineitem[orderkey[v34], linenumber[v35]].l_linenumber;
+        [stmt_out] liveout: {nationkey[v37], suppkey[v36], l#l_discount[v250], linenumber[v35], orderkey[v34], regionkey[v38], l#l_extendedprice[v249]}
+        [stmt_in] livein: {nationkey[v37], suppkey[v36], l#l_discount[v250], linenumber[v35], orderkey[v34], regionkey[v38], l#l_extendedprice[v249]}
+      l#l_linestatus[v253] = Lineitem[orderkey[v34], linenumber[v35]].l_linestatus;
+        [stmt_out] liveout: {l#l_extendedprice[v249], regionkey[v38], nationkey[v37], orderkey[v34], suppkey[v36], linenumber[v35], l#l_discount[v250]}
+        [stmt_in] livein: {l#l_extendedprice[v249], regionkey[v38], nationkey[v37], orderkey[v34], suppkey[v36], linenumber[v35], l#l_discount[v250]}
+      l#l_orderkey[v244] = Lineitem[orderkey[v34], linenumber[v35]].l_orderkey;
+        [stmt_out] liveout: {orderkey[v34], suppkey[v36], regionkey[v38], l#l_discount[v250], nationkey[v37], linenumber[v35], l#l_extendedprice[v249]}
+        [stmt_in] livein: {orderkey[v34], suppkey[v36], regionkey[v38], l#l_discount[v250], nationkey[v37], linenumber[v35], l#l_extendedprice[v249]}
+      l#l_partkey[v246] = Lineitem[orderkey[v34], linenumber[v35]].l_partkey;
+        [stmt_out] liveout: {orderkey[v34], nationkey[v37], linenumber[v35], l#l_discount[v250], l#l_extendedprice[v249], regionkey[v38], suppkey[v36]}
+        [stmt_in] livein: {orderkey[v34], nationkey[v37], linenumber[v35], l#l_discount[v250], l#l_extendedprice[v249], regionkey[v38], suppkey[v36]}
+      l#l_quantity[v248] = Lineitem[orderkey[v34], linenumber[v35]].l_quantity;
+        [stmt_out] liveout: {suppkey[v36], linenumber[v35], regionkey[v38], l#l_extendedprice[v249], l#l_discount[v250], nationkey[v37], orderkey[v34]}
+        [stmt_in] livein: {suppkey[v36], linenumber[v35], regionkey[v38], l#l_extendedprice[v249], l#l_discount[v250], nationkey[v37], orderkey[v34]}
+      l#l_receiptdate[v256] = Lineitem[orderkey[v34], linenumber[v35]].l_receiptdate;
+        [stmt_out] liveout: {nationkey[v37], l#l_extendedprice[v249], suppkey[v36], regionkey[v38], linenumber[v35], orderkey[v34], l#l_discount[v250]}
+        [stmt_in] livein: {nationkey[v37], l#l_extendedprice[v249], suppkey[v36], regionkey[v38], linenumber[v35], orderkey[v34], l#l_discount[v250]}
+      l#l_returnflag[v252] = Lineitem[orderkey[v34], linenumber[v35]].l_returnflag;
+        [stmt_out] liveout: {regionkey[v38], linenumber[v35], nationkey[v37], l#l_extendedprice[v249], orderkey[v34], suppkey[v36], l#l_discount[v250]}
+        [stmt_in] livein: {regionkey[v38], linenumber[v35], nationkey[v37], l#l_extendedprice[v249], orderkey[v34], suppkey[v36], l#l_discount[v250]}
+      l#l_shipdate[v254] = Lineitem[orderkey[v34], linenumber[v35]].l_shipdate;
+        [stmt_out] liveout: {l#l_discount[v250], regionkey[v38], l#l_extendedprice[v249], suppkey[v36], linenumber[v35], orderkey[v34], nationkey[v37]}
+        [stmt_in] livein: {l#l_discount[v250], regionkey[v38], l#l_extendedprice[v249], suppkey[v36], linenumber[v35], orderkey[v34], nationkey[v37]}
+      l#l_shipinstruct[v257] = Lineitem[orderkey[v34], linenumber[v35]].l_shipinstruct;
+        [stmt_out] liveout: {nationkey[v37], l#l_extendedprice[v249], regionkey[v38], linenumber[v35], orderkey[v34], suppkey[v36], l#l_discount[v250]}
+        [stmt_in] livein: {nationkey[v37], l#l_extendedprice[v249], regionkey[v38], linenumber[v35], orderkey[v34], suppkey[v36], l#l_discount[v250]}
+      l#l_shipmode[v258] = Lineitem[orderkey[v34], linenumber[v35]].l_shipmode;
+        [stmt_out] liveout: {nationkey[v37], l#l_discount[v250], linenumber[v35], suppkey[v36], l#l_extendedprice[v249], regionkey[v38], orderkey[v34]}
+        [stmt_in] livein: {nationkey[v37], l#l_discount[v250], linenumber[v35], suppkey[v36], l#l_extendedprice[v249], regionkey[v38], orderkey[v34]}
+      l#l_suppkey[v247] = Lineitem[orderkey[v34], linenumber[v35]].l_suppkey;
+        [stmt_out] liveout: {l#l_extendedprice[v249], regionkey[v38], linenumber[v35], suppkey[v36], l#l_discount[v250], orderkey[v34], nationkey[v37]}
+        [stmt_in] livein: {l#l_extendedprice[v249], regionkey[v38], linenumber[v35], suppkey[v36], l#l_discount[v250], orderkey[v34], nationkey[v37]}
+      l#l_tax[v251] = Lineitem[orderkey[v34], linenumber[v35]].l_tax;
+        [stmt_out] liveout: {l#l_extendedprice[v249], l#l_discount[v250], suppkey[v36], nationkey[v37], regionkey[v38]}
+        [stmt_in] livein: {l#l_extendedprice[v249], l#l_discount[v250], suppkey[v36], nationkey[v37], regionkey[v38]}
+      #tmp18[v262] = 1 - l#l_discount[v250];
+        [stmt_out] liveout: {suppkey[v36], l#l_extendedprice[v249], regionkey[v38], #tmp18[v262], nationkey[v37]}
+        [stmt_in] livein: {suppkey[v36], l#l_extendedprice[v249], regionkey[v38], #tmp18[v262], nationkey[v37]}
+      #tmp19[v263] = l#l_extendedprice[v249] * #tmp18[v262];
+        [stmt_out] liveout: {suppkey[v36], regionkey[v38], #tmp19[v263], nationkey[v37]}
+        [stmt_in] livein: {suppkey[v36], regionkey[v38], #tmp19[v263], nationkey[v37]}
+      revenue[v261] = #tmp19[v263];
+        [stmt_out] liveout: {nationkey[v37], suppkey[v36], regionkey[v38]}
+      hop_exit hop11;
+      liveout: {nationkey[v37], regionkey[v38], suppkey[v36]}
+  }
+
+  hop11 {
+    entry_block: bb11
+    bb11 (preds: bb10):
+      livein: {regionkey[v38], nationkey[v37], suppkey[v36]}
+        [stmt_in] livein: {nationkey[v37], regionkey[v38], suppkey[v36]}
+      #tmp20[v272] = Supplier[suppkey[v36]];
+        [stmt_out] liveout: {#tmp20[v272], suppkey[v36], regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {#tmp20[v272], suppkey[v36], regionkey[v38], nationkey[v37]}
+      s[v264] = #tmp20[v272];
+        [stmt_out] liveout: {suppkey[v36], regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {suppkey[v36], regionkey[v38], nationkey[v37]}
+      s#s_acctbal[v270] = Supplier[suppkey[v36]].s_acctbal;
+        [stmt_out] liveout: {suppkey[v36], nationkey[v37], regionkey[v38]}
+        [stmt_in] livein: {suppkey[v36], nationkey[v37], regionkey[v38]}
+      s#s_address[v267] = Supplier[suppkey[v36]].s_address;
+        [stmt_out] liveout: {nationkey[v37], regionkey[v38], suppkey[v36]}
+        [stmt_in] livein: {nationkey[v37], regionkey[v38], suppkey[v36]}
+      s#s_comment[v271] = Supplier[suppkey[v36]].s_comment;
+        [stmt_out] liveout: {suppkey[v36], nationkey[v37], regionkey[v38]}
+        [stmt_in] livein: {suppkey[v36], nationkey[v37], regionkey[v38]}
+      s#s_name[v266] = Supplier[suppkey[v36]].s_name;
+        [stmt_out] liveout: {suppkey[v36], regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {suppkey[v36], regionkey[v38], nationkey[v37]}
+      s#s_nationkey[v268] = Supplier[suppkey[v36]].s_nationkey;
+        [stmt_out] liveout: {suppkey[v36], nationkey[v37], regionkey[v38]}
+        [stmt_in] livein: {suppkey[v36], nationkey[v37], regionkey[v38]}
+      s#s_phone[v269] = Supplier[suppkey[v36]].s_phone;
+        [stmt_out] liveout: {nationkey[v37], suppkey[v36], regionkey[v38]}
+        [stmt_in] livein: {nationkey[v37], suppkey[v36], regionkey[v38]}
+      s#s_suppkey[v265] = Supplier[suppkey[v36]].s_suppkey;
+        [stmt_out] liveout: {nationkey[v37], regionkey[v38]}
+      hop_exit hop12;
+      liveout: {nationkey[v37], regionkey[v38]}
+  }
+
+  hop12 {
+    entry_block: bb12
+    bb12 (preds: bb11):
+      livein: {nationkey[v37], regionkey[v38]}
+        [stmt_in] livein: {regionkey[v38], nationkey[v37]}
+      #tmp21[v278] = Nation[nationkey[v37]];
+        [stmt_out] liveout: {#tmp21[v278], regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {#tmp21[v278], regionkey[v38], nationkey[v37]}
+      n[v273] = #tmp21[v278];
+        [stmt_out] liveout: {regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {regionkey[v38], nationkey[v37]}
+      n#n_comment[v277] = Nation[nationkey[v37]].n_comment;
+        [stmt_out] liveout: {regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {regionkey[v38], nationkey[v37]}
+      n#n_name[v275] = Nation[nationkey[v37]].n_name;
+        [stmt_out] liveout: {regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {regionkey[v38], nationkey[v37]}
+      n#n_nationkey[v274] = Nation[nationkey[v37]].n_nationkey;
+        [stmt_out] liveout: {nationkey[v37], regionkey[v38]}
+        [stmt_in] livein: {nationkey[v37], regionkey[v38]}
+      n#n_regionkey[v276] = Nation[nationkey[v37]].n_regionkey;
+        [stmt_out] liveout: {regionkey[v38]}
+        [stmt_in] livein: {regionkey[v38]}
+      #tmp22[v283] = Region[regionkey[v38]];
+        [stmt_out] liveout: {regionkey[v38], #tmp22[v283]}
+        [stmt_in] livein: {regionkey[v38], #tmp22[v283]}
+      r[v279] = #tmp22[v283];
+        [stmt_out] liveout: {regionkey[v38]}
+        [stmt_in] livein: {regionkey[v38]}
+      r#r_comment[v282] = Region[regionkey[v38]].r_comment;
+        [stmt_out] liveout: {regionkey[v38]}
+        [stmt_in] livein: {regionkey[v38]}
+      r#r_name[v281] = Region[regionkey[v38]].r_name;
+        [stmt_out] liveout: {regionkey[v38]}
+        [stmt_in] livein: {regionkey[v38]}
+      r#r_regionkey[v280] = Region[regionkey[v38]].r_regionkey;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q10[fn22](custkey[v39]: int, orderkey[v40]: int, linenumber[v41]: int, nationkey[v42]: int)
+ {
+  entry_hop: hop13
+
+  hop13 {
+    entry_block: bb13
+    bb13:
+      livein: {linenumber[v41], nationkey[v42], orderkey[v40], custkey[v39]}
+        [stmt_in] livein: {linenumber[v41], nationkey[v42], orderkey[v40], custkey[v39]}
+      #tmp23[v293] = Customer[custkey[v39]];
+        [stmt_out] liveout: {linenumber[v41], custkey[v39], nationkey[v42], orderkey[v40], #tmp23[v293]}
+        [stmt_in] livein: {linenumber[v41], custkey[v39], nationkey[v42], orderkey[v40], #tmp23[v293]}
+      c[v284] = #tmp23[v293];
+        [stmt_out] liveout: {custkey[v39], orderkey[v40], nationkey[v42], linenumber[v41]}
+        [stmt_in] livein: {custkey[v39], orderkey[v40], nationkey[v42], linenumber[v41]}
+      c#c_acctbal[v290] = Customer[custkey[v39]].c_acctbal;
+        [stmt_out] liveout: {orderkey[v40], nationkey[v42], linenumber[v41], custkey[v39]}
+        [stmt_in] livein: {orderkey[v40], nationkey[v42], linenumber[v41], custkey[v39]}
+      c#c_address[v287] = Customer[custkey[v39]].c_address;
+        [stmt_out] liveout: {linenumber[v41], nationkey[v42], custkey[v39], orderkey[v40]}
+        [stmt_in] livein: {linenumber[v41], nationkey[v42], custkey[v39], orderkey[v40]}
+      c#c_comment[v292] = Customer[custkey[v39]].c_comment;
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], nationkey[v42], custkey[v39]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], nationkey[v42], custkey[v39]}
+      c#c_custkey[v285] = Customer[custkey[v39]].c_custkey;
+        [stmt_out] liveout: {nationkey[v42], orderkey[v40], linenumber[v41], custkey[v39]}
+        [stmt_in] livein: {nationkey[v42], orderkey[v40], linenumber[v41], custkey[v39]}
+      c#c_mktsegment[v291] = Customer[custkey[v39]].c_mktsegment;
+        [stmt_out] liveout: {linenumber[v41], custkey[v39], orderkey[v40], nationkey[v42]}
+        [stmt_in] livein: {linenumber[v41], custkey[v39], orderkey[v40], nationkey[v42]}
+      c#c_name[v286] = Customer[custkey[v39]].c_name;
+        [stmt_out] liveout: {linenumber[v41], custkey[v39], orderkey[v40], nationkey[v42]}
+        [stmt_in] livein: {linenumber[v41], custkey[v39], orderkey[v40], nationkey[v42]}
+      c#c_nationkey[v288] = Customer[custkey[v39]].c_nationkey;
+        [stmt_out] liveout: {custkey[v39], orderkey[v40], linenumber[v41], nationkey[v42]}
+        [stmt_in] livein: {custkey[v39], orderkey[v40], linenumber[v41], nationkey[v42]}
+      c#c_phone[v289] = Customer[custkey[v39]].c_phone;
+        [stmt_out] liveout: {nationkey[v42], orderkey[v40], linenumber[v41]}
+        [stmt_in] livein: {nationkey[v42], orderkey[v40], linenumber[v41]}
+      revenue[v294] = 0;
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], nationkey[v42]}
+      hop_exit hop14;
+      liveout: {nationkey[v42], orderkey[v40], linenumber[v41]}
+  }
+
+  hop14 {
+    entry_block: bb14
+    bb14 (preds: bb13):
+      livein: {linenumber[v41], nationkey[v42], orderkey[v40]}
+        [stmt_in] livein: {linenumber[v41], orderkey[v40], nationkey[v42]}
+      #tmp24[v305] = Orders[orderkey[v40]];
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], #tmp24[v305], nationkey[v42]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], #tmp24[v305], nationkey[v42]}
+      o[v295] = #tmp24[v305];
+        [stmt_out] liveout: {linenumber[v41], nationkey[v42], orderkey[v40]}
+        [stmt_in] livein: {linenumber[v41], nationkey[v42], orderkey[v40]}
+      o#o_clerk[v302] = Orders[orderkey[v40]].o_clerk;
+        [stmt_out] liveout: {linenumber[v41], nationkey[v42], orderkey[v40]}
+        [stmt_in] livein: {linenumber[v41], nationkey[v42], orderkey[v40]}
+      o#o_comment[v304] = Orders[orderkey[v40]].o_comment;
+        [stmt_out] liveout: {linenumber[v41], orderkey[v40], nationkey[v42]}
+        [stmt_in] livein: {linenumber[v41], orderkey[v40], nationkey[v42]}
+      o#o_custkey[v297] = Orders[orderkey[v40]].o_custkey;
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], nationkey[v42]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], nationkey[v42]}
+      o#o_orderdate[v300] = Orders[orderkey[v40]].o_orderdate;
+        [stmt_out] liveout: {nationkey[v42], linenumber[v41], orderkey[v40]}
+        [stmt_in] livein: {nationkey[v42], linenumber[v41], orderkey[v40]}
+      o#o_orderkey[v296] = Orders[orderkey[v40]].o_orderkey;
+        [stmt_out] liveout: {linenumber[v41], orderkey[v40], nationkey[v42]}
+        [stmt_in] livein: {linenumber[v41], orderkey[v40], nationkey[v42]}
+      o#o_orderpriority[v301] = Orders[orderkey[v40]].o_orderpriority;
+        [stmt_out] liveout: {nationkey[v42], orderkey[v40], linenumber[v41]}
+        [stmt_in] livein: {nationkey[v42], orderkey[v40], linenumber[v41]}
+      o#o_orderstatus[v298] = Orders[orderkey[v40]].o_orderstatus;
+        [stmt_out] liveout: {linenumber[v41], nationkey[v42], orderkey[v40]}
+        [stmt_in] livein: {linenumber[v41], nationkey[v42], orderkey[v40]}
+      o#o_shippriority[v303] = Orders[orderkey[v40]].o_shippriority;
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], nationkey[v42]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], nationkey[v42]}
+      o#o_totalprice[v299] = Orders[orderkey[v40]].o_totalprice;
+        [stmt_out] liveout: {linenumber[v41], orderkey[v40], nationkey[v42]}
+        [stmt_in] livein: {linenumber[v41], orderkey[v40], nationkey[v42]}
+      #tmp25[v323] = Lineitem[orderkey[v40], linenumber[v41]];
+        [stmt_out] liveout: {linenumber[v41], orderkey[v40], nationkey[v42], #tmp25[v323]}
+        [stmt_in] livein: {linenumber[v41], orderkey[v40], nationkey[v42], #tmp25[v323]}
+      l[v306] = #tmp25[v323];
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], nationkey[v42]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], nationkey[v42]}
+      l#l_comment[v322] = Lineitem[orderkey[v40], linenumber[v41]].l_comment;
+        [stmt_out] liveout: {linenumber[v41], nationkey[v42], orderkey[v40]}
+        [stmt_in] livein: {linenumber[v41], nationkey[v42], orderkey[v40]}
+      l#l_commitdate[v318] = Lineitem[orderkey[v40], linenumber[v41]].l_commitdate;
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], nationkey[v42]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], nationkey[v42]}
+      l#l_discount[v313] = Lineitem[orderkey[v40], linenumber[v41]].l_discount;
+        [stmt_out] liveout: {l#l_discount[v313], linenumber[v41], orderkey[v40], nationkey[v42]}
+        [stmt_in] livein: {l#l_discount[v313], linenumber[v41], orderkey[v40], nationkey[v42]}
+      l#l_extendedprice[v312] = Lineitem[orderkey[v40], linenumber[v41]].l_extendedprice;
+        [stmt_out] liveout: {l#l_discount[v313], l#l_extendedprice[v312], nationkey[v42], linenumber[v41], orderkey[v40]}
+        [stmt_in] livein: {l#l_discount[v313], l#l_extendedprice[v312], nationkey[v42], linenumber[v41], orderkey[v40]}
+      l#l_linenumber[v308] = Lineitem[orderkey[v40], linenumber[v41]].l_linenumber;
+        [stmt_out] liveout: {l#l_extendedprice[v312], l#l_discount[v313], nationkey[v42], linenumber[v41], orderkey[v40]}
+        [stmt_in] livein: {l#l_extendedprice[v312], l#l_discount[v313], nationkey[v42], linenumber[v41], orderkey[v40]}
+      l#l_linestatus[v316] = Lineitem[orderkey[v40], linenumber[v41]].l_linestatus;
+        [stmt_out] liveout: {nationkey[v42], l#l_discount[v313], l#l_extendedprice[v312], linenumber[v41], orderkey[v40]}
+        [stmt_in] livein: {nationkey[v42], l#l_discount[v313], l#l_extendedprice[v312], linenumber[v41], orderkey[v40]}
+      l#l_orderkey[v307] = Lineitem[orderkey[v40], linenumber[v41]].l_orderkey;
+        [stmt_out] liveout: {nationkey[v42], linenumber[v41], l#l_discount[v313], l#l_extendedprice[v312], orderkey[v40]}
+        [stmt_in] livein: {nationkey[v42], linenumber[v41], l#l_discount[v313], l#l_extendedprice[v312], orderkey[v40]}
+      l#l_partkey[v309] = Lineitem[orderkey[v40], linenumber[v41]].l_partkey;
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], nationkey[v42], l#l_discount[v313], l#l_extendedprice[v312]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], nationkey[v42], l#l_discount[v313], l#l_extendedprice[v312]}
+      l#l_quantity[v311] = Lineitem[orderkey[v40], linenumber[v41]].l_quantity;
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], l#l_discount[v313], l#l_extendedprice[v312], nationkey[v42]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], l#l_discount[v313], l#l_extendedprice[v312], nationkey[v42]}
+      l#l_receiptdate[v319] = Lineitem[orderkey[v40], linenumber[v41]].l_receiptdate;
+        [stmt_out] liveout: {orderkey[v40], l#l_discount[v313], nationkey[v42], l#l_extendedprice[v312], linenumber[v41]}
+        [stmt_in] livein: {orderkey[v40], l#l_discount[v313], nationkey[v42], l#l_extendedprice[v312], linenumber[v41]}
+      l#l_returnflag[v315] = Lineitem[orderkey[v40], linenumber[v41]].l_returnflag;
+        [stmt_out] liveout: {orderkey[v40], nationkey[v42], l#l_discount[v313], linenumber[v41], l#l_extendedprice[v312]}
+        [stmt_in] livein: {orderkey[v40], nationkey[v42], l#l_discount[v313], linenumber[v41], l#l_extendedprice[v312]}
+      l#l_shipdate[v317] = Lineitem[orderkey[v40], linenumber[v41]].l_shipdate;
+        [stmt_out] liveout: {linenumber[v41], l#l_extendedprice[v312], orderkey[v40], l#l_discount[v313], nationkey[v42]}
+        [stmt_in] livein: {linenumber[v41], l#l_extendedprice[v312], orderkey[v40], l#l_discount[v313], nationkey[v42]}
+      l#l_shipinstruct[v320] = Lineitem[orderkey[v40], linenumber[v41]].l_shipinstruct;
+        [stmt_out] liveout: {orderkey[v40], nationkey[v42], l#l_extendedprice[v312], linenumber[v41], l#l_discount[v313]}
+        [stmt_in] livein: {orderkey[v40], nationkey[v42], l#l_extendedprice[v312], linenumber[v41], l#l_discount[v313]}
+      l#l_shipmode[v321] = Lineitem[orderkey[v40], linenumber[v41]].l_shipmode;
+        [stmt_out] liveout: {l#l_extendedprice[v312], linenumber[v41], nationkey[v42], l#l_discount[v313], orderkey[v40]}
+        [stmt_in] livein: {l#l_extendedprice[v312], linenumber[v41], nationkey[v42], l#l_discount[v313], orderkey[v40]}
+      l#l_suppkey[v310] = Lineitem[orderkey[v40], linenumber[v41]].l_suppkey;
+        [stmt_out] liveout: {l#l_extendedprice[v312], nationkey[v42], linenumber[v41], l#l_discount[v313], orderkey[v40]}
+        [stmt_in] livein: {l#l_extendedprice[v312], nationkey[v42], linenumber[v41], l#l_discount[v313], orderkey[v40]}
+      l#l_tax[v314] = Lineitem[orderkey[v40], linenumber[v41]].l_tax;
+        [stmt_out] liveout: {nationkey[v42], l#l_extendedprice[v312], l#l_discount[v313]}
+        [stmt_in] livein: {nationkey[v42], l#l_extendedprice[v312], l#l_discount[v313]}
+      #tmp26[v324] = 1 - l#l_discount[v313];
+        [stmt_out] liveout: {#tmp26[v324], nationkey[v42], l#l_extendedprice[v312]}
+        [stmt_in] livein: {#tmp26[v324], nationkey[v42], l#l_extendedprice[v312]}
+      #tmp27[v325] = l#l_extendedprice[v312] * #tmp26[v324];
+        [stmt_out] liveout: {nationkey[v42], #tmp27[v325]}
+        [stmt_in] livein: {nationkey[v42], #tmp27[v325]}
+      revenue[v294] = #tmp27[v325];
+        [stmt_out] liveout: {nationkey[v42]}
+      hop_exit hop15;
+      liveout: {nationkey[v42]}
+  }
+
+  hop15 {
+    entry_block: bb15
+    bb15 (preds: bb14):
+      livein: {nationkey[v42]}
+        [stmt_in] livein: {nationkey[v42]}
+      #tmp28[v331] = Nation[nationkey[v42]];
+        [stmt_out] liveout: {#tmp28[v331], nationkey[v42]}
+        [stmt_in] livein: {#tmp28[v331], nationkey[v42]}
+      n[v326] = #tmp28[v331];
+        [stmt_out] liveout: {nationkey[v42]}
+        [stmt_in] livein: {nationkey[v42]}
+      n#n_comment[v330] = Nation[nationkey[v42]].n_comment;
+        [stmt_out] liveout: {nationkey[v42]}
+        [stmt_in] livein: {nationkey[v42]}
+      n#n_name[v328] = Nation[nationkey[v42]].n_name;
+        [stmt_out] liveout: {nationkey[v42]}
+        [stmt_in] livein: {nationkey[v42]}
+      n#n_nationkey[v327] = Nation[nationkey[v42]].n_nationkey;
+        [stmt_out] liveout: {nationkey[v42]}
+        [stmt_in] livein: {nationkey[v42]}
+      n#n_regionkey[v329] = Nation[nationkey[v42]].n_regionkey;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q11[fn23](partkey[v43]: int, suppkey[v44]: int, nationkey[v45]: int)
+ {
+  entry_hop: hop16
+
+  hop16 {
+    entry_block: bb16
+    bb16:
+      livein: {partkey[v43], suppkey[v44], nationkey[v45]}
+        [stmt_in] livein: {partkey[v43], suppkey[v44], nationkey[v45]}
+      #tmp29[v338] = Partsupp[partkey[v43], suppkey[v44]];
+        [stmt_out] liveout: {partkey[v43], #tmp29[v338], suppkey[v44], nationkey[v45]}
+        [stmt_in] livein: {partkey[v43], #tmp29[v338], suppkey[v44], nationkey[v45]}
+      ps[v332] = #tmp29[v338];
+        [stmt_out] liveout: {partkey[v43], nationkey[v45], suppkey[v44]}
+        [stmt_in] livein: {partkey[v43], nationkey[v45], suppkey[v44]}
+      ps#ps_availqty[v335] = Partsupp[partkey[v43], suppkey[v44]].ps_availqty;
+        [stmt_out] liveout: {ps#ps_availqty[v335], suppkey[v44], partkey[v43], nationkey[v45]}
+        [stmt_in] livein: {ps#ps_availqty[v335], suppkey[v44], partkey[v43], nationkey[v45]}
+      ps#ps_comment[v337] = Partsupp[partkey[v43], suppkey[v44]].ps_comment;
+        [stmt_out] liveout: {ps#ps_availqty[v335], nationkey[v45], suppkey[v44], partkey[v43]}
+        [stmt_in] livein: {ps#ps_availqty[v335], nationkey[v45], suppkey[v44], partkey[v43]}
+      ps#ps_partkey[v333] = Partsupp[partkey[v43], suppkey[v44]].ps_partkey;
+        [stmt_out] liveout: {nationkey[v45], suppkey[v44], ps#ps_availqty[v335], partkey[v43]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44], ps#ps_availqty[v335], partkey[v43]}
+      ps#ps_suppkey[v334] = Partsupp[partkey[v43], suppkey[v44]].ps_suppkey;
+        [stmt_out] liveout: {ps#ps_availqty[v335], partkey[v43], suppkey[v44], nationkey[v45]}
+        [stmt_in] livein: {ps#ps_availqty[v335], partkey[v43], suppkey[v44], nationkey[v45]}
+      ps#ps_supplycost[v336] = Partsupp[partkey[v43], suppkey[v44]].ps_supplycost;
+        [stmt_out] liveout: {ps#ps_supplycost[v336], suppkey[v44], ps#ps_availqty[v335], nationkey[v45]}
+        [stmt_in] livein: {ps#ps_supplycost[v336], suppkey[v44], ps#ps_availqty[v335], nationkey[v45]}
+      #tmp30[v340] = float[fn5](ps#ps_availqty[v335]);
+        [stmt_out] liveout: {ps#ps_supplycost[v336], nationkey[v45], suppkey[v44], #tmp30[v340]}
+        [stmt_in] livein: {ps#ps_supplycost[v336], nationkey[v45], suppkey[v44], #tmp30[v340]}
+      #tmp31[v341] = #tmp30[v340] * ps#ps_supplycost[v336];
+        [stmt_out] liveout: {suppkey[v44], nationkey[v45], #tmp31[v341]}
+        [stmt_in] livein: {suppkey[v44], nationkey[v45], #tmp31[v341]}
+      value[v339] = #tmp31[v341];
+        [stmt_out] liveout: {suppkey[v44], nationkey[v45]}
+      hop_exit hop17;
+      liveout: {nationkey[v45], suppkey[v44]}
+  }
+
+  hop17 {
+    entry_block: bb17
+    bb17 (preds: bb16):
+      livein: {suppkey[v44], nationkey[v45]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44]}
+      #tmp32[v350] = Supplier[suppkey[v44]];
+        [stmt_out] liveout: {suppkey[v44], nationkey[v45], #tmp32[v350]}
+        [stmt_in] livein: {suppkey[v44], nationkey[v45], #tmp32[v350]}
+      s[v342] = #tmp32[v350];
+        [stmt_out] liveout: {nationkey[v45], suppkey[v44]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44]}
+      s#s_acctbal[v348] = Supplier[suppkey[v44]].s_acctbal;
+        [stmt_out] liveout: {suppkey[v44], nationkey[v45]}
+        [stmt_in] livein: {suppkey[v44], nationkey[v45]}
+      s#s_address[v345] = Supplier[suppkey[v44]].s_address;
+        [stmt_out] liveout: {nationkey[v45], suppkey[v44]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44]}
+      s#s_comment[v349] = Supplier[suppkey[v44]].s_comment;
+        [stmt_out] liveout: {suppkey[v44], nationkey[v45]}
+        [stmt_in] livein: {suppkey[v44], nationkey[v45]}
+      s#s_name[v344] = Supplier[suppkey[v44]].s_name;
+        [stmt_out] liveout: {nationkey[v45], suppkey[v44]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44]}
+      s#s_nationkey[v346] = Supplier[suppkey[v44]].s_nationkey;
+        [stmt_out] liveout: {nationkey[v45], suppkey[v44]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44]}
+      s#s_phone[v347] = Supplier[suppkey[v44]].s_phone;
+        [stmt_out] liveout: {nationkey[v45], suppkey[v44]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44]}
+      s#s_suppkey[v343] = Supplier[suppkey[v44]].s_suppkey;
+        [stmt_out] liveout: {nationkey[v45]}
+      hop_exit hop18;
+      liveout: {nationkey[v45]}
+  }
+
+  hop18 {
+    entry_block: bb18
+    bb18 (preds: bb17):
+      livein: {nationkey[v45]}
+        [stmt_in] livein: {nationkey[v45]}
+      #tmp33[v356] = Nation[nationkey[v45]];
+        [stmt_out] liveout: {#tmp33[v356], nationkey[v45]}
+        [stmt_in] livein: {#tmp33[v356], nationkey[v45]}
+      n[v351] = #tmp33[v356];
+        [stmt_out] liveout: {nationkey[v45]}
+        [stmt_in] livein: {nationkey[v45]}
+      n#n_comment[v355] = Nation[nationkey[v45]].n_comment;
+        [stmt_out] liveout: {nationkey[v45]}
+        [stmt_in] livein: {nationkey[v45]}
+      n#n_name[v353] = Nation[nationkey[v45]].n_name;
+        [stmt_out] liveout: {nationkey[v45]}
+        [stmt_in] livein: {nationkey[v45]}
+      n#n_nationkey[v352] = Nation[nationkey[v45]].n_nationkey;
+        [stmt_out] liveout: {nationkey[v45]}
+        [stmt_in] livein: {nationkey[v45]}
+      n#n_regionkey[v354] = Nation[nationkey[v45]].n_regionkey;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q12[fn24](orderkey[v46]: int, linenumber[v47]: int)
+ {
+  entry_hop: hop19
+
+  hop19 {
+    entry_block: bb19
+    bb19:
+      livein: {linenumber[v47], orderkey[v46]}
+        [stmt_in] livein: {orderkey[v46], linenumber[v47]}
+      #tmp34[v367] = Orders[orderkey[v46]];
+        [stmt_out] liveout: {linenumber[v47], orderkey[v46], #tmp34[v367]}
+        [stmt_in] livein: {linenumber[v47], orderkey[v46], #tmp34[v367]}
+      o[v357] = #tmp34[v367];
+        [stmt_out] liveout: {linenumber[v47], orderkey[v46]}
+        [stmt_in] livein: {linenumber[v47], orderkey[v46]}
+      o#o_clerk[v364] = Orders[orderkey[v46]].o_clerk;
+        [stmt_out] liveout: {orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {orderkey[v46], linenumber[v47]}
+      o#o_comment[v366] = Orders[orderkey[v46]].o_comment;
+        [stmt_out] liveout: {orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {orderkey[v46], linenumber[v47]}
+      o#o_custkey[v359] = Orders[orderkey[v46]].o_custkey;
+        [stmt_out] liveout: {orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {orderkey[v46], linenumber[v47]}
+      o#o_orderdate[v362] = Orders[orderkey[v46]].o_orderdate;
+        [stmt_out] liveout: {orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {orderkey[v46], linenumber[v47]}
+      o#o_orderkey[v358] = Orders[orderkey[v46]].o_orderkey;
+        [stmt_out] liveout: {linenumber[v47], orderkey[v46]}
+        [stmt_in] livein: {linenumber[v47], orderkey[v46]}
+      o#o_orderpriority[v363] = Orders[orderkey[v46]].o_orderpriority;
+        [stmt_out] liveout: {o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+      o#o_orderstatus[v360] = Orders[orderkey[v46]].o_orderstatus;
+        [stmt_out] liveout: {o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+      o#o_shippriority[v365] = Orders[orderkey[v46]].o_shippriority;
+        [stmt_out] liveout: {linenumber[v47], o#o_orderpriority[v363], orderkey[v46]}
+        [stmt_in] livein: {linenumber[v47], o#o_orderpriority[v363], orderkey[v46]}
+      o#o_totalprice[v361] = Orders[orderkey[v46]].o_totalprice;
+        [stmt_out] liveout: {o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+      #tmp35[v385] = Lineitem[orderkey[v46], linenumber[v47]];
+        [stmt_out] liveout: {#tmp35[v385], o#o_orderpriority[v363], linenumber[v47], orderkey[v46]}
+        [stmt_in] livein: {#tmp35[v385], o#o_orderpriority[v363], linenumber[v47], orderkey[v46]}
+      l[v368] = #tmp35[v385];
+        [stmt_out] liveout: {orderkey[v46], o#o_orderpriority[v363], linenumber[v47]}
+        [stmt_in] livein: {orderkey[v46], o#o_orderpriority[v363], linenumber[v47]}
+      l#l_comment[v384] = Lineitem[orderkey[v46], linenumber[v47]].l_comment;
+        [stmt_out] liveout: {orderkey[v46], o#o_orderpriority[v363], linenumber[v47]}
+        [stmt_in] livein: {orderkey[v46], o#o_orderpriority[v363], linenumber[v47]}
+      l#l_commitdate[v380] = Lineitem[orderkey[v46], linenumber[v47]].l_commitdate;
+        [stmt_out] liveout: {linenumber[v47], orderkey[v46], o#o_orderpriority[v363]}
+        [stmt_in] livein: {linenumber[v47], orderkey[v46], o#o_orderpriority[v363]}
+      l#l_discount[v375] = Lineitem[orderkey[v46], linenumber[v47]].l_discount;
+        [stmt_out] liveout: {orderkey[v46], o#o_orderpriority[v363], linenumber[v47]}
+        [stmt_in] livein: {orderkey[v46], o#o_orderpriority[v363], linenumber[v47]}
+      l#l_extendedprice[v374] = Lineitem[orderkey[v46], linenumber[v47]].l_extendedprice;
+        [stmt_out] liveout: {linenumber[v47], orderkey[v46], o#o_orderpriority[v363]}
+        [stmt_in] livein: {linenumber[v47], orderkey[v46], o#o_orderpriority[v363]}
+      l#l_linenumber[v370] = Lineitem[orderkey[v46], linenumber[v47]].l_linenumber;
+        [stmt_out] liveout: {o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+      l#l_linestatus[v378] = Lineitem[orderkey[v46], linenumber[v47]].l_linestatus;
+        [stmt_out] liveout: {linenumber[v47], o#o_orderpriority[v363], orderkey[v46]}
+        [stmt_in] livein: {linenumber[v47], o#o_orderpriority[v363], orderkey[v46]}
+      l#l_orderkey[v369] = Lineitem[orderkey[v46], linenumber[v47]].l_orderkey;
+        [stmt_out] liveout: {linenumber[v47], orderkey[v46], o#o_orderpriority[v363]}
+        [stmt_in] livein: {linenumber[v47], orderkey[v46], o#o_orderpriority[v363]}
+      l#l_partkey[v371] = Lineitem[orderkey[v46], linenumber[v47]].l_partkey;
+        [stmt_out] liveout: {linenumber[v47], orderkey[v46], o#o_orderpriority[v363]}
+        [stmt_in] livein: {linenumber[v47], orderkey[v46], o#o_orderpriority[v363]}
+      l#l_quantity[v373] = Lineitem[orderkey[v46], linenumber[v47]].l_quantity;
+        [stmt_out] liveout: {linenumber[v47], o#o_orderpriority[v363], orderkey[v46]}
+        [stmt_in] livein: {linenumber[v47], o#o_orderpriority[v363], orderkey[v46]}
+      l#l_receiptdate[v381] = Lineitem[orderkey[v46], linenumber[v47]].l_receiptdate;
+        [stmt_out] liveout: {o#o_orderpriority[v363], linenumber[v47], orderkey[v46]}
+        [stmt_in] livein: {o#o_orderpriority[v363], linenumber[v47], orderkey[v46]}
+      l#l_returnflag[v377] = Lineitem[orderkey[v46], linenumber[v47]].l_returnflag;
+        [stmt_out] liveout: {orderkey[v46], linenumber[v47], o#o_orderpriority[v363]}
+        [stmt_in] livein: {orderkey[v46], linenumber[v47], o#o_orderpriority[v363]}
+      l#l_shipdate[v379] = Lineitem[orderkey[v46], linenumber[v47]].l_shipdate;
+        [stmt_out] liveout: {o#o_orderpriority[v363], linenumber[v47], orderkey[v46]}
+        [stmt_in] livein: {o#o_orderpriority[v363], linenumber[v47], orderkey[v46]}
+      l#l_shipinstruct[v382] = Lineitem[orderkey[v46], linenumber[v47]].l_shipinstruct;
+        [stmt_out] liveout: {linenumber[v47], o#o_orderpriority[v363], orderkey[v46]}
+        [stmt_in] livein: {linenumber[v47], o#o_orderpriority[v363], orderkey[v46]}
+      l#l_shipmode[v383] = Lineitem[orderkey[v46], linenumber[v47]].l_shipmode;
+        [stmt_out] liveout: {l#l_shipmode[v383], o#o_orderpriority[v363], linenumber[v47], orderkey[v46]}
+        [stmt_in] livein: {l#l_shipmode[v383], o#o_orderpriority[v363], linenumber[v47], orderkey[v46]}
+      l#l_suppkey[v372] = Lineitem[orderkey[v46], linenumber[v47]].l_suppkey;
+        [stmt_out] liveout: {l#l_shipmode[v383], o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+        [stmt_in] livein: {l#l_shipmode[v383], o#o_orderpriority[v363], orderkey[v46], linenumber[v47]}
+      l#l_tax[v376] = Lineitem[orderkey[v46], linenumber[v47]].l_tax;
+        [stmt_out] liveout: {o#o_orderpriority[v363], l#l_shipmode[v383]}
+        [stmt_in] livein: {o#o_orderpriority[v363], l#l_shipmode[v383]}
+      mode[v386] = l#l_shipmode[v383];
+        [stmt_out] liveout: {o#o_orderpriority[v363]}
+        [stmt_in] livein: {o#o_orderpriority[v363]}
+      priority[v387] = o#o_orderpriority[v363];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q13[fn25](custkey[v48]: int, orderkey[v49]: int)
+ {
+  entry_hop: hop20
+
+  hop20 {
+    entry_block: bb20
+    bb20:
+      livein: {custkey[v48], orderkey[v49]}
+        [stmt_in] livein: {custkey[v48], orderkey[v49]}
+      #tmp36[v397] = Customer[custkey[v48]];
+        [stmt_out] liveout: {#tmp36[v397], custkey[v48], orderkey[v49]}
+        [stmt_in] livein: {#tmp36[v397], custkey[v48], orderkey[v49]}
+      c[v388] = #tmp36[v397];
+        [stmt_out] liveout: {orderkey[v49], custkey[v48]}
+        [stmt_in] livein: {orderkey[v49], custkey[v48]}
+      c#c_acctbal[v394] = Customer[custkey[v48]].c_acctbal;
+        [stmt_out] liveout: {orderkey[v49], custkey[v48]}
+        [stmt_in] livein: {orderkey[v49], custkey[v48]}
+      c#c_address[v391] = Customer[custkey[v48]].c_address;
+        [stmt_out] liveout: {custkey[v48], orderkey[v49]}
+        [stmt_in] livein: {custkey[v48], orderkey[v49]}
+      c#c_comment[v396] = Customer[custkey[v48]].c_comment;
+        [stmt_out] liveout: {custkey[v48], orderkey[v49]}
+        [stmt_in] livein: {custkey[v48], orderkey[v49]}
+      c#c_custkey[v389] = Customer[custkey[v48]].c_custkey;
+        [stmt_out] liveout: {custkey[v48], orderkey[v49]}
+        [stmt_in] livein: {custkey[v48], orderkey[v49]}
+      c#c_mktsegment[v395] = Customer[custkey[v48]].c_mktsegment;
+        [stmt_out] liveout: {custkey[v48], orderkey[v49]}
+        [stmt_in] livein: {custkey[v48], orderkey[v49]}
+      c#c_name[v390] = Customer[custkey[v48]].c_name;
+        [stmt_out] liveout: {orderkey[v49], custkey[v48]}
+        [stmt_in] livein: {orderkey[v49], custkey[v48]}
+      c#c_nationkey[v392] = Customer[custkey[v48]].c_nationkey;
+        [stmt_out] liveout: {custkey[v48], orderkey[v49]}
+        [stmt_in] livein: {custkey[v48], orderkey[v49]}
+      c#c_phone[v393] = Customer[custkey[v48]].c_phone;
+        [stmt_out] liveout: {orderkey[v49]}
+      hop_exit hop21;
+      liveout: {orderkey[v49]}
+  }
+
+  hop21 {
+    entry_block: bb21
+    bb21 (preds: bb20):
+      livein: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      #tmp37[v408] = Orders[orderkey[v49]];
+        [stmt_out] liveout: {orderkey[v49], #tmp37[v408]}
+        [stmt_in] livein: {orderkey[v49], #tmp37[v408]}
+      o[v398] = #tmp37[v408];
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_clerk[v405] = Orders[orderkey[v49]].o_clerk;
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_comment[v407] = Orders[orderkey[v49]].o_comment;
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_custkey[v400] = Orders[orderkey[v49]].o_custkey;
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_orderdate[v403] = Orders[orderkey[v49]].o_orderdate;
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_orderkey[v399] = Orders[orderkey[v49]].o_orderkey;
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_orderpriority[v404] = Orders[orderkey[v49]].o_orderpriority;
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_orderstatus[v401] = Orders[orderkey[v49]].o_orderstatus;
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_shippriority[v406] = Orders[orderkey[v49]].o_shippriority;
+        [stmt_out] liveout: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      o#o_totalprice[v402] = Orders[orderkey[v49]].o_totalprice;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q14[fn26](orderkey[v50]: int, linenumber[v51]: int, partkey[v52]: int)
+ {
+  entry_hop: hop22
+
+  hop22 {
+    entry_block: bb22
+    bb22:
+      livein: {orderkey[v50], linenumber[v51], partkey[v52]}
+        [stmt_in] livein: {orderkey[v50], partkey[v52], linenumber[v51]}
+      #tmp38[v426] = Lineitem[orderkey[v50], linenumber[v51]];
+        [stmt_out] liveout: {partkey[v52], orderkey[v50], linenumber[v51], #tmp38[v426]}
+        [stmt_in] livein: {partkey[v52], orderkey[v50], linenumber[v51], #tmp38[v426]}
+      l[v409] = #tmp38[v426];
+        [stmt_out] liveout: {orderkey[v50], partkey[v52], linenumber[v51]}
+        [stmt_in] livein: {orderkey[v50], partkey[v52], linenumber[v51]}
+      l#l_comment[v425] = Lineitem[orderkey[v50], linenumber[v51]].l_comment;
+        [stmt_out] liveout: {orderkey[v50], linenumber[v51], partkey[v52]}
+        [stmt_in] livein: {orderkey[v50], linenumber[v51], partkey[v52]}
+      l#l_commitdate[v421] = Lineitem[orderkey[v50], linenumber[v51]].l_commitdate;
+        [stmt_out] liveout: {orderkey[v50], linenumber[v51], partkey[v52]}
+        [stmt_in] livein: {orderkey[v50], linenumber[v51], partkey[v52]}
+      l#l_discount[v416] = Lineitem[orderkey[v50], linenumber[v51]].l_discount;
+        [stmt_out] liveout: {linenumber[v51], orderkey[v50], partkey[v52]}
+        [stmt_in] livein: {linenumber[v51], orderkey[v50], partkey[v52]}
+      l#l_extendedprice[v415] = Lineitem[orderkey[v50], linenumber[v51]].l_extendedprice;
+        [stmt_out] liveout: {partkey[v52], linenumber[v51], orderkey[v50], l#l_extendedprice[v415]}
+        [stmt_in] livein: {partkey[v52], linenumber[v51], orderkey[v50], l#l_extendedprice[v415]}
+      l#l_linenumber[v411] = Lineitem[orderkey[v50], linenumber[v51]].l_linenumber;
+        [stmt_out] liveout: {orderkey[v50], l#l_extendedprice[v415], linenumber[v51], partkey[v52]}
+        [stmt_in] livein: {orderkey[v50], l#l_extendedprice[v415], linenumber[v51], partkey[v52]}
+      l#l_linestatus[v419] = Lineitem[orderkey[v50], linenumber[v51]].l_linestatus;
+        [stmt_out] liveout: {linenumber[v51], orderkey[v50], l#l_extendedprice[v415], partkey[v52]}
+        [stmt_in] livein: {linenumber[v51], orderkey[v50], l#l_extendedprice[v415], partkey[v52]}
+      l#l_orderkey[v410] = Lineitem[orderkey[v50], linenumber[v51]].l_orderkey;
+        [stmt_out] liveout: {partkey[v52], l#l_extendedprice[v415], linenumber[v51], orderkey[v50]}
+        [stmt_in] livein: {partkey[v52], l#l_extendedprice[v415], linenumber[v51], orderkey[v50]}
+      l#l_partkey[v412] = Lineitem[orderkey[v50], linenumber[v51]].l_partkey;
+        [stmt_out] liveout: {linenumber[v51], partkey[v52], orderkey[v50], l#l_extendedprice[v415]}
+        [stmt_in] livein: {linenumber[v51], partkey[v52], orderkey[v50], l#l_extendedprice[v415]}
+      l#l_quantity[v414] = Lineitem[orderkey[v50], linenumber[v51]].l_quantity;
+        [stmt_out] liveout: {linenumber[v51], l#l_extendedprice[v415], orderkey[v50], partkey[v52]}
+        [stmt_in] livein: {linenumber[v51], l#l_extendedprice[v415], orderkey[v50], partkey[v52]}
+      l#l_receiptdate[v422] = Lineitem[orderkey[v50], linenumber[v51]].l_receiptdate;
+        [stmt_out] liveout: {partkey[v52], l#l_extendedprice[v415], linenumber[v51], orderkey[v50]}
+        [stmt_in] livein: {partkey[v52], l#l_extendedprice[v415], linenumber[v51], orderkey[v50]}
+      l#l_returnflag[v418] = Lineitem[orderkey[v50], linenumber[v51]].l_returnflag;
+        [stmt_out] liveout: {orderkey[v50], partkey[v52], l#l_extendedprice[v415], linenumber[v51]}
+        [stmt_in] livein: {orderkey[v50], partkey[v52], l#l_extendedprice[v415], linenumber[v51]}
+      l#l_shipdate[v420] = Lineitem[orderkey[v50], linenumber[v51]].l_shipdate;
+        [stmt_out] liveout: {linenumber[v51], orderkey[v50], partkey[v52], l#l_extendedprice[v415]}
+        [stmt_in] livein: {linenumber[v51], orderkey[v50], partkey[v52], l#l_extendedprice[v415]}
+      l#l_shipinstruct[v423] = Lineitem[orderkey[v50], linenumber[v51]].l_shipinstruct;
+        [stmt_out] liveout: {linenumber[v51], partkey[v52], l#l_extendedprice[v415], orderkey[v50]}
+        [stmt_in] livein: {linenumber[v51], partkey[v52], l#l_extendedprice[v415], orderkey[v50]}
+      l#l_shipmode[v424] = Lineitem[orderkey[v50], linenumber[v51]].l_shipmode;
+        [stmt_out] liveout: {orderkey[v50], partkey[v52], l#l_extendedprice[v415], linenumber[v51]}
+        [stmt_in] livein: {orderkey[v50], partkey[v52], l#l_extendedprice[v415], linenumber[v51]}
+      l#l_suppkey[v413] = Lineitem[orderkey[v50], linenumber[v51]].l_suppkey;
+        [stmt_out] liveout: {l#l_extendedprice[v415], partkey[v52], orderkey[v50], linenumber[v51]}
+        [stmt_in] livein: {l#l_extendedprice[v415], partkey[v52], orderkey[v50], linenumber[v51]}
+      l#l_tax[v417] = Lineitem[orderkey[v50], linenumber[v51]].l_tax;
+        [stmt_out] liveout: {l#l_extendedprice[v415], partkey[v52]}
+        [stmt_in] livein: {l#l_extendedprice[v415], partkey[v52]}
+      ep[v427] = l#l_extendedprice[v415];
+        [stmt_out] liveout: {partkey[v52]}
+      hop_exit hop23;
+      liveout: {partkey[v52]}
+  }
+
+  hop23 {
+    entry_block: bb23
+    bb23 (preds: bb22):
+      livein: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      #tmp39[v438] = Part[partkey[v52]];
+        [stmt_out] liveout: {partkey[v52], #tmp39[v438]}
+        [stmt_in] livein: {partkey[v52], #tmp39[v438]}
+      p[v428] = #tmp39[v438];
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_brand[v432] = Part[partkey[v52]].p_brand;
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_comment[v437] = Part[partkey[v52]].p_comment;
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_container[v435] = Part[partkey[v52]].p_container;
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_mfgr[v431] = Part[partkey[v52]].p_mfgr;
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_name[v430] = Part[partkey[v52]].p_name;
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_partkey[v429] = Part[partkey[v52]].p_partkey;
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_retailprice[v436] = Part[partkey[v52]].p_retailprice;
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_size[v434] = Part[partkey[v52]].p_size;
+        [stmt_out] liveout: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_type[v433] = Part[partkey[v52]].p_type;
+        [stmt_out] liveout: {p#p_type[v433]}
+        [stmt_in] livein: {p#p_type[v433]}
+      ptype[v439] = p#p_type[v433];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q15[fn27](orderkey[v53]: int, linenumber[v54]: int, suppkey[v55]: int)
+ {
+  entry_hop: hop24
+
+  hop24 {
+    entry_block: bb24
+    bb24:
+      livein: {orderkey[v53], linenumber[v54], suppkey[v55]}
+        [stmt_in] livein: {orderkey[v53], suppkey[v55], linenumber[v54]}
+      #tmp40[v457] = Lineitem[orderkey[v53], linenumber[v54]];
+        [stmt_out] liveout: {linenumber[v54], #tmp40[v457], orderkey[v53], suppkey[v55]}
+        [stmt_in] livein: {linenumber[v54], #tmp40[v457], orderkey[v53], suppkey[v55]}
+      l[v440] = #tmp40[v457];
+        [stmt_out] liveout: {orderkey[v53], suppkey[v55], linenumber[v54]}
+        [stmt_in] livein: {orderkey[v53], suppkey[v55], linenumber[v54]}
+      l#l_comment[v456] = Lineitem[orderkey[v53], linenumber[v54]].l_comment;
+        [stmt_out] liveout: {orderkey[v53], suppkey[v55], linenumber[v54]}
+        [stmt_in] livein: {orderkey[v53], suppkey[v55], linenumber[v54]}
+      l#l_commitdate[v452] = Lineitem[orderkey[v53], linenumber[v54]].l_commitdate;
+        [stmt_out] liveout: {linenumber[v54], orderkey[v53], suppkey[v55]}
+        [stmt_in] livein: {linenumber[v54], orderkey[v53], suppkey[v55]}
+      l#l_discount[v447] = Lineitem[orderkey[v53], linenumber[v54]].l_discount;
+        [stmt_out] liveout: {orderkey[v53], suppkey[v55], l#l_discount[v447], linenumber[v54]}
+        [stmt_in] livein: {orderkey[v53], suppkey[v55], l#l_discount[v447], linenumber[v54]}
+      l#l_extendedprice[v446] = Lineitem[orderkey[v53], linenumber[v54]].l_extendedprice;
+        [stmt_out] liveout: {linenumber[v54], suppkey[v55], orderkey[v53], l#l_extendedprice[v446], l#l_discount[v447]}
+        [stmt_in] livein: {linenumber[v54], suppkey[v55], orderkey[v53], l#l_extendedprice[v446], l#l_discount[v447]}
+      l#l_linenumber[v442] = Lineitem[orderkey[v53], linenumber[v54]].l_linenumber;
+        [stmt_out] liveout: {suppkey[v55], l#l_extendedprice[v446], linenumber[v54], orderkey[v53], l#l_discount[v447]}
+        [stmt_in] livein: {suppkey[v55], l#l_extendedprice[v446], linenumber[v54], orderkey[v53], l#l_discount[v447]}
+      l#l_linestatus[v450] = Lineitem[orderkey[v53], linenumber[v54]].l_linestatus;
+        [stmt_out] liveout: {linenumber[v54], l#l_extendedprice[v446], l#l_discount[v447], suppkey[v55], orderkey[v53]}
+        [stmt_in] livein: {linenumber[v54], l#l_extendedprice[v446], l#l_discount[v447], suppkey[v55], orderkey[v53]}
+      l#l_orderkey[v441] = Lineitem[orderkey[v53], linenumber[v54]].l_orderkey;
+        [stmt_out] liveout: {l#l_discount[v447], linenumber[v54], suppkey[v55], l#l_extendedprice[v446], orderkey[v53]}
+        [stmt_in] livein: {l#l_discount[v447], linenumber[v54], suppkey[v55], l#l_extendedprice[v446], orderkey[v53]}
+      l#l_partkey[v443] = Lineitem[orderkey[v53], linenumber[v54]].l_partkey;
+        [stmt_out] liveout: {linenumber[v54], l#l_discount[v447], suppkey[v55], l#l_extendedprice[v446], orderkey[v53]}
+        [stmt_in] livein: {linenumber[v54], l#l_discount[v447], suppkey[v55], l#l_extendedprice[v446], orderkey[v53]}
+      l#l_quantity[v445] = Lineitem[orderkey[v53], linenumber[v54]].l_quantity;
+        [stmt_out] liveout: {l#l_discount[v447], orderkey[v53], suppkey[v55], l#l_extendedprice[v446], linenumber[v54]}
+        [stmt_in] livein: {l#l_discount[v447], orderkey[v53], suppkey[v55], l#l_extendedprice[v446], linenumber[v54]}
+      l#l_receiptdate[v453] = Lineitem[orderkey[v53], linenumber[v54]].l_receiptdate;
+        [stmt_out] liveout: {orderkey[v53], suppkey[v55], l#l_extendedprice[v446], linenumber[v54], l#l_discount[v447]}
+        [stmt_in] livein: {orderkey[v53], suppkey[v55], l#l_extendedprice[v446], linenumber[v54], l#l_discount[v447]}
+      l#l_returnflag[v449] = Lineitem[orderkey[v53], linenumber[v54]].l_returnflag;
+        [stmt_out] liveout: {orderkey[v53], suppkey[v55], l#l_extendedprice[v446], linenumber[v54], l#l_discount[v447]}
+        [stmt_in] livein: {orderkey[v53], suppkey[v55], l#l_extendedprice[v446], linenumber[v54], l#l_discount[v447]}
+      l#l_shipdate[v451] = Lineitem[orderkey[v53], linenumber[v54]].l_shipdate;
+        [stmt_out] liveout: {orderkey[v53], suppkey[v55], l#l_extendedprice[v446], l#l_discount[v447], linenumber[v54]}
+        [stmt_in] livein: {orderkey[v53], suppkey[v55], l#l_extendedprice[v446], l#l_discount[v447], linenumber[v54]}
+      l#l_shipinstruct[v454] = Lineitem[orderkey[v53], linenumber[v54]].l_shipinstruct;
+        [stmt_out] liveout: {l#l_extendedprice[v446], l#l_discount[v447], linenumber[v54], suppkey[v55], orderkey[v53]}
+        [stmt_in] livein: {l#l_extendedprice[v446], l#l_discount[v447], linenumber[v54], suppkey[v55], orderkey[v53]}
+      l#l_shipmode[v455] = Lineitem[orderkey[v53], linenumber[v54]].l_shipmode;
+        [stmt_out] liveout: {orderkey[v53], l#l_extendedprice[v446], l#l_discount[v447], linenumber[v54], suppkey[v55]}
+        [stmt_in] livein: {orderkey[v53], l#l_extendedprice[v446], l#l_discount[v447], linenumber[v54], suppkey[v55]}
+      l#l_suppkey[v444] = Lineitem[orderkey[v53], linenumber[v54]].l_suppkey;
+        [stmt_out] liveout: {l#l_discount[v447], suppkey[v55], l#l_extendedprice[v446], linenumber[v54], orderkey[v53]}
+        [stmt_in] livein: {l#l_discount[v447], suppkey[v55], l#l_extendedprice[v446], linenumber[v54], orderkey[v53]}
+      l#l_tax[v448] = Lineitem[orderkey[v53], linenumber[v54]].l_tax;
+        [stmt_out] liveout: {l#l_extendedprice[v446], suppkey[v55], l#l_discount[v447]}
+        [stmt_in] livein: {l#l_extendedprice[v446], suppkey[v55], l#l_discount[v447]}
+      #tmp41[v459] = 1 - l#l_discount[v447];
+        [stmt_out] liveout: {#tmp41[v459], suppkey[v55], l#l_extendedprice[v446]}
+        [stmt_in] livein: {#tmp41[v459], suppkey[v55], l#l_extendedprice[v446]}
+      #tmp42[v460] = l#l_extendedprice[v446] * #tmp41[v459];
+        [stmt_out] liveout: {#tmp42[v460], suppkey[v55]}
+        [stmt_in] livein: {#tmp42[v460], suppkey[v55]}
+      revenue[v458] = #tmp42[v460];
+        [stmt_out] liveout: {suppkey[v55]}
+      hop_exit hop25;
+      liveout: {suppkey[v55]}
+  }
+
+  hop25 {
+    entry_block: bb25
+    bb25 (preds: bb24):
+      livein: {suppkey[v55]}
+        [stmt_in] livein: {suppkey[v55]}
+      #tmp43[v469] = Supplier[suppkey[v55]];
+        [stmt_out] liveout: {#tmp43[v469], suppkey[v55]}
+        [stmt_in] livein: {#tmp43[v469], suppkey[v55]}
+      s[v461] = #tmp43[v469];
+        [stmt_out] liveout: {suppkey[v55]}
+        [stmt_in] livein: {suppkey[v55]}
+      s#s_acctbal[v467] = Supplier[suppkey[v55]].s_acctbal;
+        [stmt_out] liveout: {suppkey[v55]}
+        [stmt_in] livein: {suppkey[v55]}
+      s#s_address[v464] = Supplier[suppkey[v55]].s_address;
+        [stmt_out] liveout: {suppkey[v55]}
+        [stmt_in] livein: {suppkey[v55]}
+      s#s_comment[v468] = Supplier[suppkey[v55]].s_comment;
+        [stmt_out] liveout: {suppkey[v55]}
+        [stmt_in] livein: {suppkey[v55]}
+      s#s_name[v463] = Supplier[suppkey[v55]].s_name;
+        [stmt_out] liveout: {s#s_name[v463], suppkey[v55]}
+        [stmt_in] livein: {s#s_name[v463], suppkey[v55]}
+      s#s_nationkey[v465] = Supplier[suppkey[v55]].s_nationkey;
+        [stmt_out] liveout: {s#s_name[v463], suppkey[v55]}
+        [stmt_in] livein: {s#s_name[v463], suppkey[v55]}
+      s#s_phone[v466] = Supplier[suppkey[v55]].s_phone;
+        [stmt_out] liveout: {suppkey[v55], s#s_name[v463]}
+        [stmt_in] livein: {suppkey[v55], s#s_name[v463]}
+      s#s_suppkey[v462] = Supplier[suppkey[v55]].s_suppkey;
+        [stmt_out] liveout: {s#s_name[v463]}
+        [stmt_in] livein: {s#s_name[v463]}
+      sname[v470] = s#s_name[v463];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q16[fn28](partkey[v56]: int, suppkey[v57]: int)
+ {
+  entry_hop: hop26
+
+  hop26 {
+    entry_block: bb26
+    bb26:
+      livein: {partkey[v56], suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      #tmp44[v481] = Part[partkey[v56]];
+        [stmt_out] liveout: {#tmp44[v481], suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {#tmp44[v481], suppkey[v57], partkey[v56]}
+      p[v471] = #tmp44[v481];
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_brand[v475] = Part[partkey[v56]].p_brand;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_comment[v480] = Part[partkey[v56]].p_comment;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_container[v478] = Part[partkey[v56]].p_container;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_mfgr[v474] = Part[partkey[v56]].p_mfgr;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_name[v473] = Part[partkey[v56]].p_name;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_partkey[v472] = Part[partkey[v56]].p_partkey;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_retailprice[v479] = Part[partkey[v56]].p_retailprice;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_size[v477] = Part[partkey[v56]].p_size;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      p#p_type[v476] = Part[partkey[v56]].p_type;
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      #tmp45[v488] = Partsupp[partkey[v56], suppkey[v57]];
+        [stmt_out] liveout: {#tmp45[v488], partkey[v56], suppkey[v57]}
+        [stmt_in] livein: {#tmp45[v488], partkey[v56], suppkey[v57]}
+      ps[v482] = #tmp45[v488];
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      ps#ps_availqty[v485] = Partsupp[partkey[v56], suppkey[v57]].ps_availqty;
+        [stmt_out] liveout: {partkey[v56], suppkey[v57]}
+        [stmt_in] livein: {partkey[v56], suppkey[v57]}
+      ps#ps_comment[v487] = Partsupp[partkey[v56], suppkey[v57]].ps_comment;
+        [stmt_out] liveout: {partkey[v56], suppkey[v57]}
+        [stmt_in] livein: {partkey[v56], suppkey[v57]}
+      ps#ps_partkey[v483] = Partsupp[partkey[v56], suppkey[v57]].ps_partkey;
+        [stmt_out] liveout: {partkey[v56], suppkey[v57]}
+        [stmt_in] livein: {partkey[v56], suppkey[v57]}
+      ps#ps_suppkey[v484] = Partsupp[partkey[v56], suppkey[v57]].ps_suppkey;
+        [stmt_out] liveout: {partkey[v56], suppkey[v57]}
+        [stmt_in] livein: {partkey[v56], suppkey[v57]}
+      ps#ps_supplycost[v486] = Partsupp[partkey[v56], suppkey[v57]].ps_supplycost;
+        [stmt_out] liveout: {suppkey[v57]}
+      hop_exit hop27;
+      liveout: {suppkey[v57]}
+  }
+
+  hop27 {
+    entry_block: bb27
+    bb27 (preds: bb26):
+      livein: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      #tmp46[v497] = Supplier[suppkey[v57]];
+        [stmt_out] liveout: {suppkey[v57], #tmp46[v497]}
+        [stmt_in] livein: {suppkey[v57], #tmp46[v497]}
+      s[v489] = #tmp46[v497];
+        [stmt_out] liveout: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      s#s_acctbal[v495] = Supplier[suppkey[v57]].s_acctbal;
+        [stmt_out] liveout: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      s#s_address[v492] = Supplier[suppkey[v57]].s_address;
+        [stmt_out] liveout: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      s#s_comment[v496] = Supplier[suppkey[v57]].s_comment;
+        [stmt_out] liveout: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      s#s_name[v491] = Supplier[suppkey[v57]].s_name;
+        [stmt_out] liveout: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      s#s_nationkey[v493] = Supplier[suppkey[v57]].s_nationkey;
+        [stmt_out] liveout: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      s#s_phone[v494] = Supplier[suppkey[v57]].s_phone;
+        [stmt_out] liveout: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      s#s_suppkey[v490] = Supplier[suppkey[v57]].s_suppkey;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q17[fn29](partkey[v58]: int, orderkey[v59]: int, linenumber[v60]: int)
+ {
+  entry_hop: hop28
+
+  hop28 {
+    entry_block: bb28
+    bb28:
+      livein: {linenumber[v60], partkey[v58], orderkey[v59]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60], partkey[v58]}
+      #tmp47[v508] = Part[partkey[v58]];
+        [stmt_out] liveout: {linenumber[v60], orderkey[v59], partkey[v58], #tmp47[v508]}
+        [stmt_in] livein: {linenumber[v60], orderkey[v59], partkey[v58], #tmp47[v508]}
+      p[v498] = #tmp47[v508];
+        [stmt_out] liveout: {linenumber[v60], partkey[v58], orderkey[v59]}
+        [stmt_in] livein: {linenumber[v60], partkey[v58], orderkey[v59]}
+      p#p_brand[v502] = Part[partkey[v58]].p_brand;
+        [stmt_out] liveout: {p#p_brand[v502], partkey[v58], orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {p#p_brand[v502], partkey[v58], orderkey[v59], linenumber[v60]}
+      p#p_comment[v507] = Part[partkey[v58]].p_comment;
+        [stmt_out] liveout: {p#p_brand[v502], partkey[v58], orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {p#p_brand[v502], partkey[v58], orderkey[v59], linenumber[v60]}
+      p#p_container[v505] = Part[partkey[v58]].p_container;
+        [stmt_out] liveout: {p#p_brand[v502], linenumber[v60], partkey[v58], orderkey[v59]}
+        [stmt_in] livein: {p#p_brand[v502], linenumber[v60], partkey[v58], orderkey[v59]}
+      p#p_mfgr[v501] = Part[partkey[v58]].p_mfgr;
+        [stmt_out] liveout: {p#p_brand[v502], partkey[v58], linenumber[v60], orderkey[v59]}
+        [stmt_in] livein: {p#p_brand[v502], partkey[v58], linenumber[v60], orderkey[v59]}
+      p#p_name[v500] = Part[partkey[v58]].p_name;
+        [stmt_out] liveout: {p#p_brand[v502], partkey[v58], orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {p#p_brand[v502], partkey[v58], orderkey[v59], linenumber[v60]}
+      p#p_partkey[v499] = Part[partkey[v58]].p_partkey;
+        [stmt_out] liveout: {p#p_brand[v502], linenumber[v60], partkey[v58], orderkey[v59]}
+        [stmt_in] livein: {p#p_brand[v502], linenumber[v60], partkey[v58], orderkey[v59]}
+      p#p_retailprice[v506] = Part[partkey[v58]].p_retailprice;
+        [stmt_out] liveout: {partkey[v58], p#p_brand[v502], linenumber[v60], orderkey[v59]}
+        [stmt_in] livein: {partkey[v58], p#p_brand[v502], linenumber[v60], orderkey[v59]}
+      p#p_size[v504] = Part[partkey[v58]].p_size;
+        [stmt_out] liveout: {orderkey[v59], p#p_brand[v502], partkey[v58], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], p#p_brand[v502], partkey[v58], linenumber[v60]}
+      p#p_type[v503] = Part[partkey[v58]].p_type;
+        [stmt_out] liveout: {linenumber[v60], p#p_brand[v502], orderkey[v59]}
+        [stmt_in] livein: {linenumber[v60], p#p_brand[v502], orderkey[v59]}
+      brand[v509] = p#p_brand[v502];
+        [stmt_out] liveout: {linenumber[v60], orderkey[v59]}
+      hop_exit hop29;
+      liveout: {linenumber[v60], orderkey[v59]}
+  }
+
+  hop29 {
+    entry_block: bb29
+    bb29 (preds: bb28):
+      livein: {linenumber[v60], orderkey[v59]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60]}
+      #tmp48[v527] = Lineitem[orderkey[v59], linenumber[v60]];
+        [stmt_out] liveout: {linenumber[v60], orderkey[v59], #tmp48[v527]}
+        [stmt_in] livein: {linenumber[v60], orderkey[v59], #tmp48[v527]}
+      l[v510] = #tmp48[v527];
+        [stmt_out] liveout: {linenumber[v60], orderkey[v59]}
+        [stmt_in] livein: {linenumber[v60], orderkey[v59]}
+      l#l_comment[v526] = Lineitem[orderkey[v59], linenumber[v60]].l_comment;
+        [stmt_out] liveout: {orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60]}
+      l#l_commitdate[v522] = Lineitem[orderkey[v59], linenumber[v60]].l_commitdate;
+        [stmt_out] liveout: {linenumber[v60], orderkey[v59]}
+        [stmt_in] livein: {linenumber[v60], orderkey[v59]}
+      l#l_discount[v517] = Lineitem[orderkey[v59], linenumber[v60]].l_discount;
+        [stmt_out] liveout: {orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60]}
+      l#l_extendedprice[v516] = Lineitem[orderkey[v59], linenumber[v60]].l_extendedprice;
+        [stmt_out] liveout: {orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60]}
+      l#l_linenumber[v512] = Lineitem[orderkey[v59], linenumber[v60]].l_linenumber;
+        [stmt_out] liveout: {orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60]}
+      l#l_linestatus[v520] = Lineitem[orderkey[v59], linenumber[v60]].l_linestatus;
+        [stmt_out] liveout: {orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60]}
+      l#l_orderkey[v511] = Lineitem[orderkey[v59], linenumber[v60]].l_orderkey;
+        [stmt_out] liveout: {linenumber[v60], orderkey[v59]}
+        [stmt_in] livein: {linenumber[v60], orderkey[v59]}
+      l#l_partkey[v513] = Lineitem[orderkey[v59], linenumber[v60]].l_partkey;
+        [stmt_out] liveout: {orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60]}
+      l#l_quantity[v515] = Lineitem[orderkey[v59], linenumber[v60]].l_quantity;
+        [stmt_out] liveout: {l#l_quantity[v515], linenumber[v60], orderkey[v59]}
+        [stmt_in] livein: {l#l_quantity[v515], linenumber[v60], orderkey[v59]}
+      l#l_receiptdate[v523] = Lineitem[orderkey[v59], linenumber[v60]].l_receiptdate;
+        [stmt_out] liveout: {l#l_quantity[v515], orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {l#l_quantity[v515], orderkey[v59], linenumber[v60]}
+      l#l_returnflag[v519] = Lineitem[orderkey[v59], linenumber[v60]].l_returnflag;
+        [stmt_out] liveout: {orderkey[v59], l#l_quantity[v515], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], l#l_quantity[v515], linenumber[v60]}
+      l#l_shipdate[v521] = Lineitem[orderkey[v59], linenumber[v60]].l_shipdate;
+        [stmt_out] liveout: {orderkey[v59], l#l_quantity[v515], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], l#l_quantity[v515], linenumber[v60]}
+      l#l_shipinstruct[v524] = Lineitem[orderkey[v59], linenumber[v60]].l_shipinstruct;
+        [stmt_out] liveout: {linenumber[v60], orderkey[v59], l#l_quantity[v515]}
+        [stmt_in] livein: {linenumber[v60], orderkey[v59], l#l_quantity[v515]}
+      l#l_shipmode[v525] = Lineitem[orderkey[v59], linenumber[v60]].l_shipmode;
+        [stmt_out] liveout: {linenumber[v60], l#l_quantity[v515], orderkey[v59]}
+        [stmt_in] livein: {linenumber[v60], l#l_quantity[v515], orderkey[v59]}
+      l#l_suppkey[v514] = Lineitem[orderkey[v59], linenumber[v60]].l_suppkey;
+        [stmt_out] liveout: {l#l_quantity[v515], orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {l#l_quantity[v515], orderkey[v59], linenumber[v60]}
+      l#l_tax[v518] = Lineitem[orderkey[v59], linenumber[v60]].l_tax;
+        [stmt_out] liveout: {l#l_quantity[v515]}
+        [stmt_in] livein: {l#l_quantity[v515]}
+      qty[v528] = l#l_quantity[v515];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q18[fn30](custkey[v61]: int, orderkey[v62]: int, linenumber[v63]: int)
+ {
+  entry_hop: hop30
+
+  hop30 {
+    entry_block: bb30
+    bb30:
+      livein: {custkey[v61], orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62], custkey[v61]}
+      #tmp49[v538] = Customer[custkey[v61]];
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62], custkey[v61], #tmp49[v538]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62], custkey[v61], #tmp49[v538]}
+      c[v529] = #tmp49[v538];
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63], custkey[v61]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63], custkey[v61]}
+      c#c_acctbal[v535] = Customer[custkey[v61]].c_acctbal;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63], custkey[v61]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63], custkey[v61]}
+      c#c_address[v532] = Customer[custkey[v61]].c_address;
+        [stmt_out] liveout: {custkey[v61], linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {custkey[v61], linenumber[v63], orderkey[v62]}
+      c#c_comment[v537] = Customer[custkey[v61]].c_comment;
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62], custkey[v61]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62], custkey[v61]}
+      c#c_custkey[v530] = Customer[custkey[v61]].c_custkey;
+        [stmt_out] liveout: {orderkey[v62], custkey[v61], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], custkey[v61], linenumber[v63]}
+      c#c_mktsegment[v536] = Customer[custkey[v61]].c_mktsegment;
+        [stmt_out] liveout: {custkey[v61], linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {custkey[v61], linenumber[v63], orderkey[v62]}
+      c#c_name[v531] = Customer[custkey[v61]].c_name;
+        [stmt_out] liveout: {custkey[v61], linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {custkey[v61], linenumber[v63], orderkey[v62]}
+      c#c_nationkey[v533] = Customer[custkey[v61]].c_nationkey;
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62], custkey[v61]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62], custkey[v61]}
+      c#c_phone[v534] = Customer[custkey[v61]].c_phone;
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62]}
+      hop_exit hop31;
+      liveout: {linenumber[v63], orderkey[v62]}
+  }
+
+  hop31 {
+    entry_block: bb31
+    bb31 (preds: bb30):
+      livein: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      #tmp50[v549] = Orders[orderkey[v62]];
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62], #tmp50[v549]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62], #tmp50[v549]}
+      o[v539] = #tmp50[v549];
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      o#o_clerk[v546] = Orders[orderkey[v62]].o_clerk;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      o#o_comment[v548] = Orders[orderkey[v62]].o_comment;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      o#o_custkey[v541] = Orders[orderkey[v62]].o_custkey;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      o#o_orderdate[v544] = Orders[orderkey[v62]].o_orderdate;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      o#o_orderkey[v540] = Orders[orderkey[v62]].o_orderkey;
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62]}
+      o#o_orderpriority[v545] = Orders[orderkey[v62]].o_orderpriority;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      o#o_orderstatus[v542] = Orders[orderkey[v62]].o_orderstatus;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      o#o_shippriority[v547] = Orders[orderkey[v62]].o_shippriority;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      o#o_totalprice[v543] = Orders[orderkey[v62]].o_totalprice;
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62]}
+      #tmp51[v567] = Lineitem[orderkey[v62], linenumber[v63]];
+        [stmt_out] liveout: {#tmp51[v567], linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {#tmp51[v567], linenumber[v63], orderkey[v62]}
+      l[v550] = #tmp51[v567];
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62]}
+      l#l_comment[v566] = Lineitem[orderkey[v62], linenumber[v63]].l_comment;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      l#l_commitdate[v562] = Lineitem[orderkey[v62], linenumber[v63]].l_commitdate;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      l#l_discount[v557] = Lineitem[orderkey[v62], linenumber[v63]].l_discount;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      l#l_extendedprice[v556] = Lineitem[orderkey[v62], linenumber[v63]].l_extendedprice;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      l#l_linenumber[v552] = Lineitem[orderkey[v62], linenumber[v63]].l_linenumber;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      l#l_linestatus[v560] = Lineitem[orderkey[v62], linenumber[v63]].l_linestatus;
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62]}
+      l#l_orderkey[v551] = Lineitem[orderkey[v62], linenumber[v63]].l_orderkey;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      l#l_partkey[v553] = Lineitem[orderkey[v62], linenumber[v63]].l_partkey;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      l#l_quantity[v555] = Lineitem[orderkey[v62], linenumber[v63]].l_quantity;
+        [stmt_out] liveout: {orderkey[v62], l#l_quantity[v555], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], l#l_quantity[v555], linenumber[v63]}
+      l#l_receiptdate[v563] = Lineitem[orderkey[v62], linenumber[v63]].l_receiptdate;
+        [stmt_out] liveout: {l#l_quantity[v555], linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {l#l_quantity[v555], linenumber[v63], orderkey[v62]}
+      l#l_returnflag[v559] = Lineitem[orderkey[v62], linenumber[v63]].l_returnflag;
+        [stmt_out] liveout: {l#l_quantity[v555], orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {l#l_quantity[v555], orderkey[v62], linenumber[v63]}
+      l#l_shipdate[v561] = Lineitem[orderkey[v62], linenumber[v63]].l_shipdate;
+        [stmt_out] liveout: {l#l_quantity[v555], orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {l#l_quantity[v555], orderkey[v62], linenumber[v63]}
+      l#l_shipinstruct[v564] = Lineitem[orderkey[v62], linenumber[v63]].l_shipinstruct;
+        [stmt_out] liveout: {linenumber[v63], l#l_quantity[v555], orderkey[v62]}
+        [stmt_in] livein: {linenumber[v63], l#l_quantity[v555], orderkey[v62]}
+      l#l_shipmode[v565] = Lineitem[orderkey[v62], linenumber[v63]].l_shipmode;
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63], l#l_quantity[v555]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63], l#l_quantity[v555]}
+      l#l_suppkey[v554] = Lineitem[orderkey[v62], linenumber[v63]].l_suppkey;
+        [stmt_out] liveout: {l#l_quantity[v555], orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {l#l_quantity[v555], orderkey[v62], linenumber[v63]}
+      l#l_tax[v558] = Lineitem[orderkey[v62], linenumber[v63]].l_tax;
+        [stmt_out] liveout: {l#l_quantity[v555]}
+        [stmt_in] livein: {l#l_quantity[v555]}
+      qty[v568] = l#l_quantity[v555];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q19[fn31](orderkey[v64]: int, linenumber[v65]: int, partkey[v66]: int)
+ {
+  entry_hop: hop32
+
+  hop32 {
+    entry_block: bb32
+    bb32:
+      livein: {partkey[v66], linenumber[v65], orderkey[v64]}
+        [stmt_in] livein: {partkey[v66], linenumber[v65], orderkey[v64]}
+      #tmp52[v586] = Lineitem[orderkey[v64], linenumber[v65]];
+        [stmt_out] liveout: {linenumber[v65], #tmp52[v586], orderkey[v64], partkey[v66]}
+        [stmt_in] livein: {linenumber[v65], #tmp52[v586], orderkey[v64], partkey[v66]}
+      l[v569] = #tmp52[v586];
+        [stmt_out] liveout: {orderkey[v64], partkey[v66], linenumber[v65]}
+        [stmt_in] livein: {orderkey[v64], partkey[v66], linenumber[v65]}
+      l#l_comment[v585] = Lineitem[orderkey[v64], linenumber[v65]].l_comment;
+        [stmt_out] liveout: {linenumber[v65], orderkey[v64], partkey[v66]}
+        [stmt_in] livein: {linenumber[v65], orderkey[v64], partkey[v66]}
+      l#l_commitdate[v581] = Lineitem[orderkey[v64], linenumber[v65]].l_commitdate;
+        [stmt_out] liveout: {partkey[v66], linenumber[v65], orderkey[v64]}
+        [stmt_in] livein: {partkey[v66], linenumber[v65], orderkey[v64]}
+      l#l_discount[v576] = Lineitem[orderkey[v64], linenumber[v65]].l_discount;
+        [stmt_out] liveout: {linenumber[v65], l#l_discount[v576], orderkey[v64], partkey[v66]}
+        [stmt_in] livein: {linenumber[v65], l#l_discount[v576], orderkey[v64], partkey[v66]}
+      l#l_extendedprice[v575] = Lineitem[orderkey[v64], linenumber[v65]].l_extendedprice;
+        [stmt_out] liveout: {l#l_extendedprice[v575], partkey[v66], l#l_discount[v576], orderkey[v64], linenumber[v65]}
+        [stmt_in] livein: {l#l_extendedprice[v575], partkey[v66], l#l_discount[v576], orderkey[v64], linenumber[v65]}
+      l#l_linenumber[v571] = Lineitem[orderkey[v64], linenumber[v65]].l_linenumber;
+        [stmt_out] liveout: {partkey[v66], l#l_discount[v576], orderkey[v64], linenumber[v65], l#l_extendedprice[v575]}
+        [stmt_in] livein: {partkey[v66], l#l_discount[v576], orderkey[v64], linenumber[v65], l#l_extendedprice[v575]}
+      l#l_linestatus[v579] = Lineitem[orderkey[v64], linenumber[v65]].l_linestatus;
+        [stmt_out] liveout: {partkey[v66], linenumber[v65], orderkey[v64], l#l_discount[v576], l#l_extendedprice[v575]}
+        [stmt_in] livein: {partkey[v66], linenumber[v65], orderkey[v64], l#l_discount[v576], l#l_extendedprice[v575]}
+      l#l_orderkey[v570] = Lineitem[orderkey[v64], linenumber[v65]].l_orderkey;
+        [stmt_out] liveout: {partkey[v66], orderkey[v64], l#l_extendedprice[v575], linenumber[v65], l#l_discount[v576]}
+        [stmt_in] livein: {partkey[v66], orderkey[v64], l#l_extendedprice[v575], linenumber[v65], l#l_discount[v576]}
+      l#l_partkey[v572] = Lineitem[orderkey[v64], linenumber[v65]].l_partkey;
+        [stmt_out] liveout: {l#l_discount[v576], partkey[v66], linenumber[v65], orderkey[v64], l#l_extendedprice[v575]}
+        [stmt_in] livein: {l#l_discount[v576], partkey[v66], linenumber[v65], orderkey[v64], l#l_extendedprice[v575]}
+      l#l_quantity[v574] = Lineitem[orderkey[v64], linenumber[v65]].l_quantity;
+        [stmt_out] liveout: {linenumber[v65], l#l_extendedprice[v575], orderkey[v64], l#l_discount[v576], partkey[v66]}
+        [stmt_in] livein: {linenumber[v65], l#l_extendedprice[v575], orderkey[v64], l#l_discount[v576], partkey[v66]}
+      l#l_receiptdate[v582] = Lineitem[orderkey[v64], linenumber[v65]].l_receiptdate;
+        [stmt_out] liveout: {l#l_discount[v576], partkey[v66], orderkey[v64], linenumber[v65], l#l_extendedprice[v575]}
+        [stmt_in] livein: {l#l_discount[v576], partkey[v66], orderkey[v64], linenumber[v65], l#l_extendedprice[v575]}
+      l#l_returnflag[v578] = Lineitem[orderkey[v64], linenumber[v65]].l_returnflag;
+        [stmt_out] liveout: {l#l_discount[v576], linenumber[v65], orderkey[v64], partkey[v66], l#l_extendedprice[v575]}
+        [stmt_in] livein: {l#l_discount[v576], linenumber[v65], orderkey[v64], partkey[v66], l#l_extendedprice[v575]}
+      l#l_shipdate[v580] = Lineitem[orderkey[v64], linenumber[v65]].l_shipdate;
+        [stmt_out] liveout: {l#l_extendedprice[v575], partkey[v66], orderkey[v64], l#l_discount[v576], linenumber[v65]}
+        [stmt_in] livein: {l#l_extendedprice[v575], partkey[v66], orderkey[v64], l#l_discount[v576], linenumber[v65]}
+      l#l_shipinstruct[v583] = Lineitem[orderkey[v64], linenumber[v65]].l_shipinstruct;
+        [stmt_out] liveout: {orderkey[v64], partkey[v66], l#l_extendedprice[v575], l#l_discount[v576], linenumber[v65]}
+        [stmt_in] livein: {orderkey[v64], partkey[v66], l#l_extendedprice[v575], l#l_discount[v576], linenumber[v65]}
+      l#l_shipmode[v584] = Lineitem[orderkey[v64], linenumber[v65]].l_shipmode;
+        [stmt_out] liveout: {l#l_discount[v576], l#l_extendedprice[v575], linenumber[v65], orderkey[v64], partkey[v66]}
+        [stmt_in] livein: {l#l_discount[v576], l#l_extendedprice[v575], linenumber[v65], orderkey[v64], partkey[v66]}
+      l#l_suppkey[v573] = Lineitem[orderkey[v64], linenumber[v65]].l_suppkey;
+        [stmt_out] liveout: {l#l_extendedprice[v575], orderkey[v64], linenumber[v65], partkey[v66], l#l_discount[v576]}
+        [stmt_in] livein: {l#l_extendedprice[v575], orderkey[v64], linenumber[v65], partkey[v66], l#l_discount[v576]}
+      l#l_tax[v577] = Lineitem[orderkey[v64], linenumber[v65]].l_tax;
+        [stmt_out] liveout: {l#l_extendedprice[v575], partkey[v66], l#l_discount[v576]}
+        [stmt_in] livein: {l#l_extendedprice[v575], partkey[v66], l#l_discount[v576]}
+      #tmp53[v588] = 1 - l#l_discount[v576];
+        [stmt_out] liveout: {l#l_extendedprice[v575], partkey[v66], #tmp53[v588]}
+        [stmt_in] livein: {l#l_extendedprice[v575], partkey[v66], #tmp53[v588]}
+      #tmp54[v589] = l#l_extendedprice[v575] * #tmp53[v588];
+        [stmt_out] liveout: {partkey[v66], #tmp54[v589]}
+        [stmt_in] livein: {partkey[v66], #tmp54[v589]}
+      revenue[v587] = #tmp54[v589];
+        [stmt_out] liveout: {partkey[v66]}
+      hop_exit hop33;
+      liveout: {partkey[v66]}
+  }
+
+  hop33 {
+    entry_block: bb33
+    bb33 (preds: bb32):
+      livein: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      #tmp55[v600] = Part[partkey[v66]];
+        [stmt_out] liveout: {#tmp55[v600], partkey[v66]}
+        [stmt_in] livein: {#tmp55[v600], partkey[v66]}
+      p[v590] = #tmp55[v600];
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_brand[v594] = Part[partkey[v66]].p_brand;
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_comment[v599] = Part[partkey[v66]].p_comment;
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_container[v597] = Part[partkey[v66]].p_container;
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_mfgr[v593] = Part[partkey[v66]].p_mfgr;
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_name[v592] = Part[partkey[v66]].p_name;
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_partkey[v591] = Part[partkey[v66]].p_partkey;
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_retailprice[v598] = Part[partkey[v66]].p_retailprice;
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_size[v596] = Part[partkey[v66]].p_size;
+        [stmt_out] liveout: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      p#p_type[v595] = Part[partkey[v66]].p_type;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q20[fn32](partkey[v67]: int, suppkey[v68]: int, nationkey[v69]: int, orderkey[v70]: int, linenumber[v71]: int)
+ {
+  entry_hop: hop34
+
+  hop34 {
+    entry_block: bb34
+    bb34:
+      livein: {partkey[v67], linenumber[v71], suppkey[v68], orderkey[v70], nationkey[v69]}
+        [stmt_in] livein: {nationkey[v69], linenumber[v71], partkey[v67], orderkey[v70], suppkey[v68]}
+      #tmp56[v611] = Part[partkey[v67]];
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71], suppkey[v68], nationkey[v69], partkey[v67], #tmp56[v611]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71], suppkey[v68], nationkey[v69], partkey[v67], #tmp56[v611]}
+      p[v601] = #tmp56[v611];
+        [stmt_out] liveout: {orderkey[v70], nationkey[v69], linenumber[v71], suppkey[v68], partkey[v67]}
+        [stmt_in] livein: {orderkey[v70], nationkey[v69], linenumber[v71], suppkey[v68], partkey[v67]}
+      p#p_brand[v605] = Part[partkey[v67]].p_brand;
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70], suppkey[v68], partkey[v67], nationkey[v69]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70], suppkey[v68], partkey[v67], nationkey[v69]}
+      p#p_comment[v610] = Part[partkey[v67]].p_comment;
+        [stmt_out] liveout: {nationkey[v69], orderkey[v70], linenumber[v71], suppkey[v68], partkey[v67]}
+        [stmt_in] livein: {nationkey[v69], orderkey[v70], linenumber[v71], suppkey[v68], partkey[v67]}
+      p#p_container[v608] = Part[partkey[v67]].p_container;
+        [stmt_out] liveout: {partkey[v67], suppkey[v68], nationkey[v69], linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {partkey[v67], suppkey[v68], nationkey[v69], linenumber[v71], orderkey[v70]}
+      p#p_mfgr[v604] = Part[partkey[v67]].p_mfgr;
+        [stmt_out] liveout: {orderkey[v70], partkey[v67], suppkey[v68], nationkey[v69], linenumber[v71]}
+        [stmt_in] livein: {orderkey[v70], partkey[v67], suppkey[v68], nationkey[v69], linenumber[v71]}
+      p#p_name[v603] = Part[partkey[v67]].p_name;
+        [stmt_out] liveout: {suppkey[v68], orderkey[v70], nationkey[v69], linenumber[v71], partkey[v67]}
+        [stmt_in] livein: {suppkey[v68], orderkey[v70], nationkey[v69], linenumber[v71], partkey[v67]}
+      p#p_partkey[v602] = Part[partkey[v67]].p_partkey;
+        [stmt_out] liveout: {orderkey[v70], partkey[v67], nationkey[v69], linenumber[v71], suppkey[v68]}
+        [stmt_in] livein: {orderkey[v70], partkey[v67], nationkey[v69], linenumber[v71], suppkey[v68]}
+      p#p_retailprice[v609] = Part[partkey[v67]].p_retailprice;
+        [stmt_out] liveout: {linenumber[v71], nationkey[v69], orderkey[v70], partkey[v67], suppkey[v68]}
+        [stmt_in] livein: {linenumber[v71], nationkey[v69], orderkey[v70], partkey[v67], suppkey[v68]}
+      p#p_size[v607] = Part[partkey[v67]].p_size;
+        [stmt_out] liveout: {partkey[v67], suppkey[v68], orderkey[v70], linenumber[v71], nationkey[v69]}
+        [stmt_in] livein: {partkey[v67], suppkey[v68], orderkey[v70], linenumber[v71], nationkey[v69]}
+      p#p_type[v606] = Part[partkey[v67]].p_type;
+        [stmt_out] liveout: {suppkey[v68], orderkey[v70], linenumber[v71], partkey[v67], nationkey[v69]}
+        [stmt_in] livein: {suppkey[v68], orderkey[v70], linenumber[v71], partkey[v67], nationkey[v69]}
+      #tmp57[v618] = Partsupp[partkey[v67], suppkey[v68]];
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70], nationkey[v69], partkey[v67], #tmp57[v618], suppkey[v68]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70], nationkey[v69], partkey[v67], #tmp57[v618], suppkey[v68]}
+      ps[v612] = #tmp57[v618];
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70], suppkey[v68], nationkey[v69], partkey[v67]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70], suppkey[v68], nationkey[v69], partkey[v67]}
+      ps#ps_availqty[v615] = Partsupp[partkey[v67], suppkey[v68]].ps_availqty;
+        [stmt_out] liveout: {linenumber[v71], nationkey[v69], orderkey[v70], suppkey[v68], partkey[v67]}
+        [stmt_in] livein: {linenumber[v71], nationkey[v69], orderkey[v70], suppkey[v68], partkey[v67]}
+      ps#ps_comment[v617] = Partsupp[partkey[v67], suppkey[v68]].ps_comment;
+        [stmt_out] liveout: {suppkey[v68], partkey[v67], nationkey[v69], orderkey[v70], linenumber[v71]}
+        [stmt_in] livein: {suppkey[v68], partkey[v67], nationkey[v69], orderkey[v70], linenumber[v71]}
+      ps#ps_partkey[v613] = Partsupp[partkey[v67], suppkey[v68]].ps_partkey;
+        [stmt_out] liveout: {linenumber[v71], partkey[v67], orderkey[v70], nationkey[v69], suppkey[v68]}
+        [stmt_in] livein: {linenumber[v71], partkey[v67], orderkey[v70], nationkey[v69], suppkey[v68]}
+      ps#ps_suppkey[v614] = Partsupp[partkey[v67], suppkey[v68]].ps_suppkey;
+        [stmt_out] liveout: {partkey[v67], linenumber[v71], suppkey[v68], orderkey[v70], nationkey[v69]}
+        [stmt_in] livein: {partkey[v67], linenumber[v71], suppkey[v68], orderkey[v70], nationkey[v69]}
+      ps#ps_supplycost[v616] = Partsupp[partkey[v67], suppkey[v68]].ps_supplycost;
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71], nationkey[v69], suppkey[v68]}
+      hop_exit hop35;
+      liveout: {orderkey[v70], linenumber[v71], suppkey[v68], nationkey[v69]}
+  }
+
+  hop35 {
+    entry_block: bb35
+    bb35 (preds: bb34):
+      livein: {orderkey[v70], linenumber[v71], suppkey[v68], nationkey[v69]}
+        [stmt_in] livein: {suppkey[v68], orderkey[v70], nationkey[v69], linenumber[v71]}
+      #tmp58[v627] = Supplier[suppkey[v68]];
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70], nationkey[v69], suppkey[v68], #tmp58[v627]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70], nationkey[v69], suppkey[v68], #tmp58[v627]}
+      s[v619] = #tmp58[v627];
+        [stmt_out] liveout: {suppkey[v68], linenumber[v71], orderkey[v70], nationkey[v69]}
+        [stmt_in] livein: {suppkey[v68], linenumber[v71], orderkey[v70], nationkey[v69]}
+      s#s_acctbal[v625] = Supplier[suppkey[v68]].s_acctbal;
+        [stmt_out] liveout: {linenumber[v71], nationkey[v69], suppkey[v68], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], nationkey[v69], suppkey[v68], orderkey[v70]}
+      s#s_address[v622] = Supplier[suppkey[v68]].s_address;
+        [stmt_out] liveout: {linenumber[v71], nationkey[v69], orderkey[v70], suppkey[v68]}
+        [stmt_in] livein: {linenumber[v71], nationkey[v69], orderkey[v70], suppkey[v68]}
+      s#s_comment[v626] = Supplier[suppkey[v68]].s_comment;
+        [stmt_out] liveout: {nationkey[v69], linenumber[v71], orderkey[v70], suppkey[v68]}
+        [stmt_in] livein: {nationkey[v69], linenumber[v71], orderkey[v70], suppkey[v68]}
+      s#s_name[v621] = Supplier[suppkey[v68]].s_name;
+        [stmt_out] liveout: {orderkey[v70], suppkey[v68], nationkey[v69], linenumber[v71]}
+        [stmt_in] livein: {orderkey[v70], suppkey[v68], nationkey[v69], linenumber[v71]}
+      s#s_nationkey[v623] = Supplier[suppkey[v68]].s_nationkey;
+        [stmt_out] liveout: {suppkey[v68], nationkey[v69], linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {suppkey[v68], nationkey[v69], linenumber[v71], orderkey[v70]}
+      s#s_phone[v624] = Supplier[suppkey[v68]].s_phone;
+        [stmt_out] liveout: {orderkey[v70], suppkey[v68], linenumber[v71], nationkey[v69]}
+        [stmt_in] livein: {orderkey[v70], suppkey[v68], linenumber[v71], nationkey[v69]}
+      s#s_suppkey[v620] = Supplier[suppkey[v68]].s_suppkey;
+        [stmt_out] liveout: {nationkey[v69], linenumber[v71], orderkey[v70]}
+      hop_exit hop36;
+      liveout: {orderkey[v70], nationkey[v69], linenumber[v71]}
+  }
+
+  hop36 {
+    entry_block: bb36
+    bb36 (preds: bb35):
+      livein: {orderkey[v70], nationkey[v69], linenumber[v71]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71], nationkey[v69]}
+      #tmp59[v633] = Nation[nationkey[v69]];
+        [stmt_out] liveout: {nationkey[v69], linenumber[v71], #tmp59[v633], orderkey[v70]}
+        [stmt_in] livein: {nationkey[v69], linenumber[v71], #tmp59[v633], orderkey[v70]}
+      n[v628] = #tmp59[v633];
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71], nationkey[v69]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71], nationkey[v69]}
+      n#n_comment[v632] = Nation[nationkey[v69]].n_comment;
+        [stmt_out] liveout: {linenumber[v71], nationkey[v69], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], nationkey[v69], orderkey[v70]}
+      n#n_name[v630] = Nation[nationkey[v69]].n_name;
+        [stmt_out] liveout: {orderkey[v70], nationkey[v69], linenumber[v71]}
+        [stmt_in] livein: {orderkey[v70], nationkey[v69], linenumber[v71]}
+      n#n_nationkey[v629] = Nation[nationkey[v69]].n_nationkey;
+        [stmt_out] liveout: {nationkey[v69], linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {nationkey[v69], linenumber[v71], orderkey[v70]}
+      n#n_regionkey[v631] = Nation[nationkey[v69]].n_regionkey;
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71]}
+      hop_exit hop37;
+      liveout: {orderkey[v70], linenumber[v71]}
+  }
+
+  hop37 {
+    entry_block: bb37
+    bb37 (preds: bb36):
+      livein: {linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70]}
+      #tmp60[v651] = Lineitem[orderkey[v70], linenumber[v71]];
+        [stmt_out] liveout: {#tmp60[v651], linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {#tmp60[v651], linenumber[v71], orderkey[v70]}
+      l[v634] = #tmp60[v651];
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70]}
+      l#l_comment[v650] = Lineitem[orderkey[v70], linenumber[v71]].l_comment;
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70]}
+      l#l_commitdate[v646] = Lineitem[orderkey[v70], linenumber[v71]].l_commitdate;
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71]}
+      l#l_discount[v641] = Lineitem[orderkey[v70], linenumber[v71]].l_discount;
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71]}
+      l#l_extendedprice[v640] = Lineitem[orderkey[v70], linenumber[v71]].l_extendedprice;
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70]}
+      l#l_linenumber[v636] = Lineitem[orderkey[v70], linenumber[v71]].l_linenumber;
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70]}
+      l#l_linestatus[v644] = Lineitem[orderkey[v70], linenumber[v71]].l_linestatus;
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71]}
+      l#l_orderkey[v635] = Lineitem[orderkey[v70], linenumber[v71]].l_orderkey;
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70]}
+      l#l_partkey[v637] = Lineitem[orderkey[v70], linenumber[v71]].l_partkey;
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70]}
+      l#l_quantity[v639] = Lineitem[orderkey[v70], linenumber[v71]].l_quantity;
+        [stmt_out] liveout: {l#l_quantity[v639], orderkey[v70], linenumber[v71]}
+        [stmt_in] livein: {l#l_quantity[v639], orderkey[v70], linenumber[v71]}
+      l#l_receiptdate[v647] = Lineitem[orderkey[v70], linenumber[v71]].l_receiptdate;
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71], l#l_quantity[v639]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71], l#l_quantity[v639]}
+      l#l_returnflag[v643] = Lineitem[orderkey[v70], linenumber[v71]].l_returnflag;
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70], l#l_quantity[v639]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70], l#l_quantity[v639]}
+      l#l_shipdate[v645] = Lineitem[orderkey[v70], linenumber[v71]].l_shipdate;
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71], l#l_quantity[v639]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71], l#l_quantity[v639]}
+      l#l_shipinstruct[v648] = Lineitem[orderkey[v70], linenumber[v71]].l_shipinstruct;
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71], l#l_quantity[v639]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71], l#l_quantity[v639]}
+      l#l_shipmode[v649] = Lineitem[orderkey[v70], linenumber[v71]].l_shipmode;
+        [stmt_out] liveout: {orderkey[v70], l#l_quantity[v639], linenumber[v71]}
+        [stmt_in] livein: {orderkey[v70], l#l_quantity[v639], linenumber[v71]}
+      l#l_suppkey[v638] = Lineitem[orderkey[v70], linenumber[v71]].l_suppkey;
+        [stmt_out] liveout: {linenumber[v71], l#l_quantity[v639], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], l#l_quantity[v639], orderkey[v70]}
+      l#l_tax[v642] = Lineitem[orderkey[v70], linenumber[v71]].l_tax;
+        [stmt_out] liveout: {l#l_quantity[v639]}
+        [stmt_in] livein: {l#l_quantity[v639]}
+      qty[v652] = l#l_quantity[v639];
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q21[fn33](suppkey[v72]: int, orderkey[v73]: int, linenumber[v74]: int, nationkey[v75]: int)
+ {
+  entry_hop: hop38
+
+  hop38 {
+    entry_block: bb38
+    bb38:
+      livein: {nationkey[v75], linenumber[v74], orderkey[v73], suppkey[v72]}
+        [stmt_in] livein: {orderkey[v73], linenumber[v74], nationkey[v75], suppkey[v72]}
+      #tmp61[v661] = Supplier[suppkey[v72]];
+        [stmt_out] liveout: {suppkey[v72], nationkey[v75], #tmp61[v661], linenumber[v74], orderkey[v73]}
+        [stmt_in] livein: {suppkey[v72], nationkey[v75], #tmp61[v661], linenumber[v74], orderkey[v73]}
+      s[v653] = #tmp61[v661];
+        [stmt_out] liveout: {nationkey[v75], linenumber[v74], orderkey[v73], suppkey[v72]}
+        [stmt_in] livein: {nationkey[v75], linenumber[v74], orderkey[v73], suppkey[v72]}
+      s#s_acctbal[v659] = Supplier[suppkey[v72]].s_acctbal;
+        [stmt_out] liveout: {linenumber[v74], nationkey[v75], orderkey[v73], suppkey[v72]}
+        [stmt_in] livein: {linenumber[v74], nationkey[v75], orderkey[v73], suppkey[v72]}
+      s#s_address[v656] = Supplier[suppkey[v72]].s_address;
+        [stmt_out] liveout: {linenumber[v74], suppkey[v72], orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {linenumber[v74], suppkey[v72], orderkey[v73], nationkey[v75]}
+      s#s_comment[v660] = Supplier[suppkey[v72]].s_comment;
+        [stmt_out] liveout: {suppkey[v72], orderkey[v73], nationkey[v75], linenumber[v74]}
+        [stmt_in] livein: {suppkey[v72], orderkey[v73], nationkey[v75], linenumber[v74]}
+      s#s_name[v655] = Supplier[suppkey[v72]].s_name;
+        [stmt_out] liveout: {nationkey[v75], suppkey[v72], orderkey[v73], linenumber[v74]}
+        [stmt_in] livein: {nationkey[v75], suppkey[v72], orderkey[v73], linenumber[v74]}
+      s#s_nationkey[v657] = Supplier[suppkey[v72]].s_nationkey;
+        [stmt_out] liveout: {linenumber[v74], nationkey[v75], suppkey[v72], orderkey[v73]}
+        [stmt_in] livein: {linenumber[v74], nationkey[v75], suppkey[v72], orderkey[v73]}
+      s#s_phone[v658] = Supplier[suppkey[v72]].s_phone;
+        [stmt_out] liveout: {linenumber[v74], suppkey[v72], nationkey[v75], orderkey[v73]}
+        [stmt_in] livein: {linenumber[v74], suppkey[v72], nationkey[v75], orderkey[v73]}
+      s#s_suppkey[v654] = Supplier[suppkey[v72]].s_suppkey;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75], linenumber[v74]}
+      hop_exit hop39;
+      liveout: {orderkey[v73], linenumber[v74], nationkey[v75]}
+  }
+
+  hop39 {
+    entry_block: bb39
+    bb39 (preds: bb38):
+      livein: {orderkey[v73], linenumber[v74], nationkey[v75]}
+        [stmt_in] livein: {nationkey[v75], linenumber[v74], orderkey[v73]}
+      #tmp62[v679] = Lineitem[orderkey[v73], linenumber[v74]];
+        [stmt_out] liveout: {linenumber[v74], orderkey[v73], #tmp62[v679], nationkey[v75]}
+        [stmt_in] livein: {linenumber[v74], orderkey[v73], #tmp62[v679], nationkey[v75]}
+      l[v662] = #tmp62[v679];
+        [stmt_out] liveout: {orderkey[v73], linenumber[v74], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], linenumber[v74], nationkey[v75]}
+      l#l_comment[v678] = Lineitem[orderkey[v73], linenumber[v74]].l_comment;
+        [stmt_out] liveout: {nationkey[v75], linenumber[v74], orderkey[v73]}
+        [stmt_in] livein: {nationkey[v75], linenumber[v74], orderkey[v73]}
+      l#l_commitdate[v674] = Lineitem[orderkey[v73], linenumber[v74]].l_commitdate;
+        [stmt_out] liveout: {orderkey[v73], linenumber[v74], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], linenumber[v74], nationkey[v75]}
+      l#l_discount[v669] = Lineitem[orderkey[v73], linenumber[v74]].l_discount;
+        [stmt_out] liveout: {nationkey[v75], orderkey[v73], linenumber[v74]}
+        [stmt_in] livein: {nationkey[v75], orderkey[v73], linenumber[v74]}
+      l#l_extendedprice[v668] = Lineitem[orderkey[v73], linenumber[v74]].l_extendedprice;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75], linenumber[v74]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75], linenumber[v74]}
+      l#l_linenumber[v664] = Lineitem[orderkey[v73], linenumber[v74]].l_linenumber;
+        [stmt_out] liveout: {orderkey[v73], linenumber[v74], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], linenumber[v74], nationkey[v75]}
+      l#l_linestatus[v672] = Lineitem[orderkey[v73], linenumber[v74]].l_linestatus;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75], linenumber[v74]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75], linenumber[v74]}
+      l#l_orderkey[v663] = Lineitem[orderkey[v73], linenumber[v74]].l_orderkey;
+        [stmt_out] liveout: {nationkey[v75], orderkey[v73], linenumber[v74]}
+        [stmt_in] livein: {nationkey[v75], orderkey[v73], linenumber[v74]}
+      l#l_partkey[v665] = Lineitem[orderkey[v73], linenumber[v74]].l_partkey;
+        [stmt_out] liveout: {linenumber[v74], nationkey[v75], orderkey[v73]}
+        [stmt_in] livein: {linenumber[v74], nationkey[v75], orderkey[v73]}
+      l#l_quantity[v667] = Lineitem[orderkey[v73], linenumber[v74]].l_quantity;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75], linenumber[v74]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75], linenumber[v74]}
+      l#l_receiptdate[v675] = Lineitem[orderkey[v73], linenumber[v74]].l_receiptdate;
+        [stmt_out] liveout: {linenumber[v74], orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {linenumber[v74], orderkey[v73], nationkey[v75]}
+      l#l_returnflag[v671] = Lineitem[orderkey[v73], linenumber[v74]].l_returnflag;
+        [stmt_out] liveout: {nationkey[v75], orderkey[v73], linenumber[v74]}
+        [stmt_in] livein: {nationkey[v75], orderkey[v73], linenumber[v74]}
+      l#l_shipdate[v673] = Lineitem[orderkey[v73], linenumber[v74]].l_shipdate;
+        [stmt_out] liveout: {orderkey[v73], linenumber[v74], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], linenumber[v74], nationkey[v75]}
+      l#l_shipinstruct[v676] = Lineitem[orderkey[v73], linenumber[v74]].l_shipinstruct;
+        [stmt_out] liveout: {nationkey[v75], orderkey[v73], linenumber[v74]}
+        [stmt_in] livein: {nationkey[v75], orderkey[v73], linenumber[v74]}
+      l#l_shipmode[v677] = Lineitem[orderkey[v73], linenumber[v74]].l_shipmode;
+        [stmt_out] liveout: {orderkey[v73], linenumber[v74], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], linenumber[v74], nationkey[v75]}
+      l#l_suppkey[v666] = Lineitem[orderkey[v73], linenumber[v74]].l_suppkey;
+        [stmt_out] liveout: {nationkey[v75], linenumber[v74], orderkey[v73]}
+        [stmt_in] livein: {nationkey[v75], linenumber[v74], orderkey[v73]}
+      l#l_tax[v670] = Lineitem[orderkey[v73], linenumber[v74]].l_tax;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75]}
+      #tmp63[v690] = Orders[orderkey[v73]];
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75], #tmp63[v690]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75], #tmp63[v690]}
+      o[v680] = #tmp63[v690];
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75]}
+      o#o_clerk[v687] = Orders[orderkey[v73]].o_clerk;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75]}
+      o#o_comment[v689] = Orders[orderkey[v73]].o_comment;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75]}
+      o#o_custkey[v682] = Orders[orderkey[v73]].o_custkey;
+        [stmt_out] liveout: {nationkey[v75], orderkey[v73]}
+        [stmt_in] livein: {nationkey[v75], orderkey[v73]}
+      o#o_orderdate[v685] = Orders[orderkey[v73]].o_orderdate;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75]}
+      o#o_orderkey[v681] = Orders[orderkey[v73]].o_orderkey;
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75]}
+      o#o_orderpriority[v686] = Orders[orderkey[v73]].o_orderpriority;
+        [stmt_out] liveout: {nationkey[v75], orderkey[v73]}
+        [stmt_in] livein: {nationkey[v75], orderkey[v73]}
+      o#o_orderstatus[v683] = Orders[orderkey[v73]].o_orderstatus;
+        [stmt_out] liveout: {nationkey[v75], orderkey[v73]}
+        [stmt_in] livein: {nationkey[v75], orderkey[v73]}
+      o#o_shippriority[v688] = Orders[orderkey[v73]].o_shippriority;
+        [stmt_out] liveout: {nationkey[v75], orderkey[v73]}
+        [stmt_in] livein: {nationkey[v75], orderkey[v73]}
+      o#o_totalprice[v684] = Orders[orderkey[v73]].o_totalprice;
+        [stmt_out] liveout: {nationkey[v75]}
+      hop_exit hop40;
+      liveout: {nationkey[v75]}
+  }
+
+  hop40 {
+    entry_block: bb40
+    bb40 (preds: bb39):
+      livein: {nationkey[v75]}
+        [stmt_in] livein: {nationkey[v75]}
+      #tmp64[v696] = Nation[nationkey[v75]];
+        [stmt_out] liveout: {#tmp64[v696], nationkey[v75]}
+        [stmt_in] livein: {#tmp64[v696], nationkey[v75]}
+      n[v691] = #tmp64[v696];
+        [stmt_out] liveout: {nationkey[v75]}
+        [stmt_in] livein: {nationkey[v75]}
+      n#n_comment[v695] = Nation[nationkey[v75]].n_comment;
+        [stmt_out] liveout: {nationkey[v75]}
+        [stmt_in] livein: {nationkey[v75]}
+      n#n_name[v693] = Nation[nationkey[v75]].n_name;
+        [stmt_out] liveout: {nationkey[v75]}
+        [stmt_in] livein: {nationkey[v75]}
+      n#n_nationkey[v692] = Nation[nationkey[v75]].n_nationkey;
+        [stmt_out] liveout: {nationkey[v75]}
+        [stmt_in] livein: {nationkey[v75]}
+      n#n_regionkey[v694] = Nation[nationkey[v75]].n_regionkey;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+transaction Q22[fn34](custkey[v76]: int, orderkey[v77]: int)
+ {
+  entry_hop: hop41
+
+  hop41 {
+    entry_block: bb41
+    bb41:
+      livein: {custkey[v76], orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77], custkey[v76]}
+      #tmp65[v706] = Customer[custkey[v76]];
+        [stmt_out] liveout: {orderkey[v77], custkey[v76], #tmp65[v706]}
+        [stmt_in] livein: {orderkey[v77], custkey[v76], #tmp65[v706]}
+      c[v697] = #tmp65[v706];
+        [stmt_out] liveout: {orderkey[v77], custkey[v76]}
+        [stmt_in] livein: {orderkey[v77], custkey[v76]}
+      c#c_acctbal[v703] = Customer[custkey[v76]].c_acctbal;
+        [stmt_out] liveout: {c#c_acctbal[v703], orderkey[v77], custkey[v76]}
+        [stmt_in] livein: {c#c_acctbal[v703], orderkey[v77], custkey[v76]}
+      c#c_address[v700] = Customer[custkey[v76]].c_address;
+        [stmt_out] liveout: {custkey[v76], orderkey[v77], c#c_acctbal[v703]}
+        [stmt_in] livein: {custkey[v76], orderkey[v77], c#c_acctbal[v703]}
+      c#c_comment[v705] = Customer[custkey[v76]].c_comment;
+        [stmt_out] liveout: {orderkey[v77], custkey[v76], c#c_acctbal[v703]}
+        [stmt_in] livein: {orderkey[v77], custkey[v76], c#c_acctbal[v703]}
+      c#c_custkey[v698] = Customer[custkey[v76]].c_custkey;
+        [stmt_out] liveout: {c#c_acctbal[v703], custkey[v76], orderkey[v77]}
+        [stmt_in] livein: {c#c_acctbal[v703], custkey[v76], orderkey[v77]}
+      c#c_mktsegment[v704] = Customer[custkey[v76]].c_mktsegment;
+        [stmt_out] liveout: {c#c_acctbal[v703], custkey[v76], orderkey[v77]}
+        [stmt_in] livein: {c#c_acctbal[v703], custkey[v76], orderkey[v77]}
+      c#c_name[v699] = Customer[custkey[v76]].c_name;
+        [stmt_out] liveout: {c#c_acctbal[v703], orderkey[v77], custkey[v76]}
+        [stmt_in] livein: {c#c_acctbal[v703], orderkey[v77], custkey[v76]}
+      c#c_nationkey[v701] = Customer[custkey[v76]].c_nationkey;
+        [stmt_out] liveout: {c#c_acctbal[v703], custkey[v76], orderkey[v77]}
+        [stmt_in] livein: {c#c_acctbal[v703], custkey[v76], orderkey[v77]}
+      c#c_phone[v702] = Customer[custkey[v76]].c_phone;
+        [stmt_out] liveout: {orderkey[v77], c#c_acctbal[v703], c#c_phone[v702]}
+        [stmt_in] livein: {orderkey[v77], c#c_acctbal[v703], c#c_phone[v702]}
+      acctbal[v707] = c#c_acctbal[v703];
+        [stmt_out] liveout: {c#c_phone[v702], orderkey[v77]}
+        [stmt_in] livein: {c#c_phone[v702], orderkey[v77]}
+      phone[v708] = c#c_phone[v702];
+        [stmt_out] liveout: {orderkey[v77]}
+      hop_exit hop42;
+      liveout: {orderkey[v77]}
+  }
+
+  hop42 {
+    entry_block: bb42
+    bb42 (preds: bb41):
+      livein: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      #tmp66[v719] = Orders[orderkey[v77]];
+        [stmt_out] liveout: {orderkey[v77], #tmp66[v719]}
+        [stmt_in] livein: {orderkey[v77], #tmp66[v719]}
+      o[v709] = #tmp66[v719];
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_clerk[v716] = Orders[orderkey[v77]].o_clerk;
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_comment[v718] = Orders[orderkey[v77]].o_comment;
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_custkey[v711] = Orders[orderkey[v77]].o_custkey;
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_orderdate[v714] = Orders[orderkey[v77]].o_orderdate;
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_orderkey[v710] = Orders[orderkey[v77]].o_orderkey;
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_orderpriority[v715] = Orders[orderkey[v77]].o_orderpriority;
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_orderstatus[v712] = Orders[orderkey[v77]].o_orderstatus;
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_shippriority[v717] = Orders[orderkey[v77]].o_shippriority;
+        [stmt_out] liveout: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      o#o_totalprice[v713] = Orders[orderkey[v77]].o_totalprice;
+        [stmt_out] liveout: {}
+      return;
+      liveout: {}
+  }
+
+}
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_r_regionkey[fn35](iter[v78]: Iterator<table_Region>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_n_nationkey[fn36](iter[v79]: Iterator<table_Nation>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_p_partkey[fn37](iter[v80]: Iterator<table_Part>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_s_suppkey[fn38](iter[v81]: Iterator<table_Supplier>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ps_partkey[fn39](iter[v82]: Iterator<table_Partsupp>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_ps_suppkey[fn40](iter[v83]: Iterator<table_Partsupp>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_c_custkey[fn41](iter[v84]: Iterator<table_Customer>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_o_orderkey[fn42](iter[v85]: Iterator<table_Orders>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_l_orderkey[fn43](iter[v86]: Iterator<table_Lineitem>)
+
+
+@generated
+@intrinsic
+@iterator
+@rename
+function get_l_linenumber[fn44](iter[v87]: Iterator<table_Lineitem>)
+
+

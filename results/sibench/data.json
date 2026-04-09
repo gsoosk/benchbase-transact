@@ -1,0 +1,62 @@
+{
+  "summary": {
+    "function_count": 19,
+    "hop_count": 3,
+    "instance_count": 2,
+    "boogie_loop_unroll": 12,
+    "boogie_timeout_secs": 60,
+    "sc_c_edges": 1,
+    "simplified_sc_c_edges": 0,
+    "verification_total": 1,
+    "verification_pass": 1,
+    "verification_errors": 0,
+    "verification_timeouts": 0,
+    "boogie_compile_failures": 0,
+    "verification_cache_hits": 0,
+    "verification_cache_misses": 1,
+    "verification_cache_stores": 1,
+    "verification_cache_evictions": 0,
+    "verification_cache_invalidations": 0,
+    "verification_original_root_units": 3,
+    "verification_split_total_units": 3,
+    "verification_split_root_timeouts": 0,
+    "verification_split_performed": 0,
+    "verification_split_skipped_max_depth": 0,
+    "verification_split_skipped_no_cutpoint": 0,
+    "verification_split_budget_exhausted": 0,
+    "verification_split_depth_counts": {
+      "0": 1
+    },
+    "verification_split_max_depth_used": 0
+  },
+  "c_edge_verifications": [
+    {
+      "source_function_id": 17,
+      "source_instance": 0,
+      "source_hop_id": 2,
+      "target_function_id": 17,
+      "target_instance": 1,
+      "target_hop_id": 2,
+      "duration_ms": 301.917125,
+      "result": "Pass",
+      "eliminated": true,
+      "memory_stats": {
+        "max_rss_kb": null,
+        "avg_rss_kb": null,
+        "minor_page_faults": null,
+        "major_page_faults": null,
+        "voluntary_context_switches": null,
+        "involuntary_context_switches": null,
+        "user_time_secs": null,
+        "system_time_secs": null,
+        "cpu_percent": null,
+        "elapsed_secs": null
+      },
+      "boogie_stdout": "Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory\n",
+      "boogie_stderr": "",
+      "boogie_file": "commutative_f17_i0_h2_vs_f17_i1_h2.bpl"
+    }
+  ],
+  "timestamp": "2026-04-09T11:41:32.122691-07:00",
+  "input_file": "sibench.transact"
+}
