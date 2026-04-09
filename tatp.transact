@@ -88,6 +88,7 @@ table CallForwarding {
 transaction DeleteCallForwarding(s_id: int, sf_type: int, start_time: int) {
     hop {
         var cf: Row<CallForwarding> = CallForwarding[s_id: s_id, sf_type: sf_type, start_time: start_time];
+        to_unit(cf);
     }
 }
 
@@ -95,6 +96,7 @@ transaction GetAccessData(s_id: int, ai_type: int) {
     hop {
         var ai: Row<AccessInfo> = AccessInfo[s_id: s_id, ai_type: ai_type];
         var d1: int = ai.data1;
+        to_unit(d1);
     }
 }
 
@@ -105,6 +107,7 @@ transaction GetNewDestination(s_id: int, sf_type: int, start_time: int, end_time
         if sf_active == 1 {
             var cf: Row<CallForwarding> = CallForwarding[s_id: s_id, sf_type: sf_type, start_time: start_time];
             var num: string = cf.numberx;
+            to_unit(num);
         }
     }
 }
@@ -113,14 +116,16 @@ transaction GetSubscriberData(s_id: int) {
     hop {
         var sub: Row<Subscriber> = Subscriber[s_id: s_id];
         var bit1: int = sub.bit_1;
+        to_unit(bit1);
     }
 }
 
 transaction InsertCallForwarding(s_id: int, sf_type: int, start_time: int, end_time: int, numberx: string) {
     hop {
         var sub: Row<Subscriber> = Subscriber[s_id: s_id];
+        to_unit(sub);
         var sf: Row<SpecialFacility> = SpecialFacility[s_id: s_id, sf_type: sf_type];
-        
+        to_unit(sf);
         CallForwarding[s_id: s_id, sf_type: sf_type, start_time: start_time] = {
             end_time: end_time,
             numberx: numberx

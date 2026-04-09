@@ -66,6 +66,7 @@ transaction Vote(voteId: int, phoneNumber: int, contestantNumber: int) {
     hop {
         var c: Row<CONTESTANTS> = CONTESTANTS[contestant_number: contestantNumber];
         var cname: string = c.contestant_name;
+        to_unit(cname);
     }
 
     // Hop 2: Location partition — resolve area code to state.

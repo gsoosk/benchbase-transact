@@ -216,14 +216,17 @@ transaction Q1(item_sk: int, ticket_num: int, store_sk: int, cust_sk: int) {
     hop {
         var sr: Row<store_returns> = store_returns[sr_item_sk: item_sk, sr_ticket_number: ticket_num];
         var net_loss: float = sr.sr_net_loss;
+        to_unit(net_loss);
     }
     hop {
         var s: Row<store> = store[s_store_sk: store_sk];
         var sname: string = s.s_store_name;
+        to_unit(sname);
     }
     hop {
         var c: Row<customer> = customer[c_customer_sk: cust_sk];
         var cname: string = c.c_first_name;
+        to_unit(cname);
     }
 }
 
@@ -234,16 +237,21 @@ transaction Q7(item_sk: int, ticket_num: int, cd_demo_sk: int, promo_sk: int) {
     hop {
         var ss: Row<store_sales> = store_sales[ss_item_sk: item_sk, ss_ticket_number: ticket_num];
         var i: Row<item> = item[i_item_sk: item_sk];
+        to_unit(i);
         var qty: int = ss.ss_quantity;
+        to_unit(qty);
         var price: float = ss.ss_list_price;
+        to_unit(price);
     }
     hop {
         var cd: Row<customer_demographics> = customer_demographics[cd_demo_sk: cd_demo_sk];
         var gender: string = cd.cd_gender;
+        to_unit(gender);
     }
     hop {
         var promo: Row<promotion> = promotion[p_promo_sk: promo_sk];
         var pname: string = promo.p_promo_name;
+        to_unit(pname);
     }
 }
 
@@ -254,11 +262,14 @@ transaction Q12(item_sk: int, order_num: int, date_sk: int) {
     hop {
         var ws: Row<web_sales> = web_sales[ws_item_sk: item_sk, ws_order_number: order_num];
         var i: Row<item> = item[i_item_sk: item_sk];
+        to_unit(i);
         var revenue: float = ws.ws_ext_sales_price;
+        to_unit(revenue);
     }
     hop {
         var d: Row<date_dim> = date_dim[d_date_sk: date_sk];
         var yr: int = d.d_year;
+        to_unit(yr);
     }
 }
 
@@ -269,20 +280,25 @@ transaction Q19(item_sk: int, order_num: int, cust_sk: int, addr_sk: int, date_s
     hop {
         var cs: Row<catalog_sales> = catalog_sales[cs_item_sk: item_sk, cs_order_number: order_num];
         var revenue: float = cs.cs_ext_sales_price;
+        to_unit(revenue);
     }
     hop {
         var i: Row<item> = item[i_item_sk: item_sk];
         var brand: string = i.i_manufact;
+        to_unit(brand);
     }
     hop {
         var c: Row<customer> = customer[c_customer_sk: cust_sk];
+        to_unit(c);
     }
     hop {
         var ca: Row<customer_address> = customer_address[ca_address_sk: addr_sk];
         var state: string = ca.ca_state;
+        to_unit(state);
     }
     hop {
         var d: Row<date_dim> = date_dim[d_date_sk: date_sk];
+        to_unit(d);
     }
 }
 
@@ -293,20 +309,25 @@ transaction Q34(item_sk: int, ticket_num: int, cust_sk: int, cd_sk: int, store_s
     hop {
         var ss: Row<store_sales> = store_sales[ss_item_sk: item_sk, ss_ticket_number: ticket_num];
         var qty: int = ss.ss_quantity;
+        to_unit(qty);
     }
     hop {
         var c: Row<customer> = customer[c_customer_sk: cust_sk];
+        to_unit(c);
     }
     hop {
         var cd: Row<customer_demographics> = customer_demographics[cd_demo_sk: cd_sk];
         var marital: string = cd.cd_marital_status;
+        to_unit(marital);
     }
     hop {
         var s: Row<store> = store[s_store_sk: store_sk];
+        to_unit(s);
     }
     hop {
         var d: Row<date_dim> = date_dim[d_date_sk: date_sk];
         var yr: int = d.d_year;
+        to_unit(yr);
     }
 }
 
@@ -318,15 +339,19 @@ transaction Q50(item_sk: int, ticket_num: int, ret_date_sk: int, store_sk: int) 
         var sr: Row<store_returns> = store_returns[sr_item_sk: item_sk, sr_ticket_number: ticket_num];
         var ss: Row<store_sales> = store_sales[ss_item_sk: item_sk, ss_ticket_number: ticket_num];
         var ret_amt: float = sr.sr_return_amount;
+        to_unit(ret_amt);
         var sale_amt: float = ss.ss_net_paid;
+        to_unit(sale_amt);
     }
     hop {
         var s: Row<store> = store[s_store_sk: store_sk];
         var sname: string = s.s_store_name;
+        to_unit(sname);
     }
     hop {
         var d: Row<date_dim> = date_dim[d_date_sk: ret_date_sk];
         var yr: int = d.d_year;
+        to_unit(yr);
     }
 }
 
@@ -337,17 +362,21 @@ transaction Q96(item_sk: int, order_num: int, warehouse_sk: int, time_sk: int, d
     hop {
         var ws: Row<web_sales> = web_sales[ws_item_sk: item_sk, ws_order_number: order_num];
         var qty: int = ws.ws_quantity;
+        to_unit(qty);
     }
     hop {
         var w: Row<warehouse> = warehouse[w_warehouse_sk: warehouse_sk];
         var wname: string = w.w_warehouse_name;
+        to_unit(wname);
     }
     hop {
         var t: Row<time_dim> = time_dim[t_time_sk: time_sk];
         var hr: int = t.t_hour;
+        to_unit(hr);
     }
     hop {
         var d: Row<date_dim> = date_dim[d_date_sk: date_sk];
         var yr: int = d.d_year;
+        to_unit(yr);
     }
 }

@@ -188,8 +188,10 @@ transaction CloseAuctionsNoBids(item_id: int, seller_id: int) {
 transaction GetItem(item_id: int, seller_id: int) {
     hop {
         var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
+        to_unit(item);
         var seller: Row<USERACCT> = USERACCT[u_id: seller_id];
         var region: Row<REGION> = REGION[r_id: seller.u_r_id];
+        to_unit(region);
     }
 }
 
@@ -204,22 +206,28 @@ transaction GetUserInfo(user_id: int, other_user_id: int,
                         item_id: int, comment_id: int) {
     hop {
         var u: Row<USERACCT> = USERACCT[u_id: user_id];
+        to_unit(u);
         var feedback: Row<USERACCT_FEEDBACK> = USERACCT_FEEDBACK[uf_u_id: user_id,
                                                                   uf_i_id: item_id,
                                                                   uf_i_u_id: other_user_id,
                                                                   uf_from_id: other_user_id];
+        to_unit(feedback);
         var comment: Row<ITEM_COMMENT> = ITEM_COMMENT[ic_id: comment_id,
                                                        ic_i_id: item_id,
                                                        ic_u_id: user_id];
+        to_unit(comment);
         var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: user_id];
+        to_unit(item);
     }
     hop {
         var purchase: Row<USERACCT_ITEM> = USERACCT_ITEM[ui_u_id: user_id,
                                                           ui_i_id: item_id,
                                                           ui_i_u_id: other_user_id];
+        to_unit(purchase);
         var watch: Row<USERACCT_WATCH> = USERACCT_WATCH[uw_u_id: user_id,
                                                          uw_i_id: item_id,
                                                          uw_i_u_id: other_user_id];
+        to_unit(watch);
     }
 }
 

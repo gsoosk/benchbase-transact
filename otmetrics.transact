@@ -44,5 +44,6 @@ transaction GetSessionRange(source_id: int, session_low: int, session_high: int,
                                                   session_id: session_low,
                                                   created_time: created_time];
         var tid: int = obs.type_id;
+        to_unit(tid);
     }
 }

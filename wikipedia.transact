@@ -180,7 +180,9 @@ transaction GetPageAnonymous(pageId: int, pr_type: string, latest_rev_id: int, t
     hop {
         // Page partition: read page metadata, restrictions, and current revision.
         var p: Row<page> = page[page_id: pageId];
+        to_unit(p);
         var pr: Row<page_restrictions> = page_restrictions[pr_page: pageId, pr_type: pr_type];
+        to_unit(pr);
         var r: Row<revision> = revision[rev_page: pageId, rev_id: latest_rev_id];
         var textId: int = r.rev_text_id;
     }
@@ -189,6 +191,7 @@ transaction GetPageAnonymous(pageId: int, pr_type: string, latest_rev_id: int, t
         // textId flows from Hop 1 as a continuation variable.
         var t: Row<text> = text[old_id: textId];
         var content: string = t.old_text;
+        to_unit(content);
     }
 }
 
@@ -204,13 +207,18 @@ transaction GetPageAuthenticated(userId: int, pageId: int, ug_group: string,
     hop {
         // User partition: verify identity and check for IP blocks.
         var u: Row<user> = user[user_id: userId];
+        to_unit(u);
         var ug: Row<user_groups> = user_groups[ug_user: userId, ug_group: ug_group];
+        to_unit(ug);
         var ip: Row<ipblocks> = ipblocks[ipb_user: userId, ipb_id: ipb_id];
+        to_unit(ip);
     }
     hop {
         // Page partition: same as anonymous path.
         var p: Row<page> = page[page_id: pageId];
+        to_unit(p);
         var pr: Row<page_restrictions> = page_restrictions[pr_page: pageId, pr_type: pr_type];
+        to_unit(pr);
         var r: Row<revision> = revision[rev_page: pageId, rev_id: latest_rev_id];
         var textId: int = r.rev_text_id;
     }
@@ -218,6 +226,7 @@ transaction GetPageAuthenticated(userId: int, pageId: int, ug_group: string,
         // Text partition: fetch content.
         var t: Row<text> = text[old_id: textId];
         var content: string = t.old_text;
+        to_unit(content);
     }
 }
 

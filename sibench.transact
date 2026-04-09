@@ -34,6 +34,7 @@ transaction MinRecord(representative_id: int) {
     hop {
         var r: Row<SITable> = SITable[id: representative_id];
         var v: int = r.value;
+        to_unit(v);
     }
 }
 

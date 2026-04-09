@@ -66,10 +66,12 @@ transaction GetAverageRatingByTrustedUser(iid: int, uid: int, reviewer_uid: int)
     hop {
         var r: Row<review> = review[u_id: reviewer_uid, i_id: iid];
         var rating: int = r.rating;
+        to_unit(rating);
     }
     hop {
         var t: Row<trust> = trust[source_u_id: uid, target_u_id: reviewer_uid];
         var trust_level: int = t.trust;
+        to_unit(trust_level);
     }
 }
 
@@ -80,6 +82,7 @@ transaction GetItemAverageRating(iid: int, reviewer_uid: int) {
     hop {
         var r: Row<review> = review[u_id: reviewer_uid, i_id: iid];
         var rating: int = r.rating;
+        to_unit(rating);
     }
 }
 
@@ -90,9 +93,11 @@ transaction GetItemAverageRating(iid: int, reviewer_uid: int) {
 transaction GetItemReviewsByTrustedUser(iid: int, uid: int, reviewer_uid: int) {
     hop {
         var r: Row<review> = review[u_id: reviewer_uid, i_id: iid];
+        to_unit(r);
     }
     hop {
         var t: Row<trust> = trust[source_u_id: uid, target_u_id: reviewer_uid];
+        to_unit(t);
     }
 }
 
@@ -102,7 +107,9 @@ transaction GetItemReviewsByTrustedUser(iid: int, uid: int, reviewer_uid: int) {
 transaction GetReviewItemById(iid: int, reviewer_uid: int) {
     hop {
         var r: Row<review> = review[u_id: reviewer_uid, i_id: iid];
+        to_unit(r);
         var i: Row<item> = item[i_id: iid];
+        to_unit(i);
     }
 }
 
@@ -114,9 +121,11 @@ transaction GetReviewItemById(iid: int, reviewer_uid: int) {
 transaction GetReviewsByUser(uid: int, iid: int) {
     hop {
         var u: Row<useracct> = useracct[u_id: uid];
+        to_unit(u);
     }
     hop {
         var r: Row<review> = review[u_id: uid, i_id: iid];
+        to_unit(r);
     }
 }
 

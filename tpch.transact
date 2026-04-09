@@ -134,6 +134,7 @@ transaction Q1(orderkey: int, linenumber: int) {
     hop {
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+        to_unit(revenue);
     }
 }
 
@@ -143,15 +144,20 @@ transaction Q2(partkey: int, suppkey: int, nationkey: int, regionkey: int) {
     hop {
         var ps: Row<Partsupp> = Partsupp[ps_partkey: partkey, ps_suppkey: suppkey];
         var p: Row<Part> = Part[p_partkey: partkey];
+        to_unit(p);
         var cost: float = ps.ps_supplycost;
+        to_unit(cost);
     }
     hop {
         var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
         var sname: string = s.s_name;
+        to_unit(sname);
     }
     hop {
         var n: Row<Nation> = Nation[n_nationkey: nationkey];
+        to_unit(n);
         var r: Row<Region> = Region[r_regionkey: regionkey];
+        to_unit(r);
     }
 }
 
@@ -161,11 +167,14 @@ transaction Q3(custkey: int, orderkey: int, linenumber: int) {
     hop {
         var c: Row<Customer> = Customer[c_custkey: custkey];
         var seg: string = c.c_mktsegment;
+        to_unit(seg);
     }
     hop {
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        to_unit(o);
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+        to_unit(revenue);
     }
 }
 
@@ -175,7 +184,9 @@ transaction Q4(orderkey: int, linenumber: int) {
     hop {
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        to_unit(l);
         var priority: string = o.o_orderpriority;
+        to_unit(priority);
     }
 }
 
@@ -184,18 +195,24 @@ transaction Q4(orderkey: int, linenumber: int) {
 transaction Q5(custkey: int, orderkey: int, linenumber: int, suppkey: int, nationkey: int, regionkey: int) {
     hop {
         var c: Row<Customer> = Customer[c_custkey: custkey];
+        to_unit(c);
     }
     hop {
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        to_unit(o);
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+        to_unit(revenue);
     }
     hop {
         var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+        to_unit(s);
     }
     hop {
         var n: Row<Nation> = Nation[n_nationkey: nationkey];
+        to_unit(n);
         var r: Row<Region> = Region[r_regionkey: regionkey];
+        to_unit(r);
     }
 }
 
@@ -204,15 +221,19 @@ transaction Q5(custkey: int, orderkey: int, linenumber: int, suppkey: int, natio
 transaction Q10(custkey: int, orderkey: int, linenumber: int, nationkey: int) {
     hop {
         var c: Row<Customer> = Customer[c_custkey: custkey];
+        to_unit(c);
         var revenue: float = 0.0;
     }
     hop {
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        to_unit(o);
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         revenue = l.l_extendedprice * (1.0 - l.l_discount);
+        to_unit(revenue);
     }
     hop {
         var n: Row<Nation> = Nation[n_nationkey: nationkey];
+        to_unit(n);
     }
 }
 
@@ -222,12 +243,15 @@ transaction Q11(partkey: int, suppkey: int, nationkey: int) {
     hop {
         var ps: Row<Partsupp> = Partsupp[ps_partkey: partkey, ps_suppkey: suppkey];
         var value: float = float(ps.ps_availqty) * ps.ps_supplycost;
+        to_unit(value);
     }
     hop {
         var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+        to_unit(s);
     }
     hop {
         var n: Row<Nation> = Nation[n_nationkey: nationkey];
+        to_unit(n);
     }
 }
 
@@ -237,7 +261,9 @@ transaction Q12(orderkey: int, linenumber: int) {
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var mode: string = l.l_shipmode;
+        to_unit(mode);
         var priority: string = o.o_orderpriority;
+        to_unit(priority);
     }
 }
 
@@ -246,9 +272,11 @@ transaction Q12(orderkey: int, linenumber: int) {
 transaction Q13(custkey: int, orderkey: int) {
     hop {
         var c: Row<Customer> = Customer[c_custkey: custkey];
+        to_unit(c);
     }
     hop {
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        to_unit(o);
     }
 }
 
@@ -258,10 +286,12 @@ transaction Q14(orderkey: int, linenumber: int, partkey: int) {
     hop {
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var ep: float = l.l_extendedprice;
+        to_unit(ep);
     }
     hop {
         var p: Row<Part> = Part[p_partkey: partkey];
         var ptype: string = p.p_type;
+        to_unit(ptype);
     }
 }
 
@@ -271,10 +301,12 @@ transaction Q15(orderkey: int, linenumber: int, suppkey: int) {
     hop {
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+        to_unit(revenue);
     }
     hop {
         var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
         var sname: string = s.s_name;
+        to_unit(sname);
     }
 }
 
@@ -283,10 +315,13 @@ transaction Q15(orderkey: int, linenumber: int, suppkey: int) {
 transaction Q16(partkey: int, suppkey: int) {
     hop {
         var p: Row<Part> = Part[p_partkey: partkey];
+        to_unit(p);
         var ps: Row<Partsupp> = Partsupp[ps_partkey: partkey, ps_suppkey: suppkey];
+        to_unit(ps);
     }
     hop {
         var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+        to_unit(s);
     }
 }
 
@@ -296,10 +331,12 @@ transaction Q17(partkey: int, orderkey: int, linenumber: int) {
     hop {
         var p: Row<Part> = Part[p_partkey: partkey];
         var brand: string = p.p_brand;
+        to_unit(brand);
     }
     hop {
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var qty: float = l.l_quantity;
+        to_unit(qty);
     }
 }
 
@@ -308,11 +345,14 @@ transaction Q17(partkey: int, orderkey: int, linenumber: int) {
 transaction Q18(custkey: int, orderkey: int, linenumber: int) {
     hop {
         var c: Row<Customer> = Customer[c_custkey: custkey];
+        to_unit(c);
     }
     hop {
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        to_unit(o);
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var qty: float = l.l_quantity;
+        to_unit(qty);
     }
 }
 
@@ -322,9 +362,11 @@ transaction Q19(orderkey: int, linenumber: int, partkey: int) {
     hop {
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+        to_unit(revenue);
     }
     hop {
         var p: Row<Part> = Part[p_partkey: partkey];
+        to_unit(p);
     }
 }
 
@@ -333,17 +375,22 @@ transaction Q19(orderkey: int, linenumber: int, partkey: int) {
 transaction Q20(partkey: int, suppkey: int, nationkey: int, orderkey: int, linenumber: int) {
     hop {
         var p: Row<Part> = Part[p_partkey: partkey];
+        to_unit(p);
         var ps: Row<Partsupp> = Partsupp[ps_partkey: partkey, ps_suppkey: suppkey];
+        to_unit(ps);
     }
     hop {
         var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+        to_unit(s);
     }
     hop {
         var n: Row<Nation> = Nation[n_nationkey: nationkey];
+        to_unit(n);
     }
     hop {
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
         var qty: float = l.l_quantity;
+        to_unit(qty);
     }
 }
 
@@ -352,13 +399,17 @@ transaction Q20(partkey: int, suppkey: int, nationkey: int, orderkey: int, linen
 transaction Q21(suppkey: int, orderkey: int, linenumber: int, nationkey: int) {
     hop {
         var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+        to_unit(s);
     }
     hop {
         var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        to_unit(l);
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        to_unit(o);
     }
     hop {
         var n: Row<Nation> = Nation[n_nationkey: nationkey];
+        to_unit(n);
     }
 }
 
@@ -368,9 +419,12 @@ transaction Q22(custkey: int, orderkey: int) {
     hop {
         var c: Row<Customer> = Customer[c_custkey: custkey];
         var acctbal: float = c.c_acctbal;
+        to_unit(acctbal);
         var phone: string = c.c_phone;
+        to_unit(phone);
     }
     hop {
         var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        to_unit(o);
     }
 }

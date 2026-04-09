@@ -63,6 +63,7 @@ transaction CPU1() {
     hops for i: int = 0 to CPU_RANGE {
         var r: Row<cputable> = cputable[empid: i];
         var p: string = r.passwd;
+        to_unit(p);
     }
 }
 
@@ -71,6 +72,7 @@ transaction CPU2() {
     hops for i: int = 0 to CPU_RANGE {
         var r: Row<cputable> = cputable[empid: i];
         var p: string = r.passwd;
+        to_unit(p);
     }
 }
 

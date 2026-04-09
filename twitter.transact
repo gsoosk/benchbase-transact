@@ -76,10 +76,12 @@ table ADDED_TWEETS {
 transaction GetFollowers(uid: int, follower_uid: int) {
     hop {
         var f: Row<FOLLOWERS> = FOLLOWERS[f1: uid, f2: follower_uid];
+        to_unit(f);
     }
     hop {
         var u: Row<USER> = USER[uid: follower_uid];
         var uname: string = u.name;
+        to_unit(uname);
     }
 }
 
@@ -90,6 +92,7 @@ transaction GetTweet(author_uid: int, tweet_id: int) {
     hop {
         var t: Row<TWEETS> = TWEETS[uid: author_uid, id: tweet_id];
         var txt: string = t.text;
+        to_unit(txt);
     }
 }
 
@@ -101,10 +104,12 @@ transaction GetTweet(author_uid: int, tweet_id: int) {
 transaction GetTweetsFromFollowing(uid: int, followed_uid: int, tweet_id: int) {
     hop {
         var f: Row<FOLLOWS> = FOLLOWS[f1: uid, f2: followed_uid];
+        to_unit(f);
     }
     hop {
         var t: Row<TWEETS> = TWEETS[uid: followed_uid, id: tweet_id];
         var txt: string = t.text;
+        to_unit(txt);
     }
 }
 
@@ -115,6 +120,7 @@ transaction GetUserTweets(uid: int, tweet_id: int) {
     hop {
         var t: Row<TWEETS> = TWEETS[uid: uid, id: tweet_id];
         var txt: string = t.text;
+        to_unit(txt);
     }
 }
 

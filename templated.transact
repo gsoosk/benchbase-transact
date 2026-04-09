@@ -30,6 +30,7 @@ table TEMPLATED_TABLE {
 transaction GenericRead(key: int) {
     hop {
         var r: Row<TEMPLATED_TABLE> = TEMPLATED_TABLE[T_ID: key];
+        to_unit(r);
     }
 }
 

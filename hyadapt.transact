@@ -72,6 +72,7 @@ transaction MaxRecord1(keyname: int) {
     hops for i: int = 0 to SCAN_SIZE {
         var r: Row<htable> = htable[FIELD1: keyname + i];
         var v2: int = r.FIELD2;
+        to_unit(v2);
     }
 }
 
@@ -81,6 +82,7 @@ transaction MaxRecord2(keyname: int) {
         var r: Row<htable> = htable[FIELD1: keyname + i];
         var v2: int = r.FIELD2; var v27: int = r.FIELD27; var v52: int = r.FIELD52;
         var v77: int = r.FIELD77; var v102: int = r.FIELD102;
+        to_unit(v2); to_unit(v27); to_unit(v52); to_unit(v77); to_unit(v102);
     }
 }
 
@@ -92,6 +94,8 @@ transaction MaxRecord3(keyname: int) {
         var v17: int = r.FIELD17; var v22: int = r.FIELD22; var v27: int = r.FIELD27;
         var v52: int = r.FIELD52; var v77: int = r.FIELD77; var v102: int = r.FIELD102;
         var v127: int = r.FIELD127;
+        to_unit(v2); to_unit(v7); to_unit(v12); to_unit(v17); to_unit(v22); to_unit(v27);
+        to_unit(v52); to_unit(v77); to_unit(v102); to_unit(v127);
     }
 }
 
@@ -104,6 +108,9 @@ transaction MaxRecord4(keyname: int) {
         var v26: int = r.FIELD26; var v52: int = r.FIELD52; var v78: int = r.FIELD78;
         var v104: int = r.FIELD104; var v130: int = r.FIELD130; var v156: int = r.FIELD156;
         var v182: int = r.FIELD182; var v208: int = r.FIELD208; var v234: int = r.FIELD234;
+        to_unit(v2); to_unit(v6); to_unit(v10); to_unit(v14); to_unit(v18); to_unit(v22);
+        to_unit(v26); to_unit(v52); to_unit(v78); to_unit(v104); to_unit(v130); to_unit(v156);
+        to_unit(v182); to_unit(v208); to_unit(v234);
     }
 }
 
@@ -117,6 +124,9 @@ transaction MaxRecord5(keyname: int) {
         var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
         var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
         var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v5); to_unit(v8); to_unit(v11); to_unit(v14); to_unit(v17);
+        to_unit(v20); to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150);
+        to_unit(v175); to_unit(v200); to_unit(v225); to_unit(v250);
     }
 }
 
@@ -129,6 +139,9 @@ transaction MaxRecord6(keyname: int) {
         var v50: int = r.FIELD50; var v100: int = r.FIELD100; var v125: int = r.FIELD125;
         var v150: int = r.FIELD150; var v175: int = r.FIELD175; var v200: int = r.FIELD200;
         var v225: int = r.FIELD225; var v248: int = r.FIELD248; var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v4); to_unit(v6); to_unit(v8); to_unit(v10); to_unit(v12);
+        to_unit(v50); to_unit(v100); to_unit(v125); to_unit(v150); to_unit(v175); to_unit(v200);
+        to_unit(v225); to_unit(v248); to_unit(v250);
     }
 }
 
@@ -142,6 +155,9 @@ transaction MaxRecord7(keyname: int) {
         var v125: int = r.FIELD125; var v150: int = r.FIELD150; var v175: int = r.FIELD175;
         var v200: int = r.FIELD200; var v225: int = r.FIELD225; var v240: int = r.FIELD240;
         var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v4); to_unit(v6); to_unit(v8); to_unit(v10); to_unit(v25);
+        to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150); to_unit(v175);
+        to_unit(v200); to_unit(v225); to_unit(v240); to_unit(v250);
     }
 }
 
@@ -155,6 +171,9 @@ transaction MaxRecord8(keyname: int) {
         var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
         var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
         var v245: int = r.FIELD245; var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v3); to_unit(v5); to_unit(v7); to_unit(v9); to_unit(v11);
+        to_unit(v25); to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150);
+        to_unit(v175); to_unit(v200); to_unit(v225); to_unit(v245); to_unit(v250);
     }
 }
 
@@ -169,6 +188,10 @@ transaction MaxRecord9(keyname: int) {
         var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
         var v240: int = r.FIELD240; var v245: int = r.FIELD245; var v248: int = r.FIELD248;
         var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v3); to_unit(v4); to_unit(v5); to_unit(v6); to_unit(v7);
+        to_unit(v25); to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150);
+        to_unit(v175); to_unit(v200); to_unit(v225); to_unit(v240); to_unit(v245); to_unit(v248);
+        to_unit(v250);
     }
 }
 
@@ -182,6 +205,9 @@ transaction MaxRecord10(keyname: int) {
         var v125: int = r.FIELD125; var v150: int = r.FIELD150; var v175: int = r.FIELD175;
         var v200: int = r.FIELD200; var v225: int = r.FIELD225; var v249: int = r.FIELD249;
         var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v3); to_unit(v4); to_unit(v5); to_unit(v10); to_unit(v25);
+        to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150); to_unit(v175);
+        to_unit(v200); to_unit(v225); to_unit(v249); to_unit(v250);
     }
 }
 
@@ -190,6 +216,7 @@ transaction ReadRecord1(keyname: int) {
     hops for i: int = 0 to SCAN_SIZE {
         var r: Row<htable> = htable[FIELD1: keyname + i];
         var v2: int = r.FIELD2;
+        to_unit(v2);
     }
 }
 
@@ -199,6 +226,7 @@ transaction ReadRecord2(keyname: int) {
         var r: Row<htable> = htable[FIELD1: keyname + i];
         var v2: int = r.FIELD2; var v27: int = r.FIELD27; var v52: int = r.FIELD52;
         var v77: int = r.FIELD77; var v102: int = r.FIELD102;
+        to_unit(v2); to_unit(v27); to_unit(v52); to_unit(v77); to_unit(v102);
     }
 }
 
@@ -210,6 +238,8 @@ transaction ReadRecord3(keyname: int) {
         var v17: int = r.FIELD17; var v22: int = r.FIELD22; var v27: int = r.FIELD27;
         var v52: int = r.FIELD52; var v77: int = r.FIELD77; var v102: int = r.FIELD102;
         var v127: int = r.FIELD127;
+        to_unit(v2); to_unit(v7); to_unit(v12); to_unit(v17); to_unit(v22); to_unit(v27);
+        to_unit(v52); to_unit(v77); to_unit(v102); to_unit(v127);
     }
 }
 
@@ -222,6 +252,9 @@ transaction ReadRecord4(keyname: int) {
         var v26: int = r.FIELD26; var v52: int = r.FIELD52; var v78: int = r.FIELD78;
         var v104: int = r.FIELD104; var v130: int = r.FIELD130; var v156: int = r.FIELD156;
         var v182: int = r.FIELD182; var v208: int = r.FIELD208; var v234: int = r.FIELD234;
+        to_unit(v2); to_unit(v6); to_unit(v10); to_unit(v14); to_unit(v18); to_unit(v22);
+        to_unit(v26); to_unit(v52); to_unit(v78); to_unit(v104); to_unit(v130); to_unit(v156);
+        to_unit(v182); to_unit(v208); to_unit(v234);
     }
 }
 
@@ -235,6 +268,9 @@ transaction ReadRecord5(keyname: int) {
         var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
         var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
         var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v5); to_unit(v8); to_unit(v11); to_unit(v14); to_unit(v17);
+        to_unit(v20); to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150);
+        to_unit(v175); to_unit(v200); to_unit(v225); to_unit(v250);
     }
 }
 
@@ -247,6 +283,9 @@ transaction ReadRecord6(keyname: int) {
         var v50: int = r.FIELD50; var v100: int = r.FIELD100; var v125: int = r.FIELD125;
         var v150: int = r.FIELD150; var v175: int = r.FIELD175; var v200: int = r.FIELD200;
         var v225: int = r.FIELD225; var v248: int = r.FIELD248; var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v4); to_unit(v6); to_unit(v8); to_unit(v10); to_unit(v12);
+        to_unit(v50); to_unit(v100); to_unit(v125); to_unit(v150); to_unit(v175); to_unit(v200);
+        to_unit(v225); to_unit(v248); to_unit(v250);
     }
 }
 
@@ -260,6 +299,9 @@ transaction ReadRecord7(keyname: int) {
         var v125: int = r.FIELD125; var v150: int = r.FIELD150; var v175: int = r.FIELD175;
         var v200: int = r.FIELD200; var v225: int = r.FIELD225; var v240: int = r.FIELD240;
         var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v4); to_unit(v6); to_unit(v8); to_unit(v10); to_unit(v25);
+        to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150); to_unit(v175);
+        to_unit(v200); to_unit(v225); to_unit(v240); to_unit(v250);
     }
 }
 
@@ -273,6 +315,9 @@ transaction ReadRecord8(keyname: int) {
         var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
         var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
         var v245: int = r.FIELD245; var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v3); to_unit(v5); to_unit(v7); to_unit(v9); to_unit(v11);
+        to_unit(v25); to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150);
+        to_unit(v175); to_unit(v200); to_unit(v225); to_unit(v245); to_unit(v250);
     }
 }
 
@@ -287,6 +332,10 @@ transaction ReadRecord9(keyname: int) {
         var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
         var v240: int = r.FIELD240; var v245: int = r.FIELD245; var v248: int = r.FIELD248;
         var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v3); to_unit(v4); to_unit(v5); to_unit(v6); to_unit(v7);
+        to_unit(v25); to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150);
+        to_unit(v175); to_unit(v200); to_unit(v225); to_unit(v240); to_unit(v245); to_unit(v248);
+        to_unit(v250);
     }
 }
 
@@ -300,5 +349,8 @@ transaction ReadRecord10(keyname: int) {
         var v125: int = r.FIELD125; var v150: int = r.FIELD150; var v175: int = r.FIELD175;
         var v200: int = r.FIELD200; var v225: int = r.FIELD225; var v249: int = r.FIELD249;
         var v250: int = r.FIELD250;
+        to_unit(v2); to_unit(v3); to_unit(v4); to_unit(v5); to_unit(v10); to_unit(v25);
+        to_unit(v50); to_unit(v75); to_unit(v100); to_unit(v125); to_unit(v150); to_unit(v175);
+        to_unit(v200); to_unit(v225); to_unit(v249); to_unit(v250);
     }
 }

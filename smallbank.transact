@@ -61,15 +61,18 @@ transaction Amalgamate(custId0: int, custId1: int) {
 transaction Balance(custId: int) {
     hop {
         var a: Row<Accounts> = Accounts[custid: custId];
+        to_unit(a);
         var s: Row<Savings> = Savings[custid: custId];
         var c: Row<Checking> = Checking[custid: custId];
         var total: float = s.bal + c.bal;
+        to_unit(total);
     }
 }
 
 transaction DepositChecking(custId: int, amount: float) {
     hop {
         var a: Row<Accounts> = Accounts[custid: custId];
+        to_unit(a);
         var c: Row<Checking> = Checking[custid: custId];
         c.bal = c.bal + amount;
         Checking[custid: custId] = c;
@@ -95,6 +98,7 @@ transaction SendPayment(sendAcct: int, destAcct: int, amount: float) {
 transaction TransactSavings(custId: int, amount: float) {
     hop {
         var a: Row<Accounts> = Accounts[custid: custId];
+        to_unit(a);
         var s: Row<Savings> = Savings[custid: custId];
         
         s.bal = s.bal - amount;
