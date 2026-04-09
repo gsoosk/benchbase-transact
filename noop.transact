@@ -1,2 +1,6 @@
+// NoOp benchmark — baseline control with no application logic.
 transaction NoOp() {
+    hop {
+        // No table accesses; models pure overhead baseline.
+    }
 }

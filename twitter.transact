@@ -1,4 +1,28 @@
+// ============================================================================
+// Twitter — Social-Network Micro-Blogging Benchmark
+//
+// Tables
+//   USER        — partitioned by uid
+//   FOLLOWERS   — partitioned by f1 (the followed user); composite PK (f1, f2)
+//   FOLLOWS     — partitioned by f1 (the following user); composite PK (f1, f2)
+//   TWEETS      — partitioned by uid (author); composite PK (uid, id)
+//   ADDED_TWEETS— staging table, partitioned by uid; composite PK (uid, id)
+//
+// Partition strategy:
+//   All of a user's tweets and their follow/follower lists are on the same
+//   partition as the user (f(uid)).  This enables single-partition reads for
+//   GetUserTweets and makes InsertTweet a partition-local write.
+//
+//   Fan-out reads (GetFollowers, GetTweetsFromFollowing) span two partitions:
+//   first the local follow-list, then a representative hop to the remote user
+//   or tweet partition.  These are chopped into 2 hops.
+// ============================================================================
+
 partition p(x: int) -> int { return x; }
+
+// ============================================================================
+// Tables
+// ============================================================================
 
 table USER {
     primary uid: int;
@@ -6,79 +30,102 @@ table USER {
     name: string;
 }
 
+// FOLLOWERS[f1, f2]: user f2 follows user f1.  Partitioned by f1 (the target).
 table FOLLOWERS {
-    primary f1: int, f2: int;
+    primary f1: int;
+    primary f2: int;
     node p(f1);
 }
 
+// FOLLOWS[f1, f2]: user f1 follows user f2.  Partitioned by f1 (the source).
 table FOLLOWS {
-    primary f1: int, f2: int;
+    primary f1: int;
+    primary f2: int;
     node p(f1);
 }
 
+// TWEETS partitioned by uid so all tweets by an author are co-located.
+// Composite PK (uid, id) satisfies the node(uid) constraint.
 table TWEETS {
+    primary uid: int;
     primary id: int;
     node p(uid);
-    uid: int;
     text: string;
-    createdate: date;
+    createdate: int;
 }
 
+// ADDED_TWEETS: staging / write buffer, same layout as TWEETS.
 table ADDED_TWEETS {
+    primary uid: int;
     primary id: int;
     node p(uid);
-    uid: int;
     text: string;
-    createdate: date;
+    createdate: int;
 }
 
-transaction GetFollowers(uid: int) {
-    hop {
-        // Represents: SELECT f2 FROM FOLLOWERS WHERE f1 = ?
-        var f: Row<FOLLOWERS> = FOLLOWERS[f1: uid];
-    }
-    hop {
-        // Represents: SELECT uid, name FROM USER WHERE uid IN (follower_ids)
-        // This hop is executed for a follower f.f2, which is likely on a different partition.
-        var u: Row<USER> = USER[uid: f.f2];
-    }
-}
+// ============================================================================
+// Transactions
+// ============================================================================
 
-transaction GetTweet(tweet_id: int) {
+// GetFollowers:
+//   SQL: SELECT f2 FROM FOLLOWERS WHERE f1 = ?
+//        SELECT uid, name FROM USER WHERE uid = ?    (per follower)
+// Chop: Hop 1 reads FOLLOWERS on f1's partition to obtain one follower ID (f2).
+//       Hop 2 fetches that follower's USER record from f2's partition.
+// follower_uid is the representative follower being fetched in this chop.
+transaction GetFollowers(uid: int, follower_uid: int) {
     hop {
-        // TWEETS is partitioned by uid, so a lookup by id may be a scatter-gather.
-        // It is modeled as a single logical operation.
-        var t: Row<TWEETS> = TWEETS[id: tweet_id];
-    }
-}
-
-transaction GetTweetsFromFollowing(uid: int) {
-    hop {
-        // Represents: SELECT f2 FROM FOLLOWS WHERE f1 = ?
-        var f: Row<FOLLOWS> = FOLLOWS[f1: uid];
+        var f: Row<FOLLOWERS> = FOLLOWERS[f1: uid, f2: follower_uid];
     }
     hop {
-        // Represents: SELECT * FROM TWEETS WHERE uid IN (followed_user_ids)
-        // This hop is executed for a followed user f.f2, which is likely on a different partition.
-        var t: Row<TWEETS> = TWEETS[uid: f.f2];
+        var u: Row<USER> = USER[uid: follower_uid];
+        var uname: string = u.name;
     }
 }
 
-transaction GetUserTweets(uid: int) {
+// GetTweet:
+//   SQL: SELECT * FROM TWEETS WHERE uid = ? AND id = ?
+// Single-partition read on the author's partition.
+transaction GetTweet(author_uid: int, tweet_id: int) {
     hop {
-        // TWEETS is partitioned by uid, so this is a single-partition query.
-        var t: Row<TWEETS> = TWEETS[uid: uid];
+        var t: Row<TWEETS> = TWEETS[uid: author_uid, id: tweet_id];
+        var txt: string = t.text;
     }
 }
 
-transaction InsertTweet(uid: int, text: string, createdate: date) {
+// GetTweetsFromFollowing:
+//   SQL: SELECT f2 FROM FOLLOWS WHERE f1 = ?
+//        SELECT * FROM TWEETS WHERE uid = ?   (for each followed user)
+// Chop: Hop 1 reads FOLLOWS on uid's partition to identify one followed user.
+//       Hop 2 reads a representative tweet from that user's partition.
+transaction GetTweetsFromFollowing(uid: int, followed_uid: int, tweet_id: int) {
     hop {
-        // ADDED_TWEETS is partitioned by uid, so this is a single-partition write.
-        var t: Row<ADDED_TWEETS> = new Row<ADDED_TWEETS>();
-        t.uid = uid;
-        t.text = text;
-        t.createdate = createdate;
-        // The DSL does not specify an insert syntax, this is an approximation.
-        // ADDED_TWEETS.insert(t);
+        var f: Row<FOLLOWS> = FOLLOWS[f1: uid, f2: followed_uid];
+    }
+    hop {
+        var t: Row<TWEETS> = TWEETS[uid: followed_uid, id: tweet_id];
+        var txt: string = t.text;
+    }
+}
+
+// GetUserTweets:
+//   SQL: SELECT * FROM TWEETS WHERE uid = ?
+// Single-partition read — all tweets by uid are on uid's partition.
+transaction GetUserTweets(uid: int, tweet_id: int) {
+    hop {
+        var t: Row<TWEETS> = TWEETS[uid: uid, id: tweet_id];
+        var txt: string = t.text;
+    }
+}
+
+// InsertTweet:
+//   SQL: INSERT INTO added_tweets (uid, id, text, createdate) VALUES (?, ?, ?, ?)
+// Single-partition write on uid's partition.
+transaction InsertTweet(uid: int, tweet_id: int, text: string, createdate: int) {
+    hop {
+        ADDED_TWEETS[uid: uid, id: tweet_id] = {
+            text: text,
+            createdate: createdate
+        };
     }
 }

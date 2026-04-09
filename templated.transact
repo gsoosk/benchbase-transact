@@ -1,13 +1,19 @@
-// Since the provided Java code is a generic query executor for a 'templated'
-// benchmark, the actual schema and transaction logic are not present.
-// The following is a hypothesized schema and set of transactions that such a
-// benchmark might use, inferred from the generic nature of the code.
+// ============================================================================
+// Templated — Generic Configurable Benchmark
+//
+// A flexible benchmark that uses a single table with configurable query
+// templates (read, update, insert, read-modify-write across two partitions).
+//
+// Partition strategy: modulo hash on T_ID — 128 partitions.
+// GenericReadModifyWrite is the only cross-partition transaction (2 hops).
+// ============================================================================
 
-// A simple partitioning function based on the primary key.
 partition f(x: int) -> int { return x % 128; }
 
-// A hypothesized table for a generic benchmark, containing various data types
-// that the Java code is capable of handling.
+// ============================================================================
+// Tables
+// ============================================================================
+
 table TEMPLATED_TABLE {
     primary T_ID: int;
     node f(T_ID);
@@ -16,18 +22,18 @@ table TEMPLATED_TABLE {
     T_STRING_VAL: string;
 }
 
-// Represents a templated query that reads a single record by its primary key.
-// This is a single-partition transaction and therefore requires only one hop.
-// Corresponds to a template like: "SELECT * FROM TEMPLATED_TABLE WHERE T_ID = ?"
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// GenericRead: SELECT * FROM TEMPLATED_TABLE WHERE T_ID = ?
 transaction GenericRead(key: int) {
     hop {
         var r: Row<TEMPLATED_TABLE> = TEMPLATED_TABLE[T_ID: key];
     }
 }
 
-// Represents a templated query that updates a single record.
-// This is also a single-partition transaction.
-// Corresponds to a template like: "UPDATE TEMPLATED_TABLE SET T_STRING_VAL = ? WHERE T_ID = ?"
+// GenericUpdate: UPDATE TEMPLATED_TABLE SET T_STRING_VAL = ? WHERE T_ID = ?
 transaction GenericUpdate(key: int, new_string: string) {
     hop {
         var r: Row<TEMPLATED_TABLE> = TEMPLATED_TABLE[T_ID: key];
@@ -36,25 +42,21 @@ transaction GenericUpdate(key: int, new_string: string) {
     }
 }
 
-// Represents a templated query that inserts a single record.
-// This is a single-partition transaction.
-// Corresponds to a template like: "INSERT INTO TEMPLATED_TABLE VALUES (?, ?, ?, ?)"
+// GenericInsert: INSERT INTO TEMPLATED_TABLE VALUES (?, ?, ?, ?)
+// Uses row-literal assignment; no new Row<T>() constructor needed.
 transaction GenericInsert(key: int, int_val: int, float_val: float, string_val: string) {
     hop {
-        var r: Row<TEMPLATED_TABLE> = new Row<TEMPLATED_TABLE>();
-        r.T_ID = key;
-        r.T_INT_VAL = int_val;
-        r.T_FLOAT_VAL = float_val;
-        r.T_STRING_VAL = string_val;
-        TEMPLATED_TABLE[T_ID: key] = r;
+        TEMPLATED_TABLE[T_ID: key] = {
+            T_INT_VAL: int_val,
+            T_FLOAT_VAL: float_val,
+            T_STRING_VAL: string_val
+        };
     }
 }
 
-// Represents a more complex templated query that modifies two different records,
-// for example, transferring a value from one to another.
-// Since the two keys (key1, key2) can map to different partitions, this
-// transaction is split into two 'hop' blocks to demonstrate rational chopping.
-// This could correspond to a stored procedure executing two UPDATE statements.
+// GenericReadModifyWrite: Transfer float value between two records.
+// key1 and key2 may map to different partitions → 2 hops.
+// Chop: Hop 1 debits key1's partition; Hop 2 credits key2's partition.
 transaction GenericReadModifyWrite(key1: int, key2: int, amount: float) {
     hop {
         var r1: Row<TEMPLATED_TABLE> = TEMPLATED_TABLE[T_ID: key1];

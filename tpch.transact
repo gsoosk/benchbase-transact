@@ -1,13 +1,44 @@
-partition f(x: int) -> int { return x; }
+// ============================================================================
+// TPC-H — Analytical Decision-Support Benchmark
+//
+// All 22 TPC-H queries are read-only analytical workloads.
+// They involve complex multi-table joins, aggregations, and subqueries.
+//
+// Partition strategy:
+//   Region / Nation — small dimension tables; replicated (global partition g).
+//   Part            — partitioned by p_partkey.
+//   Supplier        — partitioned by s_suppkey.
+//   Partsupp        — co-located with Part: partitioned by ps_partkey.
+//   Customer        — partitioned by c_custkey.
+//   Orders          — partitioned by o_orderkey.
+//   Lineitem        — co-located with Orders: partitioned by l_orderkey.
+//
+// Chopping:
+//   TPC-H queries typically join 2-5 tables across partition boundaries.
+//   Each hop represents accessing one partition family.
+//   Since these are read-only, hops are independent and can be parallelized.
+//
+// Note: dates are represented as int (YYYYMMDD format).
+// ============================================================================
 
+partition f(x: int) -> int { return x; }
+partition g(x: int) -> int { return 0; }    // global/replicated partition
+
+// ============================================================================
+// Tables
+// ============================================================================
+
+// Small dimension tables — replicated globally (single partition).
 table Region {
     primary r_regionkey: int;
+    node g(r_regionkey);
     r_name: string;
     r_comment: string;
 }
 
 table Nation {
     primary n_nationkey: int;
+    node g(n_nationkey);
     n_name: string;
     n_regionkey: int;
     n_comment: string;
@@ -37,8 +68,10 @@ table Supplier {
     s_comment: string;
 }
 
+// Partsupp co-located with Part (partitioned by ps_partkey).
 table Partsupp {
-    primary ps_partkey: int, ps_suppkey: int;
+    primary ps_partkey: int;
+    primary ps_suppkey: int;
     node f(ps_partkey);
     ps_availqty: int;
     ps_supplycost: float;
@@ -63,15 +96,17 @@ table Orders {
     o_custkey: int;
     o_orderstatus: string;
     o_totalprice: float;
-    o_orderdate: date;
+    o_orderdate: int;
     o_orderpriority: string;
     o_clerk: string;
     o_shippriority: int;
     o_comment: string;
 }
 
+// Lineitem co-located with Orders (partitioned by l_orderkey).
 table Lineitem {
-    primary l_orderkey: int, l_linenumber: int;
+    primary l_orderkey: int;
+    primary l_linenumber: int;
     node f(l_orderkey);
     l_partkey: int;
     l_suppkey: int;
@@ -81,82 +116,261 @@ table Lineitem {
     l_tax: float;
     l_returnflag: string;
     l_linestatus: string;
-    l_shipdate: date;
-    l_commitdate: date;
-    l_receiptdate: date;
+    l_shipdate: int;
+    l_commitdate: int;
+    l_receiptdate: int;
     l_shipinstruct: string;
     l_shipmode: string;
     l_comment: string;
 }
 
-transaction Q1(delta: int) {
-    hop {}
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// Q1: Pricing Summary Report — aggregate over Lineitem for a date range.
+// Single partition family (Lineitem / Orders) — one hop.
+transaction Q1(orderkey: int, linenumber: int) {
+    hop {
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+    }
 }
 
-transaction Q2(size: int, type_like: string, region: string) {
-    hop {}
+// Q2: Minimum Cost Supplier — joins Part, Partsupp, Supplier, Nation, Region.
+// Chop: Part/Partsupp partition → Supplier partition → global Nation/Region.
+transaction Q2(partkey: int, suppkey: int, nationkey: int, regionkey: int) {
+    hop {
+        var ps: Row<Partsupp> = Partsupp[ps_partkey: partkey, ps_suppkey: suppkey];
+        var p: Row<Part> = Part[p_partkey: partkey];
+        var cost: float = ps.ps_supplycost;
+    }
+    hop {
+        var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+        var sname: string = s.s_name;
+    }
+    hop {
+        var n: Row<Nation> = Nation[n_nationkey: nationkey];
+        var r: Row<Region> = Region[r_regionkey: regionkey];
+    }
 }
 
-transaction Q3(segment: string, date: date) {
-    hop {}
+// Q3: Shipping Priority — joins Customer, Orders, Lineitem for unshipped orders.
+// Chop: Customer partition → Orders partition (co-located with Lineitem).
+transaction Q3(custkey: int, orderkey: int, linenumber: int) {
+    hop {
+        var c: Row<Customer> = Customer[c_custkey: custkey];
+        var seg: string = c.c_mktsegment;
+    }
+    hop {
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+    }
 }
 
-transaction Q4(date: date) {
-    hop {}
+// Q4: Order Priority Checking — joins Orders and Lineitem for a date range.
+// Orders and Lineitem are co-located — single hop.
+transaction Q4(orderkey: int, linenumber: int) {
+    hop {
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var priority: string = o.o_orderpriority;
+    }
 }
 
-transaction Q5(region: string, date: date) {
-    hop {}
+// Q5: Local Supplier Volume — joins Customer, Orders, Lineitem, Supplier, Nation, Region.
+// Chop: Customer → Orders/Lineitem → Supplier → Nation/Region.
+transaction Q5(custkey: int, orderkey: int, linenumber: int, suppkey: int, nationkey: int, regionkey: int) {
+    hop {
+        var c: Row<Customer> = Customer[c_custkey: custkey];
+    }
+    hop {
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+    }
+    hop {
+        var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+    }
+    hop {
+        var n: Row<Nation> = Nation[n_nationkey: nationkey];
+        var r: Row<Region> = Region[r_regionkey: regionkey];
+    }
 }
 
-transaction Q10(date: date) {
-    hop {}
+// Q10: Returned Item Reporting — Customer, Orders, Lineitem, Nation.
+// Chop: Customer → Orders/Lineitem → Nation.
+transaction Q10(custkey: int, orderkey: int, linenumber: int, nationkey: int) {
+    hop {
+        var c: Row<Customer> = Customer[c_custkey: custkey];
+        var revenue: float = 0.0;
+    }
+    hop {
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        revenue = l.l_extendedprice * (1.0 - l.l_discount);
+    }
+    hop {
+        var n: Row<Nation> = Nation[n_nationkey: nationkey];
+    }
 }
 
-transaction Q11(nation: string, fraction: float) {
-    hop {}
+// Q11: Important Stock Identification — Partsupp, Supplier, Nation.
+// Chop: Partsupp/Part partition → Supplier → Nation.
+transaction Q11(partkey: int, suppkey: int, nationkey: int) {
+    hop {
+        var ps: Row<Partsupp> = Partsupp[ps_partkey: partkey, ps_suppkey: suppkey];
+        var value: float = float(ps.ps_availqty) * ps.ps_supplycost;
+    }
+    hop {
+        var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+    }
+    hop {
+        var n: Row<Nation> = Nation[n_nationkey: nationkey];
+    }
 }
 
-transaction Q12(shipMode1: string, shipMode2: string, date: date) {
-    hop {}
+// Q12: Shipping Modes and Order Priority — Orders and Lineitem (co-located).
+transaction Q12(orderkey: int, linenumber: int) {
+    hop {
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var mode: string = l.l_shipmode;
+        var priority: string = o.o_orderpriority;
+    }
 }
 
-transaction Q13(filter: string) {
-    hop {}
+// Q13: Customer Distribution — Customer and Orders.
+// Chop: Customer partition → Orders partition.
+transaction Q13(custkey: int, orderkey: int) {
+    hop {
+        var c: Row<Customer> = Customer[c_custkey: custkey];
+    }
+    hop {
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+    }
 }
 
-transaction Q14(date: date) {
-    hop {}
+// Q14: Promotion Effect — Lineitem and Part.
+// Chop: Lineitem/Orders partition → Part partition.
+transaction Q14(orderkey: int, linenumber: int, partkey: int) {
+    hop {
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var ep: float = l.l_extendedprice;
+    }
+    hop {
+        var p: Row<Part> = Part[p_partkey: partkey];
+        var ptype: string = p.p_type;
+    }
 }
 
-transaction Q15(date: date) {
-    hop {}
+// Q15: Top Supplier — Lineitem and Supplier (via Revenue view).
+// Chop: Lineitem partition → Supplier partition.
+transaction Q15(orderkey: int, linenumber: int, suppkey: int) {
+    hop {
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+    }
+    hop {
+        var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+        var sname: string = s.s_name;
+    }
 }
 
-transaction Q16(brand: string, type_like: string, size1: int, size2: int, size3: int, size4: int, size5: int, size6: int, size7: int, size8: int) {
-    hop {}
+// Q16: Part/Supplier Relationship — Part, Partsupp, Supplier.
+// Chop: Part/Partsupp (co-located) → Supplier.
+transaction Q16(partkey: int, suppkey: int) {
+    hop {
+        var p: Row<Part> = Part[p_partkey: partkey];
+        var ps: Row<Partsupp> = Partsupp[ps_partkey: partkey, ps_suppkey: suppkey];
+    }
+    hop {
+        var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+    }
 }
 
-transaction Q17(brand: string, container: string) {
-    hop {}
+// Q17: Small-Quantity Order Revenue — Part and Lineitem.
+// Chop: Part → Lineitem/Orders.
+transaction Q17(partkey: int, orderkey: int, linenumber: int) {
+    hop {
+        var p: Row<Part> = Part[p_partkey: partkey];
+        var brand: string = p.p_brand;
+    }
+    hop {
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var qty: float = l.l_quantity;
+    }
 }
 
-transaction Q18(quantity: int) {
-    hop {}
+// Q18: Large Volume Customer — Customer, Orders, Lineitem.
+// Chop: Customer → Orders/Lineitem.
+transaction Q18(custkey: int, orderkey: int, linenumber: int) {
+    hop {
+        var c: Row<Customer> = Customer[c_custkey: custkey];
+    }
+    hop {
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var qty: float = l.l_quantity;
+    }
 }
 
-transaction Q19(brand1: string, quantity1: int, brand2: string, quantity2: int, brand3: string, quantity3: int) {
-    hop {}
+// Q19: Discounted Revenue — Lineitem and Part.
+// Chop: Lineitem/Orders → Part.
+transaction Q19(orderkey: int, linenumber: int, partkey: int) {
+    hop {
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var revenue: float = l.l_extendedprice * (1.0 - l.l_discount);
+    }
+    hop {
+        var p: Row<Part> = Part[p_partkey: partkey];
+    }
 }
 
-transaction Q20(color_like: string, date: date, nation: string) {
-    hop {}
+// Q20: Potential Part Promotion — Part, Partsupp, Supplier, Nation, Lineitem.
+// Chop: Part/Partsupp → Supplier → Nation → Lineitem.
+transaction Q20(partkey: int, suppkey: int, nationkey: int, orderkey: int, linenumber: int) {
+    hop {
+        var p: Row<Part> = Part[p_partkey: partkey];
+        var ps: Row<Partsupp> = Partsupp[ps_partkey: partkey, ps_suppkey: suppkey];
+    }
+    hop {
+        var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+    }
+    hop {
+        var n: Row<Nation> = Nation[n_nationkey: nationkey];
+    }
+    hop {
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var qty: float = l.l_quantity;
+    }
 }
 
-transaction Q21(nation: string) {
-    hop {}
+// Q21: Suppliers Who Kept Orders Waiting — Supplier, Lineitem, Orders, Nation.
+// Chop: Supplier → Lineitem/Orders → Nation.
+transaction Q21(suppkey: int, orderkey: int, linenumber: int, nationkey: int) {
+    hop {
+        var s: Row<Supplier> = Supplier[s_suppkey: suppkey];
+    }
+    hop {
+        var l: Row<Lineitem> = Lineitem[l_orderkey: orderkey, l_linenumber: linenumber];
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+    }
+    hop {
+        var n: Row<Nation> = Nation[n_nationkey: nationkey];
+    }
 }
 
-transaction Q22(code1: string, code2: string, code3: string, code4: string, code5: string, code6: string, code7: string) {
-    hop {}
+// Q22: Global Sales Opportunity — Customer and Orders.
+// Chop: Customer → Orders.
+transaction Q22(custkey: int, orderkey: int) {
+    hop {
+        var c: Row<Customer> = Customer[c_custkey: custkey];
+        var acctbal: float = c.c_acctbal;
+        var phone: string = c.c_phone;
+    }
+    hop {
+        var o: Row<Orders> = Orders[o_orderkey: orderkey];
+    }
 }

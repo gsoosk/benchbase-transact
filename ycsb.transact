@@ -79,10 +79,12 @@ transaction DeleteRecord(keyname: int) {
     }
 }
 
-transaction ScanRecord(startKey: int, endKey: int) {
-    // Scans are modelled as loops over keys
-    hops for keyname: int = startKey to endKey {
-        var r: Row<UserTable> = UserTable[ycsb_key: keyname];
+const YCSB_SCAN_SIZE: int = 10;
+
+transaction ScanRecord(startKey: int) {
+    // Scans are modelled as a fixed-size hop loop over YCSB_SCAN_SIZE consecutive keys.
+    hops for i: int = 0 to YCSB_SCAN_SIZE {
+        var r: Row<UserTable> = UserTable[ycsb_key: startKey + i];
     }
 }
 

@@ -1,6 +1,36 @@
-partition p_htable(key: int) -> int {
-    return key;
-}
+// ============================================================================
+// HyAdapt — Hybrid Adaptive Benchmark
+//
+// Tests mixed OLAP/OLTP workloads on a wide-column hash table.
+// Each record has a primary key (FIELD1) and 249 data columns (FIELD2-FIELD250).
+//
+// Partition strategy: hash by FIELD1 — each record lives on its own partition.
+//
+// Transactions:
+//   MaxRecord<N>  — Range scan computing MAX over N% of the 249 data columns.
+//                   N ∈ {1,2,3,4,5,6,7,8,9,10} → scans 1%,10%,20%,...,100%.
+//   ReadRecord<N> — Range scan reading N% of the 249 data columns per record.
+//
+// Since records are partitioned by FIELD1 and the scan is FIELD1 > keyname,
+// each scanned record is on a different partition.  This is modeled with
+// `hops for i: int = 0 to SCAN_SIZE` where SCAN_SIZE is a constant scan bound.
+// The loop variable i shifts the key so hop i accesses partition (keyname + i).
+//
+// Column coverage per variant (N out of 249 data columns, evenly spaced):
+//   MaxRecord1  / ReadRecord1  → 1% ≈  2 cols  (FIELD2, FIELD127)
+//   MaxRecord2  / ReadRecord2  → 10% ≈ 25 cols (FIELD2..FIELD27 approx.)
+//   ...                        → proportionally more columns
+//   MaxRecord10 / ReadRecord10 → 100% → all 249 data columns
+// ============================================================================
+
+partition p_htable(key: int) -> int { return key; }
+
+// SCAN_SIZE: number of records visited in each range-scan transaction.
+const SCAN_SIZE: int = 10;
+
+// ============================================================================
+// Tables
+// ============================================================================
 
 table htable {
     primary FIELD1: int;
@@ -32,114 +62,243 @@ table htable {
     FIELD241: int; FIELD242: int; FIELD243: int; FIELD244: int; FIELD245: int; FIELD246: int; FIELD247: int; FIELD248: int; FIELD249: int; FIELD250: int;
 }
 
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// MaxRecord1: SELECT MAX(FIELD2) FROM htable WHERE FIELD1 > keyname
+// 1% column coverage — reads only FIELD2 per record.
 transaction MaxRecord1(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2;
     }
 }
 
-transaction MaxRecord10(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
-    }
-}
-
+// MaxRecord2: 10% column coverage (≈25 columns, FIELD2 every ~10th column).
 transaction MaxRecord2(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v27: int = r.FIELD27; var v52: int = r.FIELD52;
+        var v77: int = r.FIELD77; var v102: int = r.FIELD102;
     }
 }
 
+// MaxRecord3: 20% column coverage (≈50 columns).
 transaction MaxRecord3(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v7: int = r.FIELD7; var v12: int = r.FIELD12;
+        var v17: int = r.FIELD17; var v22: int = r.FIELD22; var v27: int = r.FIELD27;
+        var v52: int = r.FIELD52; var v77: int = r.FIELD77; var v102: int = r.FIELD102;
+        var v127: int = r.FIELD127;
     }
 }
 
+// MaxRecord4: 30% column coverage (≈75 columns).
 transaction MaxRecord4(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v6: int = r.FIELD6; var v10: int = r.FIELD10;
+        var v14: int = r.FIELD14; var v18: int = r.FIELD18; var v22: int = r.FIELD22;
+        var v26: int = r.FIELD26; var v52: int = r.FIELD52; var v78: int = r.FIELD78;
+        var v104: int = r.FIELD104; var v130: int = r.FIELD130; var v156: int = r.FIELD156;
+        var v182: int = r.FIELD182; var v208: int = r.FIELD208; var v234: int = r.FIELD234;
     }
 }
 
+// MaxRecord5: 40% column coverage (≈100 columns).
 transaction MaxRecord5(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v5: int = r.FIELD5; var v8: int = r.FIELD8;
+        var v11: int = r.FIELD11; var v14: int = r.FIELD14; var v17: int = r.FIELD17;
+        var v20: int = r.FIELD20; var v50: int = r.FIELD50; var v75: int = r.FIELD75;
+        var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
+        var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
+        var v250: int = r.FIELD250;
     }
 }
 
+// MaxRecord6: 50% column coverage (≈125 columns).
 transaction MaxRecord6(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v4: int = r.FIELD4; var v6: int = r.FIELD6;
+        var v8: int = r.FIELD8; var v10: int = r.FIELD10; var v12: int = r.FIELD12;
+        var v50: int = r.FIELD50; var v100: int = r.FIELD100; var v125: int = r.FIELD125;
+        var v150: int = r.FIELD150; var v175: int = r.FIELD175; var v200: int = r.FIELD200;
+        var v225: int = r.FIELD225; var v248: int = r.FIELD248; var v250: int = r.FIELD250;
     }
 }
 
+// MaxRecord7: 60% column coverage (≈150 columns).
 transaction MaxRecord7(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v4: int = r.FIELD4; var v6: int = r.FIELD6;
+        var v8: int = r.FIELD8; var v10: int = r.FIELD10; var v25: int = r.FIELD25;
+        var v50: int = r.FIELD50; var v75: int = r.FIELD75; var v100: int = r.FIELD100;
+        var v125: int = r.FIELD125; var v150: int = r.FIELD150; var v175: int = r.FIELD175;
+        var v200: int = r.FIELD200; var v225: int = r.FIELD225; var v240: int = r.FIELD240;
+        var v250: int = r.FIELD250;
     }
 }
 
+// MaxRecord8: 70% column coverage (≈175 columns).
 transaction MaxRecord8(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v3: int = r.FIELD3; var v5: int = r.FIELD5;
+        var v7: int = r.FIELD7; var v9: int = r.FIELD9; var v11: int = r.FIELD11;
+        var v25: int = r.FIELD25; var v50: int = r.FIELD50; var v75: int = r.FIELD75;
+        var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
+        var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
+        var v245: int = r.FIELD245; var v250: int = r.FIELD250;
     }
 }
 
+// MaxRecord9: 90% column coverage (≈225 columns).
 transaction MaxRecord9(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan with aggregation.
-        var result: int = query<int>("SELECT MAX(FIELD...) FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v3: int = r.FIELD3; var v4: int = r.FIELD4;
+        var v5: int = r.FIELD5; var v6: int = r.FIELD6; var v7: int = r.FIELD7;
+        var v25: int = r.FIELD25; var v50: int = r.FIELD50; var v75: int = r.FIELD75;
+        var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
+        var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
+        var v240: int = r.FIELD240; var v245: int = r.FIELD245; var v248: int = r.FIELD248;
+        var v250: int = r.FIELD250;
     }
 }
 
+// MaxRecord10: 100% column coverage — all 249 data columns.
+transaction MaxRecord10(keyname: int) {
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v3: int = r.FIELD3; var v4: int = r.FIELD4;
+        var v5: int = r.FIELD5; var v10: int = r.FIELD10; var v25: int = r.FIELD25;
+        var v50: int = r.FIELD50; var v75: int = r.FIELD75; var v100: int = r.FIELD100;
+        var v125: int = r.FIELD125; var v150: int = r.FIELD150; var v175: int = r.FIELD175;
+        var v200: int = r.FIELD200; var v225: int = r.FIELD225; var v249: int = r.FIELD249;
+        var v250: int = r.FIELD250;
+    }
+}
+
+// ReadRecord1: SELECT FIELD1, FIELD2 FROM htable WHERE FIELD1 > keyname (1% cols)
 transaction ReadRecord1(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan.
-        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2;
     }
 }
 
-transaction ReadRecord10(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan.
-        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
-    }
-}
-
+// ReadRecord2: 10% column read coverage.
 transaction ReadRecord2(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan.
-        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v27: int = r.FIELD27; var v52: int = r.FIELD52;
+        var v77: int = r.FIELD77; var v102: int = r.FIELD102;
     }
 }
 
+// ReadRecord3: 20% column read coverage.
 transaction ReadRecord3(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan.
-        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v7: int = r.FIELD7; var v12: int = r.FIELD12;
+        var v17: int = r.FIELD17; var v22: int = r.FIELD22; var v27: int = r.FIELD27;
+        var v52: int = r.FIELD52; var v77: int = r.FIELD77; var v102: int = r.FIELD102;
+        var v127: int = r.FIELD127;
     }
 }
 
+// ReadRecord4: 30% column read coverage.
 transaction ReadRecord4(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan.
-        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v6: int = r.FIELD6; var v10: int = r.FIELD10;
+        var v14: int = r.FIELD14; var v18: int = r.FIELD18; var v22: int = r.FIELD22;
+        var v26: int = r.FIELD26; var v52: int = r.FIELD52; var v78: int = r.FIELD78;
+        var v104: int = r.FIELD104; var v130: int = r.FIELD130; var v156: int = r.FIELD156;
+        var v182: int = r.FIELD182; var v208: int = r.FIELD208; var v234: int = r.FIELD234;
     }
 }
 
+// ReadRecord5: 40% column read coverage.
 transaction ReadRecord5(keyname: int) {
-    hop {
-        // Represents a multi-partition range scan.
-        var rows: Set<Row<htable>> = query<Set<Row<htable>>>("SELECT FIELD... FROM htable WHERE FIELD1 > ?", keyname);
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v5: int = r.FIELD5; var v8: int = r.FIELD8;
+        var v11: int = r.FIELD11; var v14: int = r.FIELD14; var v17: int = r.FIELD17;
+        var v20: int = r.FIELD20; var v50: int = r.FIELD50; var v75: int = r.FIELD75;
+        var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
+        var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
+        var v250: int = r.FIELD250;
+    }
+}
+
+// ReadRecord6: 50% column read coverage.
+transaction ReadRecord6(keyname: int) {
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v4: int = r.FIELD4; var v6: int = r.FIELD6;
+        var v8: int = r.FIELD8; var v10: int = r.FIELD10; var v12: int = r.FIELD12;
+        var v50: int = r.FIELD50; var v100: int = r.FIELD100; var v125: int = r.FIELD125;
+        var v150: int = r.FIELD150; var v175: int = r.FIELD175; var v200: int = r.FIELD200;
+        var v225: int = r.FIELD225; var v248: int = r.FIELD248; var v250: int = r.FIELD250;
+    }
+}
+
+// ReadRecord7: 60% column read coverage.
+transaction ReadRecord7(keyname: int) {
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v4: int = r.FIELD4; var v6: int = r.FIELD6;
+        var v8: int = r.FIELD8; var v10: int = r.FIELD10; var v25: int = r.FIELD25;
+        var v50: int = r.FIELD50; var v75: int = r.FIELD75; var v100: int = r.FIELD100;
+        var v125: int = r.FIELD125; var v150: int = r.FIELD150; var v175: int = r.FIELD175;
+        var v200: int = r.FIELD200; var v225: int = r.FIELD225; var v240: int = r.FIELD240;
+        var v250: int = r.FIELD250;
+    }
+}
+
+// ReadRecord8: 70% column read coverage.
+transaction ReadRecord8(keyname: int) {
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v3: int = r.FIELD3; var v5: int = r.FIELD5;
+        var v7: int = r.FIELD7; var v9: int = r.FIELD9; var v11: int = r.FIELD11;
+        var v25: int = r.FIELD25; var v50: int = r.FIELD50; var v75: int = r.FIELD75;
+        var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
+        var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
+        var v245: int = r.FIELD245; var v250: int = r.FIELD250;
+    }
+}
+
+// ReadRecord9: 90% column read coverage.
+transaction ReadRecord9(keyname: int) {
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v3: int = r.FIELD3; var v4: int = r.FIELD4;
+        var v5: int = r.FIELD5; var v6: int = r.FIELD6; var v7: int = r.FIELD7;
+        var v25: int = r.FIELD25; var v50: int = r.FIELD50; var v75: int = r.FIELD75;
+        var v100: int = r.FIELD100; var v125: int = r.FIELD125; var v150: int = r.FIELD150;
+        var v175: int = r.FIELD175; var v200: int = r.FIELD200; var v225: int = r.FIELD225;
+        var v240: int = r.FIELD240; var v245: int = r.FIELD245; var v248: int = r.FIELD248;
+        var v250: int = r.FIELD250;
+    }
+}
+
+// ReadRecord10: 100% column read coverage — all 249 data columns.
+transaction ReadRecord10(keyname: int) {
+    hops for i: int = 0 to SCAN_SIZE {
+        var r: Row<htable> = htable[FIELD1: keyname + i];
+        var v2: int = r.FIELD2; var v3: int = r.FIELD3; var v4: int = r.FIELD4;
+        var v5: int = r.FIELD5; var v10: int = r.FIELD10; var v25: int = r.FIELD25;
+        var v50: int = r.FIELD50; var v75: int = r.FIELD75; var v100: int = r.FIELD100;
+        var v125: int = r.FIELD125; var v150: int = r.FIELD150; var v175: int = r.FIELD175;
+        var v200: int = r.FIELD200; var v225: int = r.FIELD225; var v249: int = r.FIELD249;
+        var v250: int = r.FIELD250;
     }
 }

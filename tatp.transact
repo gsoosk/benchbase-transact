@@ -101,8 +101,8 @@ transaction GetAccessData(s_id: int, ai_type: int) {
 transaction GetNewDestination(s_id: int, sf_type: int, start_time: int, end_time: int) {
     hop {
         var sf: Row<SpecialFacility> = SpecialFacility[s_id: s_id, sf_type: sf_type];
-        var active: int = sf.is_active;
-        if active == 1 {
+        var sf_active: int = sf.is_active;
+        if sf_active == 1 {
             var cf: Row<CallForwarding> = CallForwarding[s_id: s_id, sf_type: sf_type, start_time: start_time];
             var num: string = cf.numberx;
         }

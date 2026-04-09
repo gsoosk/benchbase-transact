@@ -287,6 +287,55 @@ transaction Delivery(w_id: int, o_carrier_id: int, date: int) {
     }
 }
 
+// OrderStatus
+//
+// Read a customer's most-recent order and all of its order lines.
+// All three tables (Customer, Order, Order_Line) are co-located on the
+// g(w_id, d_id) partition → single hop.
+//
+// o_id: the customer's last order ID (pre-resolved by the application before
+//       issuing the transaction, e.g. via D_NEXT_O_ID - 1).
+transaction OrderStatus(w_id: int, d_id: int, c_id: int, o_id: int) {
+    hop {
+        var c: Row<Customer> = Customer[C_W_ID: w_id, C_D_ID: d_id, C_ID: c_id];
+        var o: Row<Order> = Order[O_W_ID: w_id, O_D_ID: d_id, O_ID: o_id];
+        for (var ol_number: int = 0; ol_number < O_OL_CNT; ol_number = ol_number + 1) {
+            var ol: Row<Order_Line> = Order_Line[OL_W_ID: w_id, OL_D_ID: d_id,
+                                                  OL_O_ID: o_id, OL_NUMBER: ol_number];
+        }
+    }
+}
+
+// StockLevel
+//
+// Count distinct items in the last ~20 orders for a district whose stock
+// quantity falls below a threshold.
+//
+// Chopping:
+//   Hop 1 (district/order-line partition g(w_id, d_id)):
+//         Read D_NEXT_O_ID; scan order lines for the most recent order.
+//   Hop 2 (stock/item partition h(w_id, i_id)):
+//         Read Stock for a representative item from those order lines.
+//
+// rep_i_id: a representative item ID drawn from the scanned order lines
+//           (passed as a parameter; in production the application would
+//            iterate this hop over all distinct item IDs found in Hop 1).
+transaction StockLevel(w_id: int, d_id: int, threshold: int, rep_i_id: int) {
+    // Hop 1: district/order-line partition — identify recent order items.
+    hop {
+        var next_o_id: int = District[D_W_ID: w_id, D_ID: d_id].D_NEXT_O_ID;
+        for (var ol_number: int = 0; ol_number < O_OL_CNT; ol_number = ol_number + 1) {
+            var ol: Row<Order_Line> = Order_Line[OL_W_ID: w_id, OL_D_ID: d_id,
+                                                  OL_O_ID: next_o_id, OL_NUMBER: ol_number];
+        }
+    }
+    // Hop 2: stock/item partition h(w_id, rep_i_id) — check quantity threshold.
+    hop {
+        var s: Row<Stock> = Stock[S_W_ID: w_id, S_I_ID: rep_i_id];
+        var low_stock: bool = s.S_QUANTITY < threshold;
+    }
+}
+
 // Payment
 transaction Payment(w_id: int, d_id: int, c_w_id: int, c_d_id: int, c_id: int, amount: float) {
     // Add payment amount to supply warehouse

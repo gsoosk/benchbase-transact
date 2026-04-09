@@ -1,18 +1,48 @@
-partition f(x: int) -> int { return x; }
+// ============================================================================
+// OTMetrics — Observability / Telemetry Metrics Benchmark
+//
+// Workload: range queries over time-series observations keyed by source.
+//
+// Partition strategy: all observations for a given source_id are co-located
+// on the same partition (f(source_id)).  Every transaction is single-partition.
+// No chopping is needed — each GetSessionRange touches exactly one partition.
+// ============================================================================
 
+partition f(x: int) -> int {
+    return x;
+}
+
+// ============================================================================
+// Tables
+// ============================================================================
+
+// Timestamp represented as int (seconds since epoch).
 table observations {
-    primary source_id: int, session_id: int, created_time: timestamp;
+    primary source_id: int;
+    primary session_id: int;
+    primary created_time: int;
     node f(source_id);
     type_id: int;
 }
 
-transaction GetSessionRange(source_id: int, session_low: int, session_high: int, type_ids: Array<int>) {
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// GetSessionRange:
+//   SQL: SELECT * FROM observations
+//        WHERE source_id = ? AND session_id BETWEEN ? AND ?
+//        AND type_id = ?
+// All rows for a given source_id live on the same partition → single hop.
+// created_time + type_id identify the representative row for point-read modeling.
+transaction GetSessionRange(source_id: int, session_low: int, session_high: int,
+                            type_id: int, created_time: int) {
     hop {
-        for (row in observations where row.source_id == source_id &&
-                                    row.session_id >= session_low &&
-                                    row.session_id <= session_high &&
-                                    contains(type_ids, row.type_id)) {
-            // This loop represents reading the result set from a single partition.
-        }
+        // Single-partition scan: all matching rows are on source_id's partition.
+        // Representative point-read captures the partition access pattern.
+        var obs: Row<observations> = observations[source_id: source_id,
+                                                  session_id: session_low,
+                                                  created_time: created_time];
+        var tid: int = obs.type_id;
     }
 }

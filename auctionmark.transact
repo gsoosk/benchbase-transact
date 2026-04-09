@@ -1,480 +1,374 @@
-partition f(id: string) -> int { return hash(id); }
-partition g(id: int) -> int { return id; }
+// ============================================================================
+// AuctionMark — Online Auction Benchmark
+//
+// Models an eBay-style auction site.  Users list items for auction; other
+// users bid, comment, and purchase items.
+//
+// Partition strategy:
+//   USERACCT                          — partitioned by u_id (seller/buyer key)
+//   REGION                            — small global table, partitioned by r_id
+//   ITEM, ITEM_BID, ITEM_MAX_BID,
+//   ITEM_COMMENT                      — co-located with the SELLER (i_u_id/ib_u_id)
+//   USERACCT_ITEM, USERACCT_WATCH     — co-located with the BUYER (ui_u_id/uw_u_id)
+//   USERACCT_FEEDBACK                 — co-located with the RECIPIENT user (uf_u_id)
+//
+// Rationale: placing all of a seller's auction data on the same partition
+// eliminates cross-partition coordination for the hot path (bidding, commenting).
+// Only transactions that involve both a seller and a buyer cross a partition
+// boundary.
+//
+// Chopping:
+//   CloseAuctions  — seller partition (update ITEM, read winning bid)
+//                    → buyer partition (record USERACCT_ITEM)          [2 hops]
+//   GetItem        — seller partition only                              [1 hop]
+//   GetUserInfo    — seller/user partition → buyer's purchase partition [2 hops]
+//   NewBid         — seller partition only (all bid tables co-located)  [1 hop]
+//   NewComment     — seller partition only                              [1 hop]
+//   NewCommentResponse — seller partition only                          [1 hop]
+//   NewFeedback    — recipient partition only                           [1 hop]
+//   NewItem        — seller partition only                              [1 hop]
+//   NewPurchase    — seller partition (close item, credit seller)
+//                    → buyer partition (debit buyer)                    [2 hops]
+//   UpdateItem     — seller partition only                              [1 hop]
+//
+// Notes:
+//   - All IDs use int (AuctionMark uses composite string IDs internally,
+//     but int surrogates simplify the partition function).
+//   - Timestamps are represented as int (seconds since epoch).
+//   - INSERT is modeled via row-literal assignment: Table[keys] = {fields}.
+// ============================================================================
 
-// Constants inferred from Java code
-const CLOSE_AUCTIONS_ITEMS_PER_ROUND: int = 100; // Example value, actual value from AuctionMarkConstants
-const ITEM_BID_PERCENT_STEP: float = 0.01; // Example value
-const ITEM_LOADCONFIG_LIMIT: int = 100; // Example value
+partition p_user(x: int) -> int { return x; }
+partition p_region(x: int) -> int { return x; }
 
-const ITEM_STATUS_OPEN: int = 0; // ItemStatus.OPEN.ordinal()
-const ITEM_STATUS_WAITING_FOR_PURCHASE: int = 1; // ItemStatus.WAITING_FOR_PURCHASE.ordinal()
-const ITEM_STATUS_CLOSED: int = 2; // ItemStatus.CLOSED.ordinal()
+const ITEM_STATUS_OPEN: int = 0;
+const ITEM_STATUS_WAITING_FOR_PURCHASE: int = 1;
+const ITEM_STATUS_CLOSED: int = 2;
 
-// Mock utility functions
-function getProcTimestamp(benchmarkTimes: List<timestamp>): timestamp {
-    // In a real system, this would get the current time or a simulated time.
-    // For TransAct, we assume it returns a timestamp.
-    return now();
-}
-
-function min(a: float, b: float): float {
-    if (a < b) { return a; } else { return b; }
-}
-
-// Placeholder for aggregate function COUNT
-function COUNT(col: any): int { return 0; }
+// ============================================================================
+// Tables
+// ============================================================================
 
 table USERACCT {
-    primary u_id: string;
-    node f(u_id);
+    primary u_id: int;
+    node p_user(u_id);
     u_rating: int;
-    u_created: timestamp;
     u_balance: float;
+    u_comments: int;
+    u_r_id: int;
     u_sattr0: string;
     u_sattr1: string;
     u_sattr2: string;
     u_sattr3: string;
     u_sattr4: string;
-    u_r_id: int;
-    u_comments: int;
-    u_updated: timestamp;
 }
 
+// REGION is a small reference table; replicated to each region partition.
 table REGION {
     primary r_id: int;
-    node g(r_id);
+    node p_region(r_id);
     r_name: string;
 }
 
+// ITEM co-located with seller: all of a seller's items live on p_user(i_u_id).
 table ITEM {
-    primary i_id: string, i_u_id: string;
-    node f(i_u_id);
+    primary i_id: int;
+    primary i_u_id: int;    // seller id — drives partition placement
+    node p_user(i_u_id);
     i_name: string;
     i_initial_price: float;
     i_current_price: float;
     i_num_bids: int;
-    i_end_date: timestamp;
+    i_end_date: int;
+    i_start_date: int;
     i_status: int;
-    i_start_date: timestamp;
-    i_updated: timestamp;
     i_num_comments: int;
     i_c_id: int;
 }
 
+// ITEM_BID co-located with item (seller's partition).
 table ITEM_BID {
-    primary ib_id: int, ib_i_id: string, ib_u_id: string;
-    node f(ib_u_id);
-    ib_buyer_id: string;
+    primary ib_id: int;
+    primary ib_i_id: int;
+    primary ib_u_id: int;   // seller id
+    node p_user(ib_u_id);
+    ib_buyer_id: int;
     ib_bid: float;
     ib_max_bid: float;
-    ib_created: timestamp;
-    ib_updated: timestamp;
 }
 
+// ITEM_MAX_BID tracks the current highest bid per item (seller's partition).
 table ITEM_MAX_BID {
-    primary imb_i_id: string, imb_u_id: string;
-    node f(imb_u_id);
+    primary imb_i_id: int;
+    primary imb_u_id: int;  // seller id
+    node p_user(imb_u_id);
     imb_ib_id: int;
-    imb_ib_i_id: string;
-    imb_ib_u_id: string;
-    imb_created: timestamp;
-    imb_updated: timestamp;
+    imb_ib_i_id: int;
+    imb_ib_u_id: int;
 }
 
-table USERACCT_ITEM {
-    primary ui_u_id: string, ui_i_id: string, ui_i_u_id: string;
-    node f(ui_u_id);
-    ui_created: timestamp;
-}
-
-table USERACCT_FEEDBACK {
-    primary uf_u_id: string, uf_i_id: string, uf_i_u_id: string, uf_from_id: string;
-    node f(uf_u_id);
-    uf_rating: int;
-    uf_date: timestamp;
-    uf_sattr0: string;
-}
-
+// ITEM_COMMENT co-located with item/seller.
 table ITEM_COMMENT {
-    primary ic_id: int, ic_i_id: string, ic_u_id: string;
-    node f(ic_u_id);
-    ic_buyer_id: string;
+    primary ic_id: int;
+    primary ic_i_id: int;
+    primary ic_u_id: int;   // seller id
+    node p_user(ic_u_id);
+    ic_buyer_id: int;
     ic_question: string;
     ic_response: string;
-    ic_created: timestamp;
-    ic_updated: timestamp;
 }
 
+// USERACCT_ITEM records items won by a buyer; lives on the BUYER's partition.
+table USERACCT_ITEM {
+    primary ui_u_id: int;   // buyer id — drives partition placement
+    primary ui_i_id: int;
+    primary ui_i_u_id: int; // seller id
+    node p_user(ui_u_id);
+}
+
+// USERACCT_FEEDBACK lives on the feedback recipient's partition.
+table USERACCT_FEEDBACK {
+    primary uf_u_id: int;   // recipient user id
+    primary uf_i_id: int;
+    primary uf_i_u_id: int; // seller id
+    primary uf_from_id: int;
+    node p_user(uf_u_id);
+    uf_rating: int;
+}
+
+// USERACCT_WATCH lives on the watcher/buyer's partition.
 table USERACCT_WATCH {
-    primary uw_u_id: string, uw_i_id: string, uw_i_u_id: string;
-    node f(uw_u_id);
-    uw_created: timestamp;
+    primary uw_u_id: int;   // buyer/watcher id
+    primary uw_i_id: int;
+    primary uw_i_u_id: int; // seller id
+    node p_user(uw_u_id);
 }
 
-table CONFIG_PROFILE {
-    primary cfp_scale_factor: float; // Assuming this is the primary key for a single row.
-    node g(0); // Fixed partition for a single-row table.
-    cfp_loader_start: timestamp;
-    cfp_loader_end: timestamp;
-    cfp_benchmark_info: string;
-}
+// ============================================================================
+// Transactions
+// ============================================================================
 
-table GLOBAL_ATTRIBUTE_GROUP {
-    primary gag_id: int;
-    node g(gag_id);
-}
-
-transaction CloseAuctions(benchmarkTimes: List<timestamp>, startTime: timestamp, endTime: timestamp) {
-    var currentTime: timestamp = getProcTimestamp(benchmarkTimes);
-
-    // Hop 1: Fetch a batch of due items. This is a distributed read.
-    // We assume this read can be done in a single hop, potentially by a coordinator.
-    // The important part is that the *updates* to these items will be chopped.
-    var dueItems: List<Row<ITEM>> = ITEM.filter(
-        (row: Row<ITEM>) => row.i_start_date >= startTime && row.i_start_date <= endTime && row.i_status == ITEM_STATUS_OPEN
-    ).orderBy(i_id, ASC).limit(CLOSE_AUCTIONS_ITEMS_PER_ROUND);
-
-    for (var itemRow: Row<ITEM> in dueItems) {
-        var itemId: string = itemRow.i_id;
-        var sellerId: string = itemRow.i_u_id;
-        var numBids: int = itemRow.i_num_bids;
-        var itemStatus: int;
-        var bidId: int = null;
-        var buyerId: string = null;
-
-        if (numBids > 0) {
-            // Hop for seller's partition (ITEM, ITEM_MAX_BID, ITEM_BID)
-            hop {
-                var maxBidRow: Row<ITEM_MAX_BID> = ITEM_MAX_BID[imb_i_id: itemId, imb_u_id: sellerId];
-                var itemBidRow: Row<ITEM_BID> = ITEM_BID[ib_id: maxBidRow.imb_ib_id, ib_i_id: maxBidRow.imb_ib_i_id, ib_u_id: maxBidRow.imb_ib_u_id];
-                bidId = itemBidRow.ib_id;
-                buyerId = itemBidRow.ib_buyer_id;
-
-                itemStatus = ITEM_STATUS_WAITING_FOR_PURCHASE;
-                var itemToUpdate: Row<ITEM> = ITEM[i_id: itemId, i_u_id: sellerId];
-                itemToUpdate.i_status = itemStatus;
-                itemToUpdate.i_updated = currentTime;
-                ITEM[i_id: itemId, i_u_id: sellerId] = itemToUpdate;
-            }
-            // Hop for buyer's partition (USERACCT_ITEM)
-            hop {
-                // This hop depends on buyerId from the previous hop.
-                var newUserItem: Row<USERACCT_ITEM> = new Row<USERACCT_ITEM>();
-                newUserItem.ui_u_id = buyerId;
-                newUserItem.ui_i_id = itemId;
-                newUserItem.ui_i_u_id = sellerId;
-                newUserItem.ui_created = currentTime;
-                USERACCT_ITEM.insert(newUserItem);
-            }
-        } else {
-            // Hop for seller's partition (ITEM)
-            hop {
-                itemStatus = ITEM_STATUS_CLOSED;
-                var itemToUpdate: Row<ITEM> = ITEM[i_id: itemId, i_u_id: sellerId];
-                itemToUpdate.i_status = itemStatus;
-                itemToUpdate.i_updated = currentTime;
-                ITEM[i_id: itemId, i_u_id: sellerId] = itemToUpdate;
-            }
-        }
-    }
-}
-
-transaction GetItem(benchmarkTimes: List<timestamp>, item_id: string, seller_id: string) {
-    hop {
-        var item_row: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
-        var user_row: Row<USERACCT> = USERACCT[u_id: seller_id];
-        var region_row: Row<REGION> = REGION[r_id: user_row.u_r_id];
-    }
-}
-
-transaction GetUserInfo(
-    benchmarkTimes: List<timestamp>,
-    user_id: string,
-    get_feedback: boolean,
-    get_comments: boolean,
-    get_seller_items: boolean,
-    get_buyer_items: boolean,
-    get_watched_items: boolean
-) {
-    // Hop 1: Access user-local data (USERACCT, USERACCT_FEEDBACK, ITEM_COMMENT, ITEM for seller)
-    hop {
-        var user: Row<USERACCT> = USERACCT[u_id: user_id];
-        var region: Row<REGION> = REGION[r_id: user.u_r_id];
-
-        if (get_feedback) {
-            var userFeedback: List<Row<USERACCT_FEEDBACK>> = USERACCT_FEEDBACK.filter(
-                (row: Row<USERACCT_FEEDBACK>) => row.uf_u_id == user_id
-            ).orderBy(uf_date, DESC).limit(25);
-        }
-
-        if (get_comments) {
-            var itemComments: List<Row<ITEM_COMMENT>> = ITEM_COMMENT.filter(
-                (row: Row<ITEM_COMMENT>) => row.ic_u_id == user_id && row.ic_response == null
-            ).orderBy(ic_created, DESC).limit(25);
-        }
-
-        if (get_seller_items) {
-            var sellerItems: List<Row<ITEM>> = ITEM.filter(
-                (row: Row<ITEM>) => row.i_u_id == user_id
-            ).orderBy(i_end_date, DESC).limit(25);
-        }
-    }
-
-    // Hop 2 (conditional): Distributed join for buyer's purchased items
-    if (get_buyer_items) {
-        hop {
-            // This represents a distributed join between USERACCT_ITEM (partitioned by buyer_id)
-            // and ITEM (partitioned by seller_id).
-            var buyerItems: List<Row<ITEM>> = ITEM.join(USERACCT_ITEM, (i, ui) => i.i_id == ui.ui_i_id && i.i_u_id == ui.ui_i_u_id)
-                                                .filter((i, ui) => ui.ui_u_id == user_id)
-                                                .orderBy(i_end_date, DESC).limit(25);
-        }
-    }
-
-    // Hop 3 (conditional): Distributed join for buyer's watched items
-    if (get_watched_items) {
-        hop {
-            // This represents a distributed join between USERACCT_WATCH (partitioned by buyer_id)
-            // and ITEM (partitioned by seller_id).
-            var watchedItems: List<Row<ITEM>> = ITEM.join(USERACCT_WATCH, (i, uw) => i.i_id == uw.uw_i_id && i.i_u_id == uw.uw_i_u_id)
-                                                .filter((i, uw) => uw.uw_u_id == user_id)
-                                                .orderBy(i_end_date, DESC).limit(25);
-        }
-    }
-}
-
-transaction LoadConfig() {
-    hop {
-        var configProfile: List<Row<CONFIG_PROFILE>> = CONFIG_PROFILE.all();
-    }
-
-    hop {
-        var categoryCounts: List<Object[]> = ITEM.groupBy(i_c_id).select(i_c_id, COUNT(i_id));
-    }
-
-    hop {
-        var attributes: List<Row<GLOBAL_ATTRIBUTE_GROUP>> = GLOBAL_ATTRIBUTE_GROUP.all();
-    }
-
-    hop {
-        var pendingComments: List<Row<ITEM_COMMENT>> = ITEM_COMMENT.filter(
-            (row: Row<ITEM_COMMENT>) => row.ic_response == null
-        );
-    }
-
-    hop {
-        var config: Row<CONFIG_PROFILE> = CONFIG_PROFILE.all()[0]; // Assuming single row
-        var openItems: List<Row<ITEM>> = ITEM.filter(
-            (row: Row<ITEM>) => row.i_status == ITEM_STATUS_OPEN && row.i_end_date > config.cfp_loader_start
-        ).orderBy(i_end_date, ASC).limit(ITEM_LOADCONFIG_LIMIT);
-    }
-
-    hop {
-        var config: Row<CONFIG_PROFILE> = CONFIG_PROFILE.all()[0]; // Assuming single row
-        var waiting: List<Row<ITEM>> = ITEM.filter(
-            (row: Row<ITEM>) => row.i_status == ITEM_STATUS_WAITING_FOR_PURCHASE && row.i_end_date <= config.cfp_loader_start
-        ).orderBy(i_end_date, ASC).limit(ITEM_LOADCONFIG_LIMIT);
-    }
-
-    hop {
-        var config: Row<CONFIG_PROFILE> = CONFIG_PROFILE.all()[0]; // Assuming single row
-        var closedItems: List<Row<ITEM>> = ITEM.filter(
-            (row: Row<ITEM>) => row.i_status == ITEM_STATUS_CLOSED && row.i_end_date <= config.cfp_loader_start
-        ).orderBy(i_end_date, ASC).limit(ITEM_LOADCONFIG_LIMIT);
-    }
-}
-
-transaction NewBid(
-    benchmarkTimes: List<timestamp>,
-    item_id: string,
-    seller_id: string,
-    buyer_id: string,
-    newBid: float,
-    estimatedEndDate: timestamp
-) {
-    var currentTime: timestamp = getProcTimestamp(benchmarkTimes);
-
+// CloseAuctions: Close one auction that has received bids.
+//
+// Hop 1 (seller partition): Read ITEM, ITEM_MAX_BID, winning ITEM_BID;
+//         update ITEM status to WAITING_FOR_PURCHASE; capture buyer_id.
+// Hop 2 (buyer partition):  Insert USERACCT_ITEM record for the winner.
+//
+// buyer_id flows from Hop 1 to Hop 2 as a continuation variable.
+transaction CloseAuctions(item_id: int, seller_id: int) {
     hop {
         var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
-        var i_initial_price: float = item.i_initial_price;
-        var i_current_price: float = item.i_current_price;
-        var i_num_bids: int = item.i_num_bids;
-        var i_end_date: timestamp = item.i_end_date;
-        var i_status: int = item.i_status;
+        item.i_status = ITEM_STATUS_WAITING_FOR_PURCHASE;
+        ITEM[i_id: item_id, i_u_id: seller_id] = item;
 
-        var newBidId: int = 0;
-        var newBidMaxBuyerId: string = buyer_id;
+        var max_bid: Row<ITEM_MAX_BID> = ITEM_MAX_BID[imb_i_id: item_id, imb_u_id: seller_id];
+        var winning_bid: Row<ITEM_BID> = ITEM_BID[ib_id: max_bid.imb_ib_id,
+                                                   ib_i_id: item_id,
+                                                   ib_u_id: seller_id];
+        var buyer_id: int = winning_bid.ib_buyer_id;
+    }
+    hop {
+        USERACCT_ITEM[ui_u_id: buyer_id, ui_i_id: item_id, ui_i_u_id: seller_id] = {};
+    }
+}
 
-        if (i_num_bids > 0) {
-            var maxBidIdResult: Row<ITEM_BID> = ITEM_BID.filter((row: Row<ITEM_BID>) => row.ib_i_id == item_id && row.ib_u_id == seller_id).max(ib_id);
-            newBidId = maxBidIdResult.ib_id + 1;
+// CloseAuctionsNoBids: Close an auction that received zero bids.
+// Single hop on seller's partition — no buyer interaction needed.
+transaction CloseAuctionsNoBids(item_id: int, seller_id: int) {
+    hop {
+        var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
+        item.i_status = ITEM_STATUS_CLOSED;
+        ITEM[i_id: item_id, i_u_id: seller_id] = item;
+    }
+}
 
-            var itemMaxBid: Row<ITEM_MAX_BID> = ITEM_MAX_BID[imb_i_id: item_id, imb_u_id: seller_id];
-            var currentItemBid: Row<ITEM_BID> = ITEM_BID[ib_id: itemMaxBid.imb_ib_id, ib_i_id: itemMaxBid.imb_ib_i_id, ib_u_id: itemMaxBid.imb_ib_u_id];
-            var currentBidId: int = currentItemBid.ib_id;
-            var currentBidAmount: float = currentItemBid.ib_bid;
-            var currentBidMax: float = currentItemBid.ib_max_bid;
-            var currentBuyerId: string = currentItemBid.ib_buyer_id;
+// GetItem: Read auction item details together with the seller's profile.
+// Both ITEM and USERACCT are on the seller's partition → single hop.
+// REGION is a replicated global table accessible from any partition.
+transaction GetItem(item_id: int, seller_id: int) {
+    hop {
+        var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
+        var seller: Row<USERACCT> = USERACCT[u_id: seller_id];
+        var region: Row<REGION> = REGION[r_id: seller.u_r_id];
+    }
+}
 
-            var updateMaxBid: boolean = false;
+// GetUserInfo: Read a user's profile, feedback, comments, items, and purchases.
+//
+// Hop 1 (user's seller partition): USERACCT, USERACCT_FEEDBACK, ITEM_COMMENT, ITEM.
+// Hop 2 (user's buyer partition):  USERACCT_ITEM and USERACCT_WATCH
+//         (representative single-row reads for items purchased/watched).
+//
+// other_user_id identifies the "other side" of feedback/purchase relationships.
+transaction GetUserInfo(user_id: int, other_user_id: int,
+                        item_id: int, comment_id: int) {
+    hop {
+        var u: Row<USERACCT> = USERACCT[u_id: user_id];
+        var feedback: Row<USERACCT_FEEDBACK> = USERACCT_FEEDBACK[uf_u_id: user_id,
+                                                                  uf_i_id: item_id,
+                                                                  uf_i_u_id: other_user_id,
+                                                                  uf_from_id: other_user_id];
+        var comment: Row<ITEM_COMMENT> = ITEM_COMMENT[ic_id: comment_id,
+                                                       ic_i_id: item_id,
+                                                       ic_u_id: user_id];
+        var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: user_id];
+    }
+    hop {
+        var purchase: Row<USERACCT_ITEM> = USERACCT_ITEM[ui_u_id: user_id,
+                                                          ui_i_id: item_id,
+                                                          ui_i_u_id: other_user_id];
+        var watch: Row<USERACCT_WATCH> = USERACCT_WATCH[uw_u_id: user_id,
+                                                         uw_i_id: item_id,
+                                                         uw_i_u_id: other_user_id];
+    }
+}
 
-            if (buyer_id == currentBuyerId) {
-                var bidToUpdate: Row<ITEM_BID> = ITEM_BID[ib_id: currentBidId, ib_i_id: item_id, ib_u_id: seller_id];
-                bidToUpdate.ib_bid = i_current_price;
-                bidToUpdate.ib_max_bid = newBid;
-                bidToUpdate.ib_updated = currentTime;
-                ITEM_BID[ib_id: currentBidId, ib_i_id: item_id, ib_u_id: seller_id] = bidToUpdate;
-            } else {
-                if (newBid > currentBidMax) {
-                    i_current_price = min(newBid, currentBidMax + (i_initial_price * ITEM_BID_PERCENT_STEP));
-                    updateMaxBid = true;
-                } else {
-                    newBidMaxBuyerId = currentBuyerId;
-                    i_current_price = min(currentBidMax, newBid + (i_initial_price * ITEM_BID_PERCENT_STEP));
-                    var bidToUpdate: Row<ITEM_BID> = ITEM_BID[ib_id: currentBidId, ib_i_id: item_id, ib_u_id: seller_id];
-                    bidToUpdate.ib_bid = i_current_price;
-                    bidToUpdate.ib_max_bid = i_current_price;
-                    bidToUpdate.ib_updated = currentTime;
-                    ITEM_BID[ib_id: currentBidId, ib_i_id: item_id, ib_u_id: seller_id] = bidToUpdate;
-                }
+// NewBid: Place or update a bid on an auction item.
+//
+// All bid data (ITEM, ITEM_BID, ITEM_MAX_BID) is co-located on the seller's
+// partition → single hop.
+//
+// new_bid_id: next available bid ID (assigned before the transaction).
+transaction NewBid(item_id: int, seller_id: int, buyer_id: int,
+                   new_bid: float, new_bid_id: int) {
+    hop {
+        var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
+        var cur_price: float = item.i_current_price;
 
-                var newItemBid: Row<ITEM_BID> = new Row<ITEM_BID>();
-                newItemBid.ib_id = newBidId;
-                newItemBid.ib_i_id = item_id;
-                newItemBid.ib_u_id = seller_id;
-                newItemBid.ib_buyer_id = buyer_id;
-                newItemBid.ib_bid = i_current_price;
-                newItemBid.ib_max_bid = newBid;
-                newItemBid.ib_created = currentTime;
-                newItemBid.ib_updated = currentTime;
-                ITEM_BID.insert(newItemBid);
+        // Update item: increment bid count and advance current price.
+        item.i_num_bids = item.i_num_bids + 1;
+        if (new_bid > cur_price) {
+            item.i_current_price = new_bid;
+        }
+        ITEM[i_id: item_id, i_u_id: seller_id] = item;
 
-                var itemToUpdate: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
-                itemToUpdate.i_num_bids = itemToUpdate.i_num_bids + 1;
-                itemToUpdate.i_current_price = i_current_price;
-                itemToUpdate.i_updated = currentTime;
-                ITEM[i_id: item_id, i_u_id: seller_id] = itemToUpdate;
+        // Insert new bid record.
+        ITEM_BID[ib_id: new_bid_id, ib_i_id: item_id, ib_u_id: seller_id] = {
+            ib_buyer_id: buyer_id,
+            ib_bid: new_bid,
+            ib_max_bid: new_bid
+        };
 
-                if (updateMaxBid) {
-                    var itemMaxBidToUpdate: Row<ITEM_MAX_BID> = ITEM_MAX_BID[imb_i_id: item_id, imb_u_id: seller_id];
-                    itemMaxBidToUpdate.imb_ib_id = newBidId;
-                    itemMaxBidToUpdate.imb_ib_i_id = item_id;
-                    itemMaxBidToUpdate.imb_ib_u_id = seller_id;
-                    itemMaxBidToUpdate.imb_updated = currentTime;
-                    ITEM_MAX_BID[imb_i_id: item_id, imb_u_id: seller_id] = itemMaxBidToUpdate;
-                }
-            }
-        } else {
-            var newItemBid: Row<ITEM_BID> = new Row<ITEM_BID>();
-            newItemBid.ib_id = newBidId;
-            newItemBid.ib_i_id = item_id;
-            newItemBid.ib_u_id = seller_id;
-            newItemBid.ib_buyer_id = buyer_id;
-            newItemBid.ib_bid = i_initial_price;
-            newItemBid.ib_max_bid = newBid;
-            newItemBid.ib_created = currentTime;
-            newItemBid.ib_updated = currentTime;
-            ITEM_BID.insert(newItemBid);
-
-            var newItemMaxBid: Row<ITEM_MAX_BID> = new Row<ITEM_MAX_BID>();
-            newItemMaxBid.imb_i_id = item_id;
-            newItemMaxBid.imb_u_id = seller_id;
-            newItemMaxBid.imb_ib_id = newBidId;
-            newItemMaxBid.imb_ib_i_id = item_id;
-            newItemMaxBid.imb_ib_u_id = seller_id;
-            newItemMaxBid.imb_created = currentTime;
-            newItemMaxBid.imb_updated = currentTime;
-            ITEM_MAX_BID.insert(newItemMaxBid);
-
-            var itemToUpdate: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
-            itemToUpdate.i_num_bids = itemToUpdate.i_num_bids + 1;
-            itemToUpdate.i_current_price = i_initial_price;
-            itemToUpdate.i_updated = currentTime;
-            ITEM[i_id: item_id, i_u_id: seller_id] = itemToUpdate;
+        // Update max-bid tracker to point to this bid if it's the highest.
+        if (new_bid > cur_price) {
+            ITEM_MAX_BID[imb_i_id: item_id, imb_u_id: seller_id] = {
+                imb_ib_id: new_bid_id,
+                imb_ib_i_id: item_id,
+                imb_ib_u_id: seller_id
+            };
         }
     }
 }
 
-transaction NewComment(
-    benchmarkTimes: List<timestamp>,
-    item_id: string,
-    seller_id: string,
-    buyer_id: string,
-    question: string
-) {
-    var currentTime: timestamp = getProcTimestamp(benchmarkTimes);
-
+// NewComment: Buyer posts a question on a seller's auction item.
+// ITEM and ITEM_COMMENT are co-located on the seller's partition → single hop.
+// comment_id: next available comment ID (pre-assigned).
+transaction NewComment(item_id: int, seller_id: int, buyer_id: int,
+                       comment_id: int, question: string) {
     hop {
         var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
-        var ic_id: int = item.i_num_comments + 1;
-
-        var newItemComment: Row<ITEM_COMMENT> = new Row<ITEM_COMMENT>();
-        newItemComment.ic_id = ic_id;
-        newItemComment.ic_i_id = item_id;
-        newItemComment.ic_u_id = seller_id;
-        newItemComment.ic_buyer_id = buyer_id;
-        newItemComment.ic_question = question;
-        newItemComment.ic_created = currentTime;
-        newItemComment.ic_updated = currentTime;
-        ITEM_COMMENT.insert(newItemComment);
-
         item.i_num_comments = item.i_num_comments + 1;
         ITEM[i_id: item_id, i_u_id: seller_id] = item;
 
-        var user: Row<USERACCT> = USERACCT[u_id: seller_id];
-        user.u_comments = user.u_comments + 1;
-        user.u_updated = currentTime;
-        USERACCT[u_id: seller_id] = user;
+        ITEM_COMMENT[ic_id: comment_id, ic_i_id: item_id, ic_u_id: seller_id] = {
+            ic_buyer_id: buyer_id,
+            ic_question: question,
+            ic_response: ""
+        };
+
+        var seller: Row<USERACCT> = USERACCT[u_id: seller_id];
+        seller.u_comments = seller.u_comments + 1;
+        USERACCT[u_id: seller_id] = seller;
     }
 }
 
-transaction NewCommentResponse(
-    benchmarkTimes: List<timestamp>,
-    item_id: string,
-    seller_id: string,
-    comment_id: int,
-    response: string
-) {
-    var currentTime: timestamp = getProcTimestamp(benchmarkTimes);
-
+// NewCommentResponse: Seller replies to a buyer's comment on their item.
+// ITEM_COMMENT and USERACCT (seller) are on the seller's partition → single hop.
+transaction NewCommentResponse(comment_id: int, item_id: int, seller_id: int,
+                               response: string) {
     hop {
-        var itemComment: Row<ITEM_COMMENT> = ITEM_COMMENT[ic_id: comment_id, ic_i_id: item_id, ic_u_id: seller_id];
-        itemComment.ic_response = response;
-        itemComment.ic_updated = currentTime;
-        ITEM_COMMENT[ic_id: comment_id, ic_i_id: item_id, ic_u_id: seller_id] = itemComment;
+        var c: Row<ITEM_COMMENT> = ITEM_COMMENT[ic_id: comment_id,
+                                                ic_i_id: item_id,
+                                                ic_u_id: seller_id];
+        c.ic_response = response;
+        ITEM_COMMENT[ic_id: comment_id, ic_i_id: item_id, ic_u_id: seller_id] = c;
 
-        var user: Row<USERACCT> = USERACCT[u_id: seller_id];
-        user.u_comments = user.u_comments - 1;
-        user.u_updated = currentTime;
-        USERACCT[u_id: seller_id] = user;
+        var seller: Row<USERACCT> = USERACCT[u_id: seller_id];
+        seller.u_comments = seller.u_comments - 1;
+        USERACCT[u_id: seller_id] = seller;
     }
 }
 
-transaction NewFeedback(
-    benchmarkTimes: List<timestamp>,
-    user_id: string,
-    i_id: string,
-    seller_id: string,
-    from_id: string,
-    rating: int,
-    sattr0: string
-) {
-    var currentTime: timestamp = getProcTimestamp(benchmarkTimes);
-
+// NewFeedback: Post a rating for another user after a completed transaction.
+// USERACCT_FEEDBACK and USERACCT of the recipient are on the recipient's
+// partition → single hop.
+transaction NewFeedback(from_id: int, to_id: int, item_id: int,
+                        seller_id: int, rating: int) {
     hop {
-        var newFeedback: Row<USERACCT_FEEDBACK> = new Row<USERACCT_FEEDBACK>();
-        newFeedback.uf_u_id = user_id;
-        newFeedback.uf_i_id = i_id;
-        newFeedback.uf_i_u_id = seller_id;
-        newFeedback.uf_from_id = from_id;
-        newFeedback.uf_rating = rating;
-        newFeedback.uf_date = currentTime;
-        newFeedback.uf_sattr0 = sattr0;
-        USERACCT_FEEDBACK.insert(newFeedback);
+        USERACCT_FEEDBACK[uf_u_id: to_id, uf_i_id: item_id,
+                          uf_i_u_id: seller_id, uf_from_id: from_id] = {
+            uf_rating: rating
+        };
 
-        var user: Row<USERACCT> = USERACCT[u_id: user_id];
-        user.u_rating = user.u_rating + rating;
-        user.u_updated = currentTime;
-        USERACCT[u_id: user_id] = user;
+        var u: Row<USERACCT> = USERACCT[u_id: to_id];
+        u.u_rating = u.u_rating + rating;
+        USERACCT[u_id: to_id] = u;
+    }
+}
+
+// NewItem: Create a new auction listing on the seller's partition.
+// Decrements seller's balance by the listing fee.
+transaction NewItem(item_id: int, seller_id: int, name: string,
+                    initial_price: float, end_date: int, start_date: int, c_id: int) {
+    hop {
+        ITEM[i_id: item_id, i_u_id: seller_id] = {
+            i_name: name,
+            i_initial_price: initial_price,
+            i_current_price: initial_price,
+            i_num_bids: 0,
+            i_end_date: end_date,
+            i_start_date: start_date,
+            i_status: ITEM_STATUS_OPEN,
+            i_num_comments: 0,
+            i_c_id: c_id
+        };
+
+        var seller: Row<USERACCT> = USERACCT[u_id: seller_id];
+        seller.u_balance = seller.u_balance - initial_price;
+        USERACCT[u_id: seller_id] = seller;
+    }
+}
+
+// NewPurchase: Complete a Buy-Now purchase for an open auction item.
+//
+// Hop 1 (seller partition): Close the item, credit the seller's balance.
+// Hop 2 (buyer partition):  Debit the buyer's balance.
+//
+// buy_now_price flows implicitly (it is a transaction parameter accessible in both hops).
+transaction NewPurchase(item_id: int, seller_id: int, buyer_id: int,
+                        buy_now_price: float) {
+    hop {
+        var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
+        item.i_status = ITEM_STATUS_CLOSED;
+        ITEM[i_id: item_id, i_u_id: seller_id] = item;
+
+        var seller: Row<USERACCT> = USERACCT[u_id: seller_id];
+        seller.u_balance = seller.u_balance + buy_now_price;
+        USERACCT[u_id: seller_id] = seller;
+    }
+    hop {
+        var buyer: Row<USERACCT> = USERACCT[u_id: buyer_id];
+        buyer.u_balance = buyer.u_balance - buy_now_price;
+        USERACCT[u_id: buyer_id] = buyer;
+    }
+}
+
+// UpdateItem: Modify an auction listing's description.
+// ITEM is on the seller's partition → single hop.
+transaction UpdateItem(item_id: int, seller_id: int, new_name: string) {
+    hop {
+        var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
+        item.i_name = new_name;
+        ITEM[i_id: item_id, i_u_id: seller_id] = item;
     }
 }
