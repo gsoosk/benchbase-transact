@@ -1,16 +1,16 @@
 Starting compilation pipeline
 [Stage 1/6] Frontend
-Done. 7ms
+Done. 6ms
 [Stage 2/6] CFG Generation
-Done. 4ms
+Done. 3ms
 [Stage 3/6] Optimization
 Done. 2ms
 [Stage 4/6] SC-Graph
-Done. 1ms
+Done. 405μs
 [Stage 5/6] Verification
-Done. 407ms
+Done. 297ms
 [Stage 6/6] Codegen
-Done. 778μs
+Done. 1ms
 Completed
 Summary
   Functions: 23  Hops: 6  Instances: 2

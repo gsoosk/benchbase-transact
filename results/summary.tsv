@@ -1,18 +1,18 @@
 benchmark	total_time_s	functions	hops	c_edges_original	c_edges_simplified	verifications	pass	errors	timeouts	boogie_failures
-smallbank	.78									
-tatp	1.43									
-ycsb	.03									
-tpcc	25.40									
-voter	.46									
-twitter	.63									
-wikipedia	2.11									
-auctionmark	12.47									
-epinions	1.08									
-hyadapt	238.37									
-noop	1.11									
-otmetrics	1.21									
-resourcestresser	3.53									
-sibench	.53									
-templated	2.91									
-tpch	1.70									
-tpcds	.75									
+smallbank	6.04	25	9	99	0	99	99	0	0	0
+tatp	2.56	31	8	35	0	35	35	0	0	0
+ycsb	11.95	23	16	204	0	204	204	0	0	0
+tpcc	27.83	56	44	416	0	416	416	0	0	0
+voter	.35	23	6	1	0	1	1	0	0	0
+twitter	.53	30	8	1	0	1	1	0	0	0
+wikipedia	3.73	38	11	53	0	53	53	0	0	0
+auctionmark	12.83	50	16	220	0	220	220	0	0	0
+epinions	2.48	32	14	40	0	40	40	0	0	0
+hyadapt	117.08	37	201	0	0	0	0	0	0	0
+noop	.29	16	1	0	0	0	0	0	0	0
+otmetrics	.29	20	2	0	0	0	0	0	0	0
+resourcestresser	2.42	26	208	29	0	29	29	0	0	0
+sibench	.47	19	3	5	0	5	5	0	0	0
+templated	2.50	21	6	42	0	42	42	0	0	0
+tpch	1.34	45	43	0	0	0	0	0	0	0
+tpcds	.55	47	29	0	0	0	0	0	0	0

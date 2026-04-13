@@ -47,6 +47,15 @@ SUMMARY_FILE="$RESULTS_DIR/summary.tsv"
 echo -e "benchmark\ttotal_time_s\tfunctions\thops\tc_edges_original\tc_edges_simplified\tverifications\tpass\terrors\ttimeouts\tboogie_failures" \
     > "$SUMMARY_FILE"
 
+# Helper: extract a number after a label like "Functions: 25" from a file
+# Usage: extract_stat "Functions" file.log
+extract_stat() {
+    local label="$1"
+    local file="$2"
+    # Use grep -oE (extended regex, macOS-compatible) then awk to get the number
+    grep -oE "${label}: [0-9]+" "$file" | tail -1 | awk '{print $NF}'
+}
+
 for BENCH in "${BENCHMARKS[@]}"; do
     INPUT="$TRANSACT_DIR/${BENCH}.transact"
     OUT_DIR="$RESULTS_DIR/$BENCH"
@@ -64,13 +73,11 @@ for BENCH in "${BENCHMARKS[@]}"; do
     mkdir -p "$OUT_DIR"
 
     START_TS=$(python3 -c "import time; print(int(time.time()*1000))")
-    set +e
     "$FMITF_BIN" "$INPUT" "$OUT_DIR" \
         --timeout "$TIMEOUT" \
         --no-color \
         2>&1 | tee "$OUT_DIR/run.log"
-    EXIT_CODE=$?
-    set -e
+    EXIT_CODE=${PIPESTATUS[0]}
     END_TS=$(python3 -c "import time; print(int(time.time()*1000))")
     ELAPSED_MS=$(( END_TS - START_TS ))
     ELAPSED_S=$(echo "scale=2; $ELAPSED_MS / 1000" | bc)
@@ -81,19 +88,32 @@ for BENCH in "${BENCHMARKS[@]}"; do
         continue
     fi
 
-    # Parse summary line from run.log
-    FUNCTIONS=$(grep -oP 'Functions: \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
-    HOPS=$(grep -oP 'Hops: \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
-    C_ORIG=$(grep -oP 'C-edges \(original\): \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
-    C_SIMP=$(grep -oP 'C-edges \(simplified\): \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
-    VERIF=$(grep -oP 'Verifications: \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
-    PASS=$(grep -oP 'Pass: \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
-    ERRORS=$(grep -oP 'Errors: \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
-    TIMEOUTS=$(grep -oP 'Timeouts: \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
-    BF=$(grep -oP 'Boogie failures: \K[0-9]+' "$OUT_DIR/run.log" | tail -1 || echo "?")
+    # Parse summary stats from run.log using macOS-compatible grep -oE + awk
+    LOG="$OUT_DIR/run.log"
+    FUNCTIONS=$(extract_stat "Functions" "$LOG")
+    HOPS=$(extract_stat "Hops" "$LOG")
+    # C-edges lines: "C-edges (original): 71  C-edges (simplified): 0"
+    C_ORIG=$(grep -oE 'C-edges \(original\): [0-9]+' "$LOG" | tail -1 | awk '{print $NF}')
+    C_SIMP=$(grep -oE 'C-edges \(simplified\): [0-9]+' "$LOG" | tail -1 | awk '{print $NF}')
+    VERIF=$(extract_stat "Verifications" "$LOG")
+    PASS=$(extract_stat "Pass" "$LOG")
+    ERRORS=$(extract_stat "Errors" "$LOG")
+    TIMEOUTS=$(extract_stat "Timeouts" "$LOG")
+    BF=$(grep -oE 'Boogie failures: [0-9]+' "$LOG" | tail -1 | awk '{print $NF}')
+
+    # Default to 0 if not found
+    FUNCTIONS=${FUNCTIONS:-0}
+    HOPS=${HOPS:-0}
+    C_ORIG=${C_ORIG:-0}
+    C_SIMP=${C_SIMP:-0}
+    VERIF=${VERIF:-0}
+    PASS=${PASS:-0}
+    ERRORS=${ERRORS:-0}
+    TIMEOUTS=${TIMEOUTS:-0}
+    BF=${BF:-0}
 
     echo ""
-    echo "  => Total wall time: ${ELAPSED_S}s"
+    echo "  => Wall time: ${ELAPSED_S}s | C-edges: ${C_ORIG} | Pass: ${PASS} | Errors: ${ERRORS} | Timeouts: ${TIMEOUTS}"
 
     echo -e "${BENCH}\t${ELAPSED_S}\t${FUNCTIONS}\t${HOPS}\t${C_ORIG}\t${C_SIMP}\t${VERIF}\t${PASS}\t${ERRORS}\t${TIMEOUTS}\t${BF}" \
         >> "$SUMMARY_FILE"
@@ -104,3 +124,7 @@ echo "======================================================================"
 echo "  All benchmarks complete."
 echo "  Summary TSV: $SUMMARY_FILE"
 echo "======================================================================"
+
+# Print the summary table
+echo ""
+cat "$SUMMARY_FILE" | column -t -s $'\t'
