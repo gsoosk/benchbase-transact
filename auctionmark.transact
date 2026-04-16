@@ -5,31 +5,44 @@
 // users bid, comment, and purchase items.
 //
 // Partition strategy:
-//   USERACCT                          — partitioned by u_id (seller/buyer key)
-//   REGION                            — small global table, partitioned by r_id
+//   userPartition(u_id)  — all user-keyed tables, partitioned by the
+//                          relevant user ID (seller, buyer, or recipient).
+//   globalPartition(x)   — REGION only; a tiny static reference table that
+//                          never changes after load, so it maps all rows to
+//                          partition 0 (effectively replicated/global).
+//
+// Table placement:
+//   USERACCT                          — partitioned by u_id
+//   REGION                            — global (partition 0), read-only
 //   ITEM, ITEM_BID, ITEM_MAX_BID,
-//   ITEM_COMMENT                      — co-located with the SELLER (i_u_id/ib_u_id)
-//   USERACCT_ITEM, USERACCT_WATCH     — co-located with the BUYER (ui_u_id/uw_u_id)
-//   USERACCT_FEEDBACK                 — co-located with the RECIPIENT user (uf_u_id)
+//   ITEM_COMMENT                      — co-located with SELLER (i_u_id /
+//                                       ib_u_id / imb_u_id / ic_u_id)
+//   USERACCT_ITEM, USERACCT_WATCH     — co-located with BUYER  (ui_u_id /
+//                                       uw_u_id)
+//   USERACCT_FEEDBACK                 — co-located with RECIPIENT (uf_u_id)
 //
 // Rationale: placing all of a seller's auction data on the same partition
-// eliminates cross-partition coordination for the hot path (bidding, commenting).
-// Only transactions that involve both a seller and a buyer cross a partition
-// boundary.
+// eliminates cross-partition coordination for the hot path (bidding,
+// commenting).  Only transactions that involve two distinct users cross a
+// partition boundary (seller_id ≠ buyer_id).
 //
 // Chopping:
-//   CloseAuctions  — seller partition (update ITEM, read winning bid)
-//                    → buyer partition (record USERACCT_ITEM)          [2 hops]
-//   GetItem        — seller partition only                              [1 hop]
-//   GetUserInfo    — seller/user partition → buyer's purchase partition [2 hops]
-//   NewBid         — seller partition only (all bid tables co-located)  [1 hop]
-//   NewComment     — seller partition only                              [1 hop]
+//   CloseAuctions      — seller partition (ITEM, bids) → buyer partition
+//                        (USERACCT_ITEM)                               [2 hops]
+//   CloseAuctionsNoBids— seller partition only                         [1 hop]
+//   GetItem            — seller partition only (ITEM, USERACCT)        [1 hop]
+//                        REGION omitted: read-only reference, does not
+//                        affect commutativity analysis.
+//   GetUserInfo        — single user's partition (seller + buyer roles
+//                        both use the same user_id → same partition)   [1 hop]
+//   NewBid             — seller partition only                          [1 hop]
+//   NewComment         — seller partition only                          [1 hop]
 //   NewCommentResponse — seller partition only                          [1 hop]
-//   NewFeedback    — recipient partition only                           [1 hop]
-//   NewItem        — seller partition only                              [1 hop]
-//   NewPurchase    — seller partition (close item, credit seller)
-//                    → buyer partition (debit buyer)                    [2 hops]
-//   UpdateItem     — seller partition only                              [1 hop]
+//   NewFeedback        — recipient's partition only                     [1 hop]
+//   NewItem            — seller partition only                          [1 hop]
+//   NewPurchase        — seller partition (close item, credit seller)
+//                        → buyer partition (debit buyer)               [2 hops]
+//   UpdateItem         — seller partition only                          [1 hop]
 //
 // Notes:
 //   - All IDs use int (AuctionMark uses composite string IDs internally,
@@ -38,8 +51,11 @@
 //   - INSERT is modeled via row-literal assignment: Table[keys] = {fields}.
 // ============================================================================
 
-partition p_user(x: int) -> int { return x; }
-partition p_region(x: int) -> int { return x; }
+partition userPartition(u_id: int) -> int { return u_id; }
+
+// REGION is a tiny static reference table (never written after load).
+// Mapping all rows to partition 0 models it as a globally accessible table.
+partition globalPartition(x: int) -> int { return 0; }
 
 const ITEM_STATUS_OPEN: int = 0;
 const ITEM_STATUS_WAITING_FOR_PURCHASE: int = 1;
@@ -51,7 +67,7 @@ const ITEM_STATUS_CLOSED: int = 2;
 
 table USERACCT {
     primary u_id: int;
-    node p_user(u_id);
+    node userPartition(u_id);
     u_rating: int;
     u_balance: float;
     u_comments: int;
@@ -63,18 +79,21 @@ table USERACCT {
     u_sattr4: string;
 }
 
-// REGION is a small reference table; replicated to each region partition.
+// Static reference table; never written by any transaction.
+// Excluded from hop bodies — read-only tables trivially commute with all
+// writes and do not need to appear in commutativity proofs.
 table REGION {
     primary r_id: int;
-    node p_region(r_id);
+    node globalPartition(r_id);
     r_name: string;
 }
 
-// ITEM co-located with seller: all of a seller's items live on p_user(i_u_id).
+// ITEM co-located with seller: all of a seller's items live on
+// userPartition(i_u_id).
 table ITEM {
     primary i_id: int;
     primary i_u_id: int;    // seller id — drives partition placement
-    node p_user(i_u_id);
+    node userPartition(i_u_id);
     i_name: string;
     i_initial_price: float;
     i_current_price: float;
@@ -91,7 +110,7 @@ table ITEM_BID {
     primary ib_id: int;
     primary ib_i_id: int;
     primary ib_u_id: int;   // seller id
-    node p_user(ib_u_id);
+    node userPartition(ib_u_id);
     ib_buyer_id: int;
     ib_bid: float;
     ib_max_bid: float;
@@ -101,7 +120,7 @@ table ITEM_BID {
 table ITEM_MAX_BID {
     primary imb_i_id: int;
     primary imb_u_id: int;  // seller id
-    node p_user(imb_u_id);
+    node userPartition(imb_u_id);
     imb_ib_id: int;
     imb_ib_i_id: int;
     imb_ib_u_id: int;
@@ -112,7 +131,7 @@ table ITEM_COMMENT {
     primary ic_id: int;
     primary ic_i_id: int;
     primary ic_u_id: int;   // seller id
-    node p_user(ic_u_id);
+    node userPartition(ic_u_id);
     ic_buyer_id: int;
     ic_question: string;
     ic_response: string;
@@ -123,7 +142,7 @@ table USERACCT_ITEM {
     primary ui_u_id: int;   // buyer id — drives partition placement
     primary ui_i_id: int;
     primary ui_i_u_id: int; // seller id
-    node p_user(ui_u_id);
+    node userPartition(ui_u_id);
 }
 
 // USERACCT_FEEDBACK lives on the feedback recipient's partition.
@@ -132,7 +151,7 @@ table USERACCT_FEEDBACK {
     primary uf_i_id: int;
     primary uf_i_u_id: int; // seller id
     primary uf_from_id: int;
-    node p_user(uf_u_id);
+    node userPartition(uf_u_id);
     uf_rating: int;
 }
 
@@ -141,7 +160,7 @@ table USERACCT_WATCH {
     primary uw_u_id: int;   // buyer/watcher id
     primary uw_i_id: int;
     primary uw_i_u_id: int; // seller id
-    node p_user(uw_u_id);
+    node userPartition(uw_u_id);
 }
 
 // ============================================================================
@@ -183,25 +202,23 @@ transaction CloseAuctionsNoBids(item_id: int, seller_id: int) {
 }
 
 // GetItem: Read auction item details together with the seller's profile.
-// Both ITEM and USERACCT are on the seller's partition → single hop.
-// REGION is a replicated global table accessible from any partition.
+// Both ITEM and USERACCT are on userPartition(seller_id) → single hop.
+// REGION is omitted: it is read-only and does not affect commutativity.
 transaction GetItem(item_id: int, seller_id: int) {
     hop {
         var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: seller_id];
         to_unit(item);
         var seller: Row<USERACCT> = USERACCT[u_id: seller_id];
-        var region: Row<REGION> = REGION[r_id: seller.u_r_id];
-        to_unit(region);
+        to_unit(seller);
     }
 }
 
-// GetUserInfo: Read a user's profile, feedback, comments, items, and purchases.
+// GetUserInfo: Read a user's full profile — as both seller and buyer.
 //
-// Hop 1 (user's seller partition): USERACCT, USERACCT_FEEDBACK, ITEM_COMMENT, ITEM.
-// Hop 2 (user's buyer partition):  USERACCT_ITEM and USERACCT_WATCH
-//         (representative single-row reads for items purchased/watched).
-//
-// other_user_id identifies the "other side" of feedback/purchase relationships.
+// All tables are partitioned by userPartition(user_id): the user acts as
+// seller (ITEM, ITEM_COMMENT), as feedback recipient (USERACCT_FEEDBACK),
+// as buyer (USERACCT_ITEM, USERACCT_WATCH), and as account holder
+// (USERACCT) — all on the same partition. Single hop suffices.
 transaction GetUserInfo(user_id: int, other_user_id: int,
                         item_id: int, comment_id: int) {
     hop {
@@ -218,8 +235,6 @@ transaction GetUserInfo(user_id: int, other_user_id: int,
         to_unit(comment);
         var item: Row<ITEM> = ITEM[i_id: item_id, i_u_id: user_id];
         to_unit(item);
-    }
-    hop {
         var purchase: Row<USERACCT_ITEM> = USERACCT_ITEM[ui_u_id: user_id,
                                                           ui_i_id: item_id,
                                                           ui_i_u_id: other_user_id];
@@ -352,7 +367,8 @@ transaction NewItem(item_id: int, seller_id: int, name: string,
 // Hop 1 (seller partition): Close the item, credit the seller's balance.
 // Hop 2 (buyer partition):  Debit the buyer's balance.
 //
-// buy_now_price flows implicitly (it is a transaction parameter accessible in both hops).
+// buy_now_price flows implicitly (it is a transaction parameter accessible
+// in both hops).
 transaction NewPurchase(item_id: int, seller_id: int, buyer_id: int,
                         buy_now_price: float) {
     hop {
