@@ -37,7 +37,7 @@
       "target_function_id": 20,
       "target_instance": 1,
       "target_hop_id": 7,
-      "duration_ms": 467.360541,
+      "duration_ms": 354.635959,
       "result": "Pass",
       "eliminated": true,
       "memory_stats": {
@@ -57,6 +57,6 @@
       "boogie_file": "commutative_f20_i0_h7_vs_f20_i1_h7.bpl"
     }
   ],
-  "timestamp": "2026-04-09T11:37:09.527223-07:00",
+  "timestamp": "2026-04-13T13:11:52.861022-07:00",
   "input_file": "twitter.transact"
 }

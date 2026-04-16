@@ -21,15 +21,22 @@ func GetnewdestinationHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error)
 
 	var s_id uint64
 	var sf_type uint64
+	var start_time uint64
 	var sf_is_active uint64
 	var sf_active uint64
-	var _tmp3 bool
+	var _tmp5 bool
+	var cf_numberx string
+	var num string
+	var _tmp7 Unit
 
 	var keyBytes1 []byte
 	var row1 Specialfacility
+	var keyBytes2 []byte
+	var row2 Callforwarding
 
 	s_id = toUint64(params["s_id"])
 	sf_type = toUint64(params["sf_type"])
+	start_time = toUint64(params["start_time"])
 
 	goto BB3
 
@@ -39,13 +46,19 @@ BB3:
 	rwSet = AddRWSet(rwSet, "Specialfacility", keyBytes1)
 	sf_is_active = row1.is_active
 	sf_active = sf_is_active
-	_tmp3 = sf_active == 1
-	if _tmp3 {
+	_tmp5 = sf_active == 1
+	if _tmp5 {
 		goto BB4
 	} else {
 		goto BB5
 	}
 BB4:
+	// TableGet: Callforwarding
+	keyBytes2, row2 = getCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time})
+	rwSet = AddRWSet(rwSet, "Callforwarding", keyBytes2)
+	cf_numberx = row2.numberx
+	num = cf_numberx
+	_ = num
 	goto BB5
 BB5:
 	// return - no action
@@ -60,15 +73,22 @@ BB5:
 func GetnewdestinationHop0Par(params map[string]string) uint64 {
 	var s_id uint64
 	var sf_type uint64
+	var start_time uint64
 	var sf_is_active uint64
 	var sf_active uint64
-	var _tmp3 bool
+	var _tmp5 bool
+	var cf_numberx string
+	var num string
+	var _tmp7 Unit
 
 	var keyBytes1 []byte
 	var row1 Specialfacility
+	var keyBytes2 []byte
+	var row2 Callforwarding
 
 	s_id = toUint64(params["s_id"])
 	sf_type = toUint64(params["sf_type"])
+	start_time = toUint64(params["start_time"])
 
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
@@ -85,13 +105,21 @@ BB3:
 	rwSet = AddRWSet(rwSet, "Specialfacility", keyBytes1)
 	sf_is_active = row1.is_active
 	sf_active = sf_is_active
-	_tmp3 = sf_active == 1
-	if _tmp3 {
+	_tmp5 = sf_active == 1
+	if _tmp5 {
 		goto BB4
 	} else {
 		goto BB5
 	}
 BB4:
+	// First table access - calculate partition: Callforwarding
+	if true { return getCallforwardingPar(CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time}) }
+	// TableGet: Callforwarding
+	keyBytes2, row2 = getCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time})
+	rwSet = AddRWSet(rwSet, "Callforwarding", keyBytes2)
+	cf_numberx = row2.numberx
+	num = cf_numberx
+	_ = num
 	goto BB5
 BB5:
 	return 0

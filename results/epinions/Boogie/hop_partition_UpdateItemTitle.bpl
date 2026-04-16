@@ -107,23 +107,23 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
-const __shards__ : int;
-const TBL_item : Table (item);
-var trust_source_u_id : [int][int]int;
-var trust_target_u_id : [int][int]int;
-var review_i_id : [int][int]int;
-var review_rating : [int][int]int;
-var useracct_name : [int]String;
-var useracct_u_id : [int]int;
-const TBL_useracct : Table (useracct);
-const __slice__ : int;
-const TBL_review : Table (review);
-var trust_trust : [int][int]int;
-var item_title : [int]String;
 var review_creation_date : [int][int]int;
+var review_i_id : [int][int]int;
+const TBL_review : Table (review);
+const TBL_useracct : Table (useracct);
+var review_rating : [int][int]int;
+var item_title : [int]String;
+var useracct_name : [int]String;
 var review_u_id : [int][int]int;
-const TBL_trust : Table (trust);
+var trust_trust : [int][int]int;
+const __slice__ : int;
+var trust_source_u_id : [int][int]int;
+const __shards__ : int;
 var item_i_id : [int]int;
+var useracct_u_id : [int]int;
+const TBL_trust : Table (trust);
+var trust_target_u_id : [int][int]int;
+const TBL_item : Table (item);
 procedure verify_hop_partitions_UpdateItemTitle(iid: int, title: String)
 modifies item_i_id, item_title;
 {
@@ -137,11 +137,11 @@ modifies item_i_id, item_title;
     s10_i#i_id := item_i_id[s10_iid];
     s10_i#title := s10_title;
     item_i_id := item_i_id[s10_iid := s10_i#i_id];
-  // Partition check hop 10 func 'f_item' tables 'item'=>'item' keys [k0=iid] first_span Span { start: 4279, end: 4294, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 4329, end: 4348, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 22) (hop_id . 10) (table_id . 0) (span ((start . 4329) (end . 4348) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s10_iid == s10_iid);
+  // Partition check hop 10 func 'f_item' tables 'item'=>'item' keys [k0=iid] first_span Span { start: 4479, end: 4494, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 4529, end: 4548, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 22) (hop_id . 10) (table_id . 0) (span ((start . 4529) (end . 4548) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s10_iid == s10_iid);
     item_title := item_title[s10_iid := s10_i#title];
-  // Partition check hop 10 func 'f_item' tables 'item'=>'item' keys [k0=iid] first_span Span { start: 4279, end: 4294, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 4329, end: 4348, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 22) (hop_id . 10) (table_id . 0) (span ((start . 4329) (end . 4348) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s10_iid == s10_iid);
+  // Partition check hop 10 func 'f_item' tables 'item'=>'item' keys [k0=iid] first_span Span { start: 4479, end: 4494, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 4529, end: 4548, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 22) (hop_id . 10) (table_id . 0) (span ((start . 4529) (end . 4548) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s10_iid == s10_iid);
     goto s10_epilogue;
   s10_hop_exit:
   s10_epilogue:

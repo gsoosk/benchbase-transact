@@ -19,9 +19,64 @@ func GetuserinfoHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var user_id uint64
+	var other_user_id uint64
+	var item_id uint64
+	var comment_id uint64
+	var u Useracct
+	var _tmp9 Useracct
+	var _tmp10 Unit
+	var feedback UseracctFeedback
+	var _tmp11 UseracctFeedback
+	var _tmp12 Unit
+	var comment ItemComment
+	var _tmp13 ItemComment
+	var _tmp14 Unit
+	var item Item
+	var _tmp15 Item
+	var _tmp16 Unit
+
+	var keyBytes1 []byte
+	var row1 Useracct
+	var keyBytes2 []byte
+	var row2 UseracctFeedback
+	var keyBytes3 []byte
+	var row3 ItemComment
+	var keyBytes4 []byte
+	var row4 Item
+
+	user_id = toUint64(params["user_id"])
+	other_user_id = toUint64(params["other_user_id"])
+	item_id = toUint64(params["item_id"])
+	comment_id = toUint64(params["comment_id"])
+
 	goto BB6
 
 BB6:
+	// TableGet: Useracct
+	keyBytes1, row1 = getUseracct(tx, UseracctKey{u_id: user_id})
+	rwSet = AddRWSet(rwSet, "Useracct", keyBytes1)
+	_tmp9 = row1
+	u = _tmp9
+	_ = u
+	// TableGet: UseracctFeedback
+	keyBytes2, row2 = getUseracctFeedback(tx, UseracctFeedbackKey{uf_u_id: user_id, uf_i_id: item_id, uf_i_u_id: other_user_id, uf_from_id: other_user_id})
+	rwSet = AddRWSet(rwSet, "UseracctFeedback", keyBytes2)
+	_tmp11 = row2
+	feedback = _tmp11
+	_ = feedback
+	// TableGet: ItemComment
+	keyBytes3, row3 = getItemComment(tx, ItemCommentKey{ic_id: comment_id, ic_i_id: item_id, ic_u_id: user_id})
+	rwSet = AddRWSet(rwSet, "ItemComment", keyBytes3)
+	_tmp13 = row3
+	comment = _tmp13
+	_ = comment
+	// TableGet: Item
+	keyBytes4, row4 = getItem(tx, ItemKey{i_id: item_id, i_u_id: user_id})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes4)
+	_tmp15 = row4
+	item = _tmp15
+	_ = item
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +89,40 @@ func GetuserinfoHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var user_id uint64
+	var other_user_id uint64
+	var item_id uint64
+	var purchase UseracctItem
+	var _tmp17 UseracctItem
+	var _tmp18 Unit
+	var watch UseracctWatch
+	var _tmp19 UseracctWatch
+	var _tmp20 Unit
+
+	var keyBytes1 []byte
+	var row1 UseracctItem
+	var keyBytes2 []byte
+	var row2 UseracctWatch
+
+	user_id = toUint64(params["user_id"])
+	other_user_id = toUint64(params["other_user_id"])
+	item_id = toUint64(params["item_id"])
+
 	goto BB7
 
 BB7:
+	// TableGet: UseracctItem
+	keyBytes1, row1 = getUseracctItem(tx, UseracctItemKey{ui_u_id: user_id, ui_i_id: item_id, ui_i_u_id: other_user_id})
+	rwSet = AddRWSet(rwSet, "UseracctItem", keyBytes1)
+	_tmp17 = row1
+	purchase = _tmp17
+	_ = purchase
+	// TableGet: UseracctWatch
+	keyBytes2, row2 = getUseracctWatch(tx, UseracctWatchKey{uw_u_id: user_id, uw_i_id: item_id, uw_i_u_id: other_user_id})
+	rwSet = AddRWSet(rwSet, "UseracctWatch", keyBytes2)
+	_tmp19 = row2
+	watch = _tmp19
+	_ = watch
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +133,37 @@ BB7:
 
 // GetuserinfoHop0Par calculates the partition for hop 0 without database access.
 func GetuserinfoHop0Par(params map[string]string) uint64 {
+	var user_id uint64
+	var other_user_id uint64
+	var item_id uint64
+	var comment_id uint64
+	var u Useracct
+	var _tmp9 Useracct
+	var _tmp10 Unit
+	var feedback UseracctFeedback
+	var _tmp11 UseracctFeedback
+	var _tmp12 Unit
+	var comment ItemComment
+	var _tmp13 ItemComment
+	var _tmp14 Unit
+	var item Item
+	var _tmp15 Item
+	var _tmp16 Unit
+
+	var keyBytes1 []byte
+	var row1 Useracct
+	var keyBytes2 []byte
+	var row2 UseracctFeedback
+	var keyBytes3 []byte
+	var row3 ItemComment
+	var keyBytes4 []byte
+	var row4 Item
+
+	user_id = toUint64(params["user_id"])
+	other_user_id = toUint64(params["other_user_id"])
+	item_id = toUint64(params["item_id"])
+	comment_id = toUint64(params["comment_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +172,62 @@ func GetuserinfoHop0Par(params map[string]string) uint64 {
 	goto BB6
 
 BB6:
+	// First table access - calculate partition: Useracct
+	if true { return getUseracctPar(UseracctKey{u_id: user_id}) }
+	// TableGet: Useracct
+	keyBytes1, row1 = getUseracct(tx, UseracctKey{u_id: user_id})
+	rwSet = AddRWSet(rwSet, "Useracct", keyBytes1)
+	_tmp9 = row1
+	u = _tmp9
+	_ = u
+	// First table access - calculate partition: UseracctFeedback
+	if true { return getUseracctFeedbackPar(UseracctFeedbackKey{uf_u_id: user_id, uf_i_id: item_id, uf_i_u_id: other_user_id, uf_from_id: other_user_id}) }
+	// TableGet: UseracctFeedback
+	keyBytes2, row2 = getUseracctFeedback(tx, UseracctFeedbackKey{uf_u_id: user_id, uf_i_id: item_id, uf_i_u_id: other_user_id, uf_from_id: other_user_id})
+	rwSet = AddRWSet(rwSet, "UseracctFeedback", keyBytes2)
+	_tmp11 = row2
+	feedback = _tmp11
+	_ = feedback
+	// First table access - calculate partition: ItemComment
+	if true { return getItemCommentPar(ItemCommentKey{ic_id: comment_id, ic_i_id: item_id, ic_u_id: user_id}) }
+	// TableGet: ItemComment
+	keyBytes3, row3 = getItemComment(tx, ItemCommentKey{ic_id: comment_id, ic_i_id: item_id, ic_u_id: user_id})
+	rwSet = AddRWSet(rwSet, "ItemComment", keyBytes3)
+	_tmp13 = row3
+	comment = _tmp13
+	_ = comment
+	// First table access - calculate partition: Item
+	if true { return getItemPar(ItemKey{i_id: item_id, i_u_id: user_id}) }
+	// TableGet: Item
+	keyBytes4, row4 = getItem(tx, ItemKey{i_id: item_id, i_u_id: user_id})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes4)
+	_tmp15 = row4
+	item = _tmp15
+	_ = item
 	panic("unexpected hop exit in partition")
 }
 
 // GetuserinfoHop1Par calculates the partition for hop 1 without database access.
 func GetuserinfoHop1Par(params map[string]string) uint64 {
+	var user_id uint64
+	var other_user_id uint64
+	var item_id uint64
+	var purchase UseracctItem
+	var _tmp17 UseracctItem
+	var _tmp18 Unit
+	var watch UseracctWatch
+	var _tmp19 UseracctWatch
+	var _tmp20 Unit
+
+	var keyBytes1 []byte
+	var row1 UseracctItem
+	var keyBytes2 []byte
+	var row2 UseracctWatch
+
+	user_id = toUint64(params["user_id"])
+	other_user_id = toUint64(params["other_user_id"])
+	item_id = toUint64(params["item_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +236,22 @@ func GetuserinfoHop1Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	// First table access - calculate partition: UseracctItem
+	if true { return getUseracctItemPar(UseracctItemKey{ui_u_id: user_id, ui_i_id: item_id, ui_i_u_id: other_user_id}) }
+	// TableGet: UseracctItem
+	keyBytes1, row1 = getUseracctItem(tx, UseracctItemKey{ui_u_id: user_id, ui_i_id: item_id, ui_i_u_id: other_user_id})
+	rwSet = AddRWSet(rwSet, "UseracctItem", keyBytes1)
+	_tmp17 = row1
+	purchase = _tmp17
+	_ = purchase
+	// First table access - calculate partition: UseracctWatch
+	if true { return getUseracctWatchPar(UseracctWatchKey{uw_u_id: user_id, uw_i_id: item_id, uw_i_u_id: other_user_id}) }
+	// TableGet: UseracctWatch
+	keyBytes2, row2 = getUseracctWatch(tx, UseracctWatchKey{uw_u_id: user_id, uw_i_id: item_id, uw_i_u_id: other_user_id})
+	rwSet = AddRWSet(rwSet, "UseracctWatch", keyBytes2)
+	_tmp19 = row2
+	watch = _tmp19
+	_ = watch
 	return 0
 }
 

@@ -19,9 +19,25 @@ func Q21Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var suppkey uint64
+	var s Supplier
+	var _tmp108 Supplier
+	var _tmp109 Unit
+
+	var keyBytes1 []byte
+	var row1 Supplier
+
+	suppkey = toUint64(params["suppkey"])
+
 	goto BB38
 
 BB38:
+	// TableGet: Supplier
+	keyBytes1, row1 = getSupplier(tx, SupplierKey{s_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Supplier", keyBytes1)
+	_tmp108 = row1
+	s = _tmp108
+	_ = s
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +50,38 @@ func Q21Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var orderkey uint64
+	var linenumber uint64
+	var l Lineitem
+	var _tmp110 Lineitem
+	var _tmp111 Unit
+	var o Orders
+	var _tmp112 Orders
+	var _tmp113 Unit
+
+	var keyBytes1 []byte
+	var row1 Lineitem
+	var keyBytes2 []byte
+	var row2 Orders
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	goto BB39
 
 BB39:
+	// TableGet: Lineitem
+	keyBytes1, row1 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes1)
+	_tmp110 = row1
+	l = _tmp110
+	_ = l
+	// TableGet: Orders
+	keyBytes2, row2 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes2)
+	_tmp112 = row2
+	o = _tmp112
+	_ = o
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +94,25 @@ func Q21Hop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var nationkey uint64
+	var n Nation
+	var _tmp114 Nation
+	var _tmp115 Unit
+
+	var keyBytes1 []byte
+	var row1 Nation
+
+	nationkey = toUint64(params["nationkey"])
+
 	goto BB40
 
 BB40:
+	// TableGet: Nation
+	keyBytes1, row1 = getNation(tx, NationKey{n_nationkey: nationkey})
+	rwSet = AddRWSet(rwSet, "Nation", keyBytes1)
+	_tmp114 = row1
+	n = _tmp114
+	_ = n
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -62,6 +123,16 @@ BB40:
 
 // Q21Hop0Par calculates the partition for hop 0 without database access.
 func Q21Hop0Par(params map[string]string) uint64 {
+	var suppkey uint64
+	var s Supplier
+	var _tmp108 Supplier
+	var _tmp109 Unit
+
+	var keyBytes1 []byte
+	var row1 Supplier
+
+	suppkey = toUint64(params["suppkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -70,11 +141,36 @@ func Q21Hop0Par(params map[string]string) uint64 {
 	goto BB38
 
 BB38:
+	// First table access - calculate partition: Supplier
+	if true { return getSupplierPar(SupplierKey{s_suppkey: suppkey}) }
+	// TableGet: Supplier
+	keyBytes1, row1 = getSupplier(tx, SupplierKey{s_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Supplier", keyBytes1)
+	_tmp108 = row1
+	s = _tmp108
+	_ = s
 	panic("unexpected hop exit in partition")
 }
 
 // Q21Hop1Par calculates the partition for hop 1 without database access.
 func Q21Hop1Par(params map[string]string) uint64 {
+	var orderkey uint64
+	var linenumber uint64
+	var l Lineitem
+	var _tmp110 Lineitem
+	var _tmp111 Unit
+	var o Orders
+	var _tmp112 Orders
+	var _tmp113 Unit
+
+	var keyBytes1 []byte
+	var row1 Lineitem
+	var keyBytes2 []byte
+	var row2 Orders
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -83,11 +179,37 @@ func Q21Hop1Par(params map[string]string) uint64 {
 	goto BB39
 
 BB39:
+	// First table access - calculate partition: Lineitem
+	if true { return getLineitemPar(LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber}) }
+	// TableGet: Lineitem
+	keyBytes1, row1 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes1)
+	_tmp110 = row1
+	l = _tmp110
+	_ = l
+	// First table access - calculate partition: Orders
+	if true { return getOrdersPar(OrdersKey{o_orderkey: orderkey}) }
+	// TableGet: Orders
+	keyBytes2, row2 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes2)
+	_tmp112 = row2
+	o = _tmp112
+	_ = o
 	panic("unexpected hop exit in partition")
 }
 
 // Q21Hop2Par calculates the partition for hop 2 without database access.
 func Q21Hop2Par(params map[string]string) uint64 {
+	var nationkey uint64
+	var n Nation
+	var _tmp114 Nation
+	var _tmp115 Unit
+
+	var keyBytes1 []byte
+	var row1 Nation
+
+	nationkey = toUint64(params["nationkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -96,6 +218,14 @@ func Q21Hop2Par(params map[string]string) uint64 {
 	goto BB40
 
 BB40:
+	// First table access - calculate partition: Nation
+	if true { return getNationPar(NationKey{n_nationkey: nationkey}) }
+	// TableGet: Nation
+	keyBytes1, row1 = getNation(tx, NationKey{n_nationkey: nationkey})
+	rwSet = AddRWSet(rwSet, "Nation", keyBytes1)
+	_tmp114 = row1
+	n = _tmp114
+	_ = n
 	return 0
 }
 

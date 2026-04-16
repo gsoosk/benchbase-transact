@@ -453,16 +453,19 @@ transaction Q1[f49](item_sk[p81]: int[t1], ticket_num[p82]: int[t1], store_sk[p8
   {
     let sr[v0]: Row<store_returns>[t6<tab<store_returns>>] = store_returns[t7<tab<store_returns>>][itab10][tab10][sr_item_sk: item_sk[t1][p81], sr_ticket_number: ticket_num[t1][p82]][t6<tab<store_returns>>];
     let net_loss[v1]: float[t4] = sr[t6<tab<store_returns>>][v0].sr_net_loss[field72][t4];
+    to_unit[(infer2) -> t10][f43][f43](net_loss[t4][v1])[t10];
   }
   hop
   {
     let s[v2]: Row<store>[t6<tab<store>>] = store[t7<tab<store>>][itab7][tab7][s_store_sk: store_sk[t1][p83]][t6<tab<store>>];
     let sname[v3]: string[t3] = s[t6<tab<store>>][v2].s_store_name[field45][t3];
+    to_unit[(infer6) -> t10][f43][f43](sname[t3][v3])[t10];
   }
   hop
   {
     let c[v4]: Row<customer>[t6<tab<customer>>] = customer[t7<tab<customer>>][itab4][tab4][c_customer_sk: cust_sk[t1][p84]][t6<tab<customer>>];
     let cname[v5]: string[t3] = c[t6<tab<customer>>][v4].c_first_name[field25][t3];
+    to_unit[(infer10) -> t10][f43][f43](cname[t3][v5])[t10];
   }
 }
 
@@ -472,18 +475,23 @@ transaction Q7[f50](item_sk[p85]: int[t1], ticket_num[p86]: int[t1], cd_demo_sk[
   {
     let ss[v6]: Row<store_sales>[t6<tab<store_sales>>] = store_sales[t7<tab<store_sales>>][itab9][tab9][ss_item_sk: item_sk[t1][p85], ss_ticket_number: ticket_num[t1][p86]][t6<tab<store_sales>>];
     let i[v7]: Row<item>[t6<tab<item>>] = item[t7<tab<item>>][itab3][tab3][i_item_sk: item_sk[t1][p85]][t6<tab<item>>];
+    to_unit[(infer2) -> t10][f43][f43](i[t6<tab<item>>][v7])[t10];
     let qty[v8]: int[t1] = ss[t6<tab<store_sales>>][v6].ss_quantity[field59][t1];
+    to_unit[(infer5) -> t10][f43][f43](qty[t1][v8])[t10];
     let price[v9]: float[t4] = ss[t6<tab<store_sales>>][v6].ss_list_price[field60][t4];
+    to_unit[(infer8) -> t10][f43][f43](price[t4][v9])[t10];
   }
   hop
   {
     let cd[v10]: Row<customer_demographics>[t6<tab<customer_demographics>>] = customer_demographics[t7<tab<customer_demographics>>][itab5][tab5][cd_demo_sk: cd_demo_sk[t1][p87]][t6<tab<customer_demographics>>];
     let gender[v11]: string[t3] = cd[t6<tab<customer_demographics>>][v10].cd_gender[field30][t3];
+    to_unit[(infer12) -> t10][f43][f43](gender[t3][v11])[t10];
   }
   hop
   {
     let promo[v12]: Row<promotion>[t6<tab<promotion>>] = promotion[t7<tab<promotion>>][itab2][tab2][p_promo_sk: promo_sk[t1][p88]][t6<tab<promotion>>];
     let pname[v13]: string[t3] = promo[t6<tab<promotion>>][v12].p_promo_name[field12][t3];
+    to_unit[(infer16) -> t10][f43][f43](pname[t3][v13])[t10];
   }
 }
 
@@ -493,12 +501,15 @@ transaction Q12[f51](item_sk[p89]: int[t1], order_num[p90]: int[t1], date_sk[p91
   {
     let ws[v14]: Row<web_sales>[t6<tab<web_sales>>] = web_sales[t7<tab<web_sales>>][itab13][tab13][ws_item_sk: item_sk[t1][p89], ws_order_number: order_num[t1][p90]][t6<tab<web_sales>>];
     let i[v15]: Row<item>[t6<tab<item>>] = item[t7<tab<item>>][itab3][tab3][i_item_sk: item_sk[t1][p89]][t6<tab<item>>];
+    to_unit[(infer2) -> t10][f43][f43](i[t6<tab<item>>][v15])[t10];
     let revenue[v16]: float[t4] = ws[t6<tab<web_sales>>][v14].ws_ext_sales_price[field96][t4];
+    to_unit[(infer5) -> t10][f43][f43](revenue[t4][v16])[t10];
   }
   hop
   {
     let d[v17]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: date_sk[t1][p91]][t6<tab<date_dim>>];
     let yr[v18]: int[t1] = d[t6<tab<date_dim>>][v17].d_year[field2][t1];
+    to_unit[(infer9) -> t10][f43][f43](yr[t1][v18])[t10];
   }
 }
 
@@ -508,24 +519,29 @@ transaction Q19[f52](item_sk[p92]: int[t1], order_num[p93]: int[t1], cust_sk[p94
   {
     let cs[v19]: Row<catalog_sales>[t6<tab<catalog_sales>>] = catalog_sales[t7<tab<catalog_sales>>][itab11][tab11][cs_item_sk: item_sk[t1][p92], cs_order_number: order_num[t1][p93]][t6<tab<catalog_sales>>];
     let revenue[v20]: float[t4] = cs[t6<tab<catalog_sales>>][v19].cs_ext_sales_price[field81][t4];
+    to_unit[(infer2) -> t10][f43][f43](revenue[t4][v20])[t10];
   }
   hop
   {
     let i[v21]: Row<item>[t6<tab<item>>] = item[t7<tab<item>>][itab3][tab3][i_item_sk: item_sk[t1][p92]][t6<tab<item>>];
     let brand[v22]: string[t3] = i[t6<tab<item>>][v21].i_manufact[field22][t3];
+    to_unit[(infer6) -> t10][f43][f43](brand[t3][v22])[t10];
   }
   hop
   {
     let c[v23]: Row<customer>[t6<tab<customer>>] = customer[t7<tab<customer>>][itab4][tab4][c_customer_sk: cust_sk[t1][p94]][t6<tab<customer>>];
+    to_unit[(infer9) -> t10][f43][f43](c[t6<tab<customer>>][v23])[t10];
   }
   hop
   {
     let ca[v24]: Row<customer_address>[t6<tab<customer_address>>] = customer_address[t7<tab<customer_address>>][itab6][tab6][ca_address_sk: addr_sk[t1][p95]][t6<tab<customer_address>>];
     let state[v25]: string[t3] = ca[t6<tab<customer_address>>][v24].ca_state[field39][t3];
+    to_unit[(infer13) -> t10][f43][f43](state[t3][v25])[t10];
   }
   hop
   {
     let d[v26]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: date_sk[t1][p96]][t6<tab<date_dim>>];
+    to_unit[(infer16) -> t10][f43][f43](d[t6<tab<date_dim>>][v26])[t10];
   }
 }
 
@@ -535,24 +551,29 @@ transaction Q34[f53](item_sk[p97]: int[t1], ticket_num[p98]: int[t1], cust_sk[p9
   {
     let ss[v27]: Row<store_sales>[t6<tab<store_sales>>] = store_sales[t7<tab<store_sales>>][itab9][tab9][ss_item_sk: item_sk[t1][p97], ss_ticket_number: ticket_num[t1][p98]][t6<tab<store_sales>>];
     let qty[v28]: int[t1] = ss[t6<tab<store_sales>>][v27].ss_quantity[field59][t1];
+    to_unit[(infer2) -> t10][f43][f43](qty[t1][v28])[t10];
   }
   hop
   {
     let c[v29]: Row<customer>[t6<tab<customer>>] = customer[t7<tab<customer>>][itab4][tab4][c_customer_sk: cust_sk[t1][p99]][t6<tab<customer>>];
+    to_unit[(infer5) -> t10][f43][f43](c[t6<tab<customer>>][v29])[t10];
   }
   hop
   {
     let cd[v30]: Row<customer_demographics>[t6<tab<customer_demographics>>] = customer_demographics[t7<tab<customer_demographics>>][itab5][tab5][cd_demo_sk: cd_sk[t1][p100]][t6<tab<customer_demographics>>];
     let marital[v31]: string[t3] = cd[t6<tab<customer_demographics>>][v30].cd_marital_status[field31][t3];
+    to_unit[(infer9) -> t10][f43][f43](marital[t3][v31])[t10];
   }
   hop
   {
     let s[v32]: Row<store>[t6<tab<store>>] = store[t7<tab<store>>][itab7][tab7][s_store_sk: store_sk[t1][p101]][t6<tab<store>>];
+    to_unit[(infer12) -> t10][f43][f43](s[t6<tab<store>>][v32])[t10];
   }
   hop
   {
     let d[v33]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: date_sk[t1][p102]][t6<tab<date_dim>>];
     let yr[v34]: int[t1] = d[t6<tab<date_dim>>][v33].d_year[field2][t1];
+    to_unit[(infer16) -> t10][f43][f43](yr[t1][v34])[t10];
   }
 }
 
@@ -563,17 +584,21 @@ transaction Q50[f54](item_sk[p103]: int[t1], ticket_num[p104]: int[t1], ret_date
     let sr[v35]: Row<store_returns>[t6<tab<store_returns>>] = store_returns[t7<tab<store_returns>>][itab10][tab10][sr_item_sk: item_sk[t1][p103], sr_ticket_number: ticket_num[t1][p104]][t6<tab<store_returns>>];
     let ss[v36]: Row<store_sales>[t6<tab<store_sales>>] = store_sales[t7<tab<store_sales>>][itab9][tab9][ss_item_sk: item_sk[t1][p103], ss_ticket_number: ticket_num[t1][p104]][t6<tab<store_sales>>];
     let ret_amt[v37]: float[t4] = sr[t6<tab<store_returns>>][v35].sr_return_amount[field71][t4];
+    to_unit[(infer3) -> t10][f43][f43](ret_amt[t4][v37])[t10];
     let sale_amt[v38]: float[t4] = ss[t6<tab<store_sales>>][v36].ss_net_paid[field63][t4];
+    to_unit[(infer6) -> t10][f43][f43](sale_amt[t4][v38])[t10];
   }
   hop
   {
     let s[v39]: Row<store>[t6<tab<store>>] = store[t7<tab<store>>][itab7][tab7][s_store_sk: store_sk[t1][p106]][t6<tab<store>>];
     let sname[v40]: string[t3] = s[t6<tab<store>>][v39].s_store_name[field45][t3];
+    to_unit[(infer10) -> t10][f43][f43](sname[t3][v40])[t10];
   }
   hop
   {
     let d[v41]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: ret_date_sk[t1][p105]][t6<tab<date_dim>>];
     let yr[v42]: int[t1] = d[t6<tab<date_dim>>][v41].d_year[field2][t1];
+    to_unit[(infer14) -> t10][f43][f43](yr[t1][v42])[t10];
   }
 }
 
@@ -583,21 +608,25 @@ transaction Q96[f55](item_sk[p107]: int[t1], order_num[p108]: int[t1], warehouse
   {
     let ws[v43]: Row<web_sales>[t6<tab<web_sales>>] = web_sales[t7<tab<web_sales>>][itab13][tab13][ws_item_sk: item_sk[t1][p107], ws_order_number: order_num[t1][p108]][t6<tab<web_sales>>];
     let qty[v44]: int[t1] = ws[t6<tab<web_sales>>][v43].ws_quantity[field93][t1];
+    to_unit[(infer2) -> t10][f43][f43](qty[t1][v44])[t10];
   }
   hop
   {
     let w[v45]: Row<warehouse>[t6<tab<warehouse>>] = warehouse[t7<tab<warehouse>>][itab8][tab8][w_warehouse_sk: warehouse_sk[t1][p109]][t6<tab<warehouse>>];
     let wname[v46]: string[t3] = w[t6<tab<warehouse>>][v45].w_warehouse_name[field50][t3];
+    to_unit[(infer6) -> t10][f43][f43](wname[t3][v46])[t10];
   }
   hop
   {
     let t[v47]: Row<time_dim>[t6<tab<time_dim>>] = time_dim[t7<tab<time_dim>>][itab1][tab1][t_time_sk: time_sk[t1][p110]][t6<tab<time_dim>>];
     let hr[v48]: int[t1] = t[t6<tab<time_dim>>][v47].t_hour[field8][t1];
+    to_unit[(infer10) -> t10][f43][f43](hr[t1][v48])[t10];
   }
   hop
   {
     let d[v49]: Row<date_dim>[t6<tab<date_dim>>] = date_dim[t7<tab<date_dim>>][itab0][tab0][d_date_sk: date_sk[t1][p111]][t6<tab<date_dim>>];
     let yr[v50]: int[t1] = d[t6<tab<date_dim>>][v49].d_year[field2][t1];
+    to_unit[(infer14) -> t10][f43][f43](yr[t1][v50])[t10];
   }
 }
 

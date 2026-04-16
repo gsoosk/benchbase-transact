@@ -19,12 +19,54 @@ func GetpageanonymousHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) 
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var pageId uint64
+	var pr_type string
+	var latest_rev_id uint64
+	var p Page
+	var _tmp2 Page
+	var _tmp3 Unit
+	var pr PageRestrictions
+	var _tmp4 PageRestrictions
+	var _tmp5 Unit
+	var r_rev_text_id uint64
+	var textId uint64
+
+	var keyBytes1 []byte
+	var row1 Page
+	var keyBytes2 []byte
+	var row2 PageRestrictions
+	var keyBytes3 []byte
+	var row3 Revision
+
+	pageId = toUint64(params["pageId"])
+	pr_type = params["pr_type"]
+	latest_rev_id = toUint64(params["latest_rev_id"])
+
 	goto BB4
 
 BB4:
+	// TableGet: Page
+	keyBytes1, row1 = getPage(tx, PageKey{page_id: pageId})
+	rwSet = AddRWSet(rwSet, "Page", keyBytes1)
+	_tmp2 = row1
+	p = _tmp2
+	_ = p
+	// TableGet: PageRestrictions
+	keyBytes2, row2 = getPageRestrictions(tx, PageRestrictionsKey{pr_page: pageId, pr_type: pr_type})
+	rwSet = AddRWSet(rwSet, "PageRestrictions", keyBytes2)
+	_tmp4 = row2
+	pr = _tmp4
+	_ = pr
+	// TableGet: Revision
+	keyBytes3, row3 = getRevision(tx, RevisionKey{rev_page: pageId, rev_id: latest_rev_id})
+	rwSet = AddRWSet(rwSet, "Revision", keyBytes3)
+	r_rev_text_id = row3.rev_text_id
+	textId = r_rev_text_id
+	// Write back variables to results
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
+		Results: []string{string(mustJSON(textId))},
 		RWSets: rwSet,
 	}, nil
 }
@@ -34,9 +76,25 @@ func GetpageanonymousHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) 
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var textId uint64
+	var t_old_text string
+	var content string
+	var _tmp8 Unit
+
+	var keyBytes1 []byte
+	var row1 Text
+
+	textId = toUint64(params["textId"])
+
 	goto BB5
 
 BB5:
+	// TableGet: Text
+	keyBytes1, row1 = getText(tx, TextKey{old_id: textId})
+	rwSet = AddRWSet(rwSet, "Text", keyBytes1)
+	t_old_text = row1.old_text
+	content = t_old_text
+	_ = content
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +105,29 @@ BB5:
 
 // GetpageanonymousHop0Par calculates the partition for hop 0 without database access.
 func GetpageanonymousHop0Par(params map[string]string) uint64 {
+	var pageId uint64
+	var pr_type string
+	var latest_rev_id uint64
+	var p Page
+	var _tmp2 Page
+	var _tmp3 Unit
+	var pr PageRestrictions
+	var _tmp4 PageRestrictions
+	var _tmp5 Unit
+	var r_rev_text_id uint64
+	var textId uint64
+
+	var keyBytes1 []byte
+	var row1 Page
+	var keyBytes2 []byte
+	var row2 PageRestrictions
+	var keyBytes3 []byte
+	var row3 Revision
+
+	pageId = toUint64(params["pageId"])
+	pr_type = params["pr_type"]
+	latest_rev_id = toUint64(params["latest_rev_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +136,46 @@ func GetpageanonymousHop0Par(params map[string]string) uint64 {
 	goto BB4
 
 BB4:
+	// First table access - calculate partition: Page
+	if true { return getPagePar(PageKey{page_id: pageId}) }
+	// TableGet: Page
+	keyBytes1, row1 = getPage(tx, PageKey{page_id: pageId})
+	rwSet = AddRWSet(rwSet, "Page", keyBytes1)
+	_tmp2 = row1
+	p = _tmp2
+	_ = p
+	// First table access - calculate partition: PageRestrictions
+	if true { return getPageRestrictionsPar(PageRestrictionsKey{pr_page: pageId, pr_type: pr_type}) }
+	// TableGet: PageRestrictions
+	keyBytes2, row2 = getPageRestrictions(tx, PageRestrictionsKey{pr_page: pageId, pr_type: pr_type})
+	rwSet = AddRWSet(rwSet, "PageRestrictions", keyBytes2)
+	_tmp4 = row2
+	pr = _tmp4
+	_ = pr
+	// First table access - calculate partition: Revision
+	if true { return getRevisionPar(RevisionKey{rev_page: pageId, rev_id: latest_rev_id}) }
+	// TableGet: Revision
+	keyBytes3, row3 = getRevision(tx, RevisionKey{rev_page: pageId, rev_id: latest_rev_id})
+	rwSet = AddRWSet(rwSet, "Revision", keyBytes3)
+	r_rev_text_id = row3.rev_text_id
+	textId = r_rev_text_id
+	// Unreachable: use variables in results
+	_ = []string{string(mustJSON(textId))}
 	panic("unexpected hop exit in partition")
 }
 
 // GetpageanonymousHop1Par calculates the partition for hop 1 without database access.
 func GetpageanonymousHop1Par(params map[string]string) uint64 {
+	var textId uint64
+	var t_old_text string
+	var content string
+	var _tmp8 Unit
+
+	var keyBytes1 []byte
+	var row1 Text
+
+	textId = toUint64(params["textId"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +184,14 @@ func GetpageanonymousHop1Par(params map[string]string) uint64 {
 	goto BB5
 
 BB5:
+	// First table access - calculate partition: Text
+	if true { return getTextPar(TextKey{old_id: textId}) }
+	// TableGet: Text
+	keyBytes1, row1 = getText(tx, TextKey{old_id: textId})
+	rwSet = AddRWSet(rwSet, "Text", keyBytes1)
+	t_old_text = row1.old_text
+	content = t_old_text
+	_ = content
 	return 0
 }
 
@@ -86,6 +210,8 @@ func GetpageanonymousNextReq(in *proto.TrxRes, params map[string]string, shards 
 		// Calculate partition for next hop using partition function
 		nextShard = int(GetpageanonymousHop0Par(paramsCopy))
 	case 1:
+		// Extract variables from previous hop results
+		params["textId"] = in.Results[0]
 		// Deep copy params to avoid modification
 		paramsCopy := make(map[string]string)
 		for k, v := range params {

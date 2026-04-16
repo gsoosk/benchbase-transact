@@ -19,9 +19,25 @@ func MinrecordHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var representative_id uint64
+	var r_value uint64
+	var v uint64
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Sitable
+
+	representative_id = toUint64(params["representative_id"])
+
 	goto BB1
 
 BB1:
+	// TableGet: Sitable
+	keyBytes1, row1 = getSitable(tx, SitableKey{id: representative_id})
+	rwSet = AddRWSet(rwSet, "Sitable", keyBytes1)
+	r_value = row1.value
+	v = r_value
+	_ = v
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +48,16 @@ BB1:
 
 // MinrecordHop0Par calculates the partition for hop 0 without database access.
 func MinrecordHop0Par(params map[string]string) uint64 {
+	var representative_id uint64
+	var r_value uint64
+	var v uint64
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Sitable
+
+	representative_id = toUint64(params["representative_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +66,14 @@ func MinrecordHop0Par(params map[string]string) uint64 {
 	goto BB1
 
 BB1:
+	// First table access - calculate partition: Sitable
+	if true { return getSitablePar(SitableKey{id: representative_id}) }
+	// TableGet: Sitable
+	keyBytes1, row1 = getSitable(tx, SitableKey{id: representative_id})
+	rwSet = AddRWSet(rwSet, "Sitable", keyBytes1)
+	r_value = row1.value
+	v = r_value
+	_ = v
 	return 0
 }
 

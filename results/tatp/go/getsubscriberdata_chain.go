@@ -19,9 +19,25 @@ func GetsubscriberdataHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error)
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var s_id uint64
+	var sub_bit_1 uint64
+	var bit1 uint64
+	var _tmp9 Unit
+
+	var keyBytes1 []byte
+	var row1 Subscriber
+
+	s_id = toUint64(params["s_id"])
+
 	goto BB6
 
 BB6:
+	// TableGet: Subscriber
+	keyBytes1, row1 = getSubscriber(tx, SubscriberKey{s_id: s_id})
+	rwSet = AddRWSet(rwSet, "Subscriber", keyBytes1)
+	sub_bit_1 = row1.bit_1
+	bit1 = sub_bit_1
+	_ = bit1
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +48,16 @@ BB6:
 
 // GetsubscriberdataHop0Par calculates the partition for hop 0 without database access.
 func GetsubscriberdataHop0Par(params map[string]string) uint64 {
+	var s_id uint64
+	var sub_bit_1 uint64
+	var bit1 uint64
+	var _tmp9 Unit
+
+	var keyBytes1 []byte
+	var row1 Subscriber
+
+	s_id = toUint64(params["s_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +66,14 @@ func GetsubscriberdataHop0Par(params map[string]string) uint64 {
 	goto BB6
 
 BB6:
+	// First table access - calculate partition: Subscriber
+	if true { return getSubscriberPar(SubscriberKey{s_id: s_id}) }
+	// TableGet: Subscriber
+	keyBytes1, row1 = getSubscriber(tx, SubscriberKey{s_id: s_id})
+	rwSet = AddRWSet(rwSet, "Subscriber", keyBytes1)
+	sub_bit_1 = row1.bit_1
+	bit1 = sub_bit_1
+	_ = bit1
 	return 0
 }
 

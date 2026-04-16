@@ -189,95 +189,95 @@ axiom (forall
     <==>
     (S_W_ID_1 == S_W_ID_2 && S_I_ID_1 == S_I_ID_2 && S_QUANTITY_1 == S_QUANTITY_2 && S_YTD_1 == S_YTD_2 && S_ORDER_CNT_1 == S_ORDER_CNT_2 && S_REMOTE_CNT_1 == S_REMOTE_CNT_2 && S_DATA_1 == S_DATA_2)
 );
-const __shards__ : int;
-var Customer_C_YTD_PAYMENT : [int][int][int]real;
-var Customer_C_ZIP : [int][int][int]String;
-var Customer_C_DISCOUNT : [int][int][int]real;
-const TBL_Order_Line : Table (Order_Line);
-var Customer_C_STATE : [int][int][int]String;
-var Stock_S_DATA : [int][int]String;
-var District_D_STREET_1 : [int][int]String;
-var Item_I_DATA : [int][int]String;
-var Order_Line_OL_O_ID : [int][int][int][int]int;
-var Customer_C_MIDDLE : [int][int][int]String;
-var Customer_C_CITY : [int][int][int]String;
-var Warehouse_W_CITY : [int]String;
-var Customer_C_ID : [int][int][int]int;
-var Order_Line_OL_D_ID : [int][int][int][int]int;
-var Customer_C_BALANCE : [int][int][int]real;
-var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
+var Customer_C_STREET_2 : [int][int][int]String;
+var Item_I_NAME : [int][int]String;
+var District_D_ID : [int][int]int;
 const __slice__ : int;
-var Stock_S_QUANTITY : [int][int]int;
+var Order_O_CARRIER_ID : [int][int][int]int;
 var District_D_STREET_2 : [int][int]String;
-var Warehouse_W_NAME : [int]String;
-var District_D_ZIP : [int][int]String;
-var New_Order_NO_O_ID : [int][int][int]int;
-var Order_Line_OL_W_ID : [int][int][int][int]int;
-var Customer_C_D_ID : [int][int][int]int;
-var District_D_NAME : [int][int]String;
-var Warehouse_W_TAX : [int]real;
-var Customer_C_W_ID : [int][int][int]int;
-var Customer_C_CREDIT : [int][int][int]String;
-var Customer_C_PAYMENT_CNT : [int][int][int]real;
 var Item_I_PRICE : [int][int]real;
-var Warehouse_W_STREET_1 : [int]String;
-var Stock_S_YTD : [int][int]real;
-var Customer_C_DELIVERY_CNT : [int][int][int]real;
-var Stock_S_I_ID : [int][int]int;
-const O_OL_CNT : int;
-var Order_O_ENTRY_DATE : [int][int][int]int;
+var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
+var Warehouse_W_STATE : [int]String;
+var Customer_C_D_ID : [int][int][int]int;
+const TBL_Order : Table (Order);
 var Customer_C_STREET_1 : [int][int][int]String;
-const TBL_District : Table (District);
-var Warehouse_W_STREET_2 : [int]String;
-const TBL_New_Order : Table (New_Order);
-var Customer_C_PHONE : [int][int][int]String;
+var Customer_C_STATE : [int][int][int]String;
 var District_D_NEXT_NO_ID : [int][int]int;
 var Warehouse_W_ZIP : [int]String;
-var District_D_NEXT_O_ID : [int][int]int;
-const TBL_Warehouse : Table (Warehouse);
-var District_D_CITY : [int][int]String;
-var Order_O_OL_CNT : [int][int][int]int;
-var District_D_W_ID : [int][int]int;
 var Customer_C_SINCE : [int][int][int]int;
-var Order_O_ALL_LOCAL : [int][int][int]int;
-var Warehouse_W_YTD : [int]real;
-var Order_O_ID : [int][int][int]int;
-var Customer_C_STREET_2 : [int][int][int]String;
-const TBL_Order : Table (Order);
-var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
-var Order_Line_OL_AMOUNT : [int][int][int][int]int;
-var Stock_S_W_ID : [int][int]int;
-var Item_W_ID : [int][int]int;
-var District_D_ID : [int][int]int;
-var District_D_TAX : [int][int]real;
-var Stock_S_REMOTE_CNT : [int][int]int;
-var Item_I_ID : [int][int]int;
-const TBL_Item : Table (Item);
-var Warehouse_W_STATE : [int]String;
-var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
-var Warehouse_W_ID : [int]int;
-var Order_Line_OL_I_ID : [int][int][int][int]int;
-var Stock_S_ORDER_CNT : [int][int]int;
-var Order_O_CARRIER_ID : [int][int][int]int;
-var Order_O_D_ID : [int][int][int]int;
-var New_Order_NO_D_ID : [int][int][int]int;
+var District_D_NEXT_O_ID : [int][int]int;
 var District_D_STATE : [int][int]String;
-var Order_O_C_ID : [int][int][int]int;
-var New_Order_NO_W_ID : [int][int][int]int;
-var Customer_C_FIRST : [int][int][int]String;
+const __shards__ : int;
+var Customer_C_CREDIT : [int][int][int]String;
+var Customer_C_ID : [int][int][int]int;
 var Customer_C_DATA : [int][int][int]String;
+var Customer_C_BALANCE : [int][int][int]real;
+var District_D_STREET_1 : [int][int]String;
+var Stock_S_DATA : [int][int]String;
+var District_D_CITY : [int][int]String;
+var New_Order_NO_W_ID : [int][int][int]int;
+const TBL_Order_Line : Table (Order_Line);
+var Stock_S_QUANTITY : [int][int]int;
+const TBL_Warehouse : Table (Warehouse);
+var Warehouse_W_STREET_2 : [int]String;
+var Warehouse_W_NAME : [int]String;
+var District_D_TAX : [int][int]real;
+var Item_W_ID : [int][int]int;
+var Order_Line_OL_W_ID : [int][int][int][int]int;
+var Warehouse_W_ID : [int]int;
+const TBL_Item : Table (Item);
+var Order_O_ENTRY_DATE : [int][int][int]int;
+var Stock_S_REMOTE_CNT : [int][int]int;
+var Customer_C_YTD_PAYMENT : [int][int][int]real;
+var Stock_S_YTD : [int][int]real;
+var Customer_C_ZIP : [int][int][int]String;
+var Order_Line_OL_AMOUNT : [int][int][int][int]int;
+const O_OL_CNT : int;
+var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
+var Stock_S_I_ID : [int][int]int;
+var Customer_C_PHONE : [int][int][int]String;
+var Order_Line_OL_O_ID : [int][int][int][int]int;
+var Stock_S_W_ID : [int][int]int;
+var District_D_W_ID : [int][int]int;
+var Customer_C_FIRST : [int][int][int]String;
+var Order_O_D_ID : [int][int][int]int;
+var Warehouse_W_YTD : [int]real;
+var Order_Line_OL_NUMBER : [int][int][int][int]int;
+var Stock_S_ORDER_CNT : [int][int]int;
+var New_Order_NO_O_ID : [int][int][int]int;
+var Customer_C_DISCOUNT : [int][int][int]real;
+var Item_I_IM_ID : [int][int]int;
+var Customer_C_PAYMENT_CNT : [int][int][int]real;
+var District_D_NAME : [int][int]String;
+var Warehouse_W_STREET_1 : [int]String;
+const TBL_District : Table (District);
+var Warehouse_W_CITY : [int]String;
+var District_D_ZIP : [int][int]String;
+var Warehouse_W_TAX : [int]real;
+const TBL_New_Order : Table (New_Order);
 var District_D_YTD : [int][int]real;
-var Order_Line_OL_QUANTITY : [int][int][int][int]int;
-var Item_I_NAME : [int][int]String;
-const TBL_Stock : Table (Stock);
+var Customer_C_DELIVERY_CNT : [int][int][int]real;
 var Customer_C_CREDIT_LIMIT : [int][int][int]real;
 var Order_O_W_ID : [int][int][int]int;
+var New_Order_NO_D_ID : [int][int][int]int;
 var Customer_C_LAST : [int][int][int]String;
-var Order_Line_OL_NUMBER : [int][int][int][int]int;
+var Order_O_C_ID : [int][int][int]int;
 const TBL_Customer : Table (Customer);
-var Item_I_IM_ID : [int][int]int;
+var Customer_C_MIDDLE : [int][int][int]String;
+var Customer_C_W_ID : [int][int][int]int;
+var Order_O_ALL_LOCAL : [int][int][int]int;
+var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
+var Order_Line_OL_QUANTITY : [int][int][int][int]int;
+var Order_O_ID : [int][int][int]int;
+var Order_O_OL_CNT : [int][int][int]int;
+var Order_Line_OL_D_ID : [int][int][int][int]int;
+const TBL_Stock : Table (Stock);
+var Order_Line_OL_I_ID : [int][int][int][int]int;
+var Item_I_ID : [int][int]int;
+var Item_I_DATA : [int][int]String;
+var Customer_C_CITY : [int][int][int]String;
 procedure Check_SliceCommut_Hop29_vs_Hop30()
-modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Order_Line_OL_AMOUNT, Order_Line_OL_DELIVERY_DATE, Order_O_CARRIER_ID, Order_O_C_ID;
+modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Order_Line_OL_AMOUNT, Order_Line_OL_DELIVERY_DATE, Order_O_CARRIER_ID, Order_O_C_ID, Order_O_OL_CNT;
 {
   var s0_w_id : int;
   var s0_o_carrier_id : int;
@@ -294,42 +294,49 @@ modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Ord
   var Order_Line_OL_DELIVERY_DATE_init : [int][int][int][int]int;
   var Order_O_CARRIER_ID_init : [int][int][int]int;
   var Order_O_C_ID_init : [int][int][int]int;
+  var Order_O_OL_CNT_init : [int][int][int]int;
   var s0_w_id_init : int;
   var s0_o_carrier_id_init : int;
   var s0_date_init : int;
   var s1_w_id_init : int;
   var s1_o_carrier_id_init : int;
   var s1_date_init : int;
-  var s0_#tmp280 : int;
-  var s0_no_o_id : int;
   var s0_#tmp281 : int;
+  var s0_no_o_id : int;
   var s0_#tmp282 : int;
+  var s0_#tmp283 : int;
   var s0_c_id : int;
-  var s0_#tmp284 : bool;
+  var s0_#tmp284 : int;
+  var s0_ol_cnt : int;
+  var s0_#tmp285 : unit;
+  var s0_#tmp286 : bool;
   var s0_ol_number : int;
-  var s0_#tmp285 : int;
-  var s0_#tmp286 : real;
-  var s0_#tmp287 : real;
-  var s0_ol_total : real;
+  var s0_#tmp287 : int;
+  var s0_#tmp288 : real;
   var s0_#tmp289 : real;
-  var s0_#tmp290 : real;
+  var s0_ol_total : real;
   var s0_#tmp291 : real;
   var s0_#tmp292 : real;
-  var s1_#tmp293 : int;
-  var s1_no_o_id : int;
-  var s1_#tmp294 : int;
+  var s0_#tmp293 : real;
+  var s0_#tmp294 : real;
   var s1_#tmp295 : int;
+  var s1_no_o_id : int;
+  var s1_#tmp296 : int;
+  var s1_#tmp297 : int;
   var s1_c_id : int;
-  var s1_#tmp297 : bool;
-  var s1_ol_number : int;
   var s1_#tmp298 : int;
-  var s1_#tmp299 : real;
-  var s1_#tmp300 : real;
-  var s1_ol_total : real;
+  var s1_ol_cnt : int;
+  var s1_#tmp299 : unit;
+  var s1_#tmp300 : bool;
+  var s1_ol_number : int;
+  var s1_#tmp301 : int;
   var s1_#tmp302 : real;
   var s1_#tmp303 : real;
-  var s1_#tmp304 : real;
+  var s1_ol_total : real;
   var s1_#tmp305 : real;
+  var s1_#tmp306 : real;
+  var s1_#tmp307 : real;
+  var s1_#tmp308 : real;
   var Customer_C_BALANCE_a_then_b : [int][int][int]real;
   var Customer_C_DELIVERY_CNT_a_then_b : [int][int][int]real;
   var District_D_NEXT_NO_ID_a_then_b : [int][int]int;
@@ -362,6 +369,7 @@ modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Ord
     havoc Order_Line_OL_DELIVERY_DATE;
     havoc Order_O_CARRIER_ID;
     havoc Order_O_C_ID;
+    havoc Order_O_OL_CNT;
     havoc s0_w_id;
     havoc s0_o_carrier_id;
     havoc s0_date;
@@ -378,6 +386,7 @@ modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Ord
     Order_Line_OL_DELIVERY_DATE_init := Order_Line_OL_DELIVERY_DATE;
     Order_O_CARRIER_ID_init := Order_O_CARRIER_ID;
     Order_O_C_ID_init := Order_O_C_ID;
+    Order_O_OL_CNT_init := Order_O_OL_CNT;
     s0_w_id_init := s0_w_id;
     s0_o_carrier_id_init := s0_o_carrier_id;
     s0_date_init := s0_date;
@@ -388,195 +397,201 @@ modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Ord
   // Executing A then B:
     if (s0_active) {
     s0_block87__ab:
-      s0_#tmp280 := District_D_NEXT_NO_ID[s0_w_id][1];
-      s0_no_o_id := s0_#tmp280;
-      s0_#tmp281 := s0_no_o_id + 1;
-      District_D_NEXT_NO_ID := District_D_NEXT_NO_ID[s0_w_id := District_D_NEXT_NO_ID[s0_w_id][1 := s0_#tmp281]];
-      s0_#tmp282 := Order_O_C_ID[s0_w_id][1][s0_no_o_id];
-      s0_c_id := s0_#tmp282;
+      s0_#tmp281 := District_D_NEXT_NO_ID[s0_w_id][1];
+      s0_no_o_id := s0_#tmp281;
+      s0_#tmp282 := s0_no_o_id + 1;
+      District_D_NEXT_NO_ID := District_D_NEXT_NO_ID[s0_w_id := District_D_NEXT_NO_ID[s0_w_id][1 := s0_#tmp282]];
+      s0_#tmp283 := Order_O_C_ID[s0_w_id][1][s0_no_o_id];
+      s0_c_id := s0_#tmp283;
+      s0_#tmp284 := Order_O_OL_CNT[s0_w_id][1][s0_no_o_id];
+      s0_ol_cnt := s0_#tmp284;
+      s0_#tmp285 := to_unit(s0_ol_cnt);
       Order_O_CARRIER_ID := Order_O_CARRIER_ID[s0_w_id := Order_O_CARRIER_ID[s0_w_id][1 := Order_O_CARRIER_ID[s0_w_id][1][s0_no_o_id := s0_o_carrier_id]]];
       goto s0_block89__ab;
     s0_block88__ab:
-      s0_#tmp284 := s0_ol_number < O_OL_CNT;
-      if (s0_#tmp284) {
+      s0_#tmp286 := s0_ol_number < O_OL_CNT;
+      if (s0_#tmp286) {
       goto s0_block89__ab;
     } else {
       goto s0_block91__ab;
     }
     s0_block89__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][0 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][0];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := 0.0000000 + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][0];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := 0.0000000 + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block166__ab;
     s0_block91__ab:
-      s0_#tmp289 := Customer_C_BALANCE[s0_w_id][1][s0_c_id];
-      s0_#tmp290 := s0_#tmp289 + s0_ol_total;
-      Customer_C_BALANCE := Customer_C_BALANCE[s0_w_id := Customer_C_BALANCE[s0_w_id][1 := Customer_C_BALANCE[s0_w_id][1][s0_c_id := s0_#tmp290]]];
-      s0_#tmp291 := Customer_C_DELIVERY_CNT[s0_w_id][1][s0_c_id];
-      s0_#tmp292 := s0_#tmp291 + 1.0000000;
-      Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s0_w_id := Customer_C_DELIVERY_CNT[s0_w_id][1 := Customer_C_DELIVERY_CNT[s0_w_id][1][s0_c_id := s0_#tmp292]]];
+      s0_#tmp291 := Customer_C_BALANCE[s0_w_id][1][s0_c_id];
+      s0_#tmp292 := s0_#tmp291 + s0_ol_total;
+      Customer_C_BALANCE := Customer_C_BALANCE[s0_w_id := Customer_C_BALANCE[s0_w_id][1 := Customer_C_BALANCE[s0_w_id][1][s0_c_id := s0_#tmp292]]];
+      s0_#tmp293 := Customer_C_DELIVERY_CNT[s0_w_id][1][s0_c_id];
+      s0_#tmp294 := s0_#tmp293 + 1.0000000;
+      Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s0_w_id := Customer_C_DELIVERY_CNT[s0_w_id][1 := Customer_C_DELIVERY_CNT[s0_w_id][1][s0_c_id := s0_#tmp294]]];
       goto s0_hop_exit__ab;
     s0_block166__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][1 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][1];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][1];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block167__ab;
     s0_block167__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][2 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][2];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][2];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block168__ab;
     s0_block168__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][3 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][3];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][3];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block169__ab;
     s0_block169__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][4 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][4];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][4];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block170__ab;
     s0_block170__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][5 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][5];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][5];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block171__ab;
     s0_block171__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][6 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][6];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][6];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block172__ab;
     s0_block172__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][7 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][7];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][7];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block173__ab;
     s0_block173__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][8 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][8];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][8];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block174__ab;
     s0_block174__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][9 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][9];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][9];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block91__ab;
     s0_hop_exit__ab:
     }
     if (s1_active) {
     s1_block92__ab:
-      s1_#tmp293 := District_D_NEXT_NO_ID[s1_w_id][2];
-      s1_no_o_id := s1_#tmp293;
-      s1_#tmp294 := s1_no_o_id + 1;
-      District_D_NEXT_NO_ID := District_D_NEXT_NO_ID[s1_w_id := District_D_NEXT_NO_ID[s1_w_id][2 := s1_#tmp294]];
-      s1_#tmp295 := Order_O_C_ID[s1_w_id][2][s1_no_o_id];
-      s1_c_id := s1_#tmp295;
+      s1_#tmp295 := District_D_NEXT_NO_ID[s1_w_id][2];
+      s1_no_o_id := s1_#tmp295;
+      s1_#tmp296 := s1_no_o_id + 1;
+      District_D_NEXT_NO_ID := District_D_NEXT_NO_ID[s1_w_id := District_D_NEXT_NO_ID[s1_w_id][2 := s1_#tmp296]];
+      s1_#tmp297 := Order_O_C_ID[s1_w_id][2][s1_no_o_id];
+      s1_c_id := s1_#tmp297;
+      s1_#tmp298 := Order_O_OL_CNT[s1_w_id][2][s1_no_o_id];
+      s1_ol_cnt := s1_#tmp298;
+      s1_#tmp299 := to_unit(s1_ol_cnt);
       Order_O_CARRIER_ID := Order_O_CARRIER_ID[s1_w_id := Order_O_CARRIER_ID[s1_w_id][2 := Order_O_CARRIER_ID[s1_w_id][2][s1_no_o_id := s1_o_carrier_id]]];
       goto s1_block94__ab;
     s1_block93__ab:
-      s1_#tmp297 := s1_ol_number < O_OL_CNT;
-      if (s1_#tmp297) {
+      s1_#tmp300 := s1_ol_number < O_OL_CNT;
+      if (s1_#tmp300) {
       goto s1_block94__ab;
     } else {
       goto s1_block96__ab;
     }
     s1_block94__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][0 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][0];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := 0.0000000 + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][0];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := 0.0000000 + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block175__ab;
     s1_block96__ab:
-      s1_#tmp302 := Customer_C_BALANCE[s1_w_id][2][s1_c_id];
-      s1_#tmp303 := s1_#tmp302 + s1_ol_total;
-      Customer_C_BALANCE := Customer_C_BALANCE[s1_w_id := Customer_C_BALANCE[s1_w_id][2 := Customer_C_BALANCE[s1_w_id][2][s1_c_id := s1_#tmp303]]];
-      s1_#tmp304 := Customer_C_DELIVERY_CNT[s1_w_id][2][s1_c_id];
-      s1_#tmp305 := s1_#tmp304 + 1.0000000;
-      Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s1_w_id := Customer_C_DELIVERY_CNT[s1_w_id][2 := Customer_C_DELIVERY_CNT[s1_w_id][2][s1_c_id := s1_#tmp305]]];
+      s1_#tmp305 := Customer_C_BALANCE[s1_w_id][2][s1_c_id];
+      s1_#tmp306 := s1_#tmp305 + s1_ol_total;
+      Customer_C_BALANCE := Customer_C_BALANCE[s1_w_id := Customer_C_BALANCE[s1_w_id][2 := Customer_C_BALANCE[s1_w_id][2][s1_c_id := s1_#tmp306]]];
+      s1_#tmp307 := Customer_C_DELIVERY_CNT[s1_w_id][2][s1_c_id];
+      s1_#tmp308 := s1_#tmp307 + 1.0000000;
+      Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s1_w_id := Customer_C_DELIVERY_CNT[s1_w_id][2 := Customer_C_DELIVERY_CNT[s1_w_id][2][s1_c_id := s1_#tmp308]]];
       goto s1_hop_exit__ab;
     s1_block175__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][1 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][1];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][1];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block176__ab;
     s1_block176__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][2 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][2];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][2];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block177__ab;
     s1_block177__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][3 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][3];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][3];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block178__ab;
     s1_block178__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][4 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][4];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][4];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block179__ab;
     s1_block179__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][5 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][5];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][5];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block180__ab;
     s1_block180__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][6 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][6];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][6];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block181__ab;
     s1_block181__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][7 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][7];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][7];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block182__ab;
     s1_block182__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][8 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][8];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][8];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block183__ab;
     s1_block183__ab:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][9 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][9];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][9];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block96__ab;
     s1_hop_exit__ab:
     }
@@ -600,6 +615,7 @@ modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Ord
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE_init;
     Order_O_CARRIER_ID := Order_O_CARRIER_ID_init;
     Order_O_C_ID := Order_O_C_ID_init;
+    Order_O_OL_CNT := Order_O_OL_CNT_init;
     s0_w_id := s0_w_id_init;
     s0_o_carrier_id := s0_o_carrier_id_init;
     s0_date := s0_date_init;
@@ -611,195 +627,201 @@ modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Ord
   // Executing B then A:
     if (s1_active) {
     s1_block92__ba:
-      s1_#tmp293 := District_D_NEXT_NO_ID[s1_w_id][2];
-      s1_no_o_id := s1_#tmp293;
-      s1_#tmp294 := s1_no_o_id + 1;
-      District_D_NEXT_NO_ID := District_D_NEXT_NO_ID[s1_w_id := District_D_NEXT_NO_ID[s1_w_id][2 := s1_#tmp294]];
-      s1_#tmp295 := Order_O_C_ID[s1_w_id][2][s1_no_o_id];
-      s1_c_id := s1_#tmp295;
+      s1_#tmp295 := District_D_NEXT_NO_ID[s1_w_id][2];
+      s1_no_o_id := s1_#tmp295;
+      s1_#tmp296 := s1_no_o_id + 1;
+      District_D_NEXT_NO_ID := District_D_NEXT_NO_ID[s1_w_id := District_D_NEXT_NO_ID[s1_w_id][2 := s1_#tmp296]];
+      s1_#tmp297 := Order_O_C_ID[s1_w_id][2][s1_no_o_id];
+      s1_c_id := s1_#tmp297;
+      s1_#tmp298 := Order_O_OL_CNT[s1_w_id][2][s1_no_o_id];
+      s1_ol_cnt := s1_#tmp298;
+      s1_#tmp299 := to_unit(s1_ol_cnt);
       Order_O_CARRIER_ID := Order_O_CARRIER_ID[s1_w_id := Order_O_CARRIER_ID[s1_w_id][2 := Order_O_CARRIER_ID[s1_w_id][2][s1_no_o_id := s1_o_carrier_id]]];
       goto s1_block94__ba;
     s1_block93__ba:
-      s1_#tmp297 := s1_ol_number < O_OL_CNT;
-      if (s1_#tmp297) {
+      s1_#tmp300 := s1_ol_number < O_OL_CNT;
+      if (s1_#tmp300) {
       goto s1_block94__ba;
     } else {
       goto s1_block96__ba;
     }
     s1_block94__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][0 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][0];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := 0.0000000 + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][0];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := 0.0000000 + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block175__ba;
     s1_block96__ba:
-      s1_#tmp302 := Customer_C_BALANCE[s1_w_id][2][s1_c_id];
-      s1_#tmp303 := s1_#tmp302 + s1_ol_total;
-      Customer_C_BALANCE := Customer_C_BALANCE[s1_w_id := Customer_C_BALANCE[s1_w_id][2 := Customer_C_BALANCE[s1_w_id][2][s1_c_id := s1_#tmp303]]];
-      s1_#tmp304 := Customer_C_DELIVERY_CNT[s1_w_id][2][s1_c_id];
-      s1_#tmp305 := s1_#tmp304 + 1.0000000;
-      Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s1_w_id := Customer_C_DELIVERY_CNT[s1_w_id][2 := Customer_C_DELIVERY_CNT[s1_w_id][2][s1_c_id := s1_#tmp305]]];
+      s1_#tmp305 := Customer_C_BALANCE[s1_w_id][2][s1_c_id];
+      s1_#tmp306 := s1_#tmp305 + s1_ol_total;
+      Customer_C_BALANCE := Customer_C_BALANCE[s1_w_id := Customer_C_BALANCE[s1_w_id][2 := Customer_C_BALANCE[s1_w_id][2][s1_c_id := s1_#tmp306]]];
+      s1_#tmp307 := Customer_C_DELIVERY_CNT[s1_w_id][2][s1_c_id];
+      s1_#tmp308 := s1_#tmp307 + 1.0000000;
+      Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s1_w_id := Customer_C_DELIVERY_CNT[s1_w_id][2 := Customer_C_DELIVERY_CNT[s1_w_id][2][s1_c_id := s1_#tmp308]]];
       goto s1_hop_exit__ba;
     s1_block175__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][1 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][1];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][1];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block176__ba;
     s1_block176__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][2 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][2];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][2];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block177__ba;
     s1_block177__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][3 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][3];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][3];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block178__ba;
     s1_block178__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][4 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][4];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][4];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block179__ba;
     s1_block179__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][5 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][5];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][5];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block180__ba;
     s1_block180__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][6 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][6];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][6];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block181__ba;
     s1_block181__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][7 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][7];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][7];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block182__ba;
     s1_block182__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][8 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][8];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][8];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block183__ba;
     s1_block183__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s1_w_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2 := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id := Order_Line_OL_DELIVERY_DATE[s1_w_id][2][s1_no_o_id][9 := s1_date]]]];
-      s1_#tmp298 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][9];
-      s1_#tmp299 := real(s1_#tmp298);
-      s1_#tmp300 := s1_ol_total + s1_#tmp299;
-      s1_ol_total := s1_#tmp300;
+      s1_#tmp301 := Order_Line_OL_AMOUNT[s1_w_id][2][s1_no_o_id][9];
+      s1_#tmp302 := real(s1_#tmp301);
+      s1_#tmp303 := s1_ol_total + s1_#tmp302;
+      s1_ol_total := s1_#tmp303;
       goto s1_block96__ba;
     s1_hop_exit__ba:
     }
     if (s0_active) {
     s0_block87__ba:
-      s0_#tmp280 := District_D_NEXT_NO_ID[s0_w_id][1];
-      s0_no_o_id := s0_#tmp280;
-      s0_#tmp281 := s0_no_o_id + 1;
-      District_D_NEXT_NO_ID := District_D_NEXT_NO_ID[s0_w_id := District_D_NEXT_NO_ID[s0_w_id][1 := s0_#tmp281]];
-      s0_#tmp282 := Order_O_C_ID[s0_w_id][1][s0_no_o_id];
-      s0_c_id := s0_#tmp282;
+      s0_#tmp281 := District_D_NEXT_NO_ID[s0_w_id][1];
+      s0_no_o_id := s0_#tmp281;
+      s0_#tmp282 := s0_no_o_id + 1;
+      District_D_NEXT_NO_ID := District_D_NEXT_NO_ID[s0_w_id := District_D_NEXT_NO_ID[s0_w_id][1 := s0_#tmp282]];
+      s0_#tmp283 := Order_O_C_ID[s0_w_id][1][s0_no_o_id];
+      s0_c_id := s0_#tmp283;
+      s0_#tmp284 := Order_O_OL_CNT[s0_w_id][1][s0_no_o_id];
+      s0_ol_cnt := s0_#tmp284;
+      s0_#tmp285 := to_unit(s0_ol_cnt);
       Order_O_CARRIER_ID := Order_O_CARRIER_ID[s0_w_id := Order_O_CARRIER_ID[s0_w_id][1 := Order_O_CARRIER_ID[s0_w_id][1][s0_no_o_id := s0_o_carrier_id]]];
       goto s0_block89__ba;
     s0_block88__ba:
-      s0_#tmp284 := s0_ol_number < O_OL_CNT;
-      if (s0_#tmp284) {
+      s0_#tmp286 := s0_ol_number < O_OL_CNT;
+      if (s0_#tmp286) {
       goto s0_block89__ba;
     } else {
       goto s0_block91__ba;
     }
     s0_block89__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][0 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][0];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := 0.0000000 + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][0];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := 0.0000000 + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block166__ba;
     s0_block91__ba:
-      s0_#tmp289 := Customer_C_BALANCE[s0_w_id][1][s0_c_id];
-      s0_#tmp290 := s0_#tmp289 + s0_ol_total;
-      Customer_C_BALANCE := Customer_C_BALANCE[s0_w_id := Customer_C_BALANCE[s0_w_id][1 := Customer_C_BALANCE[s0_w_id][1][s0_c_id := s0_#tmp290]]];
-      s0_#tmp291 := Customer_C_DELIVERY_CNT[s0_w_id][1][s0_c_id];
-      s0_#tmp292 := s0_#tmp291 + 1.0000000;
-      Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s0_w_id := Customer_C_DELIVERY_CNT[s0_w_id][1 := Customer_C_DELIVERY_CNT[s0_w_id][1][s0_c_id := s0_#tmp292]]];
+      s0_#tmp291 := Customer_C_BALANCE[s0_w_id][1][s0_c_id];
+      s0_#tmp292 := s0_#tmp291 + s0_ol_total;
+      Customer_C_BALANCE := Customer_C_BALANCE[s0_w_id := Customer_C_BALANCE[s0_w_id][1 := Customer_C_BALANCE[s0_w_id][1][s0_c_id := s0_#tmp292]]];
+      s0_#tmp293 := Customer_C_DELIVERY_CNT[s0_w_id][1][s0_c_id];
+      s0_#tmp294 := s0_#tmp293 + 1.0000000;
+      Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s0_w_id := Customer_C_DELIVERY_CNT[s0_w_id][1 := Customer_C_DELIVERY_CNT[s0_w_id][1][s0_c_id := s0_#tmp294]]];
       goto s0_hop_exit__ba;
     s0_block166__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][1 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][1];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][1];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block167__ba;
     s0_block167__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][2 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][2];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][2];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block168__ba;
     s0_block168__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][3 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][3];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][3];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block169__ba;
     s0_block169__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][4 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][4];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][4];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block170__ba;
     s0_block170__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][5 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][5];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][5];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block171__ba;
     s0_block171__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][6 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][6];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][6];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block172__ba;
     s0_block172__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][7 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][7];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][7];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block173__ba;
     s0_block173__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][8 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][8];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][8];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block174__ba;
     s0_block174__ba:
       Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s0_w_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1 := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id := Order_Line_OL_DELIVERY_DATE[s0_w_id][1][s0_no_o_id][9 := s0_date]]]];
-      s0_#tmp285 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][9];
-      s0_#tmp286 := real(s0_#tmp285);
-      s0_#tmp287 := s0_ol_total + s0_#tmp286;
-      s0_ol_total := s0_#tmp287;
+      s0_#tmp287 := Order_Line_OL_AMOUNT[s0_w_id][1][s0_no_o_id][9];
+      s0_#tmp288 := real(s0_#tmp287);
+      s0_#tmp289 := s0_ol_total + s0_#tmp288;
+      s0_ol_total := s0_#tmp289;
       goto s0_block91__ba;
     s0_hop_exit__ba:
     }

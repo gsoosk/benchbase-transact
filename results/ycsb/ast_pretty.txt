@@ -288,6 +288,7 @@ transaction ReadRecord[f46](keyname[p78]: int[t1]) : (t1) -> t0
   hop
   {
     let r[v0]: Row<UserTable>[t6<tab<UserTable>>] = UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: keyname[t1][p78]][t6<tab<UserTable>>];
+    to_unit[(infer1) -> t10][f43][f43](r[t6<tab<UserTable>>][v0])[t10];
   }
 }
 
@@ -334,6 +335,7 @@ transaction ScanRecord[f50](startKey[p102]: int[t1]) : (t1) -> t0
   hops for i[v4] in 0[t1]..YCSB_SCAN_SIZE[infer1][c2]
   {
     let r[v3]: Row<UserTable>[t6<tab<UserTable>>] = UserTable[t7<tab<UserTable>>][itab0][tab0][ycsb_key: startKey[t1][p102] + [f0]i[t1][v4][t1]][t6<tab<UserTable>>];
+    to_unit[(infer3) -> t10][f43][f43](r[t6<tab<UserTable>>][v3])[t10];
   }
 }
 

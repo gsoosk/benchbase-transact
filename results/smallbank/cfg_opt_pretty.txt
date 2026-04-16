@@ -130,34 +130,34 @@ transaction Amalgamate[fn16](custId0[v21]: int, custId1[v22]: int)
       livein: {custId1[v22], custId0[v21]}
         [stmt_in] livein: {custId0[v21], custId1[v22]}
       s0#bal[v38] = Savings[custId0[v21]].bal;
-        [stmt_out] liveout: {custId0[v21], custId1[v22], s0#bal[v38]}
-        [stmt_in] livein: {custId0[v21], custId1[v22], s0#bal[v38]}
+        [stmt_out] liveout: {s0#bal[v38], custId0[v21], custId1[v22]}
+        [stmt_in] livein: {s0#bal[v38], custId0[v21], custId1[v22]}
       s0#custid[v37] = Savings[custId0[v21]].custid;
-        [stmt_out] liveout: {s0#custid[v37], custId0[v21], custId1[v22], s0#bal[v38]}
-        [stmt_in] livein: {s0#custid[v37], custId0[v21], custId1[v22], s0#bal[v38]}
+        [stmt_out] liveout: {s0#custid[v37], s0#bal[v38], custId0[v21], custId1[v22]}
+        [stmt_in] livein: {s0#custid[v37], s0#bal[v38], custId0[v21], custId1[v22]}
       c0#bal[v42] = Checking[custId0[v21]].bal;
-        [stmt_out] liveout: {c0#bal[v42], s0#bal[v38], s0#custid[v37], custId0[v21], custId1[v22]}
-        [stmt_in] livein: {c0#bal[v42], s0#bal[v38], s0#custid[v37], custId0[v21], custId1[v22]}
+        [stmt_out] liveout: {custId0[v21], s0#custid[v37], custId1[v22], s0#bal[v38], c0#bal[v42]}
+        [stmt_in] livein: {custId0[v21], s0#custid[v37], custId1[v22], s0#bal[v38], c0#bal[v42]}
       c0#custid[v41] = Checking[custId0[v21]].custid;
-        [stmt_out] liveout: {s0#bal[v38], c0#bal[v42], custId1[v22], c0#custid[v41], custId0[v21], s0#custid[v37]}
-        [stmt_in] livein: {s0#bal[v38], c0#bal[v42], custId1[v22], c0#custid[v41], custId0[v21], s0#custid[v37]}
+        [stmt_out] liveout: {custId0[v21], custId1[v22], s0#bal[v38], s0#custid[v37], c0#custid[v41], c0#bal[v42]}
+        [stmt_in] livein: {custId0[v21], custId1[v22], s0#bal[v38], s0#custid[v37], c0#custid[v41], c0#bal[v42]}
       #tmp2[v45] = s0#bal[v38] + c0#bal[v42];
-        [stmt_out] liveout: {#tmp2[v45], custId1[v22], c0#custid[v41], custId0[v21], s0#custid[v37]}
-        [stmt_in] livein: {#tmp2[v45], custId1[v22], c0#custid[v41], custId0[v21], s0#custid[v37]}
+        [stmt_out] liveout: {c0#custid[v41], s0#custid[v37], custId0[v21], custId1[v22], #tmp2[v45]}
+        [stmt_in] livein: {c0#custid[v41], s0#custid[v37], custId0[v21], custId1[v22], #tmp2[v45]}
       total[v44] = #tmp2[v45];
-        [stmt_out] liveout: {s0#custid[v37], custId1[v22], c0#custid[v41], custId0[v21], total[v44]}
-        [stmt_in] livein: {s0#custid[v37], custId1[v22], c0#custid[v41], custId0[v21], total[v44]}
+        [stmt_out] liveout: {custId0[v21], custId1[v22], total[v44], c0#custid[v41], s0#custid[v37]}
+        [stmt_in] livein: {custId0[v21], custId1[v22], total[v44], c0#custid[v41], s0#custid[v37]}
       Savings[custId0[v21]].bal = 0;
-        [stmt_out] liveout: {custId1[v22], s0#custid[v37], total[v44], c0#custid[v41], custId0[v21]}
-        [stmt_in] livein: {custId1[v22], s0#custid[v37], total[v44], c0#custid[v41], custId0[v21]}
+        [stmt_out] liveout: {total[v44], custId0[v21], custId1[v22], c0#custid[v41], s0#custid[v37]}
+        [stmt_in] livein: {total[v44], custId0[v21], custId1[v22], c0#custid[v41], s0#custid[v37]}
       Savings[custId0[v21]].custid = s0#custid[v37];
-        [stmt_out] liveout: {c0#custid[v41], custId1[v22], total[v44], custId0[v21]}
-        [stmt_in] livein: {c0#custid[v41], custId1[v22], total[v44], custId0[v21]}
+        [stmt_out] liveout: {custId0[v21], custId1[v22], c0#custid[v41], total[v44]}
+        [stmt_in] livein: {custId0[v21], custId1[v22], c0#custid[v41], total[v44]}
       Checking[custId0[v21]].bal = 0;
-        [stmt_out] liveout: {custId1[v22], total[v44], c0#custid[v41], custId0[v21]}
-        [stmt_in] livein: {custId1[v22], total[v44], c0#custid[v41], custId0[v21]}
+        [stmt_out] liveout: {custId0[v21], custId1[v22], total[v44], c0#custid[v41]}
+        [stmt_in] livein: {custId0[v21], custId1[v22], total[v44], c0#custid[v41]}
       Checking[custId0[v21]].custid = c0#custid[v41];
-        [stmt_out] liveout: {custId1[v22], total[v44]}
+        [stmt_out] liveout: {total[v44], custId1[v22]}
       hop_exit hop2;
       liveout: {custId1[v22], total[v44]}
   }
@@ -165,23 +165,23 @@ transaction Amalgamate[fn16](custId0[v21]: int, custId1[v22]: int)
   hop2 {
     entry_block: bb2
     bb2 (preds: bb1):
-      livein: {total[v44], custId1[v22]}
-        [stmt_in] livein: {custId1[v22], total[v44]}
+      livein: {custId1[v22], total[v44]}
+        [stmt_in] livein: {total[v44], custId1[v22]}
       c1#bal[v48] = Checking[custId1[v22]].bal;
-        [stmt_out] liveout: {total[v44], c1#bal[v48], custId1[v22]}
-        [stmt_in] livein: {total[v44], c1#bal[v48], custId1[v22]}
+        [stmt_out] liveout: {custId1[v22], total[v44], c1#bal[v48]}
+        [stmt_in] livein: {custId1[v22], total[v44], c1#bal[v48]}
       c1#custid[v47] = Checking[custId1[v22]].custid;
-        [stmt_out] liveout: {c1#bal[v48], c1#custid[v47], custId1[v22], total[v44]}
-        [stmt_in] livein: {c1#bal[v48], c1#custid[v47], custId1[v22], total[v44]}
+        [stmt_out] liveout: {c1#custid[v47], c1#bal[v48], total[v44], custId1[v22]}
+        [stmt_in] livein: {c1#custid[v47], c1#bal[v48], total[v44], custId1[v22]}
       #tmp4[v50] = c1#bal[v48] + total[v44];
         [stmt_out] liveout: {custId1[v22], c1#custid[v47], #tmp4[v50]}
         [stmt_in] livein: {custId1[v22], c1#custid[v47], #tmp4[v50]}
       c1#bal[v48] = #tmp4[v50];
-        [stmt_out] liveout: {c1#bal[v48], custId1[v22], c1#custid[v47]}
-        [stmt_in] livein: {c1#bal[v48], custId1[v22], c1#custid[v47]}
+        [stmt_out] liveout: {c1#custid[v47], c1#bal[v48], custId1[v22]}
+        [stmt_in] livein: {c1#custid[v47], c1#bal[v48], custId1[v22]}
       Checking[custId1[v22]].bal = c1#bal[v48];
-        [stmt_out] liveout: {custId1[v22], c1#custid[v47]}
-        [stmt_in] livein: {custId1[v22], c1#custid[v47]}
+        [stmt_out] liveout: {c1#custid[v47], custId1[v22]}
+        [stmt_in] livein: {c1#custid[v47], custId1[v22]}
       Checking[custId1[v22]].custid = c1#custid[v47];
         [stmt_out] liveout: {}
       return;
@@ -197,7 +197,31 @@ transaction Balance[fn17](custId[v23]: int)
   hop3 {
     entry_block: bb3
     bb3:
-      livein: {}
+      livein: {custId[v23]}
+        [stmt_in] livein: {custId[v23]}
+      #tmp5[v54] = Accounts[custId[v23]];
+        [stmt_out] liveout: {custId[v23], #tmp5[v54]}
+        [stmt_in] livein: {custId[v23], #tmp5[v54]}
+      a[v51] = #tmp5[v54];
+        [stmt_out] liveout: {custId[v23], a[v51]}
+        [stmt_in] livein: {custId[v23], a[v51]}
+      #tmp6[v55] = to_unit[fn13](a[v51]);
+        [stmt_out] liveout: {custId[v23]}
+        [stmt_in] livein: {custId[v23]}
+      s#bal[v58] = Savings[custId[v23]].bal;
+        [stmt_out] liveout: {custId[v23], s#bal[v58]}
+        [stmt_in] livein: {custId[v23], s#bal[v58]}
+      c#bal[v62] = Checking[custId[v23]].bal;
+        [stmt_out] liveout: {s#bal[v58], c#bal[v62]}
+        [stmt_in] livein: {s#bal[v58], c#bal[v62]}
+      #tmp9[v65] = s#bal[v58] + c#bal[v62];
+        [stmt_out] liveout: {#tmp9[v65]}
+        [stmt_in] livein: {#tmp9[v65]}
+      total[v64] = #tmp9[v65];
+        [stmt_out] liveout: {total[v64]}
+        [stmt_in] livein: {total[v64]}
+      #tmp10[v66] = to_unit[fn13](total[v64]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -211,24 +235,33 @@ transaction DepositChecking[fn18](custId[v24]: int, amount[v25]: float)
   hop4 {
     entry_block: bb4
     bb4:
-      livein: {custId[v24], amount[v25]}
+      livein: {amount[v25], custId[v24]}
+        [stmt_in] livein: {custId[v24], amount[v25]}
+      #tmp11[v70] = Accounts[custId[v24]];
+        [stmt_out] liveout: {#tmp11[v70], amount[v25], custId[v24]}
+        [stmt_in] livein: {#tmp11[v70], amount[v25], custId[v24]}
+      a[v67] = #tmp11[v70];
+        [stmt_out] liveout: {a[v67], custId[v24], amount[v25]}
+        [stmt_in] livein: {a[v67], custId[v24], amount[v25]}
+      #tmp12[v71] = to_unit[fn13](a[v67]);
+        [stmt_out] liveout: {amount[v25], custId[v24]}
         [stmt_in] livein: {amount[v25], custId[v24]}
-      c#bal[v71] = Checking[custId[v24]].bal;
-        [stmt_out] liveout: {c#bal[v71], amount[v25], custId[v24]}
-        [stmt_in] livein: {c#bal[v71], amount[v25], custId[v24]}
-      c#custid[v70] = Checking[custId[v24]].custid;
-        [stmt_out] liveout: {amount[v25], c#custid[v70], custId[v24], c#bal[v71]}
-        [stmt_in] livein: {amount[v25], c#custid[v70], custId[v24], c#bal[v71]}
-      #tmp11[v73] = c#bal[v71] + amount[v25];
-        [stmt_out] liveout: {custId[v24], c#custid[v70], #tmp11[v73]}
-        [stmt_in] livein: {custId[v24], c#custid[v70], #tmp11[v73]}
-      c#bal[v71] = #tmp11[v73];
-        [stmt_out] liveout: {c#bal[v71], c#custid[v70], custId[v24]}
-        [stmt_in] livein: {c#bal[v71], c#custid[v70], custId[v24]}
-      Checking[custId[v24]].bal = c#bal[v71];
-        [stmt_out] liveout: {c#custid[v70], custId[v24]}
-        [stmt_in] livein: {c#custid[v70], custId[v24]}
-      Checking[custId[v24]].custid = c#custid[v70];
+      c#bal[v74] = Checking[custId[v24]].bal;
+        [stmt_out] liveout: {amount[v25], custId[v24], c#bal[v74]}
+        [stmt_in] livein: {amount[v25], custId[v24], c#bal[v74]}
+      c#custid[v73] = Checking[custId[v24]].custid;
+        [stmt_out] liveout: {amount[v25], c#bal[v74], c#custid[v73], custId[v24]}
+        [stmt_in] livein: {amount[v25], c#bal[v74], c#custid[v73], custId[v24]}
+      #tmp14[v76] = c#bal[v74] + amount[v25];
+        [stmt_out] liveout: {custId[v24], #tmp14[v76], c#custid[v73]}
+        [stmt_in] livein: {custId[v24], #tmp14[v76], c#custid[v73]}
+      c#bal[v74] = #tmp14[v76];
+        [stmt_out] liveout: {c#bal[v74], c#custid[v73], custId[v24]}
+        [stmt_in] livein: {c#bal[v74], c#custid[v73], custId[v24]}
+      Checking[custId[v24]].bal = c#bal[v74];
+        [stmt_out] liveout: {custId[v24], c#custid[v73]}
+        [stmt_in] livein: {custId[v24], c#custid[v73]}
+      Checking[custId[v24]].custid = c#custid[v73];
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -243,27 +276,27 @@ transaction SendPayment[fn19](sendAcct[v26]: int, destAcct[v27]: int, amount[v28
   hop5 {
     entry_block: bb5
     bb5:
-      livein: {sendAcct[v26], destAcct[v27], amount[v28]}
-        [stmt_in] livein: {amount[v28], destAcct[v27], sendAcct[v26]}
-      c0#bal[v76] = Checking[sendAcct[v26]].bal;
-        [stmt_out] liveout: {destAcct[v27], sendAcct[v26], c0#bal[v76], amount[v28]}
-        [stmt_in] livein: {destAcct[v27], sendAcct[v26], c0#bal[v76], amount[v28]}
-      c0#custid[v75] = Checking[sendAcct[v26]].custid;
-        [stmt_out] liveout: {amount[v28], destAcct[v27], c0#custid[v75], c0#bal[v76], sendAcct[v26]}
-        [stmt_in] livein: {amount[v28], destAcct[v27], c0#custid[v75], c0#bal[v76], sendAcct[v26]}
-      #tmp13[v78] = c0#bal[v76] - amount[v28];
-        [stmt_out] liveout: {amount[v28], c0#custid[v75], sendAcct[v26], destAcct[v27], #tmp13[v78]}
-        [stmt_in] livein: {amount[v28], c0#custid[v75], sendAcct[v26], destAcct[v27], #tmp13[v78]}
-      c0#bal[v76] = #tmp13[v78];
-        [stmt_out] liveout: {destAcct[v27], c0#custid[v75], amount[v28], c0#bal[v76], sendAcct[v26]}
-        [stmt_in] livein: {destAcct[v27], c0#custid[v75], amount[v28], c0#bal[v76], sendAcct[v26]}
-      Checking[sendAcct[v26]].bal = c0#bal[v76];
-        [stmt_out] liveout: {destAcct[v27], c0#custid[v75], amount[v28], sendAcct[v26]}
-        [stmt_in] livein: {destAcct[v27], c0#custid[v75], amount[v28], sendAcct[v26]}
-      Checking[sendAcct[v26]].custid = c0#custid[v75];
+      livein: {amount[v28], destAcct[v27], sendAcct[v26]}
+        [stmt_in] livein: {destAcct[v27], sendAcct[v26], amount[v28]}
+      c0#bal[v79] = Checking[sendAcct[v26]].bal;
+        [stmt_out] liveout: {sendAcct[v26], c0#bal[v79], amount[v28], destAcct[v27]}
+        [stmt_in] livein: {sendAcct[v26], c0#bal[v79], amount[v28], destAcct[v27]}
+      c0#custid[v78] = Checking[sendAcct[v26]].custid;
+        [stmt_out] liveout: {c0#custid[v78], c0#bal[v79], amount[v28], sendAcct[v26], destAcct[v27]}
+        [stmt_in] livein: {c0#custid[v78], c0#bal[v79], amount[v28], sendAcct[v26], destAcct[v27]}
+      #tmp16[v81] = c0#bal[v79] - amount[v28];
+        [stmt_out] liveout: {destAcct[v27], #tmp16[v81], c0#custid[v78], sendAcct[v26], amount[v28]}
+        [stmt_in] livein: {destAcct[v27], #tmp16[v81], c0#custid[v78], sendAcct[v26], amount[v28]}
+      c0#bal[v79] = #tmp16[v81];
+        [stmt_out] liveout: {c0#bal[v79], sendAcct[v26], amount[v28], destAcct[v27], c0#custid[v78]}
+        [stmt_in] livein: {c0#bal[v79], sendAcct[v26], amount[v28], destAcct[v27], c0#custid[v78]}
+      Checking[sendAcct[v26]].bal = c0#bal[v79];
+        [stmt_out] liveout: {c0#custid[v78], sendAcct[v26], destAcct[v27], amount[v28]}
+        [stmt_in] livein: {c0#custid[v78], sendAcct[v26], destAcct[v27], amount[v28]}
+      Checking[sendAcct[v26]].custid = c0#custid[v78];
         [stmt_out] liveout: {amount[v28], destAcct[v27]}
       hop_exit hop6;
-      liveout: {destAcct[v27], amount[v28]}
+      liveout: {amount[v28], destAcct[v27]}
   }
 
   hop6 {
@@ -271,22 +304,22 @@ transaction SendPayment[fn19](sendAcct[v26]: int, destAcct[v27]: int, amount[v28
     bb6 (preds: bb5):
       livein: {amount[v28], destAcct[v27]}
         [stmt_in] livein: {destAcct[v27], amount[v28]}
-      c1#bal[v81] = Checking[destAcct[v27]].bal;
-        [stmt_out] liveout: {destAcct[v27], amount[v28], c1#bal[v81]}
-        [stmt_in] livein: {destAcct[v27], amount[v28], c1#bal[v81]}
-      c1#custid[v80] = Checking[destAcct[v27]].custid;
-        [stmt_out] liveout: {destAcct[v27], amount[v28], c1#bal[v81], c1#custid[v80]}
-        [stmt_in] livein: {destAcct[v27], amount[v28], c1#bal[v81], c1#custid[v80]}
-      #tmp15[v83] = c1#bal[v81] + amount[v28];
-        [stmt_out] liveout: {#tmp15[v83], destAcct[v27], c1#custid[v80]}
-        [stmt_in] livein: {#tmp15[v83], destAcct[v27], c1#custid[v80]}
-      c1#bal[v81] = #tmp15[v83];
-        [stmt_out] liveout: {destAcct[v27], c1#bal[v81], c1#custid[v80]}
-        [stmt_in] livein: {destAcct[v27], c1#bal[v81], c1#custid[v80]}
-      Checking[destAcct[v27]].bal = c1#bal[v81];
-        [stmt_out] liveout: {c1#custid[v80], destAcct[v27]}
-        [stmt_in] livein: {c1#custid[v80], destAcct[v27]}
-      Checking[destAcct[v27]].custid = c1#custid[v80];
+      c1#bal[v84] = Checking[destAcct[v27]].bal;
+        [stmt_out] liveout: {destAcct[v27], c1#bal[v84], amount[v28]}
+        [stmt_in] livein: {destAcct[v27], c1#bal[v84], amount[v28]}
+      c1#custid[v83] = Checking[destAcct[v27]].custid;
+        [stmt_out] liveout: {amount[v28], destAcct[v27], c1#custid[v83], c1#bal[v84]}
+        [stmt_in] livein: {amount[v28], destAcct[v27], c1#custid[v83], c1#bal[v84]}
+      #tmp18[v86] = c1#bal[v84] + amount[v28];
+        [stmt_out] liveout: {#tmp18[v86], c1#custid[v83], destAcct[v27]}
+        [stmt_in] livein: {#tmp18[v86], c1#custid[v83], destAcct[v27]}
+      c1#bal[v84] = #tmp18[v86];
+        [stmt_out] liveout: {destAcct[v27], c1#custid[v83], c1#bal[v84]}
+        [stmt_in] livein: {destAcct[v27], c1#custid[v83], c1#bal[v84]}
+      Checking[destAcct[v27]].bal = c1#bal[v84];
+        [stmt_out] liveout: {c1#custid[v83], destAcct[v27]}
+        [stmt_in] livein: {c1#custid[v83], destAcct[v27]}
+      Checking[destAcct[v27]].custid = c1#custid[v83];
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -303,22 +336,31 @@ transaction TransactSavings[fn20](custId[v29]: int, amount[v30]: float)
     bb7:
       livein: {custId[v29], amount[v30]}
         [stmt_in] livein: {amount[v30], custId[v29]}
-      s#bal[v90] = Savings[custId[v29]].bal;
-        [stmt_out] liveout: {amount[v30], custId[v29], s#bal[v90]}
-        [stmt_in] livein: {amount[v30], custId[v29], s#bal[v90]}
-      s#custid[v89] = Savings[custId[v29]].custid;
-        [stmt_out] liveout: {amount[v30], s#bal[v90], s#custid[v89], custId[v29]}
-        [stmt_in] livein: {amount[v30], s#bal[v90], s#custid[v89], custId[v29]}
-      #tmp18[v92] = s#bal[v90] - amount[v30];
-        [stmt_out] liveout: {s#custid[v89], #tmp18[v92], custId[v29]}
-        [stmt_in] livein: {s#custid[v89], #tmp18[v92], custId[v29]}
-      s#bal[v90] = #tmp18[v92];
-        [stmt_out] liveout: {custId[v29], s#custid[v89], s#bal[v90]}
-        [stmt_in] livein: {custId[v29], s#custid[v89], s#bal[v90]}
-      Savings[custId[v29]].bal = s#bal[v90];
-        [stmt_out] liveout: {s#custid[v89], custId[v29]}
-        [stmt_in] livein: {s#custid[v89], custId[v29]}
-      Savings[custId[v29]].custid = s#custid[v89];
+      #tmp19[v90] = Accounts[custId[v29]];
+        [stmt_out] liveout: {#tmp19[v90], custId[v29], amount[v30]}
+        [stmt_in] livein: {#tmp19[v90], custId[v29], amount[v30]}
+      a[v87] = #tmp19[v90];
+        [stmt_out] liveout: {a[v87], amount[v30], custId[v29]}
+        [stmt_in] livein: {a[v87], amount[v30], custId[v29]}
+      #tmp20[v91] = to_unit[fn13](a[v87]);
+        [stmt_out] liveout: {amount[v30], custId[v29]}
+        [stmt_in] livein: {amount[v30], custId[v29]}
+      s#bal[v94] = Savings[custId[v29]].bal;
+        [stmt_out] liveout: {s#bal[v94], custId[v29], amount[v30]}
+        [stmt_in] livein: {s#bal[v94], custId[v29], amount[v30]}
+      s#custid[v93] = Savings[custId[v29]].custid;
+        [stmt_out] liveout: {s#custid[v93], amount[v30], custId[v29], s#bal[v94]}
+        [stmt_in] livein: {s#custid[v93], amount[v30], custId[v29], s#bal[v94]}
+      #tmp22[v96] = s#bal[v94] - amount[v30];
+        [stmt_out] liveout: {custId[v29], #tmp22[v96], s#custid[v93]}
+        [stmt_in] livein: {custId[v29], #tmp22[v96], s#custid[v93]}
+      s#bal[v94] = #tmp22[v96];
+        [stmt_out] liveout: {custId[v29], s#custid[v93], s#bal[v94]}
+        [stmt_in] livein: {custId[v29], s#custid[v93], s#bal[v94]}
+      Savings[custId[v29]].bal = s#bal[v94];
+        [stmt_out] liveout: {custId[v29], s#custid[v93]}
+        [stmt_in] livein: {custId[v29], s#custid[v93]}
+      Savings[custId[v29]].custid = s#custid[v93];
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -333,60 +375,60 @@ transaction WriteCheck[fn21](custId[v31]: int, amount[v32]: float)
   hop8 {
     entry_block: bb8
     bb8:
-      livein: {custId[v31], amount[v32]}
-        [stmt_in] livein: {amount[v32], custId[v31]}
-      s#bal[v95] = Savings[custId[v31]].bal;
-        [stmt_out] liveout: {s#bal[v95], amount[v32], custId[v31]}
-        [stmt_in] livein: {s#bal[v95], amount[v32], custId[v31]}
-      c#bal[v99] = Checking[custId[v31]].bal;
-        [stmt_out] liveout: {s#bal[v95], custId[v31], amount[v32], c#bal[v99]}
-        [stmt_in] livein: {s#bal[v95], custId[v31], amount[v32], c#bal[v99]}
-      c#custid[v98] = Checking[custId[v31]].custid;
-        [stmt_out] liveout: {amount[v32], custId[v31], s#bal[v95], c#custid[v98], c#bal[v99]}
-        [stmt_in] livein: {amount[v32], custId[v31], s#bal[v95], c#custid[v98], c#bal[v99]}
-      #tmp21[v102] = s#bal[v95] + c#bal[v99];
-        [stmt_out] liveout: {c#bal[v99], #tmp21[v102], amount[v32], custId[v31], c#custid[v98]}
-        [stmt_in] livein: {c#bal[v99], #tmp21[v102], amount[v32], custId[v31], c#custid[v98]}
-      total[v101] = #tmp21[v102];
-        [stmt_out] liveout: {amount[v32], total[v101], c#bal[v99], custId[v31], c#custid[v98]}
-        [stmt_in] livein: {amount[v32], total[v101], c#bal[v99], custId[v31], c#custid[v98]}
-      #tmp22[v103] = total[v101] < amount[v32];
-        [stmt_out] liveout: {#tmp22[v103], amount[v32], c#bal[v99], c#custid[v98], custId[v31]}
-      branch #tmp22[v103] ? bb9 : bb11;
-      liveout: {custId[v31], c#bal[v99], amount[v32], c#custid[v98]}
+      livein: {amount[v32], custId[v31]}
+        [stmt_in] livein: {custId[v31], amount[v32]}
+      s#bal[v99] = Savings[custId[v31]].bal;
+        [stmt_out] liveout: {custId[v31], amount[v32], s#bal[v99]}
+        [stmt_in] livein: {custId[v31], amount[v32], s#bal[v99]}
+      c#bal[v103] = Checking[custId[v31]].bal;
+        [stmt_out] liveout: {s#bal[v99], custId[v31], amount[v32], c#bal[v103]}
+        [stmt_in] livein: {s#bal[v99], custId[v31], amount[v32], c#bal[v103]}
+      c#custid[v102] = Checking[custId[v31]].custid;
+        [stmt_out] liveout: {custId[v31], s#bal[v99], amount[v32], c#custid[v102], c#bal[v103]}
+        [stmt_in] livein: {custId[v31], s#bal[v99], amount[v32], c#custid[v102], c#bal[v103]}
+      #tmp25[v106] = s#bal[v99] + c#bal[v103];
+        [stmt_out] liveout: {c#bal[v103], custId[v31], amount[v32], c#custid[v102], #tmp25[v106]}
+        [stmt_in] livein: {c#bal[v103], custId[v31], amount[v32], c#custid[v102], #tmp25[v106]}
+      total[v105] = #tmp25[v106];
+        [stmt_out] liveout: {total[v105], c#custid[v102], custId[v31], amount[v32], c#bal[v103]}
+        [stmt_in] livein: {total[v105], c#custid[v102], custId[v31], amount[v32], c#bal[v103]}
+      #tmp26[v107] = total[v105] < amount[v32];
+        [stmt_out] liveout: {#tmp26[v107], c#bal[v103], custId[v31], amount[v32], c#custid[v102]}
+      branch #tmp26[v107] ? bb9 : bb11;
+      liveout: {c#bal[v103], amount[v32], custId[v31], c#custid[v102]}
     bb9 (preds: bb8):
-      livein: {c#bal[v99], amount[v32], c#custid[v98], custId[v31]}
-        [stmt_in] livein: {c#bal[v99], amount[v32], c#custid[v98], custId[v31]}
-      #tmp23[v104] = c#bal[v99] - amount[v32];
-        [stmt_out] liveout: {custId[v31], c#custid[v98], #tmp23[v104]}
-        [stmt_in] livein: {custId[v31], c#custid[v98], #tmp23[v104]}
-      #tmp24[v105] = #tmp23[v104] - 1;
-        [stmt_out] liveout: {custId[v31], #tmp24[v105], c#custid[v98]}
-        [stmt_in] livein: {custId[v31], #tmp24[v105], c#custid[v98]}
-      c#bal[v99] = #tmp24[v105];
-        [stmt_out] liveout: {c#custid[v98], custId[v31], c#bal[v99]}
+      livein: {c#custid[v102], custId[v31], amount[v32], c#bal[v103]}
+        [stmt_in] livein: {custId[v31], c#custid[v102], amount[v32], c#bal[v103]}
+      #tmp27[v108] = c#bal[v103] - amount[v32];
+        [stmt_out] liveout: {custId[v31], c#custid[v102], #tmp27[v108]}
+        [stmt_in] livein: {custId[v31], c#custid[v102], #tmp27[v108]}
+      #tmp28[v109] = #tmp27[v108] - 1;
+        [stmt_out] liveout: {custId[v31], c#custid[v102], #tmp28[v109]}
+        [stmt_in] livein: {custId[v31], c#custid[v102], #tmp28[v109]}
+      c#bal[v103] = #tmp28[v109];
+        [stmt_out] liveout: {c#bal[v103], custId[v31], c#custid[v102]}
       jump bb10;
-      liveout: {c#bal[v99], c#custid[v98], custId[v31]}
+      liveout: {custId[v31], c#custid[v102], c#bal[v103]}
     bb10 (preds: bb9, bb11):
-      livein: {c#custid[v98], custId[v31], c#bal[v99]}
-        [stmt_in] livein: {custId[v31], c#custid[v98], c#bal[v99]}
-      Checking[custId[v31]].bal = c#bal[v99];
-        [stmt_out] liveout: {custId[v31], c#custid[v98]}
-        [stmt_in] livein: {custId[v31], c#custid[v98]}
-      Checking[custId[v31]].custid = c#custid[v98];
+      livein: {c#custid[v102], custId[v31], c#bal[v103]}
+        [stmt_in] livein: {c#custid[v102], custId[v31], c#bal[v103]}
+      Checking[custId[v31]].bal = c#bal[v103];
+        [stmt_out] liveout: {c#custid[v102], custId[v31]}
+        [stmt_in] livein: {c#custid[v102], custId[v31]}
+      Checking[custId[v31]].custid = c#custid[v102];
         [stmt_out] liveout: {}
       return;
       liveout: {}
     bb11 (preds: bb8):
-      livein: {c#custid[v98], custId[v31], c#bal[v99], amount[v32]}
-        [stmt_in] livein: {amount[v32], custId[v31], c#bal[v99], c#custid[v98]}
-      #tmp25[v106] = c#bal[v99] - amount[v32];
-        [stmt_out] liveout: {custId[v31], #tmp25[v106], c#custid[v98]}
-        [stmt_in] livein: {custId[v31], #tmp25[v106], c#custid[v98]}
-      c#bal[v99] = #tmp25[v106];
-        [stmt_out] liveout: {c#custid[v98], custId[v31], c#bal[v99]}
+      livein: {custId[v31], c#custid[v102], c#bal[v103], amount[v32]}
+        [stmt_in] livein: {c#custid[v102], amount[v32], c#bal[v103], custId[v31]}
+      #tmp29[v110] = c#bal[v103] - amount[v32];
+        [stmt_out] liveout: {c#custid[v102], custId[v31], #tmp29[v110]}
+        [stmt_in] livein: {c#custid[v102], custId[v31], #tmp29[v110]}
+      c#bal[v103] = #tmp29[v110];
+        [stmt_out] liveout: {c#custid[v102], c#bal[v103], custId[v31]}
       jump bb10;
-      liveout: {custId[v31], c#bal[v99], c#custid[v98]}
+      liveout: {c#custid[v102], custId[v31], c#bal[v103]}
   }
 
 }

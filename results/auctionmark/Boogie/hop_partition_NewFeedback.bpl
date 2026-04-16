@@ -205,71 +205,71 @@ axiom (forall
     <==>
     (uw_u_id_1 == uw_u_id_2 && uw_i_id_1 == uw_i_id_2 && uw_i_u_id_1 == uw_i_u_id_2)
 );
-var USERACCT_u_r_id : [int]int;
-var ITEM_BID_ib_buyer_id : [int][int][int]int;
-var USERACCT_FEEDBACK_uf_from_id : [int][int][int][int]int;
-const TBL_ITEM : Table (ITEM);
-const __slice__ : int;
-var USERACCT_WATCH_uw_i_id : [int][int][int]int;
-var ITEM_i_end_date : [int][int]int;
-var USERACCT_u_sattr4 : [int]String;
-var ITEM_MAX_BID_imb_i_id : [int][int]int;
-var ITEM_MAX_BID_imb_ib_u_id : [int][int]int;
-var USERACCT_u_sattr2 : [int]String;
-var USERACCT_u_balance : [int]real;
-var USERACCT_ITEM_ui_i_id : [int][int][int]int;
-var ITEM_i_u_id : [int][int]int;
-var USERACCT_u_id : [int]int;
-const ITEM_STATUS_OPEN : int;
-var USERACCT_u_sattr3 : [int]String;
-const TBL_ITEM_MAX_BID : Table (ITEM_MAX_BID);
-var ITEM_BID_ib_i_id : [int][int][int]int;
-var USERACCT_u_sattr1 : [int]String;
-var USERACCT_ITEM_ui_i_u_id : [int][int][int]int;
-var ITEM_MAX_BID_imb_u_id : [int][int]int;
-var ITEM_i_name : [int][int]String;
+var ITEM_i_num_comments : [int][int]int;
 var USERACCT_FEEDBACK_uf_u_id : [int][int][int][int]int;
-const TBL_ITEM_BID : Table (ITEM_BID);
-var ITEM_i_c_id : [int][int]int;
-var USERACCT_WATCH_uw_i_u_id : [int][int][int]int;
-var ITEM_MAX_BID_imb_ib_i_id : [int][int]int;
-var ITEM_BID_ib_id : [int][int][int]int;
+var USERACCT_u_sattr2 : [int]String;
+var USERACCT_u_r_id : [int]int;
+const TBL_ITEM : Table (ITEM);
+var REGION_r_id : [int]int;
+const ITEM_STATUS_CLOSED : int;
+var ITEM_i_name : [int][int]String;
+var ITEM_i_status : [int][int]int;
+var USERACCT_u_balance : [int]real;
+var ITEM_BID_ib_u_id : [int][int][int]int;
+const __shards__ : int;
+var USERACCT_u_comments : [int]int;
+var USERACCT_u_sattr1 : [int]String;
+var USERACCT_WATCH_uw_u_id : [int][int][int]int;
 var ITEM_i_current_price : [int][int]real;
 var USERACCT_FEEDBACK_uf_i_u_id : [int][int][int][int]int;
-var REGION_r_name : [int]String;
-var USERACCT_u_rating : [int]int;
+const TBL_ITEM_MAX_BID : Table (ITEM_MAX_BID);
+var ITEM_COMMENT_ic_u_id : [int][int][int]int;
+var ITEM_MAX_BID_imb_u_id : [int][int]int;
+var ITEM_MAX_BID_imb_ib_i_id : [int][int]int;
+var USERACCT_FEEDBACK_uf_from_id : [int][int][int][int]int;
+const TBL_ITEM_BID : Table (ITEM_BID);
+var USERACCT_u_sattr4 : [int]String;
+var ITEM_MAX_BID_imb_ib_u_id : [int][int]int;
+var ITEM_MAX_BID_imb_i_id : [int][int]int;
+const ITEM_STATUS_OPEN : int;
+var USERACCT_u_sattr3 : [int]String;
+const TBL_ITEM_COMMENT : Table (ITEM_COMMENT);
 var ITEM_MAX_BID_imb_ib_id : [int][int]int;
-const TBL_USERACCT_ITEM : Table (USERACCT_ITEM);
-const ITEM_STATUS_CLOSED : int;
-var ITEM_BID_ib_u_id : [int][int][int]int;
 var ITEM_BID_ib_max_bid : [int][int][int]real;
-const TBL_USERACCT_FEEDBACK : Table (USERACCT_FEEDBACK);
+var ITEM_i_c_id : [int][int]int;
+var ITEM_BID_ib_bid : [int][int][int]real;
+var REGION_r_name : [int]String;
+var ITEM_BID_ib_id : [int][int][int]int;
+var USERACCT_ITEM_ui_i_u_id : [int][int][int]int;
+var ITEM_COMMENT_ic_response : [int][int][int]String;
 var USERACCT_FEEDBACK_uf_rating : [int][int][int][int]int;
 var ITEM_i_id : [int][int]int;
-var USERACCT_u_sattr0 : [int]String;
-const TBL_USERACCT_WATCH : Table (USERACCT_WATCH);
-var REGION_r_id : [int]int;
-var ITEM_COMMENT_ic_i_id : [int][int][int]int;
-var ITEM_COMMENT_ic_response : [int][int][int]String;
-var ITEM_i_initial_price : [int][int]real;
-var USERACCT_WATCH_uw_u_id : [int][int][int]int;
-const TBL_REGION : Table (REGION);
-var ITEM_i_start_date : [int][int]int;
-var USERACCT_ITEM_ui_u_id : [int][int][int]int;
-var ITEM_BID_ib_bid : [int][int][int]real;
-var ITEM_COMMENT_ic_u_id : [int][int][int]int;
-var ITEM_COMMENT_ic_question : [int][int][int]String;
-var USERACCT_FEEDBACK_uf_i_id : [int][int][int][int]int;
-var ITEM_COMMENT_ic_buyer_id : [int][int][int]int;
-const TBL_ITEM_COMMENT : Table (ITEM_COMMENT);
-var ITEM_i_status : [int][int]int;
-var ITEM_COMMENT_ic_id : [int][int][int]int;
-var ITEM_i_num_bids : [int][int]int;
 const ITEM_STATUS_WAITING_FOR_PURCHASE : int;
-var USERACCT_u_comments : [int]int;
-const __shards__ : int;
-var ITEM_i_num_comments : [int][int]int;
 const TBL_USERACCT : Table (USERACCT);
+var USERACCT_u_sattr0 : [int]String;
+const TBL_REGION : Table (REGION);
+var ITEM_i_u_id : [int][int]int;
+var USERACCT_ITEM_ui_u_id : [int][int][int]int;
+var ITEM_i_num_bids : [int][int]int;
+var ITEM_i_start_date : [int][int]int;
+var USERACCT_u_id : [int]int;
+var USERACCT_ITEM_ui_i_id : [int][int][int]int;
+var ITEM_COMMENT_ic_i_id : [int][int][int]int;
+const TBL_USERACCT_ITEM : Table (USERACCT_ITEM);
+var USERACCT_u_rating : [int]int;
+var ITEM_i_initial_price : [int][int]real;
+var ITEM_i_end_date : [int][int]int;
+var ITEM_COMMENT_ic_id : [int][int][int]int;
+var USERACCT_WATCH_uw_i_id : [int][int][int]int;
+var USERACCT_FEEDBACK_uf_i_id : [int][int][int][int]int;
+var USERACCT_WATCH_uw_i_u_id : [int][int][int]int;
+var ITEM_COMMENT_ic_buyer_id : [int][int][int]int;
+const TBL_USERACCT_FEEDBACK : Table (USERACCT_FEEDBACK);
+var ITEM_COMMENT_ic_question : [int][int][int]String;
+const TBL_USERACCT_WATCH : Table (USERACCT_WATCH);
+var ITEM_BID_ib_buyer_id : [int][int][int]int;
+var ITEM_BID_ib_i_id : [int][int][int]int;
+const __slice__ : int;
 procedure verify_hop_partitions_NewFeedback(from_id: int, to_id: int, item_id: int, seller_id: int, rating: int)
 modifies USERACCT_FEEDBACK_uf_rating, USERACCT_u_balance, USERACCT_u_comments, USERACCT_u_id, USERACCT_u_r_id, USERACCT_u_rating, USERACCT_u_sattr0, USERACCT_u_sattr1, USERACCT_u_sattr2, USERACCT_u_sattr3, USERACCT_u_sattr4;
 {
@@ -288,73 +288,73 @@ modifies USERACCT_FEEDBACK_uf_rating, USERACCT_u_balance, USERACCT_u_comments, U
   var s11_u#u_sattr2 : String;
   var s11_u#u_sattr3 : String;
   var s11_u#u_sattr4 : String;
-  var s11_#tmp25 : int;
+  var s11_#tmp33 : int;
 
   // Hop partition verification for function 'NewFeedback'
   s11_block15:
     USERACCT_FEEDBACK_uf_rating := USERACCT_FEEDBACK_uf_rating[s11_to_id := USERACCT_FEEDBACK_uf_rating[s11_to_id][s11_item_id := USERACCT_FEEDBACK_uf_rating[s11_to_id][s11_item_id][s11_seller_id := USERACCT_FEEDBACK_uf_rating[s11_to_id][s11_item_id][s11_seller_id][s11_from_id := s11_rating]]]];
     s11_u#u_balance := USERACCT_u_balance[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_comments := USERACCT_u_comments[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_id := USERACCT_u_id[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_r_id := USERACCT_u_r_id[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_rating := USERACCT_u_rating[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_sattr0 := USERACCT_u_sattr0[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_sattr1 := USERACCT_u_sattr1[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_sattr2 := USERACCT_u_sattr2[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_sattr3 := USERACCT_u_sattr3[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     s11_u#u_sattr4 := USERACCT_u_sattr4[s11_to_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12441, end: 12462, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12441) (end . 12462) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
-    s11_#tmp25 := s11_u#u_rating + s11_rating;
-    s11_u#u_rating := s11_#tmp25;
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12636, end: 12657, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12636) (end . 12657) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+    s11_#tmp33 := s11_u#u_rating + s11_rating;
+    s11_u#u_rating := s11_#tmp33;
     USERACCT_u_balance := USERACCT_u_balance[s11_to_id := s11_u#u_balance];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_comments := USERACCT_u_comments[s11_to_id := s11_u#u_comments];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_id := USERACCT_u_id[s11_to_id := s11_u#u_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_r_id := USERACCT_u_r_id[s11_to_id := s11_u#u_r_id];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_rating := USERACCT_u_rating[s11_to_id := s11_u#u_rating];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_sattr0 := USERACCT_u_sattr0[s11_to_id := s11_u#u_sattr0];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_sattr1 := USERACCT_u_sattr1[s11_to_id := s11_u#u_sattr1];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_sattr2 := USERACCT_u_sattr2[s11_to_id := s11_u#u_sattr2];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_sattr3 := USERACCT_u_sattr3[s11_to_id := s11_u#u_sattr3];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     USERACCT_u_sattr4 := USERACCT_u_sattr4[s11_to_id := s11_u#u_sattr4];
-  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12243, end: 12407, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12514, end: 12539, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12514) (end . 12539) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
+  // Partition check hop 11 func 'p_user' tables 'USERACCT_FEEDBACK'=>'USERACCT' keys [k0=to_id] first_span Span { start: 12438, end: 12602, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12709, end: 12734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 24) (hop_id . 11) (table_id . 0) (span ((start . 12709) (end . 12734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s11_to_id == s11_to_id);
     goto s11_epilogue;
   s11_hop_exit:
   s11_epilogue:

@@ -6,19 +6,23 @@ digraph SCGraph {
   subgraph cluster_legend {
     label="Verification Time (ms)";
     style=dashed;
-    legend_0 [label="301.9 (Light Blue)", color="#87CEEB", style=filled, shape=box];
-    legend_1 [label="301.9 (Yellow)", color="#FFFF00", style=filled, shape=box];
-    legend_2 [label="301.9 (Orange)", color="#FFA500", style=filled, shape=box];
-    legend_3 [label="301.9 (Red)", color="#FF0000", style=filled, shape=box];
-    legend_4 [label="301.9 (Deep Red)", color="#8B0000", style=filled, shape=box];
+    legend_0 [label="305.1 (Light Blue)", color="#87CEEB", style=filled, shape=box];
+    legend_1 [label="311.4 (Yellow)", color="#FFFF00", style=filled, shape=box];
+    legend_2 [label="317.8 (Orange)", color="#FFA500", style=filled, shape=box];
+    legend_3 [label="324.2 (Red)", color="#FF0000", style=filled, shape=box];
+    legend_4 [label="330.6 (Deep Red)", color="#8B0000", style=filled, shape=box];
     legend_0 -> legend_1 -> legend_2 -> legend_3 -> legend_4 [style=invis];
     legend_eliminated [label="Eliminated", style="dotted,bold", shape=box];
     legend_remaining [label="Remaining", style=dashed, shape=box];
     legend_eliminated -> legend_remaining [style=invis];
   }
-  f16_i0_h1 [label="MinRecord#0\nHop 1\n"];
-  f16_i1_h1 [label="MinRecord#1\nHop 1\n"];
-  f17_i0_h2 [label="UpdateRecord#0\nHop 2\n", style=filled, fillcolor="#FFA500"];
-  f17_i1_h2 [label="UpdateRecord#1\nHop 2\n", style=filled, fillcolor="#FFA500"];
-  f17_i0_h2 -> f17_i1_h2 [dir=none, style="dotted,bold", color="#FFA500", label="C (301.9ms)",penwidth=2.0];
+  f16_i0_h1 [label="MinRecord#0\nHop 1\n", style=filled, fillcolor="#FF4100"];
+  f16_i1_h1 [label="MinRecord#1\nHop 1\n", style=filled, fillcolor="#8C0000"];
+  f17_i0_h2 [label="UpdateRecord#0\nHop 2\n", style=filled, fillcolor="#FF9700"];
+  f17_i1_h2 [label="UpdateRecord#1\nHop 2\n", style=filled, fillcolor="#FF7200"];
+  f16_i0_h1 -> f17_i0_h2 [dir=none, style="dotted,bold", color="#FF7B00", label="C (319.4ms)",penwidth=2.0];
+  f16_i0_h1 -> f17_i1_h2 [dir=none, style="dotted,bold", color="#FF0700", label="C (323.9ms)",penwidth=2.0];
+  f16_i1_h1 -> f17_i0_h2 [dir=none, style="dotted,bold", color="#8B0000", label="C (330.6ms)",penwidth=2.0];
+  f16_i1_h1 -> f17_i1_h2 [dir=none, style="dotted,bold", color="#8E0000", label="C (330.4ms)",penwidth=2.0];
+  f17_i0_h2 -> f17_i1_h2 [dir=none, style="dotted,bold", color="#87CEEB", label="C (305.1ms)",penwidth=2.0];
 }

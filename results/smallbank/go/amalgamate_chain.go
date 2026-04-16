@@ -66,8 +66,8 @@ BB1:
 	row4.Key.custid = c0_custid
 	putChecking(tx, CheckingKey{custid: custId0}, row4)
 	// Flush caches for tables written in this hop
-	flushCheckingCache(tx)
 	flushSavingsCache(tx)
+	flushCheckingCache(tx)
 	// Write back variables to results
 	return &proto.TrxRes{
 		Status: proto.Status_Success,

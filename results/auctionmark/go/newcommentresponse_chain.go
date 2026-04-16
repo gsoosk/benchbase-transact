@@ -39,7 +39,7 @@ func NewcommentresponseHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error
 	var seller_u_sattr2 string
 	var seller_u_sattr3 string
 	var seller_u_sattr4 string
-	var _tmp23 uint64
+	var _tmp31 uint64
 
 	var keyBytes1 []byte
 	var row1 ItemComment
@@ -90,8 +90,8 @@ BB14:
 	seller_u_sattr2 = row3.u_sattr2
 	seller_u_sattr3 = row3.u_sattr3
 	seller_u_sattr4 = row3.u_sattr4
-	_tmp23 = seller_u_comments - 1
-	seller_u_comments = _tmp23
+	_tmp31 = seller_u_comments - 1
+	seller_u_comments = _tmp31
 	// Combined table access: Useracct (10 operations)
 	keyBytes4, row4 = getUseracct(tx, UseracctKey{u_id: seller_id})
 	rwSet = AddRWSet(rwSet, "Useracct", keyBytes4)
@@ -139,7 +139,7 @@ func NewcommentresponseHop0Par(params map[string]string) uint64 {
 	var seller_u_sattr2 string
 	var seller_u_sattr3 string
 	var seller_u_sattr4 string
-	var _tmp23 uint64
+	var _tmp31 uint64
 
 	var keyBytes1 []byte
 	var row1 ItemComment
@@ -201,8 +201,8 @@ BB14:
 	seller_u_sattr2 = row3.u_sattr2
 	seller_u_sattr3 = row3.u_sattr3
 	seller_u_sattr4 = row3.u_sattr4
-	_tmp23 = seller_u_comments - 1
-	seller_u_comments = _tmp23
+	_tmp31 = seller_u_comments - 1
+	seller_u_comments = _tmp31
 	// First table access (optimized group) - calculate partition: Useracct
 	if true { return putUseracctPar(UseracctKey{u_id: seller_id}) }
 	// Combined table access: Useracct (10 operations)

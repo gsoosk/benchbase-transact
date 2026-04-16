@@ -107,27 +107,44 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
-var useracct_u_id : [int]int;
-var item_title : [int]String;
-const __slice__ : int;
+var item_i_id : [int]int;
 const TBL_item : Table (item);
 var trust_source_u_id : [int][int]int;
-const __shards__ : int;
-const TBL_review : Table (review);
-var useracct_name : [int]String;
-var item_i_id : [int]int;
-const TBL_useracct : Table (useracct);
 const TBL_trust : Table (trust);
-var trust_target_u_id : [int][int]int;
-var review_u_id : [int][int]int;
 var trust_trust : [int][int]int;
+const __slice__ : int;
+const __shards__ : int;
 var review_rating : [int][int]int;
 var review_i_id : [int][int]int;
+const TBL_review : Table (review);
+var item_title : [int]String;
+var trust_target_u_id : [int][int]int;
+var useracct_name : [int]String;
+var review_u_id : [int][int]int;
+const TBL_useracct : Table (useracct);
 var review_creation_date : [int][int]int;
+var useracct_u_id : [int]int;
 procedure verify_hop_partitions_GetReviewItemById(iid: int, reviewer_uid: int)
 {
+  var s7_#tmp10 : Row (Table (review));
+  var s7_reviewer_uid : int;
+  var s7_iid : int;
+  var s7_r : Row (Table (review));
+  var s7_#tmp11 : unit;
+  var s7_#tmp12 : Row (Table (item));
+  var s7_i : Row (Table (item));
+  var s7_#tmp13 : unit;
+
   // Hop partition verification for function 'GetReviewItemById'
   s7_block7:
+    s7_#tmp10 := construct_Row_review(review_u_id[s7_reviewer_uid][s7_iid], review_i_id[s7_reviewer_uid][s7_iid], review_rating[s7_reviewer_uid][s7_iid], review_creation_date[s7_reviewer_uid][s7_iid]);
+    s7_r := s7_#tmp10;
+    s7_#tmp11 := to_unit(s7_r);
+    s7_#tmp12 := construct_Row_item(item_i_id[s7_iid], item_title[s7_iid]);
+  // Partition check hop 7 func 'f_item' tables 'review'=>'item' keys [k0=iid] first_span Span { start: 3682, end: 3719, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 3768, end: 3783, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 7) (table_id . 0) (span ((start . 3768) (end . 3783) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s7_iid == s7_iid);
+    s7_i := s7_#tmp12;
+    s7_#tmp13 := to_unit(s7_i);
     goto s7_epilogue;
   s7_hop_exit:
   s7_epilogue:

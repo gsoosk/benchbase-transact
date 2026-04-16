@@ -200,80 +200,80 @@ axiom (forall
     <==>
     (log_user_1 == log_user_2 && log_id_1 == log_id_2 && log_type_1 == log_type_2 && log_action_1 == log_action_2 && log_timestamp_1 == log_timestamp_2 && log_user_text_1 == log_user_text_2 && log_namespace_1 == log_namespace_2 && log_title_1 == log_title_2 && log_page_1 == log_page_2 && log_comment_1 == log_comment_2 && log_params_1 == log_params_2)
 );
-var user_user_id : [int]int;
-const TBL_logging : Table (logging);
-var page_page_title : [int]String;
-var user_user_name : [int]String;
-var revision_rev_len : [int][int]int;
-var text_old_flags : [int]String;
-var ipblocks_ipb_expiry : [int][int]int;
-var page_restrictions_pr_page : [int][String]int;
-const TBL_ipblocks : Table (ipblocks);
-var watchlist_wl_namespace : [int][int][String]int;
-var recentchanges_rc_timestamp : [int]int;
-var page_page_latest : [int]int;
-var recentchanges_rc_cur_id : [int]int;
-var recentchanges_rc_namespace : [int]int;
-const __shards__ : int;
-var page_restrictions_pr_level : [int][String]String;
-var logging_log_action : [int][int]String;
-var ipblocks_ipb_address : [int][int]String;
-var logging_log_page : [int][int]int;
-var text_old_text : [int]String;
-var recentchanges_rc_this_oldid : [int]int;
-var user_groups_ug_group : [int][String]String;
-var ipblocks_ipb_user : [int][int]int;
-var revision_rev_page : [int][int]int;
-var recentchanges_rc_last_oldid : [int]int;
-var page_page_is_redirect : [int]int;
-var revision_rev_parent_id : [int][int]int;
-var page_page_is_new : [int]int;
-var logging_log_type : [int][int]String;
-const TBL_watchlist : Table (watchlist);
 const TBL_page : Table (page);
+var page_page_title : [int]String;
 var page_page_touched : [int]int;
-var text_old_page : [int]int;
-var watchlist_wl_title : [int][int][String]String;
-var logging_log_user_text : [int][int]String;
-var logging_log_params : [int][int]String;
-var ipblocks_ipb_id : [int][int]int;
-const TBL_text : Table (text);
-var watchlist_wl_user : [int][int][String]int;
-const TBL_page_restrictions : Table (page_restrictions);
-var revision_rev_text_id : [int][int]int;
-var page_page_len : [int]int;
-var revision_rev_comment : [int][int]String;
-const TBL_recentchanges : Table (recentchanges);
-var recentchanges_rc_new_len : [int]int;
-var logging_log_timestamp : [int][int]int;
-const TBL_revision : Table (revision);
-var recentchanges_rc_comment : [int]String;
-const TBL_user : Table (user);
+const TBL_watchlist : Table (watchlist);
+var text_old_text : [int]String;
 const __slice__ : int;
-var recentchanges_rc_title : [int]String;
-var page_page_id : [int]int;
-var recentchanges_rc_user : [int]int;
-var page_restrictions_pr_type : [int][String]String;
-var recentchanges_rc_user_text : [int]String;
-var revision_rev_id : [int][int]int;
-var user_groups_ug_user : [int][String]int;
-var revision_rev_user_text : [int][int]String;
-var recentchanges_rc_id : [int]int;
-var logging_log_title : [int][int]String;
 var logging_log_comment : [int][int]String;
-var user_user_editcount : [int]int;
-const TBL_user_groups : Table (user_groups);
-var user_user_touched : [int]int;
-var revision_rev_user : [int][int]int;
-var revision_rev_timestamp : [int][int]int;
-var page_page_namespace : [int]int;
-var logging_log_user : [int][int]int;
-var watchlist_wl_notificationtimestamp : [int][int][String]int;
-var logging_log_id : [int][int]int;
-var text_old_id : [int]int;
+var text_old_page : [int]int;
+var ipblocks_ipb_address : [int][int]String;
+const TBL_revision : Table (revision);
+var recentchanges_rc_user : [int]int;
 var recentchanges_rc_ip : [int]String;
+var recentchanges_rc_last_oldid : [int]int;
+var revision_rev_user_text : [int][int]String;
+var revision_rev_timestamp : [int][int]int;
+const TBL_recentchanges : Table (recentchanges);
+var recentchanges_rc_comment : [int]String;
+var text_old_id : [int]int;
+var page_page_namespace : [int]int;
+var recentchanges_rc_cur_id : [int]int;
+var revision_rev_parent_id : [int][int]int;
+var user_groups_ug_group : [int][String]String;
+var ipblocks_ipb_expiry : [int][int]int;
 var recentchanges_rc_old_len : [int]int;
+var user_groups_ug_user : [int][String]int;
+var logging_log_user : [int][int]int;
+var logging_log_timestamp : [int][int]int;
+var revision_rev_user : [int][int]int;
+var logging_log_user_text : [int][int]String;
+var logging_log_page : [int][int]int;
+const __shards__ : int;
+var user_user_editcount : [int]int;
+var page_restrictions_pr_level : [int][String]String;
+var ipblocks_ipb_user : [int][int]int;
+const TBL_logging : Table (logging);
+var logging_log_type : [int][int]String;
+var page_page_id : [int]int;
+var page_page_is_redirect : [int]int;
+var page_page_len : [int]int;
+var page_restrictions_pr_type : [int][String]String;
+var revision_rev_len : [int][int]int;
+const TBL_text : Table (text);
+var recentchanges_rc_this_oldid : [int]int;
+var recentchanges_rc_new_len : [int]int;
+var recentchanges_rc_title : [int]String;
+var ipblocks_ipb_id : [int][int]int;
+var text_old_flags : [int]String;
+var revision_rev_text_id : [int][int]int;
+var logging_log_title : [int][int]String;
 var logging_log_namespace : [int][int]int;
+var watchlist_wl_user : [int][int][String]int;
+var user_user_name : [int]String;
+var watchlist_wl_namespace : [int][int][String]int;
+const TBL_page_restrictions : Table (page_restrictions);
+var logging_log_id : [int][int]int;
+var logging_log_params : [int][int]String;
+var recentchanges_rc_user_text : [int]String;
+var user_user_touched : [int]int;
+var watchlist_wl_notificationtimestamp : [int][int][String]int;
+var revision_rev_comment : [int][int]String;
+var recentchanges_rc_timestamp : [int]int;
+var recentchanges_rc_id : [int]int;
+var recentchanges_rc_namespace : [int]int;
+var page_restrictions_pr_page : [int][String]int;
+var page_page_is_new : [int]int;
+const TBL_user_groups : Table (user_groups);
+var logging_log_action : [int][int]String;
+var page_page_latest : [int]int;
+var user_user_id : [int]int;
+const TBL_ipblocks : Table (ipblocks);
+var revision_rev_page : [int][int]int;
+const TBL_user : Table (user);
+var watchlist_wl_title : [int][int][String]String;
+var revision_rev_id : [int][int]int;
 procedure Check_SliceCommut_Hop7_vs_Hop7()
 modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, watchlist_wl_namespace, watchlist_wl_notificationtimestamp, watchlist_wl_title, watchlist_wl_user;
 {
@@ -303,7 +303,7 @@ modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, w
   var s0_wl#wl_notificationtimestamp : int;
   var s0_wl#wl_title : String;
   var s0_wl#wl_user : int;
-  var s0_#tmp14 : bool;
+  var s0_#tmp23 : bool;
   var s0_wl2#wl_namespace : int;
   var s0_wl2#wl_notificationtimestamp : int;
   var s0_wl2#wl_title : String;
@@ -315,7 +315,7 @@ modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, w
   var s1_wl#wl_notificationtimestamp : int;
   var s1_wl#wl_title : String;
   var s1_wl#wl_user : int;
-  var s1_#tmp14 : bool;
+  var s1_#tmp23 : bool;
   var s1_wl2#wl_namespace : int;
   var s1_wl2#wl_notificationtimestamp : int;
   var s1_wl2#wl_title : String;
@@ -385,8 +385,8 @@ modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, w
       watchlist_wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s0_userId := watchlist_wl_notificationtimestamp[s0_userId][s0_nameSpace := watchlist_wl_notificationtimestamp[s0_userId][s0_nameSpace][s0_pageTitle := s0_wl#wl_notificationtimestamp]]];
       watchlist_wl_title := watchlist_wl_title[s0_userId := watchlist_wl_title[s0_userId][s0_nameSpace := watchlist_wl_title[s0_userId][s0_nameSpace][s0_pageTitle := s0_wl#wl_title]]];
       watchlist_wl_user := watchlist_wl_user[s0_userId := watchlist_wl_user[s0_userId][s0_nameSpace := watchlist_wl_user[s0_userId][s0_nameSpace][s0_pageTitle := s0_wl#wl_user]]];
-      s0_#tmp14 := s0_nameSpace == 0;
-      if (s0_#tmp14) {
+      s0_#tmp23 := s0_nameSpace == 0;
+      if (s0_#tmp23) {
       goto s0_block10__ab;
     } else {
       goto s0_block11__ab;
@@ -423,8 +423,8 @@ modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, w
       watchlist_wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s1_userId := watchlist_wl_notificationtimestamp[s1_userId][s1_nameSpace := watchlist_wl_notificationtimestamp[s1_userId][s1_nameSpace][s1_pageTitle := s1_wl#wl_notificationtimestamp]]];
       watchlist_wl_title := watchlist_wl_title[s1_userId := watchlist_wl_title[s1_userId][s1_nameSpace := watchlist_wl_title[s1_userId][s1_nameSpace][s1_pageTitle := s1_wl#wl_title]]];
       watchlist_wl_user := watchlist_wl_user[s1_userId := watchlist_wl_user[s1_userId][s1_nameSpace := watchlist_wl_user[s1_userId][s1_nameSpace][s1_pageTitle := s1_wl#wl_user]]];
-      s1_#tmp14 := s1_nameSpace == 0;
-      if (s1_#tmp14) {
+      s1_#tmp23 := s1_nameSpace == 0;
+      if (s1_#tmp23) {
       goto s1_block10__ab;
     } else {
       goto s1_block11__ab;
@@ -488,8 +488,8 @@ modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, w
       watchlist_wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s1_userId := watchlist_wl_notificationtimestamp[s1_userId][s1_nameSpace := watchlist_wl_notificationtimestamp[s1_userId][s1_nameSpace][s1_pageTitle := s1_wl#wl_notificationtimestamp]]];
       watchlist_wl_title := watchlist_wl_title[s1_userId := watchlist_wl_title[s1_userId][s1_nameSpace := watchlist_wl_title[s1_userId][s1_nameSpace][s1_pageTitle := s1_wl#wl_title]]];
       watchlist_wl_user := watchlist_wl_user[s1_userId := watchlist_wl_user[s1_userId][s1_nameSpace := watchlist_wl_user[s1_userId][s1_nameSpace][s1_pageTitle := s1_wl#wl_user]]];
-      s1_#tmp14 := s1_nameSpace == 0;
-      if (s1_#tmp14) {
+      s1_#tmp23 := s1_nameSpace == 0;
+      if (s1_#tmp23) {
       goto s1_block10__ba;
     } else {
       goto s1_block11__ba;
@@ -526,8 +526,8 @@ modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, w
       watchlist_wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s0_userId := watchlist_wl_notificationtimestamp[s0_userId][s0_nameSpace := watchlist_wl_notificationtimestamp[s0_userId][s0_nameSpace][s0_pageTitle := s0_wl#wl_notificationtimestamp]]];
       watchlist_wl_title := watchlist_wl_title[s0_userId := watchlist_wl_title[s0_userId][s0_nameSpace := watchlist_wl_title[s0_userId][s0_nameSpace][s0_pageTitle := s0_wl#wl_title]]];
       watchlist_wl_user := watchlist_wl_user[s0_userId := watchlist_wl_user[s0_userId][s0_nameSpace := watchlist_wl_user[s0_userId][s0_nameSpace][s0_pageTitle := s0_wl#wl_user]]];
-      s0_#tmp14 := s0_nameSpace == 0;
-      if (s0_#tmp14) {
+      s0_#tmp23 := s0_nameSpace == 0;
+      if (s0_#tmp23) {
       goto s0_block10__ba;
     } else {
       goto s0_block11__ba;

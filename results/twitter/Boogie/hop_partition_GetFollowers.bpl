@@ -126,34 +126,50 @@ axiom (forall
     <==>
     (uid_1 == uid_2 && id_1 == id_2 && text_1 == text_2 && createdate_1 == createdate_2)
 );
-var TWEETS_text : [int][int]String;
-const __slice__ : int;
-const TBL_FOLLOWERS : Table (FOLLOWERS);
-var FOLLOWS_f2 : [int][int]int;
-var ADDED_TWEETS_text : [int][int]String;
-var USER_uid : [int]int;
-var FOLLOWERS_f2 : [int][int]int;
-var FOLLOWS_f1 : [int][int]int;
-const __shards__ : int;
 const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
-var ADDED_TWEETS_id : [int][int]int;
-var ADDED_TWEETS_createdate : [int][int]int;
-var TWEETS_id : [int][int]int;
-const TBL_TWEETS : Table (TWEETS);
-const TBL_FOLLOWS : Table (FOLLOWS);
 var USER_name : [int]String;
-var ADDED_TWEETS_uid : [int][int]int;
-var TWEETS_uid : [int][int]int;
-const TBL_USER : Table (USER);
+const __slice__ : int;
 var FOLLOWERS_f1 : [int][int]int;
+var FOLLOWS_f1 : [int][int]int;
 var TWEETS_createdate : [int][int]int;
+const TBL_FOLLOWERS : Table (FOLLOWERS);
+var TWEETS_uid : [int][int]int;
+var TWEETS_id : [int][int]int;
+var ADDED_TWEETS_id : [int][int]int;
+var ADDED_TWEETS_text : [int][int]String;
+var FOLLOWERS_f2 : [int][int]int;
+const TBL_TWEETS : Table (TWEETS);
+var ADDED_TWEETS_uid : [int][int]int;
+const TBL_FOLLOWS : Table (FOLLOWS);
+const __shards__ : int;
+var FOLLOWS_f2 : [int][int]int;
+const TBL_USER : Table (USER);
+var TWEETS_text : [int][int]String;
+var ADDED_TWEETS_createdate : [int][int]int;
+var USER_uid : [int]int;
 procedure verify_hop_partitions_GetFollowers(uid: int, follower_uid: int)
 {
+  var s1_#tmp0 : Row (Table (FOLLOWERS));
+  var s1_uid : int;
+  var s1_follower_uid : int;
+  var s1_f : Row (Table (FOLLOWERS));
+  var s1_#tmp1 : unit;
+  var s2_u#name : String;
+  var s2_follower_uid : int;
+  var s2_uname : String;
+  var s2_#tmp3 : unit;
+
   // Hop partition verification for function 'GetFollowers'
   s1_block1:
+    s1_#tmp0 := construct_Row_FOLLOWERS(FOLLOWERS_f1[s1_uid][s1_follower_uid], FOLLOWERS_f2[s1_uid][s1_follower_uid]);
+    s1_f := s1_#tmp0;
+    s1_#tmp1 := to_unit(s1_f);
     goto s1_hop_exit;
   s1_hop_exit:
   s2_block2:
+    s2_u#name := USER_name[s2_follower_uid];
+    s2_uname := s2_u#name;
+    s2_#tmp3 := to_unit(s2_uname);
     goto s2_epilogue;
   s2_hop_exit:
   s1_epilogue:

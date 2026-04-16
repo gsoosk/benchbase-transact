@@ -189,93 +189,93 @@ axiom (forall
     <==>
     (S_W_ID_1 == S_W_ID_2 && S_I_ID_1 == S_I_ID_2 && S_QUANTITY_1 == S_QUANTITY_2 && S_YTD_1 == S_YTD_2 && S_ORDER_CNT_1 == S_ORDER_CNT_2 && S_REMOTE_CNT_1 == S_REMOTE_CNT_2 && S_DATA_1 == S_DATA_2)
 );
-var Customer_C_PHONE : [int][int][int]String;
-var Order_O_W_ID : [int][int][int]int;
-var Order_Line_OL_AMOUNT : [int][int][int][int]int;
-var Customer_C_FIRST : [int][int][int]String;
-var Order_O_ENTRY_DATE : [int][int][int]int;
-var Stock_S_I_ID : [int][int]int;
-var District_D_STREET_2 : [int][int]String;
-const TBL_New_Order : Table (New_Order);
-var Customer_C_MIDDLE : [int][int][int]String;
-var Item_I_PRICE : [int][int]real;
-var Order_O_ID : [int][int][int]int;
-const TBL_Warehouse : Table (Warehouse);
-var Warehouse_W_ZIP : [int]String;
-var Customer_C_CREDIT_LIMIT : [int][int][int]real;
-var Stock_S_YTD : [int][int]real;
-var Customer_C_CITY : [int][int][int]String;
-var Order_O_C_ID : [int][int][int]int;
-var Order_Line_OL_D_ID : [int][int][int][int]int;
-var District_D_NEXT_NO_ID : [int][int]int;
-var District_D_CITY : [int][int]String;
-var Item_I_IM_ID : [int][int]int;
-var Stock_S_DATA : [int][int]String;
-var Order_O_D_ID : [int][int][int]int;
-var Order_O_OL_CNT : [int][int][int]int;
-var Customer_C_CREDIT : [int][int][int]String;
-var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
-var Customer_C_ID : [int][int][int]int;
-var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
-var Order_Line_OL_QUANTITY : [int][int][int][int]int;
-var District_D_NEXT_O_ID : [int][int]int;
-var Customer_C_DISCOUNT : [int][int][int]real;
-var Order_Line_OL_O_ID : [int][int][int][int]int;
-var Order_Line_OL_NUMBER : [int][int][int][int]int;
-const __slice__ : int;
-var Warehouse_W_TAX : [int]real;
-var District_D_ID : [int][int]int;
-var New_Order_NO_D_ID : [int][int][int]int;
-var District_D_STREET_1 : [int][int]String;
-var District_D_TAX : [int][int]real;
-var Customer_C_PAYMENT_CNT : [int][int][int]real;
-var Warehouse_W_NAME : [int]String;
-var District_D_YTD : [int][int]real;
-var New_Order_NO_W_ID : [int][int][int]int;
-var Order_O_ALL_LOCAL : [int][int][int]int;
-var Warehouse_W_STREET_1 : [int]String;
-var Item_W_ID : [int][int]int;
-var Customer_C_STREET_2 : [int][int][int]String;
-var Item_I_DATA : [int][int]String;
-var Customer_C_LAST : [int][int][int]String;
-var Order_Line_OL_I_ID : [int][int][int][int]int;
-var Warehouse_W_ID : [int]int;
-var Customer_C_SINCE : [int][int][int]int;
-var Order_O_CARRIER_ID : [int][int][int]int;
-var Customer_C_STATE : [int][int][int]String;
 var Customer_C_DATA : [int][int][int]String;
-const __shards__ : int;
-var Customer_C_D_ID : [int][int][int]int;
-var Item_I_NAME : [int][int]String;
-var District_D_ZIP : [int][int]String;
-var Customer_C_YTD_PAYMENT : [int][int][int]real;
-var Warehouse_W_YTD : [int]real;
-var Customer_C_ZIP : [int][int][int]String;
-var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
-const TBL_Stock : Table (Stock);
-var Order_Line_OL_W_ID : [int][int][int][int]int;
+const __slice__ : int;
+var Order_O_W_ID : [int][int][int]int;
+var Order_O_ALL_LOCAL : [int][int][int]int;
+const TBL_District : Table (District);
+var Item_I_PRICE : [int][int]real;
+var Warehouse_W_TAX : [int]real;
+var Customer_C_CREDIT : [int][int][int]String;
+var Customer_C_ID : [int][int][int]int;
+var Warehouse_W_NAME : [int]String;
+var Customer_C_PHONE : [int][int][int]String;
+var Customer_C_MIDDLE : [int][int][int]String;
+var District_D_CITY : [int][int]String;
+var Customer_C_DISCOUNT : [int][int][int]real;
+var Order_O_ENTRY_DATE : [int][int][int]int;
+var District_D_STREET_1 : [int][int]String;
+var Customer_C_CREDIT_LIMIT : [int][int][int]real;
+var District_D_YTD : [int][int]real;
 var New_Order_NO_O_ID : [int][int][int]int;
 const TBL_Order : Table (Order);
-var Customer_C_BALANCE : [int][int][int]real;
-var Warehouse_W_STREET_2 : [int]String;
-var District_D_STATE : [int][int]String;
-var Item_I_ID : [int][int]int;
+const __shards__ : int;
+var District_D_STREET_2 : [int][int]String;
+var Customer_C_CITY : [int][int][int]String;
+var Order_Line_OL_NUMBER : [int][int][int][int]int;
+var Customer_C_STATE : [int][int][int]String;
+var Item_I_DATA : [int][int]String;
+var Customer_C_D_ID : [int][int][int]int;
+var District_D_ZIP : [int][int]String;
+var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
+const TBL_Stock : Table (Stock);
+var Customer_C_STREET_2 : [int][int][int]String;
+var Warehouse_W_ID : [int]int;
 var Stock_S_W_ID : [int][int]int;
-var District_D_W_ID : [int][int]int;
-var District_D_NAME : [int][int]String;
-const TBL_Customer : Table (Customer);
-var Customer_C_STREET_1 : [int][int][int]String;
-var Customer_C_DELIVERY_CNT : [int][int][int]real;
-const O_OL_CNT : int;
-var Stock_S_REMOTE_CNT : [int][int]int;
-const TBL_District : Table (District);
-var Warehouse_W_STATE : [int]String;
-const TBL_Item : Table (Item);
-var Stock_S_ORDER_CNT : [int][int]int;
-var Customer_C_W_ID : [int][int][int]int;
-const TBL_Order_Line : Table (Order_Line);
+var Stock_S_DATA : [int][int]String;
 var Warehouse_W_CITY : [int]String;
+var Warehouse_W_STREET_1 : [int]String;
+var Item_W_ID : [int][int]int;
+var Stock_S_I_ID : [int][int]int;
+var District_D_ID : [int][int]int;
+var District_D_NEXT_NO_ID : [int][int]int;
+var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
+var Customer_C_DELIVERY_CNT : [int][int][int]real;
+var Order_O_CARRIER_ID : [int][int][int]int;
+var Order_Line_OL_I_ID : [int][int][int][int]int;
+var Order_Line_OL_QUANTITY : [int][int][int][int]int;
+const TBL_New_Order : Table (New_Order);
+var Warehouse_W_STREET_2 : [int]String;
+const TBL_Item : Table (Item);
+var Stock_S_REMOTE_CNT : [int][int]int;
+var Warehouse_W_YTD : [int]real;
+var Customer_C_BALANCE : [int][int][int]real;
+var Customer_C_YTD_PAYMENT : [int][int][int]real;
+var District_D_TAX : [int][int]real;
+var Customer_C_W_ID : [int][int][int]int;
+var Warehouse_W_ZIP : [int]String;
+var Customer_C_SINCE : [int][int][int]int;
+var District_D_NAME : [int][int]String;
+const TBL_Order_Line : Table (Order_Line);
+var Order_Line_OL_AMOUNT : [int][int][int][int]int;
+const TBL_Customer : Table (Customer);
+var Stock_S_YTD : [int][int]real;
+var Customer_C_LAST : [int][int][int]String;
+const O_OL_CNT : int;
+var Order_O_C_ID : [int][int][int]int;
+var Order_Line_OL_W_ID : [int][int][int][int]int;
+var Order_O_D_ID : [int][int][int]int;
+var Item_I_NAME : [int][int]String;
+var Order_Line_OL_D_ID : [int][int][int][int]int;
+var New_Order_NO_W_ID : [int][int][int]int;
+var Order_Line_OL_O_ID : [int][int][int][int]int;
+var Warehouse_W_STATE : [int]String;
+var Customer_C_ZIP : [int][int][int]String;
+var Stock_S_ORDER_CNT : [int][int]int;
+var District_D_STATE : [int][int]String;
+const TBL_Warehouse : Table (Warehouse);
+var District_D_W_ID : [int][int]int;
+var Customer_C_FIRST : [int][int][int]String;
 var Stock_S_QUANTITY : [int][int]int;
+var Item_I_ID : [int][int]int;
+var Order_O_ID : [int][int][int]int;
+var Item_I_IM_ID : [int][int]int;
+var Customer_C_PAYMENT_CNT : [int][int][int]real;
+var Customer_C_STREET_1 : [int][int][int]String;
+var New_Order_NO_D_ID : [int][int][int]int;
+var Order_O_OL_CNT : [int][int][int]int;
+var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
+var District_D_NEXT_O_ID : [int][int]int;
 procedure Check_SliceCommut_Hop41_vs_Hop41()
 modifies Warehouse_W_YTD;
 {
@@ -306,10 +306,10 @@ modifies Warehouse_W_YTD;
   var s1_c_d_id_init : int;
   var s1_c_id_init : int;
   var s1_amount_init : real;
-  var s0_#tmp408 : real;
-  var s0_#tmp409 : real;
-  var s1_#tmp408 : real;
-  var s1_#tmp409 : real;
+  var s0_#tmp423 : real;
+  var s0_#tmp424 : real;
+  var s1_#tmp423 : real;
+  var s1_#tmp424 : real;
   var Warehouse_W_YTD_a_then_b : [int]real;
   var s0_w_id_a_then_b : int;
   var s0_d_id_a_then_b : int;
@@ -372,17 +372,17 @@ modifies Warehouse_W_YTD;
   // Executing A then B:
     if (s0_active) {
     s0_block143__ab:
-      s0_#tmp408 := Warehouse_W_YTD[s0_w_id];
-      s0_#tmp409 := s0_#tmp408 + s0_amount;
-      Warehouse_W_YTD := Warehouse_W_YTD[s0_w_id := s0_#tmp409];
+      s0_#tmp423 := Warehouse_W_YTD[s0_w_id];
+      s0_#tmp424 := s0_#tmp423 + s0_amount;
+      Warehouse_W_YTD := Warehouse_W_YTD[s0_w_id := s0_#tmp424];
       goto s0_hop_exit__ab;
     s0_hop_exit__ab:
     }
     if (s1_active) {
     s1_block143__ab:
-      s1_#tmp408 := Warehouse_W_YTD[s1_w_id];
-      s1_#tmp409 := s1_#tmp408 + s1_amount;
-      Warehouse_W_YTD := Warehouse_W_YTD[s1_w_id := s1_#tmp409];
+      s1_#tmp423 := Warehouse_W_YTD[s1_w_id];
+      s1_#tmp424 := s1_#tmp423 + s1_amount;
+      Warehouse_W_YTD := Warehouse_W_YTD[s1_w_id := s1_#tmp424];
       goto s1_hop_exit__ab;
     s1_hop_exit__ab:
     }
@@ -419,17 +419,17 @@ modifies Warehouse_W_YTD;
   // Executing B then A:
     if (s1_active) {
     s1_block143__ba:
-      s1_#tmp408 := Warehouse_W_YTD[s1_w_id];
-      s1_#tmp409 := s1_#tmp408 + s1_amount;
-      Warehouse_W_YTD := Warehouse_W_YTD[s1_w_id := s1_#tmp409];
+      s1_#tmp423 := Warehouse_W_YTD[s1_w_id];
+      s1_#tmp424 := s1_#tmp423 + s1_amount;
+      Warehouse_W_YTD := Warehouse_W_YTD[s1_w_id := s1_#tmp424];
       goto s1_hop_exit__ba;
     s1_hop_exit__ba:
     }
     if (s0_active) {
     s0_block143__ba:
-      s0_#tmp408 := Warehouse_W_YTD[s0_w_id];
-      s0_#tmp409 := s0_#tmp408 + s0_amount;
-      Warehouse_W_YTD := Warehouse_W_YTD[s0_w_id := s0_#tmp409];
+      s0_#tmp423 := Warehouse_W_YTD[s0_w_id];
+      s0_#tmp424 := s0_#tmp423 + s0_amount;
+      Warehouse_W_YTD := Warehouse_W_YTD[s0_w_id := s0_#tmp424];
       goto s0_hop_exit__ba;
     s0_hop_exit__ba:
     }

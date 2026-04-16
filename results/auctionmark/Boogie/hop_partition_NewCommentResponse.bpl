@@ -205,71 +205,71 @@ axiom (forall
     <==>
     (uw_u_id_1 == uw_u_id_2 && uw_i_id_1 == uw_i_id_2 && uw_i_u_id_1 == uw_i_u_id_2)
 );
+var ITEM_i_current_price : [int][int]real;
+var ITEM_MAX_BID_imb_ib_i_id : [int][int]int;
+var ITEM_i_end_date : [int][int]int;
+var USERACCT_u_rating : [int]int;
+var REGION_r_id : [int]int;
+var ITEM_i_name : [int][int]String;
+const TBL_ITEM_COMMENT : Table (ITEM_COMMENT);
+const TBL_USERACCT : Table (USERACCT);
+var ITEM_COMMENT_ic_i_id : [int][int][int]int;
+var ITEM_MAX_BID_imb_u_id : [int][int]int;
+var ITEM_MAX_BID_imb_ib_id : [int][int]int;
+var ITEM_BID_ib_i_id : [int][int][int]int;
+const TBL_ITEM_MAX_BID : Table (ITEM_MAX_BID);
+var USERACCT_u_sattr1 : [int]String;
+const TBL_ITEM : Table (ITEM);
+var ITEM_COMMENT_ic_response : [int][int][int]String;
+var ITEM_i_initial_price : [int][int]real;
+var USERACCT_ITEM_ui_i_id : [int][int][int]int;
+var ITEM_BID_ib_id : [int][int][int]int;
+var ITEM_MAX_BID_imb_i_id : [int][int]int;
+var USERACCT_WATCH_uw_u_id : [int][int][int]int;
+const ITEM_STATUS_CLOSED : int;
+var ITEM_i_id : [int][int]int;
+var ITEM_i_c_id : [int][int]int;
+const TBL_REGION : Table (REGION);
+var ITEM_COMMENT_ic_id : [int][int][int]int;
+var ITEM_i_u_id : [int][int]int;
+var REGION_r_name : [int]String;
+var ITEM_BID_ib_max_bid : [int][int][int]real;
+var USERACCT_FEEDBACK_uf_i_u_id : [int][int][int][int]int;
+var USERACCT_u_sattr4 : [int]String;
+var ITEM_i_start_date : [int][int]int;
+var USERACCT_u_balance : [int]real;
+const ITEM_STATUS_OPEN : int;
+var ITEM_BID_ib_u_id : [int][int][int]int;
 var USERACCT_u_sattr2 : [int]String;
 var ITEM_i_num_bids : [int][int]int;
-var ITEM_BID_ib_bid : [int][int][int]real;
-var USERACCT_FEEDBACK_uf_u_id : [int][int][int][int]int;
-var ITEM_MAX_BID_imb_i_id : [int][int]int;
+var ITEM_i_status : [int][int]int;
 var USERACCT_u_r_id : [int]int;
-var ITEM_COMMENT_ic_buyer_id : [int][int][int]int;
-var USERACCT_FEEDBACK_uf_from_id : [int][int][int][int]int;
-const TBL_ITEM : Table (ITEM);
-var ITEM_i_u_id : [int][int]int;
-var ITEM_BID_ib_i_id : [int][int][int]int;
-var ITEM_MAX_BID_imb_u_id : [int][int]int;
-var ITEM_i_id : [int][int]int;
-var USERACCT_FEEDBACK_uf_i_id : [int][int][int][int]int;
-var ITEM_COMMENT_ic_id : [int][int][int]int;
-var ITEM_i_initial_price : [int][int]real;
-var USERACCT_WATCH_uw_i_u_id : [int][int][int]int;
-const TBL_USERACCT_WATCH : Table (USERACCT_WATCH);
+var ITEM_BID_ib_buyer_id : [int][int][int]int;
+var USERACCT_FEEDBACK_uf_u_id : [int][int][int][int]int;
+var ITEM_MAX_BID_imb_ib_u_id : [int][int]int;
+var USERACCT_u_comments : [int]int;
+const __shards__ : int;
+var USERACCT_WATCH_uw_i_id : [int][int][int]int;
+const TBL_USERACCT_ITEM : Table (USERACCT_ITEM);
 var USERACCT_u_sattr0 : [int]String;
-const TBL_USERACCT_FEEDBACK : Table (USERACCT_FEEDBACK);
-var ITEM_MAX_BID_imb_ib_id : [int][int]int;
-const TBL_ITEM_BID : Table (ITEM_BID);
-var USERACCT_u_balance : [int]real;
+const TBL_USERACCT_WATCH : Table (USERACCT_WATCH);
 var ITEM_COMMENT_ic_question : [int][int][int]String;
-var USERACCT_u_sattr1 : [int]String;
+const TBL_ITEM_BID : Table (ITEM_BID);
+const ITEM_STATUS_WAITING_FOR_PURCHASE : int;
+var USERACCT_ITEM_ui_u_id : [int][int][int]int;
+var USERACCT_FEEDBACK_uf_from_id : [int][int][int][int]int;
+var USERACCT_WATCH_uw_i_u_id : [int][int][int]int;
 var USERACCT_u_sattr3 : [int]String;
 const __slice__ : int;
-var USERACCT_WATCH_uw_i_id : [int][int][int]int;
-var USERACCT_FEEDBACK_uf_i_u_id : [int][int][int][int]int;
-const ITEM_STATUS_CLOSED : int;
-var USERACCT_FEEDBACK_uf_rating : [int][int][int][int]int;
-var USERACCT_u_comments : [int]int;
-var ITEM_BID_ib_id : [int][int][int]int;
-var ITEM_i_c_id : [int][int]int;
-var USERACCT_u_id : [int]int;
-var ITEM_i_end_date : [int][int]int;
-var USERACCT_ITEM_ui_u_id : [int][int][int]int;
-var REGION_r_name : [int]String;
-var ITEM_i_current_price : [int][int]real;
-var ITEM_i_status : [int][int]int;
-var ITEM_BID_ib_max_bid : [int][int][int]real;
-var ITEM_COMMENT_ic_response : [int][int][int]String;
-var ITEM_BID_ib_u_id : [int][int][int]int;
-const TBL_ITEM_COMMENT : Table (ITEM_COMMENT);
-var REGION_r_id : [int]int;
-const __shards__ : int;
-var ITEM_i_name : [int][int]String;
-var ITEM_COMMENT_ic_u_id : [int][int][int]int;
-var USERACCT_u_rating : [int]int;
-const ITEM_STATUS_OPEN : int;
-const TBL_REGION : Table (REGION);
-var ITEM_MAX_BID_imb_ib_u_id : [int][int]int;
 var ITEM_i_num_comments : [int][int]int;
+var ITEM_BID_ib_bid : [int][int][int]real;
+var ITEM_COMMENT_ic_u_id : [int][int][int]int;
+var ITEM_COMMENT_ic_buyer_id : [int][int][int]int;
+var USERACCT_FEEDBACK_uf_rating : [int][int][int][int]int;
 var USERACCT_ITEM_ui_i_u_id : [int][int][int]int;
-const TBL_USERACCT_ITEM : Table (USERACCT_ITEM);
-var USERACCT_WATCH_uw_u_id : [int][int][int]int;
-const TBL_ITEM_MAX_BID : Table (ITEM_MAX_BID);
-var USERACCT_u_sattr4 : [int]String;
-var ITEM_MAX_BID_imb_ib_i_id : [int][int]int;
-const TBL_USERACCT : Table (USERACCT);
-const ITEM_STATUS_WAITING_FOR_PURCHASE : int;
-var ITEM_i_start_date : [int][int]int;
-var USERACCT_ITEM_ui_i_id : [int][int][int]int;
-var ITEM_COMMENT_ic_i_id : [int][int][int]int;
-var ITEM_BID_ib_buyer_id : [int][int][int]int;
+const TBL_USERACCT_FEEDBACK : Table (USERACCT_FEEDBACK);
+var USERACCT_FEEDBACK_uf_i_id : [int][int][int][int]int;
+var USERACCT_u_id : [int]int;
 procedure verify_hop_partitions_NewCommentResponse(comment_id: int, item_id: int, seller_id: int, response: String)
 modifies ITEM_COMMENT_ic_buyer_id, ITEM_COMMENT_ic_i_id, ITEM_COMMENT_ic_id, ITEM_COMMENT_ic_question, ITEM_COMMENT_ic_response, ITEM_COMMENT_ic_u_id, USERACCT_u_balance, USERACCT_u_comments, USERACCT_u_id, USERACCT_u_r_id, USERACCT_u_rating, USERACCT_u_sattr0, USERACCT_u_sattr1, USERACCT_u_sattr2, USERACCT_u_sattr3, USERACCT_u_sattr4;
 {
@@ -293,104 +293,104 @@ modifies ITEM_COMMENT_ic_buyer_id, ITEM_COMMENT_ic_i_id, ITEM_COMMENT_ic_id, ITE
   var s10_seller#u_sattr2 : String;
   var s10_seller#u_sattr3 : String;
   var s10_seller#u_sattr4 : String;
-  var s10_#tmp23 : int;
+  var s10_#tmp31 : int;
 
   // Hop partition verification for function 'NewCommentResponse'
   s10_block14:
     s10_c#ic_buyer_id := ITEM_COMMENT_ic_buyer_id[s10_comment_id][s10_item_id][s10_seller_id];
     s10_c#ic_i_id := ITEM_COMMENT_ic_i_id[s10_comment_id][s10_item_id][s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11473) (end . 11638) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11668) (end . 11833) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_c#ic_id := ITEM_COMMENT_ic_id[s10_comment_id][s10_item_id][s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11473) (end . 11638) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11668) (end . 11833) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_c#ic_question := ITEM_COMMENT_ic_question[s10_comment_id][s10_item_id][s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11473) (end . 11638) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11668) (end . 11833) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_c#ic_u_id := ITEM_COMMENT_ic_u_id[s10_comment_id][s10_item_id][s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11473) (end . 11638) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11668) (end . 11833) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_c#ic_response := s10_response;
     ITEM_COMMENT_ic_buyer_id := ITEM_COMMENT_ic_buyer_id[s10_comment_id := ITEM_COMMENT_ic_buyer_id[s10_comment_id][s10_item_id := ITEM_COMMENT_ic_buyer_id[s10_comment_id][s10_item_id][s10_seller_id := s10_c#ic_buyer_id]]];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11682, end: 11755, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11682) (end . 11755) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11877, end: 11950, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11877) (end . 11950) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     ITEM_COMMENT_ic_i_id := ITEM_COMMENT_ic_i_id[s10_comment_id := ITEM_COMMENT_ic_i_id[s10_comment_id][s10_item_id := ITEM_COMMENT_ic_i_id[s10_comment_id][s10_item_id][s10_seller_id := s10_c#ic_i_id]]];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11682, end: 11755, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11682) (end . 11755) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11877, end: 11950, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11877) (end . 11950) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     ITEM_COMMENT_ic_id := ITEM_COMMENT_ic_id[s10_comment_id := ITEM_COMMENT_ic_id[s10_comment_id][s10_item_id := ITEM_COMMENT_ic_id[s10_comment_id][s10_item_id][s10_seller_id := s10_c#ic_id]]];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11682, end: 11755, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11682) (end . 11755) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11877, end: 11950, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11877) (end . 11950) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     ITEM_COMMENT_ic_question := ITEM_COMMENT_ic_question[s10_comment_id := ITEM_COMMENT_ic_question[s10_comment_id][s10_item_id := ITEM_COMMENT_ic_question[s10_comment_id][s10_item_id][s10_seller_id := s10_c#ic_question]]];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11682, end: 11755, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11682) (end . 11755) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11877, end: 11950, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11877) (end . 11950) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     ITEM_COMMENT_ic_response := ITEM_COMMENT_ic_response[s10_comment_id := ITEM_COMMENT_ic_response[s10_comment_id][s10_item_id := ITEM_COMMENT_ic_response[s10_comment_id][s10_item_id][s10_seller_id := s10_c#ic_response]]];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11682, end: 11755, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11682) (end . 11755) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11877, end: 11950, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11877) (end . 11950) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     ITEM_COMMENT_ic_u_id := ITEM_COMMENT_ic_u_id[s10_comment_id := ITEM_COMMENT_ic_u_id[s10_comment_id][s10_item_id := ITEM_COMMENT_ic_u_id[s10_comment_id][s10_item_id][s10_seller_id := s10_c#ic_u_id]]];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11682, end: 11755, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11682) (end . 11755) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'ITEM_COMMENT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11877, end: 11950, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 5) (span ((start . 11877) (end . 11950) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_balance := USERACCT_u_balance[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_comments := USERACCT_u_comments[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_id := USERACCT_u_id[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_r_id := USERACCT_u_r_id[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_rating := USERACCT_u_rating[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_sattr0 := USERACCT_u_sattr0[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_sattr1 := USERACCT_u_sattr1[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_sattr2 := USERACCT_u_sattr2[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_sattr3 := USERACCT_u_sattr3[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     s10_seller#u_sattr4 := USERACCT_u_sattr4[s10_seller_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11794, end: 11819, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11794) (end . 11819) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
-    s10_#tmp23 := s10_seller#u_comments - 1;
-    s10_seller#u_comments := s10_#tmp23;
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11989, end: 12014, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11989) (end . 12014) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+    s10_#tmp31 := s10_seller#u_comments - 1;
+    s10_seller#u_comments := s10_#tmp31;
     USERACCT_u_balance := USERACCT_u_balance[s10_seller_id := s10_seller#u_balance];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_comments := USERACCT_u_comments[s10_seller_id := s10_seller#u_comments];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_id := USERACCT_u_id[s10_seller_id := s10_seller#u_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_r_id := USERACCT_u_r_id[s10_seller_id := s10_seller#u_r_id];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_rating := USERACCT_u_rating[s10_seller_id := s10_seller#u_rating];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_sattr0 := USERACCT_u_sattr0[s10_seller_id := s10_seller#u_sattr0];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_sattr1 := USERACCT_u_sattr1[s10_seller_id := s10_seller#u_sattr1];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_sattr2 := USERACCT_u_sattr2[s10_seller_id := s10_seller#u_sattr2];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_sattr3 := USERACCT_u_sattr3[s10_seller_id := s10_seller#u_sattr3];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     USERACCT_u_sattr4 := USERACCT_u_sattr4[s10_seller_id := s10_seller#u_sattr4];
-  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11473, end: 11638, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 11880, end: 11914, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 11880) (end . 11914) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
+  // Partition check hop 10 func 'p_user' tables 'ITEM_COMMENT'=>'USERACCT' keys [k0=seller_id] first_span Span { start: 11668, end: 11833, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" } current_span Span { start: 12075, end: 12109, filename: "/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 23) (hop_id . 10) (table_id . 0) (span ((start . 12075) (end . 12109) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/auctionmark.transact\"))))"} (s10_seller_id == s10_seller_id);
     goto s10_epilogue;
   s10_hop_exit:
   s10_epilogue:

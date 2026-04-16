@@ -2,9 +2,13 @@ digraph CombinedSCGraph {
   graph [rankdir=LR];
   node  [shape=record, fontsize=10, fontname=Helvetica];
   edge  [fontname=Helvetica];
-  cv0 [label="MinRecord#1\nHop 1\n"];
-  cv1 [label="MinRecord#0\nHop 1\n"];
+  cv0 [label="MinRecord#0\nHop 1\n"];
+  cv1 [label="MinRecord#1\nHop 1\n"];
   cv2 [label="UpdateRecord#0\nHop 2\n"];
   cv3 [label="UpdateRecord#1\nHop 2\n"];
+  cv0 -> cv2 [dir=none, style=dashed, color=darkorange, label="C"];
+  cv0 -> cv3 [dir=none, style=dashed, color=darkorange, label="C"];
+  cv1 -> cv2 [dir=none, style=dashed, color=darkorange, label="C"];
+  cv1 -> cv3 [dir=none, style=dashed, color=darkorange, label="C"];
   cv2 -> cv3 [dir=none, style=dashed, color=darkorange, label="C"];
 }

@@ -24,9 +24,19 @@ func InsertcallforwardingHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, err
 	var start_time uint64
 	var end_time uint64
 	var numberx string
+	var sub Subscriber
+	var _tmp10 Subscriber
+	var _tmp11 Unit
+	var sf Specialfacility
+	var _tmp12 Specialfacility
+	var _tmp13 Unit
 
 	var keyBytes1 []byte
-	var row1 Callforwarding
+	var row1 Subscriber
+	var keyBytes2 []byte
+	var row2 Specialfacility
+	var keyBytes3 []byte
+	var row3 Callforwarding
 
 	s_id = toUint64(params["s_id"])
 	sf_type = toUint64(params["sf_type"])
@@ -37,12 +47,24 @@ func InsertcallforwardingHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, err
 	goto BB7
 
 BB7:
+	// TableGet: Subscriber
+	keyBytes1, row1 = getSubscriber(tx, SubscriberKey{s_id: s_id})
+	rwSet = AddRWSet(rwSet, "Subscriber", keyBytes1)
+	_tmp10 = row1
+	sub = _tmp10
+	_ = sub
+	// TableGet: Specialfacility
+	keyBytes2, row2 = getSpecialfacility(tx, SpecialfacilityKey{s_id: s_id, sf_type: sf_type})
+	rwSet = AddRWSet(rwSet, "Specialfacility", keyBytes2)
+	_tmp12 = row2
+	sf = _tmp12
+	_ = sf
 	// Combined table access: Callforwarding (2 operations)
-	keyBytes1, row1 = getCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time})
-	rwSet = AddRWSet(rwSet, "Callforwarding", keyBytes1)
-	row1.end_time = end_time
-	row1.numberx = numberx
-	putCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time}, row1)
+	keyBytes3, row3 = getCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time})
+	rwSet = AddRWSet(rwSet, "Callforwarding", keyBytes3)
+	row3.end_time = end_time
+	row3.numberx = numberx
+	putCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time}, row3)
 	// return - no action
 	// Flush caches for tables written in this hop
 	flushCallforwardingCache(tx)
@@ -60,9 +82,19 @@ func InsertcallforwardingHop0Par(params map[string]string) uint64 {
 	var start_time uint64
 	var end_time uint64
 	var numberx string
+	var sub Subscriber
+	var _tmp10 Subscriber
+	var _tmp11 Unit
+	var sf Specialfacility
+	var _tmp12 Specialfacility
+	var _tmp13 Unit
 
 	var keyBytes1 []byte
-	var row1 Callforwarding
+	var row1 Subscriber
+	var keyBytes2 []byte
+	var row2 Specialfacility
+	var keyBytes3 []byte
+	var row3 Callforwarding
 
 	s_id = toUint64(params["s_id"])
 	sf_type = toUint64(params["sf_type"])
@@ -78,14 +110,30 @@ func InsertcallforwardingHop0Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	// First table access - calculate partition: Subscriber
+	if true { return getSubscriberPar(SubscriberKey{s_id: s_id}) }
+	// TableGet: Subscriber
+	keyBytes1, row1 = getSubscriber(tx, SubscriberKey{s_id: s_id})
+	rwSet = AddRWSet(rwSet, "Subscriber", keyBytes1)
+	_tmp10 = row1
+	sub = _tmp10
+	_ = sub
+	// First table access - calculate partition: Specialfacility
+	if true { return getSpecialfacilityPar(SpecialfacilityKey{s_id: s_id, sf_type: sf_type}) }
+	// TableGet: Specialfacility
+	keyBytes2, row2 = getSpecialfacility(tx, SpecialfacilityKey{s_id: s_id, sf_type: sf_type})
+	rwSet = AddRWSet(rwSet, "Specialfacility", keyBytes2)
+	_tmp12 = row2
+	sf = _tmp12
+	_ = sf
 	// First table access (optimized group) - calculate partition: Callforwarding
 	if true { return putCallforwardingPar(CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time}) }
 	// Combined table access: Callforwarding (2 operations)
-	keyBytes1, row1 = getCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time})
-	rwSet = AddRWSet(rwSet, "Callforwarding", keyBytes1)
-	row1.end_time = end_time
-	row1.numberx = numberx
-	putCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time}, row1)
+	keyBytes3, row3 = getCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time})
+	rwSet = AddRWSet(rwSet, "Callforwarding", keyBytes3)
+	row3.end_time = end_time
+	row3.numberx = numberx
+	putCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time}, row3)
 	return 0
 }
 

@@ -19,9 +19,25 @@ func Q3Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var custkey uint64
+	var c_c_mktsegment string
+	var seg string
+	var _tmp15 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+
+	custkey = toUint64(params["custkey"])
+
 	goto BB6
 
 BB6:
+	// TableGet: Customer
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{c_custkey: custkey})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	c_c_mktsegment = row1.c_mktsegment
+	seg = c_c_mktsegment
+	_ = seg
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +50,44 @@ func Q3Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var orderkey uint64
+	var linenumber uint64
+	var o Orders
+	var _tmp16 Orders
+	var _tmp17 Unit
+	var l_l_extendedprice float32
+	var l_l_discount float32
+	var revenue float32
+	var _tmp19 float32
+	var _tmp20 float32
+	var _tmp21 Unit
+
+	var keyBytes1 []byte
+	var row1 Orders
+	var keyBytes2 []byte
+	var row2 Lineitem
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	goto BB7
 
 BB7:
+	// TableGet: Orders
+	keyBytes1, row1 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes1)
+	_tmp16 = row1
+	o = _tmp16
+	_ = o
+	// Combined table access: Lineitem (2 operations)
+	keyBytes2, row2 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes2)
+	l_l_discount = row2.l_discount
+	l_l_extendedprice = row2.l_extendedprice
+	_tmp19 = 1 - l_l_discount
+	_tmp20 = l_l_extendedprice * _tmp19
+	revenue = _tmp20
+	_ = revenue
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +98,16 @@ BB7:
 
 // Q3Hop0Par calculates the partition for hop 0 without database access.
 func Q3Hop0Par(params map[string]string) uint64 {
+	var custkey uint64
+	var c_c_mktsegment string
+	var seg string
+	var _tmp15 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+
+	custkey = toUint64(params["custkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +116,39 @@ func Q3Hop0Par(params map[string]string) uint64 {
 	goto BB6
 
 BB6:
+	// First table access - calculate partition: Customer
+	if true { return getCustomerPar(CustomerKey{c_custkey: custkey}) }
+	// TableGet: Customer
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{c_custkey: custkey})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	c_c_mktsegment = row1.c_mktsegment
+	seg = c_c_mktsegment
+	_ = seg
 	panic("unexpected hop exit in partition")
 }
 
 // Q3Hop1Par calculates the partition for hop 1 without database access.
 func Q3Hop1Par(params map[string]string) uint64 {
+	var orderkey uint64
+	var linenumber uint64
+	var o Orders
+	var _tmp16 Orders
+	var _tmp17 Unit
+	var l_l_extendedprice float32
+	var l_l_discount float32
+	var revenue float32
+	var _tmp19 float32
+	var _tmp20 float32
+	var _tmp21 Unit
+
+	var keyBytes1 []byte
+	var row1 Orders
+	var keyBytes2 []byte
+	var row2 Lineitem
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +157,25 @@ func Q3Hop1Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	// First table access - calculate partition: Orders
+	if true { return getOrdersPar(OrdersKey{o_orderkey: orderkey}) }
+	// TableGet: Orders
+	keyBytes1, row1 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes1)
+	_tmp16 = row1
+	o = _tmp16
+	_ = o
+	// First table access (optimized group) - calculate partition: Lineitem
+	if true { return getLineitemPar(LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber}) }
+	// Combined table access: Lineitem (2 operations)
+	keyBytes2, row2 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes2)
+	l_l_discount = row2.l_discount
+	l_l_extendedprice = row2.l_extendedprice
+	_tmp19 = 1 - l_l_discount
+	_tmp20 = l_l_extendedprice * _tmp19
+	revenue = _tmp20
+	_ = revenue
 	return 0
 }
 

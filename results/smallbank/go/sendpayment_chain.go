@@ -23,7 +23,7 @@ func SendpaymentHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var amount float32
 	var c0_custid uint64
 	var c0_bal float32
-	var _tmp13 float32
+	var _tmp16 float32
 
 	var keyBytes1 []byte
 	var row1 Checking
@@ -41,8 +41,8 @@ BB5:
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes1)
 	c0_bal = row1.bal
 	c0_custid = row1.Key.custid
-	_tmp13 = c0_bal - amount
-	c0_bal = _tmp13
+	_tmp16 = c0_bal - amount
+	c0_bal = _tmp16
 	// Combined table access: Checking (2 operations)
 	keyBytes2, row2 = getChecking(tx, CheckingKey{custid: sendAcct})
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes2)
@@ -67,7 +67,7 @@ func SendpaymentHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var amount float32
 	var c1_custid uint64
 	var c1_bal float32
-	var _tmp15 float32
+	var _tmp18 float32
 
 	var keyBytes1 []byte
 	var row1 Checking
@@ -85,8 +85,8 @@ BB6:
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes1)
 	c1_bal = row1.bal
 	c1_custid = row1.Key.custid
-	_tmp15 = c1_bal + amount
-	c1_bal = _tmp15
+	_tmp18 = c1_bal + amount
+	c1_bal = _tmp18
 	// Combined table access: Checking (2 operations)
 	keyBytes2, row2 = getChecking(tx, CheckingKey{custid: destAcct})
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes2)
@@ -109,7 +109,7 @@ func SendpaymentHop0Par(params map[string]string) uint64 {
 	var amount float32
 	var c0_custid uint64
 	var c0_bal float32
-	var _tmp13 float32
+	var _tmp16 float32
 
 	var keyBytes1 []byte
 	var row1 Checking
@@ -134,8 +134,8 @@ BB5:
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes1)
 	c0_bal = row1.bal
 	c0_custid = row1.Key.custid
-	_tmp13 = c0_bal - amount
-	c0_bal = _tmp13
+	_tmp16 = c0_bal - amount
+	c0_bal = _tmp16
 	// First table access (optimized group) - calculate partition: Checking
 	if true { return putCheckingPar(CheckingKey{custid: sendAcct}) }
 	// Combined table access: Checking (2 operations)
@@ -153,7 +153,7 @@ func SendpaymentHop1Par(params map[string]string) uint64 {
 	var amount float32
 	var c1_custid uint64
 	var c1_bal float32
-	var _tmp15 float32
+	var _tmp18 float32
 
 	var keyBytes1 []byte
 	var row1 Checking
@@ -178,8 +178,8 @@ BB6:
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes1)
 	c1_bal = row1.bal
 	c1_custid = row1.Key.custid
-	_tmp15 = c1_bal + amount
-	c1_bal = _tmp15
+	_tmp18 = c1_bal + amount
+	c1_bal = _tmp18
 	// First table access (optimized group) - calculate partition: Checking
 	if true { return putCheckingPar(CheckingKey{custid: destAcct}) }
 	// Combined table access: Checking (2 operations)

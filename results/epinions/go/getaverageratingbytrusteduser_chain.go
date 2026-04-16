@@ -19,9 +19,27 @@ func GetaverageratingbytrusteduserHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.Tr
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var iid uint64
+	var reviewer_uid uint64
+	var r_rating uint64
+	var rating uint64
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Review
+
+	iid = toUint64(params["iid"])
+	reviewer_uid = toUint64(params["reviewer_uid"])
+
 	goto BB2
 
 BB2:
+	// TableGet: Review
+	keyBytes1, row1 = getReview(tx, ReviewKey{u_id: reviewer_uid, i_id: iid})
+	rwSet = AddRWSet(rwSet, "Review", keyBytes1)
+	r_rating = row1.rating
+	rating = r_rating
+	_ = rating
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +52,27 @@ func GetaverageratingbytrusteduserHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.Tr
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var uid uint64
+	var reviewer_uid uint64
+	var t_trust uint64
+	var trust_level uint64
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 Trust
+
+	uid = toUint64(params["uid"])
+	reviewer_uid = toUint64(params["reviewer_uid"])
+
 	goto BB3
 
 BB3:
+	// TableGet: Trust
+	keyBytes1, row1 = getTrust(tx, TrustKey{source_u_id: uid, target_u_id: reviewer_uid})
+	rwSet = AddRWSet(rwSet, "Trust", keyBytes1)
+	t_trust = row1.trust
+	trust_level = t_trust
+	_ = trust_level
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +83,18 @@ BB3:
 
 // GetaverageratingbytrusteduserHop0Par calculates the partition for hop 0 without database access.
 func GetaverageratingbytrusteduserHop0Par(params map[string]string) uint64 {
+	var iid uint64
+	var reviewer_uid uint64
+	var r_rating uint64
+	var rating uint64
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Review
+
+	iid = toUint64(params["iid"])
+	reviewer_uid = toUint64(params["reviewer_uid"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +103,31 @@ func GetaverageratingbytrusteduserHop0Par(params map[string]string) uint64 {
 	goto BB2
 
 BB2:
+	// First table access - calculate partition: Review
+	if true { return getReviewPar(ReviewKey{u_id: reviewer_uid, i_id: iid}) }
+	// TableGet: Review
+	keyBytes1, row1 = getReview(tx, ReviewKey{u_id: reviewer_uid, i_id: iid})
+	rwSet = AddRWSet(rwSet, "Review", keyBytes1)
+	r_rating = row1.rating
+	rating = r_rating
+	_ = rating
 	panic("unexpected hop exit in partition")
 }
 
 // GetaverageratingbytrusteduserHop1Par calculates the partition for hop 1 without database access.
 func GetaverageratingbytrusteduserHop1Par(params map[string]string) uint64 {
+	var uid uint64
+	var reviewer_uid uint64
+	var t_trust uint64
+	var trust_level uint64
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 Trust
+
+	uid = toUint64(params["uid"])
+	reviewer_uid = toUint64(params["reviewer_uid"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +136,14 @@ func GetaverageratingbytrusteduserHop1Par(params map[string]string) uint64 {
 	goto BB3
 
 BB3:
+	// First table access - calculate partition: Trust
+	if true { return getTrustPar(TrustKey{source_u_id: uid, target_u_id: reviewer_uid}) }
+	// TableGet: Trust
+	keyBytes1, row1 = getTrust(tx, TrustKey{source_u_id: uid, target_u_id: reviewer_uid})
+	rwSet = AddRWSet(rwSet, "Trust", keyBytes1)
+	t_trust = row1.trust
+	trust_level = t_trust
+	_ = trust_level
 	return 0
 }
 

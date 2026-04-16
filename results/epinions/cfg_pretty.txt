@@ -143,27 +143,30 @@ transaction GetAverageRatingByTrustedUser[fn17](iid[v22]: int, uid[v23]: int, re
   hop2 {
     entry_block: bb2
     bb2:
-      livein: {reviewer_uid[v24], uid[v23], iid[v22]}
-        [stmt_in] livein: {uid[v23], reviewer_uid[v24], iid[v22]}
+      livein: {uid[v23], reviewer_uid[v24], iid[v22]}
+        [stmt_in] livein: {reviewer_uid[v24], iid[v22], uid[v23]}
       #tmp0[v55] = review[reviewer_uid[v24], iid[v22]];
-        [stmt_out] liveout: {reviewer_uid[v24], iid[v22], uid[v23], #tmp0[v55]}
-        [stmt_in] livein: {reviewer_uid[v24], iid[v22], uid[v23], #tmp0[v55]}
+        [stmt_out] liveout: {iid[v22], #tmp0[v55], uid[v23], reviewer_uid[v24]}
+        [stmt_in] livein: {iid[v22], #tmp0[v55], uid[v23], reviewer_uid[v24]}
       r[v50] = #tmp0[v55];
-        [stmt_out] liveout: {uid[v23], iid[v22], reviewer_uid[v24]}
-        [stmt_in] livein: {uid[v23], iid[v22], reviewer_uid[v24]}
+        [stmt_out] liveout: {iid[v22], uid[v23], reviewer_uid[v24]}
+        [stmt_in] livein: {iid[v22], uid[v23], reviewer_uid[v24]}
       r#creation_date[v54] = review[reviewer_uid[v24], iid[v22]].creation_date;
         [stmt_out] liveout: {reviewer_uid[v24], iid[v22], uid[v23]}
         [stmt_in] livein: {reviewer_uid[v24], iid[v22], uid[v23]}
       r#i_id[v52] = review[reviewer_uid[v24], iid[v22]].i_id;
-        [stmt_out] liveout: {uid[v23], reviewer_uid[v24], iid[v22]}
-        [stmt_in] livein: {uid[v23], reviewer_uid[v24], iid[v22]}
+        [stmt_out] liveout: {iid[v22], reviewer_uid[v24], uid[v23]}
+        [stmt_in] livein: {iid[v22], reviewer_uid[v24], uid[v23]}
       r#rating[v53] = review[reviewer_uid[v24], iid[v22]].rating;
-        [stmt_out] liveout: {r#rating[v53], uid[v23], reviewer_uid[v24], iid[v22]}
-        [stmt_in] livein: {r#rating[v53], uid[v23], reviewer_uid[v24], iid[v22]}
+        [stmt_out] liveout: {uid[v23], reviewer_uid[v24], r#rating[v53], iid[v22]}
+        [stmt_in] livein: {uid[v23], reviewer_uid[v24], r#rating[v53], iid[v22]}
       r#u_id[v51] = review[reviewer_uid[v24], iid[v22]].u_id;
-        [stmt_out] liveout: {uid[v23], r#rating[v53], reviewer_uid[v24]}
-        [stmt_in] livein: {uid[v23], r#rating[v53], reviewer_uid[v24]}
+        [stmt_out] liveout: {r#rating[v53], uid[v23], reviewer_uid[v24]}
+        [stmt_in] livein: {r#rating[v53], uid[v23], reviewer_uid[v24]}
       rating[v56] = r#rating[v53];
+        [stmt_out] liveout: {rating[v56], uid[v23], reviewer_uid[v24]}
+        [stmt_in] livein: {rating[v56], uid[v23], reviewer_uid[v24]}
+      #tmp1[v57] = to_unit[fn13](rating[v56]);
         [stmt_out] liveout: {uid[v23], reviewer_uid[v24]}
       hop_exit hop3;
       liveout: {uid[v23], reviewer_uid[v24]}
@@ -173,23 +176,26 @@ transaction GetAverageRatingByTrustedUser[fn17](iid[v22]: int, uid[v23]: int, re
     entry_block: bb3
     bb3 (preds: bb2):
       livein: {uid[v23], reviewer_uid[v24]}
-        [stmt_in] livein: {uid[v23], reviewer_uid[v24]}
-      #tmp1[v61] = trust[uid[v23], reviewer_uid[v24]];
-        [stmt_out] liveout: {uid[v23], #tmp1[v61], reviewer_uid[v24]}
-        [stmt_in] livein: {uid[v23], #tmp1[v61], reviewer_uid[v24]}
-      t[v57] = #tmp1[v61];
+        [stmt_in] livein: {reviewer_uid[v24], uid[v23]}
+      #tmp2[v62] = trust[uid[v23], reviewer_uid[v24]];
+        [stmt_out] liveout: {#tmp2[v62], uid[v23], reviewer_uid[v24]}
+        [stmt_in] livein: {#tmp2[v62], uid[v23], reviewer_uid[v24]}
+      t[v58] = #tmp2[v62];
         [stmt_out] liveout: {uid[v23], reviewer_uid[v24]}
         [stmt_in] livein: {uid[v23], reviewer_uid[v24]}
-      t#source_u_id[v58] = trust[uid[v23], reviewer_uid[v24]].source_u_id;
+      t#source_u_id[v59] = trust[uid[v23], reviewer_uid[v24]].source_u_id;
         [stmt_out] liveout: {reviewer_uid[v24], uid[v23]}
         [stmt_in] livein: {reviewer_uid[v24], uid[v23]}
-      t#target_u_id[v59] = trust[uid[v23], reviewer_uid[v24]].target_u_id;
-        [stmt_out] liveout: {uid[v23], reviewer_uid[v24]}
-        [stmt_in] livein: {uid[v23], reviewer_uid[v24]}
-      t#trust[v60] = trust[uid[v23], reviewer_uid[v24]].trust;
-        [stmt_out] liveout: {t#trust[v60]}
-        [stmt_in] livein: {t#trust[v60]}
-      trust_level[v62] = t#trust[v60];
+      t#target_u_id[v60] = trust[uid[v23], reviewer_uid[v24]].target_u_id;
+        [stmt_out] liveout: {reviewer_uid[v24], uid[v23]}
+        [stmt_in] livein: {reviewer_uid[v24], uid[v23]}
+      t#trust[v61] = trust[uid[v23], reviewer_uid[v24]].trust;
+        [stmt_out] liveout: {t#trust[v61]}
+        [stmt_in] livein: {t#trust[v61]}
+      trust_level[v63] = t#trust[v61];
+        [stmt_out] liveout: {trust_level[v63]}
+        [stmt_in] livein: {trust_level[v63]}
+      #tmp3[v64] = to_unit[fn13](trust_level[v63]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -204,27 +210,30 @@ transaction GetItemAverageRating[fn18](iid[v25]: int, reviewer_uid[v26]: int)
   hop4 {
     entry_block: bb4
     bb4:
-      livein: {iid[v25], reviewer_uid[v26]}
+      livein: {reviewer_uid[v26], iid[v25]}
         [stmt_in] livein: {reviewer_uid[v26], iid[v25]}
-      #tmp2[v68] = review[reviewer_uid[v26], iid[v25]];
-        [stmt_out] liveout: {iid[v25], reviewer_uid[v26], #tmp2[v68]}
-        [stmt_in] livein: {iid[v25], reviewer_uid[v26], #tmp2[v68]}
-      r[v63] = #tmp2[v68];
+      #tmp4[v70] = review[reviewer_uid[v26], iid[v25]];
+        [stmt_out] liveout: {iid[v25], #tmp4[v70], reviewer_uid[v26]}
+        [stmt_in] livein: {iid[v25], #tmp4[v70], reviewer_uid[v26]}
+      r[v65] = #tmp4[v70];
         [stmt_out] liveout: {iid[v25], reviewer_uid[v26]}
         [stmt_in] livein: {iid[v25], reviewer_uid[v26]}
-      r#creation_date[v67] = review[reviewer_uid[v26], iid[v25]].creation_date;
+      r#creation_date[v69] = review[reviewer_uid[v26], iid[v25]].creation_date;
         [stmt_out] liveout: {iid[v25], reviewer_uid[v26]}
         [stmt_in] livein: {iid[v25], reviewer_uid[v26]}
-      r#i_id[v65] = review[reviewer_uid[v26], iid[v25]].i_id;
+      r#i_id[v67] = review[reviewer_uid[v26], iid[v25]].i_id;
         [stmt_out] liveout: {reviewer_uid[v26], iid[v25]}
         [stmt_in] livein: {reviewer_uid[v26], iid[v25]}
-      r#rating[v66] = review[reviewer_uid[v26], iid[v25]].rating;
-        [stmt_out] liveout: {iid[v25], reviewer_uid[v26], r#rating[v66]}
-        [stmt_in] livein: {iid[v25], reviewer_uid[v26], r#rating[v66]}
-      r#u_id[v64] = review[reviewer_uid[v26], iid[v25]].u_id;
-        [stmt_out] liveout: {r#rating[v66]}
-        [stmt_in] livein: {r#rating[v66]}
-      rating[v69] = r#rating[v66];
+      r#rating[v68] = review[reviewer_uid[v26], iid[v25]].rating;
+        [stmt_out] liveout: {r#rating[v68], iid[v25], reviewer_uid[v26]}
+        [stmt_in] livein: {r#rating[v68], iid[v25], reviewer_uid[v26]}
+      r#u_id[v66] = review[reviewer_uid[v26], iid[v25]].u_id;
+        [stmt_out] liveout: {r#rating[v68]}
+        [stmt_in] livein: {r#rating[v68]}
+      rating[v71] = r#rating[v68];
+        [stmt_out] liveout: {rating[v71]}
+        [stmt_in] livein: {rating[v71]}
+      #tmp5[v72] = to_unit[fn13](rating[v71]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -239,27 +248,30 @@ transaction GetItemReviewsByTrustedUser[fn19](iid[v27]: int, uid[v28]: int, revi
   hop5 {
     entry_block: bb5
     bb5:
-      livein: {reviewer_uid[v29], uid[v28], iid[v27]}
-        [stmt_in] livein: {uid[v28], reviewer_uid[v29], iid[v27]}
-      #tmp3[v75] = review[reviewer_uid[v29], iid[v27]];
-        [stmt_out] liveout: {uid[v28], iid[v27], #tmp3[v75], reviewer_uid[v29]}
-        [stmt_in] livein: {uid[v28], iid[v27], #tmp3[v75], reviewer_uid[v29]}
-      r[v70] = #tmp3[v75];
-        [stmt_out] liveout: {uid[v28], iid[v27], reviewer_uid[v29]}
-        [stmt_in] livein: {uid[v28], iid[v27], reviewer_uid[v29]}
-      r#creation_date[v74] = review[reviewer_uid[v29], iid[v27]].creation_date;
-        [stmt_out] liveout: {reviewer_uid[v29], iid[v27], uid[v28]}
-        [stmt_in] livein: {reviewer_uid[v29], iid[v27], uid[v28]}
-      r#i_id[v72] = review[reviewer_uid[v29], iid[v27]].i_id;
-        [stmt_out] liveout: {uid[v28], reviewer_uid[v29], iid[v27]}
-        [stmt_in] livein: {uid[v28], reviewer_uid[v29], iid[v27]}
-      r#rating[v73] = review[reviewer_uid[v29], iid[v27]].rating;
-        [stmt_out] liveout: {uid[v28], iid[v27], reviewer_uid[v29]}
-        [stmt_in] livein: {uid[v28], iid[v27], reviewer_uid[v29]}
-      r#u_id[v71] = review[reviewer_uid[v29], iid[v27]].u_id;
+      livein: {iid[v27], uid[v28], reviewer_uid[v29]}
+        [stmt_in] livein: {iid[v27], uid[v28], reviewer_uid[v29]}
+      #tmp6[v78] = review[reviewer_uid[v29], iid[v27]];
+        [stmt_out] liveout: {iid[v27], #tmp6[v78], reviewer_uid[v29], uid[v28]}
+        [stmt_in] livein: {iid[v27], #tmp6[v78], reviewer_uid[v29], uid[v28]}
+      r[v73] = #tmp6[v78];
+        [stmt_out] liveout: {r[v73], iid[v27], reviewer_uid[v29], uid[v28]}
+        [stmt_in] livein: {r[v73], iid[v27], reviewer_uid[v29], uid[v28]}
+      r#creation_date[v77] = review[reviewer_uid[v29], iid[v27]].creation_date;
+        [stmt_out] liveout: {iid[v27], r[v73], reviewer_uid[v29], uid[v28]}
+        [stmt_in] livein: {iid[v27], r[v73], reviewer_uid[v29], uid[v28]}
+      r#i_id[v75] = review[reviewer_uid[v29], iid[v27]].i_id;
+        [stmt_out] liveout: {iid[v27], r[v73], uid[v28], reviewer_uid[v29]}
+        [stmt_in] livein: {iid[v27], r[v73], uid[v28], reviewer_uid[v29]}
+      r#rating[v76] = review[reviewer_uid[v29], iid[v27]].rating;
+        [stmt_out] liveout: {uid[v28], iid[v27], reviewer_uid[v29], r[v73]}
+        [stmt_in] livein: {uid[v28], iid[v27], reviewer_uid[v29], r[v73]}
+      r#u_id[v74] = review[reviewer_uid[v29], iid[v27]].u_id;
+        [stmt_out] liveout: {uid[v28], r[v73], reviewer_uid[v29]}
+        [stmt_in] livein: {uid[v28], r[v73], reviewer_uid[v29]}
+      #tmp7[v79] = to_unit[fn13](r[v73]);
         [stmt_out] liveout: {uid[v28], reviewer_uid[v29]}
       hop_exit hop6;
-      liveout: {uid[v28], reviewer_uid[v29]}
+      liveout: {reviewer_uid[v29], uid[v28]}
   }
 
   hop6 {
@@ -267,19 +279,22 @@ transaction GetItemReviewsByTrustedUser[fn19](iid[v27]: int, uid[v28]: int, revi
     bb6 (preds: bb5):
       livein: {reviewer_uid[v29], uid[v28]}
         [stmt_in] livein: {uid[v28], reviewer_uid[v29]}
-      #tmp4[v80] = trust[uid[v28], reviewer_uid[v29]];
-        [stmt_out] liveout: {uid[v28], #tmp4[v80], reviewer_uid[v29]}
-        [stmt_in] livein: {uid[v28], #tmp4[v80], reviewer_uid[v29]}
-      t[v76] = #tmp4[v80];
-        [stmt_out] liveout: {reviewer_uid[v29], uid[v28]}
-        [stmt_in] livein: {reviewer_uid[v29], uid[v28]}
-      t#source_u_id[v77] = trust[uid[v28], reviewer_uid[v29]].source_u_id;
-        [stmt_out] liveout: {uid[v28], reviewer_uid[v29]}
-        [stmt_in] livein: {uid[v28], reviewer_uid[v29]}
-      t#target_u_id[v78] = trust[uid[v28], reviewer_uid[v29]].target_u_id;
-        [stmt_out] liveout: {reviewer_uid[v29], uid[v28]}
-        [stmt_in] livein: {reviewer_uid[v29], uid[v28]}
-      t#trust[v79] = trust[uid[v28], reviewer_uid[v29]].trust;
+      #tmp8[v84] = trust[uid[v28], reviewer_uid[v29]];
+        [stmt_out] liveout: {#tmp8[v84], reviewer_uid[v29], uid[v28]}
+        [stmt_in] livein: {#tmp8[v84], reviewer_uid[v29], uid[v28]}
+      t[v80] = #tmp8[v84];
+        [stmt_out] liveout: {t[v80], uid[v28], reviewer_uid[v29]}
+        [stmt_in] livein: {t[v80], uid[v28], reviewer_uid[v29]}
+      t#source_u_id[v81] = trust[uid[v28], reviewer_uid[v29]].source_u_id;
+        [stmt_out] liveout: {uid[v28], reviewer_uid[v29], t[v80]}
+        [stmt_in] livein: {uid[v28], reviewer_uid[v29], t[v80]}
+      t#target_u_id[v82] = trust[uid[v28], reviewer_uid[v29]].target_u_id;
+        [stmt_out] liveout: {reviewer_uid[v29], uid[v28], t[v80]}
+        [stmt_in] livein: {reviewer_uid[v29], uid[v28], t[v80]}
+      t#trust[v83] = trust[uid[v28], reviewer_uid[v29]].trust;
+        [stmt_out] liveout: {t[v80]}
+        [stmt_in] livein: {t[v80]}
+      #tmp9[v85] = to_unit[fn13](t[v80]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -294,36 +309,42 @@ transaction GetReviewItemById[fn20](iid[v30]: int, reviewer_uid[v31]: int)
   hop7 {
     entry_block: bb7
     bb7:
-      livein: {reviewer_uid[v31], iid[v30]}
+      livein: {iid[v30], reviewer_uid[v31]}
         [stmt_in] livein: {iid[v30], reviewer_uid[v31]}
-      #tmp5[v86] = review[reviewer_uid[v31], iid[v30]];
-        [stmt_out] liveout: {reviewer_uid[v31], #tmp5[v86], iid[v30]}
-        [stmt_in] livein: {reviewer_uid[v31], #tmp5[v86], iid[v30]}
-      r[v81] = #tmp5[v86];
-        [stmt_out] liveout: {iid[v30], reviewer_uid[v31]}
-        [stmt_in] livein: {iid[v30], reviewer_uid[v31]}
-      r#creation_date[v85] = review[reviewer_uid[v31], iid[v30]].creation_date;
-        [stmt_out] liveout: {iid[v30], reviewer_uid[v31]}
-        [stmt_in] livein: {iid[v30], reviewer_uid[v31]}
-      r#i_id[v83] = review[reviewer_uid[v31], iid[v30]].i_id;
-        [stmt_out] liveout: {reviewer_uid[v31], iid[v30]}
-        [stmt_in] livein: {reviewer_uid[v31], iid[v30]}
-      r#rating[v84] = review[reviewer_uid[v31], iid[v30]].rating;
-        [stmt_out] liveout: {iid[v30], reviewer_uid[v31]}
-        [stmt_in] livein: {iid[v30], reviewer_uid[v31]}
-      r#u_id[v82] = review[reviewer_uid[v31], iid[v30]].u_id;
+      #tmp10[v91] = review[reviewer_uid[v31], iid[v30]];
+        [stmt_out] liveout: {#tmp10[v91], reviewer_uid[v31], iid[v30]}
+        [stmt_in] livein: {#tmp10[v91], reviewer_uid[v31], iid[v30]}
+      r[v86] = #tmp10[v91];
+        [stmt_out] liveout: {r[v86], reviewer_uid[v31], iid[v30]}
+        [stmt_in] livein: {r[v86], reviewer_uid[v31], iid[v30]}
+      r#creation_date[v90] = review[reviewer_uid[v31], iid[v30]].creation_date;
+        [stmt_out] liveout: {reviewer_uid[v31], r[v86], iid[v30]}
+        [stmt_in] livein: {reviewer_uid[v31], r[v86], iid[v30]}
+      r#i_id[v88] = review[reviewer_uid[v31], iid[v30]].i_id;
+        [stmt_out] liveout: {r[v86], iid[v30], reviewer_uid[v31]}
+        [stmt_in] livein: {r[v86], iid[v30], reviewer_uid[v31]}
+      r#rating[v89] = review[reviewer_uid[v31], iid[v30]].rating;
+        [stmt_out] liveout: {reviewer_uid[v31], r[v86], iid[v30]}
+        [stmt_in] livein: {reviewer_uid[v31], r[v86], iid[v30]}
+      r#u_id[v87] = review[reviewer_uid[v31], iid[v30]].u_id;
+        [stmt_out] liveout: {r[v86], iid[v30]}
+        [stmt_in] livein: {r[v86], iid[v30]}
+      #tmp11[v92] = to_unit[fn13](r[v86]);
         [stmt_out] liveout: {iid[v30]}
         [stmt_in] livein: {iid[v30]}
-      #tmp6[v90] = item[iid[v30]];
-        [stmt_out] liveout: {iid[v30], #tmp6[v90]}
-        [stmt_in] livein: {iid[v30], #tmp6[v90]}
-      i[v87] = #tmp6[v90];
-        [stmt_out] liveout: {iid[v30]}
-        [stmt_in] livein: {iid[v30]}
-      i#i_id[v88] = item[iid[v30]].i_id;
-        [stmt_out] liveout: {iid[v30]}
-        [stmt_in] livein: {iid[v30]}
-      i#title[v89] = item[iid[v30]].title;
+      #tmp12[v96] = item[iid[v30]];
+        [stmt_out] liveout: {#tmp12[v96], iid[v30]}
+        [stmt_in] livein: {#tmp12[v96], iid[v30]}
+      i[v93] = #tmp12[v96];
+        [stmt_out] liveout: {iid[v30], i[v93]}
+        [stmt_in] livein: {iid[v30], i[v93]}
+      i#i_id[v94] = item[iid[v30]].i_id;
+        [stmt_out] liveout: {i[v93], iid[v30]}
+        [stmt_in] livein: {i[v93], iid[v30]}
+      i#title[v95] = item[iid[v30]].title;
+        [stmt_out] liveout: {i[v93]}
+        [stmt_in] livein: {i[v93]}
+      #tmp13[v97] = to_unit[fn13](i[v93]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -339,17 +360,20 @@ transaction GetReviewsByUser[fn21](uid[v32]: int, iid[v33]: int)
     entry_block: bb8
     bb8:
       livein: {uid[v32], iid[v33]}
-        [stmt_in] livein: {iid[v33], uid[v32]}
-      #tmp7[v94] = useracct[uid[v32]];
-        [stmt_out] liveout: {iid[v33], #tmp7[v94], uid[v32]}
-        [stmt_in] livein: {iid[v33], #tmp7[v94], uid[v32]}
-      u[v91] = #tmp7[v94];
-        [stmt_out] liveout: {iid[v33], uid[v32]}
-        [stmt_in] livein: {iid[v33], uid[v32]}
-      u#name[v93] = useracct[uid[v32]].name;
-        [stmt_out] liveout: {uid[v32], iid[v33]}
         [stmt_in] livein: {uid[v32], iid[v33]}
-      u#u_id[v92] = useracct[uid[v32]].u_id;
+      #tmp14[v101] = useracct[uid[v32]];
+        [stmt_out] liveout: {iid[v33], #tmp14[v101], uid[v32]}
+        [stmt_in] livein: {iid[v33], #tmp14[v101], uid[v32]}
+      u[v98] = #tmp14[v101];
+        [stmt_out] liveout: {uid[v32], iid[v33], u[v98]}
+        [stmt_in] livein: {uid[v32], iid[v33], u[v98]}
+      u#name[v100] = useracct[uid[v32]].name;
+        [stmt_out] liveout: {u[v98], uid[v32], iid[v33]}
+        [stmt_in] livein: {u[v98], uid[v32], iid[v33]}
+      u#u_id[v99] = useracct[uid[v32]].u_id;
+        [stmt_out] liveout: {iid[v33], u[v98], uid[v32]}
+        [stmt_in] livein: {iid[v33], u[v98], uid[v32]}
+      #tmp15[v102] = to_unit[fn13](u[v98]);
         [stmt_out] liveout: {uid[v32], iid[v33]}
       hop_exit hop9;
       liveout: {uid[v32], iid[v33]}
@@ -358,24 +382,27 @@ transaction GetReviewsByUser[fn21](uid[v32]: int, iid[v33]: int)
   hop9 {
     entry_block: bb9
     bb9 (preds: bb8):
-      livein: {iid[v33], uid[v32]}
-        [stmt_in] livein: {uid[v32], iid[v33]}
-      #tmp8[v100] = review[uid[v32], iid[v33]];
-        [stmt_out] liveout: {uid[v32], #tmp8[v100], iid[v33]}
-        [stmt_in] livein: {uid[v32], #tmp8[v100], iid[v33]}
-      r[v95] = #tmp8[v100];
-        [stmt_out] liveout: {iid[v33], uid[v32]}
+      livein: {uid[v32], iid[v33]}
         [stmt_in] livein: {iid[v33], uid[v32]}
-      r#creation_date[v99] = review[uid[v32], iid[v33]].creation_date;
-        [stmt_out] liveout: {uid[v32], iid[v33]}
-        [stmt_in] livein: {uid[v32], iid[v33]}
-      r#i_id[v97] = review[uid[v32], iid[v33]].i_id;
-        [stmt_out] liveout: {uid[v32], iid[v33]}
-        [stmt_in] livein: {uid[v32], iid[v33]}
-      r#rating[v98] = review[uid[v32], iid[v33]].rating;
-        [stmt_out] liveout: {iid[v33], uid[v32]}
-        [stmt_in] livein: {iid[v33], uid[v32]}
-      r#u_id[v96] = review[uid[v32], iid[v33]].u_id;
+      #tmp16[v108] = review[uid[v32], iid[v33]];
+        [stmt_out] liveout: {iid[v33], #tmp16[v108], uid[v32]}
+        [stmt_in] livein: {iid[v33], #tmp16[v108], uid[v32]}
+      r[v103] = #tmp16[v108];
+        [stmt_out] liveout: {uid[v32], iid[v33], r[v103]}
+        [stmt_in] livein: {uid[v32], iid[v33], r[v103]}
+      r#creation_date[v107] = review[uid[v32], iid[v33]].creation_date;
+        [stmt_out] liveout: {r[v103], uid[v32], iid[v33]}
+        [stmt_in] livein: {r[v103], uid[v32], iid[v33]}
+      r#i_id[v105] = review[uid[v32], iid[v33]].i_id;
+        [stmt_out] liveout: {r[v103], uid[v32], iid[v33]}
+        [stmt_in] livein: {r[v103], uid[v32], iid[v33]}
+      r#rating[v106] = review[uid[v32], iid[v33]].rating;
+        [stmt_out] liveout: {uid[v32], iid[v33], r[v103]}
+        [stmt_in] livein: {uid[v32], iid[v33], r[v103]}
+      r#u_id[v104] = review[uid[v32], iid[v33]].u_id;
+        [stmt_out] liveout: {r[v103]}
+        [stmt_in] livein: {r[v103]}
+      #tmp17[v109] = to_unit[fn13](r[v103]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -392,25 +419,25 @@ transaction UpdateItemTitle[fn22](iid[v34]: int, title[v35]: string)
     bb10:
       livein: {iid[v34], title[v35]}
         [stmt_in] livein: {iid[v34], title[v35]}
-      #tmp9[v104] = item[iid[v34]];
-        [stmt_out] liveout: {#tmp9[v104], title[v35], iid[v34]}
-        [stmt_in] livein: {#tmp9[v104], title[v35], iid[v34]}
-      i[v101] = #tmp9[v104];
+      #tmp18[v113] = item[iid[v34]];
+        [stmt_out] liveout: {title[v35], iid[v34], #tmp18[v113]}
+        [stmt_in] livein: {title[v35], iid[v34], #tmp18[v113]}
+      i[v110] = #tmp18[v113];
         [stmt_out] liveout: {iid[v34], title[v35]}
         [stmt_in] livein: {iid[v34], title[v35]}
-      i#i_id[v102] = item[iid[v34]].i_id;
-        [stmt_out] liveout: {iid[v34], title[v35], i#i_id[v102]}
-        [stmt_in] livein: {iid[v34], title[v35], i#i_id[v102]}
-      i#title[v103] = item[iid[v34]].title;
-        [stmt_out] liveout: {title[v35], iid[v34], i#i_id[v102]}
-        [stmt_in] livein: {title[v35], iid[v34], i#i_id[v102]}
-      i#title[v103] = title[v35];
-        [stmt_out] liveout: {i#title[v103], iid[v34], i#i_id[v102]}
-        [stmt_in] livein: {i#title[v103], iid[v34], i#i_id[v102]}
-      item[iid[v34]].i_id = i#i_id[v102];
-        [stmt_out] liveout: {i#title[v103], iid[v34]}
-        [stmt_in] livein: {i#title[v103], iid[v34]}
-      item[iid[v34]].title = i#title[v103];
+      i#i_id[v111] = item[iid[v34]].i_id;
+        [stmt_out] liveout: {iid[v34], i#i_id[v111], title[v35]}
+        [stmt_in] livein: {iid[v34], i#i_id[v111], title[v35]}
+      i#title[v112] = item[iid[v34]].title;
+        [stmt_out] liveout: {title[v35], iid[v34], i#i_id[v111]}
+        [stmt_in] livein: {title[v35], iid[v34], i#i_id[v111]}
+      i#title[v112] = title[v35];
+        [stmt_out] liveout: {iid[v34], i#title[v112], i#i_id[v111]}
+        [stmt_in] livein: {iid[v34], i#title[v112], i#i_id[v111]}
+      item[iid[v34]].i_id = i#i_id[v111];
+        [stmt_out] liveout: {iid[v34], i#title[v112]}
+        [stmt_in] livein: {iid[v34], i#title[v112]}
+      item[iid[v34]].title = i#title[v112];
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -425,39 +452,39 @@ transaction UpdateReviewRating[fn23](iid[v36]: int, uid[v37]: int, rating[v38]: 
   hop11 {
     entry_block: bb11
     bb11:
-      livein: {iid[v36], rating[v38], uid[v37]}
-        [stmt_in] livein: {uid[v37], iid[v36], rating[v38]}
-      #tmp10[v110] = review[uid[v37], iid[v36]];
-        [stmt_out] liveout: {iid[v36], #tmp10[v110], uid[v37], rating[v38]}
-        [stmt_in] livein: {iid[v36], #tmp10[v110], uid[v37], rating[v38]}
-      r[v105] = #tmp10[v110];
-        [stmt_out] liveout: {uid[v37], iid[v36], rating[v38]}
-        [stmt_in] livein: {uid[v37], iid[v36], rating[v38]}
-      r#creation_date[v109] = review[uid[v37], iid[v36]].creation_date;
-        [stmt_out] liveout: {rating[v38], r#creation_date[v109], uid[v37], iid[v36]}
-        [stmt_in] livein: {rating[v38], r#creation_date[v109], uid[v37], iid[v36]}
-      r#i_id[v107] = review[uid[v37], iid[v36]].i_id;
-        [stmt_out] liveout: {r#creation_date[v109], r#i_id[v107], uid[v37], rating[v38], iid[v36]}
-        [stmt_in] livein: {r#creation_date[v109], r#i_id[v107], uid[v37], rating[v38], iid[v36]}
-      r#rating[v108] = review[uid[v37], iid[v36]].rating;
-        [stmt_out] liveout: {r#creation_date[v109], r#i_id[v107], uid[v37], iid[v36], rating[v38]}
-        [stmt_in] livein: {r#creation_date[v109], r#i_id[v107], uid[v37], iid[v36], rating[v38]}
-      r#u_id[v106] = review[uid[v37], iid[v36]].u_id;
-        [stmt_out] liveout: {rating[v38], r#u_id[v106], uid[v37], r#i_id[v107], iid[v36], r#creation_date[v109]}
-        [stmt_in] livein: {rating[v38], r#u_id[v106], uid[v37], r#i_id[v107], iid[v36], r#creation_date[v109]}
-      r#rating[v108] = rating[v38];
-        [stmt_out] liveout: {uid[v37], r#creation_date[v109], r#rating[v108], r#u_id[v106], iid[v36], r#i_id[v107]}
-        [stmt_in] livein: {uid[v37], r#creation_date[v109], r#rating[v108], r#u_id[v106], iid[v36], r#i_id[v107]}
-      review[uid[v37], iid[v36]].creation_date = r#creation_date[v109];
-        [stmt_out] liveout: {uid[v37], r#u_id[v106], r#rating[v108], iid[v36], r#i_id[v107]}
-        [stmt_in] livein: {uid[v37], r#u_id[v106], r#rating[v108], iid[v36], r#i_id[v107]}
-      review[uid[v37], iid[v36]].i_id = r#i_id[v107];
-        [stmt_out] liveout: {r#u_id[v106], uid[v37], r#rating[v108], iid[v36]}
-        [stmt_in] livein: {r#u_id[v106], uid[v37], r#rating[v108], iid[v36]}
-      review[uid[v37], iid[v36]].rating = r#rating[v108];
-        [stmt_out] liveout: {iid[v36], r#u_id[v106], uid[v37]}
-        [stmt_in] livein: {iid[v36], r#u_id[v106], uid[v37]}
-      review[uid[v37], iid[v36]].u_id = r#u_id[v106];
+      livein: {uid[v37], iid[v36], rating[v38]}
+        [stmt_in] livein: {uid[v37], rating[v38], iid[v36]}
+      #tmp19[v119] = review[uid[v37], iid[v36]];
+        [stmt_out] liveout: {iid[v36], rating[v38], #tmp19[v119], uid[v37]}
+        [stmt_in] livein: {iid[v36], rating[v38], #tmp19[v119], uid[v37]}
+      r[v114] = #tmp19[v119];
+        [stmt_out] liveout: {iid[v36], rating[v38], uid[v37]}
+        [stmt_in] livein: {iid[v36], rating[v38], uid[v37]}
+      r#creation_date[v118] = review[uid[v37], iid[v36]].creation_date;
+        [stmt_out] liveout: {r#creation_date[v118], rating[v38], iid[v36], uid[v37]}
+        [stmt_in] livein: {r#creation_date[v118], rating[v38], iid[v36], uid[v37]}
+      r#i_id[v116] = review[uid[v37], iid[v36]].i_id;
+        [stmt_out] liveout: {rating[v38], r#i_id[v116], uid[v37], r#creation_date[v118], iid[v36]}
+        [stmt_in] livein: {rating[v38], r#i_id[v116], uid[v37], r#creation_date[v118], iid[v36]}
+      r#rating[v117] = review[uid[v37], iid[v36]].rating;
+        [stmt_out] liveout: {rating[v38], r#i_id[v116], iid[v36], r#creation_date[v118], uid[v37]}
+        [stmt_in] livein: {rating[v38], r#i_id[v116], iid[v36], r#creation_date[v118], uid[v37]}
+      r#u_id[v115] = review[uid[v37], iid[v36]].u_id;
+        [stmt_out] liveout: {r#u_id[v115], r#i_id[v116], r#creation_date[v118], rating[v38], iid[v36], uid[v37]}
+        [stmt_in] livein: {r#u_id[v115], r#i_id[v116], r#creation_date[v118], rating[v38], iid[v36], uid[v37]}
+      r#rating[v117] = rating[v38];
+        [stmt_out] liveout: {r#creation_date[v118], r#rating[v117], r#i_id[v116], iid[v36], uid[v37], r#u_id[v115]}
+        [stmt_in] livein: {r#creation_date[v118], r#rating[v117], r#i_id[v116], iid[v36], uid[v37], r#u_id[v115]}
+      review[uid[v37], iid[v36]].creation_date = r#creation_date[v118];
+        [stmt_out] liveout: {uid[v37], r#u_id[v115], r#rating[v117], r#i_id[v116], iid[v36]}
+        [stmt_in] livein: {uid[v37], r#u_id[v115], r#rating[v117], r#i_id[v116], iid[v36]}
+      review[uid[v37], iid[v36]].i_id = r#i_id[v116];
+        [stmt_out] liveout: {r#u_id[v115], r#rating[v117], uid[v37], iid[v36]}
+        [stmt_in] livein: {r#u_id[v115], r#rating[v117], uid[v37], iid[v36]}
+      review[uid[v37], iid[v36]].rating = r#rating[v117];
+        [stmt_out] liveout: {r#u_id[v115], iid[v36], uid[v37]}
+        [stmt_in] livein: {r#u_id[v115], iid[v36], uid[v37]}
+      review[uid[v37], iid[v36]].u_id = r#u_id[v115];
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -472,33 +499,33 @@ transaction UpdateTrustRating[fn24](source_uid[v39]: int, target_uid[v40]: int, 
   hop12 {
     entry_block: bb12
     bb12:
-      livein: {source_uid[v39], target_uid[v40], trust_val[v41]}
+      livein: {target_uid[v40], trust_val[v41], source_uid[v39]}
+        [stmt_in] livein: {source_uid[v39], target_uid[v40], trust_val[v41]}
+      #tmp20[v124] = trust[source_uid[v39], target_uid[v40]];
+        [stmt_out] liveout: {trust_val[v41], #tmp20[v124], source_uid[v39], target_uid[v40]}
+        [stmt_in] livein: {trust_val[v41], #tmp20[v124], source_uid[v39], target_uid[v40]}
+      t[v120] = #tmp20[v124];
+        [stmt_out] liveout: {trust_val[v41], target_uid[v40], source_uid[v39]}
         [stmt_in] livein: {trust_val[v41], target_uid[v40], source_uid[v39]}
-      #tmp11[v115] = trust[source_uid[v39], target_uid[v40]];
-        [stmt_out] liveout: {source_uid[v39], trust_val[v41], #tmp11[v115], target_uid[v40]}
-        [stmt_in] livein: {source_uid[v39], trust_val[v41], #tmp11[v115], target_uid[v40]}
-      t[v111] = #tmp11[v115];
-        [stmt_out] liveout: {target_uid[v40], source_uid[v39], trust_val[v41]}
-        [stmt_in] livein: {target_uid[v40], source_uid[v39], trust_val[v41]}
-      t#source_u_id[v112] = trust[source_uid[v39], target_uid[v40]].source_u_id;
-        [stmt_out] liveout: {t#source_u_id[v112], trust_val[v41], source_uid[v39], target_uid[v40]}
-        [stmt_in] livein: {t#source_u_id[v112], trust_val[v41], source_uid[v39], target_uid[v40]}
-      t#target_u_id[v113] = trust[source_uid[v39], target_uid[v40]].target_u_id;
-        [stmt_out] liveout: {source_uid[v39], t#target_u_id[v113], trust_val[v41], t#source_u_id[v112], target_uid[v40]}
-        [stmt_in] livein: {source_uid[v39], t#target_u_id[v113], trust_val[v41], t#source_u_id[v112], target_uid[v40]}
-      t#trust[v114] = trust[source_uid[v39], target_uid[v40]].trust;
-        [stmt_out] liveout: {t#source_u_id[v112], target_uid[v40], source_uid[v39], t#target_u_id[v113], trust_val[v41]}
-        [stmt_in] livein: {t#source_u_id[v112], target_uid[v40], source_uid[v39], t#target_u_id[v113], trust_val[v41]}
-      t#trust[v114] = trust_val[v41];
-        [stmt_out] liveout: {t#source_u_id[v112], target_uid[v40], source_uid[v39], t#target_u_id[v113], t#trust[v114]}
-        [stmt_in] livein: {t#source_u_id[v112], target_uid[v40], source_uid[v39], t#target_u_id[v113], t#trust[v114]}
-      trust[source_uid[v39], target_uid[v40]].source_u_id = t#source_u_id[v112];
-        [stmt_out] liveout: {source_uid[v39], target_uid[v40], t#target_u_id[v113], t#trust[v114]}
-        [stmt_in] livein: {source_uid[v39], target_uid[v40], t#target_u_id[v113], t#trust[v114]}
-      trust[source_uid[v39], target_uid[v40]].target_u_id = t#target_u_id[v113];
-        [stmt_out] liveout: {target_uid[v40], source_uid[v39], t#trust[v114]}
-        [stmt_in] livein: {target_uid[v40], source_uid[v39], t#trust[v114]}
-      trust[source_uid[v39], target_uid[v40]].trust = t#trust[v114];
+      t#source_u_id[v121] = trust[source_uid[v39], target_uid[v40]].source_u_id;
+        [stmt_out] liveout: {trust_val[v41], target_uid[v40], t#source_u_id[v121], source_uid[v39]}
+        [stmt_in] livein: {trust_val[v41], target_uid[v40], t#source_u_id[v121], source_uid[v39]}
+      t#target_u_id[v122] = trust[source_uid[v39], target_uid[v40]].target_u_id;
+        [stmt_out] liveout: {trust_val[v41], target_uid[v40], t#source_u_id[v121], t#target_u_id[v122], source_uid[v39]}
+        [stmt_in] livein: {trust_val[v41], target_uid[v40], t#source_u_id[v121], t#target_u_id[v122], source_uid[v39]}
+      t#trust[v123] = trust[source_uid[v39], target_uid[v40]].trust;
+        [stmt_out] liveout: {target_uid[v40], source_uid[v39], t#source_u_id[v121], t#target_u_id[v122], trust_val[v41]}
+        [stmt_in] livein: {target_uid[v40], source_uid[v39], t#source_u_id[v121], t#target_u_id[v122], trust_val[v41]}
+      t#trust[v123] = trust_val[v41];
+        [stmt_out] liveout: {source_uid[v39], t#source_u_id[v121], t#target_u_id[v122], t#trust[v123], target_uid[v40]}
+        [stmt_in] livein: {source_uid[v39], t#source_u_id[v121], t#target_u_id[v122], t#trust[v123], target_uid[v40]}
+      trust[source_uid[v39], target_uid[v40]].source_u_id = t#source_u_id[v121];
+        [stmt_out] liveout: {t#target_u_id[v122], t#trust[v123], target_uid[v40], source_uid[v39]}
+        [stmt_in] livein: {t#target_u_id[v122], t#trust[v123], target_uid[v40], source_uid[v39]}
+      trust[source_uid[v39], target_uid[v40]].target_u_id = t#target_u_id[v122];
+        [stmt_out] liveout: {t#trust[v123], source_uid[v39], target_uid[v40]}
+        [stmt_in] livein: {t#trust[v123], source_uid[v39], target_uid[v40]}
+      trust[source_uid[v39], target_uid[v40]].trust = t#trust[v123];
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -513,27 +540,27 @@ transaction UpdateUserName[fn25](uid[v42]: int, name[v43]: string)
   hop13 {
     entry_block: bb13
     bb13:
-      livein: {uid[v42], name[v43]}
+      livein: {name[v43], uid[v42]}
+        [stmt_in] livein: {name[v43], uid[v42]}
+      #tmp21[v128] = useracct[uid[v42]];
+        [stmt_out] liveout: {name[v43], #tmp21[v128], uid[v42]}
+        [stmt_in] livein: {name[v43], #tmp21[v128], uid[v42]}
+      u[v125] = #tmp21[v128];
+        [stmt_out] liveout: {uid[v42], name[v43]}
         [stmt_in] livein: {uid[v42], name[v43]}
-      #tmp12[v119] = useracct[uid[v42]];
-        [stmt_out] liveout: {uid[v42], #tmp12[v119], name[v43]}
-        [stmt_in] livein: {uid[v42], #tmp12[v119], name[v43]}
-      u[v116] = #tmp12[v119];
+      u#name[v127] = useracct[uid[v42]].name;
         [stmt_out] liveout: {name[v43], uid[v42]}
         [stmt_in] livein: {name[v43], uid[v42]}
-      u#name[v118] = useracct[uid[v42]].name;
-        [stmt_out] liveout: {name[v43], uid[v42]}
-        [stmt_in] livein: {name[v43], uid[v42]}
-      u#u_id[v117] = useracct[uid[v42]].u_id;
-        [stmt_out] liveout: {name[v43], u#u_id[v117], uid[v42]}
-        [stmt_in] livein: {name[v43], u#u_id[v117], uid[v42]}
-      u#name[v118] = name[v43];
-        [stmt_out] liveout: {u#name[v118], u#u_id[v117], uid[v42]}
-        [stmt_in] livein: {u#name[v118], u#u_id[v117], uid[v42]}
-      useracct[uid[v42]].name = u#name[v118];
-        [stmt_out] liveout: {u#u_id[v117], uid[v42]}
-        [stmt_in] livein: {u#u_id[v117], uid[v42]}
-      useracct[uid[v42]].u_id = u#u_id[v117];
+      u#u_id[v126] = useracct[uid[v42]].u_id;
+        [stmt_out] liveout: {name[v43], u#u_id[v126], uid[v42]}
+        [stmt_in] livein: {name[v43], u#u_id[v126], uid[v42]}
+      u#name[v127] = name[v43];
+        [stmt_out] liveout: {uid[v42], u#name[v127], u#u_id[v126]}
+        [stmt_in] livein: {uid[v42], u#name[v127], u#u_id[v126]}
+      useracct[uid[v42]].name = u#name[v127];
+        [stmt_out] liveout: {uid[v42], u#u_id[v126]}
+        [stmt_in] livein: {uid[v42], u#u_id[v126]}
+      useracct[uid[v42]].u_id = u#u_id[v126];
         [stmt_out] liveout: {}
       return;
       liveout: {}

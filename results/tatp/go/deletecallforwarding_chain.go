@@ -19,9 +19,29 @@ func DeletecallforwardingHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, err
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var s_id uint64
+	var sf_type uint64
+	var start_time uint64
+	var cf Callforwarding
+	var _tmp0 Callforwarding
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Callforwarding
+
+	s_id = toUint64(params["s_id"])
+	sf_type = toUint64(params["sf_type"])
+	start_time = toUint64(params["start_time"])
+
 	goto BB1
 
 BB1:
+	// TableGet: Callforwarding
+	keyBytes1, row1 = getCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time})
+	rwSet = AddRWSet(rwSet, "Callforwarding", keyBytes1)
+	_tmp0 = row1
+	cf = _tmp0
+	_ = cf
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +52,20 @@ BB1:
 
 // DeletecallforwardingHop0Par calculates the partition for hop 0 without database access.
 func DeletecallforwardingHop0Par(params map[string]string) uint64 {
+	var s_id uint64
+	var sf_type uint64
+	var start_time uint64
+	var cf Callforwarding
+	var _tmp0 Callforwarding
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Callforwarding
+
+	s_id = toUint64(params["s_id"])
+	sf_type = toUint64(params["sf_type"])
+	start_time = toUint64(params["start_time"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +74,14 @@ func DeletecallforwardingHop0Par(params map[string]string) uint64 {
 	goto BB1
 
 BB1:
+	// First table access - calculate partition: Callforwarding
+	if true { return getCallforwardingPar(CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time}) }
+	// TableGet: Callforwarding
+	keyBytes1, row1 = getCallforwarding(tx, CallforwardingKey{s_id: s_id, sf_type: sf_type, start_time: start_time})
+	rwSet = AddRWSet(rwSet, "Callforwarding", keyBytes1)
+	_tmp0 = row1
+	cf = _tmp0
+	_ = cf
 	return 0
 }
 

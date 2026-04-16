@@ -88,15 +88,15 @@ axiom (forall
     <==>
     (custid_1 == custid_2 && bal_1 == bal_2)
 );
-var Checking_bal : [int]real;
-const TBL_Accounts : Table (Accounts);
-var Accounts_custid : [int]int;
-const __slice__ : int;
-const TBL_Savings : Table (Savings);
 const __shards__ : int;
 var Savings_custid : [int]int;
 const TBL_Checking : Table (Checking);
+var Checking_bal : [int]real;
+var Accounts_custid : [int]int;
+const TBL_Savings : Table (Savings);
 var Accounts_name : [int]String;
+const __slice__ : int;
+const TBL_Accounts : Table (Accounts);
 var Savings_bal : [int]real;
 var Checking_custid : [int]int;
 procedure verify_hop_partitions_WriteCheck(custId: int, amount: real)
@@ -106,47 +106,47 @@ modifies Checking_bal, Checking_custid;
   var s8_custId : int;
   var s8_c#bal : real;
   var s8_c#custid : int;
-  var s8_#tmp21 : real;
-  var s8_total : real;
-  var s8_#tmp22 : bool;
-  var s8_amount : real;
-  var s8_#tmp23 : real;
-  var s8_#tmp24 : real;
   var s8_#tmp25 : real;
+  var s8_total : real;
+  var s8_#tmp26 : bool;
+  var s8_amount : real;
+  var s8_#tmp27 : real;
+  var s8_#tmp28 : real;
+  var s8_#tmp29 : real;
 
   // Hop partition verification for function 'WriteCheck'
   s8_block8:
     s8_s#bal := Savings_bal[s8_custId];
     s8_c#bal := Checking_bal[s8_custId];
-  // Partition check hop 8 func 'f' tables 'Savings'=>'Checking' keys [k0=custId] first_span Span { start: 2935, end: 2958, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 2991, end: 3015, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 8) (table_id . 2) (span ((start . 2991) (end . 3015) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s8_custId == s8_custId);
+  // Partition check hop 8 func 'f' tables 'Savings'=>'Checking' keys [k0=custId] first_span Span { start: 3019, end: 3042, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 3075, end: 3099, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 8) (table_id . 2) (span ((start . 3075) (end . 3099) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s8_custId == s8_custId);
     s8_c#custid := Checking_custid[s8_custId];
-  // Partition check hop 8 func 'f' tables 'Savings'=>'Checking' keys [k0=custId] first_span Span { start: 2935, end: 2958, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 2991, end: 3015, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 8) (table_id . 2) (span ((start . 2991) (end . 3015) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s8_custId == s8_custId);
-    s8_#tmp21 := s8_s#bal + s8_c#bal;
-    s8_total := s8_#tmp21;
-    s8_#tmp22 := s8_total < s8_amount;
-    if (s8_#tmp22) {
+  // Partition check hop 8 func 'f' tables 'Savings'=>'Checking' keys [k0=custId] first_span Span { start: 3019, end: 3042, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 3075, end: 3099, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 8) (table_id . 2) (span ((start . 3075) (end . 3099) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s8_custId == s8_custId);
+    s8_#tmp25 := s8_s#bal + s8_c#bal;
+    s8_total := s8_#tmp25;
+    s8_#tmp26 := s8_total < s8_amount;
+    if (s8_#tmp26) {
       goto s8_block9;
     } else {
       goto s8_block11;
     }
   s8_block9:
-    s8_#tmp23 := s8_c#bal - s8_amount;
-    s8_#tmp24 := s8_#tmp23 - 1.0000000;
-    s8_c#bal := s8_#tmp24;
+    s8_#tmp27 := s8_c#bal - s8_amount;
+    s8_#tmp28 := s8_#tmp27 - 1.0000000;
+    s8_c#bal := s8_#tmp28;
     goto s8_block10;
   s8_block10:
     Checking_bal := Checking_bal[s8_custId := s8_c#bal];
-  // Partition check hop 8 func 'f' tables 'Savings'=>'Checking' keys [k0=custId] first_span Span { start: 2935, end: 2958, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 3264, end: 3292, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 8) (table_id . 2) (span ((start . 3264) (end . 3292) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s8_custId == s8_custId);
+  // Partition check hop 8 func 'f' tables 'Savings'=>'Checking' keys [k0=custId] first_span Span { start: 3019, end: 3042, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 3348, end: 3376, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 8) (table_id . 2) (span ((start . 3348) (end . 3376) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s8_custId == s8_custId);
     Checking_custid := Checking_custid[s8_custId := s8_c#custid];
-  // Partition check hop 8 func 'f' tables 'Savings'=>'Checking' keys [k0=custId] first_span Span { start: 2935, end: 2958, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 3264, end: 3292, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 8) (table_id . 2) (span ((start . 3264) (end . 3292) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s8_custId == s8_custId);
+  // Partition check hop 8 func 'f' tables 'Savings'=>'Checking' keys [k0=custId] first_span Span { start: 3019, end: 3042, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 3348, end: 3376, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 8) (table_id . 2) (span ((start . 3348) (end . 3376) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s8_custId == s8_custId);
     goto s8_epilogue;
   s8_block11:
-    s8_#tmp25 := s8_c#bal - s8_amount;
-    s8_c#bal := s8_#tmp25;
+    s8_#tmp29 := s8_c#bal - s8_amount;
+    s8_c#bal := s8_#tmp29;
     goto s8_block10;
   s8_hop_exit:
   s8_epilogue:

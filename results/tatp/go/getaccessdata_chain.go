@@ -19,9 +19,27 @@ func GetaccessdataHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var s_id uint64
+	var ai_type uint64
+	var ai_data1 uint64
+	var d1 uint64
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 Accessinfo
+
+	s_id = toUint64(params["s_id"])
+	ai_type = toUint64(params["ai_type"])
+
 	goto BB2
 
 BB2:
+	// TableGet: Accessinfo
+	keyBytes1, row1 = getAccessinfo(tx, AccessinfoKey{s_id: s_id, ai_type: ai_type})
+	rwSet = AddRWSet(rwSet, "Accessinfo", keyBytes1)
+	ai_data1 = row1.data1
+	d1 = ai_data1
+	_ = d1
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +50,18 @@ BB2:
 
 // GetaccessdataHop0Par calculates the partition for hop 0 without database access.
 func GetaccessdataHop0Par(params map[string]string) uint64 {
+	var s_id uint64
+	var ai_type uint64
+	var ai_data1 uint64
+	var d1 uint64
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 Accessinfo
+
+	s_id = toUint64(params["s_id"])
+	ai_type = toUint64(params["ai_type"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +70,14 @@ func GetaccessdataHop0Par(params map[string]string) uint64 {
 	goto BB2
 
 BB2:
+	// First table access - calculate partition: Accessinfo
+	if true { return getAccessinfoPar(AccessinfoKey{s_id: s_id, ai_type: ai_type}) }
+	// TableGet: Accessinfo
+	keyBytes1, row1 = getAccessinfo(tx, AccessinfoKey{s_id: s_id, ai_type: ai_type})
+	rwSet = AddRWSet(rwSet, "Accessinfo", keyBytes1)
+	ai_data1 = row1.data1
+	d1 = ai_data1
+	_ = d1
 	return 0
 }
 

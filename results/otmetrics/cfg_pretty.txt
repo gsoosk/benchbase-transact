@@ -119,27 +119,30 @@ transaction GetSessionRange[fn16](source_id[v21]: int, session_low[v22]: int, se
   hop1 {
     entry_block: bb1
     bb1:
-      livein: {created_time[v25], session_low[v22], source_id[v21]}
-        [stmt_in] livein: {created_time[v25], session_low[v22], source_id[v21]}
-      #tmp0[v34] = observations[source_id[v21], session_low[v22], created_time[v25]];
-        [stmt_out] liveout: {source_id[v21], created_time[v25], session_low[v22], #tmp0[v34]}
-        [stmt_in] livein: {source_id[v21], created_time[v25], session_low[v22], #tmp0[v34]}
-      obs[v29] = #tmp0[v34];
-        [stmt_out] liveout: {session_low[v22], source_id[v21], created_time[v25]}
+      livein: {source_id[v21], created_time[v25], session_low[v22]}
         [stmt_in] livein: {session_low[v22], source_id[v21], created_time[v25]}
+      #tmp0[v34] = observations[source_id[v21], session_low[v22], created_time[v25]];
+        [stmt_out] liveout: {#tmp0[v34], session_low[v22], source_id[v21], created_time[v25]}
+        [stmt_in] livein: {#tmp0[v34], session_low[v22], source_id[v21], created_time[v25]}
+      obs[v29] = #tmp0[v34];
+        [stmt_out] liveout: {created_time[v25], session_low[v22], source_id[v21]}
+        [stmt_in] livein: {created_time[v25], session_low[v22], source_id[v21]}
       obs#created_time[v32] = observations[source_id[v21], session_low[v22], created_time[v25]].created_time;
+        [stmt_out] liveout: {created_time[v25], session_low[v22], source_id[v21]}
+        [stmt_in] livein: {created_time[v25], session_low[v22], source_id[v21]}
+      obs#session_id[v31] = observations[source_id[v21], session_low[v22], created_time[v25]].session_id;
+        [stmt_out] liveout: {source_id[v21], session_low[v22], created_time[v25]}
+        [stmt_in] livein: {source_id[v21], session_low[v22], created_time[v25]}
+      obs#source_id[v30] = observations[source_id[v21], session_low[v22], created_time[v25]].source_id;
         [stmt_out] liveout: {created_time[v25], source_id[v21], session_low[v22]}
         [stmt_in] livein: {created_time[v25], source_id[v21], session_low[v22]}
-      obs#session_id[v31] = observations[source_id[v21], session_low[v22], created_time[v25]].session_id;
-        [stmt_out] liveout: {session_low[v22], created_time[v25], source_id[v21]}
-        [stmt_in] livein: {session_low[v22], created_time[v25], source_id[v21]}
-      obs#source_id[v30] = observations[source_id[v21], session_low[v22], created_time[v25]].source_id;
-        [stmt_out] liveout: {session_low[v22], source_id[v21], created_time[v25]}
-        [stmt_in] livein: {session_low[v22], source_id[v21], created_time[v25]}
       obs#type_id[v33] = observations[source_id[v21], session_low[v22], created_time[v25]].type_id;
         [stmt_out] liveout: {obs#type_id[v33]}
         [stmt_in] livein: {obs#type_id[v33]}
       tid[v35] = obs#type_id[v33];
+        [stmt_out] liveout: {tid[v35]}
+        [stmt_in] livein: {tid[v35]}
+      #tmp1[v36] = to_unit[fn13](tid[v35]);
         [stmt_out] liveout: {}
       return;
       liveout: {}

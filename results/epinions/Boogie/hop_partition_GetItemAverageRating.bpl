@@ -107,27 +107,36 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
+var useracct_u_id : [int]int;
+var item_i_id : [int]int;
+var item_title : [int]String;
+var trust_trust : [int][int]int;
+const TBL_useracct : Table (useracct);
+var review_rating : [int][int]int;
+var review_i_id : [int][int]int;
+const TBL_item : Table (item);
+const TBL_review : Table (review);
 var useracct_name : [int]String;
 var review_u_id : [int][int]int;
-var trust_source_u_id : [int][int]int;
-const TBL_item : Table (item);
-const __shards__ : int;
-var item_i_id : [int]int;
-var review_creation_date : [int][int]int;
 const __slice__ : int;
-var review_rating : [int][int]int;
-var item_title : [int]String;
-var review_i_id : [int][int]int;
+var review_creation_date : [int][int]int;
 var trust_target_u_id : [int][int]int;
-const TBL_review : Table (review);
-const TBL_useracct : Table (useracct);
+const __shards__ : int;
+var trust_source_u_id : [int][int]int;
 const TBL_trust : Table (trust);
-var trust_trust : [int][int]int;
-var useracct_u_id : [int]int;
 procedure verify_hop_partitions_GetItemAverageRating(iid: int, reviewer_uid: int)
 {
+  var s4_r#rating : int;
+  var s4_reviewer_uid : int;
+  var s4_iid : int;
+  var s4_rating : int;
+  var s4_#tmp5 : unit;
+
   // Hop partition verification for function 'GetItemAverageRating'
   s4_block4:
+    s4_r#rating := review_rating[s4_reviewer_uid][s4_iid];
+    s4_rating := s4_r#rating;
+    s4_#tmp5 := to_unit(s4_rating);
     goto s4_epilogue;
   s4_hop_exit:
   s4_epilogue:

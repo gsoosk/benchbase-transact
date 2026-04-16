@@ -19,9 +19,25 @@ func ReadrecordHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r Usertable
+	var _tmp0 Usertable
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB1
 
 BB1:
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: keyname})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp0 = row1
+	r = _tmp0
+	_ = r
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +48,16 @@ BB1:
 
 // ReadrecordHop0Par calculates the partition for hop 0 without database access.
 func ReadrecordHop0Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r Usertable
+	var _tmp0 Usertable
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +66,14 @@ func ReadrecordHop0Par(params map[string]string) uint64 {
 	goto BB1
 
 BB1:
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: keyname}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: keyname})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp0 = row1
+	r = _tmp0
+	_ = r
 	return 0
 }
 

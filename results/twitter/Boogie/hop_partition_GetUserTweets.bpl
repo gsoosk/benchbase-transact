@@ -126,31 +126,40 @@ axiom (forall
     <==>
     (uid_1 == uid_2 && id_1 == id_2 && text_1 == text_2 && createdate_1 == createdate_2)
 );
-const TBL_USER : Table (USER);
-var FOLLOWS_f2 : [int][int]int;
-var FOLLOWERS_f2 : [int][int]int;
-var TWEETS_uid : [int][int]int;
-const TBL_FOLLOWERS : Table (FOLLOWERS);
-const __shards__ : int;
 const TBL_FOLLOWS : Table (FOLLOWS);
-var TWEETS_id : [int][int]int;
-var FOLLOWERS_f1 : [int][int]int;
-const TBL_TWEETS : Table (TWEETS);
-var TWEETS_text : [int][int]String;
-var TWEETS_createdate : [int][int]int;
-const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
-var ADDED_TWEETS_id : [int][int]int;
-var ADDED_TWEETS_text : [int][int]String;
-const __slice__ : int;
-var USER_name : [int]String;
-var ADDED_TWEETS_createdate : [int][int]int;
 var FOLLOWS_f1 : [int][int]int;
 var USER_uid : [int]int;
+var TWEETS_id : [int][int]int;
+var TWEETS_createdate : [int][int]int;
+var TWEETS_text : [int][int]String;
+const TBL_USER : Table (USER);
+var TWEETS_uid : [int][int]int;
+var FOLLOWERS_f1 : [int][int]int;
+var USER_name : [int]String;
+const TBL_FOLLOWERS : Table (FOLLOWERS);
+var FOLLOWERS_f2 : [int][int]int;
+const TBL_TWEETS : Table (TWEETS);
 var ADDED_TWEETS_uid : [int][int]int;
+var ADDED_TWEETS_id : [int][int]int;
+var ADDED_TWEETS_createdate : [int][int]int;
+var ADDED_TWEETS_text : [int][int]String;
+const __shards__ : int;
+var FOLLOWS_f2 : [int][int]int;
+const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
+const __slice__ : int;
 procedure verify_hop_partitions_GetUserTweets(uid: int, tweet_id: int)
 {
+  var s6_t#text : String;
+  var s6_uid : int;
+  var s6_tweet_id : int;
+  var s6_txt : String;
+  var s6_#tmp11 : unit;
+
   // Hop partition verification for function 'GetUserTweets'
   s6_block6:
+    s6_t#text := TWEETS_text[s6_uid][s6_tweet_id];
+    s6_txt := s6_t#text;
+    s6_#tmp11 := to_unit(s6_txt);
     goto s6_epilogue;
   s6_hop_exit:
   s6_epilogue:

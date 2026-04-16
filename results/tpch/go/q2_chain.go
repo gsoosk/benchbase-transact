@@ -19,9 +19,38 @@ func Q2Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var partkey uint64
+	var suppkey uint64
+	var ps_ps_supplycost float32
+	var p Part
+	var _tmp5 Part
+	var _tmp6 Unit
+	var cost float32
+	var _tmp7 Unit
+
+	var keyBytes1 []byte
+	var row1 Partsupp
+	var keyBytes2 []byte
+	var row2 Part
+
+	partkey = toUint64(params["partkey"])
+	suppkey = toUint64(params["suppkey"])
+
 	goto BB3
 
 BB3:
+	// TableGet: Partsupp
+	keyBytes1, row1 = getPartsupp(tx, PartsuppKey{ps_partkey: partkey, ps_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Partsupp", keyBytes1)
+	ps_ps_supplycost = row1.ps_supplycost
+	// TableGet: Part
+	keyBytes2, row2 = getPart(tx, PartKey{p_partkey: partkey})
+	rwSet = AddRWSet(rwSet, "Part", keyBytes2)
+	_tmp5 = row2
+	p = _tmp5
+	_ = p
+	cost = ps_ps_supplycost
+	_ = cost
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +63,25 @@ func Q2Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var suppkey uint64
+	var s_s_name string
+	var sname string
+	var _tmp9 Unit
+
+	var keyBytes1 []byte
+	var row1 Supplier
+
+	suppkey = toUint64(params["suppkey"])
+
 	goto BB4
 
 BB4:
+	// TableGet: Supplier
+	keyBytes1, row1 = getSupplier(tx, SupplierKey{s_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Supplier", keyBytes1)
+	s_s_name = row1.s_name
+	sname = s_s_name
+	_ = sname
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +94,38 @@ func Q2Hop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var nationkey uint64
+	var regionkey uint64
+	var n Nation
+	var _tmp10 Nation
+	var _tmp11 Unit
+	var r Region
+	var _tmp12 Region
+	var _tmp13 Unit
+
+	var keyBytes1 []byte
+	var row1 Nation
+	var keyBytes2 []byte
+	var row2 Region
+
+	nationkey = toUint64(params["nationkey"])
+	regionkey = toUint64(params["regionkey"])
+
 	goto BB5
 
 BB5:
+	// TableGet: Nation
+	keyBytes1, row1 = getNation(tx, NationKey{n_nationkey: nationkey})
+	rwSet = AddRWSet(rwSet, "Nation", keyBytes1)
+	_tmp10 = row1
+	n = _tmp10
+	_ = n
+	// TableGet: Region
+	keyBytes2, row2 = getRegion(tx, RegionKey{r_regionkey: regionkey})
+	rwSet = AddRWSet(rwSet, "Region", keyBytes2)
+	_tmp12 = row2
+	r = _tmp12
+	_ = r
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -62,6 +136,23 @@ BB5:
 
 // Q2Hop0Par calculates the partition for hop 0 without database access.
 func Q2Hop0Par(params map[string]string) uint64 {
+	var partkey uint64
+	var suppkey uint64
+	var ps_ps_supplycost float32
+	var p Part
+	var _tmp5 Part
+	var _tmp6 Unit
+	var cost float32
+	var _tmp7 Unit
+
+	var keyBytes1 []byte
+	var row1 Partsupp
+	var keyBytes2 []byte
+	var row2 Part
+
+	partkey = toUint64(params["partkey"])
+	suppkey = toUint64(params["suppkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -70,11 +161,37 @@ func Q2Hop0Par(params map[string]string) uint64 {
 	goto BB3
 
 BB3:
+	// First table access - calculate partition: Partsupp
+	if true { return getPartsuppPar(PartsuppKey{ps_partkey: partkey, ps_suppkey: suppkey}) }
+	// TableGet: Partsupp
+	keyBytes1, row1 = getPartsupp(tx, PartsuppKey{ps_partkey: partkey, ps_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Partsupp", keyBytes1)
+	ps_ps_supplycost = row1.ps_supplycost
+	// First table access - calculate partition: Part
+	if true { return getPartPar(PartKey{p_partkey: partkey}) }
+	// TableGet: Part
+	keyBytes2, row2 = getPart(tx, PartKey{p_partkey: partkey})
+	rwSet = AddRWSet(rwSet, "Part", keyBytes2)
+	_tmp5 = row2
+	p = _tmp5
+	_ = p
+	cost = ps_ps_supplycost
+	_ = cost
 	panic("unexpected hop exit in partition")
 }
 
 // Q2Hop1Par calculates the partition for hop 1 without database access.
 func Q2Hop1Par(params map[string]string) uint64 {
+	var suppkey uint64
+	var s_s_name string
+	var sname string
+	var _tmp9 Unit
+
+	var keyBytes1 []byte
+	var row1 Supplier
+
+	suppkey = toUint64(params["suppkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -83,11 +200,36 @@ func Q2Hop1Par(params map[string]string) uint64 {
 	goto BB4
 
 BB4:
+	// First table access - calculate partition: Supplier
+	if true { return getSupplierPar(SupplierKey{s_suppkey: suppkey}) }
+	// TableGet: Supplier
+	keyBytes1, row1 = getSupplier(tx, SupplierKey{s_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Supplier", keyBytes1)
+	s_s_name = row1.s_name
+	sname = s_s_name
+	_ = sname
 	panic("unexpected hop exit in partition")
 }
 
 // Q2Hop2Par calculates the partition for hop 2 without database access.
 func Q2Hop2Par(params map[string]string) uint64 {
+	var nationkey uint64
+	var regionkey uint64
+	var n Nation
+	var _tmp10 Nation
+	var _tmp11 Unit
+	var r Region
+	var _tmp12 Region
+	var _tmp13 Unit
+
+	var keyBytes1 []byte
+	var row1 Nation
+	var keyBytes2 []byte
+	var row2 Region
+
+	nationkey = toUint64(params["nationkey"])
+	regionkey = toUint64(params["regionkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -96,6 +238,22 @@ func Q2Hop2Par(params map[string]string) uint64 {
 	goto BB5
 
 BB5:
+	// First table access - calculate partition: Nation
+	if true { return getNationPar(NationKey{n_nationkey: nationkey}) }
+	// TableGet: Nation
+	keyBytes1, row1 = getNation(tx, NationKey{n_nationkey: nationkey})
+	rwSet = AddRWSet(rwSet, "Nation", keyBytes1)
+	_tmp10 = row1
+	n = _tmp10
+	_ = n
+	// First table access - calculate partition: Region
+	if true { return getRegionPar(RegionKey{r_regionkey: regionkey}) }
+	// TableGet: Region
+	keyBytes2, row2 = getRegion(tx, RegionKey{r_regionkey: regionkey})
+	rwSet = AddRWSet(rwSet, "Region", keyBytes2)
+	_tmp12 = row2
+	r = _tmp12
+	_ = r
 	return 0
 }
 

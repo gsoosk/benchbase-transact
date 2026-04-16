@@ -1597,8 +1597,8 @@ BB81:
 	_ = w_tax
 	// return - no action
 	// Flush caches for tables written in this hop
-	flushOrderCache(tx)
 	flushOrderLineCache(tx)
+	flushOrderCache(tx)
 	flushDistrictCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,

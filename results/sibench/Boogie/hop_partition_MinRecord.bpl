@@ -62,15 +62,23 @@ axiom (forall
     <==>
     (id_1 == id_2 && value_1 == value_2)
 );
-var SITable_value : [int]int;
-const TBL_SITable : Table (SITable);
 const __slice__ : int;
+const TBL_SITable : Table (SITable);
+var SITable_value : [int]int;
 var SITable_id : [int]int;
 const __shards__ : int;
 procedure verify_hop_partitions_MinRecord(representative_id: int)
 {
+  var s1_r#value : int;
+  var s1_representative_id : int;
+  var s1_v : int;
+  var s1_#tmp1 : unit;
+
   // Hop partition verification for function 'MinRecord'
   s1_block1:
+    s1_r#value := SITable_value[s1_representative_id];
+    s1_v := s1_r#value;
+    s1_#tmp1 := to_unit(s1_v);
     goto s1_epilogue;
   s1_hop_exit:
   s1_epilogue:

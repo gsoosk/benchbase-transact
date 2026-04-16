@@ -304,6 +304,7 @@ transaction Vote[f48](voteId[p80]: int[t1], phoneNumber[p81]: int[t1], contestan
   {
     let c[v0]: Row<CONTESTANTS>[t6<tab<CONTESTANTS>>] = CONTESTANTS[t7<tab<CONTESTANTS>>][itab0][tab0][contestant_number: contestantNumber[t1][p82]][t6<tab<CONTESTANTS>>];
     let cname[v1]: string[t3] = c[t6<tab<CONTESTANTS>>][v0].contestant_name[field1][t3];
+    to_unit[(infer2) -> t10][f43][f43](cname[t3][v1])[t10];
   }
   hop
   {

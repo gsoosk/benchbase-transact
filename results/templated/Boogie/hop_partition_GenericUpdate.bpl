@@ -62,13 +62,13 @@ axiom (forall
     <==>
     (T_ID_1 == T_ID_2 && T_INT_VAL_1 == T_INT_VAL_2 && T_FLOAT_VAL_1 == T_FLOAT_VAL_2 && T_STRING_VAL_1 == T_STRING_VAL_2)
 );
-const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
-const __shards__ : int;
 var TEMPLATED_TABLE_T_ID : [int]int;
-var TEMPLATED_TABLE_T_INT_VAL : [int]int;
 var TEMPLATED_TABLE_T_FLOAT_VAL : [int]real;
+const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
 var TEMPLATED_TABLE_T_STRING_VAL : [int]String;
+const __shards__ : int;
 const __slice__ : int;
+var TEMPLATED_TABLE_T_INT_VAL : [int]int;
 procedure verify_hop_partitions_GenericUpdate(key: int, new_string: String)
 modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_ID, TEMPLATED_TABLE_T_INT_VAL, TEMPLATED_TABLE_T_STRING_VAL;
 {
@@ -83,24 +83,24 @@ modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_ID, TEMPLATED_TABLE_T_IN
   s2_block2:
     s2_r#T_FLOAT_VAL := TEMPLATED_TABLE_T_FLOAT_VAL[s2_key];
     s2_r#T_ID := TEMPLATED_TABLE_T_ID[s2_key];
-  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1404, end: 1430, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1404, end: 1430, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1404) (end . 1430) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
+  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1424, end: 1450, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1424, end: 1450, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1424) (end . 1450) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
     s2_r#T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s2_key];
-  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1404, end: 1430, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1404, end: 1430, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1404) (end . 1430) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
+  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1424, end: 1450, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1424, end: 1450, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1424) (end . 1450) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
     s2_r#T_STRING_VAL := s2_new_string;
     TEMPLATED_TABLE_T_FLOAT_VAL := TEMPLATED_TABLE_T_FLOAT_VAL[s2_key := s2_r#T_FLOAT_VAL];
-  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1404, end: 1430, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1477, end: 1507, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1477) (end . 1507) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
+  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1424, end: 1450, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1497, end: 1527, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1497) (end . 1527) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
     TEMPLATED_TABLE_T_ID := TEMPLATED_TABLE_T_ID[s2_key := s2_r#T_ID];
-  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1404, end: 1430, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1477, end: 1507, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1477) (end . 1507) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
+  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1424, end: 1450, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1497, end: 1527, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1497) (end . 1527) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
     TEMPLATED_TABLE_T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s2_key := s2_r#T_INT_VAL];
-  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1404, end: 1430, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1477, end: 1507, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1477) (end . 1507) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
+  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1424, end: 1450, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1497, end: 1527, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1497) (end . 1527) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
     TEMPLATED_TABLE_T_STRING_VAL := TEMPLATED_TABLE_T_STRING_VAL[s2_key := s2_r#T_STRING_VAL];
-  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1404, end: 1430, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1477, end: 1507, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1477) (end . 1507) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
+  // Partition check hop 2 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1424, end: 1450, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1497, end: 1527, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1497) (end . 1527) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s2_key == s2_key);
     goto s2_epilogue;
   s2_hop_exit:
   s2_epilogue:

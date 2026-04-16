@@ -19,9 +19,33 @@ func Q1Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var orderkey uint64
+	var linenumber uint64
+	var l_l_extendedprice float32
+	var l_l_discount float32
+	var revenue float32
+	var _tmp1 float32
+	var _tmp2 float32
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 Lineitem
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	goto BB2
 
 BB2:
+	// Combined table access: Lineitem (2 operations)
+	keyBytes1, row1 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes1)
+	l_l_discount = row1.l_discount
+	l_l_extendedprice = row1.l_extendedprice
+	_tmp1 = 1 - l_l_discount
+	_tmp2 = l_l_extendedprice * _tmp1
+	revenue = _tmp2
+	_ = revenue
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +56,21 @@ BB2:
 
 // Q1Hop0Par calculates the partition for hop 0 without database access.
 func Q1Hop0Par(params map[string]string) uint64 {
+	var orderkey uint64
+	var linenumber uint64
+	var l_l_extendedprice float32
+	var l_l_discount float32
+	var revenue float32
+	var _tmp1 float32
+	var _tmp2 float32
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 Lineitem
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +79,17 @@ func Q1Hop0Par(params map[string]string) uint64 {
 	goto BB2
 
 BB2:
+	// First table access (optimized group) - calculate partition: Lineitem
+	if true { return getLineitemPar(LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber}) }
+	// Combined table access: Lineitem (2 operations)
+	keyBytes1, row1 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes1)
+	l_l_discount = row1.l_discount
+	l_l_extendedprice = row1.l_extendedprice
+	_tmp1 = 1 - l_l_discount
+	_tmp2 = l_l_extendedprice * _tmp1
+	revenue = _tmp2
+	_ = revenue
 	return 0
 }
 

@@ -107,23 +107,23 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
-const __shards__ : int;
-var review_u_id : [int][int]int;
-var trust_source_u_id : [int][int]int;
-var item_i_id : [int]int;
-var review_creation_date : [int][int]int;
-var item_title : [int]String;
-var useracct_name : [int]String;
-var trust_target_u_id : [int][int]int;
 var review_rating : [int][int]int;
+var trust_target_u_id : [int][int]int;
+var item_title : [int]String;
+const __shards__ : int;
+const TBL_item : Table (item);
+const TBL_trust : Table (trust);
+var review_u_id : [int][int]int;
+var review_creation_date : [int][int]int;
+var trust_source_u_id : [int][int]int;
+const __slice__ : int;
+var useracct_u_id : [int]int;
+var review_i_id : [int][int]int;
+var useracct_name : [int]String;
 const TBL_useracct : Table (useracct);
 const TBL_review : Table (review);
-const TBL_trust : Table (trust);
-const __slice__ : int;
 var trust_trust : [int][int]int;
-var review_i_id : [int][int]int;
-var useracct_u_id : [int]int;
-const TBL_item : Table (item);
+var item_i_id : [int]int;
 procedure Check_SliceCommut_Hop12_vs_Hop12()
 modifies trust_source_u_id, trust_target_u_id, trust_trust;
 {

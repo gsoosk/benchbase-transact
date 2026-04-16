@@ -19,9 +19,97 @@ func Maxrecord1Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp0 uint64
+	var _tmp2 uint64
+	var _tmp3 uint64
+	var _tmp4 uint64
+	var _tmp5 uint64
+	var _tmp6 uint64
+	var _tmp7 uint64
+	var _tmp8 uint64
+	var _tmp9 uint64
+	var _tmp10 uint64
+	var _tmp11 uint64
+	var _tmp12 uint64
+	var _tmp13 uint64
+	var _tmp14 uint64
+	var _tmp15 uint64
+	var _tmp16 uint64
+	var _tmp17 uint64
+	var _tmp18 uint64
+	var _tmp20 uint64
+	var _tmp21 uint64
+	var _tmp22 uint64
+	var _tmp23 uint64
+	var _tmp24 uint64
+	var _tmp25 uint64
+	var _tmp26 uint64
+	var _tmp29 uint64
+	var _tmp31 uint64
+	var _tmp32 uint64
+	var _tmp45 uint64
+	var _tmp59 uint64
+	var _tmp66 uint64
+	var _tmp70 uint64
+	var _tmp74 uint64
+	var _tmp77 uint64
+	var _tmp112 uint64
+	var _tmp113 uint64
+	var v2 uint64
+	var _tmp252 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB1
 
 BB1:
+	_tmp0 = keyname + 0
+	_tmp2 = _tmp0
+	_tmp3 = _tmp2
+	_tmp4 = _tmp3
+	_tmp5 = _tmp4
+	_tmp6 = _tmp5
+	_tmp7 = _tmp6
+	_tmp8 = _tmp7
+	_tmp9 = _tmp8
+	_tmp10 = _tmp9
+	_tmp11 = _tmp10
+	_tmp12 = _tmp11
+	_tmp13 = _tmp12
+	_tmp14 = _tmp13
+	_tmp15 = _tmp14
+	_tmp16 = _tmp15
+	_tmp17 = _tmp16
+	_tmp18 = _tmp17
+	_tmp20 = _tmp18
+	_tmp21 = _tmp20
+	_tmp22 = _tmp21
+	_tmp23 = _tmp22
+	_tmp24 = _tmp23
+	_tmp25 = _tmp24
+	_tmp26 = _tmp25
+	_tmp29 = _tmp26
+	_tmp31 = _tmp29
+	_tmp32 = _tmp31
+	_tmp45 = _tmp32
+	_tmp59 = _tmp45
+	_tmp66 = _tmp59
+	_tmp70 = _tmp66
+	_tmp74 = _tmp70
+	_tmp77 = _tmp74
+	_tmp112 = _tmp77
+	_tmp113 = _tmp112
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp113})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +122,91 @@ func Maxrecord1Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp253 uint64
+	var _tmp255 uint64
+	var _tmp256 uint64
+	var _tmp257 uint64
+	var _tmp258 uint64
+	var _tmp259 uint64
+	var _tmp260 uint64
+	var _tmp261 uint64
+	var _tmp262 uint64
+	var _tmp263 uint64
+	var _tmp264 uint64
+	var _tmp265 uint64
+	var _tmp266 uint64
+	var _tmp267 uint64
+	var _tmp268 uint64
+	var _tmp269 uint64
+	var _tmp270 uint64
+	var _tmp271 uint64
+	var _tmp272 uint64
+	var _tmp273 uint64
+	var _tmp274 uint64
+	var _tmp275 uint64
+	var _tmp276 uint64
+	var _tmp277 uint64
+	var _tmp278 uint64
+	var _tmp280 uint64
+	var _tmp281 uint64
+	var _tmp283 uint64
+	var _tmp299 uint64
+	var _tmp307 uint64
+	var _tmp321 uint64
+	var _tmp360 uint64
+	var _tmp366 uint64
+	var v2 uint64
+	var _tmp505 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB2
 
 BB2:
+	_tmp253 = keyname + 1
+	_tmp255 = _tmp253
+	_tmp256 = _tmp255
+	_tmp257 = _tmp256
+	_tmp258 = _tmp257
+	_tmp259 = _tmp258
+	_tmp260 = _tmp259
+	_tmp261 = _tmp260
+	_tmp262 = _tmp261
+	_tmp263 = _tmp262
+	_tmp264 = _tmp263
+	_tmp265 = _tmp264
+	_tmp266 = _tmp265
+	_tmp267 = _tmp266
+	_tmp268 = _tmp267
+	_tmp269 = _tmp268
+	_tmp270 = _tmp269
+	_tmp271 = _tmp270
+	_tmp272 = _tmp271
+	_tmp273 = _tmp272
+	_tmp274 = _tmp273
+	_tmp275 = _tmp274
+	_tmp276 = _tmp275
+	_tmp277 = _tmp276
+	_tmp278 = _tmp277
+	_tmp280 = _tmp278
+	_tmp281 = _tmp280
+	_tmp283 = _tmp281
+	_tmp299 = _tmp283
+	_tmp307 = _tmp299
+	_tmp321 = _tmp307
+	_tmp360 = _tmp321
+	_tmp366 = _tmp360
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp366})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +219,89 @@ func Maxrecord1Hop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp506 uint64
+	var _tmp508 uint64
+	var _tmp509 uint64
+	var _tmp510 uint64
+	var _tmp511 uint64
+	var _tmp512 uint64
+	var _tmp513 uint64
+	var _tmp514 uint64
+	var _tmp515 uint64
+	var _tmp516 uint64
+	var _tmp517 uint64
+	var _tmp518 uint64
+	var _tmp519 uint64
+	var _tmp520 uint64
+	var _tmp521 uint64
+	var _tmp522 uint64
+	var _tmp523 uint64
+	var _tmp524 uint64
+	var _tmp525 uint64
+	var _tmp526 uint64
+	var _tmp527 uint64
+	var _tmp528 uint64
+	var _tmp529 uint64
+	var _tmp530 uint64
+	var _tmp531 uint64
+	var _tmp539 uint64
+	var _tmp544 uint64
+	var _tmp562 uint64
+	var _tmp567 uint64
+	var _tmp572 uint64
+	var _tmp581 uint64
+	var _tmp619 uint64
+	var v2 uint64
+	var _tmp758 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB3
 
 BB3:
+	_tmp506 = keyname + 2
+	_tmp508 = _tmp506
+	_tmp509 = _tmp508
+	_tmp510 = _tmp509
+	_tmp511 = _tmp510
+	_tmp512 = _tmp511
+	_tmp513 = _tmp512
+	_tmp514 = _tmp513
+	_tmp515 = _tmp514
+	_tmp516 = _tmp515
+	_tmp517 = _tmp516
+	_tmp518 = _tmp517
+	_tmp519 = _tmp518
+	_tmp520 = _tmp519
+	_tmp521 = _tmp520
+	_tmp522 = _tmp521
+	_tmp523 = _tmp522
+	_tmp524 = _tmp523
+	_tmp525 = _tmp524
+	_tmp526 = _tmp525
+	_tmp527 = _tmp526
+	_tmp528 = _tmp527
+	_tmp529 = _tmp528
+	_tmp530 = _tmp529
+	_tmp531 = _tmp530
+	_tmp539 = _tmp531
+	_tmp544 = _tmp539
+	_tmp562 = _tmp544
+	_tmp567 = _tmp562
+	_tmp572 = _tmp567
+	_tmp581 = _tmp572
+	_tmp619 = _tmp581
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp619})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -64,9 +314,95 @@ func Maxrecord1Hop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp759 uint64
+	var _tmp761 uint64
+	var _tmp762 uint64
+	var _tmp763 uint64
+	var _tmp764 uint64
+	var _tmp765 uint64
+	var _tmp766 uint64
+	var _tmp767 uint64
+	var _tmp768 uint64
+	var _tmp769 uint64
+	var _tmp770 uint64
+	var _tmp771 uint64
+	var _tmp773 uint64
+	var _tmp774 uint64
+	var _tmp775 uint64
+	var _tmp776 uint64
+	var _tmp777 uint64
+	var _tmp778 uint64
+	var _tmp781 uint64
+	var _tmp782 uint64
+	var _tmp783 uint64
+	var _tmp786 uint64
+	var _tmp787 uint64
+	var _tmp798 uint64
+	var _tmp799 uint64
+	var _tmp804 uint64
+	var _tmp805 uint64
+	var _tmp806 uint64
+	var _tmp807 uint64
+	var _tmp812 uint64
+	var _tmp815 uint64
+	var _tmp816 uint64
+	var _tmp823 uint64
+	var _tmp835 uint64
+	var _tmp872 uint64
+	var v2 uint64
+	var _tmp1011 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB4
 
 BB4:
+	_tmp759 = keyname + 3
+	_tmp761 = _tmp759
+	_tmp762 = _tmp761
+	_tmp763 = _tmp762
+	_tmp764 = _tmp763
+	_tmp765 = _tmp764
+	_tmp766 = _tmp765
+	_tmp767 = _tmp766
+	_tmp768 = _tmp767
+	_tmp769 = _tmp768
+	_tmp770 = _tmp769
+	_tmp771 = _tmp770
+	_tmp773 = _tmp771
+	_tmp774 = _tmp773
+	_tmp775 = _tmp774
+	_tmp776 = _tmp775
+	_tmp777 = _tmp776
+	_tmp778 = _tmp777
+	_tmp781 = _tmp778
+	_tmp782 = _tmp781
+	_tmp783 = _tmp782
+	_tmp786 = _tmp783
+	_tmp787 = _tmp786
+	_tmp798 = _tmp787
+	_tmp799 = _tmp798
+	_tmp804 = _tmp799
+	_tmp805 = _tmp804
+	_tmp806 = _tmp805
+	_tmp807 = _tmp806
+	_tmp812 = _tmp807
+	_tmp815 = _tmp812
+	_tmp816 = _tmp815
+	_tmp823 = _tmp816
+	_tmp835 = _tmp823
+	_tmp872 = _tmp835
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp872})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -79,9 +415,75 @@ func Maxrecord1Hop4(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp1012 uint64
+	var _tmp1014 uint64
+	var _tmp1015 uint64
+	var _tmp1016 uint64
+	var _tmp1017 uint64
+	var _tmp1018 uint64
+	var _tmp1019 uint64
+	var _tmp1020 uint64
+	var _tmp1021 uint64
+	var _tmp1022 uint64
+	var _tmp1023 uint64
+	var _tmp1024 uint64
+	var _tmp1025 uint64
+	var _tmp1026 uint64
+	var _tmp1027 uint64
+	var _tmp1028 uint64
+	var _tmp1029 uint64
+	var _tmp1030 uint64
+	var _tmp1031 uint64
+	var _tmp1034 uint64
+	var _tmp1038 uint64
+	var _tmp1039 uint64
+	var _tmp1083 uint64
+	var _tmp1099 uint64
+	var _tmp1125 uint64
+	var v2 uint64
+	var _tmp1264 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB5
 
 BB5:
+	_tmp1012 = keyname + 4
+	_tmp1014 = _tmp1012
+	_tmp1015 = _tmp1014
+	_tmp1016 = _tmp1015
+	_tmp1017 = _tmp1016
+	_tmp1018 = _tmp1017
+	_tmp1019 = _tmp1018
+	_tmp1020 = _tmp1019
+	_tmp1021 = _tmp1020
+	_tmp1022 = _tmp1021
+	_tmp1023 = _tmp1022
+	_tmp1024 = _tmp1023
+	_tmp1025 = _tmp1024
+	_tmp1026 = _tmp1025
+	_tmp1027 = _tmp1026
+	_tmp1028 = _tmp1027
+	_tmp1029 = _tmp1028
+	_tmp1030 = _tmp1029
+	_tmp1031 = _tmp1030
+	_tmp1034 = _tmp1031
+	_tmp1038 = _tmp1034
+	_tmp1039 = _tmp1038
+	_tmp1083 = _tmp1039
+	_tmp1099 = _tmp1083
+	_tmp1125 = _tmp1099
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp1125})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -94,9 +496,83 @@ func Maxrecord1Hop5(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp1265 uint64
+	var _tmp1267 uint64
+	var _tmp1268 uint64
+	var _tmp1269 uint64
+	var _tmp1270 uint64
+	var _tmp1271 uint64
+	var _tmp1272 uint64
+	var _tmp1273 uint64
+	var _tmp1274 uint64
+	var _tmp1275 uint64
+	var _tmp1276 uint64
+	var _tmp1277 uint64
+	var _tmp1278 uint64
+	var _tmp1279 uint64
+	var _tmp1280 uint64
+	var _tmp1281 uint64
+	var _tmp1282 uint64
+	var _tmp1283 uint64
+	var _tmp1284 uint64
+	var _tmp1285 uint64
+	var _tmp1286 uint64
+	var _tmp1288 uint64
+	var _tmp1296 uint64
+	var _tmp1315 uint64
+	var _tmp1322 uint64
+	var _tmp1330 uint64
+	var _tmp1331 uint64
+	var _tmp1341 uint64
+	var _tmp1378 uint64
+	var v2 uint64
+	var _tmp1517 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB6
 
 BB6:
+	_tmp1265 = keyname + 5
+	_tmp1267 = _tmp1265
+	_tmp1268 = _tmp1267
+	_tmp1269 = _tmp1268
+	_tmp1270 = _tmp1269
+	_tmp1271 = _tmp1270
+	_tmp1272 = _tmp1271
+	_tmp1273 = _tmp1272
+	_tmp1274 = _tmp1273
+	_tmp1275 = _tmp1274
+	_tmp1276 = _tmp1275
+	_tmp1277 = _tmp1276
+	_tmp1278 = _tmp1277
+	_tmp1279 = _tmp1278
+	_tmp1280 = _tmp1279
+	_tmp1281 = _tmp1280
+	_tmp1282 = _tmp1281
+	_tmp1283 = _tmp1282
+	_tmp1284 = _tmp1283
+	_tmp1285 = _tmp1284
+	_tmp1286 = _tmp1285
+	_tmp1288 = _tmp1286
+	_tmp1296 = _tmp1288
+	_tmp1315 = _tmp1296
+	_tmp1322 = _tmp1315
+	_tmp1330 = _tmp1322
+	_tmp1331 = _tmp1330
+	_tmp1341 = _tmp1331
+	_tmp1378 = _tmp1341
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp1378})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -109,9 +585,99 @@ func Maxrecord1Hop6(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp1518 uint64
+	var _tmp1520 uint64
+	var _tmp1521 uint64
+	var _tmp1522 uint64
+	var _tmp1524 uint64
+	var _tmp1525 uint64
+	var _tmp1526 uint64
+	var _tmp1527 uint64
+	var _tmp1528 uint64
+	var _tmp1529 uint64
+	var _tmp1531 uint64
+	var _tmp1532 uint64
+	var _tmp1533 uint64
+	var _tmp1534 uint64
+	var _tmp1535 uint64
+	var _tmp1537 uint64
+	var _tmp1538 uint64
+	var _tmp1539 uint64
+	var _tmp1541 uint64
+	var _tmp1544 uint64
+	var _tmp1545 uint64
+	var _tmp1546 uint64
+	var _tmp1548 uint64
+	var _tmp1550 uint64
+	var _tmp1553 uint64
+	var _tmp1555 uint64
+	var _tmp1558 uint64
+	var _tmp1562 uint64
+	var _tmp1565 uint64
+	var _tmp1569 uint64
+	var _tmp1605 uint64
+	var _tmp1610 uint64
+	var _tmp1613 uint64
+	var _tmp1617 uint64
+	var _tmp1621 uint64
+	var _tmp1627 uint64
+	var _tmp1631 uint64
+	var v2 uint64
+	var _tmp1770 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB7
 
 BB7:
+	_tmp1518 = keyname + 6
+	_tmp1520 = _tmp1518
+	_tmp1521 = _tmp1520
+	_tmp1522 = _tmp1521
+	_tmp1524 = _tmp1522
+	_tmp1525 = _tmp1524
+	_tmp1526 = _tmp1525
+	_tmp1527 = _tmp1526
+	_tmp1528 = _tmp1527
+	_tmp1529 = _tmp1528
+	_tmp1531 = _tmp1529
+	_tmp1532 = _tmp1531
+	_tmp1533 = _tmp1532
+	_tmp1534 = _tmp1533
+	_tmp1535 = _tmp1534
+	_tmp1537 = _tmp1535
+	_tmp1538 = _tmp1537
+	_tmp1539 = _tmp1538
+	_tmp1541 = _tmp1539
+	_tmp1544 = _tmp1541
+	_tmp1545 = _tmp1544
+	_tmp1546 = _tmp1545
+	_tmp1548 = _tmp1546
+	_tmp1550 = _tmp1548
+	_tmp1553 = _tmp1550
+	_tmp1555 = _tmp1553
+	_tmp1558 = _tmp1555
+	_tmp1562 = _tmp1558
+	_tmp1565 = _tmp1562
+	_tmp1569 = _tmp1565
+	_tmp1605 = _tmp1569
+	_tmp1610 = _tmp1605
+	_tmp1613 = _tmp1610
+	_tmp1617 = _tmp1613
+	_tmp1621 = _tmp1617
+	_tmp1627 = _tmp1621
+	_tmp1631 = _tmp1627
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp1631})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -124,9 +690,89 @@ func Maxrecord1Hop7(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp1771 uint64
+	var _tmp1773 uint64
+	var _tmp1774 uint64
+	var _tmp1775 uint64
+	var _tmp1776 uint64
+	var _tmp1777 uint64
+	var _tmp1778 uint64
+	var _tmp1779 uint64
+	var _tmp1780 uint64
+	var _tmp1781 uint64
+	var _tmp1782 uint64
+	var _tmp1783 uint64
+	var _tmp1784 uint64
+	var _tmp1785 uint64
+	var _tmp1786 uint64
+	var _tmp1787 uint64
+	var _tmp1789 uint64
+	var _tmp1790 uint64
+	var _tmp1791 uint64
+	var _tmp1792 uint64
+	var _tmp1794 uint64
+	var _tmp1808 uint64
+	var _tmp1814 uint64
+	var _tmp1815 uint64
+	var _tmp1816 uint64
+	var _tmp1821 uint64
+	var _tmp1828 uint64
+	var _tmp1832 uint64
+	var _tmp1843 uint64
+	var _tmp1862 uint64
+	var _tmp1876 uint64
+	var _tmp1884 uint64
+	var v2 uint64
+	var _tmp2023 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB8
 
 BB8:
+	_tmp1771 = keyname + 7
+	_tmp1773 = _tmp1771
+	_tmp1774 = _tmp1773
+	_tmp1775 = _tmp1774
+	_tmp1776 = _tmp1775
+	_tmp1777 = _tmp1776
+	_tmp1778 = _tmp1777
+	_tmp1779 = _tmp1778
+	_tmp1780 = _tmp1779
+	_tmp1781 = _tmp1780
+	_tmp1782 = _tmp1781
+	_tmp1783 = _tmp1782
+	_tmp1784 = _tmp1783
+	_tmp1785 = _tmp1784
+	_tmp1786 = _tmp1785
+	_tmp1787 = _tmp1786
+	_tmp1789 = _tmp1787
+	_tmp1790 = _tmp1789
+	_tmp1791 = _tmp1790
+	_tmp1792 = _tmp1791
+	_tmp1794 = _tmp1792
+	_tmp1808 = _tmp1794
+	_tmp1814 = _tmp1808
+	_tmp1815 = _tmp1814
+	_tmp1816 = _tmp1815
+	_tmp1821 = _tmp1816
+	_tmp1828 = _tmp1821
+	_tmp1832 = _tmp1828
+	_tmp1843 = _tmp1832
+	_tmp1862 = _tmp1843
+	_tmp1876 = _tmp1862
+	_tmp1884 = _tmp1876
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp1884})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -139,9 +785,91 @@ func Maxrecord1Hop8(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp2024 uint64
+	var _tmp2026 uint64
+	var _tmp2027 uint64
+	var _tmp2028 uint64
+	var _tmp2029 uint64
+	var _tmp2030 uint64
+	var _tmp2031 uint64
+	var _tmp2032 uint64
+	var _tmp2033 uint64
+	var _tmp2034 uint64
+	var _tmp2035 uint64
+	var _tmp2036 uint64
+	var _tmp2037 uint64
+	var _tmp2038 uint64
+	var _tmp2039 uint64
+	var _tmp2040 uint64
+	var _tmp2041 uint64
+	var _tmp2042 uint64
+	var _tmp2043 uint64
+	var _tmp2045 uint64
+	var _tmp2046 uint64
+	var _tmp2047 uint64
+	var _tmp2050 uint64
+	var _tmp2053 uint64
+	var _tmp2054 uint64
+	var _tmp2055 uint64
+	var _tmp2057 uint64
+	var _tmp2070 uint64
+	var _tmp2076 uint64
+	var _tmp2083 uint64
+	var _tmp2087 uint64
+	var _tmp2112 uint64
+	var _tmp2137 uint64
+	var v2 uint64
+	var _tmp2276 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB9
 
 BB9:
+	_tmp2024 = keyname + 8
+	_tmp2026 = _tmp2024
+	_tmp2027 = _tmp2026
+	_tmp2028 = _tmp2027
+	_tmp2029 = _tmp2028
+	_tmp2030 = _tmp2029
+	_tmp2031 = _tmp2030
+	_tmp2032 = _tmp2031
+	_tmp2033 = _tmp2032
+	_tmp2034 = _tmp2033
+	_tmp2035 = _tmp2034
+	_tmp2036 = _tmp2035
+	_tmp2037 = _tmp2036
+	_tmp2038 = _tmp2037
+	_tmp2039 = _tmp2038
+	_tmp2040 = _tmp2039
+	_tmp2041 = _tmp2040
+	_tmp2042 = _tmp2041
+	_tmp2043 = _tmp2042
+	_tmp2045 = _tmp2043
+	_tmp2046 = _tmp2045
+	_tmp2047 = _tmp2046
+	_tmp2050 = _tmp2047
+	_tmp2053 = _tmp2050
+	_tmp2054 = _tmp2053
+	_tmp2055 = _tmp2054
+	_tmp2057 = _tmp2055
+	_tmp2070 = _tmp2057
+	_tmp2076 = _tmp2070
+	_tmp2083 = _tmp2076
+	_tmp2087 = _tmp2083
+	_tmp2112 = _tmp2087
+	_tmp2137 = _tmp2112
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp2137})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -154,9 +882,99 @@ func Maxrecord1Hop9(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp2277 uint64
+	var _tmp2279 uint64
+	var _tmp2280 uint64
+	var _tmp2281 uint64
+	var _tmp2282 uint64
+	var _tmp2283 uint64
+	var _tmp2284 uint64
+	var _tmp2285 uint64
+	var _tmp2286 uint64
+	var _tmp2287 uint64
+	var _tmp2288 uint64
+	var _tmp2289 uint64
+	var _tmp2290 uint64
+	var _tmp2291 uint64
+	var _tmp2292 uint64
+	var _tmp2293 uint64
+	var _tmp2294 uint64
+	var _tmp2295 uint64
+	var _tmp2296 uint64
+	var _tmp2298 uint64
+	var _tmp2300 uint64
+	var _tmp2301 uint64
+	var _tmp2302 uint64
+	var _tmp2304 uint64
+	var _tmp2306 uint64
+	var _tmp2307 uint64
+	var _tmp2308 uint64
+	var _tmp2309 uint64
+	var _tmp2310 uint64
+	var _tmp2311 uint64
+	var _tmp2312 uint64
+	var _tmp2315 uint64
+	var _tmp2317 uint64
+	var _tmp2318 uint64
+	var _tmp2321 uint64
+	var _tmp2323 uint64
+	var _tmp2390 uint64
+	var v2 uint64
+	var _tmp2529 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB10
 
 BB10:
+	_tmp2277 = keyname + 9
+	_tmp2279 = _tmp2277
+	_tmp2280 = _tmp2279
+	_tmp2281 = _tmp2280
+	_tmp2282 = _tmp2281
+	_tmp2283 = _tmp2282
+	_tmp2284 = _tmp2283
+	_tmp2285 = _tmp2284
+	_tmp2286 = _tmp2285
+	_tmp2287 = _tmp2286
+	_tmp2288 = _tmp2287
+	_tmp2289 = _tmp2288
+	_tmp2290 = _tmp2289
+	_tmp2291 = _tmp2290
+	_tmp2292 = _tmp2291
+	_tmp2293 = _tmp2292
+	_tmp2294 = _tmp2293
+	_tmp2295 = _tmp2294
+	_tmp2296 = _tmp2295
+	_tmp2298 = _tmp2296
+	_tmp2300 = _tmp2298
+	_tmp2301 = _tmp2300
+	_tmp2302 = _tmp2301
+	_tmp2304 = _tmp2302
+	_tmp2306 = _tmp2304
+	_tmp2307 = _tmp2306
+	_tmp2308 = _tmp2307
+	_tmp2309 = _tmp2308
+	_tmp2310 = _tmp2309
+	_tmp2311 = _tmp2310
+	_tmp2312 = _tmp2311
+	_tmp2315 = _tmp2312
+	_tmp2317 = _tmp2315
+	_tmp2318 = _tmp2317
+	_tmp2321 = _tmp2318
+	_tmp2323 = _tmp2321
+	_tmp2390 = _tmp2323
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp2390})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -167,6 +985,52 @@ BB10:
 
 // Maxrecord1Hop0Par calculates the partition for hop 0 without database access.
 func Maxrecord1Hop0Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp0 uint64
+	var _tmp2 uint64
+	var _tmp3 uint64
+	var _tmp4 uint64
+	var _tmp5 uint64
+	var _tmp6 uint64
+	var _tmp7 uint64
+	var _tmp8 uint64
+	var _tmp9 uint64
+	var _tmp10 uint64
+	var _tmp11 uint64
+	var _tmp12 uint64
+	var _tmp13 uint64
+	var _tmp14 uint64
+	var _tmp15 uint64
+	var _tmp16 uint64
+	var _tmp17 uint64
+	var _tmp18 uint64
+	var _tmp20 uint64
+	var _tmp21 uint64
+	var _tmp22 uint64
+	var _tmp23 uint64
+	var _tmp24 uint64
+	var _tmp25 uint64
+	var _tmp26 uint64
+	var _tmp29 uint64
+	var _tmp31 uint64
+	var _tmp32 uint64
+	var _tmp45 uint64
+	var _tmp59 uint64
+	var _tmp66 uint64
+	var _tmp70 uint64
+	var _tmp74 uint64
+	var _tmp77 uint64
+	var _tmp112 uint64
+	var _tmp113 uint64
+	var v2 uint64
+	var _tmp252 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -175,11 +1039,98 @@ func Maxrecord1Hop0Par(params map[string]string) uint64 {
 	goto BB1
 
 BB1:
+	_tmp0 = keyname + 0
+	_tmp2 = _tmp0
+	_tmp3 = _tmp2
+	_tmp4 = _tmp3
+	_tmp5 = _tmp4
+	_tmp6 = _tmp5
+	_tmp7 = _tmp6
+	_tmp8 = _tmp7
+	_tmp9 = _tmp8
+	_tmp10 = _tmp9
+	_tmp11 = _tmp10
+	_tmp12 = _tmp11
+	_tmp13 = _tmp12
+	_tmp14 = _tmp13
+	_tmp15 = _tmp14
+	_tmp16 = _tmp15
+	_tmp17 = _tmp16
+	_tmp18 = _tmp17
+	_tmp20 = _tmp18
+	_tmp21 = _tmp20
+	_tmp22 = _tmp21
+	_tmp23 = _tmp22
+	_tmp24 = _tmp23
+	_tmp25 = _tmp24
+	_tmp26 = _tmp25
+	_tmp29 = _tmp26
+	_tmp31 = _tmp29
+	_tmp32 = _tmp31
+	_tmp45 = _tmp32
+	_tmp59 = _tmp45
+	_tmp66 = _tmp59
+	_tmp70 = _tmp66
+	_tmp74 = _tmp70
+	_tmp77 = _tmp74
+	_tmp112 = _tmp77
+	_tmp113 = _tmp112
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp113}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp113})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop1Par calculates the partition for hop 1 without database access.
 func Maxrecord1Hop1Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp253 uint64
+	var _tmp255 uint64
+	var _tmp256 uint64
+	var _tmp257 uint64
+	var _tmp258 uint64
+	var _tmp259 uint64
+	var _tmp260 uint64
+	var _tmp261 uint64
+	var _tmp262 uint64
+	var _tmp263 uint64
+	var _tmp264 uint64
+	var _tmp265 uint64
+	var _tmp266 uint64
+	var _tmp267 uint64
+	var _tmp268 uint64
+	var _tmp269 uint64
+	var _tmp270 uint64
+	var _tmp271 uint64
+	var _tmp272 uint64
+	var _tmp273 uint64
+	var _tmp274 uint64
+	var _tmp275 uint64
+	var _tmp276 uint64
+	var _tmp277 uint64
+	var _tmp278 uint64
+	var _tmp280 uint64
+	var _tmp281 uint64
+	var _tmp283 uint64
+	var _tmp299 uint64
+	var _tmp307 uint64
+	var _tmp321 uint64
+	var _tmp360 uint64
+	var _tmp366 uint64
+	var v2 uint64
+	var _tmp505 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -188,11 +1139,94 @@ func Maxrecord1Hop1Par(params map[string]string) uint64 {
 	goto BB2
 
 BB2:
+	_tmp253 = keyname + 1
+	_tmp255 = _tmp253
+	_tmp256 = _tmp255
+	_tmp257 = _tmp256
+	_tmp258 = _tmp257
+	_tmp259 = _tmp258
+	_tmp260 = _tmp259
+	_tmp261 = _tmp260
+	_tmp262 = _tmp261
+	_tmp263 = _tmp262
+	_tmp264 = _tmp263
+	_tmp265 = _tmp264
+	_tmp266 = _tmp265
+	_tmp267 = _tmp266
+	_tmp268 = _tmp267
+	_tmp269 = _tmp268
+	_tmp270 = _tmp269
+	_tmp271 = _tmp270
+	_tmp272 = _tmp271
+	_tmp273 = _tmp272
+	_tmp274 = _tmp273
+	_tmp275 = _tmp274
+	_tmp276 = _tmp275
+	_tmp277 = _tmp276
+	_tmp278 = _tmp277
+	_tmp280 = _tmp278
+	_tmp281 = _tmp280
+	_tmp283 = _tmp281
+	_tmp299 = _tmp283
+	_tmp307 = _tmp299
+	_tmp321 = _tmp307
+	_tmp360 = _tmp321
+	_tmp366 = _tmp360
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp366}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp366})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop2Par calculates the partition for hop 2 without database access.
 func Maxrecord1Hop2Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp506 uint64
+	var _tmp508 uint64
+	var _tmp509 uint64
+	var _tmp510 uint64
+	var _tmp511 uint64
+	var _tmp512 uint64
+	var _tmp513 uint64
+	var _tmp514 uint64
+	var _tmp515 uint64
+	var _tmp516 uint64
+	var _tmp517 uint64
+	var _tmp518 uint64
+	var _tmp519 uint64
+	var _tmp520 uint64
+	var _tmp521 uint64
+	var _tmp522 uint64
+	var _tmp523 uint64
+	var _tmp524 uint64
+	var _tmp525 uint64
+	var _tmp526 uint64
+	var _tmp527 uint64
+	var _tmp528 uint64
+	var _tmp529 uint64
+	var _tmp530 uint64
+	var _tmp531 uint64
+	var _tmp539 uint64
+	var _tmp544 uint64
+	var _tmp562 uint64
+	var _tmp567 uint64
+	var _tmp572 uint64
+	var _tmp581 uint64
+	var _tmp619 uint64
+	var v2 uint64
+	var _tmp758 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -201,11 +1235,96 @@ func Maxrecord1Hop2Par(params map[string]string) uint64 {
 	goto BB3
 
 BB3:
+	_tmp506 = keyname + 2
+	_tmp508 = _tmp506
+	_tmp509 = _tmp508
+	_tmp510 = _tmp509
+	_tmp511 = _tmp510
+	_tmp512 = _tmp511
+	_tmp513 = _tmp512
+	_tmp514 = _tmp513
+	_tmp515 = _tmp514
+	_tmp516 = _tmp515
+	_tmp517 = _tmp516
+	_tmp518 = _tmp517
+	_tmp519 = _tmp518
+	_tmp520 = _tmp519
+	_tmp521 = _tmp520
+	_tmp522 = _tmp521
+	_tmp523 = _tmp522
+	_tmp524 = _tmp523
+	_tmp525 = _tmp524
+	_tmp526 = _tmp525
+	_tmp527 = _tmp526
+	_tmp528 = _tmp527
+	_tmp529 = _tmp528
+	_tmp530 = _tmp529
+	_tmp531 = _tmp530
+	_tmp539 = _tmp531
+	_tmp544 = _tmp539
+	_tmp562 = _tmp544
+	_tmp567 = _tmp562
+	_tmp572 = _tmp567
+	_tmp581 = _tmp572
+	_tmp619 = _tmp581
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp619}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp619})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop3Par calculates the partition for hop 3 without database access.
 func Maxrecord1Hop3Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp759 uint64
+	var _tmp761 uint64
+	var _tmp762 uint64
+	var _tmp763 uint64
+	var _tmp764 uint64
+	var _tmp765 uint64
+	var _tmp766 uint64
+	var _tmp767 uint64
+	var _tmp768 uint64
+	var _tmp769 uint64
+	var _tmp770 uint64
+	var _tmp771 uint64
+	var _tmp773 uint64
+	var _tmp774 uint64
+	var _tmp775 uint64
+	var _tmp776 uint64
+	var _tmp777 uint64
+	var _tmp778 uint64
+	var _tmp781 uint64
+	var _tmp782 uint64
+	var _tmp783 uint64
+	var _tmp786 uint64
+	var _tmp787 uint64
+	var _tmp798 uint64
+	var _tmp799 uint64
+	var _tmp804 uint64
+	var _tmp805 uint64
+	var _tmp806 uint64
+	var _tmp807 uint64
+	var _tmp812 uint64
+	var _tmp815 uint64
+	var _tmp816 uint64
+	var _tmp823 uint64
+	var _tmp835 uint64
+	var _tmp872 uint64
+	var v2 uint64
+	var _tmp1011 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -214,11 +1333,89 @@ func Maxrecord1Hop3Par(params map[string]string) uint64 {
 	goto BB4
 
 BB4:
+	_tmp759 = keyname + 3
+	_tmp761 = _tmp759
+	_tmp762 = _tmp761
+	_tmp763 = _tmp762
+	_tmp764 = _tmp763
+	_tmp765 = _tmp764
+	_tmp766 = _tmp765
+	_tmp767 = _tmp766
+	_tmp768 = _tmp767
+	_tmp769 = _tmp768
+	_tmp770 = _tmp769
+	_tmp771 = _tmp770
+	_tmp773 = _tmp771
+	_tmp774 = _tmp773
+	_tmp775 = _tmp774
+	_tmp776 = _tmp775
+	_tmp777 = _tmp776
+	_tmp778 = _tmp777
+	_tmp781 = _tmp778
+	_tmp782 = _tmp781
+	_tmp783 = _tmp782
+	_tmp786 = _tmp783
+	_tmp787 = _tmp786
+	_tmp798 = _tmp787
+	_tmp799 = _tmp798
+	_tmp804 = _tmp799
+	_tmp805 = _tmp804
+	_tmp806 = _tmp805
+	_tmp807 = _tmp806
+	_tmp812 = _tmp807
+	_tmp815 = _tmp812
+	_tmp816 = _tmp815
+	_tmp823 = _tmp816
+	_tmp835 = _tmp823
+	_tmp872 = _tmp835
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp872}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp872})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop4Par calculates the partition for hop 4 without database access.
 func Maxrecord1Hop4Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp1012 uint64
+	var _tmp1014 uint64
+	var _tmp1015 uint64
+	var _tmp1016 uint64
+	var _tmp1017 uint64
+	var _tmp1018 uint64
+	var _tmp1019 uint64
+	var _tmp1020 uint64
+	var _tmp1021 uint64
+	var _tmp1022 uint64
+	var _tmp1023 uint64
+	var _tmp1024 uint64
+	var _tmp1025 uint64
+	var _tmp1026 uint64
+	var _tmp1027 uint64
+	var _tmp1028 uint64
+	var _tmp1029 uint64
+	var _tmp1030 uint64
+	var _tmp1031 uint64
+	var _tmp1034 uint64
+	var _tmp1038 uint64
+	var _tmp1039 uint64
+	var _tmp1083 uint64
+	var _tmp1099 uint64
+	var _tmp1125 uint64
+	var v2 uint64
+	var _tmp1264 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -227,11 +1424,83 @@ func Maxrecord1Hop4Par(params map[string]string) uint64 {
 	goto BB5
 
 BB5:
+	_tmp1012 = keyname + 4
+	_tmp1014 = _tmp1012
+	_tmp1015 = _tmp1014
+	_tmp1016 = _tmp1015
+	_tmp1017 = _tmp1016
+	_tmp1018 = _tmp1017
+	_tmp1019 = _tmp1018
+	_tmp1020 = _tmp1019
+	_tmp1021 = _tmp1020
+	_tmp1022 = _tmp1021
+	_tmp1023 = _tmp1022
+	_tmp1024 = _tmp1023
+	_tmp1025 = _tmp1024
+	_tmp1026 = _tmp1025
+	_tmp1027 = _tmp1026
+	_tmp1028 = _tmp1027
+	_tmp1029 = _tmp1028
+	_tmp1030 = _tmp1029
+	_tmp1031 = _tmp1030
+	_tmp1034 = _tmp1031
+	_tmp1038 = _tmp1034
+	_tmp1039 = _tmp1038
+	_tmp1083 = _tmp1039
+	_tmp1099 = _tmp1083
+	_tmp1125 = _tmp1099
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp1125}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp1125})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop5Par calculates the partition for hop 5 without database access.
 func Maxrecord1Hop5Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp1265 uint64
+	var _tmp1267 uint64
+	var _tmp1268 uint64
+	var _tmp1269 uint64
+	var _tmp1270 uint64
+	var _tmp1271 uint64
+	var _tmp1272 uint64
+	var _tmp1273 uint64
+	var _tmp1274 uint64
+	var _tmp1275 uint64
+	var _tmp1276 uint64
+	var _tmp1277 uint64
+	var _tmp1278 uint64
+	var _tmp1279 uint64
+	var _tmp1280 uint64
+	var _tmp1281 uint64
+	var _tmp1282 uint64
+	var _tmp1283 uint64
+	var _tmp1284 uint64
+	var _tmp1285 uint64
+	var _tmp1286 uint64
+	var _tmp1288 uint64
+	var _tmp1296 uint64
+	var _tmp1315 uint64
+	var _tmp1322 uint64
+	var _tmp1330 uint64
+	var _tmp1331 uint64
+	var _tmp1341 uint64
+	var _tmp1378 uint64
+	var v2 uint64
+	var _tmp1517 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -240,11 +1509,95 @@ func Maxrecord1Hop5Par(params map[string]string) uint64 {
 	goto BB6
 
 BB6:
+	_tmp1265 = keyname + 5
+	_tmp1267 = _tmp1265
+	_tmp1268 = _tmp1267
+	_tmp1269 = _tmp1268
+	_tmp1270 = _tmp1269
+	_tmp1271 = _tmp1270
+	_tmp1272 = _tmp1271
+	_tmp1273 = _tmp1272
+	_tmp1274 = _tmp1273
+	_tmp1275 = _tmp1274
+	_tmp1276 = _tmp1275
+	_tmp1277 = _tmp1276
+	_tmp1278 = _tmp1277
+	_tmp1279 = _tmp1278
+	_tmp1280 = _tmp1279
+	_tmp1281 = _tmp1280
+	_tmp1282 = _tmp1281
+	_tmp1283 = _tmp1282
+	_tmp1284 = _tmp1283
+	_tmp1285 = _tmp1284
+	_tmp1286 = _tmp1285
+	_tmp1288 = _tmp1286
+	_tmp1296 = _tmp1288
+	_tmp1315 = _tmp1296
+	_tmp1322 = _tmp1315
+	_tmp1330 = _tmp1322
+	_tmp1331 = _tmp1330
+	_tmp1341 = _tmp1331
+	_tmp1378 = _tmp1341
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp1378}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp1378})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop6Par calculates the partition for hop 6 without database access.
 func Maxrecord1Hop6Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp1518 uint64
+	var _tmp1520 uint64
+	var _tmp1521 uint64
+	var _tmp1522 uint64
+	var _tmp1524 uint64
+	var _tmp1525 uint64
+	var _tmp1526 uint64
+	var _tmp1527 uint64
+	var _tmp1528 uint64
+	var _tmp1529 uint64
+	var _tmp1531 uint64
+	var _tmp1532 uint64
+	var _tmp1533 uint64
+	var _tmp1534 uint64
+	var _tmp1535 uint64
+	var _tmp1537 uint64
+	var _tmp1538 uint64
+	var _tmp1539 uint64
+	var _tmp1541 uint64
+	var _tmp1544 uint64
+	var _tmp1545 uint64
+	var _tmp1546 uint64
+	var _tmp1548 uint64
+	var _tmp1550 uint64
+	var _tmp1553 uint64
+	var _tmp1555 uint64
+	var _tmp1558 uint64
+	var _tmp1562 uint64
+	var _tmp1565 uint64
+	var _tmp1569 uint64
+	var _tmp1605 uint64
+	var _tmp1610 uint64
+	var _tmp1613 uint64
+	var _tmp1617 uint64
+	var _tmp1621 uint64
+	var _tmp1627 uint64
+	var _tmp1631 uint64
+	var v2 uint64
+	var _tmp1770 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -253,11 +1606,98 @@ func Maxrecord1Hop6Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	_tmp1518 = keyname + 6
+	_tmp1520 = _tmp1518
+	_tmp1521 = _tmp1520
+	_tmp1522 = _tmp1521
+	_tmp1524 = _tmp1522
+	_tmp1525 = _tmp1524
+	_tmp1526 = _tmp1525
+	_tmp1527 = _tmp1526
+	_tmp1528 = _tmp1527
+	_tmp1529 = _tmp1528
+	_tmp1531 = _tmp1529
+	_tmp1532 = _tmp1531
+	_tmp1533 = _tmp1532
+	_tmp1534 = _tmp1533
+	_tmp1535 = _tmp1534
+	_tmp1537 = _tmp1535
+	_tmp1538 = _tmp1537
+	_tmp1539 = _tmp1538
+	_tmp1541 = _tmp1539
+	_tmp1544 = _tmp1541
+	_tmp1545 = _tmp1544
+	_tmp1546 = _tmp1545
+	_tmp1548 = _tmp1546
+	_tmp1550 = _tmp1548
+	_tmp1553 = _tmp1550
+	_tmp1555 = _tmp1553
+	_tmp1558 = _tmp1555
+	_tmp1562 = _tmp1558
+	_tmp1565 = _tmp1562
+	_tmp1569 = _tmp1565
+	_tmp1605 = _tmp1569
+	_tmp1610 = _tmp1605
+	_tmp1613 = _tmp1610
+	_tmp1617 = _tmp1613
+	_tmp1621 = _tmp1617
+	_tmp1627 = _tmp1621
+	_tmp1631 = _tmp1627
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp1631}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp1631})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop7Par calculates the partition for hop 7 without database access.
 func Maxrecord1Hop7Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp1771 uint64
+	var _tmp1773 uint64
+	var _tmp1774 uint64
+	var _tmp1775 uint64
+	var _tmp1776 uint64
+	var _tmp1777 uint64
+	var _tmp1778 uint64
+	var _tmp1779 uint64
+	var _tmp1780 uint64
+	var _tmp1781 uint64
+	var _tmp1782 uint64
+	var _tmp1783 uint64
+	var _tmp1784 uint64
+	var _tmp1785 uint64
+	var _tmp1786 uint64
+	var _tmp1787 uint64
+	var _tmp1789 uint64
+	var _tmp1790 uint64
+	var _tmp1791 uint64
+	var _tmp1792 uint64
+	var _tmp1794 uint64
+	var _tmp1808 uint64
+	var _tmp1814 uint64
+	var _tmp1815 uint64
+	var _tmp1816 uint64
+	var _tmp1821 uint64
+	var _tmp1828 uint64
+	var _tmp1832 uint64
+	var _tmp1843 uint64
+	var _tmp1862 uint64
+	var _tmp1876 uint64
+	var _tmp1884 uint64
+	var v2 uint64
+	var _tmp2023 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -266,11 +1706,94 @@ func Maxrecord1Hop7Par(params map[string]string) uint64 {
 	goto BB8
 
 BB8:
+	_tmp1771 = keyname + 7
+	_tmp1773 = _tmp1771
+	_tmp1774 = _tmp1773
+	_tmp1775 = _tmp1774
+	_tmp1776 = _tmp1775
+	_tmp1777 = _tmp1776
+	_tmp1778 = _tmp1777
+	_tmp1779 = _tmp1778
+	_tmp1780 = _tmp1779
+	_tmp1781 = _tmp1780
+	_tmp1782 = _tmp1781
+	_tmp1783 = _tmp1782
+	_tmp1784 = _tmp1783
+	_tmp1785 = _tmp1784
+	_tmp1786 = _tmp1785
+	_tmp1787 = _tmp1786
+	_tmp1789 = _tmp1787
+	_tmp1790 = _tmp1789
+	_tmp1791 = _tmp1790
+	_tmp1792 = _tmp1791
+	_tmp1794 = _tmp1792
+	_tmp1808 = _tmp1794
+	_tmp1814 = _tmp1808
+	_tmp1815 = _tmp1814
+	_tmp1816 = _tmp1815
+	_tmp1821 = _tmp1816
+	_tmp1828 = _tmp1821
+	_tmp1832 = _tmp1828
+	_tmp1843 = _tmp1832
+	_tmp1862 = _tmp1843
+	_tmp1876 = _tmp1862
+	_tmp1884 = _tmp1876
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp1884}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp1884})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop8Par calculates the partition for hop 8 without database access.
 func Maxrecord1Hop8Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp2024 uint64
+	var _tmp2026 uint64
+	var _tmp2027 uint64
+	var _tmp2028 uint64
+	var _tmp2029 uint64
+	var _tmp2030 uint64
+	var _tmp2031 uint64
+	var _tmp2032 uint64
+	var _tmp2033 uint64
+	var _tmp2034 uint64
+	var _tmp2035 uint64
+	var _tmp2036 uint64
+	var _tmp2037 uint64
+	var _tmp2038 uint64
+	var _tmp2039 uint64
+	var _tmp2040 uint64
+	var _tmp2041 uint64
+	var _tmp2042 uint64
+	var _tmp2043 uint64
+	var _tmp2045 uint64
+	var _tmp2046 uint64
+	var _tmp2047 uint64
+	var _tmp2050 uint64
+	var _tmp2053 uint64
+	var _tmp2054 uint64
+	var _tmp2055 uint64
+	var _tmp2057 uint64
+	var _tmp2070 uint64
+	var _tmp2076 uint64
+	var _tmp2083 uint64
+	var _tmp2087 uint64
+	var _tmp2112 uint64
+	var _tmp2137 uint64
+	var v2 uint64
+	var _tmp2276 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -279,11 +1802,99 @@ func Maxrecord1Hop8Par(params map[string]string) uint64 {
 	goto BB9
 
 BB9:
+	_tmp2024 = keyname + 8
+	_tmp2026 = _tmp2024
+	_tmp2027 = _tmp2026
+	_tmp2028 = _tmp2027
+	_tmp2029 = _tmp2028
+	_tmp2030 = _tmp2029
+	_tmp2031 = _tmp2030
+	_tmp2032 = _tmp2031
+	_tmp2033 = _tmp2032
+	_tmp2034 = _tmp2033
+	_tmp2035 = _tmp2034
+	_tmp2036 = _tmp2035
+	_tmp2037 = _tmp2036
+	_tmp2038 = _tmp2037
+	_tmp2039 = _tmp2038
+	_tmp2040 = _tmp2039
+	_tmp2041 = _tmp2040
+	_tmp2042 = _tmp2041
+	_tmp2043 = _tmp2042
+	_tmp2045 = _tmp2043
+	_tmp2046 = _tmp2045
+	_tmp2047 = _tmp2046
+	_tmp2050 = _tmp2047
+	_tmp2053 = _tmp2050
+	_tmp2054 = _tmp2053
+	_tmp2055 = _tmp2054
+	_tmp2057 = _tmp2055
+	_tmp2070 = _tmp2057
+	_tmp2076 = _tmp2070
+	_tmp2083 = _tmp2076
+	_tmp2087 = _tmp2083
+	_tmp2112 = _tmp2087
+	_tmp2137 = _tmp2112
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp2137}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp2137})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	panic("unexpected hop exit in partition")
 }
 
 // Maxrecord1Hop9Par calculates the partition for hop 9 without database access.
 func Maxrecord1Hop9Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var _tmp2277 uint64
+	var _tmp2279 uint64
+	var _tmp2280 uint64
+	var _tmp2281 uint64
+	var _tmp2282 uint64
+	var _tmp2283 uint64
+	var _tmp2284 uint64
+	var _tmp2285 uint64
+	var _tmp2286 uint64
+	var _tmp2287 uint64
+	var _tmp2288 uint64
+	var _tmp2289 uint64
+	var _tmp2290 uint64
+	var _tmp2291 uint64
+	var _tmp2292 uint64
+	var _tmp2293 uint64
+	var _tmp2294 uint64
+	var _tmp2295 uint64
+	var _tmp2296 uint64
+	var _tmp2298 uint64
+	var _tmp2300 uint64
+	var _tmp2301 uint64
+	var _tmp2302 uint64
+	var _tmp2304 uint64
+	var _tmp2306 uint64
+	var _tmp2307 uint64
+	var _tmp2308 uint64
+	var _tmp2309 uint64
+	var _tmp2310 uint64
+	var _tmp2311 uint64
+	var _tmp2312 uint64
+	var _tmp2315 uint64
+	var _tmp2317 uint64
+	var _tmp2318 uint64
+	var _tmp2321 uint64
+	var _tmp2323 uint64
+	var _tmp2390 uint64
+	var v2 uint64
+	var _tmp2529 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -292,6 +1903,51 @@ func Maxrecord1Hop9Par(params map[string]string) uint64 {
 	goto BB10
 
 BB10:
+	_tmp2277 = keyname + 9
+	_tmp2279 = _tmp2277
+	_tmp2280 = _tmp2279
+	_tmp2281 = _tmp2280
+	_tmp2282 = _tmp2281
+	_tmp2283 = _tmp2282
+	_tmp2284 = _tmp2283
+	_tmp2285 = _tmp2284
+	_tmp2286 = _tmp2285
+	_tmp2287 = _tmp2286
+	_tmp2288 = _tmp2287
+	_tmp2289 = _tmp2288
+	_tmp2290 = _tmp2289
+	_tmp2291 = _tmp2290
+	_tmp2292 = _tmp2291
+	_tmp2293 = _tmp2292
+	_tmp2294 = _tmp2293
+	_tmp2295 = _tmp2294
+	_tmp2296 = _tmp2295
+	_tmp2298 = _tmp2296
+	_tmp2300 = _tmp2298
+	_tmp2301 = _tmp2300
+	_tmp2302 = _tmp2301
+	_tmp2304 = _tmp2302
+	_tmp2306 = _tmp2304
+	_tmp2307 = _tmp2306
+	_tmp2308 = _tmp2307
+	_tmp2309 = _tmp2308
+	_tmp2310 = _tmp2309
+	_tmp2311 = _tmp2310
+	_tmp2312 = _tmp2311
+	_tmp2315 = _tmp2312
+	_tmp2317 = _tmp2315
+	_tmp2318 = _tmp2317
+	_tmp2321 = _tmp2318
+	_tmp2323 = _tmp2321
+	_tmp2390 = _tmp2323
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp2390}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp2390})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD2 = row1.FIELD2
+	v2 = r_FIELD2
+	_ = v2
 	return 0
 }
 

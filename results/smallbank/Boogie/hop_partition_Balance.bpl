@@ -89,20 +89,42 @@ axiom (forall
     (custid_1 == custid_2 && bal_1 == bal_2)
 );
 const TBL_Savings : Table (Savings);
-var Savings_custid : [int]int;
+var Accounts_name : [int]String;
 const TBL_Accounts : Table (Accounts);
-var Savings_bal : [int]real;
+const __shards__ : int;
+var Savings_custid : [int]int;
 const TBL_Checking : Table (Checking);
-var Checking_bal : [int]real;
+var Savings_bal : [int]real;
 const __slice__ : int;
 var Accounts_custid : [int]int;
 var Checking_custid : [int]int;
-var Accounts_name : [int]String;
-const __shards__ : int;
+var Checking_bal : [int]real;
 procedure verify_hop_partitions_Balance(custId: int)
 {
+  var s3_#tmp5 : Row (Table (Accounts));
+  var s3_custId : int;
+  var s3_a : Row (Table (Accounts));
+  var s3_#tmp6 : unit;
+  var s3_s#bal : real;
+  var s3_c#bal : real;
+  var s3_#tmp9 : real;
+  var s3_total : real;
+  var s3_#tmp10 : unit;
+
   // Hop partition verification for function 'Balance'
   s3_block3:
+    s3_#tmp5 := construct_Row_Accounts(Accounts_custid[s3_custId], Accounts_name[s3_custId]);
+    s3_a := s3_#tmp5;
+    s3_#tmp6 := to_unit(s3_a);
+    s3_s#bal := Savings_bal[s3_custId];
+  // Partition check hop 3 func 'f' tables 'Accounts'=>'Savings' keys [k0=custId] first_span Span { start: 1624, end: 1648, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 1700, end: 1723, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 3) (table_id . 1) (span ((start . 1700) (end . 1723) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s3_custId == s3_custId);
+    s3_c#bal := Checking_bal[s3_custId];
+  // Partition check hop 3 func 'f' tables 'Accounts'=>'Checking' keys [k0=custId] first_span Span { start: 1624, end: 1648, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" } current_span Span { start: 1756, end: 1780, filename: "/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 3) (table_id . 2) (span ((start . 1756) (end . 1780) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/smallbank.transact\"))))"} (s3_custId == s3_custId);
+    s3_#tmp9 := s3_s#bal + s3_c#bal;
+    s3_total := s3_#tmp9;
+    s3_#tmp10 := to_unit(s3_total);
     goto s3_epilogue;
   s3_hop_exit:
   s3_epilogue:

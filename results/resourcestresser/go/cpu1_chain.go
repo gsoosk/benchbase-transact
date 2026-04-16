@@ -19,9 +19,22 @@ func Cpu1Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB1
 
 BB1:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 0})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +47,22 @@ func Cpu1Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB2
 
 BB2:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 1})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +75,22 @@ func Cpu1Hop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp5 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB3
 
 BB3:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 2})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -64,9 +103,22 @@ func Cpu1Hop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp7 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB4
 
 BB4:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 3})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -79,9 +131,22 @@ func Cpu1Hop4(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp9 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB5
 
 BB5:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 4})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -94,9 +159,22 @@ func Cpu1Hop5(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp11 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB6
 
 BB6:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 5})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -109,9 +187,22 @@ func Cpu1Hop6(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp13 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB7
 
 BB7:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 6})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -124,9 +215,22 @@ func Cpu1Hop7(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp15 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB8
 
 BB8:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 7})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -139,9 +243,22 @@ func Cpu1Hop8(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp17 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB9
 
 BB9:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 8})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -154,9 +271,22 @@ func Cpu1Hop9(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp19 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB10
 
 BB10:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 9})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -169,9 +299,22 @@ func Cpu1Hop10(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp21 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB11
 
 BB11:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 10})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -184,9 +327,22 @@ func Cpu1Hop11(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp23 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB12
 
 BB12:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 11})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -199,9 +355,22 @@ func Cpu1Hop12(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp25 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB13
 
 BB13:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 12})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -214,9 +383,22 @@ func Cpu1Hop13(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp27 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB14
 
 BB14:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 13})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -229,9 +411,22 @@ func Cpu1Hop14(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp29 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB15
 
 BB15:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 14})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -244,9 +439,22 @@ func Cpu1Hop15(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp31 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB16
 
 BB16:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 15})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -259,9 +467,22 @@ func Cpu1Hop16(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp33 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB17
 
 BB17:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 16})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -274,9 +495,22 @@ func Cpu1Hop17(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp35 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB18
 
 BB18:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 17})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -289,9 +523,22 @@ func Cpu1Hop18(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp37 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB19
 
 BB19:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 18})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -304,9 +551,22 @@ func Cpu1Hop19(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp39 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB20
 
 BB20:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 19})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -319,9 +579,22 @@ func Cpu1Hop20(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp41 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB21
 
 BB21:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 20})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -334,9 +607,22 @@ func Cpu1Hop21(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp43 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB22
 
 BB22:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 21})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -349,9 +635,22 @@ func Cpu1Hop22(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp45 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB23
 
 BB23:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 22})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -364,9 +663,22 @@ func Cpu1Hop23(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp47 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB24
 
 BB24:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 23})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -379,9 +691,22 @@ func Cpu1Hop24(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp49 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB25
 
 BB25:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 24})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -394,9 +719,22 @@ func Cpu1Hop25(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp51 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB26
 
 BB26:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 25})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -409,9 +747,22 @@ func Cpu1Hop26(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp53 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB27
 
 BB27:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 26})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -424,9 +775,22 @@ func Cpu1Hop27(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp55 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB28
 
 BB28:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 27})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -439,9 +803,22 @@ func Cpu1Hop28(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp57 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB29
 
 BB29:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 28})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -454,9 +831,22 @@ func Cpu1Hop29(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp59 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB30
 
 BB30:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 29})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -469,9 +859,22 @@ func Cpu1Hop30(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp61 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB31
 
 BB31:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 30})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -484,9 +887,22 @@ func Cpu1Hop31(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp63 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB32
 
 BB32:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 31})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -499,9 +915,22 @@ func Cpu1Hop32(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp65 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB33
 
 BB33:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 32})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -514,9 +943,22 @@ func Cpu1Hop33(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp67 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB34
 
 BB34:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 33})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -529,9 +971,22 @@ func Cpu1Hop34(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp69 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB35
 
 BB35:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 34})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -544,9 +999,22 @@ func Cpu1Hop35(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp71 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB36
 
 BB36:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 35})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -559,9 +1027,22 @@ func Cpu1Hop36(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp73 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB37
 
 BB37:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 36})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -574,9 +1055,22 @@ func Cpu1Hop37(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp75 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB38
 
 BB38:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 37})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -589,9 +1083,22 @@ func Cpu1Hop38(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp77 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB39
 
 BB39:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 38})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -604,9 +1111,22 @@ func Cpu1Hop39(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp79 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB40
 
 BB40:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 39})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -619,9 +1139,22 @@ func Cpu1Hop40(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp81 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB41
 
 BB41:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 40})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -634,9 +1167,22 @@ func Cpu1Hop41(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp83 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB42
 
 BB42:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 41})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -649,9 +1195,22 @@ func Cpu1Hop42(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp85 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB43
 
 BB43:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 42})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -664,9 +1223,22 @@ func Cpu1Hop43(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp87 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB44
 
 BB44:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 43})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -679,9 +1251,22 @@ func Cpu1Hop44(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp89 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB45
 
 BB45:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 44})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -694,9 +1279,22 @@ func Cpu1Hop45(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp91 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB46
 
 BB46:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 45})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -709,9 +1307,22 @@ func Cpu1Hop46(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp93 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB47
 
 BB47:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 46})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -724,9 +1335,22 @@ func Cpu1Hop47(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp95 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB48
 
 BB48:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 47})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -739,9 +1363,22 @@ func Cpu1Hop48(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp97 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB49
 
 BB49:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 48})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -754,9 +1391,22 @@ func Cpu1Hop49(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp99 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB50
 
 BB50:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 49})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -769,9 +1419,22 @@ func Cpu1Hop50(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp101 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB51
 
 BB51:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 50})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -784,9 +1447,22 @@ func Cpu1Hop51(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp103 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB52
 
 BB52:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 51})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -799,9 +1475,22 @@ func Cpu1Hop52(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp105 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB53
 
 BB53:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 52})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -814,9 +1503,22 @@ func Cpu1Hop53(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp107 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB54
 
 BB54:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 53})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -829,9 +1531,22 @@ func Cpu1Hop54(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp109 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB55
 
 BB55:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 54})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -844,9 +1559,22 @@ func Cpu1Hop55(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp111 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB56
 
 BB56:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 55})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -859,9 +1587,22 @@ func Cpu1Hop56(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp113 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB57
 
 BB57:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 56})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -874,9 +1615,22 @@ func Cpu1Hop57(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp115 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB58
 
 BB58:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 57})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -889,9 +1643,22 @@ func Cpu1Hop58(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp117 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB59
 
 BB59:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 58})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -904,9 +1671,22 @@ func Cpu1Hop59(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp119 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB60
 
 BB60:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 59})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -919,9 +1699,22 @@ func Cpu1Hop60(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp121 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB61
 
 BB61:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 60})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -934,9 +1727,22 @@ func Cpu1Hop61(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp123 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB62
 
 BB62:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 61})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -949,9 +1755,22 @@ func Cpu1Hop62(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp125 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB63
 
 BB63:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 62})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -964,9 +1783,22 @@ func Cpu1Hop63(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp127 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB64
 
 BB64:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 63})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -979,9 +1811,22 @@ func Cpu1Hop64(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp129 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB65
 
 BB65:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 64})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -994,9 +1839,22 @@ func Cpu1Hop65(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp131 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB66
 
 BB66:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 65})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1009,9 +1867,22 @@ func Cpu1Hop66(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp133 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB67
 
 BB67:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 66})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1024,9 +1895,22 @@ func Cpu1Hop67(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp135 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB68
 
 BB68:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 67})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1039,9 +1923,22 @@ func Cpu1Hop68(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp137 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB69
 
 BB69:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 68})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1054,9 +1951,22 @@ func Cpu1Hop69(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp139 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB70
 
 BB70:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 69})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1069,9 +1979,22 @@ func Cpu1Hop70(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp141 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB71
 
 BB71:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 70})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1084,9 +2007,22 @@ func Cpu1Hop71(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp143 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB72
 
 BB72:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 71})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1099,9 +2035,22 @@ func Cpu1Hop72(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp145 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB73
 
 BB73:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 72})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1114,9 +2063,22 @@ func Cpu1Hop73(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp147 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB74
 
 BB74:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 73})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1129,9 +2091,22 @@ func Cpu1Hop74(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp149 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB75
 
 BB75:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 74})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1144,9 +2119,22 @@ func Cpu1Hop75(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp151 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB76
 
 BB76:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 75})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1159,9 +2147,22 @@ func Cpu1Hop76(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp153 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB77
 
 BB77:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 76})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1174,9 +2175,22 @@ func Cpu1Hop77(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp155 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB78
 
 BB78:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 77})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1189,9 +2203,22 @@ func Cpu1Hop78(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp157 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB79
 
 BB79:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 78})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1204,9 +2231,22 @@ func Cpu1Hop79(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp159 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB80
 
 BB80:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 79})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1219,9 +2259,22 @@ func Cpu1Hop80(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp161 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB81
 
 BB81:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 80})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1234,9 +2287,22 @@ func Cpu1Hop81(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp163 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB82
 
 BB82:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 81})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1249,9 +2315,22 @@ func Cpu1Hop82(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp165 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB83
 
 BB83:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 82})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1264,9 +2343,22 @@ func Cpu1Hop83(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp167 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB84
 
 BB84:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 83})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1279,9 +2371,22 @@ func Cpu1Hop84(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp169 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB85
 
 BB85:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 84})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1294,9 +2399,22 @@ func Cpu1Hop85(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp171 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB86
 
 BB86:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 85})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1309,9 +2427,22 @@ func Cpu1Hop86(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp173 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB87
 
 BB87:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 86})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1324,9 +2455,22 @@ func Cpu1Hop87(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp175 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB88
 
 BB88:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 87})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1339,9 +2483,22 @@ func Cpu1Hop88(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp177 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB89
 
 BB89:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 88})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1354,9 +2511,22 @@ func Cpu1Hop89(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp179 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB90
 
 BB90:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 89})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1369,9 +2539,22 @@ func Cpu1Hop90(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp181 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB91
 
 BB91:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 90})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1384,9 +2567,22 @@ func Cpu1Hop91(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp183 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB92
 
 BB92:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 91})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1399,9 +2595,22 @@ func Cpu1Hop92(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp185 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB93
 
 BB93:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 92})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1414,9 +2623,22 @@ func Cpu1Hop93(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp187 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB94
 
 BB94:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 93})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1429,9 +2651,22 @@ func Cpu1Hop94(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp189 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB95
 
 BB95:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 94})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1444,9 +2679,22 @@ func Cpu1Hop95(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp191 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB96
 
 BB96:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 95})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1459,9 +2707,22 @@ func Cpu1Hop96(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp193 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB97
 
 BB97:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 96})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1474,9 +2735,22 @@ func Cpu1Hop97(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp195 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB98
 
 BB98:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 97})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1489,9 +2763,22 @@ func Cpu1Hop98(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp197 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB99
 
 BB99:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 98})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1504,9 +2791,22 @@ func Cpu1Hop99(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var r_passwd string
+	var p string
+	var _tmp199 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	goto BB100
 
 BB100:
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 99})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -1517,6 +2817,13 @@ BB100:
 
 // Cpu1Hop0Par calculates the partition for hop 0 without database access.
 func Cpu1Hop0Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1525,11 +2832,26 @@ func Cpu1Hop0Par(params map[string]string) uint64 {
 	goto BB1
 
 BB1:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 0}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 0})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop1Par calculates the partition for hop 1 without database access.
 func Cpu1Hop1Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1538,11 +2860,26 @@ func Cpu1Hop1Par(params map[string]string) uint64 {
 	goto BB2
 
 BB2:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 1}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 1})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop2Par calculates the partition for hop 2 without database access.
 func Cpu1Hop2Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp5 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1551,11 +2888,26 @@ func Cpu1Hop2Par(params map[string]string) uint64 {
 	goto BB3
 
 BB3:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 2}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 2})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop3Par calculates the partition for hop 3 without database access.
 func Cpu1Hop3Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp7 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1564,11 +2916,26 @@ func Cpu1Hop3Par(params map[string]string) uint64 {
 	goto BB4
 
 BB4:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 3}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 3})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop4Par calculates the partition for hop 4 without database access.
 func Cpu1Hop4Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp9 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1577,11 +2944,26 @@ func Cpu1Hop4Par(params map[string]string) uint64 {
 	goto BB5
 
 BB5:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 4}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 4})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop5Par calculates the partition for hop 5 without database access.
 func Cpu1Hop5Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp11 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1590,11 +2972,26 @@ func Cpu1Hop5Par(params map[string]string) uint64 {
 	goto BB6
 
 BB6:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 5}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 5})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop6Par calculates the partition for hop 6 without database access.
 func Cpu1Hop6Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp13 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1603,11 +3000,26 @@ func Cpu1Hop6Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 6}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 6})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop7Par calculates the partition for hop 7 without database access.
 func Cpu1Hop7Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp15 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1616,11 +3028,26 @@ func Cpu1Hop7Par(params map[string]string) uint64 {
 	goto BB8
 
 BB8:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 7}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 7})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop8Par calculates the partition for hop 8 without database access.
 func Cpu1Hop8Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp17 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1629,11 +3056,26 @@ func Cpu1Hop8Par(params map[string]string) uint64 {
 	goto BB9
 
 BB9:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 8}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 8})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop9Par calculates the partition for hop 9 without database access.
 func Cpu1Hop9Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp19 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1642,11 +3084,26 @@ func Cpu1Hop9Par(params map[string]string) uint64 {
 	goto BB10
 
 BB10:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 9}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 9})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop10Par calculates the partition for hop 10 without database access.
 func Cpu1Hop10Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp21 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1655,11 +3112,26 @@ func Cpu1Hop10Par(params map[string]string) uint64 {
 	goto BB11
 
 BB11:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 10}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 10})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop11Par calculates the partition for hop 11 without database access.
 func Cpu1Hop11Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp23 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1668,11 +3140,26 @@ func Cpu1Hop11Par(params map[string]string) uint64 {
 	goto BB12
 
 BB12:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 11}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 11})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop12Par calculates the partition for hop 12 without database access.
 func Cpu1Hop12Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp25 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1681,11 +3168,26 @@ func Cpu1Hop12Par(params map[string]string) uint64 {
 	goto BB13
 
 BB13:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 12}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 12})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop13Par calculates the partition for hop 13 without database access.
 func Cpu1Hop13Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp27 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1694,11 +3196,26 @@ func Cpu1Hop13Par(params map[string]string) uint64 {
 	goto BB14
 
 BB14:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 13}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 13})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop14Par calculates the partition for hop 14 without database access.
 func Cpu1Hop14Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp29 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1707,11 +3224,26 @@ func Cpu1Hop14Par(params map[string]string) uint64 {
 	goto BB15
 
 BB15:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 14}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 14})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop15Par calculates the partition for hop 15 without database access.
 func Cpu1Hop15Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp31 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1720,11 +3252,26 @@ func Cpu1Hop15Par(params map[string]string) uint64 {
 	goto BB16
 
 BB16:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 15}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 15})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop16Par calculates the partition for hop 16 without database access.
 func Cpu1Hop16Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp33 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1733,11 +3280,26 @@ func Cpu1Hop16Par(params map[string]string) uint64 {
 	goto BB17
 
 BB17:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 16}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 16})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop17Par calculates the partition for hop 17 without database access.
 func Cpu1Hop17Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp35 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1746,11 +3308,26 @@ func Cpu1Hop17Par(params map[string]string) uint64 {
 	goto BB18
 
 BB18:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 17}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 17})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop18Par calculates the partition for hop 18 without database access.
 func Cpu1Hop18Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp37 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1759,11 +3336,26 @@ func Cpu1Hop18Par(params map[string]string) uint64 {
 	goto BB19
 
 BB19:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 18}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 18})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop19Par calculates the partition for hop 19 without database access.
 func Cpu1Hop19Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp39 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1772,11 +3364,26 @@ func Cpu1Hop19Par(params map[string]string) uint64 {
 	goto BB20
 
 BB20:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 19}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 19})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop20Par calculates the partition for hop 20 without database access.
 func Cpu1Hop20Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp41 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1785,11 +3392,26 @@ func Cpu1Hop20Par(params map[string]string) uint64 {
 	goto BB21
 
 BB21:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 20}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 20})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop21Par calculates the partition for hop 21 without database access.
 func Cpu1Hop21Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp43 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1798,11 +3420,26 @@ func Cpu1Hop21Par(params map[string]string) uint64 {
 	goto BB22
 
 BB22:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 21}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 21})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop22Par calculates the partition for hop 22 without database access.
 func Cpu1Hop22Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp45 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1811,11 +3448,26 @@ func Cpu1Hop22Par(params map[string]string) uint64 {
 	goto BB23
 
 BB23:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 22}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 22})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop23Par calculates the partition for hop 23 without database access.
 func Cpu1Hop23Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp47 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1824,11 +3476,26 @@ func Cpu1Hop23Par(params map[string]string) uint64 {
 	goto BB24
 
 BB24:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 23}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 23})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop24Par calculates the partition for hop 24 without database access.
 func Cpu1Hop24Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp49 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1837,11 +3504,26 @@ func Cpu1Hop24Par(params map[string]string) uint64 {
 	goto BB25
 
 BB25:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 24}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 24})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop25Par calculates the partition for hop 25 without database access.
 func Cpu1Hop25Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp51 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1850,11 +3532,26 @@ func Cpu1Hop25Par(params map[string]string) uint64 {
 	goto BB26
 
 BB26:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 25}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 25})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop26Par calculates the partition for hop 26 without database access.
 func Cpu1Hop26Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp53 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1863,11 +3560,26 @@ func Cpu1Hop26Par(params map[string]string) uint64 {
 	goto BB27
 
 BB27:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 26}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 26})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop27Par calculates the partition for hop 27 without database access.
 func Cpu1Hop27Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp55 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1876,11 +3588,26 @@ func Cpu1Hop27Par(params map[string]string) uint64 {
 	goto BB28
 
 BB28:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 27}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 27})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop28Par calculates the partition for hop 28 without database access.
 func Cpu1Hop28Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp57 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1889,11 +3616,26 @@ func Cpu1Hop28Par(params map[string]string) uint64 {
 	goto BB29
 
 BB29:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 28}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 28})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop29Par calculates the partition for hop 29 without database access.
 func Cpu1Hop29Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp59 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1902,11 +3644,26 @@ func Cpu1Hop29Par(params map[string]string) uint64 {
 	goto BB30
 
 BB30:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 29}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 29})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop30Par calculates the partition for hop 30 without database access.
 func Cpu1Hop30Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp61 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1915,11 +3672,26 @@ func Cpu1Hop30Par(params map[string]string) uint64 {
 	goto BB31
 
 BB31:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 30}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 30})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop31Par calculates the partition for hop 31 without database access.
 func Cpu1Hop31Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp63 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1928,11 +3700,26 @@ func Cpu1Hop31Par(params map[string]string) uint64 {
 	goto BB32
 
 BB32:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 31}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 31})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop32Par calculates the partition for hop 32 without database access.
 func Cpu1Hop32Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp65 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1941,11 +3728,26 @@ func Cpu1Hop32Par(params map[string]string) uint64 {
 	goto BB33
 
 BB33:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 32}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 32})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop33Par calculates the partition for hop 33 without database access.
 func Cpu1Hop33Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp67 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1954,11 +3756,26 @@ func Cpu1Hop33Par(params map[string]string) uint64 {
 	goto BB34
 
 BB34:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 33}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 33})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop34Par calculates the partition for hop 34 without database access.
 func Cpu1Hop34Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp69 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1967,11 +3784,26 @@ func Cpu1Hop34Par(params map[string]string) uint64 {
 	goto BB35
 
 BB35:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 34}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 34})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop35Par calculates the partition for hop 35 without database access.
 func Cpu1Hop35Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp71 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1980,11 +3812,26 @@ func Cpu1Hop35Par(params map[string]string) uint64 {
 	goto BB36
 
 BB36:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 35}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 35})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop36Par calculates the partition for hop 36 without database access.
 func Cpu1Hop36Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp73 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -1993,11 +3840,26 @@ func Cpu1Hop36Par(params map[string]string) uint64 {
 	goto BB37
 
 BB37:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 36}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 36})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop37Par calculates the partition for hop 37 without database access.
 func Cpu1Hop37Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp75 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2006,11 +3868,26 @@ func Cpu1Hop37Par(params map[string]string) uint64 {
 	goto BB38
 
 BB38:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 37}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 37})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop38Par calculates the partition for hop 38 without database access.
 func Cpu1Hop38Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp77 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2019,11 +3896,26 @@ func Cpu1Hop38Par(params map[string]string) uint64 {
 	goto BB39
 
 BB39:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 38}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 38})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop39Par calculates the partition for hop 39 without database access.
 func Cpu1Hop39Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp79 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2032,11 +3924,26 @@ func Cpu1Hop39Par(params map[string]string) uint64 {
 	goto BB40
 
 BB40:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 39}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 39})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop40Par calculates the partition for hop 40 without database access.
 func Cpu1Hop40Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp81 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2045,11 +3952,26 @@ func Cpu1Hop40Par(params map[string]string) uint64 {
 	goto BB41
 
 BB41:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 40}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 40})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop41Par calculates the partition for hop 41 without database access.
 func Cpu1Hop41Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp83 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2058,11 +3980,26 @@ func Cpu1Hop41Par(params map[string]string) uint64 {
 	goto BB42
 
 BB42:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 41}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 41})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop42Par calculates the partition for hop 42 without database access.
 func Cpu1Hop42Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp85 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2071,11 +4008,26 @@ func Cpu1Hop42Par(params map[string]string) uint64 {
 	goto BB43
 
 BB43:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 42}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 42})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop43Par calculates the partition for hop 43 without database access.
 func Cpu1Hop43Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp87 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2084,11 +4036,26 @@ func Cpu1Hop43Par(params map[string]string) uint64 {
 	goto BB44
 
 BB44:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 43}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 43})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop44Par calculates the partition for hop 44 without database access.
 func Cpu1Hop44Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp89 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2097,11 +4064,26 @@ func Cpu1Hop44Par(params map[string]string) uint64 {
 	goto BB45
 
 BB45:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 44}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 44})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop45Par calculates the partition for hop 45 without database access.
 func Cpu1Hop45Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp91 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2110,11 +4092,26 @@ func Cpu1Hop45Par(params map[string]string) uint64 {
 	goto BB46
 
 BB46:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 45}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 45})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop46Par calculates the partition for hop 46 without database access.
 func Cpu1Hop46Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp93 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2123,11 +4120,26 @@ func Cpu1Hop46Par(params map[string]string) uint64 {
 	goto BB47
 
 BB47:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 46}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 46})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop47Par calculates the partition for hop 47 without database access.
 func Cpu1Hop47Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp95 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2136,11 +4148,26 @@ func Cpu1Hop47Par(params map[string]string) uint64 {
 	goto BB48
 
 BB48:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 47}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 47})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop48Par calculates the partition for hop 48 without database access.
 func Cpu1Hop48Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp97 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2149,11 +4176,26 @@ func Cpu1Hop48Par(params map[string]string) uint64 {
 	goto BB49
 
 BB49:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 48}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 48})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop49Par calculates the partition for hop 49 without database access.
 func Cpu1Hop49Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp99 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2162,11 +4204,26 @@ func Cpu1Hop49Par(params map[string]string) uint64 {
 	goto BB50
 
 BB50:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 49}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 49})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop50Par calculates the partition for hop 50 without database access.
 func Cpu1Hop50Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp101 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2175,11 +4232,26 @@ func Cpu1Hop50Par(params map[string]string) uint64 {
 	goto BB51
 
 BB51:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 50}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 50})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop51Par calculates the partition for hop 51 without database access.
 func Cpu1Hop51Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp103 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2188,11 +4260,26 @@ func Cpu1Hop51Par(params map[string]string) uint64 {
 	goto BB52
 
 BB52:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 51}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 51})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop52Par calculates the partition for hop 52 without database access.
 func Cpu1Hop52Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp105 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2201,11 +4288,26 @@ func Cpu1Hop52Par(params map[string]string) uint64 {
 	goto BB53
 
 BB53:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 52}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 52})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop53Par calculates the partition for hop 53 without database access.
 func Cpu1Hop53Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp107 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2214,11 +4316,26 @@ func Cpu1Hop53Par(params map[string]string) uint64 {
 	goto BB54
 
 BB54:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 53}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 53})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop54Par calculates the partition for hop 54 without database access.
 func Cpu1Hop54Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp109 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2227,11 +4344,26 @@ func Cpu1Hop54Par(params map[string]string) uint64 {
 	goto BB55
 
 BB55:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 54}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 54})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop55Par calculates the partition for hop 55 without database access.
 func Cpu1Hop55Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp111 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2240,11 +4372,26 @@ func Cpu1Hop55Par(params map[string]string) uint64 {
 	goto BB56
 
 BB56:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 55}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 55})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop56Par calculates the partition for hop 56 without database access.
 func Cpu1Hop56Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp113 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2253,11 +4400,26 @@ func Cpu1Hop56Par(params map[string]string) uint64 {
 	goto BB57
 
 BB57:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 56}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 56})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop57Par calculates the partition for hop 57 without database access.
 func Cpu1Hop57Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp115 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2266,11 +4428,26 @@ func Cpu1Hop57Par(params map[string]string) uint64 {
 	goto BB58
 
 BB58:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 57}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 57})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop58Par calculates the partition for hop 58 without database access.
 func Cpu1Hop58Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp117 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2279,11 +4456,26 @@ func Cpu1Hop58Par(params map[string]string) uint64 {
 	goto BB59
 
 BB59:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 58}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 58})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop59Par calculates the partition for hop 59 without database access.
 func Cpu1Hop59Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp119 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2292,11 +4484,26 @@ func Cpu1Hop59Par(params map[string]string) uint64 {
 	goto BB60
 
 BB60:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 59}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 59})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop60Par calculates the partition for hop 60 without database access.
 func Cpu1Hop60Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp121 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2305,11 +4512,26 @@ func Cpu1Hop60Par(params map[string]string) uint64 {
 	goto BB61
 
 BB61:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 60}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 60})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop61Par calculates the partition for hop 61 without database access.
 func Cpu1Hop61Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp123 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2318,11 +4540,26 @@ func Cpu1Hop61Par(params map[string]string) uint64 {
 	goto BB62
 
 BB62:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 61}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 61})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop62Par calculates the partition for hop 62 without database access.
 func Cpu1Hop62Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp125 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2331,11 +4568,26 @@ func Cpu1Hop62Par(params map[string]string) uint64 {
 	goto BB63
 
 BB63:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 62}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 62})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop63Par calculates the partition for hop 63 without database access.
 func Cpu1Hop63Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp127 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2344,11 +4596,26 @@ func Cpu1Hop63Par(params map[string]string) uint64 {
 	goto BB64
 
 BB64:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 63}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 63})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop64Par calculates the partition for hop 64 without database access.
 func Cpu1Hop64Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp129 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2357,11 +4624,26 @@ func Cpu1Hop64Par(params map[string]string) uint64 {
 	goto BB65
 
 BB65:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 64}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 64})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop65Par calculates the partition for hop 65 without database access.
 func Cpu1Hop65Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp131 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2370,11 +4652,26 @@ func Cpu1Hop65Par(params map[string]string) uint64 {
 	goto BB66
 
 BB66:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 65}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 65})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop66Par calculates the partition for hop 66 without database access.
 func Cpu1Hop66Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp133 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2383,11 +4680,26 @@ func Cpu1Hop66Par(params map[string]string) uint64 {
 	goto BB67
 
 BB67:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 66}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 66})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop67Par calculates the partition for hop 67 without database access.
 func Cpu1Hop67Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp135 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2396,11 +4708,26 @@ func Cpu1Hop67Par(params map[string]string) uint64 {
 	goto BB68
 
 BB68:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 67}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 67})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop68Par calculates the partition for hop 68 without database access.
 func Cpu1Hop68Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp137 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2409,11 +4736,26 @@ func Cpu1Hop68Par(params map[string]string) uint64 {
 	goto BB69
 
 BB69:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 68}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 68})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop69Par calculates the partition for hop 69 without database access.
 func Cpu1Hop69Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp139 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2422,11 +4764,26 @@ func Cpu1Hop69Par(params map[string]string) uint64 {
 	goto BB70
 
 BB70:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 69}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 69})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop70Par calculates the partition for hop 70 without database access.
 func Cpu1Hop70Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp141 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2435,11 +4792,26 @@ func Cpu1Hop70Par(params map[string]string) uint64 {
 	goto BB71
 
 BB71:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 70}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 70})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop71Par calculates the partition for hop 71 without database access.
 func Cpu1Hop71Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp143 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2448,11 +4820,26 @@ func Cpu1Hop71Par(params map[string]string) uint64 {
 	goto BB72
 
 BB72:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 71}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 71})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop72Par calculates the partition for hop 72 without database access.
 func Cpu1Hop72Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp145 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2461,11 +4848,26 @@ func Cpu1Hop72Par(params map[string]string) uint64 {
 	goto BB73
 
 BB73:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 72}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 72})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop73Par calculates the partition for hop 73 without database access.
 func Cpu1Hop73Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp147 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2474,11 +4876,26 @@ func Cpu1Hop73Par(params map[string]string) uint64 {
 	goto BB74
 
 BB74:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 73}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 73})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop74Par calculates the partition for hop 74 without database access.
 func Cpu1Hop74Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp149 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2487,11 +4904,26 @@ func Cpu1Hop74Par(params map[string]string) uint64 {
 	goto BB75
 
 BB75:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 74}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 74})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop75Par calculates the partition for hop 75 without database access.
 func Cpu1Hop75Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp151 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2500,11 +4932,26 @@ func Cpu1Hop75Par(params map[string]string) uint64 {
 	goto BB76
 
 BB76:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 75}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 75})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop76Par calculates the partition for hop 76 without database access.
 func Cpu1Hop76Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp153 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2513,11 +4960,26 @@ func Cpu1Hop76Par(params map[string]string) uint64 {
 	goto BB77
 
 BB77:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 76}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 76})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop77Par calculates the partition for hop 77 without database access.
 func Cpu1Hop77Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp155 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2526,11 +4988,26 @@ func Cpu1Hop77Par(params map[string]string) uint64 {
 	goto BB78
 
 BB78:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 77}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 77})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop78Par calculates the partition for hop 78 without database access.
 func Cpu1Hop78Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp157 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2539,11 +5016,26 @@ func Cpu1Hop78Par(params map[string]string) uint64 {
 	goto BB79
 
 BB79:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 78}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 78})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop79Par calculates the partition for hop 79 without database access.
 func Cpu1Hop79Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp159 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2552,11 +5044,26 @@ func Cpu1Hop79Par(params map[string]string) uint64 {
 	goto BB80
 
 BB80:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 79}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 79})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop80Par calculates the partition for hop 80 without database access.
 func Cpu1Hop80Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp161 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2565,11 +5072,26 @@ func Cpu1Hop80Par(params map[string]string) uint64 {
 	goto BB81
 
 BB81:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 80}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 80})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop81Par calculates the partition for hop 81 without database access.
 func Cpu1Hop81Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp163 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2578,11 +5100,26 @@ func Cpu1Hop81Par(params map[string]string) uint64 {
 	goto BB82
 
 BB82:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 81}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 81})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop82Par calculates the partition for hop 82 without database access.
 func Cpu1Hop82Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp165 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2591,11 +5128,26 @@ func Cpu1Hop82Par(params map[string]string) uint64 {
 	goto BB83
 
 BB83:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 82}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 82})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop83Par calculates the partition for hop 83 without database access.
 func Cpu1Hop83Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp167 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2604,11 +5156,26 @@ func Cpu1Hop83Par(params map[string]string) uint64 {
 	goto BB84
 
 BB84:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 83}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 83})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop84Par calculates the partition for hop 84 without database access.
 func Cpu1Hop84Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp169 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2617,11 +5184,26 @@ func Cpu1Hop84Par(params map[string]string) uint64 {
 	goto BB85
 
 BB85:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 84}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 84})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop85Par calculates the partition for hop 85 without database access.
 func Cpu1Hop85Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp171 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2630,11 +5212,26 @@ func Cpu1Hop85Par(params map[string]string) uint64 {
 	goto BB86
 
 BB86:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 85}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 85})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop86Par calculates the partition for hop 86 without database access.
 func Cpu1Hop86Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp173 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2643,11 +5240,26 @@ func Cpu1Hop86Par(params map[string]string) uint64 {
 	goto BB87
 
 BB87:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 86}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 86})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop87Par calculates the partition for hop 87 without database access.
 func Cpu1Hop87Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp175 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2656,11 +5268,26 @@ func Cpu1Hop87Par(params map[string]string) uint64 {
 	goto BB88
 
 BB88:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 87}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 87})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop88Par calculates the partition for hop 88 without database access.
 func Cpu1Hop88Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp177 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2669,11 +5296,26 @@ func Cpu1Hop88Par(params map[string]string) uint64 {
 	goto BB89
 
 BB89:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 88}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 88})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop89Par calculates the partition for hop 89 without database access.
 func Cpu1Hop89Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp179 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2682,11 +5324,26 @@ func Cpu1Hop89Par(params map[string]string) uint64 {
 	goto BB90
 
 BB90:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 89}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 89})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop90Par calculates the partition for hop 90 without database access.
 func Cpu1Hop90Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp181 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2695,11 +5352,26 @@ func Cpu1Hop90Par(params map[string]string) uint64 {
 	goto BB91
 
 BB91:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 90}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 90})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop91Par calculates the partition for hop 91 without database access.
 func Cpu1Hop91Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp183 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2708,11 +5380,26 @@ func Cpu1Hop91Par(params map[string]string) uint64 {
 	goto BB92
 
 BB92:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 91}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 91})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop92Par calculates the partition for hop 92 without database access.
 func Cpu1Hop92Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp185 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2721,11 +5408,26 @@ func Cpu1Hop92Par(params map[string]string) uint64 {
 	goto BB93
 
 BB93:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 92}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 92})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop93Par calculates the partition for hop 93 without database access.
 func Cpu1Hop93Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp187 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2734,11 +5436,26 @@ func Cpu1Hop93Par(params map[string]string) uint64 {
 	goto BB94
 
 BB94:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 93}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 93})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop94Par calculates the partition for hop 94 without database access.
 func Cpu1Hop94Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp189 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2747,11 +5464,26 @@ func Cpu1Hop94Par(params map[string]string) uint64 {
 	goto BB95
 
 BB95:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 94}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 94})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop95Par calculates the partition for hop 95 without database access.
 func Cpu1Hop95Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp191 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2760,11 +5492,26 @@ func Cpu1Hop95Par(params map[string]string) uint64 {
 	goto BB96
 
 BB96:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 95}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 95})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop96Par calculates the partition for hop 96 without database access.
 func Cpu1Hop96Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp193 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2773,11 +5520,26 @@ func Cpu1Hop96Par(params map[string]string) uint64 {
 	goto BB97
 
 BB97:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 96}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 96})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop97Par calculates the partition for hop 97 without database access.
 func Cpu1Hop97Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp195 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2786,11 +5548,26 @@ func Cpu1Hop97Par(params map[string]string) uint64 {
 	goto BB98
 
 BB98:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 97}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 97})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop98Par calculates the partition for hop 98 without database access.
 func Cpu1Hop98Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp197 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2799,11 +5576,26 @@ func Cpu1Hop98Par(params map[string]string) uint64 {
 	goto BB99
 
 BB99:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 98}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 98})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	panic("unexpected hop exit in partition")
 }
 
 // Cpu1Hop99Par calculates the partition for hop 99 without database access.
 func Cpu1Hop99Par(params map[string]string) uint64 {
+	var r_passwd string
+	var p string
+	var _tmp199 Unit
+
+	var keyBytes1 []byte
+	var row1 Cputable
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -2812,6 +5604,14 @@ func Cpu1Hop99Par(params map[string]string) uint64 {
 	goto BB100
 
 BB100:
+	// First table access - calculate partition: Cputable
+	if true { return getCputablePar(CputableKey{empid: 99}) }
+	// TableGet: Cputable
+	keyBytes1, row1 = getCputable(tx, CputableKey{empid: 99})
+	rwSet = AddRWSet(rwSet, "Cputable", keyBytes1)
+	r_passwd = row1.passwd
+	p = r_passwd
+	_ = p
 	return 0
 }
 

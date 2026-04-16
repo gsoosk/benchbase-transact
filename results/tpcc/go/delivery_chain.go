@@ -27,15 +27,18 @@ func DeliveryHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var _tmp268 uint64
 	var c_id uint64
 	var _tmp269 uint64
+	var ol_cnt uint64
+	var _tmp270 uint64
+	var _tmp271 Unit
 	var ol_total float32
-	var _tmp271 bool
-	var _tmp272 uint64
-	var _tmp273 float32
+	var _tmp272 bool
+	var _tmp273 uint64
 	var _tmp274 float32
-	var _tmp276 float32
+	var _tmp275 float32
 	var _tmp277 float32
 	var _tmp278 float32
 	var _tmp279 float32
+	var _tmp280 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -46,15 +49,15 @@ func DeliveryHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -71,6 +74,8 @@ func DeliveryHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -95,52 +100,58 @@ BB82:
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
 	_tmp269 = row3.O_C_ID
 	c_id = _tmp269
-	// TableSet: Order
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id}, row4)
+	_tmp270 = row4.O_OL_CNT
+	ol_cnt = _tmp270
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id}, row5)
 	goto BB84
-	_tmp271 = ol_number < O_OL_CNT
-	if _tmp271 {
+	_tmp272 = ol_number < O_OL_CNT
+	if _tmp272 {
 		goto BB84
 	} else {
 		goto BB86
 	}
 BB84:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp272 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = 0 + _tmp273
-	ol_total = _tmp274
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp273 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = 0 + _tmp274
+	ol_total = _tmp275
 	goto BB157
 BB86:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp276 = row6.C_BALANCE
-	_tmp277 = _tmp276 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp277
-	_tmp278 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}, row7)
-	_tmp279 = _tmp278 + 1
-	// TableSet: Customer
+	_tmp277 = row7.C_BALANCE
+	_tmp278 = _tmp277 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp279
+	row8.C_BALANCE = _tmp278
+	_tmp279 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}, row8)
+	_tmp280 = _tmp279 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp280
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
 	flushOrderLineCache(tx)
-	flushCustomerCache(tx)
 	flushDistrictCache(tx)
 	flushOrderCache(tx)
+	flushCustomerCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -148,102 +159,102 @@ BB86:
 	}, nil
 BB157:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp272 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp273 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB158
 BB158:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp272 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp273 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB159
 BB159:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp272 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp273 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB160
 BB160:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp272 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp273 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB161
 BB161:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp272 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp273 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB162
 BB162:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp272 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp273 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB163
 BB163:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp272 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp273 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB164
 BB164:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp272 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp273 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB165
 BB165:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp272 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp273 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB86
 }
 
@@ -256,19 +267,22 @@ func DeliveryHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp280 uint64
 	var _tmp281 uint64
-	var c_id uint64
 	var _tmp282 uint64
+	var c_id uint64
+	var _tmp283 uint64
+	var ol_cnt uint64
+	var _tmp284 uint64
+	var _tmp285 Unit
 	var ol_total float32
-	var _tmp284 bool
-	var _tmp285 uint64
-	var _tmp286 float32
-	var _tmp287 float32
+	var _tmp286 bool
+	var _tmp287 uint64
+	var _tmp288 float32
 	var _tmp289 float32
-	var _tmp290 float32
 	var _tmp291 float32
 	var _tmp292 float32
+	var _tmp293 float32
+	var _tmp294 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -279,15 +293,15 @@ func DeliveryHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -304,6 +318,8 @@ func DeliveryHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -315,65 +331,71 @@ BB87:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 1})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp280 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp280
-	_tmp281 = no_o_id + 1
+	_tmp281 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp281
+	_tmp282 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 1})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp281
+	row2.D_NEXT_NO_ID = _tmp282
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 1}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp282 = row3.O_C_ID
-	c_id = _tmp282
-	// TableSet: Order
+	_tmp283 = row3.O_C_ID
+	c_id = _tmp283
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id}, row4)
+	_tmp284 = row4.O_OL_CNT
+	ol_cnt = _tmp284
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id}, row5)
 	goto BB89
-	_tmp284 = ol_number < O_OL_CNT
-	if _tmp284 {
+	_tmp286 = ol_number < O_OL_CNT
+	if _tmp286 {
 		goto BB89
 	} else {
 		goto BB91
 	}
 BB89:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp285 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = 0 + _tmp286
-	ol_total = _tmp287
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp287 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = 0 + _tmp288
+	ol_total = _tmp289
 	goto BB166
 BB91:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp289 = row6.C_BALANCE
-	_tmp290 = _tmp289 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp290
-	_tmp291 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}, row7)
-	_tmp292 = _tmp291 + 1
-	// TableSet: Customer
+	_tmp291 = row7.C_BALANCE
+	_tmp292 = _tmp291 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp292
+	row8.C_BALANCE = _tmp292
+	_tmp293 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}, row8)
+	_tmp294 = _tmp293 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp294
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
-	flushOrderLineCache(tx)
-	flushDistrictCache(tx)
 	flushOrderCache(tx)
+	flushDistrictCache(tx)
 	flushCustomerCache(tx)
+	flushOrderLineCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -381,102 +403,102 @@ BB91:
 	}, nil
 BB166:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp285 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp287 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB167
 BB167:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp285 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp287 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB168
 BB168:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp285 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp287 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB169
 BB169:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp285 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp287 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB170
 BB170:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp285 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp287 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB171
 BB171:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp285 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp287 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB172
 BB172:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp285 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp287 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB173
 BB173:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp285 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp287 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB174
 BB174:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp285 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp287 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB91
 }
 
@@ -489,19 +511,22 @@ func DeliveryHop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp293 uint64
-	var _tmp294 uint64
-	var c_id uint64
 	var _tmp295 uint64
-	var ol_total float32
-	var _tmp297 bool
+	var _tmp296 uint64
+	var c_id uint64
+	var _tmp297 uint64
+	var ol_cnt uint64
 	var _tmp298 uint64
-	var _tmp299 float32
-	var _tmp300 float32
+	var _tmp299 Unit
+	var ol_total float32
+	var _tmp300 bool
+	var _tmp301 uint64
 	var _tmp302 float32
 	var _tmp303 float32
-	var _tmp304 float32
 	var _tmp305 float32
+	var _tmp306 float32
+	var _tmp307 float32
+	var _tmp308 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -512,15 +537,15 @@ func DeliveryHop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -537,6 +562,8 @@ func DeliveryHop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -548,60 +575,66 @@ BB92:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 2})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp293 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp293
-	_tmp294 = no_o_id + 1
+	_tmp295 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp295
+	_tmp296 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 2})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp294
+	row2.D_NEXT_NO_ID = _tmp296
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 2}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp295 = row3.O_C_ID
-	c_id = _tmp295
-	// TableSet: Order
+	_tmp297 = row3.O_C_ID
+	c_id = _tmp297
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id}, row4)
+	_tmp298 = row4.O_OL_CNT
+	ol_cnt = _tmp298
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id}, row5)
 	goto BB94
-	_tmp297 = ol_number < O_OL_CNT
-	if _tmp297 {
+	_tmp300 = ol_number < O_OL_CNT
+	if _tmp300 {
 		goto BB94
 	} else {
 		goto BB96
 	}
 BB94:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp298 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = 0 + _tmp299
-	ol_total = _tmp300
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp301 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = 0 + _tmp302
+	ol_total = _tmp303
 	goto BB175
 BB96:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp302 = row6.C_BALANCE
-	_tmp303 = _tmp302 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp303
-	_tmp304 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}, row7)
-	_tmp305 = _tmp304 + 1
-	// TableSet: Customer
+	_tmp305 = row7.C_BALANCE
+	_tmp306 = _tmp305 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp305
+	row8.C_BALANCE = _tmp306
+	_tmp307 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}, row8)
+	_tmp308 = _tmp307 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp308
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
 	flushOrderLineCache(tx)
 	flushDistrictCache(tx)
@@ -614,102 +647,102 @@ BB96:
 	}, nil
 BB175:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp298 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp301 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB176
 BB176:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp298 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp301 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB177
 BB177:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp298 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp301 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB178
 BB178:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp298 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp301 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB179
 BB179:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp298 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp301 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB180
 BB180:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp298 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp301 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB181
 BB181:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp298 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp301 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB182
 BB182:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp298 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp301 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB183
 BB183:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp298 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp301 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB96
 }
 
@@ -722,19 +755,22 @@ func DeliveryHop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp306 uint64
-	var _tmp307 uint64
+	var _tmp309 uint64
+	var _tmp310 uint64
 	var c_id uint64
-	var _tmp308 uint64
-	var ol_total float32
-	var _tmp310 bool
 	var _tmp311 uint64
-	var _tmp312 float32
-	var _tmp313 float32
-	var _tmp315 float32
+	var ol_cnt uint64
+	var _tmp312 uint64
+	var _tmp313 Unit
+	var ol_total float32
+	var _tmp314 bool
+	var _tmp315 uint64
 	var _tmp316 float32
 	var _tmp317 float32
-	var _tmp318 float32
+	var _tmp319 float32
+	var _tmp320 float32
+	var _tmp321 float32
+	var _tmp322 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -745,15 +781,15 @@ func DeliveryHop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -770,6 +806,8 @@ func DeliveryHop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -781,60 +819,66 @@ BB97:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 3})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp306 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp306
-	_tmp307 = no_o_id + 1
+	_tmp309 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp309
+	_tmp310 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 3})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp307
+	row2.D_NEXT_NO_ID = _tmp310
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 3}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp308 = row3.O_C_ID
-	c_id = _tmp308
-	// TableSet: Order
+	_tmp311 = row3.O_C_ID
+	c_id = _tmp311
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id}, row4)
+	_tmp312 = row4.O_OL_CNT
+	ol_cnt = _tmp312
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id}, row5)
 	goto BB99
-	_tmp310 = ol_number < O_OL_CNT
-	if _tmp310 {
+	_tmp314 = ol_number < O_OL_CNT
+	if _tmp314 {
 		goto BB99
 	} else {
 		goto BB101
 	}
 BB99:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp311 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = 0 + _tmp312
-	ol_total = _tmp313
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp315 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = 0 + _tmp316
+	ol_total = _tmp317
 	goto BB184
 BB101:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp315 = row6.C_BALANCE
-	_tmp316 = _tmp315 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp316
-	_tmp317 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}, row7)
-	_tmp318 = _tmp317 + 1
-	// TableSet: Customer
+	_tmp319 = row7.C_BALANCE
+	_tmp320 = _tmp319 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp318
+	row8.C_BALANCE = _tmp320
+	_tmp321 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}, row8)
+	_tmp322 = _tmp321 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp322
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
 	flushDistrictCache(tx)
 	flushOrderCache(tx)
@@ -847,102 +891,102 @@ BB101:
 	}, nil
 BB184:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp311 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp315 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB185
 BB185:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp311 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp315 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB186
 BB186:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp311 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp315 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB187
 BB187:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp311 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp315 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB188
 BB188:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp311 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp315 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB189
 BB189:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp311 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp315 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB190
 BB190:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp311 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp315 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB191
 BB191:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp311 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp315 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB192
 BB192:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp311 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp315 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB101
 }
 
@@ -955,19 +999,22 @@ func DeliveryHop4(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp319 uint64
-	var _tmp320 uint64
-	var c_id uint64
-	var _tmp321 uint64
-	var ol_total float32
-	var _tmp323 bool
+	var _tmp323 uint64
 	var _tmp324 uint64
-	var _tmp325 float32
-	var _tmp326 float32
-	var _tmp328 float32
-	var _tmp329 float32
+	var c_id uint64
+	var _tmp325 uint64
+	var ol_cnt uint64
+	var _tmp326 uint64
+	var _tmp327 Unit
+	var ol_total float32
+	var _tmp328 bool
+	var _tmp329 uint64
 	var _tmp330 float32
 	var _tmp331 float32
+	var _tmp333 float32
+	var _tmp334 float32
+	var _tmp335 float32
+	var _tmp336 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -978,15 +1025,15 @@ func DeliveryHop4(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -1003,6 +1050,8 @@ func DeliveryHop4(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -1014,64 +1063,70 @@ BB102:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 4})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp319 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp319
-	_tmp320 = no_o_id + 1
+	_tmp323 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp323
+	_tmp324 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 4})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp320
+	row2.D_NEXT_NO_ID = _tmp324
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 4}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp321 = row3.O_C_ID
-	c_id = _tmp321
-	// TableSet: Order
+	_tmp325 = row3.O_C_ID
+	c_id = _tmp325
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id}, row4)
+	_tmp326 = row4.O_OL_CNT
+	ol_cnt = _tmp326
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id}, row5)
 	goto BB104
-	_tmp323 = ol_number < O_OL_CNT
-	if _tmp323 {
+	_tmp328 = ol_number < O_OL_CNT
+	if _tmp328 {
 		goto BB104
 	} else {
 		goto BB106
 	}
 BB104:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp324 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = 0 + _tmp325
-	ol_total = _tmp326
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp329 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = 0 + _tmp330
+	ol_total = _tmp331
 	goto BB193
 BB106:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp328 = row6.C_BALANCE
-	_tmp329 = _tmp328 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp329
-	_tmp330 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}, row7)
-	_tmp331 = _tmp330 + 1
-	// TableSet: Customer
+	_tmp333 = row7.C_BALANCE
+	_tmp334 = _tmp333 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp331
+	row8.C_BALANCE = _tmp334
+	_tmp335 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}, row8)
+	_tmp336 = _tmp335 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp336
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
-	flushOrderCache(tx)
 	flushDistrictCache(tx)
 	flushOrderLineCache(tx)
+	flushOrderCache(tx)
 	flushCustomerCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -1080,102 +1135,102 @@ BB106:
 	}, nil
 BB193:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp324 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp329 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB194
 BB194:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp324 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp329 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB195
 BB195:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp324 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp329 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB196
 BB196:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp324 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp329 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB197
 BB197:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp324 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp329 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB198
 BB198:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp324 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp329 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB199
 BB199:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp324 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp329 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB200
 BB200:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp324 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp329 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB201
 BB201:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp324 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp329 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB106
 }
 
@@ -1188,19 +1243,22 @@ func DeliveryHop5(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp332 uint64
-	var _tmp333 uint64
-	var c_id uint64
-	var _tmp334 uint64
-	var ol_total float32
-	var _tmp336 bool
 	var _tmp337 uint64
-	var _tmp338 float32
-	var _tmp339 float32
-	var _tmp341 float32
-	var _tmp342 float32
-	var _tmp343 float32
+	var _tmp338 uint64
+	var c_id uint64
+	var _tmp339 uint64
+	var ol_cnt uint64
+	var _tmp340 uint64
+	var _tmp341 Unit
+	var ol_total float32
+	var _tmp342 bool
+	var _tmp343 uint64
 	var _tmp344 float32
+	var _tmp345 float32
+	var _tmp347 float32
+	var _tmp348 float32
+	var _tmp349 float32
+	var _tmp350 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -1211,15 +1269,15 @@ func DeliveryHop5(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -1236,6 +1294,8 @@ func DeliveryHop5(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -1247,65 +1307,71 @@ BB107:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 5})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp332 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp332
-	_tmp333 = no_o_id + 1
+	_tmp337 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp337
+	_tmp338 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 5})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp333
+	row2.D_NEXT_NO_ID = _tmp338
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 5}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp334 = row3.O_C_ID
-	c_id = _tmp334
-	// TableSet: Order
+	_tmp339 = row3.O_C_ID
+	c_id = _tmp339
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id}, row4)
+	_tmp340 = row4.O_OL_CNT
+	ol_cnt = _tmp340
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id}, row5)
 	goto BB109
-	_tmp336 = ol_number < O_OL_CNT
-	if _tmp336 {
+	_tmp342 = ol_number < O_OL_CNT
+	if _tmp342 {
 		goto BB109
 	} else {
 		goto BB111
 	}
 BB109:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp337 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = 0 + _tmp338
-	ol_total = _tmp339
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp343 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = 0 + _tmp344
+	ol_total = _tmp345
 	goto BB202
 BB111:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp341 = row6.C_BALANCE
-	_tmp342 = _tmp341 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp342
-	_tmp343 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}, row7)
-	_tmp344 = _tmp343 + 1
-	// TableSet: Customer
+	_tmp347 = row7.C_BALANCE
+	_tmp348 = _tmp347 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp344
+	row8.C_BALANCE = _tmp348
+	_tmp349 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}, row8)
+	_tmp350 = _tmp349 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp350
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
-	flushCustomerCache(tx)
-	flushOrderCache(tx)
-	flushOrderLineCache(tx)
 	flushDistrictCache(tx)
+	flushCustomerCache(tx)
+	flushOrderLineCache(tx)
+	flushOrderCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1313,102 +1379,102 @@ BB111:
 	}, nil
 BB202:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp337 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp343 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB203
 BB203:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp337 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp343 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB204
 BB204:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp337 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp343 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB205
 BB205:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp337 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp343 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB206
 BB206:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp337 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp343 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB207
 BB207:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp337 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp343 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB208
 BB208:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp337 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp343 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB209
 BB209:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp337 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp343 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB210
 BB210:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp337 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp343 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB111
 }
 
@@ -1421,19 +1487,22 @@ func DeliveryHop6(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp345 uint64
-	var _tmp346 uint64
+	var _tmp351 uint64
+	var _tmp352 uint64
 	var c_id uint64
-	var _tmp347 uint64
+	var _tmp353 uint64
+	var ol_cnt uint64
+	var _tmp354 uint64
+	var _tmp355 Unit
 	var ol_total float32
-	var _tmp349 bool
-	var _tmp350 uint64
-	var _tmp351 float32
-	var _tmp352 float32
-	var _tmp354 float32
-	var _tmp355 float32
-	var _tmp356 float32
-	var _tmp357 float32
+	var _tmp356 bool
+	var _tmp357 uint64
+	var _tmp358 float32
+	var _tmp359 float32
+	var _tmp361 float32
+	var _tmp362 float32
+	var _tmp363 float32
+	var _tmp364 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -1444,15 +1513,15 @@ func DeliveryHop6(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -1469,6 +1538,8 @@ func DeliveryHop6(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -1480,65 +1551,71 @@ BB112:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 6})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp345 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp345
-	_tmp346 = no_o_id + 1
+	_tmp351 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp351
+	_tmp352 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 6})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp346
+	row2.D_NEXT_NO_ID = _tmp352
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 6}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp347 = row3.O_C_ID
-	c_id = _tmp347
-	// TableSet: Order
+	_tmp353 = row3.O_C_ID
+	c_id = _tmp353
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id}, row4)
+	_tmp354 = row4.O_OL_CNT
+	ol_cnt = _tmp354
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id}, row5)
 	goto BB114
-	_tmp349 = ol_number < O_OL_CNT
-	if _tmp349 {
+	_tmp356 = ol_number < O_OL_CNT
+	if _tmp356 {
 		goto BB114
 	} else {
 		goto BB116
 	}
 BB114:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp350 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = 0 + _tmp351
-	ol_total = _tmp352
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp357 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = 0 + _tmp358
+	ol_total = _tmp359
 	goto BB211
 BB116:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp354 = row6.C_BALANCE
-	_tmp355 = _tmp354 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp355
-	_tmp356 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}, row7)
-	_tmp357 = _tmp356 + 1
-	// TableSet: Customer
+	_tmp361 = row7.C_BALANCE
+	_tmp362 = _tmp361 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp357
+	row8.C_BALANCE = _tmp362
+	_tmp363 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}, row8)
+	_tmp364 = _tmp363 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp364
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
 	flushDistrictCache(tx)
 	flushCustomerCache(tx)
-	flushOrderLineCache(tx)
 	flushOrderCache(tx)
+	flushOrderLineCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1546,102 +1623,102 @@ BB116:
 	}, nil
 BB211:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp350 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp357 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB212
 BB212:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp350 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp357 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB213
 BB213:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp350 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp357 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB214
 BB214:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp350 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp357 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB215
 BB215:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp350 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp357 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB216
 BB216:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp350 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp357 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB217
 BB217:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp350 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp357 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB218
 BB218:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp350 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp357 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB219
 BB219:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp350 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp357 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB116
 }
 
@@ -1654,19 +1731,22 @@ func DeliveryHop7(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp358 uint64
-	var _tmp359 uint64
+	var _tmp365 uint64
+	var _tmp366 uint64
 	var c_id uint64
-	var _tmp360 uint64
+	var _tmp367 uint64
+	var ol_cnt uint64
+	var _tmp368 uint64
+	var _tmp369 Unit
 	var ol_total float32
-	var _tmp362 bool
-	var _tmp363 uint64
-	var _tmp364 float32
-	var _tmp365 float32
-	var _tmp367 float32
-	var _tmp368 float32
-	var _tmp369 float32
-	var _tmp370 float32
+	var _tmp370 bool
+	var _tmp371 uint64
+	var _tmp372 float32
+	var _tmp373 float32
+	var _tmp375 float32
+	var _tmp376 float32
+	var _tmp377 float32
+	var _tmp378 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -1677,15 +1757,15 @@ func DeliveryHop7(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -1702,6 +1782,8 @@ func DeliveryHop7(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -1713,65 +1795,71 @@ BB117:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 7})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp358 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp358
-	_tmp359 = no_o_id + 1
+	_tmp365 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp365
+	_tmp366 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 7})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp359
+	row2.D_NEXT_NO_ID = _tmp366
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 7}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp360 = row3.O_C_ID
-	c_id = _tmp360
-	// TableSet: Order
+	_tmp367 = row3.O_C_ID
+	c_id = _tmp367
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id}, row4)
+	_tmp368 = row4.O_OL_CNT
+	ol_cnt = _tmp368
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id}, row5)
 	goto BB119
-	_tmp362 = ol_number < O_OL_CNT
-	if _tmp362 {
+	_tmp370 = ol_number < O_OL_CNT
+	if _tmp370 {
 		goto BB119
 	} else {
 		goto BB121
 	}
 BB119:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp363 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = 0 + _tmp364
-	ol_total = _tmp365
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp371 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = 0 + _tmp372
+	ol_total = _tmp373
 	goto BB220
 BB121:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp367 = row6.C_BALANCE
-	_tmp368 = _tmp367 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp368
-	_tmp369 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}, row7)
-	_tmp370 = _tmp369 + 1
-	// TableSet: Customer
+	_tmp375 = row7.C_BALANCE
+	_tmp376 = _tmp375 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp370
+	row8.C_BALANCE = _tmp376
+	_tmp377 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}, row8)
+	_tmp378 = _tmp377 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp378
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
-	flushCustomerCache(tx)
-	flushOrderCache(tx)
 	flushDistrictCache(tx)
 	flushOrderLineCache(tx)
+	flushOrderCache(tx)
+	flushCustomerCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -1779,102 +1867,102 @@ BB121:
 	}, nil
 BB220:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp363 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp371 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB221
 BB221:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp363 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp371 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB222
 BB222:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp363 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp371 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB223
 BB223:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp363 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp371 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB224
 BB224:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp363 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp371 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB225
 BB225:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp363 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp371 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB226
 BB226:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp363 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp371 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB227
 BB227:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp363 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp371 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB228
 BB228:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp363 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp371 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB121
 }
 
@@ -1887,19 +1975,22 @@ func DeliveryHop8(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp371 uint64
-	var _tmp372 uint64
+	var _tmp379 uint64
+	var _tmp380 uint64
 	var c_id uint64
-	var _tmp373 uint64
+	var _tmp381 uint64
+	var ol_cnt uint64
+	var _tmp382 uint64
+	var _tmp383 Unit
 	var ol_total float32
-	var _tmp375 bool
-	var _tmp376 uint64
-	var _tmp377 float32
-	var _tmp378 float32
-	var _tmp380 float32
-	var _tmp381 float32
-	var _tmp382 float32
-	var _tmp383 float32
+	var _tmp384 bool
+	var _tmp385 uint64
+	var _tmp386 float32
+	var _tmp387 float32
+	var _tmp389 float32
+	var _tmp390 float32
+	var _tmp391 float32
+	var _tmp392 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -1910,15 +2001,15 @@ func DeliveryHop8(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -1935,6 +2026,8 @@ func DeliveryHop8(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -1946,65 +2039,71 @@ BB122:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 8})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp371 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp371
-	_tmp372 = no_o_id + 1
+	_tmp379 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp379
+	_tmp380 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 8})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp372
+	row2.D_NEXT_NO_ID = _tmp380
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 8}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp373 = row3.O_C_ID
-	c_id = _tmp373
-	// TableSet: Order
+	_tmp381 = row3.O_C_ID
+	c_id = _tmp381
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id}, row4)
+	_tmp382 = row4.O_OL_CNT
+	ol_cnt = _tmp382
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id}, row5)
 	goto BB124
-	_tmp375 = ol_number < O_OL_CNT
-	if _tmp375 {
+	_tmp384 = ol_number < O_OL_CNT
+	if _tmp384 {
 		goto BB124
 	} else {
 		goto BB126
 	}
 BB124:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp376 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = 0 + _tmp377
-	ol_total = _tmp378
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp385 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = 0 + _tmp386
+	ol_total = _tmp387
 	goto BB229
 BB126:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp380 = row6.C_BALANCE
-	_tmp381 = _tmp380 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp381
-	_tmp382 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}, row7)
-	_tmp383 = _tmp382 + 1
-	// TableSet: Customer
+	_tmp389 = row7.C_BALANCE
+	_tmp390 = _tmp389 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp383
+	row8.C_BALANCE = _tmp390
+	_tmp391 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}, row8)
+	_tmp392 = _tmp391 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp392
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}, row9)
 	// Flush caches for tables written in this hop
-	flushOrderLineCache(tx)
-	flushOrderCache(tx)
 	flushDistrictCache(tx)
 	flushCustomerCache(tx)
+	flushOrderCache(tx)
+	flushOrderLineCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -2012,102 +2111,102 @@ BB126:
 	}, nil
 BB229:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp376 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp385 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB230
 BB230:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp376 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp385 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB231
 BB231:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp376 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp385 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB232
 BB232:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp376 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp385 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB233
 BB233:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp376 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp385 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB234
 BB234:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp376 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp385 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB235
 BB235:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp376 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp385 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB236
 BB236:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp376 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp385 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB237
 BB237:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp376 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp385 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB126
 }
 
@@ -2120,19 +2219,22 @@ func DeliveryHop9(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp384 uint64
-	var _tmp385 uint64
+	var _tmp393 uint64
+	var _tmp394 uint64
 	var c_id uint64
-	var _tmp386 uint64
+	var _tmp395 uint64
+	var ol_cnt uint64
+	var _tmp396 uint64
+	var _tmp397 Unit
 	var ol_total float32
-	var _tmp388 bool
-	var _tmp389 uint64
-	var _tmp390 float32
-	var _tmp391 float32
-	var _tmp393 float32
-	var _tmp394 float32
-	var _tmp395 float32
-	var _tmp396 float32
+	var _tmp398 bool
+	var _tmp399 uint64
+	var _tmp400 float32
+	var _tmp401 float32
+	var _tmp403 float32
+	var _tmp404 float32
+	var _tmp405 float32
+	var _tmp406 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -2143,15 +2245,15 @@ func DeliveryHop9(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -2168,6 +2270,8 @@ func DeliveryHop9(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -2179,66 +2283,72 @@ BB127:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 9})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp384 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp384
-	_tmp385 = no_o_id + 1
+	_tmp393 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp393
+	_tmp394 = no_o_id + 1
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 9})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp385
+	row2.D_NEXT_NO_ID = _tmp394
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 9}, row2)
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp386 = row3.O_C_ID
-	c_id = _tmp386
-	// TableSet: Order
+	_tmp395 = row3.O_C_ID
+	c_id = _tmp395
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id}, row4)
+	_tmp396 = row4.O_OL_CNT
+	ol_cnt = _tmp396
+	_ = ol_cnt
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id}, row5)
 	goto BB129
-	_tmp388 = ol_number < O_OL_CNT
-	if _tmp388 {
+	_tmp398 = ol_number < O_OL_CNT
+	if _tmp398 {
 		goto BB129
 	} else {
 		goto BB131
 	}
 BB129:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp389 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = 0 + _tmp390
-	ol_total = _tmp391
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp399 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = 0 + _tmp400
+	ol_total = _tmp401
 	goto BB238
 BB131:
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp393 = row6.C_BALANCE
-	_tmp394 = _tmp393 + ol_total
-	// Combined table access: Customer (2 operations)
 	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp394
-	_tmp395 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}, row7)
-	_tmp396 = _tmp395 + 1
-	// TableSet: Customer
+	_tmp403 = row7.C_BALANCE
+	_tmp404 = _tmp403 + ol_total
+	// Combined table access: Customer (2 operations)
 	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
 	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp396
+	row8.C_BALANCE = _tmp404
+	_tmp405 = row8.C_DELIVERY_CNT
 	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}, row8)
+	_tmp406 = _tmp405 + 1
+	// TableSet: Customer
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp406
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}, row9)
 	// return - no action
 	// Flush caches for tables written in this hop
-	flushCustomerCache(tx)
 	flushDistrictCache(tx)
 	flushOrderCache(tx)
 	flushOrderLineCache(tx)
+	flushCustomerCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -2246,102 +2356,102 @@ BB131:
 	}, nil
 BB238:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp389 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp399 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB239
 BB239:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp389 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp399 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB240
 BB240:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp389 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp399 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB241
 BB241:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp389 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp399 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB242
 BB242:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp389 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp399 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB243
 BB243:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp389 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp399 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB244
 BB244:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp389 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp399 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB245
 BB245:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp389 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp399 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB246
 BB246:
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp389 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp399 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB131
 }
 
@@ -2355,15 +2465,18 @@ func DeliveryHop0Par(params map[string]string) uint64 {
 	var _tmp268 uint64
 	var c_id uint64
 	var _tmp269 uint64
+	var ol_cnt uint64
+	var _tmp270 uint64
+	var _tmp271 Unit
 	var ol_total float32
-	var _tmp271 bool
-	var _tmp272 uint64
-	var _tmp273 float32
+	var _tmp272 bool
+	var _tmp273 uint64
 	var _tmp274 float32
-	var _tmp276 float32
+	var _tmp275 float32
 	var _tmp277 float32
 	var _tmp278 float32
 	var _tmp279 float32
+	var _tmp280 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -2374,15 +2487,15 @@ func DeliveryHop0Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -2399,6 +2512,8 @@ func DeliveryHop0Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -2435,15 +2550,23 @@ BB82:
 	_tmp269 = row3.O_C_ID
 	c_id = _tmp269
 	// First table access - calculate partition: Order
-	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id}) }
-	// TableSet: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id}) }
+	// TableGet: Order
 	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id}, row4)
+	_tmp270 = row4.O_OL_CNT
+	ol_cnt = _tmp270
+	_ = ol_cnt
+	// First table access - calculate partition: Order
+	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id}) }
+	// TableSet: Order
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 0, O_ID: no_o_id}, row5)
 	goto BB84
-	_tmp271 = ol_number < O_OL_CNT
-	if _tmp271 {
+	_tmp272 = ol_number < O_OL_CNT
+	if _tmp272 {
 		goto BB84
 	} else {
 		goto BB86
@@ -2452,156 +2575,156 @@ BB84:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp272 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = 0 + _tmp273
-	ol_total = _tmp274
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp273 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = 0 + _tmp274
+	ol_total = _tmp275
 	goto BB157
 BB86:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp276 = row6.C_BALANCE
-	_tmp277 = _tmp276 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp277 = row7.C_BALANCE
+	_tmp278 = _tmp277 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp277
-	_tmp278 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}, row7)
-	_tmp279 = _tmp278 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp278
+	_tmp279 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}, row8)
+	_tmp280 = _tmp279 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp279
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp280
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 0, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB157:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp272 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp273 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB158
 BB158:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp272 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp273 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB159
 BB159:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp272 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp273 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB160
 BB160:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp272 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp273 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB161
 BB161:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp272 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp273 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB162
 BB162:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp272 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp273 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB163
 BB163:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp272 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp273 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB164
 BB164:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp272 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp273 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB165
 BB165:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp272 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp273 = float32(_tmp272)
-	_tmp274 = ol_total + _tmp273
-	ol_total = _tmp274
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp273 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 0, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp274 = float32(_tmp273)
+	_tmp275 = ol_total + _tmp274
+	ol_total = _tmp275
 	goto BB86
 }
 
@@ -2611,19 +2734,22 @@ func DeliveryHop1Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp280 uint64
 	var _tmp281 uint64
-	var c_id uint64
 	var _tmp282 uint64
+	var c_id uint64
+	var _tmp283 uint64
+	var ol_cnt uint64
+	var _tmp284 uint64
+	var _tmp285 Unit
 	var ol_total float32
-	var _tmp284 bool
-	var _tmp285 uint64
-	var _tmp286 float32
-	var _tmp287 float32
+	var _tmp286 bool
+	var _tmp287 uint64
+	var _tmp288 float32
 	var _tmp289 float32
-	var _tmp290 float32
 	var _tmp291 float32
 	var _tmp292 float32
+	var _tmp293 float32
+	var _tmp294 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -2634,15 +2760,15 @@ func DeliveryHop1Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -2659,6 +2785,8 @@ func DeliveryHop1Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -2677,33 +2805,41 @@ BB87:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 1})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp280 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp280
-	_tmp281 = no_o_id + 1
+	_tmp281 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp281
+	_tmp282 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 1}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 1})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp281
+	row2.D_NEXT_NO_ID = _tmp282
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 1}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp282 = row3.O_C_ID
-	c_id = _tmp282
+	_tmp283 = row3.O_C_ID
+	c_id = _tmp283
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp284 = row4.O_OL_CNT
+	ol_cnt = _tmp284
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 1, O_ID: no_o_id}, row5)
 	goto BB89
-	_tmp284 = ol_number < O_OL_CNT
-	if _tmp284 {
+	_tmp286 = ol_number < O_OL_CNT
+	if _tmp286 {
 		goto BB89
 	} else {
 		goto BB91
@@ -2712,156 +2848,156 @@ BB89:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp285 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = 0 + _tmp286
-	ol_total = _tmp287
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp287 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = 0 + _tmp288
+	ol_total = _tmp289
 	goto BB166
 BB91:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp289 = row6.C_BALANCE
-	_tmp290 = _tmp289 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp291 = row7.C_BALANCE
+	_tmp292 = _tmp291 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp290
-	_tmp291 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}, row7)
-	_tmp292 = _tmp291 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp292
+	_tmp293 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}, row8)
+	_tmp294 = _tmp293 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp292
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp294
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 1, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB166:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp285 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp287 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB167
 BB167:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp285 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp287 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB168
 BB168:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp285 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp287 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB169
 BB169:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp285 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp287 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB170
 BB170:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp285 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp287 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB171
 BB171:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp285 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp287 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB172
 BB172:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp285 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp287 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB173
 BB173:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp285 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp287 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB174
 BB174:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp285 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp286 = float32(_tmp285)
-	_tmp287 = ol_total + _tmp286
-	ol_total = _tmp287
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp287 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 1, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp288 = float32(_tmp287)
+	_tmp289 = ol_total + _tmp288
+	ol_total = _tmp289
 	goto BB91
 }
 
@@ -2871,19 +3007,22 @@ func DeliveryHop2Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp293 uint64
-	var _tmp294 uint64
-	var c_id uint64
 	var _tmp295 uint64
-	var ol_total float32
-	var _tmp297 bool
+	var _tmp296 uint64
+	var c_id uint64
+	var _tmp297 uint64
+	var ol_cnt uint64
 	var _tmp298 uint64
-	var _tmp299 float32
-	var _tmp300 float32
+	var _tmp299 Unit
+	var ol_total float32
+	var _tmp300 bool
+	var _tmp301 uint64
 	var _tmp302 float32
 	var _tmp303 float32
-	var _tmp304 float32
 	var _tmp305 float32
+	var _tmp306 float32
+	var _tmp307 float32
+	var _tmp308 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -2894,15 +3033,15 @@ func DeliveryHop2Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -2919,6 +3058,8 @@ func DeliveryHop2Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -2937,33 +3078,41 @@ BB92:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 2})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp293 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp293
-	_tmp294 = no_o_id + 1
+	_tmp295 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp295
+	_tmp296 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 2}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 2})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp294
+	row2.D_NEXT_NO_ID = _tmp296
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 2}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp295 = row3.O_C_ID
-	c_id = _tmp295
+	_tmp297 = row3.O_C_ID
+	c_id = _tmp297
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp298 = row4.O_OL_CNT
+	ol_cnt = _tmp298
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 2, O_ID: no_o_id}, row5)
 	goto BB94
-	_tmp297 = ol_number < O_OL_CNT
-	if _tmp297 {
+	_tmp300 = ol_number < O_OL_CNT
+	if _tmp300 {
 		goto BB94
 	} else {
 		goto BB96
@@ -2972,156 +3121,156 @@ BB94:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp298 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = 0 + _tmp299
-	ol_total = _tmp300
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp301 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = 0 + _tmp302
+	ol_total = _tmp303
 	goto BB175
 BB96:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp302 = row6.C_BALANCE
-	_tmp303 = _tmp302 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp305 = row7.C_BALANCE
+	_tmp306 = _tmp305 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp303
-	_tmp304 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}, row7)
-	_tmp305 = _tmp304 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp306
+	_tmp307 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}, row8)
+	_tmp308 = _tmp307 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp305
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp308
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 2, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB175:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp298 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp301 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB176
 BB176:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp298 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp301 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB177
 BB177:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp298 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp301 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB178
 BB178:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp298 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp301 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB179
 BB179:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp298 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp301 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB180
 BB180:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp298 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp301 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB181
 BB181:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp298 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp301 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB182
 BB182:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp298 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp301 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB183
 BB183:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp298 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp299 = float32(_tmp298)
-	_tmp300 = ol_total + _tmp299
-	ol_total = _tmp300
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp301 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 2, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp302 = float32(_tmp301)
+	_tmp303 = ol_total + _tmp302
+	ol_total = _tmp303
 	goto BB96
 }
 
@@ -3131,19 +3280,22 @@ func DeliveryHop3Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp306 uint64
-	var _tmp307 uint64
+	var _tmp309 uint64
+	var _tmp310 uint64
 	var c_id uint64
-	var _tmp308 uint64
-	var ol_total float32
-	var _tmp310 bool
 	var _tmp311 uint64
-	var _tmp312 float32
-	var _tmp313 float32
-	var _tmp315 float32
+	var ol_cnt uint64
+	var _tmp312 uint64
+	var _tmp313 Unit
+	var ol_total float32
+	var _tmp314 bool
+	var _tmp315 uint64
 	var _tmp316 float32
 	var _tmp317 float32
-	var _tmp318 float32
+	var _tmp319 float32
+	var _tmp320 float32
+	var _tmp321 float32
+	var _tmp322 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -3154,15 +3306,15 @@ func DeliveryHop3Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -3179,6 +3331,8 @@ func DeliveryHop3Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -3197,33 +3351,41 @@ BB97:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 3})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp306 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp306
-	_tmp307 = no_o_id + 1
+	_tmp309 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp309
+	_tmp310 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 3}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 3})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp307
+	row2.D_NEXT_NO_ID = _tmp310
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 3}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp308 = row3.O_C_ID
-	c_id = _tmp308
+	_tmp311 = row3.O_C_ID
+	c_id = _tmp311
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp312 = row4.O_OL_CNT
+	ol_cnt = _tmp312
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 3, O_ID: no_o_id}, row5)
 	goto BB99
-	_tmp310 = ol_number < O_OL_CNT
-	if _tmp310 {
+	_tmp314 = ol_number < O_OL_CNT
+	if _tmp314 {
 		goto BB99
 	} else {
 		goto BB101
@@ -3232,156 +3394,156 @@ BB99:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp311 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = 0 + _tmp312
-	ol_total = _tmp313
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp315 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = 0 + _tmp316
+	ol_total = _tmp317
 	goto BB184
 BB101:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp315 = row6.C_BALANCE
-	_tmp316 = _tmp315 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp319 = row7.C_BALANCE
+	_tmp320 = _tmp319 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp316
-	_tmp317 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}, row7)
-	_tmp318 = _tmp317 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp320
+	_tmp321 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}, row8)
+	_tmp322 = _tmp321 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp318
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp322
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 3, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB184:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp311 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp315 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB185
 BB185:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp311 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp315 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB186
 BB186:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp311 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp315 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB187
 BB187:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp311 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp315 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB188
 BB188:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp311 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp315 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB189
 BB189:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp311 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp315 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB190
 BB190:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp311 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp315 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB191
 BB191:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp311 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp315 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB192
 BB192:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp311 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp312 = float32(_tmp311)
-	_tmp313 = ol_total + _tmp312
-	ol_total = _tmp313
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp315 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 3, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp316 = float32(_tmp315)
+	_tmp317 = ol_total + _tmp316
+	ol_total = _tmp317
 	goto BB101
 }
 
@@ -3391,19 +3553,22 @@ func DeliveryHop4Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp319 uint64
-	var _tmp320 uint64
-	var c_id uint64
-	var _tmp321 uint64
-	var ol_total float32
-	var _tmp323 bool
+	var _tmp323 uint64
 	var _tmp324 uint64
-	var _tmp325 float32
-	var _tmp326 float32
-	var _tmp328 float32
-	var _tmp329 float32
+	var c_id uint64
+	var _tmp325 uint64
+	var ol_cnt uint64
+	var _tmp326 uint64
+	var _tmp327 Unit
+	var ol_total float32
+	var _tmp328 bool
+	var _tmp329 uint64
 	var _tmp330 float32
 	var _tmp331 float32
+	var _tmp333 float32
+	var _tmp334 float32
+	var _tmp335 float32
+	var _tmp336 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -3414,15 +3579,15 @@ func DeliveryHop4Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -3439,6 +3604,8 @@ func DeliveryHop4Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -3457,33 +3624,41 @@ BB102:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 4})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp319 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp319
-	_tmp320 = no_o_id + 1
+	_tmp323 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp323
+	_tmp324 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 4}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 4})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp320
+	row2.D_NEXT_NO_ID = _tmp324
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 4}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp321 = row3.O_C_ID
-	c_id = _tmp321
+	_tmp325 = row3.O_C_ID
+	c_id = _tmp325
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp326 = row4.O_OL_CNT
+	ol_cnt = _tmp326
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 4, O_ID: no_o_id}, row5)
 	goto BB104
-	_tmp323 = ol_number < O_OL_CNT
-	if _tmp323 {
+	_tmp328 = ol_number < O_OL_CNT
+	if _tmp328 {
 		goto BB104
 	} else {
 		goto BB106
@@ -3492,156 +3667,156 @@ BB104:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp324 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = 0 + _tmp325
-	ol_total = _tmp326
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp329 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = 0 + _tmp330
+	ol_total = _tmp331
 	goto BB193
 BB106:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp328 = row6.C_BALANCE
-	_tmp329 = _tmp328 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp333 = row7.C_BALANCE
+	_tmp334 = _tmp333 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp329
-	_tmp330 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}, row7)
-	_tmp331 = _tmp330 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp334
+	_tmp335 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}, row8)
+	_tmp336 = _tmp335 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp331
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp336
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 4, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB193:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp324 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp329 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB194
 BB194:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp324 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp329 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB195
 BB195:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp324 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp329 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB196
 BB196:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp324 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp329 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB197
 BB197:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp324 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp329 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB198
 BB198:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp324 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp329 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB199
 BB199:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp324 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp329 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB200
 BB200:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp324 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp329 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB201
 BB201:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp324 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp325 = float32(_tmp324)
-	_tmp326 = ol_total + _tmp325
-	ol_total = _tmp326
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp329 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 4, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp330 = float32(_tmp329)
+	_tmp331 = ol_total + _tmp330
+	ol_total = _tmp331
 	goto BB106
 }
 
@@ -3651,19 +3826,22 @@ func DeliveryHop5Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp332 uint64
-	var _tmp333 uint64
-	var c_id uint64
-	var _tmp334 uint64
-	var ol_total float32
-	var _tmp336 bool
 	var _tmp337 uint64
-	var _tmp338 float32
-	var _tmp339 float32
-	var _tmp341 float32
-	var _tmp342 float32
-	var _tmp343 float32
+	var _tmp338 uint64
+	var c_id uint64
+	var _tmp339 uint64
+	var ol_cnt uint64
+	var _tmp340 uint64
+	var _tmp341 Unit
+	var ol_total float32
+	var _tmp342 bool
+	var _tmp343 uint64
 	var _tmp344 float32
+	var _tmp345 float32
+	var _tmp347 float32
+	var _tmp348 float32
+	var _tmp349 float32
+	var _tmp350 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -3674,15 +3852,15 @@ func DeliveryHop5Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -3699,6 +3877,8 @@ func DeliveryHop5Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -3717,33 +3897,41 @@ BB107:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 5})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp332 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp332
-	_tmp333 = no_o_id + 1
+	_tmp337 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp337
+	_tmp338 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 5}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 5})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp333
+	row2.D_NEXT_NO_ID = _tmp338
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 5}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp334 = row3.O_C_ID
-	c_id = _tmp334
+	_tmp339 = row3.O_C_ID
+	c_id = _tmp339
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp340 = row4.O_OL_CNT
+	ol_cnt = _tmp340
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 5, O_ID: no_o_id}, row5)
 	goto BB109
-	_tmp336 = ol_number < O_OL_CNT
-	if _tmp336 {
+	_tmp342 = ol_number < O_OL_CNT
+	if _tmp342 {
 		goto BB109
 	} else {
 		goto BB111
@@ -3752,156 +3940,156 @@ BB109:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp337 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = 0 + _tmp338
-	ol_total = _tmp339
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp343 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = 0 + _tmp344
+	ol_total = _tmp345
 	goto BB202
 BB111:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp341 = row6.C_BALANCE
-	_tmp342 = _tmp341 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp347 = row7.C_BALANCE
+	_tmp348 = _tmp347 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp342
-	_tmp343 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}, row7)
-	_tmp344 = _tmp343 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp348
+	_tmp349 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}, row8)
+	_tmp350 = _tmp349 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp344
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp350
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 5, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB202:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp337 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp343 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB203
 BB203:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp337 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp343 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB204
 BB204:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp337 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp343 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB205
 BB205:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp337 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp343 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB206
 BB206:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp337 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp343 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB207
 BB207:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp337 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp343 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB208
 BB208:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp337 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp343 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB209
 BB209:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp337 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp343 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB210
 BB210:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp337 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp338 = float32(_tmp337)
-	_tmp339 = ol_total + _tmp338
-	ol_total = _tmp339
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp343 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 5, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp344 = float32(_tmp343)
+	_tmp345 = ol_total + _tmp344
+	ol_total = _tmp345
 	goto BB111
 }
 
@@ -3911,19 +4099,22 @@ func DeliveryHop6Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp345 uint64
-	var _tmp346 uint64
+	var _tmp351 uint64
+	var _tmp352 uint64
 	var c_id uint64
-	var _tmp347 uint64
+	var _tmp353 uint64
+	var ol_cnt uint64
+	var _tmp354 uint64
+	var _tmp355 Unit
 	var ol_total float32
-	var _tmp349 bool
-	var _tmp350 uint64
-	var _tmp351 float32
-	var _tmp352 float32
-	var _tmp354 float32
-	var _tmp355 float32
-	var _tmp356 float32
-	var _tmp357 float32
+	var _tmp356 bool
+	var _tmp357 uint64
+	var _tmp358 float32
+	var _tmp359 float32
+	var _tmp361 float32
+	var _tmp362 float32
+	var _tmp363 float32
+	var _tmp364 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -3934,15 +4125,15 @@ func DeliveryHop6Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -3959,6 +4150,8 @@ func DeliveryHop6Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -3977,33 +4170,41 @@ BB112:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 6})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp345 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp345
-	_tmp346 = no_o_id + 1
+	_tmp351 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp351
+	_tmp352 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 6}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 6})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp346
+	row2.D_NEXT_NO_ID = _tmp352
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 6}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp347 = row3.O_C_ID
-	c_id = _tmp347
+	_tmp353 = row3.O_C_ID
+	c_id = _tmp353
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp354 = row4.O_OL_CNT
+	ol_cnt = _tmp354
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 6, O_ID: no_o_id}, row5)
 	goto BB114
-	_tmp349 = ol_number < O_OL_CNT
-	if _tmp349 {
+	_tmp356 = ol_number < O_OL_CNT
+	if _tmp356 {
 		goto BB114
 	} else {
 		goto BB116
@@ -4012,156 +4213,156 @@ BB114:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp350 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = 0 + _tmp351
-	ol_total = _tmp352
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp357 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = 0 + _tmp358
+	ol_total = _tmp359
 	goto BB211
 BB116:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp354 = row6.C_BALANCE
-	_tmp355 = _tmp354 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp361 = row7.C_BALANCE
+	_tmp362 = _tmp361 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp355
-	_tmp356 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}, row7)
-	_tmp357 = _tmp356 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp362
+	_tmp363 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}, row8)
+	_tmp364 = _tmp363 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp357
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp364
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 6, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB211:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp350 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp357 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB212
 BB212:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp350 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp357 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB213
 BB213:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp350 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp357 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB214
 BB214:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp350 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp357 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB215
 BB215:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp350 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp357 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB216
 BB216:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp350 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp357 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB217
 BB217:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp350 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp357 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB218
 BB218:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp350 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp357 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB219
 BB219:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp350 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp351 = float32(_tmp350)
-	_tmp352 = ol_total + _tmp351
-	ol_total = _tmp352
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp357 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 6, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp358 = float32(_tmp357)
+	_tmp359 = ol_total + _tmp358
+	ol_total = _tmp359
 	goto BB116
 }
 
@@ -4171,19 +4372,22 @@ func DeliveryHop7Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp358 uint64
-	var _tmp359 uint64
+	var _tmp365 uint64
+	var _tmp366 uint64
 	var c_id uint64
-	var _tmp360 uint64
+	var _tmp367 uint64
+	var ol_cnt uint64
+	var _tmp368 uint64
+	var _tmp369 Unit
 	var ol_total float32
-	var _tmp362 bool
-	var _tmp363 uint64
-	var _tmp364 float32
-	var _tmp365 float32
-	var _tmp367 float32
-	var _tmp368 float32
-	var _tmp369 float32
-	var _tmp370 float32
+	var _tmp370 bool
+	var _tmp371 uint64
+	var _tmp372 float32
+	var _tmp373 float32
+	var _tmp375 float32
+	var _tmp376 float32
+	var _tmp377 float32
+	var _tmp378 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -4194,15 +4398,15 @@ func DeliveryHop7Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -4219,6 +4423,8 @@ func DeliveryHop7Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -4237,33 +4443,41 @@ BB117:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 7})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp358 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp358
-	_tmp359 = no_o_id + 1
+	_tmp365 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp365
+	_tmp366 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 7}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 7})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp359
+	row2.D_NEXT_NO_ID = _tmp366
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 7}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp360 = row3.O_C_ID
-	c_id = _tmp360
+	_tmp367 = row3.O_C_ID
+	c_id = _tmp367
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp368 = row4.O_OL_CNT
+	ol_cnt = _tmp368
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 7, O_ID: no_o_id}, row5)
 	goto BB119
-	_tmp362 = ol_number < O_OL_CNT
-	if _tmp362 {
+	_tmp370 = ol_number < O_OL_CNT
+	if _tmp370 {
 		goto BB119
 	} else {
 		goto BB121
@@ -4272,156 +4486,156 @@ BB119:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp363 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = 0 + _tmp364
-	ol_total = _tmp365
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp371 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = 0 + _tmp372
+	ol_total = _tmp373
 	goto BB220
 BB121:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp367 = row6.C_BALANCE
-	_tmp368 = _tmp367 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp375 = row7.C_BALANCE
+	_tmp376 = _tmp375 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp368
-	_tmp369 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}, row7)
-	_tmp370 = _tmp369 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp376
+	_tmp377 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}, row8)
+	_tmp378 = _tmp377 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp370
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp378
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 7, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB220:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp363 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp371 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB221
 BB221:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp363 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp371 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB222
 BB222:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp363 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp371 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB223
 BB223:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp363 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp371 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB224
 BB224:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp363 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp371 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB225
 BB225:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp363 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp371 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB226
 BB226:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp363 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp371 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB227
 BB227:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp363 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp371 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB228
 BB228:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp363 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp364 = float32(_tmp363)
-	_tmp365 = ol_total + _tmp364
-	ol_total = _tmp365
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp371 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 7, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp372 = float32(_tmp371)
+	_tmp373 = ol_total + _tmp372
+	ol_total = _tmp373
 	goto BB121
 }
 
@@ -4431,19 +4645,22 @@ func DeliveryHop8Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp371 uint64
-	var _tmp372 uint64
+	var _tmp379 uint64
+	var _tmp380 uint64
 	var c_id uint64
-	var _tmp373 uint64
+	var _tmp381 uint64
+	var ol_cnt uint64
+	var _tmp382 uint64
+	var _tmp383 Unit
 	var ol_total float32
-	var _tmp375 bool
-	var _tmp376 uint64
-	var _tmp377 float32
-	var _tmp378 float32
-	var _tmp380 float32
-	var _tmp381 float32
-	var _tmp382 float32
-	var _tmp383 float32
+	var _tmp384 bool
+	var _tmp385 uint64
+	var _tmp386 float32
+	var _tmp387 float32
+	var _tmp389 float32
+	var _tmp390 float32
+	var _tmp391 float32
+	var _tmp392 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -4454,15 +4671,15 @@ func DeliveryHop8Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -4479,6 +4696,8 @@ func DeliveryHop8Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -4497,33 +4716,41 @@ BB122:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 8})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp371 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp371
-	_tmp372 = no_o_id + 1
+	_tmp379 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp379
+	_tmp380 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 8}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 8})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp372
+	row2.D_NEXT_NO_ID = _tmp380
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 8}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp373 = row3.O_C_ID
-	c_id = _tmp373
+	_tmp381 = row3.O_C_ID
+	c_id = _tmp381
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp382 = row4.O_OL_CNT
+	ol_cnt = _tmp382
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 8, O_ID: no_o_id}, row5)
 	goto BB124
-	_tmp375 = ol_number < O_OL_CNT
-	if _tmp375 {
+	_tmp384 = ol_number < O_OL_CNT
+	if _tmp384 {
 		goto BB124
 	} else {
 		goto BB126
@@ -4532,156 +4759,156 @@ BB124:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp376 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = 0 + _tmp377
-	ol_total = _tmp378
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp385 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = 0 + _tmp386
+	ol_total = _tmp387
 	goto BB229
 BB126:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp380 = row6.C_BALANCE
-	_tmp381 = _tmp380 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp389 = row7.C_BALANCE
+	_tmp390 = _tmp389 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp381
-	_tmp382 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}, row7)
-	_tmp383 = _tmp382 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp390
+	_tmp391 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}, row8)
+	_tmp392 = _tmp391 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp383
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp392
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 8, C_ID: c_id}, row9)
 	panic("unexpected hop exit in partition")
 BB229:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp376 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp385 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB230
 BB230:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp376 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp385 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB231
 BB231:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp376 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp385 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB232
 BB232:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp376 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp385 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB233
 BB233:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp376 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp385 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB234
 BB234:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp376 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp385 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB235
 BB235:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp376 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp385 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB236
 BB236:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp376 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp385 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB237
 BB237:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp376 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp377 = float32(_tmp376)
-	_tmp378 = ol_total + _tmp377
-	ol_total = _tmp378
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp385 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 8, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp386 = float32(_tmp385)
+	_tmp387 = ol_total + _tmp386
+	ol_total = _tmp387
 	goto BB126
 }
 
@@ -4691,19 +4918,22 @@ func DeliveryHop9Par(params map[string]string) uint64 {
 	var o_carrier_id uint64
 	var date uint64
 	var no_o_id uint64
-	var _tmp384 uint64
-	var _tmp385 uint64
+	var _tmp393 uint64
+	var _tmp394 uint64
 	var c_id uint64
-	var _tmp386 uint64
+	var _tmp395 uint64
+	var ol_cnt uint64
+	var _tmp396 uint64
+	var _tmp397 Unit
 	var ol_total float32
-	var _tmp388 bool
-	var _tmp389 uint64
-	var _tmp390 float32
-	var _tmp391 float32
-	var _tmp393 float32
-	var _tmp394 float32
-	var _tmp395 float32
-	var _tmp396 float32
+	var _tmp398 bool
+	var _tmp399 uint64
+	var _tmp400 float32
+	var _tmp401 float32
+	var _tmp403 float32
+	var _tmp404 float32
+	var _tmp405 float32
+	var _tmp406 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -4714,15 +4944,15 @@ func DeliveryHop9Par(params map[string]string) uint64 {
 	var keyBytes4 []byte
 	var row4 Order
 	var keyBytes5 []byte
-	var row5 OrderLine
+	var row5 Order
 	var keyBytes6 []byte
-	var row6 Customer
+	var row6 OrderLine
 	var keyBytes7 []byte
 	var row7 Customer
 	var keyBytes8 []byte
 	var row8 Customer
 	var keyBytes9 []byte
-	var row9 OrderLine
+	var row9 Customer
 	var keyBytes10 []byte
 	var row10 OrderLine
 	var keyBytes11 []byte
@@ -4739,6 +4969,8 @@ func DeliveryHop9Par(params map[string]string) uint64 {
 	var row16 OrderLine
 	var keyBytes17 []byte
 	var row17 OrderLine
+	var keyBytes18 []byte
+	var row18 OrderLine
 
 	w_id = toUint64(params["w_id"])
 	o_carrier_id = toUint64(params["o_carrier_id"])
@@ -4757,33 +4989,41 @@ BB127:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 9})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp384 = row1.D_NEXT_NO_ID
-	no_o_id = _tmp384
-	_tmp385 = no_o_id + 1
+	_tmp393 = row1.D_NEXT_NO_ID
+	no_o_id = _tmp393
+	_tmp394 = no_o_id + 1
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: 9}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 9})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_NEXT_NO_ID = _tmp385
+	row2.D_NEXT_NO_ID = _tmp394
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: 9}, row2)
 	// First table access - calculate partition: Order
 	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id}) }
 	// TableGet: Order
 	keyBytes3, row3 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id})
 	rwSet = AddRWSet(rwSet, "Order", keyBytes3)
-	_tmp386 = row3.O_C_ID
-	c_id = _tmp386
+	_tmp395 = row3.O_C_ID
+	c_id = _tmp395
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id}) }
+	// TableGet: Order
+	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
+	_tmp396 = row4.O_OL_CNT
+	ol_cnt = _tmp396
+	_ = ol_cnt
 	// First table access - calculate partition: Order
 	if true { return putOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id}) }
 	// TableSet: Order
-	keyBytes4, row4 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id})
-	rwSet = AddRWSet(rwSet, "Order", keyBytes4)
-	row4.O_CARRIER_ID = o_carrier_id
-	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id}, row4)
+	keyBytes5, row5 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes5)
+	row5.O_CARRIER_ID = o_carrier_id
+	putOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: 9, O_ID: no_o_id}, row5)
 	goto BB129
-	_tmp388 = ol_number < O_OL_CNT
-	if _tmp388 {
+	_tmp398 = ol_number < O_OL_CNT
+	if _tmp398 {
 		goto BB129
 	} else {
 		goto BB131
@@ -4792,156 +5032,156 @@ BB129:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
-	row5.OL_DELIVERY_DATE = date
-	_tmp389 = row5.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0}, row5)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = 0 + _tmp390
-	ol_total = _tmp391
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	row6.OL_DELIVERY_DATE = date
+	_tmp399 = row6.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 0}, row6)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = 0 + _tmp400
+	ol_total = _tmp401
 	goto BB238
 BB131:
 	// First table access - calculate partition: Customer
 	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}) }
 	// TableGet: Customer
-	keyBytes6, row6 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes6)
-	_tmp393 = row6.C_BALANCE
-	_tmp394 = _tmp393 + ol_total
+	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
+	_tmp403 = row7.C_BALANCE
+	_tmp404 = _tmp403 + ol_total
 	// First table access (optimized group) - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}) }
 	// Combined table access: Customer (2 operations)
-	keyBytes7, row7 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes7)
-	row7.C_BALANCE = _tmp394
-	_tmp395 = row7.C_DELIVERY_CNT
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}, row7)
-	_tmp396 = _tmp395 + 1
+	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
+	row8.C_BALANCE = _tmp404
+	_tmp405 = row8.C_DELIVERY_CNT
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}, row8)
+	_tmp406 = _tmp405 + 1
 	// First table access - calculate partition: Customer
 	if true { return putCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}) }
 	// TableSet: Customer
-	keyBytes8, row8 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
-	rwSet = AddRWSet(rwSet, "Customer", keyBytes8)
-	row8.C_DELIVERY_CNT = _tmp396
-	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}, row8)
+	keyBytes9, row9 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes9)
+	row9.C_DELIVERY_CNT = _tmp406
+	putCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: 9, C_ID: c_id}, row9)
 	return 0
 BB238:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
-	row9.OL_DELIVERY_DATE = date
-	_tmp389 = row9.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1}, row9)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	row10.OL_DELIVERY_DATE = date
+	_tmp399 = row10.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 1}, row10)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB239
 BB239:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
-	row10.OL_DELIVERY_DATE = date
-	_tmp389 = row10.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2}, row10)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	row11.OL_DELIVERY_DATE = date
+	_tmp399 = row11.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 2}, row11)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB240
 BB240:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
-	row11.OL_DELIVERY_DATE = date
-	_tmp389 = row11.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3}, row11)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	row12.OL_DELIVERY_DATE = date
+	_tmp399 = row12.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 3}, row12)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB241
 BB241:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
-	row12.OL_DELIVERY_DATE = date
-	_tmp389 = row12.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4}, row12)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
+	row13.OL_DELIVERY_DATE = date
+	_tmp399 = row13.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 4}, row13)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB242
 BB242:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes13, row13 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes13)
-	row13.OL_DELIVERY_DATE = date
-	_tmp389 = row13.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5}, row13)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
+	row14.OL_DELIVERY_DATE = date
+	_tmp399 = row14.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 5}, row14)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB243
 BB243:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes14, row14 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes14)
-	row14.OL_DELIVERY_DATE = date
-	_tmp389 = row14.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6}, row14)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
+	row15.OL_DELIVERY_DATE = date
+	_tmp399 = row15.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 6}, row15)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB244
 BB244:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes15, row15 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes15)
-	row15.OL_DELIVERY_DATE = date
-	_tmp389 = row15.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7}, row15)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
+	row16.OL_DELIVERY_DATE = date
+	_tmp399 = row16.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 7}, row16)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB245
 BB245:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes16, row16 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes16)
-	row16.OL_DELIVERY_DATE = date
-	_tmp389 = row16.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8}, row16)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
+	row17.OL_DELIVERY_DATE = date
+	_tmp399 = row17.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 8}, row17)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB246
 BB246:
 	// First table access (optimized group) - calculate partition: OrderLine
 	if true { return putOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9}) }
 	// Combined table access: OrderLine (2 operations)
-	keyBytes17, row17 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9})
-	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes17)
-	row17.OL_DELIVERY_DATE = date
-	_tmp389 = row17.OL_AMOUNT
-	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9}, row17)
-	_tmp390 = float32(_tmp389)
-	_tmp391 = ol_total + _tmp390
-	ol_total = _tmp391
+	keyBytes18, row18 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes18)
+	row18.OL_DELIVERY_DATE = date
+	_tmp399 = row18.OL_AMOUNT
+	putOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: 9, OL_O_ID: no_o_id, OL_NUMBER: 9}, row18)
+	_tmp400 = float32(_tmp399)
+	_tmp401 = ol_total + _tmp400
+	ol_total = _tmp401
 	goto BB131
 }
 

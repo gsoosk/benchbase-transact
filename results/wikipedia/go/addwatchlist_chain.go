@@ -73,8 +73,8 @@ BB3:
 	putUser(tx, UserKey{user_id: userId}, row3)
 	// return - no action
 	// Flush caches for tables written in this hop
-	flushWatchlistCache(tx)
 	flushUserCache(tx)
+	flushWatchlistCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,

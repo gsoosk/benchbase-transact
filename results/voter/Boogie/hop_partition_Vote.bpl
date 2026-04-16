@@ -91,23 +91,27 @@ axiom (forall
     <==>
     (phone_number_1 == phone_number_2 && vote_id_1 == vote_id_2 && state_1 == state_2 && contestant_number_1 == contestant_number_2)
 );
-const TBL_VOTES : Table (VOTES);
-const __shards__ : int;
-const TBL_CONTESTANTS : Table (CONTESTANTS);
-const __slice__ : int;
-var VOTES_phone_number : [int][int]int;
-var VOTES_vote_id : [int][int]int;
-var VOTES_state : [int][int]String;
-var CONTESTANTS_contestant_name : [int]String;
-var VOTES_contestant_number : [int][int]int;
-var CONTESTANTS_contestant_number : [int]int;
-var LOCATIONS_state : [int]String;
-var LOCATIONS_area_code : [int]int;
 const TBL_LOCATIONS : Table (LOCATIONS);
+var VOTES_vote_id : [int][int]int;
+var CONTESTANTS_contestant_name : [int]String;
+const TBL_CONTESTANTS : Table (CONTESTANTS);
+var LOCATIONS_area_code : [int]int;
+var VOTES_phone_number : [int][int]int;
+const __slice__ : int;
+var CONTESTANTS_contestant_number : [int]int;
+const TBL_VOTES : Table (VOTES);
+var VOTES_state : [int][int]String;
+var VOTES_contestant_number : [int][int]int;
+const __shards__ : int;
+var LOCATIONS_state : [int]String;
 procedure verify_hop_partitions_Vote(voteId: int, phoneNumber: int, contestantNumber: int)
 modifies VOTES_contestant_number, VOTES_state;
 {
-  var s4_#tmp1 : int;
+  var s3_c#contestant_name : String;
+  var s3_contestantNumber : int;
+  var s3_cname : String;
+  var s3_#tmp1 : unit;
+  var s4_#tmp2 : int;
   var s4_phoneNumber : int;
   var s4_area_code : int;
   var s4_loc#state : String;
@@ -119,11 +123,14 @@ modifies VOTES_contestant_number, VOTES_state;
 
   // Hop partition verification for function 'Vote'
   s3_block3:
+    s3_c#contestant_name := CONTESTANTS_contestant_name[s3_contestantNumber];
+    s3_cname := s3_c#contestant_name;
+    s3_#tmp1 := to_unit(s3_cname);
     goto s3_hop_exit;
   s3_hop_exit:
   s4_block4:
-    s4_#tmp1 := s4_phoneNumber / 10000000;
-    s4_area_code := s4_#tmp1;
+    s4_#tmp2 := s4_phoneNumber / 10000000;
+    s4_area_code := s4_#tmp2;
     s4_loc#state := LOCATIONS_state[s4_area_code];
     s4_state := s4_loc#state;
     goto s4_hop_exit;
@@ -131,8 +138,8 @@ modifies VOTES_contestant_number, VOTES_state;
   s5_block5:
     VOTES_state := VOTES_state[s5_phoneNumber := VOTES_state[s5_phoneNumber][s5_voteId := s5_state]];
     VOTES_contestant_number := VOTES_contestant_number[s5_phoneNumber := VOTES_contestant_number[s5_phoneNumber][s5_voteId := s5_contestantNumber]];
-  // Partition check hop 5 func 'p_phone' tables 'VOTES'=>'VOTES' keys [k0=phoneNumber] first_span Span { start: 3086, end: 3223, filename: "/Users/farzad/Desktop/Research/benchbase-transact/voter.transact" } current_span Span { start: 3086, end: 3223, filename: "/Users/farzad/Desktop/Research/benchbase-transact/voter.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 17) (function_id . 18) (hop_id . 5) (table_id . 2) (span ((start . 3086) (end . 3223) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/voter.transact\"))))"} (s5_phoneNumber == s5_phoneNumber);
+  // Partition check hop 5 func 'p_phone' tables 'VOTES'=>'VOTES' keys [k0=phoneNumber] first_span Span { start: 3110, end: 3247, filename: "/Users/farzad/Desktop/Research/benchbase-transact/voter.transact" } current_span Span { start: 3110, end: 3247, filename: "/Users/farzad/Desktop/Research/benchbase-transact/voter.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 17) (function_id . 18) (hop_id . 5) (table_id . 2) (span ((start . 3110) (end . 3247) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/voter.transact\"))))"} (s5_phoneNumber == s5_phoneNumber);
     goto s5_epilogue;
   s5_hop_exit:
   s3_epilogue:

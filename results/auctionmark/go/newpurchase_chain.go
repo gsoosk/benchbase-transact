@@ -43,7 +43,7 @@ func NewpurchaseHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var seller_u_sattr2 string
 	var seller_u_sattr3 string
 	var seller_u_sattr4 string
-	var _tmp30 float32
+	var _tmp38 float32
 
 	var keyBytes1 []byte
 	var row1 Item
@@ -103,8 +103,8 @@ BB17:
 	seller_u_sattr2 = row3.u_sattr2
 	seller_u_sattr3 = row3.u_sattr3
 	seller_u_sattr4 = row3.u_sattr4
-	_tmp30 = seller_u_balance + buy_now_price
-	seller_u_balance = _tmp30
+	_tmp38 = seller_u_balance + buy_now_price
+	seller_u_balance = _tmp38
 	// Combined table access: Useracct (10 operations)
 	keyBytes4, row4 = getUseracct(tx, UseracctKey{u_id: seller_id})
 	rwSet = AddRWSet(rwSet, "Useracct", keyBytes4)
@@ -120,8 +120,8 @@ BB17:
 	row4.u_sattr4 = seller_u_sattr4
 	putUseracct(tx, UseracctKey{u_id: seller_id}, row4)
 	// Flush caches for tables written in this hop
-	flushItemCache(tx)
 	flushUseracctCache(tx)
+	flushItemCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -146,7 +146,7 @@ func NewpurchaseHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var buyer_u_sattr2 string
 	var buyer_u_sattr3 string
 	var buyer_u_sattr4 string
-	var _tmp32 float32
+	var _tmp40 float32
 
 	var keyBytes1 []byte
 	var row1 Useracct
@@ -172,8 +172,8 @@ BB18:
 	buyer_u_sattr2 = row1.u_sattr2
 	buyer_u_sattr3 = row1.u_sattr3
 	buyer_u_sattr4 = row1.u_sattr4
-	_tmp32 = buyer_u_balance - buy_now_price
-	buyer_u_balance = _tmp32
+	_tmp40 = buyer_u_balance - buy_now_price
+	buyer_u_balance = _tmp40
 	// Combined table access: Useracct (10 operations)
 	keyBytes2, row2 = getUseracct(tx, UseracctKey{u_id: buyer_id})
 	rwSet = AddRWSet(rwSet, "Useracct", keyBytes2)
@@ -224,7 +224,7 @@ func NewpurchaseHop0Par(params map[string]string) uint64 {
 	var seller_u_sattr2 string
 	var seller_u_sattr3 string
 	var seller_u_sattr4 string
-	var _tmp30 float32
+	var _tmp38 float32
 
 	var keyBytes1 []byte
 	var row1 Item
@@ -295,8 +295,8 @@ BB17:
 	seller_u_sattr2 = row3.u_sattr2
 	seller_u_sattr3 = row3.u_sattr3
 	seller_u_sattr4 = row3.u_sattr4
-	_tmp30 = seller_u_balance + buy_now_price
-	seller_u_balance = _tmp30
+	_tmp38 = seller_u_balance + buy_now_price
+	seller_u_balance = _tmp38
 	// First table access (optimized group) - calculate partition: Useracct
 	if true { return putUseracctPar(UseracctKey{u_id: seller_id}) }
 	// Combined table access: Useracct (10 operations)
@@ -330,7 +330,7 @@ func NewpurchaseHop1Par(params map[string]string) uint64 {
 	var buyer_u_sattr2 string
 	var buyer_u_sattr3 string
 	var buyer_u_sattr4 string
-	var _tmp32 float32
+	var _tmp40 float32
 
 	var keyBytes1 []byte
 	var row1 Useracct
@@ -363,8 +363,8 @@ BB18:
 	buyer_u_sattr2 = row1.u_sattr2
 	buyer_u_sattr3 = row1.u_sattr3
 	buyer_u_sattr4 = row1.u_sattr4
-	_tmp32 = buyer_u_balance - buy_now_price
-	buyer_u_balance = _tmp32
+	_tmp40 = buyer_u_balance - buy_now_price
+	buyer_u_balance = _tmp40
 	// First table access (optimized group) - calculate partition: Useracct
 	if true { return putUseracctPar(UseracctKey{u_id: buyer_id}) }
 	// Combined table access: Useracct (10 operations)

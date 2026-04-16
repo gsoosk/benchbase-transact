@@ -205,71 +205,71 @@ axiom (forall
     <==>
     (uw_u_id_1 == uw_u_id_2 && uw_i_id_1 == uw_i_id_2 && uw_i_u_id_1 == uw_i_u_id_2)
 );
-var ITEM_i_status : [int][int]int;
-var ITEM_i_num_comments : [int][int]int;
-var USERACCT_u_sattr1 : [int]String;
-var USERACCT_u_sattr3 : [int]String;
-var ITEM_i_id : [int][int]int;
-var ITEM_COMMENT_ic_id : [int][int][int]int;
-const TBL_ITEM_BID : Table (ITEM_BID);
-const TBL_USERACCT_ITEM : Table (USERACCT_ITEM);
-const TBL_ITEM_MAX_BID : Table (ITEM_MAX_BID);
-var USERACCT_FEEDBACK_uf_rating : [int][int][int][int]int;
-var ITEM_BID_ib_buyer_id : [int][int][int]int;
-const __shards__ : int;
-var USERACCT_FEEDBACK_uf_u_id : [int][int][int][int]int;
-var ITEM_COMMENT_ic_question : [int][int][int]String;
-var USERACCT_u_sattr0 : [int]String;
-const ITEM_STATUS_WAITING_FOR_PURCHASE : int;
-var USERACCT_ITEM_ui_i_id : [int][int][int]int;
-var REGION_r_name : [int]String;
-var ITEM_MAX_BID_imb_ib_id : [int][int]int;
-var ITEM_i_num_bids : [int][int]int;
-var USERACCT_FEEDBACK_uf_i_id : [int][int][int][int]int;
-var USERACCT_u_rating : [int]int;
-var ITEM_BID_ib_bid : [int][int][int]real;
-var ITEM_i_current_price : [int][int]real;
-var ITEM_BID_ib_i_id : [int][int][int]int;
-var ITEM_MAX_BID_imb_i_id : [int][int]int;
-const TBL_REGION : Table (REGION);
-var ITEM_MAX_BID_imb_ib_u_id : [int][int]int;
-var ITEM_COMMENT_ic_i_id : [int][int][int]int;
-var USERACCT_u_r_id : [int]int;
-var REGION_r_id : [int]int;
 var ITEM_COMMENT_ic_response : [int][int][int]String;
+var ITEM_i_num_bids : [int][int]int;
+var ITEM_MAX_BID_imb_i_id : [int][int]int;
 var USERACCT_FEEDBACK_uf_from_id : [int][int][int][int]int;
-var USERACCT_WATCH_uw_i_id : [int][int][int]int;
-var ITEM_MAX_BID_imb_u_id : [int][int]int;
-var ITEM_i_u_id : [int][int]int;
-var USERACCT_ITEM_ui_i_u_id : [int][int][int]int;
-var ITEM_BID_ib_id : [int][int][int]int;
-var ITEM_COMMENT_ic_buyer_id : [int][int][int]int;
-var USERACCT_ITEM_ui_u_id : [int][int][int]int;
-const ITEM_STATUS_OPEN : int;
-var ITEM_COMMENT_ic_u_id : [int][int][int]int;
-var ITEM_BID_ib_max_bid : [int][int][int]real;
-var ITEM_i_initial_price : [int][int]real;
-const TBL_ITEM_COMMENT : Table (ITEM_COMMENT);
-var USERACCT_WATCH_uw_u_id : [int][int][int]int;
-var USERACCT_WATCH_uw_i_u_id : [int][int][int]int;
-var USERACCT_u_comments : [int]int;
-var ITEM_MAX_BID_imb_ib_i_id : [int][int]int;
-var USERACCT_u_sattr4 : [int]String;
-var ITEM_i_end_date : [int][int]int;
-var ITEM_i_start_date : [int][int]int;
-var USERACCT_FEEDBACK_uf_i_u_id : [int][int][int][int]int;
-var USERACCT_u_id : [int]int;
-const TBL_ITEM : Table (ITEM);
-var ITEM_BID_ib_u_id : [int][int][int]int;
-const TBL_USERACCT_FEEDBACK : Table (USERACCT_FEEDBACK);
-const ITEM_STATUS_CLOSED : int;
-const TBL_USERACCT : Table (USERACCT);
-const __slice__ : int;
-var USERACCT_u_balance : [int]real;
-var ITEM_i_name : [int][int]String;
-const TBL_USERACCT_WATCH : Table (USERACCT_WATCH);
-var ITEM_i_c_id : [int][int]int;
 var USERACCT_u_sattr2 : [int]String;
+const TBL_ITEM : Table (ITEM);
+var USERACCT_u_sattr1 : [int]String;
+var ITEM_MAX_BID_imb_ib_i_id : [int][int]int;
+var USERACCT_u_sattr3 : [int]String;
+var USERACCT_ITEM_ui_i_id : [int][int][int]int;
+var ITEM_COMMENT_ic_u_id : [int][int][int]int;
+const TBL_ITEM_BID : Table (ITEM_BID);
+const TBL_USERACCT_FEEDBACK : Table (USERACCT_FEEDBACK);
+var ITEM_BID_ib_max_bid : [int][int][int]real;
+var ITEM_COMMENT_ic_i_id : [int][int][int]int;
+var ITEM_i_id : [int][int]int;
+var USERACCT_u_id : [int]int;
+const __slice__ : int;
+const ITEM_STATUS_WAITING_FOR_PURCHASE : int;
+var ITEM_BID_ib_id : [int][int][int]int;
+var ITEM_MAX_BID_imb_u_id : [int][int]int;
+const TBL_USERACCT : Table (USERACCT);
+var ITEM_i_start_date : [int][int]int;
+var ITEM_i_c_id : [int][int]int;
+var USERACCT_FEEDBACK_uf_rating : [int][int][int][int]int;
+var ITEM_i_status : [int][int]int;
+var ITEM_BID_ib_u_id : [int][int][int]int;
+var USERACCT_u_r_id : [int]int;
+var USERACCT_u_comments : [int]int;
+var USERACCT_ITEM_ui_u_id : [int][int][int]int;
+var ITEM_i_num_comments : [int][int]int;
+var REGION_r_name : [int]String;
+var ITEM_i_u_id : [int][int]int;
+var REGION_r_id : [int]int;
+var ITEM_i_current_price : [int][int]real;
+const __shards__ : int;
+var USERACCT_WATCH_uw_u_id : [int][int][int]int;
+var USERACCT_u_sattr4 : [int]String;
+var USERACCT_u_balance : [int]real;
+var ITEM_BID_ib_i_id : [int][int][int]int;
+const TBL_USERACCT_WATCH : Table (USERACCT_WATCH);
+var USERACCT_u_rating : [int]int;
+const TBL_ITEM_COMMENT : Table (ITEM_COMMENT);
+var USERACCT_WATCH_uw_i_id : [int][int][int]int;
+var USERACCT_u_sattr0 : [int]String;
+const TBL_ITEM_MAX_BID : Table (ITEM_MAX_BID);
+var USERACCT_WATCH_uw_i_u_id : [int][int][int]int;
+var ITEM_MAX_BID_imb_ib_u_id : [int][int]int;
+const TBL_USERACCT_ITEM : Table (USERACCT_ITEM);
+var ITEM_COMMENT_ic_id : [int][int][int]int;
+const TBL_REGION : Table (REGION);
+const ITEM_STATUS_CLOSED : int;
+var USERACCT_FEEDBACK_uf_i_u_id : [int][int][int][int]int;
+var ITEM_i_name : [int][int]String;
+var ITEM_MAX_BID_imb_ib_id : [int][int]int;
+var ITEM_i_end_date : [int][int]int;
+var USERACCT_FEEDBACK_uf_u_id : [int][int][int][int]int;
+var USERACCT_FEEDBACK_uf_i_id : [int][int][int][int]int;
+var ITEM_i_initial_price : [int][int]real;
+var ITEM_COMMENT_ic_buyer_id : [int][int][int]int;
+const ITEM_STATUS_OPEN : int;
+var ITEM_COMMENT_ic_question : [int][int][int]String;
+var USERACCT_ITEM_ui_i_u_id : [int][int][int]int;
+var ITEM_BID_ib_buyer_id : [int][int][int]int;
+var ITEM_BID_ib_bid : [int][int][int]real;
 procedure Check_SliceCommut_Hop8_vs_Hop12()
 modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BID_imb_ib_i_id, ITEM_MAX_BID_imb_ib_id, ITEM_MAX_BID_imb_ib_u_id, ITEM_i_c_id, ITEM_i_current_price, ITEM_i_end_date, ITEM_i_id, ITEM_i_initial_price, ITEM_i_name, ITEM_i_num_bids, ITEM_i_num_comments, ITEM_i_start_date, ITEM_i_status, ITEM_i_u_id, USERACCT_u_balance, USERACCT_u_comments, USERACCT_u_id, USERACCT_u_r_id, USERACCT_u_rating, USERACCT_u_sattr0, USERACCT_u_sattr1, USERACCT_u_sattr2, USERACCT_u_sattr3, USERACCT_u_sattr4;
 {
@@ -338,9 +338,9 @@ modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BI
   var s0_item#i_status : int;
   var s0_item#i_u_id : int;
   var s0_cur_price : real;
-  var s0_#tmp14 : int;
-  var s0_#tmp15 : bool;
-  var s0_#tmp16 : bool;
+  var s0_#tmp22 : int;
+  var s0_#tmp23 : bool;
+  var s0_#tmp24 : bool;
   var s1_seller#u_balance : real;
   var s1_seller#u_comments : int;
   var s1_seller#u_id : int;
@@ -351,7 +351,7 @@ modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BI
   var s1_seller#u_sattr2 : String;
   var s1_seller#u_sattr3 : String;
   var s1_seller#u_sattr4 : String;
-  var s1_#tmp27 : real;
+  var s1_#tmp35 : real;
   var ITEM_BID_ib_bid_a_then_b : [int][int][int]real;
   var ITEM_BID_ib_buyer_id_a_then_b : [int][int][int]int;
   var ITEM_BID_ib_max_bid_a_then_b : [int][int][int]real;
@@ -506,10 +506,10 @@ modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BI
       s0_item#i_status := ITEM_i_status[s0_item_id][s0_seller_id];
       s0_item#i_u_id := ITEM_i_u_id[s0_item_id][s0_seller_id];
       s0_cur_price := s0_item#i_current_price;
-      s0_#tmp14 := s0_item#i_num_bids + 1;
-      s0_item#i_num_bids := s0_#tmp14;
-      s0_#tmp15 := s0_new_bid > s0_cur_price;
-      if (s0_#tmp15) {
+      s0_#tmp22 := s0_item#i_num_bids + 1;
+      s0_item#i_num_bids := s0_#tmp22;
+      s0_#tmp23 := s0_new_bid > s0_cur_price;
+      if (s0_#tmp23) {
       goto s0_block9__ab;
     } else {
       goto s0_block10__ab;
@@ -532,8 +532,8 @@ modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BI
       ITEM_BID_ib_buyer_id := ITEM_BID_ib_buyer_id[s0_new_bid_id := ITEM_BID_ib_buyer_id[s0_new_bid_id][s0_item_id := ITEM_BID_ib_buyer_id[s0_new_bid_id][s0_item_id][s0_seller_id := s0_buyer_id]]];
       ITEM_BID_ib_bid := ITEM_BID_ib_bid[s0_new_bid_id := ITEM_BID_ib_bid[s0_new_bid_id][s0_item_id := ITEM_BID_ib_bid[s0_new_bid_id][s0_item_id][s0_seller_id := s0_new_bid]]];
       ITEM_BID_ib_max_bid := ITEM_BID_ib_max_bid[s0_new_bid_id := ITEM_BID_ib_max_bid[s0_new_bid_id][s0_item_id := ITEM_BID_ib_max_bid[s0_new_bid_id][s0_item_id][s0_seller_id := s0_new_bid]]];
-      s0_#tmp16 := s0_new_bid > s0_cur_price;
-      if (s0_#tmp16) {
+      s0_#tmp24 := s0_new_bid > s0_cur_price;
+      if (s0_#tmp24) {
       goto s0_block11__ab;
     } else {
       goto s0_block12__ab;
@@ -569,8 +569,8 @@ modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BI
       s1_seller#u_sattr2 := USERACCT_u_sattr2[s1_seller_id];
       s1_seller#u_sattr3 := USERACCT_u_sattr3[s1_seller_id];
       s1_seller#u_sattr4 := USERACCT_u_sattr4[s1_seller_id];
-      s1_#tmp27 := s1_seller#u_balance - s1_initial_price;
-      s1_seller#u_balance := s1_#tmp27;
+      s1_#tmp35 := s1_seller#u_balance - s1_initial_price;
+      s1_seller#u_balance := s1_#tmp35;
       USERACCT_u_balance := USERACCT_u_balance[s1_seller_id := s1_seller#u_balance];
       USERACCT_u_comments := USERACCT_u_comments[s1_seller_id := s1_seller#u_comments];
       USERACCT_u_id := USERACCT_u_id[s1_seller_id := s1_seller#u_id];
@@ -677,8 +677,8 @@ modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BI
       s1_seller#u_sattr2 := USERACCT_u_sattr2[s1_seller_id];
       s1_seller#u_sattr3 := USERACCT_u_sattr3[s1_seller_id];
       s1_seller#u_sattr4 := USERACCT_u_sattr4[s1_seller_id];
-      s1_#tmp27 := s1_seller#u_balance - s1_initial_price;
-      s1_seller#u_balance := s1_#tmp27;
+      s1_#tmp35 := s1_seller#u_balance - s1_initial_price;
+      s1_seller#u_balance := s1_#tmp35;
       USERACCT_u_balance := USERACCT_u_balance[s1_seller_id := s1_seller#u_balance];
       USERACCT_u_comments := USERACCT_u_comments[s1_seller_id := s1_seller#u_comments];
       USERACCT_u_id := USERACCT_u_id[s1_seller_id := s1_seller#u_id];
@@ -707,10 +707,10 @@ modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BI
       s0_item#i_status := ITEM_i_status[s0_item_id][s0_seller_id];
       s0_item#i_u_id := ITEM_i_u_id[s0_item_id][s0_seller_id];
       s0_cur_price := s0_item#i_current_price;
-      s0_#tmp14 := s0_item#i_num_bids + 1;
-      s0_item#i_num_bids := s0_#tmp14;
-      s0_#tmp15 := s0_new_bid > s0_cur_price;
-      if (s0_#tmp15) {
+      s0_#tmp22 := s0_item#i_num_bids + 1;
+      s0_item#i_num_bids := s0_#tmp22;
+      s0_#tmp23 := s0_new_bid > s0_cur_price;
+      if (s0_#tmp23) {
       goto s0_block9__ba;
     } else {
       goto s0_block10__ba;
@@ -733,8 +733,8 @@ modifies ITEM_BID_ib_bid, ITEM_BID_ib_buyer_id, ITEM_BID_ib_max_bid, ITEM_MAX_BI
       ITEM_BID_ib_buyer_id := ITEM_BID_ib_buyer_id[s0_new_bid_id := ITEM_BID_ib_buyer_id[s0_new_bid_id][s0_item_id := ITEM_BID_ib_buyer_id[s0_new_bid_id][s0_item_id][s0_seller_id := s0_buyer_id]]];
       ITEM_BID_ib_bid := ITEM_BID_ib_bid[s0_new_bid_id := ITEM_BID_ib_bid[s0_new_bid_id][s0_item_id := ITEM_BID_ib_bid[s0_new_bid_id][s0_item_id][s0_seller_id := s0_new_bid]]];
       ITEM_BID_ib_max_bid := ITEM_BID_ib_max_bid[s0_new_bid_id := ITEM_BID_ib_max_bid[s0_new_bid_id][s0_item_id := ITEM_BID_ib_max_bid[s0_new_bid_id][s0_item_id][s0_seller_id := s0_new_bid]]];
-      s0_#tmp16 := s0_new_bid > s0_cur_price;
-      if (s0_#tmp16) {
+      s0_#tmp24 := s0_new_bid > s0_cur_price;
+      if (s0_#tmp24) {
       goto s0_block11__ba;
     } else {
       goto s0_block12__ba;

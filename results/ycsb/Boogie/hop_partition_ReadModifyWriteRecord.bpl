@@ -62,21 +62,21 @@ axiom (forall
     <==>
     (ycsb_key_1 == ycsb_key_2 && field1_1 == field1_2 && field2_1 == field2_2 && field3_1 == field3_2 && field4_1 == field4_2 && field5_1 == field5_2 && field6_1 == field6_2 && field7_1 == field7_2 && field8_1 == field8_2 && field9_1 == field9_2 && field10_1 == field10_2)
 );
-const YCSB_SCAN_SIZE : int;
-var UserTable_field9 : [int]String;
-var UserTable_field10 : [int]String;
-var UserTable_field8 : [int]String;
-var UserTable_field1 : [int]String;
-var UserTable_field3 : [int]String;
-const TBL_UserTable : Table (UserTable);
-var UserTable_field4 : [int]String;
 var UserTable_field6 : [int]String;
-var UserTable_field5 : [int]String;
-const __slice__ : int;
-var UserTable_field7 : [int]String;
 var UserTable_ycsb_key : [int]int;
-var UserTable_field2 : [int]String;
+var UserTable_field4 : [int]String;
+var UserTable_field10 : [int]String;
 const __shards__ : int;
+const __slice__ : int;
+var UserTable_field5 : [int]String;
+const TBL_UserTable : Table (UserTable);
+var UserTable_field7 : [int]String;
+var UserTable_field8 : [int]String;
+var UserTable_field2 : [int]String;
+var UserTable_field9 : [int]String;
+var UserTable_field3 : [int]String;
+const YCSB_SCAN_SIZE : int;
+var UserTable_field1 : [int]String;
 procedure verify_hop_partitions_ReadModifyWriteRecord(keyname: int, f1: String, f2: String, f3: String, f4: String, f5: String, f6: String, f7: String, f8: String, f9: String, f10: String)
 modifies UserTable_field1, UserTable_field10, UserTable_field2, UserTable_field3, UserTable_field4, UserTable_field5, UserTable_field6, UserTable_field7, UserTable_field8, UserTable_field9, UserTable_ycsb_key;
 {
@@ -107,8 +107,8 @@ modifies UserTable_field1, UserTable_field10, UserTable_field2, UserTable_field3
   s15_block15:
     s15_r#field1 := UserTable_field1[s15_keyname];
     s15_r#ycsb_key := UserTable_ycsb_key[s15_keyname];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 2774) (end . 2802) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 2814) (end . 2842) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     s15_data := s15_r#field1;
     s15_r#field2 := s15_f2;
     s15_r#field3 := s15_f3;
@@ -120,38 +120,38 @@ modifies UserTable_field1, UserTable_field10, UserTable_field2, UserTable_field3
     s15_r#field9 := s15_f9;
     s15_r#field10 := s15_f10;
     UserTable_field1 := UserTable_field1[s15_keyname := s15_data];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field10 := UserTable_field10[s15_keyname := s15_r#field10];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field2 := UserTable_field2[s15_keyname := s15_r#field2];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field3 := UserTable_field3[s15_keyname := s15_r#field3];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field4 := UserTable_field4[s15_keyname := s15_r#field4];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field5 := UserTable_field5[s15_keyname := s15_r#field5];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field6 := UserTable_field6[s15_keyname := s15_r#field6];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field7 := UserTable_field7[s15_keyname := s15_r#field7];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field8 := UserTable_field8[s15_keyname := s15_r#field8];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_field9 := UserTable_field9[s15_keyname := s15_r#field9];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     UserTable_ycsb_key := UserTable_ycsb_key[s15_keyname := s15_r#ycsb_key];
-  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2774, end: 2802, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3133, end: 3165, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3133) (end . 3165) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
+  // Partition check hop 15 func 'f' tables 'UserTable'=>'UserTable' keys [k0=keyname] first_span Span { start: 2814, end: 2842, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" } current_span Span { start: 3173, end: 3205, filename: "/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 15) (table_id . 0) (span ((start . 3173) (end . 3205) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/ycsb.transact\"))))"} (s15_keyname == s15_keyname);
     goto s15_epilogue;
   s15_hop_exit:
   s15_epilogue:

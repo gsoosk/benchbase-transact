@@ -19,9 +19,25 @@ func GenericreadHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var key uint64
+	var r TemplatedTable
+	var _tmp1 TemplatedTable
+	var _tmp2 Unit
+
+	var keyBytes1 []byte
+	var row1 TemplatedTable
+
+	key = toUint64(params["key"])
+
 	goto BB1
 
 BB1:
+	// TableGet: TemplatedTable
+	keyBytes1, row1 = getTemplatedTable(tx, TemplatedTableKey{T_ID: key})
+	rwSet = AddRWSet(rwSet, "TemplatedTable", keyBytes1)
+	_tmp1 = row1
+	r = _tmp1
+	_ = r
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +48,16 @@ BB1:
 
 // GenericreadHop0Par calculates the partition for hop 0 without database access.
 func GenericreadHop0Par(params map[string]string) uint64 {
+	var key uint64
+	var r TemplatedTable
+	var _tmp1 TemplatedTable
+	var _tmp2 Unit
+
+	var keyBytes1 []byte
+	var row1 TemplatedTable
+
+	key = toUint64(params["key"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +66,14 @@ func GenericreadHop0Par(params map[string]string) uint64 {
 	goto BB1
 
 BB1:
+	// First table access - calculate partition: TemplatedTable
+	if true { return getTemplatedTablePar(TemplatedTableKey{T_ID: key}) }
+	// TableGet: TemplatedTable
+	keyBytes1, row1 = getTemplatedTable(tx, TemplatedTableKey{T_ID: key})
+	rwSet = AddRWSet(rwSet, "TemplatedTable", keyBytes1)
+	_tmp1 = row1
+	r = _tmp1
+	_ = r
 	return 0
 }
 

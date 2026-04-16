@@ -132,6 +132,9 @@ transaction MinRecord[fn16](representative_id[v21]: int)
         [stmt_out] liveout: {r#value[v26]}
         [stmt_in] livein: {r#value[v26]}
       v[v28] = r#value[v26];
+        [stmt_out] liveout: {v[v28]}
+        [stmt_in] livein: {v[v28]}
+      #tmp1[v29] = to_unit[fn13](v[v28]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -148,28 +151,28 @@ transaction UpdateRecord[fn17](id[v22]: int)
     bb2:
       livein: {id[v22]}
         [stmt_in] livein: {id[v22]}
-      #tmp1[v32] = SITable[id[v22]];
-        [stmt_out] liveout: {id[v22], #tmp1[v32]}
-        [stmt_in] livein: {id[v22], #tmp1[v32]}
-      row[v29] = #tmp1[v32];
+      #tmp2[v33] = SITable[id[v22]];
+        [stmt_out] liveout: {id[v22], #tmp2[v33]}
+        [stmt_in] livein: {id[v22], #tmp2[v33]}
+      row[v30] = #tmp2[v33];
         [stmt_out] liveout: {id[v22]}
         [stmt_in] livein: {id[v22]}
-      row#id[v30] = SITable[id[v22]].id;
-        [stmt_out] liveout: {row#id[v30], id[v22]}
-        [stmt_in] livein: {row#id[v30], id[v22]}
-      row#value[v31] = SITable[id[v22]].value;
-        [stmt_out] liveout: {row#value[v31], row#id[v30], id[v22]}
-        [stmt_in] livein: {row#value[v31], row#id[v30], id[v22]}
-      #tmp2[v33] = row#value[v31] + 1;
-        [stmt_out] liveout: {#tmp2[v33], id[v22], row#id[v30]}
-        [stmt_in] livein: {#tmp2[v33], id[v22], row#id[v30]}
-      row#value[v31] = #tmp2[v33];
-        [stmt_out] liveout: {row#value[v31], row#id[v30], id[v22]}
-        [stmt_in] livein: {row#value[v31], row#id[v30], id[v22]}
-      SITable[id[v22]].id = row#id[v30];
-        [stmt_out] liveout: {id[v22], row#value[v31]}
-        [stmt_in] livein: {id[v22], row#value[v31]}
-      SITable[id[v22]].value = row#value[v31];
+      row#id[v31] = SITable[id[v22]].id;
+        [stmt_out] liveout: {id[v22], row#id[v31]}
+        [stmt_in] livein: {id[v22], row#id[v31]}
+      row#value[v32] = SITable[id[v22]].value;
+        [stmt_out] liveout: {id[v22], row#value[v32], row#id[v31]}
+        [stmt_in] livein: {id[v22], row#value[v32], row#id[v31]}
+      #tmp3[v34] = row#value[v32] + 1;
+        [stmt_out] liveout: {#tmp3[v34], id[v22], row#id[v31]}
+        [stmt_in] livein: {#tmp3[v34], id[v22], row#id[v31]}
+      row#value[v32] = #tmp3[v34];
+        [stmt_out] liveout: {row#value[v32], row#id[v31], id[v22]}
+        [stmt_in] livein: {row#value[v32], row#id[v31], id[v22]}
+      SITable[id[v22]].id = row#id[v31];
+        [stmt_out] liveout: {id[v22], row#value[v32]}
+        [stmt_in] livein: {id[v22], row#value[v32]}
+      SITable[id[v22]].value = row#value[v32];
         [stmt_out] liveout: {}
       return;
       liveout: {}

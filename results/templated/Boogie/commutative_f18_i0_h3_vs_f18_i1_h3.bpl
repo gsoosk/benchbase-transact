@@ -62,13 +62,13 @@ axiom (forall
     <==>
     (T_ID_1 == T_ID_2 && T_INT_VAL_1 == T_INT_VAL_2 && T_FLOAT_VAL_1 == T_FLOAT_VAL_2 && T_STRING_VAL_1 == T_STRING_VAL_2)
 );
-var TEMPLATED_TABLE_T_ID : [int]int;
-const __shards__ : int;
-var TEMPLATED_TABLE_T_STRING_VAL : [int]String;
 const __slice__ : int;
 var TEMPLATED_TABLE_T_FLOAT_VAL : [int]real;
+var TEMPLATED_TABLE_T_STRING_VAL : [int]String;
+const __shards__ : int;
 var TEMPLATED_TABLE_T_INT_VAL : [int]int;
 const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
+var TEMPLATED_TABLE_T_ID : [int]int;
 procedure Check_SliceCommut_Hop3_vs_Hop3()
 modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_INT_VAL, TEMPLATED_TABLE_T_STRING_VAL;
 {

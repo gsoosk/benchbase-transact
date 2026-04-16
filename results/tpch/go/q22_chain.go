@@ -19,9 +19,31 @@ func Q22Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var custkey uint64
+	var c_c_phone string
+	var c_c_acctbal float32
+	var acctbal float32
+	var _tmp117 Unit
+	var phone string
+	var _tmp118 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+
+	custkey = toUint64(params["custkey"])
+
 	goto BB41
 
 BB41:
+	// Combined table access: Customer (2 operations)
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{c_custkey: custkey})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	c_c_acctbal = row1.c_acctbal
+	c_c_phone = row1.c_phone
+	acctbal = c_c_acctbal
+	_ = acctbal
+	phone = c_c_phone
+	_ = phone
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +56,25 @@ func Q22Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var orderkey uint64
+	var o Orders
+	var _tmp119 Orders
+	var _tmp120 Unit
+
+	var keyBytes1 []byte
+	var row1 Orders
+
+	orderkey = toUint64(params["orderkey"])
+
 	goto BB42
 
 BB42:
+	// TableGet: Orders
+	keyBytes1, row1 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes1)
+	_tmp119 = row1
+	o = _tmp119
+	_ = o
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +85,19 @@ BB42:
 
 // Q22Hop0Par calculates the partition for hop 0 without database access.
 func Q22Hop0Par(params map[string]string) uint64 {
+	var custkey uint64
+	var c_c_phone string
+	var c_c_acctbal float32
+	var acctbal float32
+	var _tmp117 Unit
+	var phone string
+	var _tmp118 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+
+	custkey = toUint64(params["custkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +106,32 @@ func Q22Hop0Par(params map[string]string) uint64 {
 	goto BB41
 
 BB41:
+	// First table access (optimized group) - calculate partition: Customer
+	if true { return getCustomerPar(CustomerKey{c_custkey: custkey}) }
+	// Combined table access: Customer (2 operations)
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{c_custkey: custkey})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	c_c_acctbal = row1.c_acctbal
+	c_c_phone = row1.c_phone
+	acctbal = c_c_acctbal
+	_ = acctbal
+	phone = c_c_phone
+	_ = phone
 	panic("unexpected hop exit in partition")
 }
 
 // Q22Hop1Par calculates the partition for hop 1 without database access.
 func Q22Hop1Par(params map[string]string) uint64 {
+	var orderkey uint64
+	var o Orders
+	var _tmp119 Orders
+	var _tmp120 Unit
+
+	var keyBytes1 []byte
+	var row1 Orders
+
+	orderkey = toUint64(params["orderkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +140,14 @@ func Q22Hop1Par(params map[string]string) uint64 {
 	goto BB42
 
 BB42:
+	// First table access - calculate partition: Orders
+	if true { return getOrdersPar(OrdersKey{o_orderkey: orderkey}) }
+	// TableGet: Orders
+	keyBytes1, row1 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes1)
+	_tmp119 = row1
+	o = _tmp119
+	_ = o
 	return 0
 }
 

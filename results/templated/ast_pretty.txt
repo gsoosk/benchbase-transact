@@ -281,6 +281,7 @@ transaction GenericRead[f46](key[p78]: int[t1]) : (t1) -> t0
   hop
   {
     let r[v0]: Row<TEMPLATED_TABLE>[t6<tab<TEMPLATED_TABLE>>] = TEMPLATED_TABLE[t7<tab<TEMPLATED_TABLE>>][itab0][tab0][T_ID: key[t1][p78]][t6<tab<TEMPLATED_TABLE>>];
+    to_unit[(infer1) -> t10][f43][f43](r[t6<tab<TEMPLATED_TABLE>>][v0])[t10];
   }
 }
 

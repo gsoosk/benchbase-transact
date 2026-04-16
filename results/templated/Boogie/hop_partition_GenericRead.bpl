@@ -62,17 +62,25 @@ axiom (forall
     <==>
     (T_ID_1 == T_ID_2 && T_INT_VAL_1 == T_INT_VAL_2 && T_FLOAT_VAL_1 == T_FLOAT_VAL_2 && T_STRING_VAL_1 == T_STRING_VAL_2)
 );
+const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
 var TEMPLATED_TABLE_T_ID : [int]int;
+var TEMPLATED_TABLE_T_STRING_VAL : [int]String;
+var TEMPLATED_TABLE_T_INT_VAL : [int]int;
 var TEMPLATED_TABLE_T_FLOAT_VAL : [int]real;
 const __slice__ : int;
-const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
 const __shards__ : int;
-var TEMPLATED_TABLE_T_INT_VAL : [int]int;
-var TEMPLATED_TABLE_T_STRING_VAL : [int]String;
 procedure verify_hop_partitions_GenericRead(key: int)
 {
+  var s1_#tmp1 : Row (Table (TEMPLATED_TABLE));
+  var s1_key : int;
+  var s1_r : Row (Table (TEMPLATED_TABLE));
+  var s1_#tmp2 : unit;
+
   // Hop partition verification for function 'GenericRead'
   s1_block1:
+    s1_#tmp1 := construct_Row_TEMPLATED_TABLE(TEMPLATED_TABLE_T_ID[s1_key], TEMPLATED_TABLE_T_INT_VAL[s1_key], TEMPLATED_TABLE_T_FLOAT_VAL[s1_key], TEMPLATED_TABLE_T_STRING_VAL[s1_key]);
+    s1_r := s1_#tmp1;
+    s1_#tmp2 := to_unit(s1_r);
     goto s1_epilogue;
   s1_hop_exit:
   s1_epilogue:

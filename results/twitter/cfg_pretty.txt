@@ -142,17 +142,20 @@ transaction GetFollowers[fn16](uid[v21]: int, follower_uid[v22]: int)
     entry_block: bb1
     bb1:
       livein: {follower_uid[v22], uid[v21]}
-        [stmt_in] livein: {uid[v21], follower_uid[v22]}
-      #tmp0[v46] = FOLLOWERS[uid[v21], follower_uid[v22]];
-        [stmt_out] liveout: {uid[v21], #tmp0[v46], follower_uid[v22]}
-        [stmt_in] livein: {uid[v21], #tmp0[v46], follower_uid[v22]}
-      f[v43] = #tmp0[v46];
-        [stmt_out] liveout: {uid[v21], follower_uid[v22]}
-        [stmt_in] livein: {uid[v21], follower_uid[v22]}
-      f#f1[v44] = FOLLOWERS[uid[v21], follower_uid[v22]].f1;
-        [stmt_out] liveout: {follower_uid[v22], uid[v21]}
         [stmt_in] livein: {follower_uid[v22], uid[v21]}
+      #tmp0[v46] = FOLLOWERS[uid[v21], follower_uid[v22]];
+        [stmt_out] liveout: {#tmp0[v46], uid[v21], follower_uid[v22]}
+        [stmt_in] livein: {#tmp0[v46], uid[v21], follower_uid[v22]}
+      f[v43] = #tmp0[v46];
+        [stmt_out] liveout: {follower_uid[v22], f[v43], uid[v21]}
+        [stmt_in] livein: {follower_uid[v22], f[v43], uid[v21]}
+      f#f1[v44] = FOLLOWERS[uid[v21], follower_uid[v22]].f1;
+        [stmt_out] liveout: {f[v43], follower_uid[v22], uid[v21]}
+        [stmt_in] livein: {f[v43], follower_uid[v22], uid[v21]}
       f#f2[v45] = FOLLOWERS[uid[v21], follower_uid[v22]].f2;
+        [stmt_out] liveout: {f[v43], follower_uid[v22]}
+        [stmt_in] livein: {f[v43], follower_uid[v22]}
+      #tmp1[v47] = to_unit[fn13](f[v43]);
         [stmt_out] liveout: {follower_uid[v22]}
       hop_exit hop2;
       liveout: {follower_uid[v22]}
@@ -163,19 +166,22 @@ transaction GetFollowers[fn16](uid[v21]: int, follower_uid[v22]: int)
     bb2 (preds: bb1):
       livein: {follower_uid[v22]}
         [stmt_in] livein: {follower_uid[v22]}
-      #tmp1[v50] = USER[follower_uid[v22]];
-        [stmt_out] liveout: {#tmp1[v50], follower_uid[v22]}
-        [stmt_in] livein: {#tmp1[v50], follower_uid[v22]}
-      u[v47] = #tmp1[v50];
+      #tmp2[v51] = USER[follower_uid[v22]];
+        [stmt_out] liveout: {#tmp2[v51], follower_uid[v22]}
+        [stmt_in] livein: {#tmp2[v51], follower_uid[v22]}
+      u[v48] = #tmp2[v51];
         [stmt_out] liveout: {follower_uid[v22]}
         [stmt_in] livein: {follower_uid[v22]}
-      u#name[v49] = USER[follower_uid[v22]].name;
-        [stmt_out] liveout: {follower_uid[v22], u#name[v49]}
-        [stmt_in] livein: {follower_uid[v22], u#name[v49]}
-      u#uid[v48] = USER[follower_uid[v22]].uid;
-        [stmt_out] liveout: {u#name[v49]}
-        [stmt_in] livein: {u#name[v49]}
-      uname[v51] = u#name[v49];
+      u#name[v50] = USER[follower_uid[v22]].name;
+        [stmt_out] liveout: {u#name[v50], follower_uid[v22]}
+        [stmt_in] livein: {u#name[v50], follower_uid[v22]}
+      u#uid[v49] = USER[follower_uid[v22]].uid;
+        [stmt_out] liveout: {u#name[v50]}
+        [stmt_in] livein: {u#name[v50]}
+      uname[v52] = u#name[v50];
+        [stmt_out] liveout: {uname[v52]}
+        [stmt_in] livein: {uname[v52]}
+      #tmp3[v53] = to_unit[fn13](uname[v52]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -191,26 +197,29 @@ transaction GetTweet[fn17](author_uid[v23]: int, tweet_id[v24]: int)
     entry_block: bb3
     bb3:
       livein: {tweet_id[v24], author_uid[v23]}
-        [stmt_in] livein: {author_uid[v23], tweet_id[v24]}
-      #tmp2[v57] = TWEETS[author_uid[v23], tweet_id[v24]];
-        [stmt_out] liveout: {#tmp2[v57], tweet_id[v24], author_uid[v23]}
-        [stmt_in] livein: {#tmp2[v57], tweet_id[v24], author_uid[v23]}
-      t[v52] = #tmp2[v57];
+        [stmt_in] livein: {tweet_id[v24], author_uid[v23]}
+      #tmp4[v59] = TWEETS[author_uid[v23], tweet_id[v24]];
+        [stmt_out] liveout: {author_uid[v23], #tmp4[v59], tweet_id[v24]}
+        [stmt_in] livein: {author_uid[v23], #tmp4[v59], tweet_id[v24]}
+      t[v54] = #tmp4[v59];
         [stmt_out] liveout: {tweet_id[v24], author_uid[v23]}
         [stmt_in] livein: {tweet_id[v24], author_uid[v23]}
-      t#createdate[v56] = TWEETS[author_uid[v23], tweet_id[v24]].createdate;
+      t#createdate[v58] = TWEETS[author_uid[v23], tweet_id[v24]].createdate;
         [stmt_out] liveout: {author_uid[v23], tweet_id[v24]}
         [stmt_in] livein: {author_uid[v23], tweet_id[v24]}
-      t#id[v54] = TWEETS[author_uid[v23], tweet_id[v24]].id;
+      t#id[v56] = TWEETS[author_uid[v23], tweet_id[v24]].id;
         [stmt_out] liveout: {tweet_id[v24], author_uid[v23]}
         [stmt_in] livein: {tweet_id[v24], author_uid[v23]}
-      t#text[v55] = TWEETS[author_uid[v23], tweet_id[v24]].text;
-        [stmt_out] liveout: {tweet_id[v24], author_uid[v23], t#text[v55]}
-        [stmt_in] livein: {tweet_id[v24], author_uid[v23], t#text[v55]}
-      t#uid[v53] = TWEETS[author_uid[v23], tweet_id[v24]].uid;
-        [stmt_out] liveout: {t#text[v55]}
-        [stmt_in] livein: {t#text[v55]}
-      txt[v58] = t#text[v55];
+      t#text[v57] = TWEETS[author_uid[v23], tweet_id[v24]].text;
+        [stmt_out] liveout: {t#text[v57], author_uid[v23], tweet_id[v24]}
+        [stmt_in] livein: {t#text[v57], author_uid[v23], tweet_id[v24]}
+      t#uid[v55] = TWEETS[author_uid[v23], tweet_id[v24]].uid;
+        [stmt_out] liveout: {t#text[v57]}
+        [stmt_in] livein: {t#text[v57]}
+      txt[v60] = t#text[v57];
+        [stmt_out] liveout: {txt[v60]}
+        [stmt_in] livein: {txt[v60]}
+      #tmp5[v61] = to_unit[fn13](txt[v60]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -225,19 +234,22 @@ transaction GetTweetsFromFollowing[fn18](uid[v25]: int, followed_uid[v26]: int, 
   hop4 {
     entry_block: bb4
     bb4:
-      livein: {followed_uid[v26], uid[v25], tweet_id[v27]}
+      livein: {uid[v25], followed_uid[v26], tweet_id[v27]}
         [stmt_in] livein: {tweet_id[v27], followed_uid[v26], uid[v25]}
-      #tmp3[v62] = FOLLOWS[uid[v25], followed_uid[v26]];
-        [stmt_out] liveout: {followed_uid[v26], #tmp3[v62], tweet_id[v27], uid[v25]}
-        [stmt_in] livein: {followed_uid[v26], #tmp3[v62], tweet_id[v27], uid[v25]}
-      f[v59] = #tmp3[v62];
-        [stmt_out] liveout: {tweet_id[v27], followed_uid[v26], uid[v25]}
-        [stmt_in] livein: {tweet_id[v27], followed_uid[v26], uid[v25]}
-      f#f1[v60] = FOLLOWS[uid[v25], followed_uid[v26]].f1;
-        [stmt_out] liveout: {tweet_id[v27], uid[v25], followed_uid[v26]}
-        [stmt_in] livein: {tweet_id[v27], uid[v25], followed_uid[v26]}
-      f#f2[v61] = FOLLOWS[uid[v25], followed_uid[v26]].f2;
-        [stmt_out] liveout: {followed_uid[v26], tweet_id[v27]}
+      #tmp6[v65] = FOLLOWS[uid[v25], followed_uid[v26]];
+        [stmt_out] liveout: {tweet_id[v27], #tmp6[v65], followed_uid[v26], uid[v25]}
+        [stmt_in] livein: {tweet_id[v27], #tmp6[v65], followed_uid[v26], uid[v25]}
+      f[v62] = #tmp6[v65];
+        [stmt_out] liveout: {followed_uid[v26], f[v62], tweet_id[v27], uid[v25]}
+        [stmt_in] livein: {followed_uid[v26], f[v62], tweet_id[v27], uid[v25]}
+      f#f1[v63] = FOLLOWS[uid[v25], followed_uid[v26]].f1;
+        [stmt_out] liveout: {tweet_id[v27], followed_uid[v26], f[v62], uid[v25]}
+        [stmt_in] livein: {tweet_id[v27], followed_uid[v26], f[v62], uid[v25]}
+      f#f2[v64] = FOLLOWS[uid[v25], followed_uid[v26]].f2;
+        [stmt_out] liveout: {f[v62], followed_uid[v26], tweet_id[v27]}
+        [stmt_in] livein: {f[v62], followed_uid[v26], tweet_id[v27]}
+      #tmp7[v66] = to_unit[fn13](f[v62]);
+        [stmt_out] liveout: {tweet_id[v27], followed_uid[v26]}
       hop_exit hop5;
       liveout: {tweet_id[v27], followed_uid[v26]}
   }
@@ -247,25 +259,28 @@ transaction GetTweetsFromFollowing[fn18](uid[v25]: int, followed_uid[v26]: int, 
     bb5 (preds: bb4):
       livein: {followed_uid[v26], tweet_id[v27]}
         [stmt_in] livein: {tweet_id[v27], followed_uid[v26]}
-      #tmp4[v68] = TWEETS[followed_uid[v26], tweet_id[v27]];
-        [stmt_out] liveout: {#tmp4[v68], tweet_id[v27], followed_uid[v26]}
-        [stmt_in] livein: {#tmp4[v68], tweet_id[v27], followed_uid[v26]}
-      t[v63] = #tmp4[v68];
+      #tmp8[v72] = TWEETS[followed_uid[v26], tweet_id[v27]];
+        [stmt_out] liveout: {#tmp8[v72], followed_uid[v26], tweet_id[v27]}
+        [stmt_in] livein: {#tmp8[v72], followed_uid[v26], tweet_id[v27]}
+      t[v67] = #tmp8[v72];
         [stmt_out] liveout: {tweet_id[v27], followed_uid[v26]}
         [stmt_in] livein: {tweet_id[v27], followed_uid[v26]}
-      t#createdate[v67] = TWEETS[followed_uid[v26], tweet_id[v27]].createdate;
-        [stmt_out] liveout: {tweet_id[v27], followed_uid[v26]}
-        [stmt_in] livein: {tweet_id[v27], followed_uid[v26]}
-      t#id[v65] = TWEETS[followed_uid[v26], tweet_id[v27]].id;
+      t#createdate[v71] = TWEETS[followed_uid[v26], tweet_id[v27]].createdate;
         [stmt_out] liveout: {followed_uid[v26], tweet_id[v27]}
         [stmt_in] livein: {followed_uid[v26], tweet_id[v27]}
-      t#text[v66] = TWEETS[followed_uid[v26], tweet_id[v27]].text;
-        [stmt_out] liveout: {followed_uid[v26], t#text[v66], tweet_id[v27]}
-        [stmt_in] livein: {followed_uid[v26], t#text[v66], tweet_id[v27]}
-      t#uid[v64] = TWEETS[followed_uid[v26], tweet_id[v27]].uid;
-        [stmt_out] liveout: {t#text[v66]}
-        [stmt_in] livein: {t#text[v66]}
-      txt[v69] = t#text[v66];
+      t#id[v69] = TWEETS[followed_uid[v26], tweet_id[v27]].id;
+        [stmt_out] liveout: {tweet_id[v27], followed_uid[v26]}
+        [stmt_in] livein: {tweet_id[v27], followed_uid[v26]}
+      t#text[v70] = TWEETS[followed_uid[v26], tweet_id[v27]].text;
+        [stmt_out] liveout: {followed_uid[v26], t#text[v70], tweet_id[v27]}
+        [stmt_in] livein: {followed_uid[v26], t#text[v70], tweet_id[v27]}
+      t#uid[v68] = TWEETS[followed_uid[v26], tweet_id[v27]].uid;
+        [stmt_out] liveout: {t#text[v70]}
+        [stmt_in] livein: {t#text[v70]}
+      txt[v73] = t#text[v70];
+        [stmt_out] liveout: {txt[v73]}
+        [stmt_in] livein: {txt[v73]}
+      #tmp9[v74] = to_unit[fn13](txt[v73]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -281,26 +296,29 @@ transaction GetUserTweets[fn19](uid[v28]: int, tweet_id[v29]: int)
     entry_block: bb6
     bb6:
       livein: {uid[v28], tweet_id[v29]}
-        [stmt_in] livein: {tweet_id[v29], uid[v28]}
-      #tmp5[v75] = TWEETS[uid[v28], tweet_id[v29]];
-        [stmt_out] liveout: {tweet_id[v29], #tmp5[v75], uid[v28]}
-        [stmt_in] livein: {tweet_id[v29], #tmp5[v75], uid[v28]}
-      t[v70] = #tmp5[v75];
-        [stmt_out] liveout: {uid[v28], tweet_id[v29]}
         [stmt_in] livein: {uid[v28], tweet_id[v29]}
-      t#createdate[v74] = TWEETS[uid[v28], tweet_id[v29]].createdate;
+      #tmp10[v80] = TWEETS[uid[v28], tweet_id[v29]];
+        [stmt_out] liveout: {#tmp10[v80], tweet_id[v29], uid[v28]}
+        [stmt_in] livein: {#tmp10[v80], tweet_id[v29], uid[v28]}
+      t[v75] = #tmp10[v80];
         [stmt_out] liveout: {tweet_id[v29], uid[v28]}
         [stmt_in] livein: {tweet_id[v29], uid[v28]}
-      t#id[v72] = TWEETS[uid[v28], tweet_id[v29]].id;
+      t#createdate[v79] = TWEETS[uid[v28], tweet_id[v29]].createdate;
+        [stmt_out] liveout: {tweet_id[v29], uid[v28]}
+        [stmt_in] livein: {tweet_id[v29], uid[v28]}
+      t#id[v77] = TWEETS[uid[v28], tweet_id[v29]].id;
         [stmt_out] liveout: {uid[v28], tweet_id[v29]}
         [stmt_in] livein: {uid[v28], tweet_id[v29]}
-      t#text[v73] = TWEETS[uid[v28], tweet_id[v29]].text;
-        [stmt_out] liveout: {uid[v28], t#text[v73], tweet_id[v29]}
-        [stmt_in] livein: {uid[v28], t#text[v73], tweet_id[v29]}
-      t#uid[v71] = TWEETS[uid[v28], tweet_id[v29]].uid;
-        [stmt_out] liveout: {t#text[v73]}
-        [stmt_in] livein: {t#text[v73]}
-      txt[v76] = t#text[v73];
+      t#text[v78] = TWEETS[uid[v28], tweet_id[v29]].text;
+        [stmt_out] liveout: {tweet_id[v29], t#text[v78], uid[v28]}
+        [stmt_in] livein: {tweet_id[v29], t#text[v78], uid[v28]}
+      t#uid[v76] = TWEETS[uid[v28], tweet_id[v29]].uid;
+        [stmt_out] liveout: {t#text[v78]}
+        [stmt_in] livein: {t#text[v78]}
+      txt[v81] = t#text[v78];
+        [stmt_out] liveout: {txt[v81]}
+        [stmt_in] livein: {txt[v81]}
+      #tmp11[v82] = to_unit[fn13](txt[v81]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -315,11 +333,11 @@ transaction InsertTweet[fn20](uid[v30]: int, tweet_id[v31]: int, text[v32]: stri
   hop7 {
     entry_block: bb7
     bb7:
-      livein: {uid[v30], tweet_id[v31], text[v32], createdate[v33]}
-        [stmt_in] livein: {text[v32], uid[v30], tweet_id[v31], createdate[v33]}
+      livein: {text[v32], tweet_id[v31], uid[v30], createdate[v33]}
+        [stmt_in] livein: {tweet_id[v31], text[v32], uid[v30], createdate[v33]}
       ADDED_TWEETS[uid[v30], tweet_id[v31]].text = text[v32];
-        [stmt_out] liveout: {uid[v30], createdate[v33], tweet_id[v31]}
-        [stmt_in] livein: {uid[v30], createdate[v33], tweet_id[v31]}
+        [stmt_out] liveout: {tweet_id[v31], createdate[v33], uid[v30]}
+        [stmt_in] livein: {tweet_id[v31], createdate[v33], uid[v30]}
       ADDED_TWEETS[uid[v30], tweet_id[v31]].createdate = createdate[v33];
         [stmt_out] liveout: {}
       return;

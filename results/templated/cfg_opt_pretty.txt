@@ -122,7 +122,16 @@ transaction GenericRead[fn16](key[v21]: int)
   hop1 {
     entry_block: bb1
     bb1:
-      livein: {}
+      livein: {key[v21]}
+        [stmt_in] livein: {key[v21]}
+      #tmp1[v38] = TEMPLATED_TABLE[key[v21]];
+        [stmt_out] liveout: {#tmp1[v38]}
+        [stmt_in] livein: {#tmp1[v38]}
+      r[v33] = #tmp1[v38];
+        [stmt_out] liveout: {r[v33]}
+        [stmt_in] livein: {r[v33]}
+      #tmp2[v39] = to_unit[fn13](r[v33]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -136,30 +145,30 @@ transaction GenericUpdate[fn17](key[v22]: int, new_string[v23]: string)
   hop2 {
     entry_block: bb2
     bb2:
-      livein: {new_string[v23], key[v22]}
+      livein: {key[v22], new_string[v23]}
         [stmt_in] livein: {key[v22], new_string[v23]}
-      r#T_FLOAT_VAL[v42] = TEMPLATED_TABLE[key[v22]].T_FLOAT_VAL;
-        [stmt_out] liveout: {new_string[v23], key[v22], r#T_FLOAT_VAL[v42]}
-        [stmt_in] livein: {new_string[v23], key[v22], r#T_FLOAT_VAL[v42]}
-      r#T_ID[v40] = TEMPLATED_TABLE[key[v22]].T_ID;
-        [stmt_out] liveout: {key[v22], r#T_ID[v40], r#T_FLOAT_VAL[v42], new_string[v23]}
-        [stmt_in] livein: {key[v22], r#T_ID[v40], r#T_FLOAT_VAL[v42], new_string[v23]}
-      r#T_INT_VAL[v41] = TEMPLATED_TABLE[key[v22]].T_INT_VAL;
-        [stmt_out] liveout: {r#T_FLOAT_VAL[v42], r#T_ID[v40], r#T_INT_VAL[v41], new_string[v23], key[v22]}
-        [stmt_in] livein: {r#T_FLOAT_VAL[v42], r#T_ID[v40], r#T_INT_VAL[v41], new_string[v23], key[v22]}
-      r#T_STRING_VAL[v43] = new_string[v23];
-        [stmt_out] liveout: {r#T_ID[v40], r#T_INT_VAL[v41], r#T_FLOAT_VAL[v42], key[v22], r#T_STRING_VAL[v43]}
-        [stmt_in] livein: {r#T_ID[v40], r#T_INT_VAL[v41], r#T_FLOAT_VAL[v42], key[v22], r#T_STRING_VAL[v43]}
-      TEMPLATED_TABLE[key[v22]].T_FLOAT_VAL = r#T_FLOAT_VAL[v42];
-        [stmt_out] liveout: {key[v22], r#T_ID[v40], r#T_STRING_VAL[v43], r#T_INT_VAL[v41]}
-        [stmt_in] livein: {key[v22], r#T_ID[v40], r#T_STRING_VAL[v43], r#T_INT_VAL[v41]}
-      TEMPLATED_TABLE[key[v22]].T_ID = r#T_ID[v40];
-        [stmt_out] liveout: {key[v22], r#T_STRING_VAL[v43], r#T_INT_VAL[v41]}
-        [stmt_in] livein: {key[v22], r#T_STRING_VAL[v43], r#T_INT_VAL[v41]}
-      TEMPLATED_TABLE[key[v22]].T_INT_VAL = r#T_INT_VAL[v41];
-        [stmt_out] liveout: {key[v22], r#T_STRING_VAL[v43]}
-        [stmt_in] livein: {key[v22], r#T_STRING_VAL[v43]}
-      TEMPLATED_TABLE[key[v22]].T_STRING_VAL = r#T_STRING_VAL[v43];
+      r#T_FLOAT_VAL[v43] = TEMPLATED_TABLE[key[v22]].T_FLOAT_VAL;
+        [stmt_out] liveout: {new_string[v23], key[v22], r#T_FLOAT_VAL[v43]}
+        [stmt_in] livein: {new_string[v23], key[v22], r#T_FLOAT_VAL[v43]}
+      r#T_ID[v41] = TEMPLATED_TABLE[key[v22]].T_ID;
+        [stmt_out] liveout: {new_string[v23], r#T_ID[v41], r#T_FLOAT_VAL[v43], key[v22]}
+        [stmt_in] livein: {new_string[v23], r#T_ID[v41], r#T_FLOAT_VAL[v43], key[v22]}
+      r#T_INT_VAL[v42] = TEMPLATED_TABLE[key[v22]].T_INT_VAL;
+        [stmt_out] liveout: {r#T_FLOAT_VAL[v43], key[v22], r#T_INT_VAL[v42], r#T_ID[v41], new_string[v23]}
+        [stmt_in] livein: {r#T_FLOAT_VAL[v43], key[v22], r#T_INT_VAL[v42], r#T_ID[v41], new_string[v23]}
+      r#T_STRING_VAL[v44] = new_string[v23];
+        [stmt_out] liveout: {r#T_ID[v41], r#T_FLOAT_VAL[v43], r#T_STRING_VAL[v44], key[v22], r#T_INT_VAL[v42]}
+        [stmt_in] livein: {r#T_ID[v41], r#T_FLOAT_VAL[v43], r#T_STRING_VAL[v44], key[v22], r#T_INT_VAL[v42]}
+      TEMPLATED_TABLE[key[v22]].T_FLOAT_VAL = r#T_FLOAT_VAL[v43];
+        [stmt_out] liveout: {r#T_ID[v41], r#T_STRING_VAL[v44], key[v22], r#T_INT_VAL[v42]}
+        [stmt_in] livein: {r#T_ID[v41], r#T_STRING_VAL[v44], key[v22], r#T_INT_VAL[v42]}
+      TEMPLATED_TABLE[key[v22]].T_ID = r#T_ID[v41];
+        [stmt_out] liveout: {key[v22], r#T_INT_VAL[v42], r#T_STRING_VAL[v44]}
+        [stmt_in] livein: {key[v22], r#T_INT_VAL[v42], r#T_STRING_VAL[v44]}
+      TEMPLATED_TABLE[key[v22]].T_INT_VAL = r#T_INT_VAL[v42];
+        [stmt_out] liveout: {key[v22], r#T_STRING_VAL[v44]}
+        [stmt_in] livein: {key[v22], r#T_STRING_VAL[v44]}
+      TEMPLATED_TABLE[key[v22]].T_STRING_VAL = r#T_STRING_VAL[v44];
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -174,14 +183,14 @@ transaction GenericInsert[fn18](key[v24]: int, int_val[v25]: int, float_val[v26]
   hop3 {
     entry_block: bb3
     bb3:
-      livein: {key[v24], float_val[v26], int_val[v25], string_val[v27]}
-        [stmt_in] livein: {key[v24], int_val[v25], float_val[v26], string_val[v27]}
+      livein: {float_val[v26], int_val[v25], string_val[v27], key[v24]}
+        [stmt_in] livein: {float_val[v26], string_val[v27], int_val[v25], key[v24]}
       TEMPLATED_TABLE[key[v24]].T_INT_VAL = int_val[v25];
         [stmt_out] liveout: {string_val[v27], float_val[v26], key[v24]}
         [stmt_in] livein: {string_val[v27], float_val[v26], key[v24]}
       TEMPLATED_TABLE[key[v24]].T_FLOAT_VAL = float_val[v26];
-        [stmt_out] liveout: {string_val[v27], key[v24]}
-        [stmt_in] livein: {string_val[v27], key[v24]}
+        [stmt_out] liveout: {key[v24], string_val[v27]}
+        [stmt_in] livein: {key[v24], string_val[v27]}
       TEMPLATED_TABLE[key[v24]].T_STRING_VAL = string_val[v27];
         [stmt_out] liveout: {}
       return;
@@ -197,36 +206,36 @@ transaction GenericReadModifyWrite[fn19](key1[v28]: int, key2[v29]: int, amount[
   hop4 {
     entry_block: bb4
     bb4:
-      livein: {amount[v30], key1[v28], key2[v29]}
-        [stmt_in] livein: {amount[v30], key2[v29], key1[v28]}
-      r1#T_FLOAT_VAL[v48] = TEMPLATED_TABLE[key1[v28]].T_FLOAT_VAL;
-        [stmt_out] liveout: {r1#T_FLOAT_VAL[v48], key2[v29], key1[v28], amount[v30]}
-        [stmt_in] livein: {r1#T_FLOAT_VAL[v48], key2[v29], key1[v28], amount[v30]}
-      r1#T_ID[v46] = TEMPLATED_TABLE[key1[v28]].T_ID;
-        [stmt_out] liveout: {key1[v28], amount[v30], r1#T_FLOAT_VAL[v48], r1#T_ID[v46], key2[v29]}
-        [stmt_in] livein: {key1[v28], amount[v30], r1#T_FLOAT_VAL[v48], r1#T_ID[v46], key2[v29]}
-      r1#T_INT_VAL[v47] = TEMPLATED_TABLE[key1[v28]].T_INT_VAL;
-        [stmt_out] liveout: {key2[v29], key1[v28], r1#T_FLOAT_VAL[v48], amount[v30], r1#T_INT_VAL[v47], r1#T_ID[v46]}
-        [stmt_in] livein: {key2[v29], key1[v28], r1#T_FLOAT_VAL[v48], amount[v30], r1#T_INT_VAL[v47], r1#T_ID[v46]}
-      r1#T_STRING_VAL[v49] = TEMPLATED_TABLE[key1[v28]].T_STRING_VAL;
-        [stmt_out] liveout: {key2[v29], r1#T_INT_VAL[v47], key1[v28], r1#T_ID[v46], r1#T_FLOAT_VAL[v48], amount[v30], r1#T_STRING_VAL[v49]}
-        [stmt_in] livein: {key2[v29], r1#T_INT_VAL[v47], key1[v28], r1#T_ID[v46], r1#T_FLOAT_VAL[v48], amount[v30], r1#T_STRING_VAL[v49]}
-      #tmp4[v51] = r1#T_FLOAT_VAL[v48] - amount[v30];
-        [stmt_out] liveout: {key2[v29], key1[v28], r1#T_INT_VAL[v47], r1#T_STRING_VAL[v49], r1#T_ID[v46], #tmp4[v51], amount[v30]}
-        [stmt_in] livein: {key2[v29], key1[v28], r1#T_INT_VAL[v47], r1#T_STRING_VAL[v49], r1#T_ID[v46], #tmp4[v51], amount[v30]}
-      r1#T_FLOAT_VAL[v48] = #tmp4[v51];
-        [stmt_out] liveout: {key2[v29], r1#T_INT_VAL[v47], r1#T_ID[v46], r1#T_STRING_VAL[v49], r1#T_FLOAT_VAL[v48], key1[v28], amount[v30]}
-        [stmt_in] livein: {key2[v29], r1#T_INT_VAL[v47], r1#T_ID[v46], r1#T_STRING_VAL[v49], r1#T_FLOAT_VAL[v48], key1[v28], amount[v30]}
-      TEMPLATED_TABLE[key1[v28]].T_FLOAT_VAL = r1#T_FLOAT_VAL[v48];
-        [stmt_out] liveout: {amount[v30], key1[v28], key2[v29], r1#T_INT_VAL[v47], r1#T_ID[v46], r1#T_STRING_VAL[v49]}
-        [stmt_in] livein: {amount[v30], key1[v28], key2[v29], r1#T_INT_VAL[v47], r1#T_ID[v46], r1#T_STRING_VAL[v49]}
-      TEMPLATED_TABLE[key1[v28]].T_ID = r1#T_ID[v46];
-        [stmt_out] liveout: {r1#T_STRING_VAL[v49], key2[v29], key1[v28], r1#T_INT_VAL[v47], amount[v30]}
-        [stmt_in] livein: {r1#T_STRING_VAL[v49], key2[v29], key1[v28], r1#T_INT_VAL[v47], amount[v30]}
-      TEMPLATED_TABLE[key1[v28]].T_INT_VAL = r1#T_INT_VAL[v47];
-        [stmt_out] liveout: {key2[v29], key1[v28], r1#T_STRING_VAL[v49], amount[v30]}
-        [stmt_in] livein: {key2[v29], key1[v28], r1#T_STRING_VAL[v49], amount[v30]}
-      TEMPLATED_TABLE[key1[v28]].T_STRING_VAL = r1#T_STRING_VAL[v49];
+      livein: {key2[v29], amount[v30], key1[v28]}
+        [stmt_in] livein: {key1[v28], key2[v29], amount[v30]}
+      r1#T_FLOAT_VAL[v49] = TEMPLATED_TABLE[key1[v28]].T_FLOAT_VAL;
+        [stmt_out] liveout: {key1[v28], r1#T_FLOAT_VAL[v49], key2[v29], amount[v30]}
+        [stmt_in] livein: {key1[v28], r1#T_FLOAT_VAL[v49], key2[v29], amount[v30]}
+      r1#T_ID[v47] = TEMPLATED_TABLE[key1[v28]].T_ID;
+        [stmt_out] liveout: {key1[v28], r1#T_FLOAT_VAL[v49], key2[v29], r1#T_ID[v47], amount[v30]}
+        [stmt_in] livein: {key1[v28], r1#T_FLOAT_VAL[v49], key2[v29], r1#T_ID[v47], amount[v30]}
+      r1#T_INT_VAL[v48] = TEMPLATED_TABLE[key1[v28]].T_INT_VAL;
+        [stmt_out] liveout: {r1#T_INT_VAL[v48], amount[v30], r1#T_ID[v47], key1[v28], r1#T_FLOAT_VAL[v49], key2[v29]}
+        [stmt_in] livein: {r1#T_INT_VAL[v48], amount[v30], r1#T_ID[v47], key1[v28], r1#T_FLOAT_VAL[v49], key2[v29]}
+      r1#T_STRING_VAL[v50] = TEMPLATED_TABLE[key1[v28]].T_STRING_VAL;
+        [stmt_out] liveout: {r1#T_ID[v47], key2[v29], r1#T_FLOAT_VAL[v49], r1#T_INT_VAL[v48], amount[v30], key1[v28], r1#T_STRING_VAL[v50]}
+        [stmt_in] livein: {r1#T_ID[v47], key2[v29], r1#T_FLOAT_VAL[v49], r1#T_INT_VAL[v48], amount[v30], key1[v28], r1#T_STRING_VAL[v50]}
+      #tmp5[v52] = r1#T_FLOAT_VAL[v49] - amount[v30];
+        [stmt_out] liveout: {r1#T_ID[v47], amount[v30], #tmp5[v52], r1#T_INT_VAL[v48], r1#T_STRING_VAL[v50], key2[v29], key1[v28]}
+        [stmt_in] livein: {r1#T_ID[v47], amount[v30], #tmp5[v52], r1#T_INT_VAL[v48], r1#T_STRING_VAL[v50], key2[v29], key1[v28]}
+      r1#T_FLOAT_VAL[v49] = #tmp5[v52];
+        [stmt_out] liveout: {r1#T_FLOAT_VAL[v49], key2[v29], key1[v28], r1#T_INT_VAL[v48], r1#T_STRING_VAL[v50], amount[v30], r1#T_ID[v47]}
+        [stmt_in] livein: {r1#T_FLOAT_VAL[v49], key2[v29], key1[v28], r1#T_INT_VAL[v48], r1#T_STRING_VAL[v50], amount[v30], r1#T_ID[v47]}
+      TEMPLATED_TABLE[key1[v28]].T_FLOAT_VAL = r1#T_FLOAT_VAL[v49];
+        [stmt_out] liveout: {amount[v30], key2[v29], key1[v28], r1#T_STRING_VAL[v50], r1#T_INT_VAL[v48], r1#T_ID[v47]}
+        [stmt_in] livein: {amount[v30], key2[v29], key1[v28], r1#T_STRING_VAL[v50], r1#T_INT_VAL[v48], r1#T_ID[v47]}
+      TEMPLATED_TABLE[key1[v28]].T_ID = r1#T_ID[v47];
+        [stmt_out] liveout: {key1[v28], amount[v30], key2[v29], r1#T_STRING_VAL[v50], r1#T_INT_VAL[v48]}
+        [stmt_in] livein: {key1[v28], amount[v30], key2[v29], r1#T_STRING_VAL[v50], r1#T_INT_VAL[v48]}
+      TEMPLATED_TABLE[key1[v28]].T_INT_VAL = r1#T_INT_VAL[v48];
+        [stmt_out] liveout: {r1#T_STRING_VAL[v50], key2[v29], amount[v30], key1[v28]}
+        [stmt_in] livein: {r1#T_STRING_VAL[v50], key2[v29], amount[v30], key1[v28]}
+      TEMPLATED_TABLE[key1[v28]].T_STRING_VAL = r1#T_STRING_VAL[v50];
         [stmt_out] liveout: {key2[v29], amount[v30]}
       hop_exit hop5;
       liveout: {key2[v29], amount[v30]}
@@ -235,36 +244,36 @@ transaction GenericReadModifyWrite[fn19](key1[v28]: int, key2[v29]: int, amount[
   hop5 {
     entry_block: bb5
     bb5 (preds: bb4):
-      livein: {amount[v30], key2[v29]}
-        [stmt_in] livein: {key2[v29], amount[v30]}
-      r2#T_FLOAT_VAL[v55] = TEMPLATED_TABLE[key2[v29]].T_FLOAT_VAL;
-        [stmt_out] liveout: {amount[v30], r2#T_FLOAT_VAL[v55], key2[v29]}
-        [stmt_in] livein: {amount[v30], r2#T_FLOAT_VAL[v55], key2[v29]}
-      r2#T_ID[v53] = TEMPLATED_TABLE[key2[v29]].T_ID;
-        [stmt_out] liveout: {r2#T_ID[v53], key2[v29], r2#T_FLOAT_VAL[v55], amount[v30]}
-        [stmt_in] livein: {r2#T_ID[v53], key2[v29], r2#T_FLOAT_VAL[v55], amount[v30]}
-      r2#T_INT_VAL[v54] = TEMPLATED_TABLE[key2[v29]].T_INT_VAL;
-        [stmt_out] liveout: {amount[v30], r2#T_ID[v53], r2#T_INT_VAL[v54], key2[v29], r2#T_FLOAT_VAL[v55]}
-        [stmt_in] livein: {amount[v30], r2#T_ID[v53], r2#T_INT_VAL[v54], key2[v29], r2#T_FLOAT_VAL[v55]}
-      r2#T_STRING_VAL[v56] = TEMPLATED_TABLE[key2[v29]].T_STRING_VAL;
-        [stmt_out] liveout: {key2[v29], amount[v30], r2#T_FLOAT_VAL[v55], r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56], r2#T_ID[v53]}
-        [stmt_in] livein: {key2[v29], amount[v30], r2#T_FLOAT_VAL[v55], r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56], r2#T_ID[v53]}
-      #tmp6[v58] = r2#T_FLOAT_VAL[v55] + amount[v30];
-        [stmt_out] liveout: {r2#T_INT_VAL[v54], #tmp6[v58], r2#T_STRING_VAL[v56], r2#T_ID[v53], key2[v29]}
-        [stmt_in] livein: {r2#T_INT_VAL[v54], #tmp6[v58], r2#T_STRING_VAL[v56], r2#T_ID[v53], key2[v29]}
-      r2#T_FLOAT_VAL[v55] = #tmp6[v58];
-        [stmt_out] liveout: {r2#T_STRING_VAL[v56], r2#T_FLOAT_VAL[v55], r2#T_ID[v53], r2#T_INT_VAL[v54], key2[v29]}
-        [stmt_in] livein: {r2#T_STRING_VAL[v56], r2#T_FLOAT_VAL[v55], r2#T_ID[v53], r2#T_INT_VAL[v54], key2[v29]}
-      TEMPLATED_TABLE[key2[v29]].T_FLOAT_VAL = r2#T_FLOAT_VAL[v55];
-        [stmt_out] liveout: {r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56], key2[v29], r2#T_ID[v53]}
-        [stmt_in] livein: {r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56], key2[v29], r2#T_ID[v53]}
-      TEMPLATED_TABLE[key2[v29]].T_ID = r2#T_ID[v53];
-        [stmt_out] liveout: {key2[v29], r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56]}
-        [stmt_in] livein: {key2[v29], r2#T_INT_VAL[v54], r2#T_STRING_VAL[v56]}
-      TEMPLATED_TABLE[key2[v29]].T_INT_VAL = r2#T_INT_VAL[v54];
-        [stmt_out] liveout: {key2[v29], r2#T_STRING_VAL[v56]}
-        [stmt_in] livein: {key2[v29], r2#T_STRING_VAL[v56]}
-      TEMPLATED_TABLE[key2[v29]].T_STRING_VAL = r2#T_STRING_VAL[v56];
+      livein: {key2[v29], amount[v30]}
+        [stmt_in] livein: {amount[v30], key2[v29]}
+      r2#T_FLOAT_VAL[v56] = TEMPLATED_TABLE[key2[v29]].T_FLOAT_VAL;
+        [stmt_out] liveout: {key2[v29], amount[v30], r2#T_FLOAT_VAL[v56]}
+        [stmt_in] livein: {key2[v29], amount[v30], r2#T_FLOAT_VAL[v56]}
+      r2#T_ID[v54] = TEMPLATED_TABLE[key2[v29]].T_ID;
+        [stmt_out] liveout: {amount[v30], r2#T_ID[v54], r2#T_FLOAT_VAL[v56], key2[v29]}
+        [stmt_in] livein: {amount[v30], r2#T_ID[v54], r2#T_FLOAT_VAL[v56], key2[v29]}
+      r2#T_INT_VAL[v55] = TEMPLATED_TABLE[key2[v29]].T_INT_VAL;
+        [stmt_out] liveout: {amount[v30], key2[v29], r2#T_ID[v54], r2#T_FLOAT_VAL[v56], r2#T_INT_VAL[v55]}
+        [stmt_in] livein: {amount[v30], key2[v29], r2#T_ID[v54], r2#T_FLOAT_VAL[v56], r2#T_INT_VAL[v55]}
+      r2#T_STRING_VAL[v57] = TEMPLATED_TABLE[key2[v29]].T_STRING_VAL;
+        [stmt_out] liveout: {key2[v29], r2#T_FLOAT_VAL[v56], amount[v30], r2#T_ID[v54], r2#T_INT_VAL[v55], r2#T_STRING_VAL[v57]}
+        [stmt_in] livein: {key2[v29], r2#T_FLOAT_VAL[v56], amount[v30], r2#T_ID[v54], r2#T_INT_VAL[v55], r2#T_STRING_VAL[v57]}
+      #tmp7[v59] = r2#T_FLOAT_VAL[v56] + amount[v30];
+        [stmt_out] liveout: {key2[v29], #tmp7[v59], r2#T_ID[v54], r2#T_STRING_VAL[v57], r2#T_INT_VAL[v55]}
+        [stmt_in] livein: {key2[v29], #tmp7[v59], r2#T_ID[v54], r2#T_STRING_VAL[v57], r2#T_INT_VAL[v55]}
+      r2#T_FLOAT_VAL[v56] = #tmp7[v59];
+        [stmt_out] liveout: {r2#T_STRING_VAL[v57], r2#T_FLOAT_VAL[v56], r2#T_ID[v54], r2#T_INT_VAL[v55], key2[v29]}
+        [stmt_in] livein: {r2#T_STRING_VAL[v57], r2#T_FLOAT_VAL[v56], r2#T_ID[v54], r2#T_INT_VAL[v55], key2[v29]}
+      TEMPLATED_TABLE[key2[v29]].T_FLOAT_VAL = r2#T_FLOAT_VAL[v56];
+        [stmt_out] liveout: {key2[v29], r2#T_ID[v54], r2#T_INT_VAL[v55], r2#T_STRING_VAL[v57]}
+        [stmt_in] livein: {key2[v29], r2#T_ID[v54], r2#T_INT_VAL[v55], r2#T_STRING_VAL[v57]}
+      TEMPLATED_TABLE[key2[v29]].T_ID = r2#T_ID[v54];
+        [stmt_out] liveout: {r2#T_STRING_VAL[v57], key2[v29], r2#T_INT_VAL[v55]}
+        [stmt_in] livein: {r2#T_STRING_VAL[v57], key2[v29], r2#T_INT_VAL[v55]}
+      TEMPLATED_TABLE[key2[v29]].T_INT_VAL = r2#T_INT_VAL[v55];
+        [stmt_out] liveout: {key2[v29], r2#T_STRING_VAL[v57]}
+        [stmt_in] livein: {key2[v29], r2#T_STRING_VAL[v57]}
+      TEMPLATED_TABLE[key2[v29]].T_STRING_VAL = r2#T_STRING_VAL[v57];
         [stmt_out] liveout: {}
       return;
       liveout: {}

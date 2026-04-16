@@ -62,33 +62,33 @@ axiom (forall
     <==>
     (id_1 == id_2 && value_1 == value_2)
 );
-var SITable_id : [int]int;
 const TBL_SITable : Table (SITable);
-var SITable_value : [int]int;
 const __slice__ : int;
 const __shards__ : int;
+var SITable_value : [int]int;
+var SITable_id : [int]int;
 procedure verify_hop_partitions_UpdateRecord(id: int)
 modifies SITable_id, SITable_value;
 {
   var s2_row#id : int;
   var s2_id : int;
   var s2_row#value : int;
-  var s2_#tmp2 : int;
+  var s2_#tmp3 : int;
 
   // Hop partition verification for function 'UpdateRecord'
   s2_block2:
     s2_row#id := SITable_id[s2_id];
     s2_row#value := SITable_value[s2_id];
-  // Partition check hop 2 func 'f' tables 'SITable'=>'SITable' keys [k0=id] first_span Span { start: 1609, end: 1624, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" } current_span Span { start: 1609, end: 1624, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1609) (end . 1624) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact\"))))"} (s2_id == s2_id);
-    s2_#tmp2 := s2_row#value + 1;
-    s2_row#value := s2_#tmp2;
+  // Partition check hop 2 func 'f' tables 'SITable'=>'SITable' keys [k0=id] first_span Span { start: 1629, end: 1644, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" } current_span Span { start: 1629, end: 1644, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1629) (end . 1644) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact\"))))"} (s2_id == s2_id);
+    s2_#tmp3 := s2_row#value + 1;
+    s2_row#value := s2_#tmp3;
     SITable_id := SITable_id[s2_id := s2_row#id];
-  // Partition check hop 2 func 'f' tables 'SITable'=>'SITable' keys [k0=id] first_span Span { start: 1609, end: 1624, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" } current_span Span { start: 1669, end: 1690, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1669) (end . 1690) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact\"))))"} (s2_id == s2_id);
+  // Partition check hop 2 func 'f' tables 'SITable'=>'SITable' keys [k0=id] first_span Span { start: 1629, end: 1644, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" } current_span Span { start: 1689, end: 1710, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1689) (end . 1710) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact\"))))"} (s2_id == s2_id);
     SITable_value := SITable_value[s2_id := s2_row#value];
-  // Partition check hop 2 func 'f' tables 'SITable'=>'SITable' keys [k0=id] first_span Span { start: 1609, end: 1624, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" } current_span Span { start: 1669, end: 1690, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1669) (end . 1690) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact\"))))"} (s2_id == s2_id);
+  // Partition check hop 2 func 'f' tables 'SITable'=>'SITable' keys [k0=id] first_span Span { start: 1629, end: 1644, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" } current_span Span { start: 1689, end: 1710, filename: "/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 17) (hop_id . 2) (table_id . 0) (span ((start . 1689) (end . 1710) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/sibench.transact\"))))"} (s2_id == s2_id);
     goto s2_epilogue;
   s2_hop_exit:
   s2_epilogue:

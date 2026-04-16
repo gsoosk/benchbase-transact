@@ -19,9 +19,38 @@ func Q12Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var item_sk uint64
+	var order_num uint64
+	var ws_ws_ext_sales_price float32
+	var i Item
+	var _tmp16 Item
+	var _tmp17 Unit
+	var revenue float32
+	var _tmp18 Unit
+
+	var keyBytes1 []byte
+	var row1 WebSales
+	var keyBytes2 []byte
+	var row2 Item
+
+	item_sk = toUint64(params["item_sk"])
+	order_num = toUint64(params["order_num"])
+
 	goto BB10
 
 BB10:
+	// TableGet: WebSales
+	keyBytes1, row1 = getWebSales(tx, WebSalesKey{ws_item_sk: item_sk, ws_order_number: order_num})
+	rwSet = AddRWSet(rwSet, "WebSales", keyBytes1)
+	ws_ws_ext_sales_price = row1.ws_ext_sales_price
+	// TableGet: Item
+	keyBytes2, row2 = getItem(tx, ItemKey{i_item_sk: item_sk})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes2)
+	_tmp16 = row2
+	i = _tmp16
+	_ = i
+	revenue = ws_ws_ext_sales_price
+	_ = revenue
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +63,25 @@ func Q12Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var date_sk uint64
+	var d_d_year uint64
+	var yr uint64
+	var _tmp20 Unit
+
+	var keyBytes1 []byte
+	var row1 DateDim
+
+	date_sk = toUint64(params["date_sk"])
+
 	goto BB11
 
 BB11:
+	// TableGet: DateDim
+	keyBytes1, row1 = getDateDim(tx, DateDimKey{d_date_sk: date_sk})
+	rwSet = AddRWSet(rwSet, "DateDim", keyBytes1)
+	d_d_year = row1.d_year
+	yr = d_d_year
+	_ = yr
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +92,23 @@ BB11:
 
 // Q12Hop0Par calculates the partition for hop 0 without database access.
 func Q12Hop0Par(params map[string]string) uint64 {
+	var item_sk uint64
+	var order_num uint64
+	var ws_ws_ext_sales_price float32
+	var i Item
+	var _tmp16 Item
+	var _tmp17 Unit
+	var revenue float32
+	var _tmp18 Unit
+
+	var keyBytes1 []byte
+	var row1 WebSales
+	var keyBytes2 []byte
+	var row2 Item
+
+	item_sk = toUint64(params["item_sk"])
+	order_num = toUint64(params["order_num"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +117,37 @@ func Q12Hop0Par(params map[string]string) uint64 {
 	goto BB10
 
 BB10:
+	// First table access - calculate partition: WebSales
+	if true { return getWebSalesPar(WebSalesKey{ws_item_sk: item_sk, ws_order_number: order_num}) }
+	// TableGet: WebSales
+	keyBytes1, row1 = getWebSales(tx, WebSalesKey{ws_item_sk: item_sk, ws_order_number: order_num})
+	rwSet = AddRWSet(rwSet, "WebSales", keyBytes1)
+	ws_ws_ext_sales_price = row1.ws_ext_sales_price
+	// First table access - calculate partition: Item
+	if true { return getItemPar(ItemKey{i_item_sk: item_sk}) }
+	// TableGet: Item
+	keyBytes2, row2 = getItem(tx, ItemKey{i_item_sk: item_sk})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes2)
+	_tmp16 = row2
+	i = _tmp16
+	_ = i
+	revenue = ws_ws_ext_sales_price
+	_ = revenue
 	panic("unexpected hop exit in partition")
 }
 
 // Q12Hop1Par calculates the partition for hop 1 without database access.
 func Q12Hop1Par(params map[string]string) uint64 {
+	var date_sk uint64
+	var d_d_year uint64
+	var yr uint64
+	var _tmp20 Unit
+
+	var keyBytes1 []byte
+	var row1 DateDim
+
+	date_sk = toUint64(params["date_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +156,14 @@ func Q12Hop1Par(params map[string]string) uint64 {
 	goto BB11
 
 BB11:
+	// First table access - calculate partition: DateDim
+	if true { return getDateDimPar(DateDimKey{d_date_sk: date_sk}) }
+	// TableGet: DateDim
+	keyBytes1, row1 = getDateDim(tx, DateDimKey{d_date_sk: date_sk})
+	rwSet = AddRWSet(rwSet, "DateDim", keyBytes1)
+	d_d_year = row1.d_year
+	yr = d_d_year
+	_ = yr
 	return 0
 }
 

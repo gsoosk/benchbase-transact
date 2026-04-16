@@ -280,6 +280,7 @@ transaction MinRecord[f46](representative_id[p78]: int[t1]) : (t1) -> t0
   {
     let r[v0]: Row<SITable>[t6<tab<SITable>>] = SITable[t7<tab<SITable>>][itab0][tab0][id: representative_id[t1][p78]][t6<tab<SITable>>];
     let v[v1]: int[t1] = r[t6<tab<SITable>>][v0].value[field1][t1];
+    to_unit[(infer2) -> t10][f43][f43](v[t1][v1])[t10];
   }
 }
 

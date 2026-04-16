@@ -19,9 +19,27 @@ func GetitemaverageratingHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, err
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var iid uint64
+	var reviewer_uid uint64
+	var r_rating uint64
+	var rating uint64
+	var _tmp5 Unit
+
+	var keyBytes1 []byte
+	var row1 Review
+
+	iid = toUint64(params["iid"])
+	reviewer_uid = toUint64(params["reviewer_uid"])
+
 	goto BB4
 
 BB4:
+	// TableGet: Review
+	keyBytes1, row1 = getReview(tx, ReviewKey{u_id: reviewer_uid, i_id: iid})
+	rwSet = AddRWSet(rwSet, "Review", keyBytes1)
+	r_rating = row1.rating
+	rating = r_rating
+	_ = rating
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +50,18 @@ BB4:
 
 // GetitemaverageratingHop0Par calculates the partition for hop 0 without database access.
 func GetitemaverageratingHop0Par(params map[string]string) uint64 {
+	var iid uint64
+	var reviewer_uid uint64
+	var r_rating uint64
+	var rating uint64
+	var _tmp5 Unit
+
+	var keyBytes1 []byte
+	var row1 Review
+
+	iid = toUint64(params["iid"])
+	reviewer_uid = toUint64(params["reviewer_uid"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +70,14 @@ func GetitemaverageratingHop0Par(params map[string]string) uint64 {
 	goto BB4
 
 BB4:
+	// First table access - calculate partition: Review
+	if true { return getReviewPar(ReviewKey{u_id: reviewer_uid, i_id: iid}) }
+	// TableGet: Review
+	keyBytes1, row1 = getReview(tx, ReviewKey{u_id: reviewer_uid, i_id: iid})
+	rwSet = AddRWSet(rwSet, "Review", keyBytes1)
+	r_rating = row1.rating
+	rating = r_rating
+	_ = rating
 	return 0
 }
 

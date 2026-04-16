@@ -19,9 +19,45 @@ func BalanceHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var custId uint64
+	var a Accounts
+	var _tmp5 Accounts
+	var _tmp6 Unit
+	var s_bal float32
+	var c_bal float32
+	var total float32
+	var _tmp9 float32
+	var _tmp10 Unit
+
+	var keyBytes1 []byte
+	var row1 Accounts
+	var keyBytes2 []byte
+	var row2 Savings
+	var keyBytes3 []byte
+	var row3 Checking
+
+	custId = toUint64(params["custId"])
+
 	goto BB3
 
 BB3:
+	// TableGet: Accounts
+	keyBytes1, row1 = getAccounts(tx, AccountsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Accounts", keyBytes1)
+	_tmp5 = row1
+	a = _tmp5
+	_ = a
+	// TableGet: Savings
+	keyBytes2, row2 = getSavings(tx, SavingsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Savings", keyBytes2)
+	s_bal = row2.bal
+	// TableGet: Checking
+	keyBytes3, row3 = getChecking(tx, CheckingKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Checking", keyBytes3)
+	c_bal = row3.bal
+	_tmp9 = s_bal + c_bal
+	total = _tmp9
+	_ = total
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +68,25 @@ BB3:
 
 // BalanceHop0Par calculates the partition for hop 0 without database access.
 func BalanceHop0Par(params map[string]string) uint64 {
+	var custId uint64
+	var a Accounts
+	var _tmp5 Accounts
+	var _tmp6 Unit
+	var s_bal float32
+	var c_bal float32
+	var total float32
+	var _tmp9 float32
+	var _tmp10 Unit
+
+	var keyBytes1 []byte
+	var row1 Accounts
+	var keyBytes2 []byte
+	var row2 Savings
+	var keyBytes3 []byte
+	var row3 Checking
+
+	custId = toUint64(params["custId"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +95,29 @@ func BalanceHop0Par(params map[string]string) uint64 {
 	goto BB3
 
 BB3:
+	// First table access - calculate partition: Accounts
+	if true { return getAccountsPar(AccountsKey{custid: custId}) }
+	// TableGet: Accounts
+	keyBytes1, row1 = getAccounts(tx, AccountsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Accounts", keyBytes1)
+	_tmp5 = row1
+	a = _tmp5
+	_ = a
+	// First table access - calculate partition: Savings
+	if true { return getSavingsPar(SavingsKey{custid: custId}) }
+	// TableGet: Savings
+	keyBytes2, row2 = getSavings(tx, SavingsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Savings", keyBytes2)
+	s_bal = row2.bal
+	// First table access - calculate partition: Checking
+	if true { return getCheckingPar(CheckingKey{custid: custId}) }
+	// TableGet: Checking
+	keyBytes3, row3 = getChecking(tx, CheckingKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Checking", keyBytes3)
+	c_bal = row3.bal
+	_tmp9 = s_bal + c_bal
+	total = _tmp9
+	_ = total
 	return 0
 }
 

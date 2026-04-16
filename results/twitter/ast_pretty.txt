@@ -307,11 +307,13 @@ transaction GetFollowers[f46](uid[p78]: int[t1], follower_uid[p79]: int[t1]) : (
   hop
   {
     let f[v0]: Row<FOLLOWERS>[t6<tab<FOLLOWERS>>] = FOLLOWERS[t7<tab<FOLLOWERS>>][itab1][tab1][f1: uid[t1][p78], f2: follower_uid[t1][p79]][t6<tab<FOLLOWERS>>];
+    to_unit[(infer1) -> t10][f43][f43](f[t6<tab<FOLLOWERS>>][v0])[t10];
   }
   hop
   {
     let u[v1]: Row<USER>[t6<tab<USER>>] = USER[t7<tab<USER>>][itab0][tab0][uid: follower_uid[t1][p79]][t6<tab<USER>>];
     let uname[v2]: string[t3] = u[t6<tab<USER>>][v1].name[field1][t3];
+    to_unit[(infer5) -> t10][f43][f43](uname[t3][v2])[t10];
   }
 }
 
@@ -321,6 +323,7 @@ transaction GetTweet[f47](author_uid[p80]: int[t1], tweet_id[p81]: int[t1]) : (t
   {
     let t[v3]: Row<TWEETS>[t6<tab<TWEETS>>] = TWEETS[t7<tab<TWEETS>>][itab3][tab3][uid: author_uid[t1][p80], id: tweet_id[t1][p81]][t6<tab<TWEETS>>];
     let txt[v4]: string[t3] = t[t6<tab<TWEETS>>][v3].text[field8][t3];
+    to_unit[(infer2) -> t10][f43][f43](txt[t3][v4])[t10];
   }
 }
 
@@ -329,11 +332,13 @@ transaction GetTweetsFromFollowing[f48](uid[p82]: int[t1], followed_uid[p83]: in
   hop
   {
     let f[v5]: Row<FOLLOWS>[t6<tab<FOLLOWS>>] = FOLLOWS[t7<tab<FOLLOWS>>][itab2][tab2][f1: uid[t1][p82], f2: followed_uid[t1][p83]][t6<tab<FOLLOWS>>];
+    to_unit[(infer1) -> t10][f43][f43](f[t6<tab<FOLLOWS>>][v5])[t10];
   }
   hop
   {
     let t[v6]: Row<TWEETS>[t6<tab<TWEETS>>] = TWEETS[t7<tab<TWEETS>>][itab3][tab3][uid: followed_uid[t1][p83], id: tweet_id[t1][p84]][t6<tab<TWEETS>>];
     let txt[v7]: string[t3] = t[t6<tab<TWEETS>>][v6].text[field8][t3];
+    to_unit[(infer5) -> t10][f43][f43](txt[t3][v7])[t10];
   }
 }
 
@@ -343,6 +348,7 @@ transaction GetUserTweets[f49](uid[p85]: int[t1], tweet_id[p86]: int[t1]) : (t1,
   {
     let t[v8]: Row<TWEETS>[t6<tab<TWEETS>>] = TWEETS[t7<tab<TWEETS>>][itab3][tab3][uid: uid[t1][p85], id: tweet_id[t1][p86]][t6<tab<TWEETS>>];
     let txt[v9]: string[t3] = t[t6<tab<TWEETS>>][v8].text[field8][t3];
+    to_unit[(infer2) -> t10][f43][f43](txt[t3][v9])[t10];
   }
 }
 

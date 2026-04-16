@@ -21,14 +21,19 @@ func TransactsavingsHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 
 	var custId uint64
 	var amount float32
+	var a Accounts
+	var _tmp19 Accounts
+	var _tmp20 Unit
 	var s_custid uint64
 	var s_bal float32
-	var _tmp18 float32
+	var _tmp22 float32
 
 	var keyBytes1 []byte
-	var row1 Savings
+	var row1 Accounts
 	var keyBytes2 []byte
 	var row2 Savings
+	var keyBytes3 []byte
+	var row3 Savings
 
 	custId = toUint64(params["custId"])
 	amount = toFloat32(params["amount"])
@@ -36,19 +41,25 @@ func TransactsavingsHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	goto BB7
 
 BB7:
-	// Combined table access: Savings (2 operations)
-	keyBytes1, row1 = getSavings(tx, SavingsKey{custid: custId})
-	rwSet = AddRWSet(rwSet, "Savings", keyBytes1)
-	s_bal = row1.bal
-	s_custid = row1.Key.custid
-	_tmp18 = s_bal - amount
-	s_bal = _tmp18
+	// TableGet: Accounts
+	keyBytes1, row1 = getAccounts(tx, AccountsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Accounts", keyBytes1)
+	_tmp19 = row1
+	a = _tmp19
+	_ = a
 	// Combined table access: Savings (2 operations)
 	keyBytes2, row2 = getSavings(tx, SavingsKey{custid: custId})
 	rwSet = AddRWSet(rwSet, "Savings", keyBytes2)
-	row2.bal = s_bal
-	row2.Key.custid = s_custid
-	putSavings(tx, SavingsKey{custid: custId}, row2)
+	s_bal = row2.bal
+	s_custid = row2.Key.custid
+	_tmp22 = s_bal - amount
+	s_bal = _tmp22
+	// Combined table access: Savings (2 operations)
+	keyBytes3, row3 = getSavings(tx, SavingsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Savings", keyBytes3)
+	row3.bal = s_bal
+	row3.Key.custid = s_custid
+	putSavings(tx, SavingsKey{custid: custId}, row3)
 	// return - no action
 	// Flush caches for tables written in this hop
 	flushSavingsCache(tx)
@@ -63,14 +74,19 @@ BB7:
 func TransactsavingsHop0Par(params map[string]string) uint64 {
 	var custId uint64
 	var amount float32
+	var a Accounts
+	var _tmp19 Accounts
+	var _tmp20 Unit
 	var s_custid uint64
 	var s_bal float32
-	var _tmp18 float32
+	var _tmp22 float32
 
 	var keyBytes1 []byte
-	var row1 Savings
+	var row1 Accounts
 	var keyBytes2 []byte
 	var row2 Savings
+	var keyBytes3 []byte
+	var row3 Savings
 
 	custId = toUint64(params["custId"])
 	amount = toFloat32(params["amount"])
@@ -83,23 +99,31 @@ func TransactsavingsHop0Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	// First table access - calculate partition: Accounts
+	if true { return getAccountsPar(AccountsKey{custid: custId}) }
+	// TableGet: Accounts
+	keyBytes1, row1 = getAccounts(tx, AccountsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Accounts", keyBytes1)
+	_tmp19 = row1
+	a = _tmp19
+	_ = a
 	// First table access (optimized group) - calculate partition: Savings
 	if true { return getSavingsPar(SavingsKey{custid: custId}) }
 	// Combined table access: Savings (2 operations)
-	keyBytes1, row1 = getSavings(tx, SavingsKey{custid: custId})
-	rwSet = AddRWSet(rwSet, "Savings", keyBytes1)
-	s_bal = row1.bal
-	s_custid = row1.Key.custid
-	_tmp18 = s_bal - amount
-	s_bal = _tmp18
+	keyBytes2, row2 = getSavings(tx, SavingsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Savings", keyBytes2)
+	s_bal = row2.bal
+	s_custid = row2.Key.custid
+	_tmp22 = s_bal - amount
+	s_bal = _tmp22
 	// First table access (optimized group) - calculate partition: Savings
 	if true { return putSavingsPar(SavingsKey{custid: custId}) }
 	// Combined table access: Savings (2 operations)
-	keyBytes2, row2 = getSavings(tx, SavingsKey{custid: custId})
-	rwSet = AddRWSet(rwSet, "Savings", keyBytes2)
-	row2.bal = s_bal
-	row2.Key.custid = s_custid
-	putSavings(tx, SavingsKey{custid: custId}, row2)
+	keyBytes3, row3 = getSavings(tx, SavingsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Savings", keyBytes3)
+	row3.bal = s_bal
+	row3.Key.custid = s_custid
+	putSavings(tx, SavingsKey{custid: custId}, row3)
 	return 0
 }
 

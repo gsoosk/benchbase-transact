@@ -19,9 +19,38 @@ func Q12Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var orderkey uint64
+	var linenumber uint64
+	var o_o_orderpriority string
+	var l_l_shipmode string
+	var mode string
+	var _tmp60 Unit
+	var priority string
+	var _tmp61 Unit
+
+	var keyBytes1 []byte
+	var row1 Orders
+	var keyBytes2 []byte
+	var row2 Lineitem
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	goto BB19
 
 BB19:
+	// TableGet: Orders
+	keyBytes1, row1 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes1)
+	o_o_orderpriority = row1.o_orderpriority
+	// TableGet: Lineitem
+	keyBytes2, row2 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes2)
+	l_l_shipmode = row2.l_shipmode
+	mode = l_l_shipmode
+	_ = mode
+	priority = o_o_orderpriority
+	_ = priority
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +61,23 @@ BB19:
 
 // Q12Hop0Par calculates the partition for hop 0 without database access.
 func Q12Hop0Par(params map[string]string) uint64 {
+	var orderkey uint64
+	var linenumber uint64
+	var o_o_orderpriority string
+	var l_l_shipmode string
+	var mode string
+	var _tmp60 Unit
+	var priority string
+	var _tmp61 Unit
+
+	var keyBytes1 []byte
+	var row1 Orders
+	var keyBytes2 []byte
+	var row2 Lineitem
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +86,22 @@ func Q12Hop0Par(params map[string]string) uint64 {
 	goto BB19
 
 BB19:
+	// First table access - calculate partition: Orders
+	if true { return getOrdersPar(OrdersKey{o_orderkey: orderkey}) }
+	// TableGet: Orders
+	keyBytes1, row1 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes1)
+	o_o_orderpriority = row1.o_orderpriority
+	// First table access - calculate partition: Lineitem
+	if true { return getLineitemPar(LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber}) }
+	// TableGet: Lineitem
+	keyBytes2, row2 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes2)
+	l_l_shipmode = row2.l_shipmode
+	mode = l_l_shipmode
+	_ = mode
+	priority = o_o_orderpriority
+	_ = priority
 	return 0
 }
 

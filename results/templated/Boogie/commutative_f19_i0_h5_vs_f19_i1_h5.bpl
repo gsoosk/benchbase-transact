@@ -62,13 +62,13 @@ axiom (forall
     <==>
     (T_ID_1 == T_ID_2 && T_INT_VAL_1 == T_INT_VAL_2 && T_FLOAT_VAL_1 == T_FLOAT_VAL_2 && T_STRING_VAL_1 == T_STRING_VAL_2)
 );
-var TEMPLATED_TABLE_T_ID : [int]int;
-const __shards__ : int;
-const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
-var TEMPLATED_TABLE_T_STRING_VAL : [int]String;
 const __slice__ : int;
+const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
 var TEMPLATED_TABLE_T_INT_VAL : [int]int;
 var TEMPLATED_TABLE_T_FLOAT_VAL : [int]real;
+var TEMPLATED_TABLE_T_ID : [int]int;
+var TEMPLATED_TABLE_T_STRING_VAL : [int]String;
+const __shards__ : int;
 procedure Check_SliceCommut_Hop5_vs_Hop5()
 modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_ID, TEMPLATED_TABLE_T_INT_VAL, TEMPLATED_TABLE_T_STRING_VAL;
 {
@@ -90,12 +90,12 @@ modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_ID, TEMPLATED_TABLE_T_IN
   var s0_r2#T_ID : int;
   var s0_r2#T_INT_VAL : int;
   var s0_r2#T_STRING_VAL : String;
-  var s0_#tmp6 : real;
+  var s0_#tmp7 : real;
   var s1_r2#T_FLOAT_VAL : real;
   var s1_r2#T_ID : int;
   var s1_r2#T_INT_VAL : int;
   var s1_r2#T_STRING_VAL : String;
-  var s1_#tmp6 : real;
+  var s1_#tmp7 : real;
   var TEMPLATED_TABLE_T_FLOAT_VAL_a_then_b : [int]real;
   var TEMPLATED_TABLE_T_ID_a_then_b : [int]int;
   var TEMPLATED_TABLE_T_INT_VAL_a_then_b : [int]int;
@@ -134,8 +134,8 @@ modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_ID, TEMPLATED_TABLE_T_IN
       s0_r2#T_ID := TEMPLATED_TABLE_T_ID[s0_key2];
       s0_r2#T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s0_key2];
       s0_r2#T_STRING_VAL := TEMPLATED_TABLE_T_STRING_VAL[s0_key2];
-      s0_#tmp6 := s0_r2#T_FLOAT_VAL + s0_amount;
-      s0_r2#T_FLOAT_VAL := s0_#tmp6;
+      s0_#tmp7 := s0_r2#T_FLOAT_VAL + s0_amount;
+      s0_r2#T_FLOAT_VAL := s0_#tmp7;
       TEMPLATED_TABLE_T_FLOAT_VAL := TEMPLATED_TABLE_T_FLOAT_VAL[s0_key2 := s0_r2#T_FLOAT_VAL];
       TEMPLATED_TABLE_T_ID := TEMPLATED_TABLE_T_ID[s0_key2 := s0_r2#T_ID];
       TEMPLATED_TABLE_T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s0_key2 := s0_r2#T_INT_VAL];
@@ -150,8 +150,8 @@ modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_ID, TEMPLATED_TABLE_T_IN
       s1_r2#T_ID := TEMPLATED_TABLE_T_ID[s1_key2];
       s1_r2#T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s1_key2];
       s1_r2#T_STRING_VAL := TEMPLATED_TABLE_T_STRING_VAL[s1_key2];
-      s1_#tmp6 := s1_r2#T_FLOAT_VAL + s1_amount;
-      s1_r2#T_FLOAT_VAL := s1_#tmp6;
+      s1_#tmp7 := s1_r2#T_FLOAT_VAL + s1_amount;
+      s1_r2#T_FLOAT_VAL := s1_#tmp7;
       TEMPLATED_TABLE_T_FLOAT_VAL := TEMPLATED_TABLE_T_FLOAT_VAL[s1_key2 := s1_r2#T_FLOAT_VAL];
       TEMPLATED_TABLE_T_ID := TEMPLATED_TABLE_T_ID[s1_key2 := s1_r2#T_ID];
       TEMPLATED_TABLE_T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s1_key2 := s1_r2#T_INT_VAL];
@@ -183,8 +183,8 @@ modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_ID, TEMPLATED_TABLE_T_IN
       s1_r2#T_ID := TEMPLATED_TABLE_T_ID[s1_key2];
       s1_r2#T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s1_key2];
       s1_r2#T_STRING_VAL := TEMPLATED_TABLE_T_STRING_VAL[s1_key2];
-      s1_#tmp6 := s1_r2#T_FLOAT_VAL + s1_amount;
-      s1_r2#T_FLOAT_VAL := s1_#tmp6;
+      s1_#tmp7 := s1_r2#T_FLOAT_VAL + s1_amount;
+      s1_r2#T_FLOAT_VAL := s1_#tmp7;
       TEMPLATED_TABLE_T_FLOAT_VAL := TEMPLATED_TABLE_T_FLOAT_VAL[s1_key2 := s1_r2#T_FLOAT_VAL];
       TEMPLATED_TABLE_T_ID := TEMPLATED_TABLE_T_ID[s1_key2 := s1_r2#T_ID];
       TEMPLATED_TABLE_T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s1_key2 := s1_r2#T_INT_VAL];
@@ -199,8 +199,8 @@ modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_ID, TEMPLATED_TABLE_T_IN
       s0_r2#T_ID := TEMPLATED_TABLE_T_ID[s0_key2];
       s0_r2#T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s0_key2];
       s0_r2#T_STRING_VAL := TEMPLATED_TABLE_T_STRING_VAL[s0_key2];
-      s0_#tmp6 := s0_r2#T_FLOAT_VAL + s0_amount;
-      s0_r2#T_FLOAT_VAL := s0_#tmp6;
+      s0_#tmp7 := s0_r2#T_FLOAT_VAL + s0_amount;
+      s0_r2#T_FLOAT_VAL := s0_#tmp7;
       TEMPLATED_TABLE_T_FLOAT_VAL := TEMPLATED_TABLE_T_FLOAT_VAL[s0_key2 := s0_r2#T_FLOAT_VAL];
       TEMPLATED_TABLE_T_ID := TEMPLATED_TABLE_T_ID[s0_key2 := s0_r2#T_ID];
       TEMPLATED_TABLE_T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s0_key2 := s0_r2#T_INT_VAL];

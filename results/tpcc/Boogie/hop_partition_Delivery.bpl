@@ -189,93 +189,93 @@ axiom (forall
     <==>
     (S_W_ID_1 == S_W_ID_2 && S_I_ID_1 == S_I_ID_2 && S_QUANTITY_1 == S_QUANTITY_2 && S_YTD_1 == S_YTD_2 && S_ORDER_CNT_1 == S_ORDER_CNT_2 && S_REMOTE_CNT_1 == S_REMOTE_CNT_2 && S_DATA_1 == S_DATA_2)
 );
+var Stock_S_YTD : [int][int]real;
+var Customer_C_DISCOUNT : [int][int][int]real;
+var Warehouse_W_STATE : [int]String;
+var Customer_C_PAYMENT_CNT : [int][int][int]real;
+var Customer_C_STREET_2 : [int][int][int]String;
+var Customer_C_ZIP : [int][int][int]String;
+var Customer_C_DATA : [int][int][int]String;
+var Item_I_IM_ID : [int][int]int;
+var Stock_S_W_ID : [int][int]int;
+const TBL_Customer : Table (Customer);
+var Stock_S_REMOTE_CNT : [int][int]int;
+var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
+var Warehouse_W_CITY : [int]String;
+var Customer_C_DELIVERY_CNT : [int][int][int]real;
+var Customer_C_YTD_PAYMENT : [int][int][int]real;
+var Order_O_CARRIER_ID : [int][int][int]int;
+var Warehouse_W_NAME : [int]String;
+var Order_O_C_ID : [int][int][int]int;
+var District_D_CITY : [int][int]String;
+const TBL_Order : Table (Order);
+var Item_I_NAME : [int][int]String;
+var Customer_C_ID : [int][int][int]int;
+var Warehouse_W_TAX : [int]real;
 var Customer_C_CREDIT_LIMIT : [int][int][int]real;
-var Item_I_ID : [int][int]int;
-var Item_I_PRICE : [int][int]real;
+var District_D_NEXT_NO_ID : [int][int]int;
+var Order_O_D_ID : [int][int][int]int;
+var Order_Line_OL_AMOUNT : [int][int][int][int]int;
+var Warehouse_W_STREET_2 : [int]String;
+var Warehouse_W_ZIP : [int]String;
+var Customer_C_W_ID : [int][int][int]int;
+var District_D_NAME : [int][int]String;
+var Warehouse_W_STREET_1 : [int]String;
+var District_D_STREET_2 : [int][int]String;
+const TBL_District : Table (District);
+var Customer_C_FIRST : [int][int][int]String;
+var New_Order_NO_O_ID : [int][int][int]int;
+var Order_O_ALL_LOCAL : [int][int][int]int;
+var Order_Line_OL_W_ID : [int][int][int][int]int;
+var Customer_C_MIDDLE : [int][int][int]String;
+var Order_Line_OL_O_ID : [int][int][int][int]int;
+var Order_O_ID : [int][int][int]int;
+var District_D_STATE : [int][int]String;
+var Order_Line_OL_D_ID : [int][int][int][int]int;
+var District_D_TAX : [int][int]real;
+var Warehouse_W_ID : [int]int;
+var Order_Line_OL_I_ID : [int][int][int][int]int;
+var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
 var Stock_S_ORDER_CNT : [int][int]int;
 var District_D_ZIP : [int][int]String;
-const __shards__ : int;
-var Stock_S_YTD : [int][int]real;
-var Warehouse_W_STREET_1 : [int]String;
-var Order_Line_OL_NUMBER : [int][int][int][int]int;
-var Customer_C_STATE : [int][int][int]String;
-const TBL_Item : Table (Item);
-var Order_Line_OL_I_ID : [int][int][int][int]int;
-var Order_Line_OL_W_ID : [int][int][int][int]int;
-var New_Order_NO_O_ID : [int][int][int]int;
-var Order_Line_OL_O_ID : [int][int][int][int]int;
-var Customer_C_W_ID : [int][int][int]int;
-var Customer_C_DELIVERY_CNT : [int][int][int]real;
-var District_D_YTD : [int][int]real;
-var Warehouse_W_ID : [int]int;
-var Customer_C_STREET_1 : [int][int][int]String;
-var Order_Line_OL_D_ID : [int][int][int][int]int;
-var Warehouse_W_NAME : [int]String;
-var Item_I_NAME : [int][int]String;
-var District_D_W_ID : [int][int]int;
-var District_D_NAME : [int][int]String;
-var Item_I_IM_ID : [int][int]int;
-var Customer_C_CREDIT : [int][int][int]String;
-var Warehouse_W_CITY : [int]String;
-var District_D_NEXT_NO_ID : [int][int]int;
-var New_Order_NO_D_ID : [int][int][int]int;
-var Order_O_C_ID : [int][int][int]int;
-var District_D_STREET_2 : [int][int]String;
-const TBL_Order : Table (Order);
-var Item_W_ID : [int][int]int;
-var Stock_S_DATA : [int][int]String;
-var Customer_C_SINCE : [int][int][int]int;
-const TBL_Customer : Table (Customer);
-var Warehouse_W_STREET_2 : [int]String;
 var Stock_S_I_ID : [int][int]int;
-var Customer_C_YTD_PAYMENT : [int][int][int]real;
-const TBL_Stock : Table (Stock);
-var Stock_S_REMOTE_CNT : [int][int]int;
-var Customer_C_ZIP : [int][int][int]String;
-var Customer_C_PAYMENT_CNT : [int][int][int]real;
-var New_Order_NO_W_ID : [int][int][int]int;
-var Order_Line_OL_AMOUNT : [int][int][int][int]int;
-var Customer_C_CITY : [int][int][int]String;
-var Customer_C_ID : [int][int][int]int;
-var Customer_C_BALANCE : [int][int][int]real;
-const __slice__ : int;
-var Warehouse_W_YTD : [int]real;
-const TBL_District : Table (District);
-const TBL_Warehouse : Table (Warehouse);
-var District_D_STATE : [int][int]String;
-var District_D_TAX : [int][int]real;
-var Customer_C_STREET_2 : [int][int][int]String;
-var District_D_STREET_1 : [int][int]String;
-var Order_O_ENTRY_DATE : [int][int][int]int;
-var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
-var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
-var Customer_C_D_ID : [int][int][int]int;
-var District_D_ID : [int][int]int;
-var Warehouse_W_STATE : [int]String;
-var Customer_C_FIRST : [int][int][int]String;
-var Warehouse_W_TAX : [int]real;
-var Customer_C_MIDDLE : [int][int][int]String;
-var Order_O_ID : [int][int][int]int;
-var Order_O_W_ID : [int][int][int]int;
-var Order_O_ALL_LOCAL : [int][int][int]int;
-var Stock_S_W_ID : [int][int]int;
-var Stock_S_QUANTITY : [int][int]int;
-var Order_O_OL_CNT : [int][int][int]int;
-var District_D_CITY : [int][int]String;
-var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
-var Customer_C_DISCOUNT : [int][int][int]real;
-var District_D_NEXT_O_ID : [int][int]int;
-var Customer_C_LAST : [int][int][int]String;
-var Customer_C_DATA : [int][int][int]String;
-var Item_I_DATA : [int][int]String;
-const TBL_New_Order : Table (New_Order);
-var Order_O_D_ID : [int][int][int]int;
-const O_OL_CNT : int;
+var Stock_S_DATA : [int][int]String;
 var Customer_C_PHONE : [int][int][int]String;
-var Order_O_CARRIER_ID : [int][int][int]int;
+var District_D_STREET_1 : [int][int]String;
+var New_Order_NO_W_ID : [int][int][int]int;
+var Order_Line_OL_NUMBER : [int][int][int][int]int;
+var Item_I_DATA : [int][int]String;
+var Customer_C_SINCE : [int][int][int]int;
+var Customer_C_CITY : [int][int][int]String;
+var District_D_YTD : [int][int]real;
+var Order_O_ENTRY_DATE : [int][int][int]int;
+const __slice__ : int;
+var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
+var Item_I_ID : [int][int]int;
+const O_OL_CNT : int;
+var Item_I_PRICE : [int][int]real;
+var Customer_C_STREET_1 : [int][int][int]String;
+var Warehouse_W_YTD : [int]real;
+var New_Order_NO_D_ID : [int][int][int]int;
+var Customer_C_D_ID : [int][int][int]int;
+var Order_O_W_ID : [int][int][int]int;
+var Customer_C_CREDIT : [int][int][int]String;
+const TBL_Item : Table (Item);
+const __shards__ : int;
+const TBL_New_Order : Table (New_Order);
+var Customer_C_BALANCE : [int][int][int]real;
+var Order_O_OL_CNT : [int][int][int]int;
+var Stock_S_QUANTITY : [int][int]int;
 const TBL_Order_Line : Table (Order_Line);
+var Item_W_ID : [int][int]int;
+const TBL_Warehouse : Table (Warehouse);
+var Customer_C_STATE : [int][int][int]String;
+var District_D_NEXT_O_ID : [int][int]int;
+var District_D_W_ID : [int][int]int;
+var Customer_C_LAST : [int][int][int]String;
 var Order_Line_OL_QUANTITY : [int][int][int][int]int;
-var Warehouse_W_ZIP : [int]String;
+var District_D_ID : [int][int]int;
+const TBL_Stock : Table (Stock);
 procedure verify_hop_partitions_Delivery(w_id: int, o_carrier_id: int, date: int)
 modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Order_Line_OL_DELIVERY_DATE, Order_O_CARRIER_ID;
 {
@@ -285,18 +285,21 @@ modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Ord
   var s28_#tmp268 : int;
   var s28_#tmp269 : int;
   var s28_c_id : int;
+  var s28_#tmp270 : int;
+  var s28_ol_cnt : int;
+  var s28_#tmp271 : unit;
   var s28_o_carrier_id : int;
-  var s28_#tmp271 : bool;
+  var s28_#tmp272 : bool;
   var s28_ol_number : int;
   var s28_date : int;
-  var s28_#tmp272 : int;
-  var s28_#tmp273 : real;
+  var s28_#tmp273 : int;
   var s28_#tmp274 : real;
+  var s28_#tmp275 : real;
   var s28_ol_total : real;
-  var s28_#tmp276 : real;
   var s28_#tmp277 : real;
   var s28_#tmp278 : real;
   var s28_#tmp279 : real;
+  var s28_#tmp280 : real;
 
   // Hop partition verification for function 'Delivery'
   s28_block82:
@@ -310,142 +313,147 @@ modifies Customer_C_BALANCE, Customer_C_DELIVERY_CNT, District_D_NEXT_NO_ID, Ord
   // Partition check hop 28 func 'g' tables 'District'=>'Order' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 7669, end: 7724, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
     assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 4) (span ((start . 7669) (end . 7724) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
     s28_c_id := s28_#tmp269;
+    s28_#tmp270 := Order_O_OL_CNT[s28_w_id][0][s28_no_o_id];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 7752, end: 7809, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 4) (span ((start . 7752) (end . 7809) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_ol_cnt := s28_#tmp270;
+    s28_#tmp271 := to_unit(s28_ol_cnt);
     Order_O_CARRIER_ID := Order_O_CARRIER_ID[s28_w_id := Order_O_CARRIER_ID[s28_w_id][0 := Order_O_CARRIER_ID[s28_w_id][0][s28_no_o_id := s28_o_carrier_id]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 7819, end: 7895, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 4) (span ((start . 7819) (end . 7895) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+  // Partition check hop 28 func 'g' tables 'District'=>'Order' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 7844, end: 7920, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 4) (span ((start . 7844) (end . 7920) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
     goto s28_block84;
   s28_block83:
-    s28_#tmp271 := s28_ol_number < O_OL_CNT;
-    if (s28_#tmp271) {
+    s28_#tmp272 := s28_ol_number < O_OL_CNT;
+    if (s28_#tmp272) {
       goto s28_block84;
     } else {
       goto s28_block86;
     }
   s28_block84:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][0 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][0];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := 0.0000000 + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][0];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := 0.0000000 + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block157;
   s28_block86:
-    s28_#tmp276 := Customer_C_BALANCE[s28_w_id][0][s28_c_id];
-  // Partition check hop 28 func 'g' tables 'District'=>'Customer' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8511, end: 8569, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 2) (span ((start . 8511) (end . 8569) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp277 := s28_#tmp276 + s28_ol_total;
-    Customer_C_BALANCE := Customer_C_BALANCE[s28_w_id := Customer_C_BALANCE[s28_w_id][0 := Customer_C_BALANCE[s28_w_id][0][s28_c_id := s28_#tmp277]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Customer' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8438, end: 8580, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 2) (span ((start . 8438) (end . 8580) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp278 := Customer_C_DELIVERY_CNT[s28_w_id][0][s28_c_id];
-  // Partition check hop 28 func 'g' tables 'District'=>'Customer' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8669, end: 8732, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 2) (span ((start . 8669) (end . 8732) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp279 := s28_#tmp278 + 1.0000000;
-    Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s28_w_id := Customer_C_DELIVERY_CNT[s28_w_id][0 := Customer_C_DELIVERY_CNT[s28_w_id][0][s28_c_id := s28_#tmp279]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Customer' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8591, end: 8738, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 2) (span ((start . 8591) (end . 8738) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp277 := Customer_C_BALANCE[s28_w_id][0][s28_c_id];
+  // Partition check hop 28 func 'g' tables 'District'=>'Customer' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8536, end: 8594, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 2) (span ((start . 8536) (end . 8594) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp278 := s28_#tmp277 + s28_ol_total;
+    Customer_C_BALANCE := Customer_C_BALANCE[s28_w_id := Customer_C_BALANCE[s28_w_id][0 := Customer_C_BALANCE[s28_w_id][0][s28_c_id := s28_#tmp278]]];
+  // Partition check hop 28 func 'g' tables 'District'=>'Customer' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8463, end: 8605, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 2) (span ((start . 8463) (end . 8605) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp279 := Customer_C_DELIVERY_CNT[s28_w_id][0][s28_c_id];
+  // Partition check hop 28 func 'g' tables 'District'=>'Customer' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8694, end: 8757, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 2) (span ((start . 8694) (end . 8757) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp280 := s28_#tmp279 + 1.0000000;
+    Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s28_w_id := Customer_C_DELIVERY_CNT[s28_w_id][0 := Customer_C_DELIVERY_CNT[s28_w_id][0][s28_c_id := s28_#tmp280]]];
+  // Partition check hop 28 func 'g' tables 'District'=>'Customer' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8616, end: 8763, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 2) (span ((start . 8616) (end . 8763) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
     goto s28_hop_exit;
   s28_block157:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][1 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][1];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][1];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block158;
   s28_block158:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][2 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][2];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][2];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block159;
   s28_block159:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][3 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][3];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][3];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block160;
   s28_block160:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][4 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][4];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][4];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block161;
   s28_block161:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][5 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][5];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][5];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block162;
   s28_block162:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][6 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][6];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][6];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block163;
   s28_block163:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][7 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][7];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][7];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block164;
   s28_block164:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][8 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][8];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][8];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block165;
   s28_block165:
     Order_Line_OL_DELIVERY_DATE := Order_Line_OL_DELIVERY_DATE[s28_w_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0 := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id := Order_Line_OL_DELIVERY_DATE[s28_w_id][0][s28_no_o_id][9 := s28_date]]]];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8153, end: 8257, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8153) (end . 8257) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp272 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][9];
-  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8299, end: 8389, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8299) (end . 8389) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
-    s28_#tmp273 := real(s28_#tmp272);
-    s28_#tmp274 := s28_ol_total + s28_#tmp273;
-    s28_ol_total := s28_#tmp274;
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8178, end: 8282, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8178) (end . 8282) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp273 := Order_Line_OL_AMOUNT[s28_w_id][0][s28_no_o_id][9];
+  // Partition check hop 28 func 'g' tables 'District'=>'Order_Line' keys [k0=w_id, k1_literal] first_span Span { start: 7477, end: 7524, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 8324, end: 8414, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 32) (hop_id . 28) (table_id . 5) (span ((start . 8324) (end . 8414) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s28_w_id == s28_w_id) && (0 == 0));
+    s28_#tmp274 := real(s28_#tmp273);
+    s28_#tmp275 := s28_ol_total + s28_#tmp274;
+    s28_ol_total := s28_#tmp275;
     goto s28_block86;
   s28_hop_exit:
   s28_epilogue:

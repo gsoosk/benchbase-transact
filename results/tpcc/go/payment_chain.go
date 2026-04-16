@@ -21,8 +21,8 @@ func PaymentHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 
 	var w_id uint64
 	var amount float32
-	var _tmp408 float32
-	var _tmp409 float32
+	var _tmp423 float32
+	var _tmp424 float32
 
 	var keyBytes1 []byte
 	var row1 Warehouse
@@ -38,12 +38,12 @@ BB143:
 	// TableGet: Warehouse
 	keyBytes1, row1 = getWarehouse(tx, WarehouseKey{W_ID: w_id})
 	rwSet = AddRWSet(rwSet, "Warehouse", keyBytes1)
-	_tmp408 = row1.W_YTD
-	_tmp409 = _tmp408 + amount
+	_tmp423 = row1.W_YTD
+	_tmp424 = _tmp423 + amount
 	// TableSet: Warehouse
 	keyBytes2, row2 = getWarehouse(tx, WarehouseKey{W_ID: w_id})
 	rwSet = AddRWSet(rwSet, "Warehouse", keyBytes2)
-	row2.W_YTD = _tmp409
+	row2.W_YTD = _tmp424
 	putWarehouse(tx, WarehouseKey{W_ID: w_id}, row2)
 	// Flush caches for tables written in this hop
 	flushWarehouseCache(tx)
@@ -62,8 +62,8 @@ func PaymentHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var w_id uint64
 	var d_id uint64
 	var amount float32
-	var _tmp410 float32
-	var _tmp411 float32
+	var _tmp425 float32
+	var _tmp426 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -80,12 +80,12 @@ BB144:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: d_id})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp410 = row1.D_YTD
-	_tmp411 = _tmp410 + amount
+	_tmp425 = row1.D_YTD
+	_tmp426 = _tmp425 + amount
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: d_id})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_YTD = _tmp411
+	row2.D_YTD = _tmp426
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: d_id}, row2)
 	// Flush caches for tables written in this hop
 	flushDistrictCache(tx)
@@ -128,28 +128,28 @@ func PaymentHop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var c_C_PAYMENT_CNT float32
 	var c_C_DELIVERY_CNT float32
 	var c_C_DATA string
-	var _tmp413 float32
-	var _tmp414 float32
-	var _tmp415 float32
-	var _tmp416 bool
-	var _tmp417 string
-	var _tmp418 string
-	var _tmp419 string
-	var _tmp420 string
-	var _tmp421 string
-	var _tmp422 string
-	var _tmp423 string
-	var _tmp424 string
-	var _tmp425 string
-	var _tmp426 string
-	var _tmp427 string
-	var _tmp428 string
-	var _tmp429 string
-	var _tmp430 string
-	var _tmp431 string
+	var _tmp428 float32
+	var _tmp429 float32
+	var _tmp430 float32
+	var _tmp431 bool
 	var _tmp432 string
 	var _tmp433 string
 	var _tmp434 string
+	var _tmp435 string
+	var _tmp436 string
+	var _tmp437 string
+	var _tmp438 string
+	var _tmp439 string
+	var _tmp440 string
+	var _tmp441 string
+	var _tmp442 string
+	var _tmp443 string
+	var _tmp444 string
+	var _tmp445 string
+	var _tmp446 string
+	var _tmp447 string
+	var _tmp448 string
+	var _tmp449 string
 
 	var keyBytes1 []byte
 	var row1 Customer
@@ -190,38 +190,38 @@ BB145:
 	c_C_W_ID = row1.Key.C_W_ID
 	c_C_YTD_PAYMENT = row1.C_YTD_PAYMENT
 	c_C_ZIP = row1.C_ZIP
-	_tmp413 = c_C_BALANCE - amount
-	c_C_BALANCE = _tmp413
-	_tmp414 = c_C_YTD_PAYMENT + amount
-	c_C_YTD_PAYMENT = _tmp414
-	_tmp415 = c_C_PAYMENT_CNT + 1
-	c_C_PAYMENT_CNT = _tmp415
-	_tmp416 = c_C_CREDIT == "BC"
-	if _tmp416 {
+	_tmp428 = c_C_BALANCE - amount
+	c_C_BALANCE = _tmp428
+	_tmp429 = c_C_YTD_PAYMENT + amount
+	c_C_YTD_PAYMENT = _tmp429
+	_tmp430 = c_C_PAYMENT_CNT + 1
+	c_C_PAYMENT_CNT = _tmp430
+	_tmp431 = c_C_CREDIT == "BC"
+	if _tmp431 {
 		goto BB146
 	} else {
 		goto BB147
 	}
 BB146:
-	_tmp417 = string(mustJSON(c_C_ID))
-	_tmp418 = concat(_tmp417, " ")
-	_tmp419 = string(mustJSON(c_C_D_ID))
-	_tmp420 = concat(_tmp418, _tmp419)
-	_tmp421 = concat(_tmp420, " ")
-	_tmp422 = string(mustJSON(c_C_W_ID))
-	_tmp423 = concat(_tmp421, _tmp422)
-	_tmp424 = concat(_tmp423, " ")
-	_tmp425 = string(mustJSON(d_id))
-	_tmp426 = concat(_tmp424, _tmp425)
-	_tmp427 = concat(_tmp426, " ")
-	_tmp428 = string(mustJSON(w_id))
-	_tmp429 = concat(_tmp427, _tmp428)
-	_tmp430 = concat(_tmp429, " ")
-	_tmp431 = string(mustJSON(amount))
-	_tmp432 = concat(_tmp430, _tmp431)
-	_tmp433 = concat(_tmp432, " | ")
-	_tmp434 = concat(_tmp433, c_C_DATA)
-	c_C_DATA = _tmp434
+	_tmp432 = string(mustJSON(c_C_ID))
+	_tmp433 = concat(_tmp432, " ")
+	_tmp434 = string(mustJSON(c_C_D_ID))
+	_tmp435 = concat(_tmp433, _tmp434)
+	_tmp436 = concat(_tmp435, " ")
+	_tmp437 = string(mustJSON(c_C_W_ID))
+	_tmp438 = concat(_tmp436, _tmp437)
+	_tmp439 = concat(_tmp438, " ")
+	_tmp440 = string(mustJSON(d_id))
+	_tmp441 = concat(_tmp439, _tmp440)
+	_tmp442 = concat(_tmp441, " ")
+	_tmp443 = string(mustJSON(w_id))
+	_tmp444 = concat(_tmp442, _tmp443)
+	_tmp445 = concat(_tmp444, " ")
+	_tmp446 = string(mustJSON(amount))
+	_tmp447 = concat(_tmp445, _tmp446)
+	_tmp448 = concat(_tmp447, " | ")
+	_tmp449 = concat(_tmp448, c_C_DATA)
+	c_C_DATA = _tmp449
 	goto BB147
 BB147:
 	// Combined table access: Customer (21 operations)
@@ -263,8 +263,8 @@ BB147:
 func PaymentHop0Par(params map[string]string) uint64 {
 	var w_id uint64
 	var amount float32
-	var _tmp408 float32
-	var _tmp409 float32
+	var _tmp423 float32
+	var _tmp424 float32
 
 	var keyBytes1 []byte
 	var row1 Warehouse
@@ -287,14 +287,14 @@ BB143:
 	// TableGet: Warehouse
 	keyBytes1, row1 = getWarehouse(tx, WarehouseKey{W_ID: w_id})
 	rwSet = AddRWSet(rwSet, "Warehouse", keyBytes1)
-	_tmp408 = row1.W_YTD
-	_tmp409 = _tmp408 + amount
+	_tmp423 = row1.W_YTD
+	_tmp424 = _tmp423 + amount
 	// First table access - calculate partition: Warehouse
 	if true { return putWarehousePar(WarehouseKey{W_ID: w_id}) }
 	// TableSet: Warehouse
 	keyBytes2, row2 = getWarehouse(tx, WarehouseKey{W_ID: w_id})
 	rwSet = AddRWSet(rwSet, "Warehouse", keyBytes2)
-	row2.W_YTD = _tmp409
+	row2.W_YTD = _tmp424
 	putWarehouse(tx, WarehouseKey{W_ID: w_id}, row2)
 	panic("unexpected hop exit in partition")
 }
@@ -304,8 +304,8 @@ func PaymentHop1Par(params map[string]string) uint64 {
 	var w_id uint64
 	var d_id uint64
 	var amount float32
-	var _tmp410 float32
-	var _tmp411 float32
+	var _tmp425 float32
+	var _tmp426 float32
 
 	var keyBytes1 []byte
 	var row1 District
@@ -329,14 +329,14 @@ BB144:
 	// TableGet: District
 	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: d_id})
 	rwSet = AddRWSet(rwSet, "District", keyBytes1)
-	_tmp410 = row1.D_YTD
-	_tmp411 = _tmp410 + amount
+	_tmp425 = row1.D_YTD
+	_tmp426 = _tmp425 + amount
 	// First table access - calculate partition: District
 	if true { return putDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: d_id}) }
 	// TableSet: District
 	keyBytes2, row2 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: d_id})
 	rwSet = AddRWSet(rwSet, "District", keyBytes2)
-	row2.D_YTD = _tmp411
+	row2.D_YTD = _tmp426
 	putDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: d_id}, row2)
 	panic("unexpected hop exit in partition")
 }
@@ -370,28 +370,28 @@ func PaymentHop2Par(params map[string]string) uint64 {
 	var c_C_PAYMENT_CNT float32
 	var c_C_DELIVERY_CNT float32
 	var c_C_DATA string
-	var _tmp413 float32
-	var _tmp414 float32
-	var _tmp415 float32
-	var _tmp416 bool
-	var _tmp417 string
-	var _tmp418 string
-	var _tmp419 string
-	var _tmp420 string
-	var _tmp421 string
-	var _tmp422 string
-	var _tmp423 string
-	var _tmp424 string
-	var _tmp425 string
-	var _tmp426 string
-	var _tmp427 string
-	var _tmp428 string
-	var _tmp429 string
-	var _tmp430 string
-	var _tmp431 string
+	var _tmp428 float32
+	var _tmp429 float32
+	var _tmp430 float32
+	var _tmp431 bool
 	var _tmp432 string
 	var _tmp433 string
 	var _tmp434 string
+	var _tmp435 string
+	var _tmp436 string
+	var _tmp437 string
+	var _tmp438 string
+	var _tmp439 string
+	var _tmp440 string
+	var _tmp441 string
+	var _tmp442 string
+	var _tmp443 string
+	var _tmp444 string
+	var _tmp445 string
+	var _tmp446 string
+	var _tmp447 string
+	var _tmp448 string
+	var _tmp449 string
 
 	var keyBytes1 []byte
 	var row1 Customer
@@ -439,38 +439,38 @@ BB145:
 	c_C_W_ID = row1.Key.C_W_ID
 	c_C_YTD_PAYMENT = row1.C_YTD_PAYMENT
 	c_C_ZIP = row1.C_ZIP
-	_tmp413 = c_C_BALANCE - amount
-	c_C_BALANCE = _tmp413
-	_tmp414 = c_C_YTD_PAYMENT + amount
-	c_C_YTD_PAYMENT = _tmp414
-	_tmp415 = c_C_PAYMENT_CNT + 1
-	c_C_PAYMENT_CNT = _tmp415
-	_tmp416 = c_C_CREDIT == "BC"
-	if _tmp416 {
+	_tmp428 = c_C_BALANCE - amount
+	c_C_BALANCE = _tmp428
+	_tmp429 = c_C_YTD_PAYMENT + amount
+	c_C_YTD_PAYMENT = _tmp429
+	_tmp430 = c_C_PAYMENT_CNT + 1
+	c_C_PAYMENT_CNT = _tmp430
+	_tmp431 = c_C_CREDIT == "BC"
+	if _tmp431 {
 		goto BB146
 	} else {
 		goto BB147
 	}
 BB146:
-	_tmp417 = string(mustJSON(c_C_ID))
-	_tmp418 = concat(_tmp417, " ")
-	_tmp419 = string(mustJSON(c_C_D_ID))
-	_tmp420 = concat(_tmp418, _tmp419)
-	_tmp421 = concat(_tmp420, " ")
-	_tmp422 = string(mustJSON(c_C_W_ID))
-	_tmp423 = concat(_tmp421, _tmp422)
-	_tmp424 = concat(_tmp423, " ")
-	_tmp425 = string(mustJSON(d_id))
-	_tmp426 = concat(_tmp424, _tmp425)
-	_tmp427 = concat(_tmp426, " ")
-	_tmp428 = string(mustJSON(w_id))
-	_tmp429 = concat(_tmp427, _tmp428)
-	_tmp430 = concat(_tmp429, " ")
-	_tmp431 = string(mustJSON(amount))
-	_tmp432 = concat(_tmp430, _tmp431)
-	_tmp433 = concat(_tmp432, " | ")
-	_tmp434 = concat(_tmp433, c_C_DATA)
-	c_C_DATA = _tmp434
+	_tmp432 = string(mustJSON(c_C_ID))
+	_tmp433 = concat(_tmp432, " ")
+	_tmp434 = string(mustJSON(c_C_D_ID))
+	_tmp435 = concat(_tmp433, _tmp434)
+	_tmp436 = concat(_tmp435, " ")
+	_tmp437 = string(mustJSON(c_C_W_ID))
+	_tmp438 = concat(_tmp436, _tmp437)
+	_tmp439 = concat(_tmp438, " ")
+	_tmp440 = string(mustJSON(d_id))
+	_tmp441 = concat(_tmp439, _tmp440)
+	_tmp442 = concat(_tmp441, " ")
+	_tmp443 = string(mustJSON(w_id))
+	_tmp444 = concat(_tmp442, _tmp443)
+	_tmp445 = concat(_tmp444, " ")
+	_tmp446 = string(mustJSON(amount))
+	_tmp447 = concat(_tmp445, _tmp446)
+	_tmp448 = concat(_tmp447, " | ")
+	_tmp449 = concat(_tmp448, c_C_DATA)
+	c_C_DATA = _tmp449
 	goto BB147
 BB147:
 	// First table access (optimized group) - calculate partition: Customer

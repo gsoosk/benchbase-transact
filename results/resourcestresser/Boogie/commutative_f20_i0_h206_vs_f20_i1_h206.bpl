@@ -101,22 +101,22 @@ axiom (forall
     <==>
     (empid_1 == empid_2 && flag1_1 == flag1_2)
 );
-var iotablesmallrow_empid : [int]int;
 var locktable_empid : [int]int;
-var locktable_salary : [int]int;
-var iotable_data2 : [int]String;
 const __slice__ : int;
-const TBL_iotable : Table (iotable);
-const TBL_iotablesmallrow : Table (iotablesmallrow);
+var locktable_salary : [int]int;
+const TBL_locktable : Table (locktable);
 var iotable_empid : [int]int;
-var cputable_passwd : [int]String;
+var iotablesmallrow_empid : [int]int;
+const TBL_iotablesmallrow : Table (iotablesmallrow);
+const __shards__ : int;
+var iotable_data2 : [int]String;
 var iotablesmallrow_flag1 : [int]int;
 const CPU_RANGE : int;
-var cputable_empid : [int]int;
-const TBL_locktable : Table (locktable);
-const TBL_cputable : Table (cputable);
-const __shards__ : int;
 var iotable_data1 : [int]String;
+var cputable_empid : [int]int;
+const TBL_cputable : Table (cputable);
+var cputable_passwd : [int]String;
+const TBL_iotable : Table (iotable);
 procedure Check_SliceCommut_Hop206_vs_Hop206()
 modifies iotable_data1, iotable_data2, iotable_empid;
 {
@@ -137,22 +137,22 @@ modifies iotable_data1, iotable_data2, iotable_empid;
   var s1_leftKey_init : int;
   var s1_newData1_init : String;
   var s1_newData2_init : String;
-  var s0_#tmp209 : int;
-  var s0_#tmp211 : int;
-  var s0_#tmp212 : int;
-  var s0_#tmp213 : int;
+  var s0_#tmp409 : int;
+  var s0_#tmp411 : int;
+  var s0_#tmp412 : int;
+  var s0_#tmp413 : int;
   var s0_r2#empid : int;
   var s0_r2#data1 : String;
   var s0_r2#data2 : String;
-  var s0_#tmp214 : int;
-  var s1_#tmp209 : int;
-  var s1_#tmp211 : int;
-  var s1_#tmp212 : int;
-  var s1_#tmp213 : int;
+  var s0_#tmp414 : int;
+  var s1_#tmp409 : int;
+  var s1_#tmp411 : int;
+  var s1_#tmp412 : int;
+  var s1_#tmp413 : int;
   var s1_r2#empid : int;
   var s1_r2#data1 : String;
   var s1_r2#data2 : String;
-  var s1_#tmp214 : int;
+  var s1_#tmp414 : int;
   var iotable_data1_a_then_b : [int]String;
   var iotable_data2_a_then_b : [int]String;
   var iotable_empid_a_then_b : [int]int;
@@ -187,34 +187,34 @@ modifies iotable_data1, iotable_data2, iotable_empid;
   // Executing A then B:
     if (s0_active) {
     s0_block206__ab:
-      s0_#tmp209 := s0_leftKey + 1;
-      s0_#tmp211 := s0_#tmp209;
-      s0_#tmp212 := s0_#tmp211;
-      s0_#tmp213 := s0_#tmp212;
-      s0_r2#empid := iotable_empid[s0_#tmp213];
+      s0_#tmp409 := s0_leftKey + 1;
+      s0_#tmp411 := s0_#tmp409;
+      s0_#tmp412 := s0_#tmp411;
+      s0_#tmp413 := s0_#tmp412;
+      s0_r2#empid := iotable_empid[s0_#tmp413];
       s0_r2#data1 := s0_newData1;
       s0_r2#data2 := s0_newData2;
-      s0_#tmp214 := s0_#tmp213;
-      iotable_data1 := iotable_data1[s0_#tmp214 := s0_r2#data1];
-      iotable_data2 := iotable_data2[s0_#tmp214 := s0_r2#data2];
-      iotable_empid := iotable_empid[s0_#tmp214 := s0_r2#empid];
+      s0_#tmp414 := s0_#tmp413;
+      iotable_data1 := iotable_data1[s0_#tmp414 := s0_r2#data1];
+      iotable_data2 := iotable_data2[s0_#tmp414 := s0_r2#data2];
+      iotable_empid := iotable_empid[s0_#tmp414 := s0_r2#empid];
       s0_active := false;
       goto s0_hop_exit__ab;
     s0_hop_exit__ab:
     }
     if (s1_active) {
     s1_block206__ab:
-      s1_#tmp209 := s1_leftKey + 1;
-      s1_#tmp211 := s1_#tmp209;
-      s1_#tmp212 := s1_#tmp211;
-      s1_#tmp213 := s1_#tmp212;
-      s1_r2#empid := iotable_empid[s1_#tmp213];
+      s1_#tmp409 := s1_leftKey + 1;
+      s1_#tmp411 := s1_#tmp409;
+      s1_#tmp412 := s1_#tmp411;
+      s1_#tmp413 := s1_#tmp412;
+      s1_r2#empid := iotable_empid[s1_#tmp413];
       s1_r2#data1 := s1_newData1;
       s1_r2#data2 := s1_newData2;
-      s1_#tmp214 := s1_#tmp213;
-      iotable_data1 := iotable_data1[s1_#tmp214 := s1_r2#data1];
-      iotable_data2 := iotable_data2[s1_#tmp214 := s1_r2#data2];
-      iotable_empid := iotable_empid[s1_#tmp214 := s1_r2#empid];
+      s1_#tmp414 := s1_#tmp413;
+      iotable_data1 := iotable_data1[s1_#tmp414 := s1_r2#data1];
+      iotable_data2 := iotable_data2[s1_#tmp414 := s1_r2#data2];
+      iotable_empid := iotable_empid[s1_#tmp414 := s1_r2#empid];
       s1_active := false;
       goto s1_hop_exit__ab;
     s1_hop_exit__ab:
@@ -238,34 +238,34 @@ modifies iotable_data1, iotable_data2, iotable_empid;
   // Executing B then A:
     if (s1_active) {
     s1_block206__ba:
-      s1_#tmp209 := s1_leftKey + 1;
-      s1_#tmp211 := s1_#tmp209;
-      s1_#tmp212 := s1_#tmp211;
-      s1_#tmp213 := s1_#tmp212;
-      s1_r2#empid := iotable_empid[s1_#tmp213];
+      s1_#tmp409 := s1_leftKey + 1;
+      s1_#tmp411 := s1_#tmp409;
+      s1_#tmp412 := s1_#tmp411;
+      s1_#tmp413 := s1_#tmp412;
+      s1_r2#empid := iotable_empid[s1_#tmp413];
       s1_r2#data1 := s1_newData1;
       s1_r2#data2 := s1_newData2;
-      s1_#tmp214 := s1_#tmp213;
-      iotable_data1 := iotable_data1[s1_#tmp214 := s1_r2#data1];
-      iotable_data2 := iotable_data2[s1_#tmp214 := s1_r2#data2];
-      iotable_empid := iotable_empid[s1_#tmp214 := s1_r2#empid];
+      s1_#tmp414 := s1_#tmp413;
+      iotable_data1 := iotable_data1[s1_#tmp414 := s1_r2#data1];
+      iotable_data2 := iotable_data2[s1_#tmp414 := s1_r2#data2];
+      iotable_empid := iotable_empid[s1_#tmp414 := s1_r2#empid];
       s1_active := false;
       goto s1_hop_exit__ba;
     s1_hop_exit__ba:
     }
     if (s0_active) {
     s0_block206__ba:
-      s0_#tmp209 := s0_leftKey + 1;
-      s0_#tmp211 := s0_#tmp209;
-      s0_#tmp212 := s0_#tmp211;
-      s0_#tmp213 := s0_#tmp212;
-      s0_r2#empid := iotable_empid[s0_#tmp213];
+      s0_#tmp409 := s0_leftKey + 1;
+      s0_#tmp411 := s0_#tmp409;
+      s0_#tmp412 := s0_#tmp411;
+      s0_#tmp413 := s0_#tmp412;
+      s0_r2#empid := iotable_empid[s0_#tmp413];
       s0_r2#data1 := s0_newData1;
       s0_r2#data2 := s0_newData2;
-      s0_#tmp214 := s0_#tmp213;
-      iotable_data1 := iotable_data1[s0_#tmp214 := s0_r2#data1];
-      iotable_data2 := iotable_data2[s0_#tmp214 := s0_r2#data2];
-      iotable_empid := iotable_empid[s0_#tmp214 := s0_r2#empid];
+      s0_#tmp414 := s0_#tmp413;
+      iotable_data1 := iotable_data1[s0_#tmp414 := s0_r2#data1];
+      iotable_data2 := iotable_data2[s0_#tmp414 := s0_r2#data2];
+      iotable_empid := iotable_empid[s0_#tmp414 := s0_r2#empid];
       s0_active := false;
       goto s0_hop_exit__ba;
     s0_hop_exit__ba:

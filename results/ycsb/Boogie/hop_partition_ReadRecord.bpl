@@ -63,24 +63,32 @@ axiom (forall
     (ycsb_key_1 == ycsb_key_2 && field1_1 == field1_2 && field2_1 == field2_2 && field3_1 == field3_2 && field4_1 == field4_2 && field5_1 == field5_2 && field6_1 == field6_2 && field7_1 == field7_2 && field8_1 == field8_2 && field9_1 == field9_2 && field10_1 == field10_2)
 );
 const YCSB_SCAN_SIZE : int;
-var UserTable_field6 : [int]String;
-var UserTable_field10 : [int]String;
-const TBL_UserTable : Table (UserTable);
-var UserTable_field5 : [int]String;
 const __slice__ : int;
-const __shards__ : int;
-var UserTable_field4 : [int]String;
-var UserTable_ycsb_key : [int]int;
-var UserTable_field1 : [int]String;
-var UserTable_field3 : [int]String;
-var UserTable_field9 : [int]String;
-var UserTable_field8 : [int]String;
 var UserTable_field2 : [int]String;
+const __shards__ : int;
+var UserTable_field6 : [int]String;
+var UserTable_field8 : [int]String;
+var UserTable_field10 : [int]String;
+var UserTable_field4 : [int]String;
+var UserTable_field3 : [int]String;
+const TBL_UserTable : Table (UserTable);
+var UserTable_ycsb_key : [int]int;
+var UserTable_field5 : [int]String;
 var UserTable_field7 : [int]String;
+var UserTable_field9 : [int]String;
+var UserTable_field1 : [int]String;
 procedure verify_hop_partitions_ReadRecord(keyname: int)
 {
+  var s1_#tmp0 : Row (Table (UserTable));
+  var s1_keyname : int;
+  var s1_r : Row (Table (UserTable));
+  var s1_#tmp1 : unit;
+
   // Hop partition verification for function 'ReadRecord'
   s1_block1:
+    s1_#tmp0 := construct_Row_UserTable(UserTable_ycsb_key[s1_keyname], UserTable_field1[s1_keyname], UserTable_field2[s1_keyname], UserTable_field3[s1_keyname], UserTable_field4[s1_keyname], UserTable_field5[s1_keyname], UserTable_field6[s1_keyname], UserTable_field7[s1_keyname], UserTable_field8[s1_keyname], UserTable_field9[s1_keyname], UserTable_field10[s1_keyname]);
+    s1_r := s1_#tmp0;
+    s1_#tmp1 := to_unit(s1_r);
     goto s1_epilogue;
   s1_hop_exit:
   s1_epilogue:

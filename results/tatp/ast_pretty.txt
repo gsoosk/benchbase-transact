@@ -340,6 +340,7 @@ transaction DeleteCallForwarding[f46](s_id[p78]: int[t1], sf_type[p79]: int[t1],
   hop
   {
     let cf[v0]: Row<CallForwarding>[t6<tab<CallForwarding>>] = CallForwarding[t7<tab<CallForwarding>>][itab3][tab3][s_id: s_id[t1][p78], sf_type: sf_type[t1][p79], start_time: start_time[t1][p80]][t6<tab<CallForwarding>>];
+    to_unit[(infer1) -> t10][f43][f43](cf[t6<tab<CallForwarding>>][v0])[t10];
   }
 }
 
@@ -349,6 +350,7 @@ transaction GetAccessData[f47](s_id[p81]: int[t1], ai_type[p82]: int[t1]) : (t1,
   {
     let ai[v1]: Row<AccessInfo>[t6<tab<AccessInfo>>] = AccessInfo[t7<tab<AccessInfo>>][itab1][tab1][s_id: s_id[t1][p81], ai_type: ai_type[t1][p82]][t6<tab<AccessInfo>>];
     let d1[v2]: int[t1] = ai[t6<tab<AccessInfo>>][v1].data1[field36][t1];
+    to_unit[(infer2) -> t10][f43][f43](d1[t1][v2])[t10];
   }
 }
 
@@ -362,6 +364,7 @@ transaction GetNewDestination[f48](s_id[p83]: int[t1], sf_type[p84]: int[t1], st
     {
       let cf[v5]: Row<CallForwarding>[t6<tab<CallForwarding>>] = CallForwarding[t7<tab<CallForwarding>>][itab3][tab3][s_id: s_id[t1][p83], sf_type: sf_type[t1][p84], start_time: start_time[t1][p85]][t6<tab<CallForwarding>>];
       let num[v6]: string[t3] = cf[t6<tab<CallForwarding>>][v5].numberx[field50][t3];
+      to_unit[(infer4) -> t10][f43][f43](num[t3][v6])[t10];
     }
   }
 }
@@ -372,6 +375,7 @@ transaction GetSubscriberData[f49](s_id[p87]: int[t1]) : (t1) -> t0
   {
     let sub[v7]: Row<Subscriber>[t6<tab<Subscriber>>] = Subscriber[t7<tab<Subscriber>>][itab0][tab0][s_id: s_id[t1][p87]][t6<tab<Subscriber>>];
     let bit1[v8]: int[t1] = sub[t6<tab<Subscriber>>][v7].bit_1[field2][t1];
+    to_unit[(infer2) -> t10][f43][f43](bit1[t1][v8])[t10];
   }
 }
 
@@ -380,7 +384,9 @@ transaction InsertCallForwarding[f50](s_id[p88]: int[t1], sf_type[p89]: int[t1],
   hop
   {
     let sub[v9]: Row<Subscriber>[t6<tab<Subscriber>>] = Subscriber[t7<tab<Subscriber>>][itab0][tab0][s_id: s_id[t1][p88]][t6<tab<Subscriber>>];
+    to_unit[(infer1) -> t10][f43][f43](sub[t6<tab<Subscriber>>][v9])[t10];
     let sf[v10]: Row<SpecialFacility>[t6<tab<SpecialFacility>>] = SpecialFacility[t7<tab<SpecialFacility>>][itab2][tab2][s_id: s_id[t1][p88], sf_type: sf_type[t1][p89]][t6<tab<SpecialFacility>>];
+    to_unit[(infer4) -> t10][f43][f43](sf[t6<tab<SpecialFacility>>][v10])[t10];
     CallForwarding[t7<tab<CallForwarding>>][itab3][tab3][s_id: s_id[t1][p88], sf_type: sf_type[t1][p89], start_time: start_time[t1][p90]][t6<tab<CallForwarding>>] = {end_time: end_time[t1][p91], numberx: numberx[t3][p92]}[t6<tab<CallForwarding>>][t0];
   }
 }

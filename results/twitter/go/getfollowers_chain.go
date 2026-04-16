@@ -19,9 +19,27 @@ func GetfollowersHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var uid uint64
+	var follower_uid uint64
+	var f Followers
+	var _tmp0 Followers
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Followers
+
+	uid = toUint64(params["uid"])
+	follower_uid = toUint64(params["follower_uid"])
+
 	goto BB1
 
 BB1:
+	// TableGet: Followers
+	keyBytes1, row1 = getFollowers(tx, FollowersKey{f1: uid, f2: follower_uid})
+	rwSet = AddRWSet(rwSet, "Followers", keyBytes1)
+	_tmp0 = row1
+	f = _tmp0
+	_ = f
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +52,25 @@ func GetfollowersHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var follower_uid uint64
+	var u_name string
+	var uname string
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 User
+
+	follower_uid = toUint64(params["follower_uid"])
+
 	goto BB2
 
 BB2:
+	// TableGet: User
+	keyBytes1, row1 = getUser(tx, UserKey{uid: follower_uid})
+	rwSet = AddRWSet(rwSet, "User", keyBytes1)
+	u_name = row1.name
+	uname = u_name
+	_ = uname
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +81,18 @@ BB2:
 
 // GetfollowersHop0Par calculates the partition for hop 0 without database access.
 func GetfollowersHop0Par(params map[string]string) uint64 {
+	var uid uint64
+	var follower_uid uint64
+	var f Followers
+	var _tmp0 Followers
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Followers
+
+	uid = toUint64(params["uid"])
+	follower_uid = toUint64(params["follower_uid"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +101,29 @@ func GetfollowersHop0Par(params map[string]string) uint64 {
 	goto BB1
 
 BB1:
+	// First table access - calculate partition: Followers
+	if true { return getFollowersPar(FollowersKey{f1: uid, f2: follower_uid}) }
+	// TableGet: Followers
+	keyBytes1, row1 = getFollowers(tx, FollowersKey{f1: uid, f2: follower_uid})
+	rwSet = AddRWSet(rwSet, "Followers", keyBytes1)
+	_tmp0 = row1
+	f = _tmp0
+	_ = f
 	panic("unexpected hop exit in partition")
 }
 
 // GetfollowersHop1Par calculates the partition for hop 1 without database access.
 func GetfollowersHop1Par(params map[string]string) uint64 {
+	var follower_uid uint64
+	var u_name string
+	var uname string
+	var _tmp3 Unit
+
+	var keyBytes1 []byte
+	var row1 User
+
+	follower_uid = toUint64(params["follower_uid"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +132,14 @@ func GetfollowersHop1Par(params map[string]string) uint64 {
 	goto BB2
 
 BB2:
+	// First table access - calculate partition: User
+	if true { return getUserPar(UserKey{uid: follower_uid}) }
+	// TableGet: User
+	keyBytes1, row1 = getUser(tx, UserKey{uid: follower_uid})
+	rwSet = AddRWSet(rwSet, "User", keyBytes1)
+	u_name = row1.name
+	uname = u_name
+	_ = uname
 	return 0
 }
 

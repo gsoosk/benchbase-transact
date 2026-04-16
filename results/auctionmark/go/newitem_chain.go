@@ -36,7 +36,7 @@ func NewitemHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var seller_u_sattr2 string
 	var seller_u_sattr3 string
 	var seller_u_sattr4 string
-	var _tmp27 float32
+	var _tmp35 float32
 
 	var keyBytes1 []byte
 	var row1 Item
@@ -82,8 +82,8 @@ BB16:
 	seller_u_sattr2 = row2.u_sattr2
 	seller_u_sattr3 = row2.u_sattr3
 	seller_u_sattr4 = row2.u_sattr4
-	_tmp27 = seller_u_balance - initial_price
-	seller_u_balance = _tmp27
+	_tmp35 = seller_u_balance - initial_price
+	seller_u_balance = _tmp35
 	// Combined table access: Useracct (10 operations)
 	keyBytes3, row3 = getUseracct(tx, UseracctKey{u_id: seller_id})
 	rwSet = AddRWSet(rwSet, "Useracct", keyBytes3)
@@ -100,8 +100,8 @@ BB16:
 	putUseracct(tx, UseracctKey{u_id: seller_id}, row3)
 	// return - no action
 	// Flush caches for tables written in this hop
-	flushItemCache(tx)
 	flushUseracctCache(tx)
+	flushItemCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -128,7 +128,7 @@ func NewitemHop0Par(params map[string]string) uint64 {
 	var seller_u_sattr2 string
 	var seller_u_sattr3 string
 	var seller_u_sattr4 string
-	var _tmp27 float32
+	var _tmp35 float32
 
 	var keyBytes1 []byte
 	var row1 Item
@@ -183,8 +183,8 @@ BB16:
 	seller_u_sattr2 = row2.u_sattr2
 	seller_u_sattr3 = row2.u_sattr3
 	seller_u_sattr4 = row2.u_sattr4
-	_tmp27 = seller_u_balance - initial_price
-	seller_u_balance = _tmp27
+	_tmp35 = seller_u_balance - initial_price
+	seller_u_balance = _tmp35
 	// First table access (optimized group) - calculate partition: Useracct
 	if true { return putUseracctPar(UseracctKey{u_id: seller_id}) }
 	// Combined table access: Useracct (10 operations)

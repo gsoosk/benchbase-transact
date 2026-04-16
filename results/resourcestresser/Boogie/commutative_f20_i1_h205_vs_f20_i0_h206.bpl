@@ -101,22 +101,22 @@ axiom (forall
     <==>
     (empid_1 == empid_2 && flag1_1 == flag1_2)
 );
-var iotablesmallrow_flag1 : [int]int;
-var iotable_data1 : [int]String;
-const TBL_iotablesmallrow : Table (iotablesmallrow);
-var iotable_data2 : [int]String;
-var cputable_passwd : [int]String;
-const TBL_iotable : Table (iotable);
-const __slice__ : int;
-const TBL_cputable : Table (cputable);
-var locktable_empid : [int]int;
 const __shards__ : int;
-var iotablesmallrow_empid : [int]int;
 var iotable_empid : [int]int;
-var cputable_empid : [int]int;
-var locktable_salary : [int]int;
-const TBL_locktable : Table (locktable);
+var locktable_empid : [int]int;
+var iotable_data2 : [int]String;
+var iotablesmallrow_empid : [int]int;
 const CPU_RANGE : int;
+const __slice__ : int;
+var locktable_salary : [int]int;
+const TBL_cputable : Table (cputable);
+var iotable_data1 : [int]String;
+const TBL_locktable : Table (locktable);
+var cputable_empid : [int]int;
+const TBL_iotablesmallrow : Table (iotablesmallrow);
+var cputable_passwd : [int]String;
+var iotablesmallrow_flag1 : [int]int;
+const TBL_iotable : Table (iotable);
 procedure Check_SliceCommut_Hop205_vs_Hop206()
 modifies iotable_data1, iotable_data2, iotable_empid;
 {
@@ -140,14 +140,14 @@ modifies iotable_data1, iotable_data2, iotable_empid;
   var s0_r1#empid : int;
   var s0_r1#data1 : String;
   var s0_r1#data2 : String;
-  var s1_#tmp209 : int;
-  var s1_#tmp211 : int;
-  var s1_#tmp212 : int;
-  var s1_#tmp213 : int;
+  var s1_#tmp409 : int;
+  var s1_#tmp411 : int;
+  var s1_#tmp412 : int;
+  var s1_#tmp413 : int;
   var s1_r2#empid : int;
   var s1_r2#data1 : String;
   var s1_r2#data2 : String;
-  var s1_#tmp214 : int;
+  var s1_#tmp414 : int;
   var iotable_data1_a_then_b : [int]String;
   var iotable_data2_a_then_b : [int]String;
   var iotable_empid_a_then_b : [int]int;
@@ -199,17 +199,17 @@ modifies iotable_data1, iotable_data2, iotable_empid;
     }
     if (s1_active) {
     s1_block206__ab:
-      s1_#tmp209 := s1_leftKey + 1;
-      s1_#tmp211 := s1_#tmp209;
-      s1_#tmp212 := s1_#tmp211;
-      s1_#tmp213 := s1_#tmp212;
-      s1_r2#empid := iotable_empid[s1_#tmp213];
+      s1_#tmp409 := s1_leftKey + 1;
+      s1_#tmp411 := s1_#tmp409;
+      s1_#tmp412 := s1_#tmp411;
+      s1_#tmp413 := s1_#tmp412;
+      s1_r2#empid := iotable_empid[s1_#tmp413];
       s1_r2#data1 := s1_newData1;
       s1_r2#data2 := s1_newData2;
-      s1_#tmp214 := s1_#tmp213;
-      iotable_data1 := iotable_data1[s1_#tmp214 := s1_r2#data1];
-      iotable_data2 := iotable_data2[s1_#tmp214 := s1_r2#data2];
-      iotable_empid := iotable_empid[s1_#tmp214 := s1_r2#empid];
+      s1_#tmp414 := s1_#tmp413;
+      iotable_data1 := iotable_data1[s1_#tmp414 := s1_r2#data1];
+      iotable_data2 := iotable_data2[s1_#tmp414 := s1_r2#data2];
+      iotable_empid := iotable_empid[s1_#tmp414 := s1_r2#empid];
       s1_active := false;
       goto s1_hop_exit__ab;
     s1_hop_exit__ab:
@@ -236,17 +236,17 @@ modifies iotable_data1, iotable_data2, iotable_empid;
   // Executing B then A:
     if (s1_active) {
     s1_block206__ba:
-      s1_#tmp209 := s1_leftKey + 1;
-      s1_#tmp211 := s1_#tmp209;
-      s1_#tmp212 := s1_#tmp211;
-      s1_#tmp213 := s1_#tmp212;
-      s1_r2#empid := iotable_empid[s1_#tmp213];
+      s1_#tmp409 := s1_leftKey + 1;
+      s1_#tmp411 := s1_#tmp409;
+      s1_#tmp412 := s1_#tmp411;
+      s1_#tmp413 := s1_#tmp412;
+      s1_r2#empid := iotable_empid[s1_#tmp413];
       s1_r2#data1 := s1_newData1;
       s1_r2#data2 := s1_newData2;
-      s1_#tmp214 := s1_#tmp213;
-      iotable_data1 := iotable_data1[s1_#tmp214 := s1_r2#data1];
-      iotable_data2 := iotable_data2[s1_#tmp214 := s1_r2#data2];
-      iotable_empid := iotable_empid[s1_#tmp214 := s1_r2#empid];
+      s1_#tmp414 := s1_#tmp413;
+      iotable_data1 := iotable_data1[s1_#tmp414 := s1_r2#data1];
+      iotable_data2 := iotable_data2[s1_#tmp414 := s1_r2#data2];
+      iotable_empid := iotable_empid[s1_#tmp414 := s1_r2#empid];
       s1_active := false;
       goto s1_hop_exit__ba;
     s1_hop_exit__ba:

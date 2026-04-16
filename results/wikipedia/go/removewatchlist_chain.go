@@ -26,7 +26,7 @@ func RemovewatchlistHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var wl_wl_namespace uint64
 	var wl_wl_title string
 	var wl_wl_notificationtimestamp uint64
-	var _tmp14 bool
+	var _tmp23 bool
 	var wl2_wl_user uint64
 	var wl2_wl_namespace uint64
 	var wl2_wl_title string
@@ -61,8 +61,8 @@ BB9:
 	row1.Key.wl_title = wl_wl_title
 	row1.Key.wl_user = wl_wl_user
 	putWatchlist(tx, WatchlistKey{wl_user: userId, wl_namespace: nameSpace, wl_title: pageTitle}, row1)
-	_tmp14 = nameSpace == 0
-	if _tmp14 {
+	_tmp23 = nameSpace == 0
+	if _tmp23 {
 		goto BB10
 	} else {
 		goto BB11
@@ -113,7 +113,7 @@ func RemovewatchlistHop0Par(params map[string]string) uint64 {
 	var wl_wl_namespace uint64
 	var wl_wl_title string
 	var wl_wl_notificationtimestamp uint64
-	var _tmp14 bool
+	var _tmp23 bool
 	var wl2_wl_user uint64
 	var wl2_wl_namespace uint64
 	var wl2_wl_title string
@@ -155,8 +155,8 @@ BB9:
 	row1.Key.wl_title = wl_wl_title
 	row1.Key.wl_user = wl_wl_user
 	putWatchlist(tx, WatchlistKey{wl_user: userId, wl_namespace: nameSpace, wl_title: pageTitle}, row1)
-	_tmp14 = nameSpace == 0
-	if _tmp14 {
+	_tmp23 = nameSpace == 0
+	if _tmp23 {
 		goto BB10
 	} else {
 		goto BB11

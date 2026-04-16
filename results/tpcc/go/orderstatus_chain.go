@@ -19,19 +19,80 @@ func OrderstatusHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
-	var _tmp399 bool
+	var w_id uint64
+	var d_id uint64
+	var c_id uint64
+	var o_id uint64
+	var c Customer
+	var _tmp407 Customer
+	var _tmp408 Unit
+	var o Order
+	var _tmp409 Order
+	var _tmp410 Unit
+	var _tmp411 bool
+	var ol OrderLine
+	var _tmp412 OrderLine
+	var _tmp413 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+	var keyBytes2 []byte
+	var row2 Order
+	var keyBytes3 []byte
+	var row3 OrderLine
+	var keyBytes4 []byte
+	var row4 OrderLine
+	var keyBytes5 []byte
+	var row5 OrderLine
+	var keyBytes6 []byte
+	var row6 OrderLine
+	var keyBytes7 []byte
+	var row7 OrderLine
+	var keyBytes8 []byte
+	var row8 OrderLine
+	var keyBytes9 []byte
+	var row9 OrderLine
+	var keyBytes10 []byte
+	var row10 OrderLine
+	var keyBytes11 []byte
+	var row11 OrderLine
+	var keyBytes12 []byte
+	var row12 OrderLine
+
+	w_id = toUint64(params["w_id"])
+	d_id = toUint64(params["d_id"])
+	c_id = toUint64(params["c_id"])
+	o_id = toUint64(params["o_id"])
 
 	goto BB132
 
 BB132:
+	// TableGet: Customer
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: d_id, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	_tmp407 = row1
+	c = _tmp407
+	_ = c
+	// TableGet: Order
+	keyBytes2, row2 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: d_id, O_ID: o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes2)
+	_tmp409 = row2
+	o = _tmp409
+	_ = o
 	goto BB134
-	_tmp399 = ol_number < O_OL_CNT
-	if _tmp399 {
+	_tmp411 = ol_number < O_OL_CNT
+	if _tmp411 {
 		goto BB134
 	} else {
 		goto BB136
 	}
 BB134:
+	// TableGet: OrderLine
+	keyBytes3, row3 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes3)
+	_tmp412 = row3
+	ol = _tmp412
+	_ = ol
 	goto BB247
 BB136:
 	// return - no action
@@ -41,28 +102,125 @@ BB136:
 		RWSets: rwSet,
 	}, nil
 BB247:
+	// TableGet: OrderLine
+	keyBytes4, row4 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes4)
+	_tmp412 = row4
+	ol = _tmp412
+	_ = ol
 	goto BB248
 BB248:
+	// TableGet: OrderLine
+	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
+	_tmp412 = row5
+	ol = _tmp412
+	_ = ol
 	goto BB249
 BB249:
+	// TableGet: OrderLine
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	_tmp412 = row6
+	ol = _tmp412
+	_ = ol
 	goto BB250
 BB250:
+	// TableGet: OrderLine
+	keyBytes7, row7 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes7)
+	_tmp412 = row7
+	ol = _tmp412
+	_ = ol
 	goto BB251
 BB251:
+	// TableGet: OrderLine
+	keyBytes8, row8 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes8)
+	_tmp412 = row8
+	ol = _tmp412
+	_ = ol
 	goto BB252
 BB252:
+	// TableGet: OrderLine
+	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
+	_tmp412 = row9
+	ol = _tmp412
+	_ = ol
 	goto BB253
 BB253:
+	// TableGet: OrderLine
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	_tmp412 = row10
+	ol = _tmp412
+	_ = ol
 	goto BB254
 BB254:
+	// TableGet: OrderLine
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	_tmp412 = row11
+	ol = _tmp412
+	_ = ol
 	goto BB255
 BB255:
+	// TableGet: OrderLine
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	_tmp412 = row12
+	ol = _tmp412
+	_ = ol
 	goto BB136
 }
 
 // OrderstatusHop0Par calculates the partition for hop 0 without database access.
 func OrderstatusHop0Par(params map[string]string) uint64 {
-	var _tmp399 bool
+	var w_id uint64
+	var d_id uint64
+	var c_id uint64
+	var o_id uint64
+	var c Customer
+	var _tmp407 Customer
+	var _tmp408 Unit
+	var o Order
+	var _tmp409 Order
+	var _tmp410 Unit
+	var _tmp411 bool
+	var ol OrderLine
+	var _tmp412 OrderLine
+	var _tmp413 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+	var keyBytes2 []byte
+	var row2 Order
+	var keyBytes3 []byte
+	var row3 OrderLine
+	var keyBytes4 []byte
+	var row4 OrderLine
+	var keyBytes5 []byte
+	var row5 OrderLine
+	var keyBytes6 []byte
+	var row6 OrderLine
+	var keyBytes7 []byte
+	var row7 OrderLine
+	var keyBytes8 []byte
+	var row8 OrderLine
+	var keyBytes9 []byte
+	var row9 OrderLine
+	var keyBytes10 []byte
+	var row10 OrderLine
+	var keyBytes11 []byte
+	var row11 OrderLine
+	var keyBytes12 []byte
+	var row12 OrderLine
+
+	w_id = toUint64(params["w_id"])
+	d_id = toUint64(params["d_id"])
+	c_id = toUint64(params["c_id"])
+	o_id = toUint64(params["o_id"])
 
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
@@ -72,34 +230,130 @@ func OrderstatusHop0Par(params map[string]string) uint64 {
 	goto BB132
 
 BB132:
+	// First table access - calculate partition: Customer
+	if true { return getCustomerPar(CustomerKey{C_W_ID: w_id, C_D_ID: d_id, C_ID: c_id}) }
+	// TableGet: Customer
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{C_W_ID: w_id, C_D_ID: d_id, C_ID: c_id})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	_tmp407 = row1
+	c = _tmp407
+	_ = c
+	// First table access - calculate partition: Order
+	if true { return getOrderPar(OrderKey{O_W_ID: w_id, O_D_ID: d_id, O_ID: o_id}) }
+	// TableGet: Order
+	keyBytes2, row2 = getOrder(tx, OrderKey{O_W_ID: w_id, O_D_ID: d_id, O_ID: o_id})
+	rwSet = AddRWSet(rwSet, "Order", keyBytes2)
+	_tmp409 = row2
+	o = _tmp409
+	_ = o
 	goto BB134
-	_tmp399 = ol_number < O_OL_CNT
-	if _tmp399 {
+	_tmp411 = ol_number < O_OL_CNT
+	if _tmp411 {
 		goto BB134
 	} else {
 		goto BB136
 	}
 BB134:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 0}) }
+	// TableGet: OrderLine
+	keyBytes3, row3 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes3)
+	_tmp412 = row3
+	ol = _tmp412
+	_ = ol
 	goto BB247
 BB136:
 	return 0
 BB247:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 1}) }
+	// TableGet: OrderLine
+	keyBytes4, row4 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes4)
+	_tmp412 = row4
+	ol = _tmp412
+	_ = ol
 	goto BB248
 BB248:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 2}) }
+	// TableGet: OrderLine
+	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
+	_tmp412 = row5
+	ol = _tmp412
+	_ = ol
 	goto BB249
 BB249:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 3}) }
+	// TableGet: OrderLine
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	_tmp412 = row6
+	ol = _tmp412
+	_ = ol
 	goto BB250
 BB250:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 4}) }
+	// TableGet: OrderLine
+	keyBytes7, row7 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes7)
+	_tmp412 = row7
+	ol = _tmp412
+	_ = ol
 	goto BB251
 BB251:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 5}) }
+	// TableGet: OrderLine
+	keyBytes8, row8 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes8)
+	_tmp412 = row8
+	ol = _tmp412
+	_ = ol
 	goto BB252
 BB252:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 6}) }
+	// TableGet: OrderLine
+	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
+	_tmp412 = row9
+	ol = _tmp412
+	_ = ol
 	goto BB253
 BB253:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 7}) }
+	// TableGet: OrderLine
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	_tmp412 = row10
+	ol = _tmp412
+	_ = ol
 	goto BB254
 BB254:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 8}) }
+	// TableGet: OrderLine
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	_tmp412 = row11
+	ol = _tmp412
+	_ = ol
 	goto BB255
 BB255:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 9}) }
+	// TableGet: OrderLine
+	keyBytes12, row12 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes12)
+	_tmp412 = row12
+	ol = _tmp412
+	_ = ol
 	goto BB136
 }
 

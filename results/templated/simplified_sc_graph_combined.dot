@@ -2,16 +2,16 @@ digraph CombinedSCGraph {
   graph [rankdir=LR];
   node  [shape=record, fontsize=10, fontname=Helvetica];
   edge  [fontname=Helvetica];
-  cv0 [label="GenericReadModifyWrite#0\nHop 4\n"];
-  cv1 [label="GenericInsert#1\nHop 3\n"];
-  cv2 [label="GenericRead#1\nHop 1\n"];
+  cv0 [label="GenericRead#0\nHop 1\n"];
+  cv1 [label="GenericRead#1\nHop 1\n"];
+  cv2 [label="GenericUpdate#1\nHop 2\n"];
   cv3 [label="GenericUpdate#0\nHop 2\n"];
-  cv4 [label="GenericReadModifyWrite#0\nHop 5\n"];
-  cv5 [label="GenericUpdate#1\nHop 2\n"];
+  cv4 [label="GenericReadModifyWrite#0\nHop 4\n"];
+  cv5 [label="GenericInsert#1\nHop 3\n"];
   cv6 [label="GenericInsert#0\nHop 3\n"];
-  cv7 [label="GenericRead#0\nHop 1\n"];
-  cv8 [label="GenericReadModifyWrite#1\nHop 4\n"];
-  cv9 [label="GenericReadModifyWrite#1\nHop 5\n"];
-  cv0 -> cv4 [color=black, label="S"];
-  cv8 -> cv9 [color=black, label="S"];
+  cv7 [label="GenericReadModifyWrite#1\nHop 4\n"];
+  cv8 [label="GenericReadModifyWrite#1\nHop 5\n"];
+  cv9 [label="GenericReadModifyWrite#0\nHop 5\n"];
+  cv4 -> cv9 [color=black, label="S"];
+  cv7 -> cv8 [color=black, label="S"];
 }

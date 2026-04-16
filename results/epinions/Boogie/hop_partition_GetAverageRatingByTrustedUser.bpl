@@ -107,30 +107,47 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
-const __slice__ : int;
-const TBL_useracct : Table (useracct);
-var trust_target_u_id : [int][int]int;
-var review_i_id : [int][int]int;
-const TBL_trust : Table (trust);
-var review_creation_date : [int][int]int;
-var item_title : [int]String;
-const TBL_review : Table (review);
-var trust_trust : [int][int]int;
-const TBL_item : Table (item);
-var useracct_u_id : [int]int;
 const __shards__ : int;
 var useracct_name : [int]String;
-var review_rating : [int][int]int;
+const TBL_trust : Table (trust);
+var useracct_u_id : [int]int;
 var item_i_id : [int]int;
+var trust_target_u_id : [int][int]int;
+var item_title : [int]String;
+const TBL_useracct : Table (useracct);
+const TBL_item : Table (item);
+var review_i_id : [int][int]int;
+const TBL_review : Table (review);
+var trust_trust : [int][int]int;
+var review_rating : [int][int]int;
+const __slice__ : int;
 var review_u_id : [int][int]int;
 var trust_source_u_id : [int][int]int;
+var review_creation_date : [int][int]int;
 procedure verify_hop_partitions_GetAverageRatingByTrustedUser(iid: int, uid: int, reviewer_uid: int)
 {
+  var s2_r#rating : int;
+  var s2_reviewer_uid : int;
+  var s2_iid : int;
+  var s2_rating : int;
+  var s2_#tmp1 : unit;
+  var s3_t#trust : int;
+  var s3_uid : int;
+  var s3_reviewer_uid : int;
+  var s3_trust_level : int;
+  var s3_#tmp3 : unit;
+
   // Hop partition verification for function 'GetAverageRatingByTrustedUser'
   s2_block2:
+    s2_r#rating := review_rating[s2_reviewer_uid][s2_iid];
+    s2_rating := s2_r#rating;
+    s2_#tmp1 := to_unit(s2_rating);
     goto s2_hop_exit;
   s2_hop_exit:
   s3_block3:
+    s3_t#trust := trust_trust[s3_uid][s3_reviewer_uid];
+    s3_trust_level := s3_t#trust;
+    s3_#tmp3 := to_unit(s3_trust_level);
     goto s3_epilogue;
   s3_hop_exit:
   s2_epilogue:

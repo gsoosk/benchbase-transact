@@ -19,9 +19,364 @@ func Readrecord10Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp50320 uint64
+	var _tmp50322 uint64
+	var _tmp50323 uint64
+	var _tmp50324 uint64
+	var _tmp50325 uint64
+	var _tmp50326 uint64
+	var _tmp50327 uint64
+	var _tmp50328 uint64
+	var _tmp50329 uint64
+	var _tmp50330 uint64
+	var _tmp50331 uint64
+	var _tmp50333 uint64
+	var _tmp50334 uint64
+	var _tmp50335 uint64
+	var _tmp50337 uint64
+	var _tmp50338 uint64
+	var _tmp50339 uint64
+	var _tmp50340 uint64
+	var _tmp50341 uint64
+	var _tmp50342 uint64
+	var _tmp50343 uint64
+	var _tmp50346 uint64
+	var _tmp50347 uint64
+	var _tmp50348 uint64
+	var _tmp50349 uint64
+	var _tmp50351 uint64
+	var _tmp50352 uint64
+	var _tmp50353 uint64
+	var _tmp50354 uint64
+	var _tmp50355 uint64
+	var _tmp50356 uint64
+	var _tmp50357 uint64
+	var _tmp50358 uint64
+	var _tmp50359 uint64
+	var _tmp50360 uint64
+	var _tmp50361 uint64
+	var _tmp50362 uint64
+	var _tmp50363 uint64
+	var _tmp50365 uint64
+	var _tmp50367 uint64
+	var _tmp50368 uint64
+	var _tmp50369 uint64
+	var _tmp50370 uint64
+	var _tmp50371 uint64
+	var _tmp50372 uint64
+	var _tmp50373 uint64
+	var _tmp50375 uint64
+	var _tmp50377 uint64
+	var _tmp50378 uint64
+	var _tmp50379 uint64
+	var _tmp50388 uint64
+	var _tmp50391 uint64
+	var _tmp50392 uint64
+	var _tmp50396 uint64
+	var _tmp50398 uint64
+	var _tmp50399 uint64
+	var _tmp50402 uint64
+	var _tmp50403 uint64
+	var _tmp50404 uint64
+	var _tmp50406 uint64
+	var _tmp50407 uint64
+	var _tmp50408 uint64
+	var _tmp50411 uint64
+	var _tmp50412 uint64
+	var _tmp50414 uint64
+	var _tmp50416 uint64
+	var _tmp50418 uint64
+	var _tmp50420 uint64
+	var _tmp50424 uint64
+	var _tmp50425 uint64
+	var _tmp50428 uint64
+	var _tmp50432 uint64
+	var _tmp50433 uint64
+	var _tmp50435 uint64
+	var _tmp50436 uint64
+	var _tmp50441 uint64
+	var _tmp50459 uint64
+	var _tmp50460 uint64
+	var _tmp50462 uint64
+	var _tmp50488 uint64
+	var _tmp50489 uint64
+	var _tmp50490 uint64
+	var _tmp50495 uint64
+	var _tmp50506 uint64
+	var _tmp50517 uint64
+	var _tmp50518 uint64
+	var _tmp50545 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp50572 Unit
+	var _tmp50573 Unit
+	var _tmp50574 Unit
+	var _tmp50575 Unit
+	var _tmp50576 Unit
+	var _tmp50577 Unit
+	var _tmp50578 Unit
+	var _tmp50579 Unit
+	var _tmp50580 Unit
+	var _tmp50581 Unit
+	var _tmp50582 Unit
+	var _tmp50583 Unit
+	var _tmp50584 Unit
+	var _tmp50585 Unit
+	var _tmp50586 Unit
+	var _tmp50587 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB191
 
 BB191:
+	_tmp50320 = keyname + 0
+	_tmp50322 = _tmp50320
+	_tmp50323 = _tmp50322
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp50323})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp50324 = _tmp50323
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp50324})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp50325 = _tmp50324
+	_tmp50326 = _tmp50325
+	_tmp50327 = _tmp50326
+	_tmp50328 = _tmp50327
+	_tmp50329 = _tmp50328
+	_tmp50330 = _tmp50329
+	_tmp50331 = _tmp50330
+	_tmp50333 = _tmp50331
+	_tmp50334 = _tmp50333
+	_tmp50335 = _tmp50334
+	_tmp50337 = _tmp50335
+	_tmp50338 = _tmp50337
+	_tmp50339 = _tmp50338
+	_tmp50340 = _tmp50339
+	_tmp50341 = _tmp50340
+	_tmp50342 = _tmp50341
+	_tmp50343 = _tmp50342
+	_tmp50346 = _tmp50343
+	_tmp50347 = _tmp50346
+	_tmp50348 = _tmp50347
+	_tmp50349 = _tmp50348
+	_tmp50351 = _tmp50349
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp50351})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp50352 = _tmp50351
+	_tmp50353 = _tmp50352
+	_tmp50354 = _tmp50353
+	_tmp50355 = _tmp50354
+	_tmp50356 = _tmp50355
+	_tmp50357 = _tmp50356
+	_tmp50358 = _tmp50357
+	_tmp50359 = _tmp50358
+	_tmp50360 = _tmp50359
+	_tmp50361 = _tmp50360
+	_tmp50362 = _tmp50361
+	_tmp50363 = _tmp50362
+	_tmp50365 = _tmp50363
+	_tmp50367 = _tmp50365
+	_tmp50368 = _tmp50367
+	_tmp50369 = _tmp50368
+	_tmp50370 = _tmp50369
+	_tmp50371 = _tmp50370
+	_tmp50372 = _tmp50371
+	_tmp50373 = _tmp50372
+	_tmp50375 = _tmp50373
+	_tmp50377 = _tmp50375
+	_tmp50378 = _tmp50377
+	_tmp50379 = _tmp50378
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp50379})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp50388 = _tmp50379
+	_tmp50391 = _tmp50388
+	_tmp50392 = _tmp50391
+	_tmp50396 = _tmp50392
+	_tmp50398 = _tmp50396
+	_tmp50399 = _tmp50398
+	_tmp50402 = _tmp50399
+	_tmp50403 = _tmp50402
+	_tmp50404 = _tmp50403
+	_tmp50406 = _tmp50404
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp50406})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp50407 = _tmp50406
+	_tmp50408 = _tmp50407
+	_tmp50411 = _tmp50408
+	_tmp50412 = _tmp50411
+	_tmp50414 = _tmp50412
+	_tmp50416 = _tmp50414
+	_tmp50418 = _tmp50416
+	_tmp50420 = _tmp50418
+	_tmp50424 = _tmp50420
+	_tmp50425 = _tmp50424
+	_tmp50428 = _tmp50425
+	_tmp50432 = _tmp50428
+	_tmp50433 = _tmp50432
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp50433})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp50435 = _tmp50433
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp50435})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp50436 = _tmp50435
+	_tmp50441 = _tmp50436
+	_tmp50459 = _tmp50441
+	_tmp50460 = _tmp50459
+	_tmp50462 = _tmp50460
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp50462})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp50488 = _tmp50462
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp50488})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp50489 = _tmp50488
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp50489})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp50490 = _tmp50489
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp50490})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp50495 = _tmp50490
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp50495})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp50506 = _tmp50495
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp50506})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp50517 = _tmp50506
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp50517})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp50518 = _tmp50517
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp50518})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp50545 = _tmp50518
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp50545})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +389,352 @@ func Readrecord10Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp50588 uint64
+	var _tmp50590 uint64
+	var _tmp50591 uint64
+	var _tmp50592 uint64
+	var _tmp50593 uint64
+	var _tmp50594 uint64
+	var _tmp50595 uint64
+	var _tmp50596 uint64
+	var _tmp50597 uint64
+	var _tmp50598 uint64
+	var _tmp50599 uint64
+	var _tmp50600 uint64
+	var _tmp50601 uint64
+	var _tmp50602 uint64
+	var _tmp50604 uint64
+	var _tmp50605 uint64
+	var _tmp50606 uint64
+	var _tmp50607 uint64
+	var _tmp50609 uint64
+	var _tmp50610 uint64
+	var _tmp50611 uint64
+	var _tmp50612 uint64
+	var _tmp50613 uint64
+	var _tmp50616 uint64
+	var _tmp50617 uint64
+	var _tmp50619 uint64
+	var _tmp50620 uint64
+	var _tmp50622 uint64
+	var _tmp50623 uint64
+	var _tmp50625 uint64
+	var _tmp50627 uint64
+	var _tmp50628 uint64
+	var _tmp50629 uint64
+	var _tmp50630 uint64
+	var _tmp50631 uint64
+	var _tmp50633 uint64
+	var _tmp50634 uint64
+	var _tmp50635 uint64
+	var _tmp50637 uint64
+	var _tmp50638 uint64
+	var _tmp50640 uint64
+	var _tmp50646 uint64
+	var _tmp50647 uint64
+	var _tmp50649 uint64
+	var _tmp50650 uint64
+	var _tmp50651 uint64
+	var _tmp50652 uint64
+	var _tmp50653 uint64
+	var _tmp50655 uint64
+	var _tmp50658 uint64
+	var _tmp50665 uint64
+	var _tmp50671 uint64
+	var _tmp50674 uint64
+	var _tmp50676 uint64
+	var _tmp50679 uint64
+	var _tmp50682 uint64
+	var _tmp50683 uint64
+	var _tmp50697 uint64
+	var _tmp50700 uint64
+	var _tmp50701 uint64
+	var _tmp50703 uint64
+	var _tmp50707 uint64
+	var _tmp50708 uint64
+	var _tmp50714 uint64
+	var _tmp50718 uint64
+	var _tmp50726 uint64
+	var _tmp50730 uint64
+	var _tmp50737 uint64
+	var _tmp50750 uint64
+	var _tmp50751 uint64
+	var _tmp50754 uint64
+	var _tmp50756 uint64
+	var _tmp50757 uint64
+	var _tmp50758 uint64
+	var _tmp50763 uint64
+	var _tmp50774 uint64
+	var _tmp50785 uint64
+	var _tmp50786 uint64
+	var _tmp50797 uint64
+	var _tmp50806 uint64
+	var _tmp50813 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp50840 Unit
+	var _tmp50841 Unit
+	var _tmp50842 Unit
+	var _tmp50843 Unit
+	var _tmp50844 Unit
+	var _tmp50845 Unit
+	var _tmp50846 Unit
+	var _tmp50847 Unit
+	var _tmp50848 Unit
+	var _tmp50849 Unit
+	var _tmp50850 Unit
+	var _tmp50851 Unit
+	var _tmp50852 Unit
+	var _tmp50853 Unit
+	var _tmp50854 Unit
+	var _tmp50855 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB192
 
 BB192:
+	_tmp50588 = keyname + 1
+	_tmp50590 = _tmp50588
+	_tmp50591 = _tmp50590
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp50591})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp50592 = _tmp50591
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp50592})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp50593 = _tmp50592
+	_tmp50594 = _tmp50593
+	_tmp50595 = _tmp50594
+	_tmp50596 = _tmp50595
+	_tmp50597 = _tmp50596
+	_tmp50598 = _tmp50597
+	_tmp50599 = _tmp50598
+	_tmp50600 = _tmp50599
+	_tmp50601 = _tmp50600
+	_tmp50602 = _tmp50601
+	_tmp50604 = _tmp50602
+	_tmp50605 = _tmp50604
+	_tmp50606 = _tmp50605
+	_tmp50607 = _tmp50606
+	_tmp50609 = _tmp50607
+	_tmp50610 = _tmp50609
+	_tmp50611 = _tmp50610
+	_tmp50612 = _tmp50611
+	_tmp50613 = _tmp50612
+	_tmp50616 = _tmp50613
+	_tmp50617 = _tmp50616
+	_tmp50619 = _tmp50617
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp50619})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp50620 = _tmp50619
+	_tmp50622 = _tmp50620
+	_tmp50623 = _tmp50622
+	_tmp50625 = _tmp50623
+	_tmp50627 = _tmp50625
+	_tmp50628 = _tmp50627
+	_tmp50629 = _tmp50628
+	_tmp50630 = _tmp50629
+	_tmp50631 = _tmp50630
+	_tmp50633 = _tmp50631
+	_tmp50634 = _tmp50633
+	_tmp50635 = _tmp50634
+	_tmp50637 = _tmp50635
+	_tmp50638 = _tmp50637
+	_tmp50640 = _tmp50638
+	_tmp50646 = _tmp50640
+	_tmp50647 = _tmp50646
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp50647})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp50649 = _tmp50647
+	_tmp50650 = _tmp50649
+	_tmp50651 = _tmp50650
+	_tmp50652 = _tmp50651
+	_tmp50653 = _tmp50652
+	_tmp50655 = _tmp50653
+	_tmp50658 = _tmp50655
+	_tmp50665 = _tmp50658
+	_tmp50671 = _tmp50665
+	_tmp50674 = _tmp50671
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp50674})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp50676 = _tmp50674
+	_tmp50679 = _tmp50676
+	_tmp50682 = _tmp50679
+	_tmp50683 = _tmp50682
+	_tmp50697 = _tmp50683
+	_tmp50700 = _tmp50697
+	_tmp50701 = _tmp50700
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp50701})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp50703 = _tmp50701
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp50703})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp50707 = _tmp50703
+	_tmp50708 = _tmp50707
+	_tmp50714 = _tmp50708
+	_tmp50718 = _tmp50714
+	_tmp50726 = _tmp50718
+	_tmp50730 = _tmp50726
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp50730})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp50737 = _tmp50730
+	_tmp50750 = _tmp50737
+	_tmp50751 = _tmp50750
+	_tmp50754 = _tmp50751
+	_tmp50756 = _tmp50754
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp50756})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp50757 = _tmp50756
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp50757})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp50758 = _tmp50757
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp50758})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp50763 = _tmp50758
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp50763})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp50774 = _tmp50763
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp50774})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp50785 = _tmp50774
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp50785})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp50786 = _tmp50785
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp50786})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp50797 = _tmp50786
+	_tmp50806 = _tmp50797
+	_tmp50813 = _tmp50806
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp50813})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +747,352 @@ func Readrecord10Hop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp50856 uint64
+	var _tmp50858 uint64
+	var _tmp50859 uint64
+	var _tmp50860 uint64
+	var _tmp50861 uint64
+	var _tmp50862 uint64
+	var _tmp50863 uint64
+	var _tmp50864 uint64
+	var _tmp50865 uint64
+	var _tmp50866 uint64
+	var _tmp50867 uint64
+	var _tmp50869 uint64
+	var _tmp50870 uint64
+	var _tmp50871 uint64
+	var _tmp50872 uint64
+	var _tmp50873 uint64
+	var _tmp50874 uint64
+	var _tmp50875 uint64
+	var _tmp50876 uint64
+	var _tmp50877 uint64
+	var _tmp50878 uint64
+	var _tmp50879 uint64
+	var _tmp50880 uint64
+	var _tmp50881 uint64
+	var _tmp50882 uint64
+	var _tmp50885 uint64
+	var _tmp50886 uint64
+	var _tmp50887 uint64
+	var _tmp50890 uint64
+	var _tmp50892 uint64
+	var _tmp50893 uint64
+	var _tmp50895 uint64
+	var _tmp50898 uint64
+	var _tmp50901 uint64
+	var _tmp50902 uint64
+	var _tmp50903 uint64
+	var _tmp50904 uint64
+	var _tmp50906 uint64
+	var _tmp50909 uint64
+	var _tmp50910 uint64
+	var _tmp50913 uint64
+	var _tmp50914 uint64
+	var _tmp50915 uint64
+	var _tmp50916 uint64
+	var _tmp50917 uint64
+	var _tmp50918 uint64
+	var _tmp50924 uint64
+	var _tmp50928 uint64
+	var _tmp50930 uint64
+	var _tmp50935 uint64
+	var _tmp50936 uint64
+	var _tmp50937 uint64
+	var _tmp50940 uint64
+	var _tmp50942 uint64
+	var _tmp50943 uint64
+	var _tmp50950 uint64
+	var _tmp50951 uint64
+	var _tmp50953 uint64
+	var _tmp50959 uint64
+	var _tmp50960 uint64
+	var _tmp50962 uint64
+	var _tmp50963 uint64
+	var _tmp50969 uint64
+	var _tmp50971 uint64
+	var _tmp50975 uint64
+	var _tmp50980 uint64
+	var _tmp50986 uint64
+	var _tmp50993 uint64
+	var _tmp50995 uint64
+	var _tmp50998 uint64
+	var _tmp51004 uint64
+	var _tmp51013 uint64
+	var _tmp51020 uint64
+	var _tmp51024 uint64
+	var _tmp51025 uint64
+	var _tmp51026 uint64
+	var _tmp51031 uint64
+	var _tmp51042 uint64
+	var _tmp51053 uint64
+	var _tmp51054 uint64
+	var _tmp51081 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp51108 Unit
+	var _tmp51109 Unit
+	var _tmp51110 Unit
+	var _tmp51111 Unit
+	var _tmp51112 Unit
+	var _tmp51113 Unit
+	var _tmp51114 Unit
+	var _tmp51115 Unit
+	var _tmp51116 Unit
+	var _tmp51117 Unit
+	var _tmp51118 Unit
+	var _tmp51119 Unit
+	var _tmp51120 Unit
+	var _tmp51121 Unit
+	var _tmp51122 Unit
+	var _tmp51123 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB193
 
 BB193:
+	_tmp50856 = keyname + 2
+	_tmp50858 = _tmp50856
+	_tmp50859 = _tmp50858
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp50859})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp50860 = _tmp50859
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp50860})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp50861 = _tmp50860
+	_tmp50862 = _tmp50861
+	_tmp50863 = _tmp50862
+	_tmp50864 = _tmp50863
+	_tmp50865 = _tmp50864
+	_tmp50866 = _tmp50865
+	_tmp50867 = _tmp50866
+	_tmp50869 = _tmp50867
+	_tmp50870 = _tmp50869
+	_tmp50871 = _tmp50870
+	_tmp50872 = _tmp50871
+	_tmp50873 = _tmp50872
+	_tmp50874 = _tmp50873
+	_tmp50875 = _tmp50874
+	_tmp50876 = _tmp50875
+	_tmp50877 = _tmp50876
+	_tmp50878 = _tmp50877
+	_tmp50879 = _tmp50878
+	_tmp50880 = _tmp50879
+	_tmp50881 = _tmp50880
+	_tmp50882 = _tmp50881
+	_tmp50885 = _tmp50882
+	_tmp50886 = _tmp50885
+	_tmp50887 = _tmp50886
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp50887})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp50890 = _tmp50887
+	_tmp50892 = _tmp50890
+	_tmp50893 = _tmp50892
+	_tmp50895 = _tmp50893
+	_tmp50898 = _tmp50895
+	_tmp50901 = _tmp50898
+	_tmp50902 = _tmp50901
+	_tmp50903 = _tmp50902
+	_tmp50904 = _tmp50903
+	_tmp50906 = _tmp50904
+	_tmp50909 = _tmp50906
+	_tmp50910 = _tmp50909
+	_tmp50913 = _tmp50910
+	_tmp50914 = _tmp50913
+	_tmp50915 = _tmp50914
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp50915})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp50916 = _tmp50915
+	_tmp50917 = _tmp50916
+	_tmp50918 = _tmp50917
+	_tmp50924 = _tmp50918
+	_tmp50928 = _tmp50924
+	_tmp50930 = _tmp50928
+	_tmp50935 = _tmp50930
+	_tmp50936 = _tmp50935
+	_tmp50937 = _tmp50936
+	_tmp50940 = _tmp50937
+	_tmp50942 = _tmp50940
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp50942})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp50943 = _tmp50942
+	_tmp50950 = _tmp50943
+	_tmp50951 = _tmp50950
+	_tmp50953 = _tmp50951
+	_tmp50959 = _tmp50953
+	_tmp50960 = _tmp50959
+	_tmp50962 = _tmp50960
+	_tmp50963 = _tmp50962
+	_tmp50969 = _tmp50963
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp50969})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp50971 = _tmp50969
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp50971})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp50975 = _tmp50971
+	_tmp50980 = _tmp50975
+	_tmp50986 = _tmp50980
+	_tmp50993 = _tmp50986
+	_tmp50995 = _tmp50993
+	_tmp50998 = _tmp50995
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp50998})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp51004 = _tmp50998
+	_tmp51013 = _tmp51004
+	_tmp51020 = _tmp51013
+	_tmp51024 = _tmp51020
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp51024})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp51025 = _tmp51024
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp51025})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp51026 = _tmp51025
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp51026})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp51031 = _tmp51026
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp51031})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp51042 = _tmp51031
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp51042})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp51053 = _tmp51042
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp51053})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp51054 = _tmp51053
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp51054})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp51081 = _tmp51054
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp51081})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -64,9 +1105,376 @@ func Readrecord10Hop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp51124 uint64
+	var _tmp51126 uint64
+	var _tmp51127 uint64
+	var _tmp51128 uint64
+	var _tmp51129 uint64
+	var _tmp51130 uint64
+	var _tmp51131 uint64
+	var _tmp51132 uint64
+	var _tmp51133 uint64
+	var _tmp51134 uint64
+	var _tmp51135 uint64
+	var _tmp51136 uint64
+	var _tmp51137 uint64
+	var _tmp51138 uint64
+	var _tmp51139 uint64
+	var _tmp51140 uint64
+	var _tmp51141 uint64
+	var _tmp51142 uint64
+	var _tmp51145 uint64
+	var _tmp51146 uint64
+	var _tmp51147 uint64
+	var _tmp51148 uint64
+	var _tmp51149 uint64
+	var _tmp51150 uint64
+	var _tmp51152 uint64
+	var _tmp51153 uint64
+	var _tmp51154 uint64
+	var _tmp51155 uint64
+	var _tmp51156 uint64
+	var _tmp51157 uint64
+	var _tmp51159 uint64
+	var _tmp51160 uint64
+	var _tmp51161 uint64
+	var _tmp51162 uint64
+	var _tmp51163 uint64
+	var _tmp51164 uint64
+	var _tmp51166 uint64
+	var _tmp51169 uint64
+	var _tmp51170 uint64
+	var _tmp51171 uint64
+	var _tmp51172 uint64
+	var _tmp51174 uint64
+	var _tmp51177 uint64
+	var _tmp51179 uint64
+	var _tmp51181 uint64
+	var _tmp51183 uint64
+	var _tmp51184 uint64
+	var _tmp51185 uint64
+	var _tmp51186 uint64
+	var _tmp51189 uint64
+	var _tmp51190 uint64
+	var _tmp51192 uint64
+	var _tmp51193 uint64
+	var _tmp51194 uint64
+	var _tmp51201 uint64
+	var _tmp51202 uint64
+	var _tmp51204 uint64
+	var _tmp51205 uint64
+	var _tmp51206 uint64
+	var _tmp51207 uint64
+	var _tmp51210 uint64
+	var _tmp51211 uint64
+	var _tmp51213 uint64
+	var _tmp51214 uint64
+	var _tmp51215 uint64
+	var _tmp51217 uint64
+	var _tmp51222 uint64
+	var _tmp51223 uint64
+	var _tmp51224 uint64
+	var _tmp51228 uint64
+	var _tmp51237 uint64
+	var _tmp51239 uint64
+	var _tmp51241 uint64
+	var _tmp51243 uint64
+	var _tmp51247 uint64
+	var _tmp51249 uint64
+	var _tmp51263 uint64
+	var _tmp51266 uint64
+	var _tmp51267 uint64
+	var _tmp51283 uint64
+	var _tmp51286 uint64
+	var _tmp51292 uint64
+	var _tmp51293 uint64
+	var _tmp51294 uint64
+	var _tmp51295 uint64
+	var _tmp51296 uint64
+	var _tmp51299 uint64
+	var _tmp51300 uint64
+	var _tmp51306 uint64
+	var _tmp51310 uint64
+	var _tmp51321 uint64
+	var _tmp51322 uint64
+	var _tmp51349 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp51376 Unit
+	var _tmp51377 Unit
+	var _tmp51378 Unit
+	var _tmp51379 Unit
+	var _tmp51380 Unit
+	var _tmp51381 Unit
+	var _tmp51382 Unit
+	var _tmp51383 Unit
+	var _tmp51384 Unit
+	var _tmp51385 Unit
+	var _tmp51386 Unit
+	var _tmp51387 Unit
+	var _tmp51388 Unit
+	var _tmp51389 Unit
+	var _tmp51390 Unit
+	var _tmp51391 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB194
 
 BB194:
+	_tmp51124 = keyname + 3
+	_tmp51126 = _tmp51124
+	_tmp51127 = _tmp51126
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp51127})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp51128 = _tmp51127
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp51128})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp51129 = _tmp51128
+	_tmp51130 = _tmp51129
+	_tmp51131 = _tmp51130
+	_tmp51132 = _tmp51131
+	_tmp51133 = _tmp51132
+	_tmp51134 = _tmp51133
+	_tmp51135 = _tmp51134
+	_tmp51136 = _tmp51135
+	_tmp51137 = _tmp51136
+	_tmp51138 = _tmp51137
+	_tmp51139 = _tmp51138
+	_tmp51140 = _tmp51139
+	_tmp51141 = _tmp51140
+	_tmp51142 = _tmp51141
+	_tmp51145 = _tmp51142
+	_tmp51146 = _tmp51145
+	_tmp51147 = _tmp51146
+	_tmp51148 = _tmp51147
+	_tmp51149 = _tmp51148
+	_tmp51150 = _tmp51149
+	_tmp51152 = _tmp51150
+	_tmp51153 = _tmp51152
+	_tmp51154 = _tmp51153
+	_tmp51155 = _tmp51154
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp51155})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp51156 = _tmp51155
+	_tmp51157 = _tmp51156
+	_tmp51159 = _tmp51157
+	_tmp51160 = _tmp51159
+	_tmp51161 = _tmp51160
+	_tmp51162 = _tmp51161
+	_tmp51163 = _tmp51162
+	_tmp51164 = _tmp51163
+	_tmp51166 = _tmp51164
+	_tmp51169 = _tmp51166
+	_tmp51170 = _tmp51169
+	_tmp51171 = _tmp51170
+	_tmp51172 = _tmp51171
+	_tmp51174 = _tmp51172
+	_tmp51177 = _tmp51174
+	_tmp51179 = _tmp51177
+	_tmp51181 = _tmp51179
+	_tmp51183 = _tmp51181
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp51183})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp51184 = _tmp51183
+	_tmp51185 = _tmp51184
+	_tmp51186 = _tmp51185
+	_tmp51189 = _tmp51186
+	_tmp51190 = _tmp51189
+	_tmp51192 = _tmp51190
+	_tmp51193 = _tmp51192
+	_tmp51194 = _tmp51193
+	_tmp51201 = _tmp51194
+	_tmp51202 = _tmp51201
+	_tmp51204 = _tmp51202
+	_tmp51205 = _tmp51204
+	_tmp51206 = _tmp51205
+	_tmp51207 = _tmp51206
+	_tmp51210 = _tmp51207
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp51210})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp51211 = _tmp51210
+	_tmp51213 = _tmp51211
+	_tmp51214 = _tmp51213
+	_tmp51215 = _tmp51214
+	_tmp51217 = _tmp51215
+	_tmp51222 = _tmp51217
+	_tmp51223 = _tmp51222
+	_tmp51224 = _tmp51223
+	_tmp51228 = _tmp51224
+	_tmp51237 = _tmp51228
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp51237})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp51239 = _tmp51237
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp51239})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp51241 = _tmp51239
+	_tmp51243 = _tmp51241
+	_tmp51247 = _tmp51243
+	_tmp51249 = _tmp51247
+	_tmp51263 = _tmp51249
+	_tmp51266 = _tmp51263
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp51266})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp51267 = _tmp51266
+	_tmp51283 = _tmp51267
+	_tmp51286 = _tmp51283
+	_tmp51292 = _tmp51286
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp51292})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp51293 = _tmp51292
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp51293})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp51294 = _tmp51293
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp51294})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp51295 = _tmp51294
+	_tmp51296 = _tmp51295
+	_tmp51299 = _tmp51296
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp51299})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp51300 = _tmp51299
+	_tmp51306 = _tmp51300
+	_tmp51310 = _tmp51306
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp51310})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp51321 = _tmp51310
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp51321})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp51322 = _tmp51321
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp51322})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp51349 = _tmp51322
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp51349})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -79,9 +1487,386 @@ func Readrecord10Hop4(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp51392 uint64
+	var _tmp51394 uint64
+	var _tmp51395 uint64
+	var _tmp51396 uint64
+	var _tmp51397 uint64
+	var _tmp51398 uint64
+	var _tmp51399 uint64
+	var _tmp51400 uint64
+	var _tmp51401 uint64
+	var _tmp51402 uint64
+	var _tmp51403 uint64
+	var _tmp51404 uint64
+	var _tmp51405 uint64
+	var _tmp51406 uint64
+	var _tmp51407 uint64
+	var _tmp51408 uint64
+	var _tmp51409 uint64
+	var _tmp51410 uint64
+	var _tmp51412 uint64
+	var _tmp51413 uint64
+	var _tmp51414 uint64
+	var _tmp51415 uint64
+	var _tmp51416 uint64
+	var _tmp51417 uint64
+	var _tmp51418 uint64
+	var _tmp51419 uint64
+	var _tmp51420 uint64
+	var _tmp51421 uint64
+	var _tmp51422 uint64
+	var _tmp51423 uint64
+	var _tmp51424 uint64
+	var _tmp51425 uint64
+	var _tmp51426 uint64
+	var _tmp51427 uint64
+	var _tmp51428 uint64
+	var _tmp51429 uint64
+	var _tmp51430 uint64
+	var _tmp51431 uint64
+	var _tmp51433 uint64
+	var _tmp51434 uint64
+	var _tmp51435 uint64
+	var _tmp51436 uint64
+	var _tmp51437 uint64
+	var _tmp51438 uint64
+	var _tmp51440 uint64
+	var _tmp51441 uint64
+	var _tmp51442 uint64
+	var _tmp51444 uint64
+	var _tmp51445 uint64
+	var _tmp51446 uint64
+	var _tmp51447 uint64
+	var _tmp51448 uint64
+	var _tmp51450 uint64
+	var _tmp51451 uint64
+	var _tmp51455 uint64
+	var _tmp51456 uint64
+	var _tmp51460 uint64
+	var _tmp51461 uint64
+	var _tmp51463 uint64
+	var _tmp51465 uint64
+	var _tmp51468 uint64
+	var _tmp51471 uint64
+	var _tmp51472 uint64
+	var _tmp51473 uint64
+	var _tmp51478 uint64
+	var _tmp51480 uint64
+	var _tmp51484 uint64
+	var _tmp51485 uint64
+	var _tmp51486 uint64
+	var _tmp51489 uint64
+	var _tmp51494 uint64
+	var _tmp51495 uint64
+	var _tmp51505 uint64
+	var _tmp51507 uint64
+	var _tmp51513 uint64
+	var _tmp51515 uint64
+	var _tmp51517 uint64
+	var _tmp51521 uint64
+	var _tmp51524 uint64
+	var _tmp51531 uint64
+	var _tmp51533 uint64
+	var _tmp51534 uint64
+	var _tmp51539 uint64
+	var _tmp51540 uint64
+	var _tmp51541 uint64
+	var _tmp51546 uint64
+	var _tmp51550 uint64
+	var _tmp51555 uint64
+	var _tmp51560 uint64
+	var _tmp51561 uint64
+	var _tmp51562 uint64
+	var _tmp51567 uint64
+	var _tmp51578 uint64
+	var _tmp51589 uint64
+	var _tmp51590 uint64
+	var _tmp51591 uint64
+	var _tmp51604 uint64
+	var _tmp51617 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp51644 Unit
+	var _tmp51645 Unit
+	var _tmp51646 Unit
+	var _tmp51647 Unit
+	var _tmp51648 Unit
+	var _tmp51649 Unit
+	var _tmp51650 Unit
+	var _tmp51651 Unit
+	var _tmp51652 Unit
+	var _tmp51653 Unit
+	var _tmp51654 Unit
+	var _tmp51655 Unit
+	var _tmp51656 Unit
+	var _tmp51657 Unit
+	var _tmp51658 Unit
+	var _tmp51659 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB195
 
 BB195:
+	_tmp51392 = keyname + 4
+	_tmp51394 = _tmp51392
+	_tmp51395 = _tmp51394
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp51395})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp51396 = _tmp51395
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp51396})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp51397 = _tmp51396
+	_tmp51398 = _tmp51397
+	_tmp51399 = _tmp51398
+	_tmp51400 = _tmp51399
+	_tmp51401 = _tmp51400
+	_tmp51402 = _tmp51401
+	_tmp51403 = _tmp51402
+	_tmp51404 = _tmp51403
+	_tmp51405 = _tmp51404
+	_tmp51406 = _tmp51405
+	_tmp51407 = _tmp51406
+	_tmp51408 = _tmp51407
+	_tmp51409 = _tmp51408
+	_tmp51410 = _tmp51409
+	_tmp51412 = _tmp51410
+	_tmp51413 = _tmp51412
+	_tmp51414 = _tmp51413
+	_tmp51415 = _tmp51414
+	_tmp51416 = _tmp51415
+	_tmp51417 = _tmp51416
+	_tmp51418 = _tmp51417
+	_tmp51419 = _tmp51418
+	_tmp51420 = _tmp51419
+	_tmp51421 = _tmp51420
+	_tmp51422 = _tmp51421
+	_tmp51423 = _tmp51422
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp51423})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp51424 = _tmp51423
+	_tmp51425 = _tmp51424
+	_tmp51426 = _tmp51425
+	_tmp51427 = _tmp51426
+	_tmp51428 = _tmp51427
+	_tmp51429 = _tmp51428
+	_tmp51430 = _tmp51429
+	_tmp51431 = _tmp51430
+	_tmp51433 = _tmp51431
+	_tmp51434 = _tmp51433
+	_tmp51435 = _tmp51434
+	_tmp51436 = _tmp51435
+	_tmp51437 = _tmp51436
+	_tmp51438 = _tmp51437
+	_tmp51440 = _tmp51438
+	_tmp51441 = _tmp51440
+	_tmp51442 = _tmp51441
+	_tmp51444 = _tmp51442
+	_tmp51445 = _tmp51444
+	_tmp51446 = _tmp51445
+	_tmp51447 = _tmp51446
+	_tmp51448 = _tmp51447
+	_tmp51450 = _tmp51448
+	_tmp51451 = _tmp51450
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp51451})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp51455 = _tmp51451
+	_tmp51456 = _tmp51455
+	_tmp51460 = _tmp51456
+	_tmp51461 = _tmp51460
+	_tmp51463 = _tmp51461
+	_tmp51465 = _tmp51463
+	_tmp51468 = _tmp51465
+	_tmp51471 = _tmp51468
+	_tmp51472 = _tmp51471
+	_tmp51473 = _tmp51472
+	_tmp51478 = _tmp51473
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp51478})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp51480 = _tmp51478
+	_tmp51484 = _tmp51480
+	_tmp51485 = _tmp51484
+	_tmp51486 = _tmp51485
+	_tmp51489 = _tmp51486
+	_tmp51494 = _tmp51489
+	_tmp51495 = _tmp51494
+	_tmp51505 = _tmp51495
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp51505})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp51507 = _tmp51505
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp51507})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp51513 = _tmp51507
+	_tmp51515 = _tmp51513
+	_tmp51517 = _tmp51515
+	_tmp51521 = _tmp51517
+	_tmp51524 = _tmp51521
+	_tmp51531 = _tmp51524
+	_tmp51533 = _tmp51531
+	_tmp51534 = _tmp51533
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp51534})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp51539 = _tmp51534
+	_tmp51540 = _tmp51539
+	_tmp51541 = _tmp51540
+	_tmp51546 = _tmp51541
+	_tmp51550 = _tmp51546
+	_tmp51555 = _tmp51550
+	_tmp51560 = _tmp51555
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp51560})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp51561 = _tmp51560
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp51561})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp51562 = _tmp51561
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp51562})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp51567 = _tmp51562
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp51567})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp51578 = _tmp51567
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp51578})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp51589 = _tmp51578
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp51589})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp51590 = _tmp51589
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp51590})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp51591 = _tmp51590
+	_tmp51604 = _tmp51591
+	_tmp51617 = _tmp51604
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp51617})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -94,9 +1879,376 @@ func Readrecord10Hop5(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp51660 uint64
+	var _tmp51662 uint64
+	var _tmp51663 uint64
+	var _tmp51664 uint64
+	var _tmp51665 uint64
+	var _tmp51666 uint64
+	var _tmp51667 uint64
+	var _tmp51668 uint64
+	var _tmp51669 uint64
+	var _tmp51670 uint64
+	var _tmp51671 uint64
+	var _tmp51672 uint64
+	var _tmp51673 uint64
+	var _tmp51674 uint64
+	var _tmp51675 uint64
+	var _tmp51676 uint64
+	var _tmp51677 uint64
+	var _tmp51678 uint64
+	var _tmp51679 uint64
+	var _tmp51680 uint64
+	var _tmp51681 uint64
+	var _tmp51682 uint64
+	var _tmp51683 uint64
+	var _tmp51684 uint64
+	var _tmp51685 uint64
+	var _tmp51686 uint64
+	var _tmp51687 uint64
+	var _tmp51688 uint64
+	var _tmp51689 uint64
+	var _tmp51690 uint64
+	var _tmp51691 uint64
+	var _tmp51692 uint64
+	var _tmp51693 uint64
+	var _tmp51695 uint64
+	var _tmp51697 uint64
+	var _tmp51698 uint64
+	var _tmp51699 uint64
+	var _tmp51701 uint64
+	var _tmp51702 uint64
+	var _tmp51703 uint64
+	var _tmp51704 uint64
+	var _tmp51705 uint64
+	var _tmp51706 uint64
+	var _tmp51709 uint64
+	var _tmp51710 uint64
+	var _tmp51712 uint64
+	var _tmp51715 uint64
+	var _tmp51717 uint64
+	var _tmp51719 uint64
+	var _tmp51720 uint64
+	var _tmp51721 uint64
+	var _tmp51722 uint64
+	var _tmp51723 uint64
+	var _tmp51725 uint64
+	var _tmp51730 uint64
+	var _tmp51732 uint64
+	var _tmp51733 uint64
+	var _tmp51734 uint64
+	var _tmp51738 uint64
+	var _tmp51739 uint64
+	var _tmp51740 uint64
+	var _tmp51742 uint64
+	var _tmp51744 uint64
+	var _tmp51746 uint64
+	var _tmp51747 uint64
+	var _tmp51750 uint64
+	var _tmp51751 uint64
+	var _tmp51752 uint64
+	var _tmp51754 uint64
+	var _tmp51756 uint64
+	var _tmp51758 uint64
+	var _tmp51759 uint64
+	var _tmp51764 uint64
+	var _tmp51766 uint64
+	var _tmp51771 uint64
+	var _tmp51773 uint64
+	var _tmp51775 uint64
+	var _tmp51785 uint64
+	var _tmp51786 uint64
+	var _tmp51788 uint64
+	var _tmp51802 uint64
+	var _tmp51807 uint64
+	var _tmp51809 uint64
+	var _tmp51819 uint64
+	var _tmp51825 uint64
+	var _tmp51828 uint64
+	var _tmp51829 uint64
+	var _tmp51830 uint64
+	var _tmp51835 uint64
+	var _tmp51846 uint64
+	var _tmp51857 uint64
+	var _tmp51858 uint64
+	var _tmp51885 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp51912 Unit
+	var _tmp51913 Unit
+	var _tmp51914 Unit
+	var _tmp51915 Unit
+	var _tmp51916 Unit
+	var _tmp51917 Unit
+	var _tmp51918 Unit
+	var _tmp51919 Unit
+	var _tmp51920 Unit
+	var _tmp51921 Unit
+	var _tmp51922 Unit
+	var _tmp51923 Unit
+	var _tmp51924 Unit
+	var _tmp51925 Unit
+	var _tmp51926 Unit
+	var _tmp51927 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB196
 
 BB196:
+	_tmp51660 = keyname + 5
+	_tmp51662 = _tmp51660
+	_tmp51663 = _tmp51662
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp51663})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp51664 = _tmp51663
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp51664})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp51665 = _tmp51664
+	_tmp51666 = _tmp51665
+	_tmp51667 = _tmp51666
+	_tmp51668 = _tmp51667
+	_tmp51669 = _tmp51668
+	_tmp51670 = _tmp51669
+	_tmp51671 = _tmp51670
+	_tmp51672 = _tmp51671
+	_tmp51673 = _tmp51672
+	_tmp51674 = _tmp51673
+	_tmp51675 = _tmp51674
+	_tmp51676 = _tmp51675
+	_tmp51677 = _tmp51676
+	_tmp51678 = _tmp51677
+	_tmp51679 = _tmp51678
+	_tmp51680 = _tmp51679
+	_tmp51681 = _tmp51680
+	_tmp51682 = _tmp51681
+	_tmp51683 = _tmp51682
+	_tmp51684 = _tmp51683
+	_tmp51685 = _tmp51684
+	_tmp51686 = _tmp51685
+	_tmp51687 = _tmp51686
+	_tmp51688 = _tmp51687
+	_tmp51689 = _tmp51688
+	_tmp51690 = _tmp51689
+	_tmp51691 = _tmp51690
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp51691})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp51692 = _tmp51691
+	_tmp51693 = _tmp51692
+	_tmp51695 = _tmp51693
+	_tmp51697 = _tmp51695
+	_tmp51698 = _tmp51697
+	_tmp51699 = _tmp51698
+	_tmp51701 = _tmp51699
+	_tmp51702 = _tmp51701
+	_tmp51703 = _tmp51702
+	_tmp51704 = _tmp51703
+	_tmp51705 = _tmp51704
+	_tmp51706 = _tmp51705
+	_tmp51709 = _tmp51706
+	_tmp51710 = _tmp51709
+	_tmp51712 = _tmp51710
+	_tmp51715 = _tmp51712
+	_tmp51717 = _tmp51715
+	_tmp51719 = _tmp51717
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp51719})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp51720 = _tmp51719
+	_tmp51721 = _tmp51720
+	_tmp51722 = _tmp51721
+	_tmp51723 = _tmp51722
+	_tmp51725 = _tmp51723
+	_tmp51730 = _tmp51725
+	_tmp51732 = _tmp51730
+	_tmp51733 = _tmp51732
+	_tmp51734 = _tmp51733
+	_tmp51738 = _tmp51734
+	_tmp51739 = _tmp51738
+	_tmp51740 = _tmp51739
+	_tmp51742 = _tmp51740
+	_tmp51744 = _tmp51742
+	_tmp51746 = _tmp51744
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp51746})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp51747 = _tmp51746
+	_tmp51750 = _tmp51747
+	_tmp51751 = _tmp51750
+	_tmp51752 = _tmp51751
+	_tmp51754 = _tmp51752
+	_tmp51756 = _tmp51754
+	_tmp51758 = _tmp51756
+	_tmp51759 = _tmp51758
+	_tmp51764 = _tmp51759
+	_tmp51766 = _tmp51764
+	_tmp51771 = _tmp51766
+	_tmp51773 = _tmp51771
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp51773})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp51775 = _tmp51773
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp51775})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp51785 = _tmp51775
+	_tmp51786 = _tmp51785
+	_tmp51788 = _tmp51786
+	_tmp51802 = _tmp51788
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp51802})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp51807 = _tmp51802
+	_tmp51809 = _tmp51807
+	_tmp51819 = _tmp51809
+	_tmp51825 = _tmp51819
+	_tmp51828 = _tmp51825
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp51828})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp51829 = _tmp51828
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp51829})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp51830 = _tmp51829
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp51830})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp51835 = _tmp51830
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp51835})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp51846 = _tmp51835
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp51846})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp51857 = _tmp51846
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp51857})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp51858 = _tmp51857
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp51858})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp51885 = _tmp51858
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp51885})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -109,9 +2261,354 @@ func Readrecord10Hop6(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp51928 uint64
+	var _tmp51930 uint64
+	var _tmp51931 uint64
+	var _tmp51932 uint64
+	var _tmp51933 uint64
+	var _tmp51934 uint64
+	var _tmp51935 uint64
+	var _tmp51936 uint64
+	var _tmp51937 uint64
+	var _tmp51938 uint64
+	var _tmp51939 uint64
+	var _tmp51940 uint64
+	var _tmp51941 uint64
+	var _tmp51943 uint64
+	var _tmp51944 uint64
+	var _tmp51946 uint64
+	var _tmp51947 uint64
+	var _tmp51948 uint64
+	var _tmp51949 uint64
+	var _tmp51950 uint64
+	var _tmp51951 uint64
+	var _tmp51953 uint64
+	var _tmp51954 uint64
+	var _tmp51955 uint64
+	var _tmp51958 uint64
+	var _tmp51959 uint64
+	var _tmp51962 uint64
+	var _tmp51964 uint64
+	var _tmp51965 uint64
+	var _tmp51969 uint64
+	var _tmp51972 uint64
+	var _tmp51973 uint64
+	var _tmp51975 uint64
+	var _tmp51976 uint64
+	var _tmp51980 uint64
+	var _tmp51982 uint64
+	var _tmp51984 uint64
+	var _tmp51985 uint64
+	var _tmp51986 uint64
+	var _tmp51987 uint64
+	var _tmp51989 uint64
+	var _tmp51991 uint64
+	var _tmp51994 uint64
+	var _tmp51997 uint64
+	var _tmp51999 uint64
+	var _tmp52000 uint64
+	var _tmp52001 uint64
+	var _tmp52004 uint64
+	var _tmp52006 uint64
+	var _tmp52007 uint64
+	var _tmp52008 uint64
+	var _tmp52009 uint64
+	var _tmp52010 uint64
+	var _tmp52011 uint64
+	var _tmp52012 uint64
+	var _tmp52013 uint64
+	var _tmp52014 uint64
+	var _tmp52018 uint64
+	var _tmp52025 uint64
+	var _tmp52027 uint64
+	var _tmp52028 uint64
+	var _tmp52029 uint64
+	var _tmp52031 uint64
+	var _tmp52032 uint64
+	var _tmp52035 uint64
+	var _tmp52040 uint64
+	var _tmp52041 uint64
+	var _tmp52043 uint64
+	var _tmp52050 uint64
+	var _tmp52051 uint64
+	var _tmp52053 uint64
+	var _tmp52065 uint64
+	var _tmp52070 uint64
+	var _tmp52092 uint64
+	var _tmp52096 uint64
+	var _tmp52097 uint64
+	var _tmp52098 uint64
+	var _tmp52103 uint64
+	var _tmp52114 uint64
+	var _tmp52125 uint64
+	var _tmp52126 uint64
+	var _tmp52153 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp52180 Unit
+	var _tmp52181 Unit
+	var _tmp52182 Unit
+	var _tmp52183 Unit
+	var _tmp52184 Unit
+	var _tmp52185 Unit
+	var _tmp52186 Unit
+	var _tmp52187 Unit
+	var _tmp52188 Unit
+	var _tmp52189 Unit
+	var _tmp52190 Unit
+	var _tmp52191 Unit
+	var _tmp52192 Unit
+	var _tmp52193 Unit
+	var _tmp52194 Unit
+	var _tmp52195 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB197
 
 BB197:
+	_tmp51928 = keyname + 6
+	_tmp51930 = _tmp51928
+	_tmp51931 = _tmp51930
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp51931})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp51932 = _tmp51931
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp51932})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp51933 = _tmp51932
+	_tmp51934 = _tmp51933
+	_tmp51935 = _tmp51934
+	_tmp51936 = _tmp51935
+	_tmp51937 = _tmp51936
+	_tmp51938 = _tmp51937
+	_tmp51939 = _tmp51938
+	_tmp51940 = _tmp51939
+	_tmp51941 = _tmp51940
+	_tmp51943 = _tmp51941
+	_tmp51944 = _tmp51943
+	_tmp51946 = _tmp51944
+	_tmp51947 = _tmp51946
+	_tmp51948 = _tmp51947
+	_tmp51949 = _tmp51948
+	_tmp51950 = _tmp51949
+	_tmp51951 = _tmp51950
+	_tmp51953 = _tmp51951
+	_tmp51954 = _tmp51953
+	_tmp51955 = _tmp51954
+	_tmp51958 = _tmp51955
+	_tmp51959 = _tmp51958
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp51959})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp51962 = _tmp51959
+	_tmp51964 = _tmp51962
+	_tmp51965 = _tmp51964
+	_tmp51969 = _tmp51965
+	_tmp51972 = _tmp51969
+	_tmp51973 = _tmp51972
+	_tmp51975 = _tmp51973
+	_tmp51976 = _tmp51975
+	_tmp51980 = _tmp51976
+	_tmp51982 = _tmp51980
+	_tmp51984 = _tmp51982
+	_tmp51985 = _tmp51984
+	_tmp51986 = _tmp51985
+	_tmp51987 = _tmp51986
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp51987})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp51989 = _tmp51987
+	_tmp51991 = _tmp51989
+	_tmp51994 = _tmp51991
+	_tmp51997 = _tmp51994
+	_tmp51999 = _tmp51997
+	_tmp52000 = _tmp51999
+	_tmp52001 = _tmp52000
+	_tmp52004 = _tmp52001
+	_tmp52006 = _tmp52004
+	_tmp52007 = _tmp52006
+	_tmp52008 = _tmp52007
+	_tmp52009 = _tmp52008
+	_tmp52010 = _tmp52009
+	_tmp52011 = _tmp52010
+	_tmp52012 = _tmp52011
+	_tmp52013 = _tmp52012
+	_tmp52014 = _tmp52013
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp52014})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp52018 = _tmp52014
+	_tmp52025 = _tmp52018
+	_tmp52027 = _tmp52025
+	_tmp52028 = _tmp52027
+	_tmp52029 = _tmp52028
+	_tmp52031 = _tmp52029
+	_tmp52032 = _tmp52031
+	_tmp52035 = _tmp52032
+	_tmp52040 = _tmp52035
+	_tmp52041 = _tmp52040
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp52041})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp52043 = _tmp52041
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp52043})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp52050 = _tmp52043
+	_tmp52051 = _tmp52050
+	_tmp52053 = _tmp52051
+	_tmp52065 = _tmp52053
+	_tmp52070 = _tmp52065
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp52070})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp52092 = _tmp52070
+	_tmp52096 = _tmp52092
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp52096})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp52097 = _tmp52096
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp52097})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp52098 = _tmp52097
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp52098})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp52103 = _tmp52098
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp52103})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp52114 = _tmp52103
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp52114})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp52125 = _tmp52114
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp52125})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp52126 = _tmp52125
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp52126})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp52153 = _tmp52126
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp52153})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -124,9 +2621,374 @@ func Readrecord10Hop7(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp52196 uint64
+	var _tmp52198 uint64
+	var _tmp52199 uint64
+	var _tmp52200 uint64
+	var _tmp52201 uint64
+	var _tmp52202 uint64
+	var _tmp52203 uint64
+	var _tmp52204 uint64
+	var _tmp52206 uint64
+	var _tmp52207 uint64
+	var _tmp52208 uint64
+	var _tmp52209 uint64
+	var _tmp52210 uint64
+	var _tmp52211 uint64
+	var _tmp52213 uint64
+	var _tmp52214 uint64
+	var _tmp52215 uint64
+	var _tmp52216 uint64
+	var _tmp52217 uint64
+	var _tmp52221 uint64
+	var _tmp52222 uint64
+	var _tmp52223 uint64
+	var _tmp52224 uint64
+	var _tmp52227 uint64
+	var _tmp52228 uint64
+	var _tmp52229 uint64
+	var _tmp52230 uint64
+	var _tmp52231 uint64
+	var _tmp52234 uint64
+	var _tmp52235 uint64
+	var _tmp52236 uint64
+	var _tmp52238 uint64
+	var _tmp52239 uint64
+	var _tmp52240 uint64
+	var _tmp52241 uint64
+	var _tmp52242 uint64
+	var _tmp52243 uint64
+	var _tmp52244 uint64
+	var _tmp52245 uint64
+	var _tmp52246 uint64
+	var _tmp52248 uint64
+	var _tmp52255 uint64
+	var _tmp52257 uint64
+	var _tmp52258 uint64
+	var _tmp52260 uint64
+	var _tmp52261 uint64
+	var _tmp52262 uint64
+	var _tmp52263 uint64
+	var _tmp52264 uint64
+	var _tmp52265 uint64
+	var _tmp52266 uint64
+	var _tmp52267 uint64
+	var _tmp52268 uint64
+	var _tmp52270 uint64
+	var _tmp52272 uint64
+	var _tmp52273 uint64
+	var _tmp52275 uint64
+	var _tmp52277 uint64
+	var _tmp52278 uint64
+	var _tmp52280 uint64
+	var _tmp52281 uint64
+	var _tmp52282 uint64
+	var _tmp52283 uint64
+	var _tmp52284 uint64
+	var _tmp52286 uint64
+	var _tmp52287 uint64
+	var _tmp52289 uint64
+	var _tmp52290 uint64
+	var _tmp52291 uint64
+	var _tmp52293 uint64
+	var _tmp52296 uint64
+	var _tmp52309 uint64
+	var _tmp52311 uint64
+	var _tmp52313 uint64
+	var _tmp52315 uint64
+	var _tmp52321 uint64
+	var _tmp52332 uint64
+	var _tmp52338 uint64
+	var _tmp52355 uint64
+	var _tmp52362 uint64
+	var _tmp52364 uint64
+	var _tmp52365 uint64
+	var _tmp52366 uint64
+	var _tmp52371 uint64
+	var _tmp52375 uint64
+	var _tmp52380 uint64
+	var _tmp52382 uint64
+	var _tmp52384 uint64
+	var _tmp52393 uint64
+	var _tmp52394 uint64
+	var _tmp52415 uint64
+	var _tmp52421 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp52448 Unit
+	var _tmp52449 Unit
+	var _tmp52450 Unit
+	var _tmp52451 Unit
+	var _tmp52452 Unit
+	var _tmp52453 Unit
+	var _tmp52454 Unit
+	var _tmp52455 Unit
+	var _tmp52456 Unit
+	var _tmp52457 Unit
+	var _tmp52458 Unit
+	var _tmp52459 Unit
+	var _tmp52460 Unit
+	var _tmp52461 Unit
+	var _tmp52462 Unit
+	var _tmp52463 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB198
 
 BB198:
+	_tmp52196 = keyname + 7
+	_tmp52198 = _tmp52196
+	_tmp52199 = _tmp52198
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp52199})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp52200 = _tmp52199
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp52200})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp52201 = _tmp52200
+	_tmp52202 = _tmp52201
+	_tmp52203 = _tmp52202
+	_tmp52204 = _tmp52203
+	_tmp52206 = _tmp52204
+	_tmp52207 = _tmp52206
+	_tmp52208 = _tmp52207
+	_tmp52209 = _tmp52208
+	_tmp52210 = _tmp52209
+	_tmp52211 = _tmp52210
+	_tmp52213 = _tmp52211
+	_tmp52214 = _tmp52213
+	_tmp52215 = _tmp52214
+	_tmp52216 = _tmp52215
+	_tmp52217 = _tmp52216
+	_tmp52221 = _tmp52217
+	_tmp52222 = _tmp52221
+	_tmp52223 = _tmp52222
+	_tmp52224 = _tmp52223
+	_tmp52227 = _tmp52224
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp52227})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp52228 = _tmp52227
+	_tmp52229 = _tmp52228
+	_tmp52230 = _tmp52229
+	_tmp52231 = _tmp52230
+	_tmp52234 = _tmp52231
+	_tmp52235 = _tmp52234
+	_tmp52236 = _tmp52235
+	_tmp52238 = _tmp52236
+	_tmp52239 = _tmp52238
+	_tmp52240 = _tmp52239
+	_tmp52241 = _tmp52240
+	_tmp52242 = _tmp52241
+	_tmp52243 = _tmp52242
+	_tmp52244 = _tmp52243
+	_tmp52245 = _tmp52244
+	_tmp52246 = _tmp52245
+	_tmp52248 = _tmp52246
+	_tmp52255 = _tmp52248
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp52255})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp52257 = _tmp52255
+	_tmp52258 = _tmp52257
+	_tmp52260 = _tmp52258
+	_tmp52261 = _tmp52260
+	_tmp52262 = _tmp52261
+	_tmp52263 = _tmp52262
+	_tmp52264 = _tmp52263
+	_tmp52265 = _tmp52264
+	_tmp52266 = _tmp52265
+	_tmp52267 = _tmp52266
+	_tmp52268 = _tmp52267
+	_tmp52270 = _tmp52268
+	_tmp52272 = _tmp52270
+	_tmp52273 = _tmp52272
+	_tmp52275 = _tmp52273
+	_tmp52277 = _tmp52275
+	_tmp52278 = _tmp52277
+	_tmp52280 = _tmp52278
+	_tmp52281 = _tmp52280
+	_tmp52282 = _tmp52281
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp52282})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp52283 = _tmp52282
+	_tmp52284 = _tmp52283
+	_tmp52286 = _tmp52284
+	_tmp52287 = _tmp52286
+	_tmp52289 = _tmp52287
+	_tmp52290 = _tmp52289
+	_tmp52291 = _tmp52290
+	_tmp52293 = _tmp52291
+	_tmp52296 = _tmp52293
+	_tmp52309 = _tmp52296
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp52309})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp52311 = _tmp52309
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp52311})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp52313 = _tmp52311
+	_tmp52315 = _tmp52313
+	_tmp52321 = _tmp52315
+	_tmp52332 = _tmp52321
+	_tmp52338 = _tmp52332
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp52338})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp52355 = _tmp52338
+	_tmp52362 = _tmp52355
+	_tmp52364 = _tmp52362
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp52364})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp52365 = _tmp52364
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp52365})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp52366 = _tmp52365
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp52366})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp52371 = _tmp52366
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp52371})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp52375 = _tmp52371
+	_tmp52380 = _tmp52375
+	_tmp52382 = _tmp52380
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp52382})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp52384 = _tmp52382
+	_tmp52393 = _tmp52384
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp52393})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp52394 = _tmp52393
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp52394})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp52415 = _tmp52394
+	_tmp52421 = _tmp52415
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp52421})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -139,9 +3001,378 @@ func Readrecord10Hop8(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp52464 uint64
+	var _tmp52466 uint64
+	var _tmp52467 uint64
+	var _tmp52468 uint64
+	var _tmp52469 uint64
+	var _tmp52470 uint64
+	var _tmp52471 uint64
+	var _tmp52472 uint64
+	var _tmp52473 uint64
+	var _tmp52474 uint64
+	var _tmp52476 uint64
+	var _tmp52477 uint64
+	var _tmp52478 uint64
+	var _tmp52479 uint64
+	var _tmp52481 uint64
+	var _tmp52482 uint64
+	var _tmp52483 uint64
+	var _tmp52484 uint64
+	var _tmp52485 uint64
+	var _tmp52486 uint64
+	var _tmp52487 uint64
+	var _tmp52488 uint64
+	var _tmp52489 uint64
+	var _tmp52490 uint64
+	var _tmp52492 uint64
+	var _tmp52493 uint64
+	var _tmp52494 uint64
+	var _tmp52495 uint64
+	var _tmp52497 uint64
+	var _tmp52499 uint64
+	var _tmp52500 uint64
+	var _tmp52501 uint64
+	var _tmp52502 uint64
+	var _tmp52503 uint64
+	var _tmp52504 uint64
+	var _tmp52506 uint64
+	var _tmp52507 uint64
+	var _tmp52509 uint64
+	var _tmp52510 uint64
+	var _tmp52511 uint64
+	var _tmp52512 uint64
+	var _tmp52515 uint64
+	var _tmp52516 uint64
+	var _tmp52517 uint64
+	var _tmp52518 uint64
+	var _tmp52519 uint64
+	var _tmp52520 uint64
+	var _tmp52521 uint64
+	var _tmp52522 uint64
+	var _tmp52523 uint64
+	var _tmp52525 uint64
+	var _tmp52526 uint64
+	var _tmp52527 uint64
+	var _tmp52529 uint64
+	var _tmp52533 uint64
+	var _tmp52536 uint64
+	var _tmp52538 uint64
+	var _tmp52540 uint64
+	var _tmp52541 uint64
+	var _tmp52543 uint64
+	var _tmp52544 uint64
+	var _tmp52546 uint64
+	var _tmp52547 uint64
+	var _tmp52549 uint64
+	var _tmp52550 uint64
+	var _tmp52551 uint64
+	var _tmp52552 uint64
+	var _tmp52553 uint64
+	var _tmp52556 uint64
+	var _tmp52560 uint64
+	var _tmp52562 uint64
+	var _tmp52571 uint64
+	var _tmp52576 uint64
+	var _tmp52577 uint64
+	var _tmp52579 uint64
+	var _tmp52584 uint64
+	var _tmp52587 uint64
+	var _tmp52591 uint64
+	var _tmp52595 uint64
+	var _tmp52600 uint64
+	var _tmp52601 uint64
+	var _tmp52606 uint64
+	var _tmp52616 uint64
+	var _tmp52619 uint64
+	var _tmp52625 uint64
+	var _tmp52632 uint64
+	var _tmp52633 uint64
+	var _tmp52634 uint64
+	var _tmp52639 uint64
+	var _tmp52640 uint64
+	var _tmp52650 uint64
+	var _tmp52661 uint64
+	var _tmp52662 uint64
+	var _tmp52689 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp52716 Unit
+	var _tmp52717 Unit
+	var _tmp52718 Unit
+	var _tmp52719 Unit
+	var _tmp52720 Unit
+	var _tmp52721 Unit
+	var _tmp52722 Unit
+	var _tmp52723 Unit
+	var _tmp52724 Unit
+	var _tmp52725 Unit
+	var _tmp52726 Unit
+	var _tmp52727 Unit
+	var _tmp52728 Unit
+	var _tmp52729 Unit
+	var _tmp52730 Unit
+	var _tmp52731 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB199
 
 BB199:
+	_tmp52464 = keyname + 8
+	_tmp52466 = _tmp52464
+	_tmp52467 = _tmp52466
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp52467})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp52468 = _tmp52467
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp52468})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp52469 = _tmp52468
+	_tmp52470 = _tmp52469
+	_tmp52471 = _tmp52470
+	_tmp52472 = _tmp52471
+	_tmp52473 = _tmp52472
+	_tmp52474 = _tmp52473
+	_tmp52476 = _tmp52474
+	_tmp52477 = _tmp52476
+	_tmp52478 = _tmp52477
+	_tmp52479 = _tmp52478
+	_tmp52481 = _tmp52479
+	_tmp52482 = _tmp52481
+	_tmp52483 = _tmp52482
+	_tmp52484 = _tmp52483
+	_tmp52485 = _tmp52484
+	_tmp52486 = _tmp52485
+	_tmp52487 = _tmp52486
+	_tmp52488 = _tmp52487
+	_tmp52489 = _tmp52488
+	_tmp52490 = _tmp52489
+	_tmp52492 = _tmp52490
+	_tmp52493 = _tmp52492
+	_tmp52494 = _tmp52493
+	_tmp52495 = _tmp52494
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp52495})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp52497 = _tmp52495
+	_tmp52499 = _tmp52497
+	_tmp52500 = _tmp52499
+	_tmp52501 = _tmp52500
+	_tmp52502 = _tmp52501
+	_tmp52503 = _tmp52502
+	_tmp52504 = _tmp52503
+	_tmp52506 = _tmp52504
+	_tmp52507 = _tmp52506
+	_tmp52509 = _tmp52507
+	_tmp52510 = _tmp52509
+	_tmp52511 = _tmp52510
+	_tmp52512 = _tmp52511
+	_tmp52515 = _tmp52512
+	_tmp52516 = _tmp52515
+	_tmp52517 = _tmp52516
+	_tmp52518 = _tmp52517
+	_tmp52519 = _tmp52518
+	_tmp52520 = _tmp52519
+	_tmp52521 = _tmp52520
+	_tmp52522 = _tmp52521
+	_tmp52523 = _tmp52522
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp52523})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp52525 = _tmp52523
+	_tmp52526 = _tmp52525
+	_tmp52527 = _tmp52526
+	_tmp52529 = _tmp52527
+	_tmp52533 = _tmp52529
+	_tmp52536 = _tmp52533
+	_tmp52538 = _tmp52536
+	_tmp52540 = _tmp52538
+	_tmp52541 = _tmp52540
+	_tmp52543 = _tmp52541
+	_tmp52544 = _tmp52543
+	_tmp52546 = _tmp52544
+	_tmp52547 = _tmp52546
+	_tmp52549 = _tmp52547
+	_tmp52550 = _tmp52549
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp52550})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp52551 = _tmp52550
+	_tmp52552 = _tmp52551
+	_tmp52553 = _tmp52552
+	_tmp52556 = _tmp52553
+	_tmp52560 = _tmp52556
+	_tmp52562 = _tmp52560
+	_tmp52571 = _tmp52562
+	_tmp52576 = _tmp52571
+	_tmp52577 = _tmp52576
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp52577})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp52579 = _tmp52577
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp52579})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp52584 = _tmp52579
+	_tmp52587 = _tmp52584
+	_tmp52591 = _tmp52587
+	_tmp52595 = _tmp52591
+	_tmp52600 = _tmp52595
+	_tmp52601 = _tmp52600
+	_tmp52606 = _tmp52601
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp52606})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp52616 = _tmp52606
+	_tmp52619 = _tmp52616
+	_tmp52625 = _tmp52619
+	_tmp52632 = _tmp52625
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp52632})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp52633 = _tmp52632
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp52633})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp52634 = _tmp52633
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp52634})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp52639 = _tmp52634
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp52639})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp52640 = _tmp52639
+	_tmp52650 = _tmp52640
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp52650})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp52661 = _tmp52650
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp52661})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp52662 = _tmp52661
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp52662})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp52689 = _tmp52662
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp52689})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -154,9 +3385,370 @@ func Readrecord10Hop9(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp52732 uint64
+	var _tmp52734 uint64
+	var _tmp52735 uint64
+	var _tmp52736 uint64
+	var _tmp52737 uint64
+	var _tmp52738 uint64
+	var _tmp52739 uint64
+	var _tmp52740 uint64
+	var _tmp52741 uint64
+	var _tmp52742 uint64
+	var _tmp52743 uint64
+	var _tmp52744 uint64
+	var _tmp52745 uint64
+	var _tmp52746 uint64
+	var _tmp52748 uint64
+	var _tmp52750 uint64
+	var _tmp52751 uint64
+	var _tmp52752 uint64
+	var _tmp52753 uint64
+	var _tmp52754 uint64
+	var _tmp52755 uint64
+	var _tmp52756 uint64
+	var _tmp52757 uint64
+	var _tmp52758 uint64
+	var _tmp52759 uint64
+	var _tmp52760 uint64
+	var _tmp52761 uint64
+	var _tmp52762 uint64
+	var _tmp52763 uint64
+	var _tmp52765 uint64
+	var _tmp52766 uint64
+	var _tmp52769 uint64
+	var _tmp52771 uint64
+	var _tmp52772 uint64
+	var _tmp52773 uint64
+	var _tmp52774 uint64
+	var _tmp52775 uint64
+	var _tmp52776 uint64
+	var _tmp52777 uint64
+	var _tmp52778 uint64
+	var _tmp52779 uint64
+	var _tmp52780 uint64
+	var _tmp52782 uint64
+	var _tmp52783 uint64
+	var _tmp52787 uint64
+	var _tmp52788 uint64
+	var _tmp52789 uint64
+	var _tmp52790 uint64
+	var _tmp52791 uint64
+	var _tmp52793 uint64
+	var _tmp52794 uint64
+	var _tmp52797 uint64
+	var _tmp52799 uint64
+	var _tmp52800 uint64
+	var _tmp52807 uint64
+	var _tmp52814 uint64
+	var _tmp52815 uint64
+	var _tmp52817 uint64
+	var _tmp52818 uint64
+	var _tmp52819 uint64
+	var _tmp52821 uint64
+	var _tmp52823 uint64
+	var _tmp52824 uint64
+	var _tmp52828 uint64
+	var _tmp52830 uint64
+	var _tmp52833 uint64
+	var _tmp52836 uint64
+	var _tmp52843 uint64
+	var _tmp52844 uint64
+	var _tmp52845 uint64
+	var _tmp52846 uint64
+	var _tmp52847 uint64
+	var _tmp52850 uint64
+	var _tmp52854 uint64
+	var _tmp52855 uint64
+	var _tmp52861 uint64
+	var _tmp52864 uint64
+	var _tmp52872 uint64
+	var _tmp52874 uint64
+	var _tmp52875 uint64
+	var _tmp52884 uint64
+	var _tmp52896 uint64
+	var _tmp52900 uint64
+	var _tmp52901 uint64
+	var _tmp52902 uint64
+	var _tmp52907 uint64
+	var _tmp52918 uint64
+	var _tmp52929 uint64
+	var _tmp52930 uint64
+	var _tmp52957 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp52984 Unit
+	var _tmp52985 Unit
+	var _tmp52986 Unit
+	var _tmp52987 Unit
+	var _tmp52988 Unit
+	var _tmp52989 Unit
+	var _tmp52990 Unit
+	var _tmp52991 Unit
+	var _tmp52992 Unit
+	var _tmp52993 Unit
+	var _tmp52994 Unit
+	var _tmp52995 Unit
+	var _tmp52996 Unit
+	var _tmp52997 Unit
+	var _tmp52998 Unit
+	var _tmp52999 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	goto BB200
 
 BB200:
+	_tmp52732 = keyname + 9
+	_tmp52734 = _tmp52732
+	_tmp52735 = _tmp52734
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp52735})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp52736 = _tmp52735
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp52736})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp52737 = _tmp52736
+	_tmp52738 = _tmp52737
+	_tmp52739 = _tmp52738
+	_tmp52740 = _tmp52739
+	_tmp52741 = _tmp52740
+	_tmp52742 = _tmp52741
+	_tmp52743 = _tmp52742
+	_tmp52744 = _tmp52743
+	_tmp52745 = _tmp52744
+	_tmp52746 = _tmp52745
+	_tmp52748 = _tmp52746
+	_tmp52750 = _tmp52748
+	_tmp52751 = _tmp52750
+	_tmp52752 = _tmp52751
+	_tmp52753 = _tmp52752
+	_tmp52754 = _tmp52753
+	_tmp52755 = _tmp52754
+	_tmp52756 = _tmp52755
+	_tmp52757 = _tmp52756
+	_tmp52758 = _tmp52757
+	_tmp52759 = _tmp52758
+	_tmp52760 = _tmp52759
+	_tmp52761 = _tmp52760
+	_tmp52762 = _tmp52761
+	_tmp52763 = _tmp52762
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp52763})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp52765 = _tmp52763
+	_tmp52766 = _tmp52765
+	_tmp52769 = _tmp52766
+	_tmp52771 = _tmp52769
+	_tmp52772 = _tmp52771
+	_tmp52773 = _tmp52772
+	_tmp52774 = _tmp52773
+	_tmp52775 = _tmp52774
+	_tmp52776 = _tmp52775
+	_tmp52777 = _tmp52776
+	_tmp52778 = _tmp52777
+	_tmp52779 = _tmp52778
+	_tmp52780 = _tmp52779
+	_tmp52782 = _tmp52780
+	_tmp52783 = _tmp52782
+	_tmp52787 = _tmp52783
+	_tmp52788 = _tmp52787
+	_tmp52789 = _tmp52788
+	_tmp52790 = _tmp52789
+	_tmp52791 = _tmp52790
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp52791})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp52793 = _tmp52791
+	_tmp52794 = _tmp52793
+	_tmp52797 = _tmp52794
+	_tmp52799 = _tmp52797
+	_tmp52800 = _tmp52799
+	_tmp52807 = _tmp52800
+	_tmp52814 = _tmp52807
+	_tmp52815 = _tmp52814
+	_tmp52817 = _tmp52815
+	_tmp52818 = _tmp52817
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp52818})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp52819 = _tmp52818
+	_tmp52821 = _tmp52819
+	_tmp52823 = _tmp52821
+	_tmp52824 = _tmp52823
+	_tmp52828 = _tmp52824
+	_tmp52830 = _tmp52828
+	_tmp52833 = _tmp52830
+	_tmp52836 = _tmp52833
+	_tmp52843 = _tmp52836
+	_tmp52844 = _tmp52843
+	_tmp52845 = _tmp52844
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp52845})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp52846 = _tmp52845
+	_tmp52847 = _tmp52846
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp52847})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp52850 = _tmp52847
+	_tmp52854 = _tmp52850
+	_tmp52855 = _tmp52854
+	_tmp52861 = _tmp52855
+	_tmp52864 = _tmp52861
+	_tmp52872 = _tmp52864
+	_tmp52874 = _tmp52872
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp52874})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp52875 = _tmp52874
+	_tmp52884 = _tmp52875
+	_tmp52896 = _tmp52884
+	_tmp52900 = _tmp52896
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp52900})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp52901 = _tmp52900
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp52901})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp52902 = _tmp52901
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp52902})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp52907 = _tmp52902
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp52907})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp52918 = _tmp52907
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp52918})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp52929 = _tmp52918
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp52929})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp52930 = _tmp52929
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp52930})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp52957 = _tmp52930
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp52957})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -167,6 +3759,178 @@ BB200:
 
 // Readrecord10Hop0Par calculates the partition for hop 0 without database access.
 func Readrecord10Hop0Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp50320 uint64
+	var _tmp50322 uint64
+	var _tmp50323 uint64
+	var _tmp50324 uint64
+	var _tmp50325 uint64
+	var _tmp50326 uint64
+	var _tmp50327 uint64
+	var _tmp50328 uint64
+	var _tmp50329 uint64
+	var _tmp50330 uint64
+	var _tmp50331 uint64
+	var _tmp50333 uint64
+	var _tmp50334 uint64
+	var _tmp50335 uint64
+	var _tmp50337 uint64
+	var _tmp50338 uint64
+	var _tmp50339 uint64
+	var _tmp50340 uint64
+	var _tmp50341 uint64
+	var _tmp50342 uint64
+	var _tmp50343 uint64
+	var _tmp50346 uint64
+	var _tmp50347 uint64
+	var _tmp50348 uint64
+	var _tmp50349 uint64
+	var _tmp50351 uint64
+	var _tmp50352 uint64
+	var _tmp50353 uint64
+	var _tmp50354 uint64
+	var _tmp50355 uint64
+	var _tmp50356 uint64
+	var _tmp50357 uint64
+	var _tmp50358 uint64
+	var _tmp50359 uint64
+	var _tmp50360 uint64
+	var _tmp50361 uint64
+	var _tmp50362 uint64
+	var _tmp50363 uint64
+	var _tmp50365 uint64
+	var _tmp50367 uint64
+	var _tmp50368 uint64
+	var _tmp50369 uint64
+	var _tmp50370 uint64
+	var _tmp50371 uint64
+	var _tmp50372 uint64
+	var _tmp50373 uint64
+	var _tmp50375 uint64
+	var _tmp50377 uint64
+	var _tmp50378 uint64
+	var _tmp50379 uint64
+	var _tmp50388 uint64
+	var _tmp50391 uint64
+	var _tmp50392 uint64
+	var _tmp50396 uint64
+	var _tmp50398 uint64
+	var _tmp50399 uint64
+	var _tmp50402 uint64
+	var _tmp50403 uint64
+	var _tmp50404 uint64
+	var _tmp50406 uint64
+	var _tmp50407 uint64
+	var _tmp50408 uint64
+	var _tmp50411 uint64
+	var _tmp50412 uint64
+	var _tmp50414 uint64
+	var _tmp50416 uint64
+	var _tmp50418 uint64
+	var _tmp50420 uint64
+	var _tmp50424 uint64
+	var _tmp50425 uint64
+	var _tmp50428 uint64
+	var _tmp50432 uint64
+	var _tmp50433 uint64
+	var _tmp50435 uint64
+	var _tmp50436 uint64
+	var _tmp50441 uint64
+	var _tmp50459 uint64
+	var _tmp50460 uint64
+	var _tmp50462 uint64
+	var _tmp50488 uint64
+	var _tmp50489 uint64
+	var _tmp50490 uint64
+	var _tmp50495 uint64
+	var _tmp50506 uint64
+	var _tmp50517 uint64
+	var _tmp50518 uint64
+	var _tmp50545 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp50572 Unit
+	var _tmp50573 Unit
+	var _tmp50574 Unit
+	var _tmp50575 Unit
+	var _tmp50576 Unit
+	var _tmp50577 Unit
+	var _tmp50578 Unit
+	var _tmp50579 Unit
+	var _tmp50580 Unit
+	var _tmp50581 Unit
+	var _tmp50582 Unit
+	var _tmp50583 Unit
+	var _tmp50584 Unit
+	var _tmp50585 Unit
+	var _tmp50586 Unit
+	var _tmp50587 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -175,11 +3939,392 @@ func Readrecord10Hop0Par(params map[string]string) uint64 {
 	goto BB191
 
 BB191:
+	_tmp50320 = keyname + 0
+	_tmp50322 = _tmp50320
+	_tmp50323 = _tmp50322
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50323}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp50323})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp50324 = _tmp50323
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50324}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp50324})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp50325 = _tmp50324
+	_tmp50326 = _tmp50325
+	_tmp50327 = _tmp50326
+	_tmp50328 = _tmp50327
+	_tmp50329 = _tmp50328
+	_tmp50330 = _tmp50329
+	_tmp50331 = _tmp50330
+	_tmp50333 = _tmp50331
+	_tmp50334 = _tmp50333
+	_tmp50335 = _tmp50334
+	_tmp50337 = _tmp50335
+	_tmp50338 = _tmp50337
+	_tmp50339 = _tmp50338
+	_tmp50340 = _tmp50339
+	_tmp50341 = _tmp50340
+	_tmp50342 = _tmp50341
+	_tmp50343 = _tmp50342
+	_tmp50346 = _tmp50343
+	_tmp50347 = _tmp50346
+	_tmp50348 = _tmp50347
+	_tmp50349 = _tmp50348
+	_tmp50351 = _tmp50349
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50351}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp50351})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp50352 = _tmp50351
+	_tmp50353 = _tmp50352
+	_tmp50354 = _tmp50353
+	_tmp50355 = _tmp50354
+	_tmp50356 = _tmp50355
+	_tmp50357 = _tmp50356
+	_tmp50358 = _tmp50357
+	_tmp50359 = _tmp50358
+	_tmp50360 = _tmp50359
+	_tmp50361 = _tmp50360
+	_tmp50362 = _tmp50361
+	_tmp50363 = _tmp50362
+	_tmp50365 = _tmp50363
+	_tmp50367 = _tmp50365
+	_tmp50368 = _tmp50367
+	_tmp50369 = _tmp50368
+	_tmp50370 = _tmp50369
+	_tmp50371 = _tmp50370
+	_tmp50372 = _tmp50371
+	_tmp50373 = _tmp50372
+	_tmp50375 = _tmp50373
+	_tmp50377 = _tmp50375
+	_tmp50378 = _tmp50377
+	_tmp50379 = _tmp50378
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50379}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp50379})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp50388 = _tmp50379
+	_tmp50391 = _tmp50388
+	_tmp50392 = _tmp50391
+	_tmp50396 = _tmp50392
+	_tmp50398 = _tmp50396
+	_tmp50399 = _tmp50398
+	_tmp50402 = _tmp50399
+	_tmp50403 = _tmp50402
+	_tmp50404 = _tmp50403
+	_tmp50406 = _tmp50404
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50406}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp50406})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp50407 = _tmp50406
+	_tmp50408 = _tmp50407
+	_tmp50411 = _tmp50408
+	_tmp50412 = _tmp50411
+	_tmp50414 = _tmp50412
+	_tmp50416 = _tmp50414
+	_tmp50418 = _tmp50416
+	_tmp50420 = _tmp50418
+	_tmp50424 = _tmp50420
+	_tmp50425 = _tmp50424
+	_tmp50428 = _tmp50425
+	_tmp50432 = _tmp50428
+	_tmp50433 = _tmp50432
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50433}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp50433})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp50435 = _tmp50433
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50435}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp50435})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp50436 = _tmp50435
+	_tmp50441 = _tmp50436
+	_tmp50459 = _tmp50441
+	_tmp50460 = _tmp50459
+	_tmp50462 = _tmp50460
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50462}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp50462})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp50488 = _tmp50462
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50488}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp50488})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp50489 = _tmp50488
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50489}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp50489})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp50490 = _tmp50489
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50490}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp50490})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp50495 = _tmp50490
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50495}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp50495})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp50506 = _tmp50495
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50506}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp50506})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp50517 = _tmp50506
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50517}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp50517})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp50518 = _tmp50517
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50518}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp50518})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp50545 = _tmp50518
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50545}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp50545})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop1Par calculates the partition for hop 1 without database access.
 func Readrecord10Hop1Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp50588 uint64
+	var _tmp50590 uint64
+	var _tmp50591 uint64
+	var _tmp50592 uint64
+	var _tmp50593 uint64
+	var _tmp50594 uint64
+	var _tmp50595 uint64
+	var _tmp50596 uint64
+	var _tmp50597 uint64
+	var _tmp50598 uint64
+	var _tmp50599 uint64
+	var _tmp50600 uint64
+	var _tmp50601 uint64
+	var _tmp50602 uint64
+	var _tmp50604 uint64
+	var _tmp50605 uint64
+	var _tmp50606 uint64
+	var _tmp50607 uint64
+	var _tmp50609 uint64
+	var _tmp50610 uint64
+	var _tmp50611 uint64
+	var _tmp50612 uint64
+	var _tmp50613 uint64
+	var _tmp50616 uint64
+	var _tmp50617 uint64
+	var _tmp50619 uint64
+	var _tmp50620 uint64
+	var _tmp50622 uint64
+	var _tmp50623 uint64
+	var _tmp50625 uint64
+	var _tmp50627 uint64
+	var _tmp50628 uint64
+	var _tmp50629 uint64
+	var _tmp50630 uint64
+	var _tmp50631 uint64
+	var _tmp50633 uint64
+	var _tmp50634 uint64
+	var _tmp50635 uint64
+	var _tmp50637 uint64
+	var _tmp50638 uint64
+	var _tmp50640 uint64
+	var _tmp50646 uint64
+	var _tmp50647 uint64
+	var _tmp50649 uint64
+	var _tmp50650 uint64
+	var _tmp50651 uint64
+	var _tmp50652 uint64
+	var _tmp50653 uint64
+	var _tmp50655 uint64
+	var _tmp50658 uint64
+	var _tmp50665 uint64
+	var _tmp50671 uint64
+	var _tmp50674 uint64
+	var _tmp50676 uint64
+	var _tmp50679 uint64
+	var _tmp50682 uint64
+	var _tmp50683 uint64
+	var _tmp50697 uint64
+	var _tmp50700 uint64
+	var _tmp50701 uint64
+	var _tmp50703 uint64
+	var _tmp50707 uint64
+	var _tmp50708 uint64
+	var _tmp50714 uint64
+	var _tmp50718 uint64
+	var _tmp50726 uint64
+	var _tmp50730 uint64
+	var _tmp50737 uint64
+	var _tmp50750 uint64
+	var _tmp50751 uint64
+	var _tmp50754 uint64
+	var _tmp50756 uint64
+	var _tmp50757 uint64
+	var _tmp50758 uint64
+	var _tmp50763 uint64
+	var _tmp50774 uint64
+	var _tmp50785 uint64
+	var _tmp50786 uint64
+	var _tmp50797 uint64
+	var _tmp50806 uint64
+	var _tmp50813 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp50840 Unit
+	var _tmp50841 Unit
+	var _tmp50842 Unit
+	var _tmp50843 Unit
+	var _tmp50844 Unit
+	var _tmp50845 Unit
+	var _tmp50846 Unit
+	var _tmp50847 Unit
+	var _tmp50848 Unit
+	var _tmp50849 Unit
+	var _tmp50850 Unit
+	var _tmp50851 Unit
+	var _tmp50852 Unit
+	var _tmp50853 Unit
+	var _tmp50854 Unit
+	var _tmp50855 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -188,11 +4333,386 @@ func Readrecord10Hop1Par(params map[string]string) uint64 {
 	goto BB192
 
 BB192:
+	_tmp50588 = keyname + 1
+	_tmp50590 = _tmp50588
+	_tmp50591 = _tmp50590
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50591}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp50591})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp50592 = _tmp50591
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50592}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp50592})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp50593 = _tmp50592
+	_tmp50594 = _tmp50593
+	_tmp50595 = _tmp50594
+	_tmp50596 = _tmp50595
+	_tmp50597 = _tmp50596
+	_tmp50598 = _tmp50597
+	_tmp50599 = _tmp50598
+	_tmp50600 = _tmp50599
+	_tmp50601 = _tmp50600
+	_tmp50602 = _tmp50601
+	_tmp50604 = _tmp50602
+	_tmp50605 = _tmp50604
+	_tmp50606 = _tmp50605
+	_tmp50607 = _tmp50606
+	_tmp50609 = _tmp50607
+	_tmp50610 = _tmp50609
+	_tmp50611 = _tmp50610
+	_tmp50612 = _tmp50611
+	_tmp50613 = _tmp50612
+	_tmp50616 = _tmp50613
+	_tmp50617 = _tmp50616
+	_tmp50619 = _tmp50617
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50619}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp50619})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp50620 = _tmp50619
+	_tmp50622 = _tmp50620
+	_tmp50623 = _tmp50622
+	_tmp50625 = _tmp50623
+	_tmp50627 = _tmp50625
+	_tmp50628 = _tmp50627
+	_tmp50629 = _tmp50628
+	_tmp50630 = _tmp50629
+	_tmp50631 = _tmp50630
+	_tmp50633 = _tmp50631
+	_tmp50634 = _tmp50633
+	_tmp50635 = _tmp50634
+	_tmp50637 = _tmp50635
+	_tmp50638 = _tmp50637
+	_tmp50640 = _tmp50638
+	_tmp50646 = _tmp50640
+	_tmp50647 = _tmp50646
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50647}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp50647})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp50649 = _tmp50647
+	_tmp50650 = _tmp50649
+	_tmp50651 = _tmp50650
+	_tmp50652 = _tmp50651
+	_tmp50653 = _tmp50652
+	_tmp50655 = _tmp50653
+	_tmp50658 = _tmp50655
+	_tmp50665 = _tmp50658
+	_tmp50671 = _tmp50665
+	_tmp50674 = _tmp50671
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50674}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp50674})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp50676 = _tmp50674
+	_tmp50679 = _tmp50676
+	_tmp50682 = _tmp50679
+	_tmp50683 = _tmp50682
+	_tmp50697 = _tmp50683
+	_tmp50700 = _tmp50697
+	_tmp50701 = _tmp50700
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50701}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp50701})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp50703 = _tmp50701
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50703}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp50703})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp50707 = _tmp50703
+	_tmp50708 = _tmp50707
+	_tmp50714 = _tmp50708
+	_tmp50718 = _tmp50714
+	_tmp50726 = _tmp50718
+	_tmp50730 = _tmp50726
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50730}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp50730})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp50737 = _tmp50730
+	_tmp50750 = _tmp50737
+	_tmp50751 = _tmp50750
+	_tmp50754 = _tmp50751
+	_tmp50756 = _tmp50754
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50756}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp50756})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp50757 = _tmp50756
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50757}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp50757})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp50758 = _tmp50757
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50758}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp50758})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp50763 = _tmp50758
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50763}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp50763})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp50774 = _tmp50763
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50774}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp50774})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp50785 = _tmp50774
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50785}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp50785})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp50786 = _tmp50785
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50786}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp50786})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp50797 = _tmp50786
+	_tmp50806 = _tmp50797
+	_tmp50813 = _tmp50806
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50813}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp50813})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop2Par calculates the partition for hop 2 without database access.
 func Readrecord10Hop2Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp50856 uint64
+	var _tmp50858 uint64
+	var _tmp50859 uint64
+	var _tmp50860 uint64
+	var _tmp50861 uint64
+	var _tmp50862 uint64
+	var _tmp50863 uint64
+	var _tmp50864 uint64
+	var _tmp50865 uint64
+	var _tmp50866 uint64
+	var _tmp50867 uint64
+	var _tmp50869 uint64
+	var _tmp50870 uint64
+	var _tmp50871 uint64
+	var _tmp50872 uint64
+	var _tmp50873 uint64
+	var _tmp50874 uint64
+	var _tmp50875 uint64
+	var _tmp50876 uint64
+	var _tmp50877 uint64
+	var _tmp50878 uint64
+	var _tmp50879 uint64
+	var _tmp50880 uint64
+	var _tmp50881 uint64
+	var _tmp50882 uint64
+	var _tmp50885 uint64
+	var _tmp50886 uint64
+	var _tmp50887 uint64
+	var _tmp50890 uint64
+	var _tmp50892 uint64
+	var _tmp50893 uint64
+	var _tmp50895 uint64
+	var _tmp50898 uint64
+	var _tmp50901 uint64
+	var _tmp50902 uint64
+	var _tmp50903 uint64
+	var _tmp50904 uint64
+	var _tmp50906 uint64
+	var _tmp50909 uint64
+	var _tmp50910 uint64
+	var _tmp50913 uint64
+	var _tmp50914 uint64
+	var _tmp50915 uint64
+	var _tmp50916 uint64
+	var _tmp50917 uint64
+	var _tmp50918 uint64
+	var _tmp50924 uint64
+	var _tmp50928 uint64
+	var _tmp50930 uint64
+	var _tmp50935 uint64
+	var _tmp50936 uint64
+	var _tmp50937 uint64
+	var _tmp50940 uint64
+	var _tmp50942 uint64
+	var _tmp50943 uint64
+	var _tmp50950 uint64
+	var _tmp50951 uint64
+	var _tmp50953 uint64
+	var _tmp50959 uint64
+	var _tmp50960 uint64
+	var _tmp50962 uint64
+	var _tmp50963 uint64
+	var _tmp50969 uint64
+	var _tmp50971 uint64
+	var _tmp50975 uint64
+	var _tmp50980 uint64
+	var _tmp50986 uint64
+	var _tmp50993 uint64
+	var _tmp50995 uint64
+	var _tmp50998 uint64
+	var _tmp51004 uint64
+	var _tmp51013 uint64
+	var _tmp51020 uint64
+	var _tmp51024 uint64
+	var _tmp51025 uint64
+	var _tmp51026 uint64
+	var _tmp51031 uint64
+	var _tmp51042 uint64
+	var _tmp51053 uint64
+	var _tmp51054 uint64
+	var _tmp51081 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp51108 Unit
+	var _tmp51109 Unit
+	var _tmp51110 Unit
+	var _tmp51111 Unit
+	var _tmp51112 Unit
+	var _tmp51113 Unit
+	var _tmp51114 Unit
+	var _tmp51115 Unit
+	var _tmp51116 Unit
+	var _tmp51117 Unit
+	var _tmp51118 Unit
+	var _tmp51119 Unit
+	var _tmp51120 Unit
+	var _tmp51121 Unit
+	var _tmp51122 Unit
+	var _tmp51123 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -201,11 +4721,398 @@ func Readrecord10Hop2Par(params map[string]string) uint64 {
 	goto BB193
 
 BB193:
+	_tmp50856 = keyname + 2
+	_tmp50858 = _tmp50856
+	_tmp50859 = _tmp50858
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50859}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp50859})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp50860 = _tmp50859
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50860}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp50860})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp50861 = _tmp50860
+	_tmp50862 = _tmp50861
+	_tmp50863 = _tmp50862
+	_tmp50864 = _tmp50863
+	_tmp50865 = _tmp50864
+	_tmp50866 = _tmp50865
+	_tmp50867 = _tmp50866
+	_tmp50869 = _tmp50867
+	_tmp50870 = _tmp50869
+	_tmp50871 = _tmp50870
+	_tmp50872 = _tmp50871
+	_tmp50873 = _tmp50872
+	_tmp50874 = _tmp50873
+	_tmp50875 = _tmp50874
+	_tmp50876 = _tmp50875
+	_tmp50877 = _tmp50876
+	_tmp50878 = _tmp50877
+	_tmp50879 = _tmp50878
+	_tmp50880 = _tmp50879
+	_tmp50881 = _tmp50880
+	_tmp50882 = _tmp50881
+	_tmp50885 = _tmp50882
+	_tmp50886 = _tmp50885
+	_tmp50887 = _tmp50886
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50887}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp50887})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp50890 = _tmp50887
+	_tmp50892 = _tmp50890
+	_tmp50893 = _tmp50892
+	_tmp50895 = _tmp50893
+	_tmp50898 = _tmp50895
+	_tmp50901 = _tmp50898
+	_tmp50902 = _tmp50901
+	_tmp50903 = _tmp50902
+	_tmp50904 = _tmp50903
+	_tmp50906 = _tmp50904
+	_tmp50909 = _tmp50906
+	_tmp50910 = _tmp50909
+	_tmp50913 = _tmp50910
+	_tmp50914 = _tmp50913
+	_tmp50915 = _tmp50914
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50915}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp50915})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp50916 = _tmp50915
+	_tmp50917 = _tmp50916
+	_tmp50918 = _tmp50917
+	_tmp50924 = _tmp50918
+	_tmp50928 = _tmp50924
+	_tmp50930 = _tmp50928
+	_tmp50935 = _tmp50930
+	_tmp50936 = _tmp50935
+	_tmp50937 = _tmp50936
+	_tmp50940 = _tmp50937
+	_tmp50942 = _tmp50940
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50942}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp50942})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp50943 = _tmp50942
+	_tmp50950 = _tmp50943
+	_tmp50951 = _tmp50950
+	_tmp50953 = _tmp50951
+	_tmp50959 = _tmp50953
+	_tmp50960 = _tmp50959
+	_tmp50962 = _tmp50960
+	_tmp50963 = _tmp50962
+	_tmp50969 = _tmp50963
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50969}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp50969})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp50971 = _tmp50969
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50971}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp50971})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp50975 = _tmp50971
+	_tmp50980 = _tmp50975
+	_tmp50986 = _tmp50980
+	_tmp50993 = _tmp50986
+	_tmp50995 = _tmp50993
+	_tmp50998 = _tmp50995
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp50998}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp50998})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp51004 = _tmp50998
+	_tmp51013 = _tmp51004
+	_tmp51020 = _tmp51013
+	_tmp51024 = _tmp51020
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51024}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp51024})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp51025 = _tmp51024
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51025}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp51025})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp51026 = _tmp51025
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51026}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp51026})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp51031 = _tmp51026
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51031}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp51031})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp51042 = _tmp51031
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51042}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp51042})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp51053 = _tmp51042
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51053}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp51053})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp51054 = _tmp51053
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51054}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp51054})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp51081 = _tmp51054
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51081}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp51081})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop3Par calculates the partition for hop 3 without database access.
 func Readrecord10Hop3Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp51124 uint64
+	var _tmp51126 uint64
+	var _tmp51127 uint64
+	var _tmp51128 uint64
+	var _tmp51129 uint64
+	var _tmp51130 uint64
+	var _tmp51131 uint64
+	var _tmp51132 uint64
+	var _tmp51133 uint64
+	var _tmp51134 uint64
+	var _tmp51135 uint64
+	var _tmp51136 uint64
+	var _tmp51137 uint64
+	var _tmp51138 uint64
+	var _tmp51139 uint64
+	var _tmp51140 uint64
+	var _tmp51141 uint64
+	var _tmp51142 uint64
+	var _tmp51145 uint64
+	var _tmp51146 uint64
+	var _tmp51147 uint64
+	var _tmp51148 uint64
+	var _tmp51149 uint64
+	var _tmp51150 uint64
+	var _tmp51152 uint64
+	var _tmp51153 uint64
+	var _tmp51154 uint64
+	var _tmp51155 uint64
+	var _tmp51156 uint64
+	var _tmp51157 uint64
+	var _tmp51159 uint64
+	var _tmp51160 uint64
+	var _tmp51161 uint64
+	var _tmp51162 uint64
+	var _tmp51163 uint64
+	var _tmp51164 uint64
+	var _tmp51166 uint64
+	var _tmp51169 uint64
+	var _tmp51170 uint64
+	var _tmp51171 uint64
+	var _tmp51172 uint64
+	var _tmp51174 uint64
+	var _tmp51177 uint64
+	var _tmp51179 uint64
+	var _tmp51181 uint64
+	var _tmp51183 uint64
+	var _tmp51184 uint64
+	var _tmp51185 uint64
+	var _tmp51186 uint64
+	var _tmp51189 uint64
+	var _tmp51190 uint64
+	var _tmp51192 uint64
+	var _tmp51193 uint64
+	var _tmp51194 uint64
+	var _tmp51201 uint64
+	var _tmp51202 uint64
+	var _tmp51204 uint64
+	var _tmp51205 uint64
+	var _tmp51206 uint64
+	var _tmp51207 uint64
+	var _tmp51210 uint64
+	var _tmp51211 uint64
+	var _tmp51213 uint64
+	var _tmp51214 uint64
+	var _tmp51215 uint64
+	var _tmp51217 uint64
+	var _tmp51222 uint64
+	var _tmp51223 uint64
+	var _tmp51224 uint64
+	var _tmp51228 uint64
+	var _tmp51237 uint64
+	var _tmp51239 uint64
+	var _tmp51241 uint64
+	var _tmp51243 uint64
+	var _tmp51247 uint64
+	var _tmp51249 uint64
+	var _tmp51263 uint64
+	var _tmp51266 uint64
+	var _tmp51267 uint64
+	var _tmp51283 uint64
+	var _tmp51286 uint64
+	var _tmp51292 uint64
+	var _tmp51293 uint64
+	var _tmp51294 uint64
+	var _tmp51295 uint64
+	var _tmp51296 uint64
+	var _tmp51299 uint64
+	var _tmp51300 uint64
+	var _tmp51306 uint64
+	var _tmp51310 uint64
+	var _tmp51321 uint64
+	var _tmp51322 uint64
+	var _tmp51349 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp51376 Unit
+	var _tmp51377 Unit
+	var _tmp51378 Unit
+	var _tmp51379 Unit
+	var _tmp51380 Unit
+	var _tmp51381 Unit
+	var _tmp51382 Unit
+	var _tmp51383 Unit
+	var _tmp51384 Unit
+	var _tmp51385 Unit
+	var _tmp51386 Unit
+	var _tmp51387 Unit
+	var _tmp51388 Unit
+	var _tmp51389 Unit
+	var _tmp51390 Unit
+	var _tmp51391 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -214,11 +5121,415 @@ func Readrecord10Hop3Par(params map[string]string) uint64 {
 	goto BB194
 
 BB194:
+	_tmp51124 = keyname + 3
+	_tmp51126 = _tmp51124
+	_tmp51127 = _tmp51126
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51127}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp51127})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp51128 = _tmp51127
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51128}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp51128})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp51129 = _tmp51128
+	_tmp51130 = _tmp51129
+	_tmp51131 = _tmp51130
+	_tmp51132 = _tmp51131
+	_tmp51133 = _tmp51132
+	_tmp51134 = _tmp51133
+	_tmp51135 = _tmp51134
+	_tmp51136 = _tmp51135
+	_tmp51137 = _tmp51136
+	_tmp51138 = _tmp51137
+	_tmp51139 = _tmp51138
+	_tmp51140 = _tmp51139
+	_tmp51141 = _tmp51140
+	_tmp51142 = _tmp51141
+	_tmp51145 = _tmp51142
+	_tmp51146 = _tmp51145
+	_tmp51147 = _tmp51146
+	_tmp51148 = _tmp51147
+	_tmp51149 = _tmp51148
+	_tmp51150 = _tmp51149
+	_tmp51152 = _tmp51150
+	_tmp51153 = _tmp51152
+	_tmp51154 = _tmp51153
+	_tmp51155 = _tmp51154
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51155}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp51155})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp51156 = _tmp51155
+	_tmp51157 = _tmp51156
+	_tmp51159 = _tmp51157
+	_tmp51160 = _tmp51159
+	_tmp51161 = _tmp51160
+	_tmp51162 = _tmp51161
+	_tmp51163 = _tmp51162
+	_tmp51164 = _tmp51163
+	_tmp51166 = _tmp51164
+	_tmp51169 = _tmp51166
+	_tmp51170 = _tmp51169
+	_tmp51171 = _tmp51170
+	_tmp51172 = _tmp51171
+	_tmp51174 = _tmp51172
+	_tmp51177 = _tmp51174
+	_tmp51179 = _tmp51177
+	_tmp51181 = _tmp51179
+	_tmp51183 = _tmp51181
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51183}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp51183})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp51184 = _tmp51183
+	_tmp51185 = _tmp51184
+	_tmp51186 = _tmp51185
+	_tmp51189 = _tmp51186
+	_tmp51190 = _tmp51189
+	_tmp51192 = _tmp51190
+	_tmp51193 = _tmp51192
+	_tmp51194 = _tmp51193
+	_tmp51201 = _tmp51194
+	_tmp51202 = _tmp51201
+	_tmp51204 = _tmp51202
+	_tmp51205 = _tmp51204
+	_tmp51206 = _tmp51205
+	_tmp51207 = _tmp51206
+	_tmp51210 = _tmp51207
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51210}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp51210})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp51211 = _tmp51210
+	_tmp51213 = _tmp51211
+	_tmp51214 = _tmp51213
+	_tmp51215 = _tmp51214
+	_tmp51217 = _tmp51215
+	_tmp51222 = _tmp51217
+	_tmp51223 = _tmp51222
+	_tmp51224 = _tmp51223
+	_tmp51228 = _tmp51224
+	_tmp51237 = _tmp51228
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51237}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp51237})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp51239 = _tmp51237
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51239}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp51239})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp51241 = _tmp51239
+	_tmp51243 = _tmp51241
+	_tmp51247 = _tmp51243
+	_tmp51249 = _tmp51247
+	_tmp51263 = _tmp51249
+	_tmp51266 = _tmp51263
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51266}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp51266})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp51267 = _tmp51266
+	_tmp51283 = _tmp51267
+	_tmp51286 = _tmp51283
+	_tmp51292 = _tmp51286
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51292}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp51292})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp51293 = _tmp51292
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51293}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp51293})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp51294 = _tmp51293
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51294}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp51294})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp51295 = _tmp51294
+	_tmp51296 = _tmp51295
+	_tmp51299 = _tmp51296
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51299}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp51299})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp51300 = _tmp51299
+	_tmp51306 = _tmp51300
+	_tmp51310 = _tmp51306
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51310}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp51310})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp51321 = _tmp51310
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51321}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp51321})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp51322 = _tmp51321
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51322}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp51322})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp51349 = _tmp51322
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51349}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp51349})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop4Par calculates the partition for hop 4 without database access.
 func Readrecord10Hop4Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp51392 uint64
+	var _tmp51394 uint64
+	var _tmp51395 uint64
+	var _tmp51396 uint64
+	var _tmp51397 uint64
+	var _tmp51398 uint64
+	var _tmp51399 uint64
+	var _tmp51400 uint64
+	var _tmp51401 uint64
+	var _tmp51402 uint64
+	var _tmp51403 uint64
+	var _tmp51404 uint64
+	var _tmp51405 uint64
+	var _tmp51406 uint64
+	var _tmp51407 uint64
+	var _tmp51408 uint64
+	var _tmp51409 uint64
+	var _tmp51410 uint64
+	var _tmp51412 uint64
+	var _tmp51413 uint64
+	var _tmp51414 uint64
+	var _tmp51415 uint64
+	var _tmp51416 uint64
+	var _tmp51417 uint64
+	var _tmp51418 uint64
+	var _tmp51419 uint64
+	var _tmp51420 uint64
+	var _tmp51421 uint64
+	var _tmp51422 uint64
+	var _tmp51423 uint64
+	var _tmp51424 uint64
+	var _tmp51425 uint64
+	var _tmp51426 uint64
+	var _tmp51427 uint64
+	var _tmp51428 uint64
+	var _tmp51429 uint64
+	var _tmp51430 uint64
+	var _tmp51431 uint64
+	var _tmp51433 uint64
+	var _tmp51434 uint64
+	var _tmp51435 uint64
+	var _tmp51436 uint64
+	var _tmp51437 uint64
+	var _tmp51438 uint64
+	var _tmp51440 uint64
+	var _tmp51441 uint64
+	var _tmp51442 uint64
+	var _tmp51444 uint64
+	var _tmp51445 uint64
+	var _tmp51446 uint64
+	var _tmp51447 uint64
+	var _tmp51448 uint64
+	var _tmp51450 uint64
+	var _tmp51451 uint64
+	var _tmp51455 uint64
+	var _tmp51456 uint64
+	var _tmp51460 uint64
+	var _tmp51461 uint64
+	var _tmp51463 uint64
+	var _tmp51465 uint64
+	var _tmp51468 uint64
+	var _tmp51471 uint64
+	var _tmp51472 uint64
+	var _tmp51473 uint64
+	var _tmp51478 uint64
+	var _tmp51480 uint64
+	var _tmp51484 uint64
+	var _tmp51485 uint64
+	var _tmp51486 uint64
+	var _tmp51489 uint64
+	var _tmp51494 uint64
+	var _tmp51495 uint64
+	var _tmp51505 uint64
+	var _tmp51507 uint64
+	var _tmp51513 uint64
+	var _tmp51515 uint64
+	var _tmp51517 uint64
+	var _tmp51521 uint64
+	var _tmp51524 uint64
+	var _tmp51531 uint64
+	var _tmp51533 uint64
+	var _tmp51534 uint64
+	var _tmp51539 uint64
+	var _tmp51540 uint64
+	var _tmp51541 uint64
+	var _tmp51546 uint64
+	var _tmp51550 uint64
+	var _tmp51555 uint64
+	var _tmp51560 uint64
+	var _tmp51561 uint64
+	var _tmp51562 uint64
+	var _tmp51567 uint64
+	var _tmp51578 uint64
+	var _tmp51589 uint64
+	var _tmp51590 uint64
+	var _tmp51591 uint64
+	var _tmp51604 uint64
+	var _tmp51617 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp51644 Unit
+	var _tmp51645 Unit
+	var _tmp51646 Unit
+	var _tmp51647 Unit
+	var _tmp51648 Unit
+	var _tmp51649 Unit
+	var _tmp51650 Unit
+	var _tmp51651 Unit
+	var _tmp51652 Unit
+	var _tmp51653 Unit
+	var _tmp51654 Unit
+	var _tmp51655 Unit
+	var _tmp51656 Unit
+	var _tmp51657 Unit
+	var _tmp51658 Unit
+	var _tmp51659 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -227,11 +5538,415 @@ func Readrecord10Hop4Par(params map[string]string) uint64 {
 	goto BB195
 
 BB195:
+	_tmp51392 = keyname + 4
+	_tmp51394 = _tmp51392
+	_tmp51395 = _tmp51394
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51395}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp51395})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp51396 = _tmp51395
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51396}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp51396})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp51397 = _tmp51396
+	_tmp51398 = _tmp51397
+	_tmp51399 = _tmp51398
+	_tmp51400 = _tmp51399
+	_tmp51401 = _tmp51400
+	_tmp51402 = _tmp51401
+	_tmp51403 = _tmp51402
+	_tmp51404 = _tmp51403
+	_tmp51405 = _tmp51404
+	_tmp51406 = _tmp51405
+	_tmp51407 = _tmp51406
+	_tmp51408 = _tmp51407
+	_tmp51409 = _tmp51408
+	_tmp51410 = _tmp51409
+	_tmp51412 = _tmp51410
+	_tmp51413 = _tmp51412
+	_tmp51414 = _tmp51413
+	_tmp51415 = _tmp51414
+	_tmp51416 = _tmp51415
+	_tmp51417 = _tmp51416
+	_tmp51418 = _tmp51417
+	_tmp51419 = _tmp51418
+	_tmp51420 = _tmp51419
+	_tmp51421 = _tmp51420
+	_tmp51422 = _tmp51421
+	_tmp51423 = _tmp51422
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51423}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp51423})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp51424 = _tmp51423
+	_tmp51425 = _tmp51424
+	_tmp51426 = _tmp51425
+	_tmp51427 = _tmp51426
+	_tmp51428 = _tmp51427
+	_tmp51429 = _tmp51428
+	_tmp51430 = _tmp51429
+	_tmp51431 = _tmp51430
+	_tmp51433 = _tmp51431
+	_tmp51434 = _tmp51433
+	_tmp51435 = _tmp51434
+	_tmp51436 = _tmp51435
+	_tmp51437 = _tmp51436
+	_tmp51438 = _tmp51437
+	_tmp51440 = _tmp51438
+	_tmp51441 = _tmp51440
+	_tmp51442 = _tmp51441
+	_tmp51444 = _tmp51442
+	_tmp51445 = _tmp51444
+	_tmp51446 = _tmp51445
+	_tmp51447 = _tmp51446
+	_tmp51448 = _tmp51447
+	_tmp51450 = _tmp51448
+	_tmp51451 = _tmp51450
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51451}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp51451})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp51455 = _tmp51451
+	_tmp51456 = _tmp51455
+	_tmp51460 = _tmp51456
+	_tmp51461 = _tmp51460
+	_tmp51463 = _tmp51461
+	_tmp51465 = _tmp51463
+	_tmp51468 = _tmp51465
+	_tmp51471 = _tmp51468
+	_tmp51472 = _tmp51471
+	_tmp51473 = _tmp51472
+	_tmp51478 = _tmp51473
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51478}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp51478})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp51480 = _tmp51478
+	_tmp51484 = _tmp51480
+	_tmp51485 = _tmp51484
+	_tmp51486 = _tmp51485
+	_tmp51489 = _tmp51486
+	_tmp51494 = _tmp51489
+	_tmp51495 = _tmp51494
+	_tmp51505 = _tmp51495
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51505}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp51505})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp51507 = _tmp51505
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51507}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp51507})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp51513 = _tmp51507
+	_tmp51515 = _tmp51513
+	_tmp51517 = _tmp51515
+	_tmp51521 = _tmp51517
+	_tmp51524 = _tmp51521
+	_tmp51531 = _tmp51524
+	_tmp51533 = _tmp51531
+	_tmp51534 = _tmp51533
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51534}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp51534})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp51539 = _tmp51534
+	_tmp51540 = _tmp51539
+	_tmp51541 = _tmp51540
+	_tmp51546 = _tmp51541
+	_tmp51550 = _tmp51546
+	_tmp51555 = _tmp51550
+	_tmp51560 = _tmp51555
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51560}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp51560})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp51561 = _tmp51560
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51561}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp51561})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp51562 = _tmp51561
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51562}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp51562})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp51567 = _tmp51562
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51567}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp51567})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp51578 = _tmp51567
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51578}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp51578})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp51589 = _tmp51578
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51589}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp51589})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp51590 = _tmp51589
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51590}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp51590})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp51591 = _tmp51590
+	_tmp51604 = _tmp51591
+	_tmp51617 = _tmp51604
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51617}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp51617})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop5Par calculates the partition for hop 5 without database access.
 func Readrecord10Hop5Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp51660 uint64
+	var _tmp51662 uint64
+	var _tmp51663 uint64
+	var _tmp51664 uint64
+	var _tmp51665 uint64
+	var _tmp51666 uint64
+	var _tmp51667 uint64
+	var _tmp51668 uint64
+	var _tmp51669 uint64
+	var _tmp51670 uint64
+	var _tmp51671 uint64
+	var _tmp51672 uint64
+	var _tmp51673 uint64
+	var _tmp51674 uint64
+	var _tmp51675 uint64
+	var _tmp51676 uint64
+	var _tmp51677 uint64
+	var _tmp51678 uint64
+	var _tmp51679 uint64
+	var _tmp51680 uint64
+	var _tmp51681 uint64
+	var _tmp51682 uint64
+	var _tmp51683 uint64
+	var _tmp51684 uint64
+	var _tmp51685 uint64
+	var _tmp51686 uint64
+	var _tmp51687 uint64
+	var _tmp51688 uint64
+	var _tmp51689 uint64
+	var _tmp51690 uint64
+	var _tmp51691 uint64
+	var _tmp51692 uint64
+	var _tmp51693 uint64
+	var _tmp51695 uint64
+	var _tmp51697 uint64
+	var _tmp51698 uint64
+	var _tmp51699 uint64
+	var _tmp51701 uint64
+	var _tmp51702 uint64
+	var _tmp51703 uint64
+	var _tmp51704 uint64
+	var _tmp51705 uint64
+	var _tmp51706 uint64
+	var _tmp51709 uint64
+	var _tmp51710 uint64
+	var _tmp51712 uint64
+	var _tmp51715 uint64
+	var _tmp51717 uint64
+	var _tmp51719 uint64
+	var _tmp51720 uint64
+	var _tmp51721 uint64
+	var _tmp51722 uint64
+	var _tmp51723 uint64
+	var _tmp51725 uint64
+	var _tmp51730 uint64
+	var _tmp51732 uint64
+	var _tmp51733 uint64
+	var _tmp51734 uint64
+	var _tmp51738 uint64
+	var _tmp51739 uint64
+	var _tmp51740 uint64
+	var _tmp51742 uint64
+	var _tmp51744 uint64
+	var _tmp51746 uint64
+	var _tmp51747 uint64
+	var _tmp51750 uint64
+	var _tmp51751 uint64
+	var _tmp51752 uint64
+	var _tmp51754 uint64
+	var _tmp51756 uint64
+	var _tmp51758 uint64
+	var _tmp51759 uint64
+	var _tmp51764 uint64
+	var _tmp51766 uint64
+	var _tmp51771 uint64
+	var _tmp51773 uint64
+	var _tmp51775 uint64
+	var _tmp51785 uint64
+	var _tmp51786 uint64
+	var _tmp51788 uint64
+	var _tmp51802 uint64
+	var _tmp51807 uint64
+	var _tmp51809 uint64
+	var _tmp51819 uint64
+	var _tmp51825 uint64
+	var _tmp51828 uint64
+	var _tmp51829 uint64
+	var _tmp51830 uint64
+	var _tmp51835 uint64
+	var _tmp51846 uint64
+	var _tmp51857 uint64
+	var _tmp51858 uint64
+	var _tmp51885 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp51912 Unit
+	var _tmp51913 Unit
+	var _tmp51914 Unit
+	var _tmp51915 Unit
+	var _tmp51916 Unit
+	var _tmp51917 Unit
+	var _tmp51918 Unit
+	var _tmp51919 Unit
+	var _tmp51920 Unit
+	var _tmp51921 Unit
+	var _tmp51922 Unit
+	var _tmp51923 Unit
+	var _tmp51924 Unit
+	var _tmp51925 Unit
+	var _tmp51926 Unit
+	var _tmp51927 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -240,11 +5955,399 @@ func Readrecord10Hop5Par(params map[string]string) uint64 {
 	goto BB196
 
 BB196:
+	_tmp51660 = keyname + 5
+	_tmp51662 = _tmp51660
+	_tmp51663 = _tmp51662
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51663}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp51663})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp51664 = _tmp51663
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51664}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp51664})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp51665 = _tmp51664
+	_tmp51666 = _tmp51665
+	_tmp51667 = _tmp51666
+	_tmp51668 = _tmp51667
+	_tmp51669 = _tmp51668
+	_tmp51670 = _tmp51669
+	_tmp51671 = _tmp51670
+	_tmp51672 = _tmp51671
+	_tmp51673 = _tmp51672
+	_tmp51674 = _tmp51673
+	_tmp51675 = _tmp51674
+	_tmp51676 = _tmp51675
+	_tmp51677 = _tmp51676
+	_tmp51678 = _tmp51677
+	_tmp51679 = _tmp51678
+	_tmp51680 = _tmp51679
+	_tmp51681 = _tmp51680
+	_tmp51682 = _tmp51681
+	_tmp51683 = _tmp51682
+	_tmp51684 = _tmp51683
+	_tmp51685 = _tmp51684
+	_tmp51686 = _tmp51685
+	_tmp51687 = _tmp51686
+	_tmp51688 = _tmp51687
+	_tmp51689 = _tmp51688
+	_tmp51690 = _tmp51689
+	_tmp51691 = _tmp51690
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51691}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp51691})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp51692 = _tmp51691
+	_tmp51693 = _tmp51692
+	_tmp51695 = _tmp51693
+	_tmp51697 = _tmp51695
+	_tmp51698 = _tmp51697
+	_tmp51699 = _tmp51698
+	_tmp51701 = _tmp51699
+	_tmp51702 = _tmp51701
+	_tmp51703 = _tmp51702
+	_tmp51704 = _tmp51703
+	_tmp51705 = _tmp51704
+	_tmp51706 = _tmp51705
+	_tmp51709 = _tmp51706
+	_tmp51710 = _tmp51709
+	_tmp51712 = _tmp51710
+	_tmp51715 = _tmp51712
+	_tmp51717 = _tmp51715
+	_tmp51719 = _tmp51717
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51719}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp51719})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp51720 = _tmp51719
+	_tmp51721 = _tmp51720
+	_tmp51722 = _tmp51721
+	_tmp51723 = _tmp51722
+	_tmp51725 = _tmp51723
+	_tmp51730 = _tmp51725
+	_tmp51732 = _tmp51730
+	_tmp51733 = _tmp51732
+	_tmp51734 = _tmp51733
+	_tmp51738 = _tmp51734
+	_tmp51739 = _tmp51738
+	_tmp51740 = _tmp51739
+	_tmp51742 = _tmp51740
+	_tmp51744 = _tmp51742
+	_tmp51746 = _tmp51744
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51746}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp51746})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp51747 = _tmp51746
+	_tmp51750 = _tmp51747
+	_tmp51751 = _tmp51750
+	_tmp51752 = _tmp51751
+	_tmp51754 = _tmp51752
+	_tmp51756 = _tmp51754
+	_tmp51758 = _tmp51756
+	_tmp51759 = _tmp51758
+	_tmp51764 = _tmp51759
+	_tmp51766 = _tmp51764
+	_tmp51771 = _tmp51766
+	_tmp51773 = _tmp51771
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51773}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp51773})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp51775 = _tmp51773
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51775}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp51775})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp51785 = _tmp51775
+	_tmp51786 = _tmp51785
+	_tmp51788 = _tmp51786
+	_tmp51802 = _tmp51788
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51802}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp51802})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp51807 = _tmp51802
+	_tmp51809 = _tmp51807
+	_tmp51819 = _tmp51809
+	_tmp51825 = _tmp51819
+	_tmp51828 = _tmp51825
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51828}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp51828})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp51829 = _tmp51828
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51829}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp51829})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp51830 = _tmp51829
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51830}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp51830})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp51835 = _tmp51830
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51835}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp51835})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp51846 = _tmp51835
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51846}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp51846})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp51857 = _tmp51846
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51857}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp51857})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp51858 = _tmp51857
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51858}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp51858})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp51885 = _tmp51858
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51885}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp51885})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop6Par calculates the partition for hop 6 without database access.
 func Readrecord10Hop6Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp51928 uint64
+	var _tmp51930 uint64
+	var _tmp51931 uint64
+	var _tmp51932 uint64
+	var _tmp51933 uint64
+	var _tmp51934 uint64
+	var _tmp51935 uint64
+	var _tmp51936 uint64
+	var _tmp51937 uint64
+	var _tmp51938 uint64
+	var _tmp51939 uint64
+	var _tmp51940 uint64
+	var _tmp51941 uint64
+	var _tmp51943 uint64
+	var _tmp51944 uint64
+	var _tmp51946 uint64
+	var _tmp51947 uint64
+	var _tmp51948 uint64
+	var _tmp51949 uint64
+	var _tmp51950 uint64
+	var _tmp51951 uint64
+	var _tmp51953 uint64
+	var _tmp51954 uint64
+	var _tmp51955 uint64
+	var _tmp51958 uint64
+	var _tmp51959 uint64
+	var _tmp51962 uint64
+	var _tmp51964 uint64
+	var _tmp51965 uint64
+	var _tmp51969 uint64
+	var _tmp51972 uint64
+	var _tmp51973 uint64
+	var _tmp51975 uint64
+	var _tmp51976 uint64
+	var _tmp51980 uint64
+	var _tmp51982 uint64
+	var _tmp51984 uint64
+	var _tmp51985 uint64
+	var _tmp51986 uint64
+	var _tmp51987 uint64
+	var _tmp51989 uint64
+	var _tmp51991 uint64
+	var _tmp51994 uint64
+	var _tmp51997 uint64
+	var _tmp51999 uint64
+	var _tmp52000 uint64
+	var _tmp52001 uint64
+	var _tmp52004 uint64
+	var _tmp52006 uint64
+	var _tmp52007 uint64
+	var _tmp52008 uint64
+	var _tmp52009 uint64
+	var _tmp52010 uint64
+	var _tmp52011 uint64
+	var _tmp52012 uint64
+	var _tmp52013 uint64
+	var _tmp52014 uint64
+	var _tmp52018 uint64
+	var _tmp52025 uint64
+	var _tmp52027 uint64
+	var _tmp52028 uint64
+	var _tmp52029 uint64
+	var _tmp52031 uint64
+	var _tmp52032 uint64
+	var _tmp52035 uint64
+	var _tmp52040 uint64
+	var _tmp52041 uint64
+	var _tmp52043 uint64
+	var _tmp52050 uint64
+	var _tmp52051 uint64
+	var _tmp52053 uint64
+	var _tmp52065 uint64
+	var _tmp52070 uint64
+	var _tmp52092 uint64
+	var _tmp52096 uint64
+	var _tmp52097 uint64
+	var _tmp52098 uint64
+	var _tmp52103 uint64
+	var _tmp52114 uint64
+	var _tmp52125 uint64
+	var _tmp52126 uint64
+	var _tmp52153 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp52180 Unit
+	var _tmp52181 Unit
+	var _tmp52182 Unit
+	var _tmp52183 Unit
+	var _tmp52184 Unit
+	var _tmp52185 Unit
+	var _tmp52186 Unit
+	var _tmp52187 Unit
+	var _tmp52188 Unit
+	var _tmp52189 Unit
+	var _tmp52190 Unit
+	var _tmp52191 Unit
+	var _tmp52192 Unit
+	var _tmp52193 Unit
+	var _tmp52194 Unit
+	var _tmp52195 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -253,11 +6356,398 @@ func Readrecord10Hop6Par(params map[string]string) uint64 {
 	goto BB197
 
 BB197:
+	_tmp51928 = keyname + 6
+	_tmp51930 = _tmp51928
+	_tmp51931 = _tmp51930
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51931}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp51931})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp51932 = _tmp51931
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51932}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp51932})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp51933 = _tmp51932
+	_tmp51934 = _tmp51933
+	_tmp51935 = _tmp51934
+	_tmp51936 = _tmp51935
+	_tmp51937 = _tmp51936
+	_tmp51938 = _tmp51937
+	_tmp51939 = _tmp51938
+	_tmp51940 = _tmp51939
+	_tmp51941 = _tmp51940
+	_tmp51943 = _tmp51941
+	_tmp51944 = _tmp51943
+	_tmp51946 = _tmp51944
+	_tmp51947 = _tmp51946
+	_tmp51948 = _tmp51947
+	_tmp51949 = _tmp51948
+	_tmp51950 = _tmp51949
+	_tmp51951 = _tmp51950
+	_tmp51953 = _tmp51951
+	_tmp51954 = _tmp51953
+	_tmp51955 = _tmp51954
+	_tmp51958 = _tmp51955
+	_tmp51959 = _tmp51958
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51959}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp51959})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp51962 = _tmp51959
+	_tmp51964 = _tmp51962
+	_tmp51965 = _tmp51964
+	_tmp51969 = _tmp51965
+	_tmp51972 = _tmp51969
+	_tmp51973 = _tmp51972
+	_tmp51975 = _tmp51973
+	_tmp51976 = _tmp51975
+	_tmp51980 = _tmp51976
+	_tmp51982 = _tmp51980
+	_tmp51984 = _tmp51982
+	_tmp51985 = _tmp51984
+	_tmp51986 = _tmp51985
+	_tmp51987 = _tmp51986
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp51987}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp51987})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp51989 = _tmp51987
+	_tmp51991 = _tmp51989
+	_tmp51994 = _tmp51991
+	_tmp51997 = _tmp51994
+	_tmp51999 = _tmp51997
+	_tmp52000 = _tmp51999
+	_tmp52001 = _tmp52000
+	_tmp52004 = _tmp52001
+	_tmp52006 = _tmp52004
+	_tmp52007 = _tmp52006
+	_tmp52008 = _tmp52007
+	_tmp52009 = _tmp52008
+	_tmp52010 = _tmp52009
+	_tmp52011 = _tmp52010
+	_tmp52012 = _tmp52011
+	_tmp52013 = _tmp52012
+	_tmp52014 = _tmp52013
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52014}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp52014})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp52018 = _tmp52014
+	_tmp52025 = _tmp52018
+	_tmp52027 = _tmp52025
+	_tmp52028 = _tmp52027
+	_tmp52029 = _tmp52028
+	_tmp52031 = _tmp52029
+	_tmp52032 = _tmp52031
+	_tmp52035 = _tmp52032
+	_tmp52040 = _tmp52035
+	_tmp52041 = _tmp52040
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52041}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp52041})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp52043 = _tmp52041
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52043}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp52043})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp52050 = _tmp52043
+	_tmp52051 = _tmp52050
+	_tmp52053 = _tmp52051
+	_tmp52065 = _tmp52053
+	_tmp52070 = _tmp52065
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52070}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp52070})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp52092 = _tmp52070
+	_tmp52096 = _tmp52092
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52096}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp52096})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp52097 = _tmp52096
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52097}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp52097})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp52098 = _tmp52097
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52098}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp52098})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp52103 = _tmp52098
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52103}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp52103})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp52114 = _tmp52103
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52114}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp52114})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp52125 = _tmp52114
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52125}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp52125})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp52126 = _tmp52125
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52126}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp52126})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp52153 = _tmp52126
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52153}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp52153})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop7Par calculates the partition for hop 7 without database access.
 func Readrecord10Hop7Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp52196 uint64
+	var _tmp52198 uint64
+	var _tmp52199 uint64
+	var _tmp52200 uint64
+	var _tmp52201 uint64
+	var _tmp52202 uint64
+	var _tmp52203 uint64
+	var _tmp52204 uint64
+	var _tmp52206 uint64
+	var _tmp52207 uint64
+	var _tmp52208 uint64
+	var _tmp52209 uint64
+	var _tmp52210 uint64
+	var _tmp52211 uint64
+	var _tmp52213 uint64
+	var _tmp52214 uint64
+	var _tmp52215 uint64
+	var _tmp52216 uint64
+	var _tmp52217 uint64
+	var _tmp52221 uint64
+	var _tmp52222 uint64
+	var _tmp52223 uint64
+	var _tmp52224 uint64
+	var _tmp52227 uint64
+	var _tmp52228 uint64
+	var _tmp52229 uint64
+	var _tmp52230 uint64
+	var _tmp52231 uint64
+	var _tmp52234 uint64
+	var _tmp52235 uint64
+	var _tmp52236 uint64
+	var _tmp52238 uint64
+	var _tmp52239 uint64
+	var _tmp52240 uint64
+	var _tmp52241 uint64
+	var _tmp52242 uint64
+	var _tmp52243 uint64
+	var _tmp52244 uint64
+	var _tmp52245 uint64
+	var _tmp52246 uint64
+	var _tmp52248 uint64
+	var _tmp52255 uint64
+	var _tmp52257 uint64
+	var _tmp52258 uint64
+	var _tmp52260 uint64
+	var _tmp52261 uint64
+	var _tmp52262 uint64
+	var _tmp52263 uint64
+	var _tmp52264 uint64
+	var _tmp52265 uint64
+	var _tmp52266 uint64
+	var _tmp52267 uint64
+	var _tmp52268 uint64
+	var _tmp52270 uint64
+	var _tmp52272 uint64
+	var _tmp52273 uint64
+	var _tmp52275 uint64
+	var _tmp52277 uint64
+	var _tmp52278 uint64
+	var _tmp52280 uint64
+	var _tmp52281 uint64
+	var _tmp52282 uint64
+	var _tmp52283 uint64
+	var _tmp52284 uint64
+	var _tmp52286 uint64
+	var _tmp52287 uint64
+	var _tmp52289 uint64
+	var _tmp52290 uint64
+	var _tmp52291 uint64
+	var _tmp52293 uint64
+	var _tmp52296 uint64
+	var _tmp52309 uint64
+	var _tmp52311 uint64
+	var _tmp52313 uint64
+	var _tmp52315 uint64
+	var _tmp52321 uint64
+	var _tmp52332 uint64
+	var _tmp52338 uint64
+	var _tmp52355 uint64
+	var _tmp52362 uint64
+	var _tmp52364 uint64
+	var _tmp52365 uint64
+	var _tmp52366 uint64
+	var _tmp52371 uint64
+	var _tmp52375 uint64
+	var _tmp52380 uint64
+	var _tmp52382 uint64
+	var _tmp52384 uint64
+	var _tmp52393 uint64
+	var _tmp52394 uint64
+	var _tmp52415 uint64
+	var _tmp52421 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp52448 Unit
+	var _tmp52449 Unit
+	var _tmp52450 Unit
+	var _tmp52451 Unit
+	var _tmp52452 Unit
+	var _tmp52453 Unit
+	var _tmp52454 Unit
+	var _tmp52455 Unit
+	var _tmp52456 Unit
+	var _tmp52457 Unit
+	var _tmp52458 Unit
+	var _tmp52459 Unit
+	var _tmp52460 Unit
+	var _tmp52461 Unit
+	var _tmp52462 Unit
+	var _tmp52463 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -266,11 +6756,410 @@ func Readrecord10Hop7Par(params map[string]string) uint64 {
 	goto BB198
 
 BB198:
+	_tmp52196 = keyname + 7
+	_tmp52198 = _tmp52196
+	_tmp52199 = _tmp52198
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52199}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp52199})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp52200 = _tmp52199
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52200}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp52200})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp52201 = _tmp52200
+	_tmp52202 = _tmp52201
+	_tmp52203 = _tmp52202
+	_tmp52204 = _tmp52203
+	_tmp52206 = _tmp52204
+	_tmp52207 = _tmp52206
+	_tmp52208 = _tmp52207
+	_tmp52209 = _tmp52208
+	_tmp52210 = _tmp52209
+	_tmp52211 = _tmp52210
+	_tmp52213 = _tmp52211
+	_tmp52214 = _tmp52213
+	_tmp52215 = _tmp52214
+	_tmp52216 = _tmp52215
+	_tmp52217 = _tmp52216
+	_tmp52221 = _tmp52217
+	_tmp52222 = _tmp52221
+	_tmp52223 = _tmp52222
+	_tmp52224 = _tmp52223
+	_tmp52227 = _tmp52224
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52227}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp52227})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp52228 = _tmp52227
+	_tmp52229 = _tmp52228
+	_tmp52230 = _tmp52229
+	_tmp52231 = _tmp52230
+	_tmp52234 = _tmp52231
+	_tmp52235 = _tmp52234
+	_tmp52236 = _tmp52235
+	_tmp52238 = _tmp52236
+	_tmp52239 = _tmp52238
+	_tmp52240 = _tmp52239
+	_tmp52241 = _tmp52240
+	_tmp52242 = _tmp52241
+	_tmp52243 = _tmp52242
+	_tmp52244 = _tmp52243
+	_tmp52245 = _tmp52244
+	_tmp52246 = _tmp52245
+	_tmp52248 = _tmp52246
+	_tmp52255 = _tmp52248
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52255}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp52255})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp52257 = _tmp52255
+	_tmp52258 = _tmp52257
+	_tmp52260 = _tmp52258
+	_tmp52261 = _tmp52260
+	_tmp52262 = _tmp52261
+	_tmp52263 = _tmp52262
+	_tmp52264 = _tmp52263
+	_tmp52265 = _tmp52264
+	_tmp52266 = _tmp52265
+	_tmp52267 = _tmp52266
+	_tmp52268 = _tmp52267
+	_tmp52270 = _tmp52268
+	_tmp52272 = _tmp52270
+	_tmp52273 = _tmp52272
+	_tmp52275 = _tmp52273
+	_tmp52277 = _tmp52275
+	_tmp52278 = _tmp52277
+	_tmp52280 = _tmp52278
+	_tmp52281 = _tmp52280
+	_tmp52282 = _tmp52281
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52282}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp52282})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp52283 = _tmp52282
+	_tmp52284 = _tmp52283
+	_tmp52286 = _tmp52284
+	_tmp52287 = _tmp52286
+	_tmp52289 = _tmp52287
+	_tmp52290 = _tmp52289
+	_tmp52291 = _tmp52290
+	_tmp52293 = _tmp52291
+	_tmp52296 = _tmp52293
+	_tmp52309 = _tmp52296
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52309}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp52309})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp52311 = _tmp52309
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52311}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp52311})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp52313 = _tmp52311
+	_tmp52315 = _tmp52313
+	_tmp52321 = _tmp52315
+	_tmp52332 = _tmp52321
+	_tmp52338 = _tmp52332
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52338}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp52338})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp52355 = _tmp52338
+	_tmp52362 = _tmp52355
+	_tmp52364 = _tmp52362
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52364}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp52364})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp52365 = _tmp52364
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52365}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp52365})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp52366 = _tmp52365
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52366}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp52366})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp52371 = _tmp52366
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52371}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp52371})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp52375 = _tmp52371
+	_tmp52380 = _tmp52375
+	_tmp52382 = _tmp52380
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52382}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp52382})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp52384 = _tmp52382
+	_tmp52393 = _tmp52384
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52393}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp52393})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp52394 = _tmp52393
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52394}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp52394})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp52415 = _tmp52394
+	_tmp52421 = _tmp52415
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52421}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp52421})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop8Par calculates the partition for hop 8 without database access.
 func Readrecord10Hop8Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp52464 uint64
+	var _tmp52466 uint64
+	var _tmp52467 uint64
+	var _tmp52468 uint64
+	var _tmp52469 uint64
+	var _tmp52470 uint64
+	var _tmp52471 uint64
+	var _tmp52472 uint64
+	var _tmp52473 uint64
+	var _tmp52474 uint64
+	var _tmp52476 uint64
+	var _tmp52477 uint64
+	var _tmp52478 uint64
+	var _tmp52479 uint64
+	var _tmp52481 uint64
+	var _tmp52482 uint64
+	var _tmp52483 uint64
+	var _tmp52484 uint64
+	var _tmp52485 uint64
+	var _tmp52486 uint64
+	var _tmp52487 uint64
+	var _tmp52488 uint64
+	var _tmp52489 uint64
+	var _tmp52490 uint64
+	var _tmp52492 uint64
+	var _tmp52493 uint64
+	var _tmp52494 uint64
+	var _tmp52495 uint64
+	var _tmp52497 uint64
+	var _tmp52499 uint64
+	var _tmp52500 uint64
+	var _tmp52501 uint64
+	var _tmp52502 uint64
+	var _tmp52503 uint64
+	var _tmp52504 uint64
+	var _tmp52506 uint64
+	var _tmp52507 uint64
+	var _tmp52509 uint64
+	var _tmp52510 uint64
+	var _tmp52511 uint64
+	var _tmp52512 uint64
+	var _tmp52515 uint64
+	var _tmp52516 uint64
+	var _tmp52517 uint64
+	var _tmp52518 uint64
+	var _tmp52519 uint64
+	var _tmp52520 uint64
+	var _tmp52521 uint64
+	var _tmp52522 uint64
+	var _tmp52523 uint64
+	var _tmp52525 uint64
+	var _tmp52526 uint64
+	var _tmp52527 uint64
+	var _tmp52529 uint64
+	var _tmp52533 uint64
+	var _tmp52536 uint64
+	var _tmp52538 uint64
+	var _tmp52540 uint64
+	var _tmp52541 uint64
+	var _tmp52543 uint64
+	var _tmp52544 uint64
+	var _tmp52546 uint64
+	var _tmp52547 uint64
+	var _tmp52549 uint64
+	var _tmp52550 uint64
+	var _tmp52551 uint64
+	var _tmp52552 uint64
+	var _tmp52553 uint64
+	var _tmp52556 uint64
+	var _tmp52560 uint64
+	var _tmp52562 uint64
+	var _tmp52571 uint64
+	var _tmp52576 uint64
+	var _tmp52577 uint64
+	var _tmp52579 uint64
+	var _tmp52584 uint64
+	var _tmp52587 uint64
+	var _tmp52591 uint64
+	var _tmp52595 uint64
+	var _tmp52600 uint64
+	var _tmp52601 uint64
+	var _tmp52606 uint64
+	var _tmp52616 uint64
+	var _tmp52619 uint64
+	var _tmp52625 uint64
+	var _tmp52632 uint64
+	var _tmp52633 uint64
+	var _tmp52634 uint64
+	var _tmp52639 uint64
+	var _tmp52640 uint64
+	var _tmp52650 uint64
+	var _tmp52661 uint64
+	var _tmp52662 uint64
+	var _tmp52689 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp52716 Unit
+	var _tmp52717 Unit
+	var _tmp52718 Unit
+	var _tmp52719 Unit
+	var _tmp52720 Unit
+	var _tmp52721 Unit
+	var _tmp52722 Unit
+	var _tmp52723 Unit
+	var _tmp52724 Unit
+	var _tmp52725 Unit
+	var _tmp52726 Unit
+	var _tmp52727 Unit
+	var _tmp52728 Unit
+	var _tmp52729 Unit
+	var _tmp52730 Unit
+	var _tmp52731 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -279,11 +7168,408 @@ func Readrecord10Hop8Par(params map[string]string) uint64 {
 	goto BB199
 
 BB199:
+	_tmp52464 = keyname + 8
+	_tmp52466 = _tmp52464
+	_tmp52467 = _tmp52466
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52467}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp52467})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp52468 = _tmp52467
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52468}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp52468})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp52469 = _tmp52468
+	_tmp52470 = _tmp52469
+	_tmp52471 = _tmp52470
+	_tmp52472 = _tmp52471
+	_tmp52473 = _tmp52472
+	_tmp52474 = _tmp52473
+	_tmp52476 = _tmp52474
+	_tmp52477 = _tmp52476
+	_tmp52478 = _tmp52477
+	_tmp52479 = _tmp52478
+	_tmp52481 = _tmp52479
+	_tmp52482 = _tmp52481
+	_tmp52483 = _tmp52482
+	_tmp52484 = _tmp52483
+	_tmp52485 = _tmp52484
+	_tmp52486 = _tmp52485
+	_tmp52487 = _tmp52486
+	_tmp52488 = _tmp52487
+	_tmp52489 = _tmp52488
+	_tmp52490 = _tmp52489
+	_tmp52492 = _tmp52490
+	_tmp52493 = _tmp52492
+	_tmp52494 = _tmp52493
+	_tmp52495 = _tmp52494
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52495}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp52495})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp52497 = _tmp52495
+	_tmp52499 = _tmp52497
+	_tmp52500 = _tmp52499
+	_tmp52501 = _tmp52500
+	_tmp52502 = _tmp52501
+	_tmp52503 = _tmp52502
+	_tmp52504 = _tmp52503
+	_tmp52506 = _tmp52504
+	_tmp52507 = _tmp52506
+	_tmp52509 = _tmp52507
+	_tmp52510 = _tmp52509
+	_tmp52511 = _tmp52510
+	_tmp52512 = _tmp52511
+	_tmp52515 = _tmp52512
+	_tmp52516 = _tmp52515
+	_tmp52517 = _tmp52516
+	_tmp52518 = _tmp52517
+	_tmp52519 = _tmp52518
+	_tmp52520 = _tmp52519
+	_tmp52521 = _tmp52520
+	_tmp52522 = _tmp52521
+	_tmp52523 = _tmp52522
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52523}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp52523})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp52525 = _tmp52523
+	_tmp52526 = _tmp52525
+	_tmp52527 = _tmp52526
+	_tmp52529 = _tmp52527
+	_tmp52533 = _tmp52529
+	_tmp52536 = _tmp52533
+	_tmp52538 = _tmp52536
+	_tmp52540 = _tmp52538
+	_tmp52541 = _tmp52540
+	_tmp52543 = _tmp52541
+	_tmp52544 = _tmp52543
+	_tmp52546 = _tmp52544
+	_tmp52547 = _tmp52546
+	_tmp52549 = _tmp52547
+	_tmp52550 = _tmp52549
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52550}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp52550})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp52551 = _tmp52550
+	_tmp52552 = _tmp52551
+	_tmp52553 = _tmp52552
+	_tmp52556 = _tmp52553
+	_tmp52560 = _tmp52556
+	_tmp52562 = _tmp52560
+	_tmp52571 = _tmp52562
+	_tmp52576 = _tmp52571
+	_tmp52577 = _tmp52576
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52577}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp52577})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp52579 = _tmp52577
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52579}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp52579})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp52584 = _tmp52579
+	_tmp52587 = _tmp52584
+	_tmp52591 = _tmp52587
+	_tmp52595 = _tmp52591
+	_tmp52600 = _tmp52595
+	_tmp52601 = _tmp52600
+	_tmp52606 = _tmp52601
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52606}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp52606})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp52616 = _tmp52606
+	_tmp52619 = _tmp52616
+	_tmp52625 = _tmp52619
+	_tmp52632 = _tmp52625
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52632}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp52632})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp52633 = _tmp52632
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52633}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp52633})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp52634 = _tmp52633
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52634}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp52634})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp52639 = _tmp52634
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52639}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp52639})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp52640 = _tmp52639
+	_tmp52650 = _tmp52640
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52650}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp52650})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp52661 = _tmp52650
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52661}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp52661})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp52662 = _tmp52661
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52662}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp52662})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp52689 = _tmp52662
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52689}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp52689})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	panic("unexpected hop exit in partition")
 }
 
 // Readrecord10Hop9Par calculates the partition for hop 9 without database access.
 func Readrecord10Hop9Par(params map[string]string) uint64 {
+	var keyname uint64
+	var r_FIELD2 uint64
+	var r_FIELD3 uint64
+	var r_FIELD4 uint64
+	var r_FIELD5 uint64
+	var r_FIELD10 uint64
+	var r_FIELD25 uint64
+	var r_FIELD50 uint64
+	var r_FIELD75 uint64
+	var r_FIELD100 uint64
+	var r_FIELD125 uint64
+	var r_FIELD150 uint64
+	var r_FIELD175 uint64
+	var r_FIELD200 uint64
+	var r_FIELD225 uint64
+	var r_FIELD249 uint64
+	var r_FIELD250 uint64
+	var _tmp52732 uint64
+	var _tmp52734 uint64
+	var _tmp52735 uint64
+	var _tmp52736 uint64
+	var _tmp52737 uint64
+	var _tmp52738 uint64
+	var _tmp52739 uint64
+	var _tmp52740 uint64
+	var _tmp52741 uint64
+	var _tmp52742 uint64
+	var _tmp52743 uint64
+	var _tmp52744 uint64
+	var _tmp52745 uint64
+	var _tmp52746 uint64
+	var _tmp52748 uint64
+	var _tmp52750 uint64
+	var _tmp52751 uint64
+	var _tmp52752 uint64
+	var _tmp52753 uint64
+	var _tmp52754 uint64
+	var _tmp52755 uint64
+	var _tmp52756 uint64
+	var _tmp52757 uint64
+	var _tmp52758 uint64
+	var _tmp52759 uint64
+	var _tmp52760 uint64
+	var _tmp52761 uint64
+	var _tmp52762 uint64
+	var _tmp52763 uint64
+	var _tmp52765 uint64
+	var _tmp52766 uint64
+	var _tmp52769 uint64
+	var _tmp52771 uint64
+	var _tmp52772 uint64
+	var _tmp52773 uint64
+	var _tmp52774 uint64
+	var _tmp52775 uint64
+	var _tmp52776 uint64
+	var _tmp52777 uint64
+	var _tmp52778 uint64
+	var _tmp52779 uint64
+	var _tmp52780 uint64
+	var _tmp52782 uint64
+	var _tmp52783 uint64
+	var _tmp52787 uint64
+	var _tmp52788 uint64
+	var _tmp52789 uint64
+	var _tmp52790 uint64
+	var _tmp52791 uint64
+	var _tmp52793 uint64
+	var _tmp52794 uint64
+	var _tmp52797 uint64
+	var _tmp52799 uint64
+	var _tmp52800 uint64
+	var _tmp52807 uint64
+	var _tmp52814 uint64
+	var _tmp52815 uint64
+	var _tmp52817 uint64
+	var _tmp52818 uint64
+	var _tmp52819 uint64
+	var _tmp52821 uint64
+	var _tmp52823 uint64
+	var _tmp52824 uint64
+	var _tmp52828 uint64
+	var _tmp52830 uint64
+	var _tmp52833 uint64
+	var _tmp52836 uint64
+	var _tmp52843 uint64
+	var _tmp52844 uint64
+	var _tmp52845 uint64
+	var _tmp52846 uint64
+	var _tmp52847 uint64
+	var _tmp52850 uint64
+	var _tmp52854 uint64
+	var _tmp52855 uint64
+	var _tmp52861 uint64
+	var _tmp52864 uint64
+	var _tmp52872 uint64
+	var _tmp52874 uint64
+	var _tmp52875 uint64
+	var _tmp52884 uint64
+	var _tmp52896 uint64
+	var _tmp52900 uint64
+	var _tmp52901 uint64
+	var _tmp52902 uint64
+	var _tmp52907 uint64
+	var _tmp52918 uint64
+	var _tmp52929 uint64
+	var _tmp52930 uint64
+	var _tmp52957 uint64
+	var v2 uint64
+	var v3 uint64
+	var v4 uint64
+	var v5 uint64
+	var v10 uint64
+	var v25 uint64
+	var v50 uint64
+	var v75 uint64
+	var v100 uint64
+	var v125 uint64
+	var v150 uint64
+	var v175 uint64
+	var v200 uint64
+	var v225 uint64
+	var v249 uint64
+	var v250 uint64
+	var _tmp52984 Unit
+	var _tmp52985 Unit
+	var _tmp52986 Unit
+	var _tmp52987 Unit
+	var _tmp52988 Unit
+	var _tmp52989 Unit
+	var _tmp52990 Unit
+	var _tmp52991 Unit
+	var _tmp52992 Unit
+	var _tmp52993 Unit
+	var _tmp52994 Unit
+	var _tmp52995 Unit
+	var _tmp52996 Unit
+	var _tmp52997 Unit
+	var _tmp52998 Unit
+	var _tmp52999 Unit
+
+	var keyBytes1 []byte
+	var row1 Htable
+	var keyBytes2 []byte
+	var row2 Htable
+	var keyBytes3 []byte
+	var row3 Htable
+	var keyBytes4 []byte
+	var row4 Htable
+	var keyBytes5 []byte
+	var row5 Htable
+	var keyBytes6 []byte
+	var row6 Htable
+	var keyBytes7 []byte
+	var row7 Htable
+	var keyBytes8 []byte
+	var row8 Htable
+	var keyBytes9 []byte
+	var row9 Htable
+	var keyBytes10 []byte
+	var row10 Htable
+	var keyBytes11 []byte
+	var row11 Htable
+	var keyBytes12 []byte
+	var row12 Htable
+	var keyBytes13 []byte
+	var row13 Htable
+	var keyBytes14 []byte
+	var row14 Htable
+	var keyBytes15 []byte
+	var row15 Htable
+	var keyBytes16 []byte
+	var row16 Htable
+
+	keyname = toUint64(params["keyname"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -292,6 +7578,224 @@ func Readrecord10Hop9Par(params map[string]string) uint64 {
 	goto BB200
 
 BB200:
+	_tmp52732 = keyname + 9
+	_tmp52734 = _tmp52732
+	_tmp52735 = _tmp52734
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52735}) }
+	// TableGet: Htable
+	keyBytes1, row1 = getHtable(tx, HtableKey{FIELD1: _tmp52735})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes1)
+	r_FIELD10 = row1.FIELD10
+	_tmp52736 = _tmp52735
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52736}) }
+	// TableGet: Htable
+	keyBytes2, row2 = getHtable(tx, HtableKey{FIELD1: _tmp52736})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes2)
+	r_FIELD100 = row2.FIELD100
+	_tmp52737 = _tmp52736
+	_tmp52738 = _tmp52737
+	_tmp52739 = _tmp52738
+	_tmp52740 = _tmp52739
+	_tmp52741 = _tmp52740
+	_tmp52742 = _tmp52741
+	_tmp52743 = _tmp52742
+	_tmp52744 = _tmp52743
+	_tmp52745 = _tmp52744
+	_tmp52746 = _tmp52745
+	_tmp52748 = _tmp52746
+	_tmp52750 = _tmp52748
+	_tmp52751 = _tmp52750
+	_tmp52752 = _tmp52751
+	_tmp52753 = _tmp52752
+	_tmp52754 = _tmp52753
+	_tmp52755 = _tmp52754
+	_tmp52756 = _tmp52755
+	_tmp52757 = _tmp52756
+	_tmp52758 = _tmp52757
+	_tmp52759 = _tmp52758
+	_tmp52760 = _tmp52759
+	_tmp52761 = _tmp52760
+	_tmp52762 = _tmp52761
+	_tmp52763 = _tmp52762
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52763}) }
+	// TableGet: Htable
+	keyBytes3, row3 = getHtable(tx, HtableKey{FIELD1: _tmp52763})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes3)
+	r_FIELD125 = row3.FIELD125
+	_tmp52765 = _tmp52763
+	_tmp52766 = _tmp52765
+	_tmp52769 = _tmp52766
+	_tmp52771 = _tmp52769
+	_tmp52772 = _tmp52771
+	_tmp52773 = _tmp52772
+	_tmp52774 = _tmp52773
+	_tmp52775 = _tmp52774
+	_tmp52776 = _tmp52775
+	_tmp52777 = _tmp52776
+	_tmp52778 = _tmp52777
+	_tmp52779 = _tmp52778
+	_tmp52780 = _tmp52779
+	_tmp52782 = _tmp52780
+	_tmp52783 = _tmp52782
+	_tmp52787 = _tmp52783
+	_tmp52788 = _tmp52787
+	_tmp52789 = _tmp52788
+	_tmp52790 = _tmp52789
+	_tmp52791 = _tmp52790
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52791}) }
+	// TableGet: Htable
+	keyBytes4, row4 = getHtable(tx, HtableKey{FIELD1: _tmp52791})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes4)
+	r_FIELD150 = row4.FIELD150
+	_tmp52793 = _tmp52791
+	_tmp52794 = _tmp52793
+	_tmp52797 = _tmp52794
+	_tmp52799 = _tmp52797
+	_tmp52800 = _tmp52799
+	_tmp52807 = _tmp52800
+	_tmp52814 = _tmp52807
+	_tmp52815 = _tmp52814
+	_tmp52817 = _tmp52815
+	_tmp52818 = _tmp52817
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52818}) }
+	// TableGet: Htable
+	keyBytes5, row5 = getHtable(tx, HtableKey{FIELD1: _tmp52818})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes5)
+	r_FIELD175 = row5.FIELD175
+	_tmp52819 = _tmp52818
+	_tmp52821 = _tmp52819
+	_tmp52823 = _tmp52821
+	_tmp52824 = _tmp52823
+	_tmp52828 = _tmp52824
+	_tmp52830 = _tmp52828
+	_tmp52833 = _tmp52830
+	_tmp52836 = _tmp52833
+	_tmp52843 = _tmp52836
+	_tmp52844 = _tmp52843
+	_tmp52845 = _tmp52844
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52845}) }
+	// TableGet: Htable
+	keyBytes6, row6 = getHtable(tx, HtableKey{FIELD1: _tmp52845})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes6)
+	r_FIELD2 = row6.FIELD2
+	_tmp52846 = _tmp52845
+	_tmp52847 = _tmp52846
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52847}) }
+	// TableGet: Htable
+	keyBytes7, row7 = getHtable(tx, HtableKey{FIELD1: _tmp52847})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes7)
+	r_FIELD200 = row7.FIELD200
+	_tmp52850 = _tmp52847
+	_tmp52854 = _tmp52850
+	_tmp52855 = _tmp52854
+	_tmp52861 = _tmp52855
+	_tmp52864 = _tmp52861
+	_tmp52872 = _tmp52864
+	_tmp52874 = _tmp52872
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52874}) }
+	// TableGet: Htable
+	keyBytes8, row8 = getHtable(tx, HtableKey{FIELD1: _tmp52874})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes8)
+	r_FIELD225 = row8.FIELD225
+	_tmp52875 = _tmp52874
+	_tmp52884 = _tmp52875
+	_tmp52896 = _tmp52884
+	_tmp52900 = _tmp52896
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52900}) }
+	// TableGet: Htable
+	keyBytes9, row9 = getHtable(tx, HtableKey{FIELD1: _tmp52900})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes9)
+	r_FIELD249 = row9.FIELD249
+	_tmp52901 = _tmp52900
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52901}) }
+	// TableGet: Htable
+	keyBytes10, row10 = getHtable(tx, HtableKey{FIELD1: _tmp52901})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes10)
+	r_FIELD25 = row10.FIELD25
+	_tmp52902 = _tmp52901
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52902}) }
+	// TableGet: Htable
+	keyBytes11, row11 = getHtable(tx, HtableKey{FIELD1: _tmp52902})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes11)
+	r_FIELD250 = row11.FIELD250
+	_tmp52907 = _tmp52902
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52907}) }
+	// TableGet: Htable
+	keyBytes12, row12 = getHtable(tx, HtableKey{FIELD1: _tmp52907})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes12)
+	r_FIELD3 = row12.FIELD3
+	_tmp52918 = _tmp52907
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52918}) }
+	// TableGet: Htable
+	keyBytes13, row13 = getHtable(tx, HtableKey{FIELD1: _tmp52918})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes13)
+	r_FIELD4 = row13.FIELD4
+	_tmp52929 = _tmp52918
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52929}) }
+	// TableGet: Htable
+	keyBytes14, row14 = getHtable(tx, HtableKey{FIELD1: _tmp52929})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes14)
+	r_FIELD5 = row14.FIELD5
+	_tmp52930 = _tmp52929
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52930}) }
+	// TableGet: Htable
+	keyBytes15, row15 = getHtable(tx, HtableKey{FIELD1: _tmp52930})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes15)
+	r_FIELD50 = row15.FIELD50
+	_tmp52957 = _tmp52930
+	// First table access - calculate partition: Htable
+	if true { return getHtablePar(HtableKey{FIELD1: _tmp52957}) }
+	// TableGet: Htable
+	keyBytes16, row16 = getHtable(tx, HtableKey{FIELD1: _tmp52957})
+	rwSet = AddRWSet(rwSet, "Htable", keyBytes16)
+	r_FIELD75 = row16.FIELD75
+	v2 = r_FIELD2
+	v3 = r_FIELD3
+	v4 = r_FIELD4
+	v5 = r_FIELD5
+	v10 = r_FIELD10
+	v25 = r_FIELD25
+	v50 = r_FIELD50
+	v75 = r_FIELD75
+	v100 = r_FIELD100
+	v125 = r_FIELD125
+	v150 = r_FIELD150
+	v175 = r_FIELD175
+	v200 = r_FIELD200
+	v225 = r_FIELD225
+	v249 = r_FIELD249
+	v250 = r_FIELD250
+	_ = v2
+	_ = v3
+	_ = v4
+	_ = v5
+	_ = v10
+	_ = v25
+	_ = v50
+	_ = v75
+	_ = v100
+	_ = v125
+	_ = v150
+	_ = v175
+	_ = v200
+	_ = v225
+	_ = v249
+	_ = v250
 	return 0
 }
 

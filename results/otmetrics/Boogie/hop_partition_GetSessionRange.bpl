@@ -68,17 +68,27 @@ axiom (forall
     <==>
     (source_id_1 == source_id_2 && session_id_1 == session_id_2 && created_time_1 == created_time_2 && type_id_1 == type_id_2)
 );
-var observations_session_id : [int][int][int]int;
-var observations_source_id : [int][int][int]int;
 const __shards__ : int;
-const __slice__ : int;
-var observations_created_time : [int][int][int]int;
-var observations_type_id : [int][int][int]int;
 const TBL_observations : Table (observations);
+const __slice__ : int;
+var observations_source_id : [int][int][int]int;
+var observations_session_id : [int][int][int]int;
+var observations_type_id : [int][int][int]int;
+var observations_created_time : [int][int][int]int;
 procedure verify_hop_partitions_GetSessionRange(source_id: int, session_low: int, session_high: int, type_id: int, created_time: int)
 {
+  var s1_obs#type_id : int;
+  var s1_source_id : int;
+  var s1_session_low : int;
+  var s1_created_time : int;
+  var s1_tid : int;
+  var s1_#tmp1 : unit;
+
   // Hop partition verification for function 'GetSessionRange'
   s1_block1:
+    s1_obs#type_id := observations_type_id[s1_source_id][s1_session_low][s1_created_time];
+    s1_tid := s1_obs#type_id;
+    s1_#tmp1 := to_unit(s1_tid);
     goto s1_epilogue;
   s1_hop_exit:
   s1_epilogue:

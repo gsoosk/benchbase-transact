@@ -145,7 +145,16 @@ transaction Vote[fn18](voteId[v23]: int, phoneNumber[v24]: int, contestantNumber
   hop3 {
     entry_block: bb3
     bb3:
-      livein: {phoneNumber[v24], voteId[v23], contestantNumber[v25]}
+      livein: {contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+        [stmt_in] livein: {contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+      c#contestant_name[v32] = CONTESTANTS[contestantNumber[v25]].contestant_name;
+        [stmt_out] liveout: {phoneNumber[v24], c#contestant_name[v32], contestantNumber[v25], voteId[v23]}
+        [stmt_in] livein: {phoneNumber[v24], c#contestant_name[v32], contestantNumber[v25], voteId[v23]}
+      cname[v34] = c#contestant_name[v32];
+        [stmt_out] liveout: {cname[v34], contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+        [stmt_in] livein: {cname[v34], contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+      #tmp1[v35] = to_unit[fn13](cname[v34]);
+        [stmt_out] liveout: {contestantNumber[v25], phoneNumber[v24], voteId[v23]}
       hop_exit hop4;
       liveout: {voteId[v23], contestantNumber[v25], phoneNumber[v24]}
   }
@@ -153,31 +162,31 @@ transaction Vote[fn18](voteId[v23]: int, phoneNumber[v24]: int, contestantNumber
   hop4 {
     entry_block: bb4
     bb4 (preds: bb3):
-      livein: {voteId[v23], phoneNumber[v24], contestantNumber[v25]}
-        [stmt_in] livein: {contestantNumber[v25], phoneNumber[v24], voteId[v23]}
-      #tmp1[v36] = phoneNumber[v24] / 10000000;
-        [stmt_out] liveout: {voteId[v23], #tmp1[v36], phoneNumber[v24], contestantNumber[v25]}
-        [stmt_in] livein: {voteId[v23], #tmp1[v36], phoneNumber[v24], contestantNumber[v25]}
-      area_code[v35] = #tmp1[v36];
-        [stmt_out] liveout: {contestantNumber[v25], voteId[v23], area_code[v35], phoneNumber[v24]}
-        [stmt_in] livein: {contestantNumber[v25], voteId[v23], area_code[v35], phoneNumber[v24]}
-      loc#state[v39] = LOCATIONS[area_code[v35]].state;
-        [stmt_out] liveout: {phoneNumber[v24], contestantNumber[v25], voteId[v23], loc#state[v39]}
-        [stmt_in] livein: {phoneNumber[v24], contestantNumber[v25], voteId[v23], loc#state[v39]}
-      state[v41] = loc#state[v39];
-        [stmt_out] liveout: {state[v41], contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+      livein: {contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+        [stmt_in] livein: {phoneNumber[v24], voteId[v23], contestantNumber[v25]}
+      #tmp2[v37] = phoneNumber[v24] / 10000000;
+        [stmt_out] liveout: {phoneNumber[v24], voteId[v23], contestantNumber[v25], #tmp2[v37]}
+        [stmt_in] livein: {phoneNumber[v24], voteId[v23], contestantNumber[v25], #tmp2[v37]}
+      area_code[v36] = #tmp2[v37];
+        [stmt_out] liveout: {phoneNumber[v24], voteId[v23], area_code[v36], contestantNumber[v25]}
+        [stmt_in] livein: {phoneNumber[v24], voteId[v23], area_code[v36], contestantNumber[v25]}
+      loc#state[v40] = LOCATIONS[area_code[v36]].state;
+        [stmt_out] liveout: {loc#state[v40], contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+        [stmt_in] livein: {loc#state[v40], contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+      state[v42] = loc#state[v40];
+        [stmt_out] liveout: {contestantNumber[v25], voteId[v23], phoneNumber[v24], state[v42]}
       hop_exit hop5;
-      liveout: {voteId[v23], state[v41], phoneNumber[v24], contestantNumber[v25]}
+      liveout: {voteId[v23], phoneNumber[v24], contestantNumber[v25], state[v42]}
   }
 
   hop5 {
     entry_block: bb5
     bb5 (preds: bb4):
-      livein: {voteId[v23], state[v41], contestantNumber[v25], phoneNumber[v24]}
-        [stmt_in] livein: {phoneNumber[v24], state[v41], contestantNumber[v25], voteId[v23]}
-      VOTES[phoneNumber[v24], voteId[v23]].state = state[v41];
-        [stmt_out] liveout: {contestantNumber[v25], phoneNumber[v24], voteId[v23]}
-        [stmt_in] livein: {contestantNumber[v25], phoneNumber[v24], voteId[v23]}
+      livein: {contestantNumber[v25], state[v42], voteId[v23], phoneNumber[v24]}
+        [stmt_in] livein: {state[v42], contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+      VOTES[phoneNumber[v24], voteId[v23]].state = state[v42];
+        [stmt_out] liveout: {contestantNumber[v25], voteId[v23], phoneNumber[v24]}
+        [stmt_in] livein: {contestantNumber[v25], voteId[v23], phoneNumber[v24]}
       VOTES[phoneNumber[v24], voteId[v23]].contestant_number = contestantNumber[v25];
         [stmt_out] liveout: {}
       return;

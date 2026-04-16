@@ -126,27 +126,27 @@ axiom (forall
     <==>
     (uid_1 == uid_2 && id_1 == id_2 && text_1 == text_2 && createdate_1 == createdate_2)
 );
-const __shards__ : int;
-const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
-var TWEETS_createdate : [int][int]int;
-const TBL_FOLLOWS : Table (FOLLOWS);
-const TBL_USER : Table (USER);
-const __slice__ : int;
-var FOLLOWS_f2 : [int][int]int;
-var ADDED_TWEETS_createdate : [int][int]int;
-var FOLLOWS_f1 : [int][int]int;
-var FOLLOWERS_f2 : [int][int]int;
-var FOLLOWERS_f1 : [int][int]int;
-const TBL_FOLLOWERS : Table (FOLLOWERS);
-const TBL_TWEETS : Table (TWEETS);
-var TWEETS_uid : [int][int]int;
-var TWEETS_id : [int][int]int;
-var USER_name : [int]String;
 var TWEETS_text : [int][int]String;
-var USER_uid : [int]int;
+const TBL_FOLLOWS : Table (FOLLOWS);
 var ADDED_TWEETS_uid : [int][int]int;
-var ADDED_TWEETS_id : [int][int]int;
+const TBL_FOLLOWERS : Table (FOLLOWERS);
+var TWEETS_createdate : [int][int]int;
+var USER_uid : [int]int;
+const TBL_USER : Table (USER);
+var FOLLOWS_f2 : [int][int]int;
+var FOLLOWERS_f1 : [int][int]int;
+var TWEETS_uid : [int][int]int;
 var ADDED_TWEETS_text : [int][int]String;
+var ADDED_TWEETS_id : [int][int]int;
+const TBL_TWEETS : Table (TWEETS);
+var FOLLOWS_f1 : [int][int]int;
+var TWEETS_id : [int][int]int;
+const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
+var FOLLOWERS_f2 : [int][int]int;
+var USER_name : [int]String;
+const __slice__ : int;
+const __shards__ : int;
+var ADDED_TWEETS_createdate : [int][int]int;
 procedure Check_SliceCommut_Hop7_vs_Hop7()
 modifies ADDED_TWEETS_createdate, ADDED_TWEETS_text;
 {

@@ -19,19 +19,63 @@ func StocklevelHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
-	var _tmp403 bool
+	var w_id uint64
+	var d_id uint64
+	var next_o_id uint64
+	var _tmp415 uint64
+	var _tmp416 bool
+	var ol OrderLine
+	var _tmp417 OrderLine
+	var _tmp418 Unit
+
+	var keyBytes1 []byte
+	var row1 District
+	var keyBytes2 []byte
+	var row2 OrderLine
+	var keyBytes3 []byte
+	var row3 OrderLine
+	var keyBytes4 []byte
+	var row4 OrderLine
+	var keyBytes5 []byte
+	var row5 OrderLine
+	var keyBytes6 []byte
+	var row6 OrderLine
+	var keyBytes7 []byte
+	var row7 OrderLine
+	var keyBytes8 []byte
+	var row8 OrderLine
+	var keyBytes9 []byte
+	var row9 OrderLine
+	var keyBytes10 []byte
+	var row10 OrderLine
+	var keyBytes11 []byte
+	var row11 OrderLine
+
+	w_id = toUint64(params["w_id"])
+	d_id = toUint64(params["d_id"])
 
 	goto BB137
 
 BB137:
+	// TableGet: District
+	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: d_id})
+	rwSet = AddRWSet(rwSet, "District", keyBytes1)
+	_tmp415 = row1.D_NEXT_O_ID
+	next_o_id = _tmp415
 	goto BB139
-	_tmp403 = ol_number < O_OL_CNT
-	if _tmp403 {
+	_tmp416 = ol_number < O_OL_CNT
+	if _tmp416 {
 		goto BB139
 	} else {
 		goto BB141
 	}
 BB139:
+	// TableGet: OrderLine
+	keyBytes2, row2 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes2)
+	_tmp417 = row2
+	ol = _tmp417
+	_ = ol
 	goto BB256
 BB141:
 	return &proto.TrxRes{
@@ -40,22 +84,76 @@ BB141:
 		RWSets: rwSet,
 	}, nil
 BB256:
+	// TableGet: OrderLine
+	keyBytes3, row3 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes3)
+	_tmp417 = row3
+	ol = _tmp417
+	_ = ol
 	goto BB257
 BB257:
+	// TableGet: OrderLine
+	keyBytes4, row4 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes4)
+	_tmp417 = row4
+	ol = _tmp417
+	_ = ol
 	goto BB258
 BB258:
+	// TableGet: OrderLine
+	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
+	_tmp417 = row5
+	ol = _tmp417
+	_ = ol
 	goto BB259
 BB259:
+	// TableGet: OrderLine
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	_tmp417 = row6
+	ol = _tmp417
+	_ = ol
 	goto BB260
 BB260:
+	// TableGet: OrderLine
+	keyBytes7, row7 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes7)
+	_tmp417 = row7
+	ol = _tmp417
+	_ = ol
 	goto BB261
 BB261:
+	// TableGet: OrderLine
+	keyBytes8, row8 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes8)
+	_tmp417 = row8
+	ol = _tmp417
+	_ = ol
 	goto BB262
 BB262:
+	// TableGet: OrderLine
+	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
+	_tmp417 = row9
+	ol = _tmp417
+	_ = ol
 	goto BB263
 BB263:
+	// TableGet: OrderLine
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	_tmp417 = row10
+	ol = _tmp417
+	_ = ol
 	goto BB264
 BB264:
+	// TableGet: OrderLine
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	_tmp417 = row11
+	ol = _tmp417
+	_ = ol
 	goto BB141
 }
 
@@ -64,9 +162,31 @@ func StocklevelHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var w_id uint64
+	var threshold uint64
+	var rep_i_id uint64
+	var s_S_QUANTITY uint64
+	var low_stock bool
+	var _tmp421 bool
+	var _tmp422 Unit
+
+	var keyBytes1 []byte
+	var row1 Stock
+
+	w_id = toUint64(params["w_id"])
+	threshold = toUint64(params["threshold"])
+	rep_i_id = toUint64(params["rep_i_id"])
+
 	goto BB142
 
 BB142:
+	// TableGet: Stock
+	keyBytes1, row1 = getStock(tx, StockKey{S_W_ID: w_id, S_I_ID: rep_i_id})
+	rwSet = AddRWSet(rwSet, "Stock", keyBytes1)
+	s_S_QUANTITY = row1.S_QUANTITY
+	_tmp421 = s_S_QUANTITY < threshold
+	low_stock = _tmp421
+	_ = low_stock
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -77,7 +197,40 @@ BB142:
 
 // StocklevelHop0Par calculates the partition for hop 0 without database access.
 func StocklevelHop0Par(params map[string]string) uint64 {
-	var _tmp403 bool
+	var w_id uint64
+	var d_id uint64
+	var next_o_id uint64
+	var _tmp415 uint64
+	var _tmp416 bool
+	var ol OrderLine
+	var _tmp417 OrderLine
+	var _tmp418 Unit
+
+	var keyBytes1 []byte
+	var row1 District
+	var keyBytes2 []byte
+	var row2 OrderLine
+	var keyBytes3 []byte
+	var row3 OrderLine
+	var keyBytes4 []byte
+	var row4 OrderLine
+	var keyBytes5 []byte
+	var row5 OrderLine
+	var keyBytes6 []byte
+	var row6 OrderLine
+	var keyBytes7 []byte
+	var row7 OrderLine
+	var keyBytes8 []byte
+	var row8 OrderLine
+	var keyBytes9 []byte
+	var row9 OrderLine
+	var keyBytes10 []byte
+	var row10 OrderLine
+	var keyBytes11 []byte
+	var row11 OrderLine
+
+	w_id = toUint64(params["w_id"])
+	d_id = toUint64(params["d_id"])
 
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
@@ -87,39 +240,141 @@ func StocklevelHop0Par(params map[string]string) uint64 {
 	goto BB137
 
 BB137:
+	// First table access - calculate partition: District
+	if true { return getDistrictPar(DistrictKey{D_W_ID: w_id, D_ID: d_id}) }
+	// TableGet: District
+	keyBytes1, row1 = getDistrict(tx, DistrictKey{D_W_ID: w_id, D_ID: d_id})
+	rwSet = AddRWSet(rwSet, "District", keyBytes1)
+	_tmp415 = row1.D_NEXT_O_ID
+	next_o_id = _tmp415
 	goto BB139
-	_tmp403 = ol_number < O_OL_CNT
-	if _tmp403 {
+	_tmp416 = ol_number < O_OL_CNT
+	if _tmp416 {
 		goto BB139
 	} else {
 		goto BB141
 	}
 BB139:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 0}) }
+	// TableGet: OrderLine
+	keyBytes2, row2 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 0})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes2)
+	_tmp417 = row2
+	ol = _tmp417
+	_ = ol
 	goto BB256
 BB141:
 	panic("unexpected hop exit in partition")
 BB256:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 1}) }
+	// TableGet: OrderLine
+	keyBytes3, row3 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 1})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes3)
+	_tmp417 = row3
+	ol = _tmp417
+	_ = ol
 	goto BB257
 BB257:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 2}) }
+	// TableGet: OrderLine
+	keyBytes4, row4 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 2})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes4)
+	_tmp417 = row4
+	ol = _tmp417
+	_ = ol
 	goto BB258
 BB258:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 3}) }
+	// TableGet: OrderLine
+	keyBytes5, row5 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 3})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes5)
+	_tmp417 = row5
+	ol = _tmp417
+	_ = ol
 	goto BB259
 BB259:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 4}) }
+	// TableGet: OrderLine
+	keyBytes6, row6 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 4})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes6)
+	_tmp417 = row6
+	ol = _tmp417
+	_ = ol
 	goto BB260
 BB260:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 5}) }
+	// TableGet: OrderLine
+	keyBytes7, row7 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 5})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes7)
+	_tmp417 = row7
+	ol = _tmp417
+	_ = ol
 	goto BB261
 BB261:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 6}) }
+	// TableGet: OrderLine
+	keyBytes8, row8 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 6})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes8)
+	_tmp417 = row8
+	ol = _tmp417
+	_ = ol
 	goto BB262
 BB262:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 7}) }
+	// TableGet: OrderLine
+	keyBytes9, row9 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 7})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes9)
+	_tmp417 = row9
+	ol = _tmp417
+	_ = ol
 	goto BB263
 BB263:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 8}) }
+	// TableGet: OrderLine
+	keyBytes10, row10 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 8})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes10)
+	_tmp417 = row10
+	ol = _tmp417
+	_ = ol
 	goto BB264
 BB264:
+	// First table access - calculate partition: OrderLine
+	if true { return getOrderLinePar(OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 9}) }
+	// TableGet: OrderLine
+	keyBytes11, row11 = getOrderLine(tx, OrderLineKey{OL_W_ID: w_id, OL_D_ID: d_id, OL_O_ID: next_o_id, OL_NUMBER: 9})
+	rwSet = AddRWSet(rwSet, "OrderLine", keyBytes11)
+	_tmp417 = row11
+	ol = _tmp417
+	_ = ol
 	goto BB141
 }
 
 // StocklevelHop1Par calculates the partition for hop 1 without database access.
 func StocklevelHop1Par(params map[string]string) uint64 {
+	var w_id uint64
+	var threshold uint64
+	var rep_i_id uint64
+	var s_S_QUANTITY uint64
+	var low_stock bool
+	var _tmp421 bool
+	var _tmp422 Unit
+
+	var keyBytes1 []byte
+	var row1 Stock
+
+	w_id = toUint64(params["w_id"])
+	threshold = toUint64(params["threshold"])
+	rep_i_id = toUint64(params["rep_i_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -128,6 +383,15 @@ func StocklevelHop1Par(params map[string]string) uint64 {
 	goto BB142
 
 BB142:
+	// First table access - calculate partition: Stock
+	if true { return getStockPar(StockKey{S_W_ID: w_id, S_I_ID: rep_i_id}) }
+	// TableGet: Stock
+	keyBytes1, row1 = getStock(tx, StockKey{S_W_ID: w_id, S_I_ID: rep_i_id})
+	rwSet = AddRWSet(rwSet, "Stock", keyBytes1)
+	s_S_QUANTITY = row1.S_QUANTITY
+	_tmp421 = s_S_QUANTITY < threshold
+	low_stock = _tmp421
+	_ = low_stock
 	return 0
 }
 

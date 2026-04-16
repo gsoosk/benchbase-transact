@@ -71,11 +71,11 @@ func Io1Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var r2_empid uint64
 	var r2_data1 string
 	var r2_data2 string
-	var _tmp209 uint64
-	var _tmp211 uint64
-	var _tmp212 uint64
-	var _tmp213 uint64
-	var _tmp214 uint64
+	var _tmp409 uint64
+	var _tmp411 uint64
+	var _tmp412 uint64
+	var _tmp413 uint64
+	var _tmp414 uint64
 
 	var keyBytes1 []byte
 	var row1 Iotable
@@ -89,24 +89,24 @@ func Io1Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	goto BB206
 
 BB206:
-	_tmp209 = leftKey + 1
-	_tmp211 = _tmp209
-	_tmp212 = _tmp211
-	_tmp213 = _tmp212
+	_tmp409 = leftKey + 1
+	_tmp411 = _tmp409
+	_tmp412 = _tmp411
+	_tmp413 = _tmp412
 	// TableGet: Iotable
-	keyBytes1, row1 = getIotable(tx, IotableKey{empid: _tmp213})
+	keyBytes1, row1 = getIotable(tx, IotableKey{empid: _tmp413})
 	rwSet = AddRWSet(rwSet, "Iotable", keyBytes1)
 	r2_empid = row1.Key.empid
 	r2_data1 = newData1
 	r2_data2 = newData2
-	_tmp214 = _tmp213
+	_tmp414 = _tmp413
 	// Combined table access: Iotable (3 operations)
-	keyBytes2, row2 = getIotable(tx, IotableKey{empid: _tmp214})
+	keyBytes2, row2 = getIotable(tx, IotableKey{empid: _tmp414})
 	rwSet = AddRWSet(rwSet, "Iotable", keyBytes2)
 	row2.data1 = r2_data1
 	row2.data2 = r2_data2
 	row2.Key.empid = r2_empid
-	putIotable(tx, IotableKey{empid: _tmp214}, row2)
+	putIotable(tx, IotableKey{empid: _tmp414}, row2)
 	// return - no action
 	// Flush caches for tables written in this hop
 	flushIotableCache(tx)
@@ -171,11 +171,11 @@ func Io1Hop1Par(params map[string]string) uint64 {
 	var r2_empid uint64
 	var r2_data1 string
 	var r2_data2 string
-	var _tmp209 uint64
-	var _tmp211 uint64
-	var _tmp212 uint64
-	var _tmp213 uint64
-	var _tmp214 uint64
+	var _tmp409 uint64
+	var _tmp411 uint64
+	var _tmp412 uint64
+	var _tmp413 uint64
+	var _tmp414 uint64
 
 	var keyBytes1 []byte
 	var row1 Iotable
@@ -194,28 +194,28 @@ func Io1Hop1Par(params map[string]string) uint64 {
 	goto BB206
 
 BB206:
-	_tmp209 = leftKey + 1
-	_tmp211 = _tmp209
-	_tmp212 = _tmp211
-	_tmp213 = _tmp212
+	_tmp409 = leftKey + 1
+	_tmp411 = _tmp409
+	_tmp412 = _tmp411
+	_tmp413 = _tmp412
 	// First table access - calculate partition: Iotable
-	if true { return getIotablePar(IotableKey{empid: _tmp213}) }
+	if true { return getIotablePar(IotableKey{empid: _tmp413}) }
 	// TableGet: Iotable
-	keyBytes1, row1 = getIotable(tx, IotableKey{empid: _tmp213})
+	keyBytes1, row1 = getIotable(tx, IotableKey{empid: _tmp413})
 	rwSet = AddRWSet(rwSet, "Iotable", keyBytes1)
 	r2_empid = row1.Key.empid
 	r2_data1 = newData1
 	r2_data2 = newData2
-	_tmp214 = _tmp213
+	_tmp414 = _tmp413
 	// First table access (optimized group) - calculate partition: Iotable
-	if true { return putIotablePar(IotableKey{empid: _tmp214}) }
+	if true { return putIotablePar(IotableKey{empid: _tmp414}) }
 	// Combined table access: Iotable (3 operations)
-	keyBytes2, row2 = getIotable(tx, IotableKey{empid: _tmp214})
+	keyBytes2, row2 = getIotable(tx, IotableKey{empid: _tmp414})
 	rwSet = AddRWSet(rwSet, "Iotable", keyBytes2)
 	row2.data1 = r2_data1
 	row2.data2 = r2_data2
 	row2.Key.empid = r2_empid
-	putIotable(tx, IotableKey{empid: _tmp214}, row2)
+	putIotable(tx, IotableKey{empid: _tmp414}, row2)
 	return 0
 }
 

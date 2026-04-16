@@ -36,9 +36,9 @@ func NewbidHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var item_i_num_comments uint64
 	var item_i_c_id uint64
 	var cur_price float32
-	var _tmp14 uint64
-	var _tmp15 bool
-	var _tmp16 bool
+	var _tmp22 uint64
+	var _tmp23 bool
+	var _tmp24 bool
 
 	var keyBytes1 []byte
 	var row1 Item
@@ -73,10 +73,10 @@ BB8:
 	item_i_status = row1.i_status
 	item_i_u_id = row1.Key.i_u_id
 	cur_price = item_i_current_price
-	_tmp14 = item_i_num_bids + 1
-	item_i_num_bids = _tmp14
-	_tmp15 = new_bid > cur_price
-	if _tmp15 {
+	_tmp22 = item_i_num_bids + 1
+	item_i_num_bids = _tmp22
+	_tmp23 = new_bid > cur_price
+	if _tmp23 {
 		goto BB9
 	} else {
 		goto BB10
@@ -107,8 +107,8 @@ BB10:
 	row3.ib_bid = new_bid
 	row3.ib_max_bid = new_bid
 	putItemBid(tx, ItemBidKey{ib_id: new_bid_id, ib_i_id: item_id, ib_u_id: seller_id}, row3)
-	_tmp16 = new_bid > cur_price
-	if _tmp16 {
+	_tmp24 = new_bid > cur_price
+	if _tmp24 {
 		goto BB11
 	} else {
 		goto BB12
@@ -126,8 +126,8 @@ BB12:
 	// return - no action
 	// Flush caches for tables written in this hop
 	flushItemCache(tx)
-	flushItemBidCache(tx)
 	flushItemMaxBidCache(tx)
+	flushItemBidCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -154,9 +154,9 @@ func NewbidHop0Par(params map[string]string) uint64 {
 	var item_i_num_comments uint64
 	var item_i_c_id uint64
 	var cur_price float32
-	var _tmp14 uint64
-	var _tmp15 bool
-	var _tmp16 bool
+	var _tmp22 uint64
+	var _tmp23 bool
+	var _tmp24 bool
 
 	var keyBytes1 []byte
 	var row1 Item
@@ -198,10 +198,10 @@ BB8:
 	item_i_status = row1.i_status
 	item_i_u_id = row1.Key.i_u_id
 	cur_price = item_i_current_price
-	_tmp14 = item_i_num_bids + 1
-	item_i_num_bids = _tmp14
-	_tmp15 = new_bid > cur_price
-	if _tmp15 {
+	_tmp22 = item_i_num_bids + 1
+	item_i_num_bids = _tmp22
+	_tmp23 = new_bid > cur_price
+	if _tmp23 {
 		goto BB9
 	} else {
 		goto BB10
@@ -236,8 +236,8 @@ BB10:
 	row3.ib_bid = new_bid
 	row3.ib_max_bid = new_bid
 	putItemBid(tx, ItemBidKey{ib_id: new_bid_id, ib_i_id: item_id, ib_u_id: seller_id}, row3)
-	_tmp16 = new_bid > cur_price
-	if _tmp16 {
+	_tmp24 = new_bid > cur_price
+	if _tmp24 {
 		goto BB11
 	} else {
 		goto BB12

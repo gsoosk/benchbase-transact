@@ -62,10 +62,10 @@ axiom (forall
     <==>
     (id_1 == id_2 && value_1 == value_2)
 );
-const TBL_SITable : Table (SITable);
+var SITable_id : [int]int;
 const __slice__ : int;
 const __shards__ : int;
-var SITable_id : [int]int;
+const TBL_SITable : Table (SITable);
 var SITable_value : [int]int;
 procedure Check_SliceCommut_Hop2_vs_Hop2()
 modifies SITable_id, SITable_value;
@@ -80,10 +80,10 @@ modifies SITable_id, SITable_value;
   var s1_id_init : int;
   var s0_row#id : int;
   var s0_row#value : int;
-  var s0_#tmp2 : int;
+  var s0_#tmp3 : int;
   var s1_row#id : int;
   var s1_row#value : int;
-  var s1_#tmp2 : int;
+  var s1_#tmp3 : int;
   var SITable_id_a_then_b : [int]int;
   var SITable_value_a_then_b : [int]int;
   var SITable_id_b_then_a : [int]int;
@@ -108,8 +108,8 @@ modifies SITable_id, SITable_value;
     s0_block2__ab:
       s0_row#id := SITable_id[s0_id];
       s0_row#value := SITable_value[s0_id];
-      s0_#tmp2 := s0_row#value + 1;
-      s0_row#value := s0_#tmp2;
+      s0_#tmp3 := s0_row#value + 1;
+      s0_row#value := s0_#tmp3;
       SITable_id := SITable_id[s0_id := s0_row#id];
       SITable_value := SITable_value[s0_id := s0_row#value];
       s0_active := false;
@@ -120,8 +120,8 @@ modifies SITable_id, SITable_value;
     s1_block2__ab:
       s1_row#id := SITable_id[s1_id];
       s1_row#value := SITable_value[s1_id];
-      s1_#tmp2 := s1_row#value + 1;
-      s1_row#value := s1_#tmp2;
+      s1_#tmp3 := s1_row#value + 1;
+      s1_row#value := s1_#tmp3;
       SITable_id := SITable_id[s1_id := s1_row#id];
       SITable_value := SITable_value[s1_id := s1_row#value];
       s1_active := false;
@@ -143,8 +143,8 @@ modifies SITable_id, SITable_value;
     s1_block2__ba:
       s1_row#id := SITable_id[s1_id];
       s1_row#value := SITable_value[s1_id];
-      s1_#tmp2 := s1_row#value + 1;
-      s1_row#value := s1_#tmp2;
+      s1_#tmp3 := s1_row#value + 1;
+      s1_row#value := s1_#tmp3;
       SITable_id := SITable_id[s1_id := s1_row#id];
       SITable_value := SITable_value[s1_id := s1_row#value];
       s1_active := false;
@@ -155,8 +155,8 @@ modifies SITable_id, SITable_value;
     s0_block2__ba:
       s0_row#id := SITable_id[s0_id];
       s0_row#value := SITable_value[s0_id];
-      s0_#tmp2 := s0_row#value + 1;
-      s0_row#value := s0_#tmp2;
+      s0_#tmp3 := s0_row#value + 1;
+      s0_row#value := s0_#tmp3;
       SITable_id := SITable_id[s0_id := s0_row#id];
       SITable_value := SITable_value[s0_id := s0_row#value];
       s0_active := false;

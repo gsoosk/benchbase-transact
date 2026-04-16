@@ -101,22 +101,22 @@ axiom (forall
     <==>
     (empid_1 == empid_2 && flag1_1 == flag1_2)
 );
-const TBL_cputable : Table (cputable);
-const TBL_iotable : Table (iotable);
-var iotablesmallrow_flag1 : [int]int;
-var iotable_data2 : [int]String;
-var iotablesmallrow_empid : [int]int;
-const __slice__ : int;
-var cputable_empid : [int]int;
-const __shards__ : int;
-var locktable_empid : [int]int;
-const TBL_iotablesmallrow : Table (iotablesmallrow);
-var locktable_salary : [int]int;
 var cputable_passwd : [int]String;
+const __shards__ : int;
+var cputable_empid : [int]int;
+var iotablesmallrow_empid : [int]int;
+var locktable_empid : [int]int;
+const TBL_iotable : Table (iotable);
+var locktable_salary : [int]int;
+const __slice__ : int;
+const CPU_RANGE : int;
+var iotablesmallrow_flag1 : [int]int;
 var iotable_empid : [int]int;
 const TBL_locktable : Table (locktable);
+const TBL_iotablesmallrow : Table (iotablesmallrow);
 var iotable_data1 : [int]String;
-const CPU_RANGE : int;
+var iotable_data2 : [int]String;
+const TBL_cputable : Table (cputable);
 procedure Check_SliceCommut_Hop203_vs_Hop204()
 modifies locktable_empid, locktable_salary;
 {
@@ -134,12 +134,11 @@ modifies locktable_empid, locktable_salary;
   var s1_newSalary_init : int;
   var s0_r1#empid : int;
   var s0_r1#salary : int;
-  var s1_#tmp203 : int;
-  var s1_#tmp205 : int;
+  var s1_#tmp403 : int;
+  var s1_#tmp405 : int;
   var s1_r2#empid : int;
-  var s1_#tmp206 : int;
   var s1_r2#salary : int;
-  var s1_#tmp207 : int;
+  var s1_#tmp407 : int;
   var locktable_empid_a_then_b : [int]int;
   var locktable_salary_a_then_b : [int]int;
   var s0_leftKey_a_then_b : int;
@@ -179,14 +178,13 @@ modifies locktable_empid, locktable_salary;
     }
     if (s1_active) {
     s1_block204__ab:
-      s1_#tmp203 := s1_leftKey + 1;
-      s1_#tmp205 := s1_#tmp203;
-      s1_r2#empid := locktable_empid[s1_#tmp205];
-      s1_#tmp206 := s1_#tmp205;
+      s1_#tmp403 := s1_leftKey + 1;
+      s1_#tmp405 := s1_#tmp403;
+      s1_r2#empid := locktable_empid[s1_#tmp405];
       s1_r2#salary := s1_newSalary;
-      s1_#tmp207 := s1_#tmp206;
-      locktable_empid := locktable_empid[s1_#tmp207 := s1_r2#empid];
-      locktable_salary := locktable_salary[s1_#tmp207 := s1_r2#salary];
+      s1_#tmp407 := s1_#tmp405;
+      locktable_empid := locktable_empid[s1_#tmp407 := s1_r2#empid];
+      locktable_salary := locktable_salary[s1_#tmp407 := s1_r2#salary];
       s1_active := false;
       goto s1_hop_exit__ab;
     s1_hop_exit__ab:
@@ -208,14 +206,13 @@ modifies locktable_empid, locktable_salary;
   // Executing B then A:
     if (s1_active) {
     s1_block204__ba:
-      s1_#tmp203 := s1_leftKey + 1;
-      s1_#tmp205 := s1_#tmp203;
-      s1_r2#empid := locktable_empid[s1_#tmp205];
-      s1_#tmp206 := s1_#tmp205;
+      s1_#tmp403 := s1_leftKey + 1;
+      s1_#tmp405 := s1_#tmp403;
+      s1_r2#empid := locktable_empid[s1_#tmp405];
       s1_r2#salary := s1_newSalary;
-      s1_#tmp207 := s1_#tmp206;
-      locktable_empid := locktable_empid[s1_#tmp207 := s1_r2#empid];
-      locktable_salary := locktable_salary[s1_#tmp207 := s1_r2#salary];
+      s1_#tmp407 := s1_#tmp405;
+      locktable_empid := locktable_empid[s1_#tmp407 := s1_r2#empid];
+      locktable_salary := locktable_salary[s1_#tmp407 := s1_r2#salary];
       s1_active := false;
       goto s1_hop_exit__ba;
     s1_hop_exit__ba:

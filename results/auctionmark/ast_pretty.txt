@@ -398,8 +398,10 @@ transaction GetItem[f49](item_id[p83]: int[t1], seller_id[p84]: int[t1]) : (t1, 
   hop
   {
     let item[v5]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p83], i_u_id: seller_id[t1][p84]][t6<tab<ITEM>>];
+    to_unit[(infer1) -> t10][f43][f43](item[t6<tab<ITEM>>][v5])[t10];
     let seller[v6]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: seller_id[t1][p84]][t6<tab<USERACCT>>];
     let region[v7]: Row<REGION>[t6<tab<REGION>>] = REGION[t7<tab<REGION>>][itab1][tab1][r_id: seller[t6<tab<USERACCT>>][v6].u_r_id[field4][t1]][t6<tab<REGION>>];
+    to_unit[(infer5) -> t10][f43][f43](region[t6<tab<REGION>>][v7])[t10];
   }
 }
 
@@ -408,14 +410,20 @@ transaction GetUserInfo[f50](user_id[p85]: int[t1], other_user_id[p86]: int[t1],
   hop
   {
     let u[v8]: Row<USERACCT>[t6<tab<USERACCT>>] = USERACCT[t7<tab<USERACCT>>][itab0][tab0][u_id: user_id[t1][p85]][t6<tab<USERACCT>>];
+    to_unit[(infer1) -> t10][f43][f43](u[t6<tab<USERACCT>>][v8])[t10];
     let feedback[v9]: Row<USERACCT_FEEDBACK>[t6<tab<USERACCT_FEEDBACK>>] = USERACCT_FEEDBACK[t7<tab<USERACCT_FEEDBACK>>][itab7][tab7][uf_u_id: user_id[t1][p85], uf_i_id: item_id[t1][p87], uf_i_u_id: other_user_id[t1][p86], uf_from_id: other_user_id[t1][p86]][t6<tab<USERACCT_FEEDBACK>>];
+    to_unit[(infer4) -> t10][f43][f43](feedback[t6<tab<USERACCT_FEEDBACK>>][v9])[t10];
     let comment[v10]: Row<ITEM_COMMENT>[t6<tab<ITEM_COMMENT>>] = ITEM_COMMENT[t7<tab<ITEM_COMMENT>>][itab5][tab5][ic_id: comment_id[t1][p88], ic_i_id: item_id[t1][p87], ic_u_id: user_id[t1][p85]][t6<tab<ITEM_COMMENT>>];
+    to_unit[(infer7) -> t10][f43][f43](comment[t6<tab<ITEM_COMMENT>>][v10])[t10];
     let item[v11]: Row<ITEM>[t6<tab<ITEM>>] = ITEM[t7<tab<ITEM>>][itab2][tab2][i_id: item_id[t1][p87], i_u_id: user_id[t1][p85]][t6<tab<ITEM>>];
+    to_unit[(infer10) -> t10][f43][f43](item[t6<tab<ITEM>>][v11])[t10];
   }
   hop
   {
     let purchase[v12]: Row<USERACCT_ITEM>[t6<tab<USERACCT_ITEM>>] = USERACCT_ITEM[t7<tab<USERACCT_ITEM>>][itab6][tab6][ui_u_id: user_id[t1][p85], ui_i_id: item_id[t1][p87], ui_i_u_id: other_user_id[t1][p86]][t6<tab<USERACCT_ITEM>>];
+    to_unit[(infer13) -> t10][f43][f43](purchase[t6<tab<USERACCT_ITEM>>][v12])[t10];
     let watch[v13]: Row<USERACCT_WATCH>[t6<tab<USERACCT_WATCH>>] = USERACCT_WATCH[t7<tab<USERACCT_WATCH>>][itab8][tab8][uw_u_id: user_id[t1][p85], uw_i_id: item_id[t1][p87], uw_i_u_id: other_user_id[t1][p86]][t6<tab<USERACCT_WATCH>>];
+    to_unit[(infer16) -> t10][f43][f43](watch[t6<tab<USERACCT_WATCH>>][v13])[t10];
   }
 }
 

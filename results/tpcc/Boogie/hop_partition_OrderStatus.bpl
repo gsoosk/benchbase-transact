@@ -189,129 +189,200 @@ axiom (forall
     <==>
     (S_W_ID_1 == S_W_ID_2 && S_I_ID_1 == S_I_ID_2 && S_QUANTITY_1 == S_QUANTITY_2 && S_YTD_1 == S_YTD_2 && S_ORDER_CNT_1 == S_ORDER_CNT_2 && S_REMOTE_CNT_1 == S_REMOTE_CNT_2 && S_DATA_1 == S_DATA_2)
 );
-var Order_O_ALL_LOCAL : [int][int][int]int;
-const TBL_Order_Line : Table (Order_Line);
-var Customer_C_YTD_PAYMENT : [int][int][int]real;
-var Warehouse_W_STREET_1 : [int]String;
-const TBL_District : Table (District);
-var Customer_C_LAST : [int][int][int]String;
-var Customer_C_BALANCE : [int][int][int]real;
-var Order_Line_OL_NUMBER : [int][int][int][int]int;
-var Order_Line_OL_W_ID : [int][int][int][int]int;
-var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
-var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
 var Stock_S_W_ID : [int][int]int;
-var Stock_S_YTD : [int][int]real;
-var Warehouse_W_TAX : [int]real;
-var District_D_CITY : [int][int]String;
-var District_D_W_ID : [int][int]int;
-var District_D_STREET_2 : [int][int]String;
-var Customer_C_DISCOUNT : [int][int][int]real;
-var Customer_C_SINCE : [int][int][int]int;
-var Stock_S_ORDER_CNT : [int][int]int;
-var Order_O_ENTRY_DATE : [int][int][int]int;
-var Order_Line_OL_O_ID : [int][int][int][int]int;
-var Customer_C_CREDIT : [int][int][int]String;
-var District_D_STATE : [int][int]String;
-var Warehouse_W_ZIP : [int]String;
-var Order_O_C_ID : [int][int][int]int;
-var District_D_ID : [int][int]int;
-var Order_Line_OL_AMOUNT : [int][int][int][int]int;
-var Warehouse_W_NAME : [int]String;
-var District_D_NAME : [int][int]String;
-var Order_O_ID : [int][int][int]int;
-var District_D_NEXT_O_ID : [int][int]int;
-var Customer_C_W_ID : [int][int][int]int;
-var New_Order_NO_W_ID : [int][int][int]int;
-var Stock_S_QUANTITY : [int][int]int;
-const TBL_Customer : Table (Customer);
-var Warehouse_W_STATE : [int]String;
-var Customer_C_FIRST : [int][int][int]String;
-var District_D_STREET_1 : [int][int]String;
-var Warehouse_W_YTD : [int]real;
-var Customer_C_D_ID : [int][int][int]int;
-var Customer_C_PAYMENT_CNT : [int][int][int]real;
-const TBL_Order : Table (Order);
-var Stock_S_REMOTE_CNT : [int][int]int;
-var Order_O_W_ID : [int][int][int]int;
-var District_D_TAX : [int][int]real;
-var Item_I_IM_ID : [int][int]int;
-const __slice__ : int;
-var Customer_C_STREET_1 : [int][int][int]String;
-var Order_O_CARRIER_ID : [int][int][int]int;
-var Order_O_D_ID : [int][int][int]int;
-var Order_Line_OL_D_ID : [int][int][int][int]int;
-var Customer_C_CITY : [int][int][int]String;
-var Customer_C_STREET_2 : [int][int][int]String;
-var District_D_YTD : [int][int]real;
-var Customer_C_STATE : [int][int][int]String;
-var New_Order_NO_D_ID : [int][int][int]int;
-var Customer_C_MIDDLE : [int][int][int]String;
-var New_Order_NO_O_ID : [int][int][int]int;
-var Customer_C_CREDIT_LIMIT : [int][int][int]real;
-var Order_O_OL_CNT : [int][int][int]int;
-var Item_I_NAME : [int][int]String;
-var Order_Line_OL_I_ID : [int][int][int][int]int;
-const TBL_Item : Table (Item);
-var Item_W_ID : [int][int]int;
-var District_D_ZIP : [int][int]String;
-var Stock_S_I_ID : [int][int]int;
-var Item_I_ID : [int][int]int;
-var Item_I_DATA : [int][int]String;
-var Customer_C_ZIP : [int][int][int]String;
-const TBL_Warehouse : Table (Warehouse);
-const TBL_New_Order : Table (New_Order);
-var Customer_C_ID : [int][int][int]int;
-var Customer_C_PHONE : [int][int][int]String;
-var Stock_S_DATA : [int][int]String;
-var Order_Line_OL_QUANTITY : [int][int][int][int]int;
-var Customer_C_DELIVERY_CNT : [int][int][int]real;
-var Item_I_PRICE : [int][int]real;
-const __shards__ : int;
-var Customer_C_DATA : [int][int][int]String;
-const O_OL_CNT : int;
-var Warehouse_W_STREET_2 : [int]String;
-var District_D_NEXT_NO_ID : [int][int]int;
-const TBL_Stock : Table (Stock);
-var Warehouse_W_ID : [int]int;
-var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
+var Customer_C_YTD_PAYMENT : [int][int][int]real;
 var Warehouse_W_CITY : [int]String;
+var Customer_C_PHONE : [int][int][int]String;
+var Stock_S_ORDER_CNT : [int][int]int;
+var District_D_ID : [int][int]int;
+var Order_Line_OL_D_ID : [int][int][int][int]int;
+var Item_I_PRICE : [int][int]real;
+const TBL_Customer : Table (Customer);
+var Customer_C_STREET_1 : [int][int][int]String;
+var Warehouse_W_NAME : [int]String;
+var Customer_C_ZIP : [int][int][int]String;
+var Customer_C_DISCOUNT : [int][int][int]real;
+var Customer_C_DELIVERY_CNT : [int][int][int]real;
+var District_D_NAME : [int][int]String;
+var Customer_C_CITY : [int][int][int]String;
+const __slice__ : int;
+var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
+var Stock_S_REMOTE_CNT : [int][int]int;
+const TBL_Warehouse : Table (Warehouse);
+var Order_O_ENTRY_DATE : [int][int][int]int;
+var Warehouse_W_ID : [int]int;
+var Customer_C_W_ID : [int][int][int]int;
+var Warehouse_W_STREET_1 : [int]String;
+var Order_O_C_ID : [int][int][int]int;
+var Order_Line_OL_I_ID : [int][int][int][int]int;
+var Customer_C_LAST : [int][int][int]String;
+var Item_W_ID : [int][int]int;
+const TBL_Order : Table (Order);
+var Warehouse_W_STREET_2 : [int]String;
+var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
+var Warehouse_W_TAX : [int]real;
+const TBL_Stock : Table (Stock);
+var Warehouse_W_STATE : [int]String;
+var Order_Line_OL_QUANTITY : [int][int][int][int]int;
+var Warehouse_W_ZIP : [int]String;
+var Item_I_ID : [int][int]int;
+var Customer_C_FIRST : [int][int][int]String;
+var Customer_C_STREET_2 : [int][int][int]String;
+var Customer_C_CREDIT : [int][int][int]String;
+const O_OL_CNT : int;
+const TBL_New_Order : Table (New_Order);
+var Order_O_ID : [int][int][int]int;
+const TBL_District : Table (District);
+var District_D_NEXT_NO_ID : [int][int]int;
+var Customer_C_DATA : [int][int][int]String;
+var District_D_W_ID : [int][int]int;
+var District_D_CITY : [int][int]String;
+var District_D_TAX : [int][int]real;
+var Customer_C_D_ID : [int][int][int]int;
+var New_Order_NO_W_ID : [int][int][int]int;
+var Order_O_CARRIER_ID : [int][int][int]int;
+var Order_O_OL_CNT : [int][int][int]int;
+var Order_O_W_ID : [int][int][int]int;
+var Order_Line_OL_W_ID : [int][int][int][int]int;
+const TBL_Item : Table (Item);
+var Customer_C_CREDIT_LIMIT : [int][int][int]real;
+var Customer_C_PAYMENT_CNT : [int][int][int]real;
+const __shards__ : int;
+var Stock_S_YTD : [int][int]real;
+var District_D_STREET_1 : [int][int]String;
+var Order_Line_OL_AMOUNT : [int][int][int][int]int;
+var District_D_NEXT_O_ID : [int][int]int;
+var Order_O_D_ID : [int][int][int]int;
+var Customer_C_SINCE : [int][int][int]int;
+var Customer_C_STATE : [int][int][int]String;
+var Order_Line_OL_O_ID : [int][int][int][int]int;
+var New_Order_NO_D_ID : [int][int][int]int;
+var Item_I_NAME : [int][int]String;
+var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
+var Customer_C_ID : [int][int][int]int;
+var Customer_C_BALANCE : [int][int][int]real;
+var Item_I_IM_ID : [int][int]int;
+const TBL_Order_Line : Table (Order_Line);
+var Order_O_ALL_LOCAL : [int][int][int]int;
+var Stock_S_DATA : [int][int]String;
+var District_D_STATE : [int][int]String;
+var District_D_STREET_2 : [int][int]String;
+var Customer_C_MIDDLE : [int][int][int]String;
+var Order_Line_OL_NUMBER : [int][int][int][int]int;
+var Warehouse_W_YTD : [int]real;
+var District_D_YTD : [int][int]real;
+var Item_I_DATA : [int][int]String;
+var Stock_S_I_ID : [int][int]int;
+var District_D_ZIP : [int][int]String;
+var New_Order_NO_O_ID : [int][int][int]int;
+var Stock_S_QUANTITY : [int][int]int;
 procedure verify_hop_partitions_OrderStatus(w_id: int, d_id: int, c_id: int, o_id: int)
 {
-  var s38_#tmp399 : bool;
+  var s38_#tmp407 : Row (Table (Customer));
+  var s38_w_id : int;
+  var s38_d_id : int;
+  var s38_c_id : int;
+  var s38_c : Row (Table (Customer));
+  var s38_#tmp408 : unit;
+  var s38_#tmp409 : Row (Table (Order));
+  var s38_o_id : int;
+  var s38_o : Row (Table (Order));
+  var s38_#tmp410 : unit;
+  var s38_#tmp411 : bool;
   var s38_ol_number : int;
+  var s38_#tmp412 : Row (Table (Order_Line));
+  var s38_ol : Row (Table (Order_Line));
+  var s38_#tmp413 : unit;
 
   // Hop partition verification for function 'OrderStatus'
   s38_block132:
+    s38_#tmp407 := construct_Row_Customer(Customer_C_W_ID[s38_w_id][s38_d_id][s38_c_id], Customer_C_D_ID[s38_w_id][s38_d_id][s38_c_id], Customer_C_ID[s38_w_id][s38_d_id][s38_c_id], Customer_C_FIRST[s38_w_id][s38_d_id][s38_c_id], Customer_C_MIDDLE[s38_w_id][s38_d_id][s38_c_id], Customer_C_LAST[s38_w_id][s38_d_id][s38_c_id], Customer_C_STREET_1[s38_w_id][s38_d_id][s38_c_id], Customer_C_STREET_2[s38_w_id][s38_d_id][s38_c_id], Customer_C_CITY[s38_w_id][s38_d_id][s38_c_id], Customer_C_STATE[s38_w_id][s38_d_id][s38_c_id], Customer_C_ZIP[s38_w_id][s38_d_id][s38_c_id], Customer_C_PHONE[s38_w_id][s38_d_id][s38_c_id], Customer_C_SINCE[s38_w_id][s38_d_id][s38_c_id], Customer_C_CREDIT[s38_w_id][s38_d_id][s38_c_id], Customer_C_CREDIT_LIMIT[s38_w_id][s38_d_id][s38_c_id], Customer_C_DISCOUNT[s38_w_id][s38_d_id][s38_c_id], Customer_C_BALANCE[s38_w_id][s38_d_id][s38_c_id], Customer_C_YTD_PAYMENT[s38_w_id][s38_d_id][s38_c_id], Customer_C_PAYMENT_CNT[s38_w_id][s38_d_id][s38_c_id], Customer_C_DELIVERY_CNT[s38_w_id][s38_d_id][s38_c_id], Customer_C_DATA[s38_w_id][s38_d_id][s38_c_id]);
+    s38_c := s38_#tmp407;
+    s38_#tmp408 := to_unit(s38_c);
+    s38_#tmp409 := construct_Row_Order(Order_O_W_ID[s38_w_id][s38_d_id][s38_o_id], Order_O_D_ID[s38_w_id][s38_d_id][s38_o_id], Order_O_ID[s38_w_id][s38_d_id][s38_o_id], Order_O_C_ID[s38_w_id][s38_d_id][s38_o_id], Order_O_ENTRY_DATE[s38_w_id][s38_d_id][s38_o_id], Order_O_CARRIER_ID[s38_w_id][s38_d_id][s38_o_id], Order_O_OL_CNT[s38_w_id][s38_d_id][s38_o_id], Order_O_ALL_LOCAL[s38_w_id][s38_d_id][s38_o_id]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9325, end: 9370, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 4) (span ((start . 9325) (end . 9370) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_o := s38_#tmp409;
+    s38_#tmp410 := to_unit(s38_o);
     goto s38_block134;
   s38_block133:
-    s38_#tmp399 := s38_ol_number < O_OL_CNT;
-    if (s38_#tmp399) {
+    s38_#tmp411 := s38_ol_number < O_OL_CNT;
+    if (s38_#tmp411) {
       goto s38_block134;
     } else {
       goto s38_block136;
     }
   s38_block134:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][0], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][0]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block247;
   s38_block136:
     goto s38_epilogue;
   s38_block247:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][1], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][1]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block248;
   s38_block248:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][2], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][2]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block249;
   s38_block249:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][3], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][3]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block250;
   s38_block250:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][4], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][4]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block251;
   s38_block251:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][5], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][5]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block252;
   s38_block252:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][6], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][6]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block253;
   s38_block253:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][7], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][7]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block254;
   s38_block254:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][8], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][8]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block255;
   s38_block255:
+    s38_#tmp412 := construct_Row_Order_Line(Order_Line_OL_W_ID[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_D_ID[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_O_ID[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_NUMBER[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_I_ID[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_SUPPLY_W_ID[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_DELIVERY_DATE[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_QUANTITY[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_AMOUNT[s38_w_id][s38_d_id][s38_o_id][9], Order_Line_OL_DIST_INTO[s38_w_id][s38_d_id][s38_o_id][9]);
+  // Partition check hop 38 func 'g' tables 'Customer'=>'Order_Line' keys [k0=w_id, k1=d_id] first_span Span { start: 9227, end: 9275, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 9518, end: 9645, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 33) (hop_id . 38) (table_id . 5) (span ((start . 9518) (end . 9645) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s38_w_id == s38_w_id) && (s38_d_id == s38_d_id));
+    s38_ol := s38_#tmp412;
+    s38_#tmp413 := to_unit(s38_ol);
     goto s38_block136;
   s38_hop_exit:
   s38_epilogue:

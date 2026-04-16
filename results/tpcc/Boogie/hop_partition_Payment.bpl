@@ -189,107 +189,107 @@ axiom (forall
     <==>
     (S_W_ID_1 == S_W_ID_2 && S_I_ID_1 == S_I_ID_2 && S_QUANTITY_1 == S_QUANTITY_2 && S_YTD_1 == S_YTD_2 && S_ORDER_CNT_1 == S_ORDER_CNT_2 && S_REMOTE_CNT_1 == S_REMOTE_CNT_2 && S_DATA_1 == S_DATA_2)
 );
-var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
-var Item_I_NAME : [int][int]String;
-var Item_I_DATA : [int][int]String;
-const TBL_District : Table (District);
-var Order_O_W_ID : [int][int][int]int;
-const TBL_Item : Table (Item);
-var District_D_YTD : [int][int]real;
-var Customer_C_ID : [int][int][int]int;
-var District_D_NEXT_O_ID : [int][int]int;
-var Warehouse_W_STATE : [int]String;
-var Warehouse_W_NAME : [int]String;
-var Customer_C_BALANCE : [int][int][int]real;
-var Customer_C_D_ID : [int][int][int]int;
-var District_D_ZIP : [int][int]String;
-var Customer_C_CREDIT : [int][int][int]String;
-var Customer_C_CREDIT_LIMIT : [int][int][int]real;
-var Stock_S_I_ID : [int][int]int;
-var Warehouse_W_STREET_2 : [int]String;
-var New_Order_NO_O_ID : [int][int][int]int;
-const TBL_Warehouse : Table (Warehouse);
-var District_D_ID : [int][int]int;
-var District_D_STREET_1 : [int][int]String;
-var Stock_S_QUANTITY : [int][int]int;
-const TBL_Order_Line : Table (Order_Line);
-var Warehouse_W_TAX : [int]real;
-var Order_Line_OL_W_ID : [int][int][int][int]int;
-var Order_Line_OL_I_ID : [int][int][int][int]int;
-var Stock_S_DATA : [int][int]String;
-var Customer_C_LAST : [int][int][int]String;
-var New_Order_NO_W_ID : [int][int][int]int;
-var Customer_C_PHONE : [int][int][int]String;
-var Customer_C_SINCE : [int][int][int]int;
-var Order_O_ALL_LOCAL : [int][int][int]int;
-const TBL_Stock : Table (Stock);
-var Item_I_ID : [int][int]int;
-var Order_O_C_ID : [int][int][int]int;
-var Stock_S_W_ID : [int][int]int;
-var Item_I_IM_ID : [int][int]int;
-var Customer_C_DATA : [int][int][int]String;
-var District_D_NEXT_NO_ID : [int][int]int;
 var New_Order_NO_D_ID : [int][int][int]int;
 var Stock_S_YTD : [int][int]real;
-const __slice__ : int;
-var Warehouse_W_YTD : [int]real;
-var Warehouse_W_ID : [int]int;
-var District_D_TAX : [int][int]real;
-var Order_O_ENTRY_DATE : [int][int][int]int;
-var Order_Line_OL_NUMBER : [int][int][int][int]int;
-var Warehouse_W_CITY : [int]String;
-var Customer_C_MIDDLE : [int][int][int]String;
-var Customer_C_STREET_1 : [int][int][int]String;
-var Customer_C_STREET_2 : [int][int][int]String;
-var Warehouse_W_STREET_1 : [int]String;
+var Customer_C_D_ID : [int][int][int]int;
 var Order_O_CARRIER_ID : [int][int][int]int;
-var District_D_STREET_2 : [int][int]String;
-var Order_O_OL_CNT : [int][int][int]int;
-var Item_I_PRICE : [int][int]real;
-var Customer_C_CITY : [int][int][int]String;
-var Customer_C_YTD_PAYMENT : [int][int][int]real;
-var Order_Line_OL_QUANTITY : [int][int][int][int]int;
-var Customer_C_FIRST : [int][int][int]String;
+var Customer_C_LAST : [int][int][int]String;
+var New_Order_NO_W_ID : [int][int][int]int;
+var Warehouse_W_CITY : [int]String;
 var District_D_STATE : [int][int]String;
-var District_D_CITY : [int][int]String;
-var Customer_C_DISCOUNT : [int][int][int]real;
-var Customer_C_PAYMENT_CNT : [int][int][int]real;
-const TBL_Order : Table (Order);
-var Order_Line_OL_O_ID : [int][int][int][int]int;
-var Order_Line_OL_AMOUNT : [int][int][int][int]int;
-var Customer_C_W_ID : [int][int][int]int;
-var Order_Line_OL_D_ID : [int][int][int][int]int;
-const TBL_Customer : Table (Customer);
-var Customer_C_ZIP : [int][int][int]String;
-var District_D_W_ID : [int][int]int;
+var Order_Line_OL_SUPPLY_W_ID : [int][int][int][int]int;
+const TBL_Order_Line : Table (Order_Line);
+var Order_O_OL_CNT : [int][int][int]int;
+var District_D_YTD : [int][int]real;
+const TBL_Item : Table (Item);
+var Customer_C_BALANCE : [int][int][int]real;
+var Order_O_ENTRY_DATE : [int][int][int]int;
 var Customer_C_DELIVERY_CNT : [int][int][int]real;
-var Order_O_ID : [int][int][int]int;
-const TBL_New_Order : Table (New_Order);
-var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
-var District_D_NAME : [int][int]String;
-var Customer_C_STATE : [int][int][int]String;
-var Stock_S_ORDER_CNT : [int][int]int;
-var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
-const O_OL_CNT : int;
-var Stock_S_REMOTE_CNT : [int][int]int;
+var Item_I_ID : [int][int]int;
+var Order_Line_OL_O_ID : [int][int][int][int]int;
+var District_D_NEXT_NO_ID : [int][int]int;
+var Stock_S_W_ID : [int][int]int;
+var District_D_STREET_1 : [int][int]String;
 var Order_O_D_ID : [int][int][int]int;
-var Item_W_ID : [int][int]int;
-var Warehouse_W_ZIP : [int]String;
+var Order_Line_OL_QUANTITY : [int][int][int][int]int;
+var Stock_S_QUANTITY : [int][int]int;
+var Order_Line_OL_DELIVERY_DATE : [int][int][int][int]int;
+const TBL_District : Table (District);
+var Order_Line_OL_AMOUNT : [int][int][int][int]int;
+var Item_I_NAME : [int][int]String;
+var Order_Line_OL_I_ID : [int][int][int][int]int;
+const TBL_New_Order : Table (New_Order);
 const __shards__ : int;
+const __slice__ : int;
+var Customer_C_MIDDLE : [int][int][int]String;
+var Warehouse_W_NAME : [int]String;
+var Customer_C_PAYMENT_CNT : [int][int][int]real;
+var District_D_CITY : [int][int]String;
+var Customer_C_ID : [int][int][int]int;
+var Order_Line_OL_W_ID : [int][int][int][int]int;
+var Item_I_DATA : [int][int]String;
+const TBL_Order : Table (Order);
+var Order_O_ID : [int][int][int]int;
+var Customer_C_W_ID : [int][int][int]int;
+const TBL_Warehouse : Table (Warehouse);
+var Customer_C_CREDIT_LIMIT : [int][int][int]real;
+var Order_O_ALL_LOCAL : [int][int][int]int;
+var District_D_NAME : [int][int]String;
+const TBL_Customer : Table (Customer);
+var District_D_STREET_2 : [int][int]String;
+var Customer_C_STATE : [int][int][int]String;
+var Customer_C_SINCE : [int][int][int]int;
+var Warehouse_W_ID : [int]int;
+var Order_O_W_ID : [int][int][int]int;
+var Stock_S_ORDER_CNT : [int][int]int;
+var Customer_C_DATA : [int][int][int]String;
+var Stock_S_REMOTE_CNT : [int][int]int;
+const O_OL_CNT : int;
+var Warehouse_W_YTD : [int]real;
+var Customer_C_DISCOUNT : [int][int][int]real;
+var Customer_C_CITY : [int][int][int]String;
+var Item_I_PRICE : [int][int]real;
+var Order_Line_OL_D_ID : [int][int][int][int]int;
+const TBL_Stock : Table (Stock);
+var Stock_S_I_ID : [int][int]int;
+var Customer_C_YTD_PAYMENT : [int][int][int]real;
+var District_D_TAX : [int][int]real;
+var District_D_NEXT_O_ID : [int][int]int;
+var Warehouse_W_STREET_1 : [int]String;
+var Customer_C_CREDIT : [int][int][int]String;
+var Order_Line_OL_DIST_INTO : [int][int][int][int]String;
+var District_D_W_ID : [int][int]int;
+var Customer_C_STREET_2 : [int][int][int]String;
+var Item_W_ID : [int][int]int;
+var District_D_ID : [int][int]int;
+var Warehouse_W_STATE : [int]String;
+var Warehouse_W_STREET_2 : [int]String;
+var Customer_C_ZIP : [int][int][int]String;
+var District_D_ZIP : [int][int]String;
+var New_Order_NO_O_ID : [int][int][int]int;
+var Item_I_IM_ID : [int][int]int;
+var Stock_S_DATA : [int][int]String;
+var Order_O_C_ID : [int][int][int]int;
+var Warehouse_W_TAX : [int]real;
+var Warehouse_W_ZIP : [int]String;
+var Customer_C_FIRST : [int][int][int]String;
+var Customer_C_PHONE : [int][int][int]String;
+var Order_Line_OL_NUMBER : [int][int][int][int]int;
+var Customer_C_STREET_1 : [int][int][int]String;
 const L_BC : String;
-const L_$u0020 : String;
 const L_$u0020$u007C$u0020 : String;
+const L_$u0020 : String;
 procedure verify_hop_partitions_Payment(w_id: int, d_id: int, c_w_id: int, c_d_id: int, c_id: int, amount: real)
 modifies Customer_C_BALANCE, Customer_C_CITY, Customer_C_CREDIT, Customer_C_CREDIT_LIMIT, Customer_C_DATA, Customer_C_DELIVERY_CNT, Customer_C_DISCOUNT, Customer_C_D_ID, Customer_C_FIRST, Customer_C_ID, Customer_C_LAST, Customer_C_MIDDLE, Customer_C_PAYMENT_CNT, Customer_C_PHONE, Customer_C_SINCE, Customer_C_STATE, Customer_C_STREET_1, Customer_C_STREET_2, Customer_C_W_ID, Customer_C_YTD_PAYMENT, Customer_C_ZIP, District_D_YTD, Warehouse_W_YTD;
 {
-  var s41_#tmp408 : real;
+  var s41_#tmp423 : real;
   var s41_w_id : int;
-  var s41_#tmp409 : real;
+  var s41_#tmp424 : real;
   var s41_amount : real;
-  var s42_#tmp410 : real;
+  var s42_#tmp425 : real;
   var s42_w_id : int;
   var s42_d_id : int;
-  var s42_#tmp411 : real;
+  var s42_#tmp426 : real;
   var s42_amount : real;
   var s43_c#C_BALANCE : real;
   var s43_c_w_id : int;
@@ -315,208 +315,208 @@ modifies Customer_C_BALANCE, Customer_C_CITY, Customer_C_CREDIT, Customer_C_CRED
   var s43_c#C_W_ID : int;
   var s43_c#C_YTD_PAYMENT : real;
   var s43_c#C_ZIP : String;
-  var s43_#tmp413 : real;
+  var s43_#tmp428 : real;
   var s43_amount : real;
-  var s43_#tmp414 : real;
-  var s43_#tmp415 : real;
-  var s43_#tmp416 : bool;
-  var s43_#tmp417 : String;
-  var s43_#tmp418 : String;
-  var s43_#tmp419 : String;
-  var s43_#tmp420 : String;
-  var s43_#tmp421 : String;
-  var s43_#tmp422 : String;
-  var s43_#tmp423 : String;
-  var s43_#tmp424 : String;
-  var s43_d_id : int;
-  var s43_#tmp425 : String;
-  var s43_#tmp426 : String;
-  var s43_#tmp427 : String;
-  var s43_w_id : int;
-  var s43_#tmp428 : String;
-  var s43_#tmp429 : String;
-  var s43_#tmp430 : String;
-  var s43_#tmp431 : String;
+  var s43_#tmp429 : real;
+  var s43_#tmp430 : real;
+  var s43_#tmp431 : bool;
   var s43_#tmp432 : String;
   var s43_#tmp433 : String;
   var s43_#tmp434 : String;
+  var s43_#tmp435 : String;
+  var s43_#tmp436 : String;
+  var s43_#tmp437 : String;
+  var s43_#tmp438 : String;
+  var s43_#tmp439 : String;
+  var s43_d_id : int;
+  var s43_#tmp440 : String;
+  var s43_#tmp441 : String;
+  var s43_#tmp442 : String;
+  var s43_w_id : int;
+  var s43_#tmp443 : String;
+  var s43_#tmp444 : String;
+  var s43_#tmp445 : String;
+  var s43_#tmp446 : String;
+  var s43_#tmp447 : String;
+  var s43_#tmp448 : String;
+  var s43_#tmp449 : String;
 
   // Hop partition verification for function 'Payment'
   s41_block143:
-    s41_#tmp408 := Warehouse_W_YTD[s41_w_id];
-    s41_#tmp409 := s41_#tmp408 + s41_amount;
-    Warehouse_W_YTD := Warehouse_W_YTD[s41_w_id := s41_#tmp409];
-  // Partition check hop 41 func 'f' tables 'Warehouse'=>'Warehouse' keys [k0=w_id] first_span Span { start: 11165, end: 11192, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11135, end: 11201, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 35) (hop_id . 41) (table_id . 0) (span ((start . 11135) (end . 11201) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} (s41_w_id == s41_w_id);
+    s41_#tmp423 := Warehouse_W_YTD[s41_w_id];
+    s41_#tmp424 := s41_#tmp423 + s41_amount;
+    Warehouse_W_YTD := Warehouse_W_YTD[s41_w_id := s41_#tmp424];
+  // Partition check hop 41 func 'f' tables 'Warehouse'=>'Warehouse' keys [k0=w_id] first_span Span { start: 11308, end: 11335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11278, end: 11344, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 35) (hop_id . 41) (table_id . 0) (span ((start . 11278) (end . 11344) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} (s41_w_id == s41_w_id);
     goto s41_hop_exit;
   s41_hop_exit:
   s42_block144:
-    s42_#tmp410 := District_D_YTD[s42_w_id][s42_d_id];
-    s42_#tmp411 := s42_#tmp410 + s42_amount;
-    District_D_YTD := District_D_YTD[s42_w_id := District_D_YTD[s42_w_id][s42_d_id := s42_#tmp411]];
-  // Partition check hop 42 func 'g' tables 'District'=>'District' keys [k0=w_id, k1=d_id] first_span Span { start: 11316, end: 11356, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11273, end: 11365, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 42) (table_id . 1) (span ((start . 11273) (end . 11365) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s42_w_id == s42_w_id) && (s42_d_id == s42_d_id));
+    s42_#tmp425 := District_D_YTD[s42_w_id][s42_d_id];
+    s42_#tmp426 := s42_#tmp425 + s42_amount;
+    District_D_YTD := District_D_YTD[s42_w_id := District_D_YTD[s42_w_id][s42_d_id := s42_#tmp426]];
+  // Partition check hop 42 func 'g' tables 'District'=>'District' keys [k0=w_id, k1=d_id] first_span Span { start: 11459, end: 11499, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11416, end: 11508, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 42) (table_id . 1) (span ((start . 11416) (end . 11508) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s42_w_id == s42_w_id) && (s42_d_id == s42_d_id));
     goto s42_hop_exit;
   s42_hop_exit:
   s43_block145:
     s43_c#C_BALANCE := Customer_C_BALANCE[s43_c_w_id][s43_c_d_id][s43_c_id];
     s43_c#C_CITY := Customer_C_CITY[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_CREDIT := Customer_C_CREDIT[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_CREDIT_LIMIT := Customer_C_CREDIT_LIMIT[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_DATA := Customer_C_DATA[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_DISCOUNT := Customer_C_DISCOUNT[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_D_ID := Customer_C_D_ID[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_FIRST := Customer_C_FIRST[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_ID := Customer_C_ID[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_LAST := Customer_C_LAST[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_MIDDLE := Customer_C_MIDDLE[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_PAYMENT_CNT := Customer_C_PAYMENT_CNT[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_PHONE := Customer_C_PHONE[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_SINCE := Customer_C_SINCE[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_STATE := Customer_C_STATE[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_STREET_1 := Customer_C_STREET_1[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_STREET_2 := Customer_C_STREET_2[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_W_ID := Customer_C_W_ID[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_YTD_PAYMENT := Customer_C_YTD_PAYMENT[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     s43_c#C_ZIP := Customer_C_ZIP[s43_c_w_id][s43_c_d_id][s43_c_id];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11438) (end . 11490) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
-    s43_#tmp413 := s43_c#C_BALANCE - s43_amount;
-    s43_c#C_BALANCE := s43_#tmp413;
-    s43_#tmp414 := s43_c#C_YTD_PAYMENT + s43_amount;
-    s43_c#C_YTD_PAYMENT := s43_#tmp414;
-    s43_#tmp415 := s43_c#C_PAYMENT_CNT + 1.0000000;
-    s43_c#C_PAYMENT_CNT := s43_#tmp415;
-    s43_#tmp416 := s43_c#C_CREDIT == L_BC;
-    if (s43_#tmp416) {
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11581) (end . 11633) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+    s43_#tmp428 := s43_c#C_BALANCE - s43_amount;
+    s43_c#C_BALANCE := s43_#tmp428;
+    s43_#tmp429 := s43_c#C_YTD_PAYMENT + s43_amount;
+    s43_c#C_YTD_PAYMENT := s43_#tmp429;
+    s43_#tmp430 := s43_c#C_PAYMENT_CNT + 1.0000000;
+    s43_c#C_PAYMENT_CNT := s43_#tmp430;
+    s43_#tmp431 := s43_c#C_CREDIT == L_BC;
+    if (s43_#tmp431) {
       goto s43_block146;
     } else {
       goto s43_block147;
     }
   s43_block146:
-    s43_#tmp417 := str(s43_c#C_ID);
-    s43_#tmp418 := concat(s43_#tmp417, L_$u0020);
-    s43_#tmp419 := str(s43_c#C_D_ID);
-    s43_#tmp420 := concat(s43_#tmp418, s43_#tmp419);
-    s43_#tmp421 := concat(s43_#tmp420, L_$u0020);
-    s43_#tmp422 := str(s43_c#C_W_ID);
-    s43_#tmp423 := concat(s43_#tmp421, s43_#tmp422);
-    s43_#tmp424 := concat(s43_#tmp423, L_$u0020);
-    s43_#tmp425 := str(s43_d_id);
-    s43_#tmp426 := concat(s43_#tmp424, s43_#tmp425);
-    s43_#tmp427 := concat(s43_#tmp426, L_$u0020);
-    s43_#tmp428 := str(s43_w_id);
-    s43_#tmp429 := concat(s43_#tmp427, s43_#tmp428);
-    s43_#tmp430 := concat(s43_#tmp429, L_$u0020);
-    s43_#tmp431 := str(s43_amount);
-    s43_#tmp432 := concat(s43_#tmp430, s43_#tmp431);
-    s43_#tmp433 := concat(s43_#tmp432, L_$u0020$u007C$u0020);
-    s43_#tmp434 := concat(s43_#tmp433, s43_c#C_DATA);
-    s43_c#C_DATA := s43_#tmp434;
+    s43_#tmp432 := str(s43_c#C_ID);
+    s43_#tmp433 := concat(s43_#tmp432, L_$u0020);
+    s43_#tmp434 := str(s43_c#C_D_ID);
+    s43_#tmp435 := concat(s43_#tmp433, s43_#tmp434);
+    s43_#tmp436 := concat(s43_#tmp435, L_$u0020);
+    s43_#tmp437 := str(s43_c#C_W_ID);
+    s43_#tmp438 := concat(s43_#tmp436, s43_#tmp437);
+    s43_#tmp439 := concat(s43_#tmp438, L_$u0020);
+    s43_#tmp440 := str(s43_d_id);
+    s43_#tmp441 := concat(s43_#tmp439, s43_#tmp440);
+    s43_#tmp442 := concat(s43_#tmp441, L_$u0020);
+    s43_#tmp443 := str(s43_w_id);
+    s43_#tmp444 := concat(s43_#tmp442, s43_#tmp443);
+    s43_#tmp445 := concat(s43_#tmp444, L_$u0020);
+    s43_#tmp446 := str(s43_amount);
+    s43_#tmp447 := concat(s43_#tmp445, s43_#tmp446);
+    s43_#tmp448 := concat(s43_#tmp447, L_$u0020$u007C$u0020);
+    s43_#tmp449 := concat(s43_#tmp448, s43_c#C_DATA);
+    s43_c#C_DATA := s43_#tmp449;
     goto s43_block147;
   s43_block147:
     Customer_C_BALANCE := Customer_C_BALANCE[s43_c_w_id := Customer_C_BALANCE[s43_c_w_id][s43_c_d_id := Customer_C_BALANCE[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_BALANCE]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_CITY := Customer_C_CITY[s43_c_w_id := Customer_C_CITY[s43_c_w_id][s43_c_d_id := Customer_C_CITY[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_CITY]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_CREDIT := Customer_C_CREDIT[s43_c_w_id := Customer_C_CREDIT[s43_c_w_id][s43_c_d_id := Customer_C_CREDIT[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_CREDIT]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_CREDIT_LIMIT := Customer_C_CREDIT_LIMIT[s43_c_w_id := Customer_C_CREDIT_LIMIT[s43_c_w_id][s43_c_d_id := Customer_C_CREDIT_LIMIT[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_CREDIT_LIMIT]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_DATA := Customer_C_DATA[s43_c_w_id := Customer_C_DATA[s43_c_w_id][s43_c_d_id := Customer_C_DATA[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_DATA]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_DELIVERY_CNT := Customer_C_DELIVERY_CNT[s43_c_w_id := Customer_C_DELIVERY_CNT[s43_c_w_id][s43_c_d_id := Customer_C_DELIVERY_CNT[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_DELIVERY_CNT]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_DISCOUNT := Customer_C_DISCOUNT[s43_c_w_id := Customer_C_DISCOUNT[s43_c_w_id][s43_c_d_id := Customer_C_DISCOUNT[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_DISCOUNT]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_D_ID := Customer_C_D_ID[s43_c_w_id := Customer_C_D_ID[s43_c_w_id][s43_c_d_id := Customer_C_D_ID[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_D_ID]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_FIRST := Customer_C_FIRST[s43_c_w_id := Customer_C_FIRST[s43_c_w_id][s43_c_d_id := Customer_C_FIRST[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_FIRST]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_ID := Customer_C_ID[s43_c_w_id := Customer_C_ID[s43_c_w_id][s43_c_d_id := Customer_C_ID[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_ID]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_LAST := Customer_C_LAST[s43_c_w_id := Customer_C_LAST[s43_c_w_id][s43_c_d_id := Customer_C_LAST[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_LAST]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_MIDDLE := Customer_C_MIDDLE[s43_c_w_id := Customer_C_MIDDLE[s43_c_w_id][s43_c_d_id := Customer_C_MIDDLE[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_MIDDLE]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_PAYMENT_CNT := Customer_C_PAYMENT_CNT[s43_c_w_id := Customer_C_PAYMENT_CNT[s43_c_w_id][s43_c_d_id := Customer_C_PAYMENT_CNT[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_PAYMENT_CNT]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_PHONE := Customer_C_PHONE[s43_c_w_id := Customer_C_PHONE[s43_c_w_id][s43_c_d_id := Customer_C_PHONE[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_PHONE]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_SINCE := Customer_C_SINCE[s43_c_w_id := Customer_C_SINCE[s43_c_w_id][s43_c_d_id := Customer_C_SINCE[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_SINCE]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_STATE := Customer_C_STATE[s43_c_w_id := Customer_C_STATE[s43_c_w_id][s43_c_d_id := Customer_C_STATE[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_STATE]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_STREET_1 := Customer_C_STREET_1[s43_c_w_id := Customer_C_STREET_1[s43_c_w_id][s43_c_d_id := Customer_C_STREET_1[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_STREET_1]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_STREET_2 := Customer_C_STREET_2[s43_c_w_id := Customer_C_STREET_2[s43_c_w_id][s43_c_d_id := Customer_C_STREET_2[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_STREET_2]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_W_ID := Customer_C_W_ID[s43_c_w_id := Customer_C_W_ID[s43_c_w_id][s43_c_d_id := Customer_C_W_ID[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_W_ID]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_YTD_PAYMENT := Customer_C_YTD_PAYMENT[s43_c_w_id := Customer_C_YTD_PAYMENT[s43_c_w_id][s43_c_d_id := Customer_C_YTD_PAYMENT[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_YTD_PAYMENT]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     Customer_C_ZIP := Customer_C_ZIP[s43_c_w_id := Customer_C_ZIP[s43_c_w_id][s43_c_d_id := Customer_C_ZIP[s43_c_w_id][s43_c_d_id][s43_c_id := s43_c#C_ZIP]]];
-  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11438, end: 11490, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 11955, end: 12011, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 11955) (end . 12011) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
+  // Partition check hop 43 func 'g' tables 'Customer'=>'Customer' keys [k0=c_w_id, k1=c_d_id] first_span Span { start: 11581, end: 11633, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" } current_span Span { start: 12098, end: 12154, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 35) (hop_id . 43) (table_id . 2) (span ((start . 12098) (end . 12154) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tpcc.transact\"))))"} ((s43_c_w_id == s43_c_w_id) && (s43_c_d_id == s43_c_d_id));
     goto s43_epilogue;
   s43_hop_exit:
   s41_epilogue:

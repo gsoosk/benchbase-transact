@@ -19,9 +19,27 @@ func ScanrecordHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp4 uint64
+	var _tmp5 Usertable
+	var _tmp17 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB5
 
 BB5:
+	_tmp4 = startKey + 0
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp4})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp5 = row1
+	r = _tmp5
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +52,27 @@ func ScanrecordHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp18 uint64
+	var _tmp19 Usertable
+	var _tmp31 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB6
 
 BB6:
+	_tmp18 = startKey + 1
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp18})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp19 = row1
+	r = _tmp19
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +85,27 @@ func ScanrecordHop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp32 uint64
+	var _tmp33 Usertable
+	var _tmp45 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB7
 
 BB7:
+	_tmp32 = startKey + 2
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp32})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp33 = row1
+	r = _tmp33
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -64,9 +118,27 @@ func ScanrecordHop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp46 uint64
+	var _tmp47 Usertable
+	var _tmp59 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB8
 
 BB8:
+	_tmp46 = startKey + 3
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp46})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp47 = row1
+	r = _tmp47
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -79,9 +151,27 @@ func ScanrecordHop4(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp60 uint64
+	var _tmp61 Usertable
+	var _tmp73 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB9
 
 BB9:
+	_tmp60 = startKey + 4
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp60})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp61 = row1
+	r = _tmp61
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -94,9 +184,27 @@ func ScanrecordHop5(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp74 uint64
+	var _tmp75 Usertable
+	var _tmp87 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB10
 
 BB10:
+	_tmp74 = startKey + 5
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp74})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp75 = row1
+	r = _tmp75
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -109,9 +217,27 @@ func ScanrecordHop6(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp88 uint64
+	var _tmp89 Usertable
+	var _tmp101 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB11
 
 BB11:
+	_tmp88 = startKey + 6
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp88})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp89 = row1
+	r = _tmp89
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -124,9 +250,27 @@ func ScanrecordHop7(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp102 uint64
+	var _tmp103 Usertable
+	var _tmp115 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB12
 
 BB12:
+	_tmp102 = startKey + 7
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp102})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp103 = row1
+	r = _tmp103
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -139,9 +283,27 @@ func ScanrecordHop8(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp116 uint64
+	var _tmp117 Usertable
+	var _tmp129 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB13
 
 BB13:
+	_tmp116 = startKey + 8
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp116})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp117 = row1
+	r = _tmp117
+	_ = r
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -154,9 +316,27 @@ func ScanrecordHop9(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var startKey uint64
+	var r Usertable
+	var _tmp130 uint64
+	var _tmp131 Usertable
+	var _tmp143 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	goto BB14
 
 BB14:
+	_tmp130 = startKey + 9
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp130})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp131 = row1
+	r = _tmp131
+	_ = r
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -167,6 +347,17 @@ BB14:
 
 // ScanrecordHop0Par calculates the partition for hop 0 without database access.
 func ScanrecordHop0Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp4 uint64
+	var _tmp5 Usertable
+	var _tmp17 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -175,11 +366,31 @@ func ScanrecordHop0Par(params map[string]string) uint64 {
 	goto BB5
 
 BB5:
+	_tmp4 = startKey + 0
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp4}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp4})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp5 = row1
+	r = _tmp5
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop1Par calculates the partition for hop 1 without database access.
 func ScanrecordHop1Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp18 uint64
+	var _tmp19 Usertable
+	var _tmp31 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -188,11 +399,31 @@ func ScanrecordHop1Par(params map[string]string) uint64 {
 	goto BB6
 
 BB6:
+	_tmp18 = startKey + 1
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp18}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp18})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp19 = row1
+	r = _tmp19
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop2Par calculates the partition for hop 2 without database access.
 func ScanrecordHop2Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp32 uint64
+	var _tmp33 Usertable
+	var _tmp45 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -201,11 +432,31 @@ func ScanrecordHop2Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	_tmp32 = startKey + 2
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp32}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp32})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp33 = row1
+	r = _tmp33
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop3Par calculates the partition for hop 3 without database access.
 func ScanrecordHop3Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp46 uint64
+	var _tmp47 Usertable
+	var _tmp59 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -214,11 +465,31 @@ func ScanrecordHop3Par(params map[string]string) uint64 {
 	goto BB8
 
 BB8:
+	_tmp46 = startKey + 3
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp46}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp46})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp47 = row1
+	r = _tmp47
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop4Par calculates the partition for hop 4 without database access.
 func ScanrecordHop4Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp60 uint64
+	var _tmp61 Usertable
+	var _tmp73 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -227,11 +498,31 @@ func ScanrecordHop4Par(params map[string]string) uint64 {
 	goto BB9
 
 BB9:
+	_tmp60 = startKey + 4
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp60}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp60})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp61 = row1
+	r = _tmp61
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop5Par calculates the partition for hop 5 without database access.
 func ScanrecordHop5Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp74 uint64
+	var _tmp75 Usertable
+	var _tmp87 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -240,11 +531,31 @@ func ScanrecordHop5Par(params map[string]string) uint64 {
 	goto BB10
 
 BB10:
+	_tmp74 = startKey + 5
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp74}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp74})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp75 = row1
+	r = _tmp75
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop6Par calculates the partition for hop 6 without database access.
 func ScanrecordHop6Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp88 uint64
+	var _tmp89 Usertable
+	var _tmp101 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -253,11 +564,31 @@ func ScanrecordHop6Par(params map[string]string) uint64 {
 	goto BB11
 
 BB11:
+	_tmp88 = startKey + 6
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp88}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp88})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp89 = row1
+	r = _tmp89
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop7Par calculates the partition for hop 7 without database access.
 func ScanrecordHop7Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp102 uint64
+	var _tmp103 Usertable
+	var _tmp115 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -266,11 +597,31 @@ func ScanrecordHop7Par(params map[string]string) uint64 {
 	goto BB12
 
 BB12:
+	_tmp102 = startKey + 7
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp102}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp102})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp103 = row1
+	r = _tmp103
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop8Par calculates the partition for hop 8 without database access.
 func ScanrecordHop8Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp116 uint64
+	var _tmp117 Usertable
+	var _tmp129 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -279,11 +630,31 @@ func ScanrecordHop8Par(params map[string]string) uint64 {
 	goto BB13
 
 BB13:
+	_tmp116 = startKey + 8
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp116}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp116})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp117 = row1
+	r = _tmp117
+	_ = r
 	panic("unexpected hop exit in partition")
 }
 
 // ScanrecordHop9Par calculates the partition for hop 9 without database access.
 func ScanrecordHop9Par(params map[string]string) uint64 {
+	var startKey uint64
+	var r Usertable
+	var _tmp130 uint64
+	var _tmp131 Usertable
+	var _tmp143 Unit
+
+	var keyBytes1 []byte
+	var row1 Usertable
+
+	startKey = toUint64(params["startKey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -292,6 +663,15 @@ func ScanrecordHop9Par(params map[string]string) uint64 {
 	goto BB14
 
 BB14:
+	_tmp130 = startKey + 9
+	// First table access - calculate partition: Usertable
+	if true { return getUsertablePar(UsertableKey{ycsb_key: _tmp130}) }
+	// TableGet: Usertable
+	keyBytes1, row1 = getUsertable(tx, UsertableKey{ycsb_key: _tmp130})
+	rwSet = AddRWSet(rwSet, "Usertable", keyBytes1)
+	_tmp131 = row1
+	r = _tmp131
+	_ = r
 	return 0
 }
 

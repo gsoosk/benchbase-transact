@@ -107,30 +107,46 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
-var review_u_id : [int][int]int;
-var item_title : [int]String;
-const TBL_useracct : Table (useracct);
-const __slice__ : int;
-var item_i_id : [int]int;
-var useracct_name : [int]String;
-var review_i_id : [int][int]int;
-var trust_source_u_id : [int][int]int;
-var trust_target_u_id : [int][int]int;
-var useracct_u_id : [int]int;
-var trust_trust : [int][int]int;
-const TBL_item : Table (item);
-const TBL_review : Table (review);
-const __shards__ : int;
-var review_rating : [int][int]int;
 var review_creation_date : [int][int]int;
 const TBL_trust : Table (trust);
+var review_i_id : [int][int]int;
+var trust_target_u_id : [int][int]int;
+var useracct_name : [int]String;
+var review_rating : [int][int]int;
+var review_u_id : [int][int]int;
+var trust_trust : [int][int]int;
+const __shards__ : int;
+const TBL_item : Table (item);
+var trust_source_u_id : [int][int]int;
+const __slice__ : int;
+var item_title : [int]String;
+var useracct_u_id : [int]int;
+const TBL_useracct : Table (useracct);
+const TBL_review : Table (review);
+var item_i_id : [int]int;
 procedure verify_hop_partitions_GetReviewsByUser(uid: int, iid: int)
 {
+  var s8_#tmp14 : Row (Table (useracct));
+  var s8_uid : int;
+  var s8_u : Row (Table (useracct));
+  var s8_#tmp15 : unit;
+  var s9_#tmp16 : Row (Table (review));
+  var s9_uid : int;
+  var s9_iid : int;
+  var s9_r : Row (Table (review));
+  var s9_#tmp17 : unit;
+
   // Hop partition verification for function 'GetReviewsByUser'
   s8_block8:
+    s8_#tmp14 := construct_Row_useracct(useracct_u_id[s8_uid], useracct_name[s8_uid]);
+    s8_u := s8_#tmp14;
+    s8_#tmp15 := to_unit(s8_u);
     goto s8_hop_exit;
   s8_hop_exit:
   s9_block9:
+    s9_#tmp16 := construct_Row_review(review_u_id[s9_uid][s9_iid], review_i_id[s9_uid][s9_iid], review_rating[s9_uid][s9_iid], review_creation_date[s9_uid][s9_iid]);
+    s9_r := s9_#tmp16;
+    s9_#tmp17 := to_unit(s9_r);
     goto s9_epilogue;
   s9_hop_exit:
   s8_epilogue:

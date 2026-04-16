@@ -64,10 +64,9 @@ func Contention2Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var newSalary uint64
 	var r2_empid uint64
 	var r2_salary uint64
-	var _tmp203 uint64
-	var _tmp205 uint64
-	var _tmp206 uint64
-	var _tmp207 uint64
+	var _tmp403 uint64
+	var _tmp405 uint64
+	var _tmp407 uint64
 
 	var keyBytes1 []byte
 	var row1 Locktable
@@ -80,21 +79,20 @@ func Contention2Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	goto BB204
 
 BB204:
-	_tmp203 = leftKey + 1
-	_tmp205 = _tmp203
+	_tmp403 = leftKey + 1
+	_tmp405 = _tmp403
 	// TableGet: Locktable
-	keyBytes1, row1 = getLocktable(tx, LocktableKey{empid: _tmp205})
+	keyBytes1, row1 = getLocktable(tx, LocktableKey{empid: _tmp405})
 	rwSet = AddRWSet(rwSet, "Locktable", keyBytes1)
 	r2_empid = row1.Key.empid
-	_tmp206 = _tmp205
 	r2_salary = newSalary
-	_tmp207 = _tmp206
+	_tmp407 = _tmp405
 	// Combined table access: Locktable (2 operations)
-	keyBytes2, row2 = getLocktable(tx, LocktableKey{empid: _tmp207})
+	keyBytes2, row2 = getLocktable(tx, LocktableKey{empid: _tmp407})
 	rwSet = AddRWSet(rwSet, "Locktable", keyBytes2)
 	row2.Key.empid = r2_empid
 	row2.salary = r2_salary
-	putLocktable(tx, LocktableKey{empid: _tmp207}, row2)
+	putLocktable(tx, LocktableKey{empid: _tmp407}, row2)
 	// return - no action
 	// Flush caches for tables written in this hop
 	flushLocktableCache(tx)
@@ -152,10 +150,9 @@ func Contention2Hop1Par(params map[string]string) uint64 {
 	var newSalary uint64
 	var r2_empid uint64
 	var r2_salary uint64
-	var _tmp203 uint64
-	var _tmp205 uint64
-	var _tmp206 uint64
-	var _tmp207 uint64
+	var _tmp403 uint64
+	var _tmp405 uint64
+	var _tmp407 uint64
 
 	var keyBytes1 []byte
 	var row1 Locktable
@@ -173,25 +170,24 @@ func Contention2Hop1Par(params map[string]string) uint64 {
 	goto BB204
 
 BB204:
-	_tmp203 = leftKey + 1
-	_tmp205 = _tmp203
+	_tmp403 = leftKey + 1
+	_tmp405 = _tmp403
 	// First table access - calculate partition: Locktable
-	if true { return getLocktablePar(LocktableKey{empid: _tmp205}) }
+	if true { return getLocktablePar(LocktableKey{empid: _tmp405}) }
 	// TableGet: Locktable
-	keyBytes1, row1 = getLocktable(tx, LocktableKey{empid: _tmp205})
+	keyBytes1, row1 = getLocktable(tx, LocktableKey{empid: _tmp405})
 	rwSet = AddRWSet(rwSet, "Locktable", keyBytes1)
 	r2_empid = row1.Key.empid
-	_tmp206 = _tmp205
 	r2_salary = newSalary
-	_tmp207 = _tmp206
+	_tmp407 = _tmp405
 	// First table access (optimized group) - calculate partition: Locktable
-	if true { return putLocktablePar(LocktableKey{empid: _tmp207}) }
+	if true { return putLocktablePar(LocktableKey{empid: _tmp407}) }
 	// Combined table access: Locktable (2 operations)
-	keyBytes2, row2 = getLocktable(tx, LocktableKey{empid: _tmp207})
+	keyBytes2, row2 = getLocktable(tx, LocktableKey{empid: _tmp407})
 	rwSet = AddRWSet(rwSet, "Locktable", keyBytes2)
 	row2.Key.empid = r2_empid
 	row2.salary = r2_salary
-	putLocktable(tx, LocktableKey{empid: _tmp207}, row2)
+	putLocktable(tx, LocktableKey{empid: _tmp407}, row2)
 	return 0
 }
 

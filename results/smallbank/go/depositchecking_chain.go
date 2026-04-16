@@ -21,14 +21,19 @@ func DepositcheckingHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 
 	var custId uint64
 	var amount float32
+	var a Accounts
+	var _tmp11 Accounts
+	var _tmp12 Unit
 	var c_custid uint64
 	var c_bal float32
-	var _tmp11 float32
+	var _tmp14 float32
 
 	var keyBytes1 []byte
-	var row1 Checking
+	var row1 Accounts
 	var keyBytes2 []byte
 	var row2 Checking
+	var keyBytes3 []byte
+	var row3 Checking
 
 	custId = toUint64(params["custId"])
 	amount = toFloat32(params["amount"])
@@ -36,19 +41,25 @@ func DepositcheckingHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	goto BB4
 
 BB4:
-	// Combined table access: Checking (2 operations)
-	keyBytes1, row1 = getChecking(tx, CheckingKey{custid: custId})
-	rwSet = AddRWSet(rwSet, "Checking", keyBytes1)
-	c_bal = row1.bal
-	c_custid = row1.Key.custid
-	_tmp11 = c_bal + amount
-	c_bal = _tmp11
+	// TableGet: Accounts
+	keyBytes1, row1 = getAccounts(tx, AccountsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Accounts", keyBytes1)
+	_tmp11 = row1
+	a = _tmp11
+	_ = a
 	// Combined table access: Checking (2 operations)
 	keyBytes2, row2 = getChecking(tx, CheckingKey{custid: custId})
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes2)
-	row2.bal = c_bal
-	row2.Key.custid = c_custid
-	putChecking(tx, CheckingKey{custid: custId}, row2)
+	c_bal = row2.bal
+	c_custid = row2.Key.custid
+	_tmp14 = c_bal + amount
+	c_bal = _tmp14
+	// Combined table access: Checking (2 operations)
+	keyBytes3, row3 = getChecking(tx, CheckingKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Checking", keyBytes3)
+	row3.bal = c_bal
+	row3.Key.custid = c_custid
+	putChecking(tx, CheckingKey{custid: custId}, row3)
 	// return - no action
 	// Flush caches for tables written in this hop
 	flushCheckingCache(tx)
@@ -63,14 +74,19 @@ BB4:
 func DepositcheckingHop0Par(params map[string]string) uint64 {
 	var custId uint64
 	var amount float32
+	var a Accounts
+	var _tmp11 Accounts
+	var _tmp12 Unit
 	var c_custid uint64
 	var c_bal float32
-	var _tmp11 float32
+	var _tmp14 float32
 
 	var keyBytes1 []byte
-	var row1 Checking
+	var row1 Accounts
 	var keyBytes2 []byte
 	var row2 Checking
+	var keyBytes3 []byte
+	var row3 Checking
 
 	custId = toUint64(params["custId"])
 	amount = toFloat32(params["amount"])
@@ -83,23 +99,31 @@ func DepositcheckingHop0Par(params map[string]string) uint64 {
 	goto BB4
 
 BB4:
+	// First table access - calculate partition: Accounts
+	if true { return getAccountsPar(AccountsKey{custid: custId}) }
+	// TableGet: Accounts
+	keyBytes1, row1 = getAccounts(tx, AccountsKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Accounts", keyBytes1)
+	_tmp11 = row1
+	a = _tmp11
+	_ = a
 	// First table access (optimized group) - calculate partition: Checking
 	if true { return getCheckingPar(CheckingKey{custid: custId}) }
 	// Combined table access: Checking (2 operations)
-	keyBytes1, row1 = getChecking(tx, CheckingKey{custid: custId})
-	rwSet = AddRWSet(rwSet, "Checking", keyBytes1)
-	c_bal = row1.bal
-	c_custid = row1.Key.custid
-	_tmp11 = c_bal + amount
-	c_bal = _tmp11
+	keyBytes2, row2 = getChecking(tx, CheckingKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Checking", keyBytes2)
+	c_bal = row2.bal
+	c_custid = row2.Key.custid
+	_tmp14 = c_bal + amount
+	c_bal = _tmp14
 	// First table access (optimized group) - calculate partition: Checking
 	if true { return putCheckingPar(CheckingKey{custid: custId}) }
 	// Combined table access: Checking (2 operations)
-	keyBytes2, row2 = getChecking(tx, CheckingKey{custid: custId})
-	rwSet = AddRWSet(rwSet, "Checking", keyBytes2)
-	row2.bal = c_bal
-	row2.Key.custid = c_custid
-	putChecking(tx, CheckingKey{custid: custId}, row2)
+	keyBytes3, row3 = getChecking(tx, CheckingKey{custid: custId})
+	rwSet = AddRWSet(rwSet, "Checking", keyBytes3)
+	row3.bal = c_bal
+	row3.Key.custid = c_custid
+	putChecking(tx, CheckingKey{custid: custId}, row3)
 	return 0
 }
 

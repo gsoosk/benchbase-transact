@@ -19,9 +19,27 @@ func GetusertweetsHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var uid uint64
+	var tweet_id uint64
+	var t_text string
+	var txt string
+	var _tmp11 Unit
+
+	var keyBytes1 []byte
+	var row1 Tweets
+
+	uid = toUint64(params["uid"])
+	tweet_id = toUint64(params["tweet_id"])
+
 	goto BB6
 
 BB6:
+	// TableGet: Tweets
+	keyBytes1, row1 = getTweets(tx, TweetsKey{uid: uid, id: tweet_id})
+	rwSet = AddRWSet(rwSet, "Tweets", keyBytes1)
+	t_text = row1.text
+	txt = t_text
+	_ = txt
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +50,18 @@ BB6:
 
 // GetusertweetsHop0Par calculates the partition for hop 0 without database access.
 func GetusertweetsHop0Par(params map[string]string) uint64 {
+	var uid uint64
+	var tweet_id uint64
+	var t_text string
+	var txt string
+	var _tmp11 Unit
+
+	var keyBytes1 []byte
+	var row1 Tweets
+
+	uid = toUint64(params["uid"])
+	tweet_id = toUint64(params["tweet_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +70,14 @@ func GetusertweetsHop0Par(params map[string]string) uint64 {
 	goto BB6
 
 BB6:
+	// First table access - calculate partition: Tweets
+	if true { return getTweetsPar(TweetsKey{uid: uid, id: tweet_id}) }
+	// TableGet: Tweets
+	keyBytes1, row1 = getTweets(tx, TweetsKey{uid: uid, id: tweet_id})
+	rwSet = AddRWSet(rwSet, "Tweets", keyBytes1)
+	t_text = row1.text
+	txt = t_text
+	_ = txt
 	return 0
 }
 

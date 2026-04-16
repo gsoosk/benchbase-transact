@@ -19,9 +19,29 @@ func GetsessionrangeHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var source_id uint64
+	var session_low uint64
+	var created_time uint64
+	var obs_type_id uint64
+	var tid uint64
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Observations
+
+	source_id = toUint64(params["source_id"])
+	session_low = toUint64(params["session_low"])
+	created_time = toUint64(params["created_time"])
+
 	goto BB1
 
 BB1:
+	// TableGet: Observations
+	keyBytes1, row1 = getObservations(tx, ObservationsKey{source_id: source_id, session_id: session_low, created_time: created_time})
+	rwSet = AddRWSet(rwSet, "Observations", keyBytes1)
+	obs_type_id = row1.type_id
+	tid = obs_type_id
+	_ = tid
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +52,20 @@ BB1:
 
 // GetsessionrangeHop0Par calculates the partition for hop 0 without database access.
 func GetsessionrangeHop0Par(params map[string]string) uint64 {
+	var source_id uint64
+	var session_low uint64
+	var created_time uint64
+	var obs_type_id uint64
+	var tid uint64
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Observations
+
+	source_id = toUint64(params["source_id"])
+	session_low = toUint64(params["session_low"])
+	created_time = toUint64(params["created_time"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +74,14 @@ func GetsessionrangeHop0Par(params map[string]string) uint64 {
 	goto BB1
 
 BB1:
+	// First table access - calculate partition: Observations
+	if true { return getObservationsPar(ObservationsKey{source_id: source_id, session_id: session_low, created_time: created_time}) }
+	// TableGet: Observations
+	keyBytes1, row1 = getObservations(tx, ObservationsKey{source_id: source_id, session_id: session_low, created_time: created_time})
+	rwSet = AddRWSet(rwSet, "Observations", keyBytes1)
+	obs_type_id = row1.type_id
+	tid = obs_type_id
+	_ = tid
 	return 0
 }
 

@@ -88,17 +88,17 @@ axiom (forall
     <==>
     (custid_1 == custid_2 && bal_1 == bal_2)
 );
-var Savings_bal : [int]real;
-var Accounts_name : [int]String;
 const TBL_Savings : Table (Savings);
-var Checking_bal : [int]real;
 var Accounts_custid : [int]int;
-var Savings_custid : [int]int;
+var Accounts_name : [int]String;
+var Checking_bal : [int]real;
 const __shards__ : int;
-var Checking_custid : [int]int;
-const __slice__ : int;
+var Savings_bal : [int]real;
+var Savings_custid : [int]int;
 const TBL_Accounts : Table (Accounts);
+const __slice__ : int;
 const TBL_Checking : Table (Checking);
+var Checking_custid : [int]int;
 procedure verify_hop_partitions_Amalgamate(custId0: int, custId1: int)
 modifies Checking_bal, Checking_custid, Savings_bal, Savings_custid;
 {

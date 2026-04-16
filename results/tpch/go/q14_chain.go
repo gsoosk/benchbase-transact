@@ -19,9 +19,27 @@ func Q14Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var orderkey uint64
+	var linenumber uint64
+	var l_l_extendedprice float32
+	var ep float32
+	var _tmp67 Unit
+
+	var keyBytes1 []byte
+	var row1 Lineitem
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	goto BB22
 
 BB22:
+	// TableGet: Lineitem
+	keyBytes1, row1 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes1)
+	l_l_extendedprice = row1.l_extendedprice
+	ep = l_l_extendedprice
+	_ = ep
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +52,25 @@ func Q14Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var partkey uint64
+	var p_p_type string
+	var ptype string
+	var _tmp69 Unit
+
+	var keyBytes1 []byte
+	var row1 Part
+
+	partkey = toUint64(params["partkey"])
+
 	goto BB23
 
 BB23:
+	// TableGet: Part
+	keyBytes1, row1 = getPart(tx, PartKey{p_partkey: partkey})
+	rwSet = AddRWSet(rwSet, "Part", keyBytes1)
+	p_p_type = row1.p_type
+	ptype = p_p_type
+	_ = ptype
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +81,18 @@ BB23:
 
 // Q14Hop0Par calculates the partition for hop 0 without database access.
 func Q14Hop0Par(params map[string]string) uint64 {
+	var orderkey uint64
+	var linenumber uint64
+	var l_l_extendedprice float32
+	var ep float32
+	var _tmp67 Unit
+
+	var keyBytes1 []byte
+	var row1 Lineitem
+
+	orderkey = toUint64(params["orderkey"])
+	linenumber = toUint64(params["linenumber"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +101,29 @@ func Q14Hop0Par(params map[string]string) uint64 {
 	goto BB22
 
 BB22:
+	// First table access - calculate partition: Lineitem
+	if true { return getLineitemPar(LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber}) }
+	// TableGet: Lineitem
+	keyBytes1, row1 = getLineitem(tx, LineitemKey{l_orderkey: orderkey, l_linenumber: linenumber})
+	rwSet = AddRWSet(rwSet, "Lineitem", keyBytes1)
+	l_l_extendedprice = row1.l_extendedprice
+	ep = l_l_extendedprice
+	_ = ep
 	panic("unexpected hop exit in partition")
 }
 
 // Q14Hop1Par calculates the partition for hop 1 without database access.
 func Q14Hop1Par(params map[string]string) uint64 {
+	var partkey uint64
+	var p_p_type string
+	var ptype string
+	var _tmp69 Unit
+
+	var keyBytes1 []byte
+	var row1 Part
+
+	partkey = toUint64(params["partkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +132,14 @@ func Q14Hop1Par(params map[string]string) uint64 {
 	goto BB23
 
 BB23:
+	// First table access - calculate partition: Part
+	if true { return getPartPar(PartKey{p_partkey: partkey}) }
+	// TableGet: Part
+	keyBytes1, row1 = getPart(tx, PartKey{p_partkey: partkey})
+	rwSet = AddRWSet(rwSet, "Part", keyBytes1)
+	p_p_type = row1.p_type
+	ptype = p_p_type
+	_ = ptype
 	return 0
 }
 

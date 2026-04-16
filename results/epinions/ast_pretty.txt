@@ -306,11 +306,13 @@ transaction GetAverageRatingByTrustedUser[f47](iid[p79]: int[t1], uid[p80]: int[
   {
     let r[v0]: Row<review>[t6<tab<review>>] = review[t7<tab<review>>][itab2][tab2][u_id: reviewer_uid[t1][p81], i_id: iid[t1][p79]][t6<tab<review>>];
     let rating[v1]: int[t1] = r[t6<tab<review>>][v0].rating[field6][t1];
+    to_unit[(infer2) -> t10][f43][f43](rating[t1][v1])[t10];
   }
   hop
   {
     let t[v2]: Row<trust>[t6<tab<trust>>] = trust[t7<tab<trust>>][itab3][tab3][source_u_id: uid[t1][p80], target_u_id: reviewer_uid[t1][p81]][t6<tab<trust>>];
     let trust_level[v3]: int[t1] = t[t6<tab<trust>>][v2].trust[field10][t1];
+    to_unit[(infer6) -> t10][f43][f43](trust_level[t1][v3])[t10];
   }
 }
 
@@ -320,6 +322,7 @@ transaction GetItemAverageRating[f48](iid[p82]: int[t1], reviewer_uid[p83]: int[
   {
     let r[v4]: Row<review>[t6<tab<review>>] = review[t7<tab<review>>][itab2][tab2][u_id: reviewer_uid[t1][p83], i_id: iid[t1][p82]][t6<tab<review>>];
     let rating[v5]: int[t1] = r[t6<tab<review>>][v4].rating[field6][t1];
+    to_unit[(infer2) -> t10][f43][f43](rating[t1][v5])[t10];
   }
 }
 
@@ -328,10 +331,12 @@ transaction GetItemReviewsByTrustedUser[f49](iid[p84]: int[t1], uid[p85]: int[t1
   hop
   {
     let r[v6]: Row<review>[t6<tab<review>>] = review[t7<tab<review>>][itab2][tab2][u_id: reviewer_uid[t1][p86], i_id: iid[t1][p84]][t6<tab<review>>];
+    to_unit[(infer1) -> t10][f43][f43](r[t6<tab<review>>][v6])[t10];
   }
   hop
   {
     let t[v7]: Row<trust>[t6<tab<trust>>] = trust[t7<tab<trust>>][itab3][tab3][source_u_id: uid[t1][p85], target_u_id: reviewer_uid[t1][p86]][t6<tab<trust>>];
+    to_unit[(infer4) -> t10][f43][f43](t[t6<tab<trust>>][v7])[t10];
   }
 }
 
@@ -340,7 +345,9 @@ transaction GetReviewItemById[f50](iid[p87]: int[t1], reviewer_uid[p88]: int[t1]
   hop
   {
     let r[v8]: Row<review>[t6<tab<review>>] = review[t7<tab<review>>][itab2][tab2][u_id: reviewer_uid[t1][p88], i_id: iid[t1][p87]][t6<tab<review>>];
+    to_unit[(infer1) -> t10][f43][f43](r[t6<tab<review>>][v8])[t10];
     let i[v9]: Row<item>[t6<tab<item>>] = item[t7<tab<item>>][itab0][tab0][i_id: iid[t1][p87]][t6<tab<item>>];
+    to_unit[(infer4) -> t10][f43][f43](i[t6<tab<item>>][v9])[t10];
   }
 }
 
@@ -349,10 +356,12 @@ transaction GetReviewsByUser[f51](uid[p89]: int[t1], iid[p90]: int[t1]) : (t1, t
   hop
   {
     let u[v10]: Row<useracct>[t6<tab<useracct>>] = useracct[t7<tab<useracct>>][itab1][tab1][u_id: uid[t1][p89]][t6<tab<useracct>>];
+    to_unit[(infer1) -> t10][f43][f43](u[t6<tab<useracct>>][v10])[t10];
   }
   hop
   {
     let r[v11]: Row<review>[t6<tab<review>>] = review[t7<tab<review>>][itab2][tab2][u_id: uid[t1][p89], i_id: iid[t1][p90]][t6<tab<review>>];
+    to_unit[(infer4) -> t10][f43][f43](r[t6<tab<review>>][v11])[t10];
   }
 }
 

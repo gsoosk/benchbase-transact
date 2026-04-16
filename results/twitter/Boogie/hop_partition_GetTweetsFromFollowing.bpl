@@ -126,34 +126,51 @@ axiom (forall
     <==>
     (uid_1 == uid_2 && id_1 == id_2 && text_1 == text_2 && createdate_1 == createdate_2)
 );
-const __shards__ : int;
-var USER_name : [int]String;
-var FOLLOWERS_f1 : [int][int]int;
-var ADDED_TWEETS_text : [int][int]String;
-var USER_uid : [int]int;
-var TWEETS_createdate : [int][int]int;
-var ADDED_TWEETS_id : [int][int]int;
-const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
-const TBL_FOLLOWS : Table (FOLLOWS);
-var FOLLOWS_f1 : [int][int]int;
-const TBL_TWEETS : Table (TWEETS);
-var TWEETS_id : [int][int]int;
-var FOLLOWERS_f2 : [int][int]int;
-var FOLLOWS_f2 : [int][int]int;
-var TWEETS_text : [int][int]String;
-const __slice__ : int;
-const TBL_USER : Table (USER);
-var TWEETS_uid : [int][int]int;
 const TBL_FOLLOWERS : Table (FOLLOWERS);
-var ADDED_TWEETS_createdate : [int][int]int;
+var USER_uid : [int]int;
+var TWEETS_id : [int][int]int;
+const TBL_TWEETS : Table (TWEETS);
+var USER_name : [int]String;
+var TWEETS_createdate : [int][int]int;
+const __shards__ : int;
+const __slice__ : int;
+var TWEETS_text : [int][int]String;
+var FOLLOWS_f2 : [int][int]int;
+const TBL_FOLLOWS : Table (FOLLOWS);
+var FOLLOWERS_f2 : [int][int]int;
+var TWEETS_uid : [int][int]int;
+var ADDED_TWEETS_id : [int][int]int;
 var ADDED_TWEETS_uid : [int][int]int;
+const TBL_USER : Table (USER);
+var ADDED_TWEETS_text : [int][int]String;
+var FOLLOWERS_f1 : [int][int]int;
+const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
+var FOLLOWS_f1 : [int][int]int;
+var ADDED_TWEETS_createdate : [int][int]int;
 procedure verify_hop_partitions_GetTweetsFromFollowing(uid: int, followed_uid: int, tweet_id: int)
 {
+  var s4_#tmp6 : Row (Table (FOLLOWS));
+  var s4_uid : int;
+  var s4_followed_uid : int;
+  var s4_f : Row (Table (FOLLOWS));
+  var s4_#tmp7 : unit;
+  var s5_t#text : String;
+  var s5_followed_uid : int;
+  var s5_tweet_id : int;
+  var s5_txt : String;
+  var s5_#tmp9 : unit;
+
   // Hop partition verification for function 'GetTweetsFromFollowing'
   s4_block4:
+    s4_#tmp6 := construct_Row_FOLLOWS(FOLLOWS_f1[s4_uid][s4_followed_uid], FOLLOWS_f2[s4_uid][s4_followed_uid]);
+    s4_f := s4_#tmp6;
+    s4_#tmp7 := to_unit(s4_f);
     goto s4_hop_exit;
   s4_hop_exit:
   s5_block5:
+    s5_t#text := TWEETS_text[s5_followed_uid][s5_tweet_id];
+    s5_txt := s5_t#text;
+    s5_#tmp9 := to_unit(s5_txt);
     goto s5_epilogue;
   s5_hop_exit:
   s4_epilogue:

@@ -1,0 +1,4 @@
+===== Compiler run started =====
+Boogie configuration: loopUnroll = 12, timeLimit = 30s
+Verification features: cache=true, split=true, split_max_depth=5, split_strategy=balanced, split_debug=false
+[Stage 1/6] Frontend - start

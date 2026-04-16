@@ -91,19 +91,19 @@ axiom (forall
     <==>
     (phone_number_1 == phone_number_2 && vote_id_1 == vote_id_2 && state_1 == state_2 && contestant_number_1 == contestant_number_2)
 );
-const TBL_LOCATIONS : Table (LOCATIONS);
-var CONTESTANTS_contestant_name : [int]String;
-var LOCATIONS_area_code : [int]int;
-const TBL_VOTES : Table (VOTES);
-var VOTES_phone_number : [int][int]int;
-var VOTES_contestant_number : [int][int]int;
-const TBL_CONTESTANTS : Table (CONTESTANTS);
+const __shards__ : int;
 const __slice__ : int;
+const TBL_CONTESTANTS : Table (CONTESTANTS);
+var VOTES_contestant_number : [int][int]int;
 var CONTESTANTS_contestant_number : [int]int;
 var LOCATIONS_state : [int]String;
-var VOTES_vote_id : [int][int]int;
-const __shards__ : int;
+const TBL_VOTES : Table (VOTES);
 var VOTES_state : [int][int]String;
+var CONTESTANTS_contestant_name : [int]String;
+var VOTES_phone_number : [int][int]int;
+var VOTES_vote_id : [int][int]int;
+const TBL_LOCATIONS : Table (LOCATIONS);
+var LOCATIONS_area_code : [int]int;
 procedure Check_SliceCommut_Hop5_vs_Hop5()
 modifies VOTES_contestant_number, VOTES_state;
 {

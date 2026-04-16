@@ -301,6 +301,7 @@ transaction CPU1[f46]() : () -> t0
   {
     let r[v0]: Row<cputable>[t6<tab<cputable>>] = cputable[t7<tab<cputable>>][itab0][tab0][empid: i[t1][v2]][t6<tab<cputable>>];
     let p[v1]: string[t3] = r[t6<tab<cputable>>][v0].passwd[field1][t3];
+    to_unit[(infer4) -> t10][f43][f43](p[t3][v1])[t10];
   }
 }
 
@@ -310,6 +311,7 @@ transaction CPU2[f47]() : () -> t0
   {
     let r[v3]: Row<cputable>[t6<tab<cputable>>] = cputable[t7<tab<cputable>>][itab0][tab0][empid: i[t1][v5]][t6<tab<cputable>>];
     let p[v4]: string[t3] = r[t6<tab<cputable>>][v3].passwd[field1][t3];
+    to_unit[(infer4) -> t10][f43][f43](p[t3][v4])[t10];
   }
 }
 

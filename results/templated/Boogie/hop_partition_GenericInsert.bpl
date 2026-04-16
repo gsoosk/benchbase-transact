@@ -62,13 +62,13 @@ axiom (forall
     <==>
     (T_ID_1 == T_ID_2 && T_INT_VAL_1 == T_INT_VAL_2 && T_FLOAT_VAL_1 == T_FLOAT_VAL_2 && T_STRING_VAL_1 == T_STRING_VAL_2)
 );
+const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
 const __slice__ : int;
-var TEMPLATED_TABLE_T_ID : [int]int;
-var TEMPLATED_TABLE_T_INT_VAL : [int]int;
+const __shards__ : int;
 var TEMPLATED_TABLE_T_FLOAT_VAL : [int]real;
 var TEMPLATED_TABLE_T_STRING_VAL : [int]String;
-const TBL_TEMPLATED_TABLE : Table (TEMPLATED_TABLE);
-const __shards__ : int;
+var TEMPLATED_TABLE_T_INT_VAL : [int]int;
+var TEMPLATED_TABLE_T_ID : [int]int;
 procedure verify_hop_partitions_GenericInsert(key: int, int_val: int, float_val: real, string_val: String)
 modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_INT_VAL, TEMPLATED_TABLE_T_STRING_VAL;
 {
@@ -81,11 +81,11 @@ modifies TEMPLATED_TABLE_T_FLOAT_VAL, TEMPLATED_TABLE_T_INT_VAL, TEMPLATED_TABLE
   s3_block3:
     TEMPLATED_TABLE_T_INT_VAL := TEMPLATED_TABLE_T_INT_VAL[s3_key := s3_int_val];
     TEMPLATED_TABLE_T_FLOAT_VAL := TEMPLATED_TABLE_T_FLOAT_VAL[s3_key := s3_float_val];
-  // Partition check hop 3 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1760, end: 1905, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1760, end: 1905, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 3) (table_id . 0) (span ((start . 1760) (end . 1905) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s3_key == s3_key);
+  // Partition check hop 3 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1780, end: 1925, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1780, end: 1925, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 3) (table_id . 0) (span ((start . 1780) (end . 1925) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s3_key == s3_key);
     TEMPLATED_TABLE_T_STRING_VAL := TEMPLATED_TABLE_T_STRING_VAL[s3_key := s3_string_val];
-  // Partition check hop 3 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1760, end: 1905, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1760, end: 1905, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 3) (table_id . 0) (span ((start . 1760) (end . 1905) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s3_key == s3_key);
+  // Partition check hop 3 func 'f' tables 'TEMPLATED_TABLE'=>'TEMPLATED_TABLE' keys [k0=key] first_span Span { start: 1780, end: 1925, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" } current_span Span { start: 1780, end: 1925, filename: "/Users/farzad/Desktop/Research/benchbase-transact/templated.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 3) (table_id . 0) (span ((start . 1780) (end . 1925) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/templated.transact\"))))"} (s3_key == s3_key);
     goto s3_epilogue;
   s3_hop_exit:
   s3_epilogue:

@@ -62,52 +62,143 @@ axiom (forall
     <==>
     (ycsb_key_1 == ycsb_key_2 && field1_1 == field1_2 && field2_1 == field2_2 && field3_1 == field3_2 && field4_1 == field4_2 && field5_1 == field5_2 && field6_1 == field6_2 && field7_1 == field7_2 && field8_1 == field8_2 && field9_1 == field9_2 && field10_1 == field10_2)
 );
+var UserTable_field8 : [int]String;
 var UserTable_ycsb_key : [int]int;
-var UserTable_field4 : [int]String;
-var UserTable_field6 : [int]String;
+const __shards__ : int;
+var UserTable_field2 : [int]String;
+var UserTable_field1 : [int]String;
 var UserTable_field7 : [int]String;
 var UserTable_field9 : [int]String;
-var UserTable_field10 : [int]String;
-var UserTable_field8 : [int]String;
-var UserTable_field2 : [int]String;
-const TBL_UserTable : Table (UserTable);
-var UserTable_field5 : [int]String;
-const __shards__ : int;
-const __slice__ : int;
 const YCSB_SCAN_SIZE : int;
-var UserTable_field1 : [int]String;
+var UserTable_field5 : [int]String;
+var UserTable_field4 : [int]String;
+var UserTable_field10 : [int]String;
+const TBL_UserTable : Table (UserTable);
+var UserTable_field6 : [int]String;
+const __slice__ : int;
 var UserTable_field3 : [int]String;
 procedure verify_hop_partitions_ScanRecord(startKey: int)
 {
+  var s5_#tmp4 : int;
+  var s5_startKey : int;
+  var s5_#tmp5 : Row (Table (UserTable));
+  var s5_r : Row (Table (UserTable));
+  var s5_#tmp17 : unit;
+  var s6_#tmp18 : int;
+  var s6_startKey : int;
+  var s6_#tmp19 : Row (Table (UserTable));
+  var s6_r : Row (Table (UserTable));
+  var s6_#tmp31 : unit;
+  var s7_#tmp32 : int;
+  var s7_startKey : int;
+  var s7_#tmp33 : Row (Table (UserTable));
+  var s7_r : Row (Table (UserTable));
+  var s7_#tmp45 : unit;
+  var s8_#tmp46 : int;
+  var s8_startKey : int;
+  var s8_#tmp47 : Row (Table (UserTable));
+  var s8_r : Row (Table (UserTable));
+  var s8_#tmp59 : unit;
+  var s9_#tmp60 : int;
+  var s9_startKey : int;
+  var s9_#tmp61 : Row (Table (UserTable));
+  var s9_r : Row (Table (UserTable));
+  var s9_#tmp73 : unit;
+  var s10_#tmp74 : int;
+  var s10_startKey : int;
+  var s10_#tmp75 : Row (Table (UserTable));
+  var s10_r : Row (Table (UserTable));
+  var s10_#tmp87 : unit;
+  var s11_#tmp88 : int;
+  var s11_startKey : int;
+  var s11_#tmp89 : Row (Table (UserTable));
+  var s11_r : Row (Table (UserTable));
+  var s11_#tmp101 : unit;
+  var s12_#tmp102 : int;
+  var s12_startKey : int;
+  var s12_#tmp103 : Row (Table (UserTable));
+  var s12_r : Row (Table (UserTable));
+  var s12_#tmp115 : unit;
+  var s13_#tmp116 : int;
+  var s13_startKey : int;
+  var s13_#tmp117 : Row (Table (UserTable));
+  var s13_r : Row (Table (UserTable));
+  var s13_#tmp129 : unit;
+  var s14_#tmp130 : int;
+  var s14_startKey : int;
+  var s14_#tmp131 : Row (Table (UserTable));
+  var s14_r : Row (Table (UserTable));
+  var s14_#tmp143 : unit;
+
   // Hop partition verification for function 'ScanRecord'
   s5_block5:
+    s5_#tmp4 := s5_startKey + 0;
+    s5_#tmp5 := construct_Row_UserTable(UserTable_ycsb_key[s5_#tmp4], UserTable_field1[s5_#tmp4], UserTable_field2[s5_#tmp4], UserTable_field3[s5_#tmp4], UserTable_field4[s5_#tmp4], UserTable_field5[s5_#tmp4], UserTable_field6[s5_#tmp4], UserTable_field7[s5_#tmp4], UserTable_field8[s5_#tmp4], UserTable_field9[s5_#tmp4], UserTable_field10[s5_#tmp4]);
+    s5_r := s5_#tmp5;
+    s5_#tmp17 := to_unit(s5_r);
     goto s5_hop_exit;
   s5_hop_exit:
   s6_block6:
+    s6_#tmp18 := s6_startKey + 1;
+    s6_#tmp19 := construct_Row_UserTable(UserTable_ycsb_key[s6_#tmp18], UserTable_field1[s6_#tmp18], UserTable_field2[s6_#tmp18], UserTable_field3[s6_#tmp18], UserTable_field4[s6_#tmp18], UserTable_field5[s6_#tmp18], UserTable_field6[s6_#tmp18], UserTable_field7[s6_#tmp18], UserTable_field8[s6_#tmp18], UserTable_field9[s6_#tmp18], UserTable_field10[s6_#tmp18]);
+    s6_r := s6_#tmp19;
+    s6_#tmp31 := to_unit(s6_r);
     goto s6_hop_exit;
   s6_hop_exit:
   s7_block7:
+    s7_#tmp32 := s7_startKey + 2;
+    s7_#tmp33 := construct_Row_UserTable(UserTable_ycsb_key[s7_#tmp32], UserTable_field1[s7_#tmp32], UserTable_field2[s7_#tmp32], UserTable_field3[s7_#tmp32], UserTable_field4[s7_#tmp32], UserTable_field5[s7_#tmp32], UserTable_field6[s7_#tmp32], UserTable_field7[s7_#tmp32], UserTable_field8[s7_#tmp32], UserTable_field9[s7_#tmp32], UserTable_field10[s7_#tmp32]);
+    s7_r := s7_#tmp33;
+    s7_#tmp45 := to_unit(s7_r);
     goto s7_hop_exit;
   s7_hop_exit:
   s8_block8:
+    s8_#tmp46 := s8_startKey + 3;
+    s8_#tmp47 := construct_Row_UserTable(UserTable_ycsb_key[s8_#tmp46], UserTable_field1[s8_#tmp46], UserTable_field2[s8_#tmp46], UserTable_field3[s8_#tmp46], UserTable_field4[s8_#tmp46], UserTable_field5[s8_#tmp46], UserTable_field6[s8_#tmp46], UserTable_field7[s8_#tmp46], UserTable_field8[s8_#tmp46], UserTable_field9[s8_#tmp46], UserTable_field10[s8_#tmp46]);
+    s8_r := s8_#tmp47;
+    s8_#tmp59 := to_unit(s8_r);
     goto s8_hop_exit;
   s8_hop_exit:
   s9_block9:
+    s9_#tmp60 := s9_startKey + 4;
+    s9_#tmp61 := construct_Row_UserTable(UserTable_ycsb_key[s9_#tmp60], UserTable_field1[s9_#tmp60], UserTable_field2[s9_#tmp60], UserTable_field3[s9_#tmp60], UserTable_field4[s9_#tmp60], UserTable_field5[s9_#tmp60], UserTable_field6[s9_#tmp60], UserTable_field7[s9_#tmp60], UserTable_field8[s9_#tmp60], UserTable_field9[s9_#tmp60], UserTable_field10[s9_#tmp60]);
+    s9_r := s9_#tmp61;
+    s9_#tmp73 := to_unit(s9_r);
     goto s9_hop_exit;
   s9_hop_exit:
   s10_block10:
+    s10_#tmp74 := s10_startKey + 5;
+    s10_#tmp75 := construct_Row_UserTable(UserTable_ycsb_key[s10_#tmp74], UserTable_field1[s10_#tmp74], UserTable_field2[s10_#tmp74], UserTable_field3[s10_#tmp74], UserTable_field4[s10_#tmp74], UserTable_field5[s10_#tmp74], UserTable_field6[s10_#tmp74], UserTable_field7[s10_#tmp74], UserTable_field8[s10_#tmp74], UserTable_field9[s10_#tmp74], UserTable_field10[s10_#tmp74]);
+    s10_r := s10_#tmp75;
+    s10_#tmp87 := to_unit(s10_r);
     goto s10_hop_exit;
   s10_hop_exit:
   s11_block11:
+    s11_#tmp88 := s11_startKey + 6;
+    s11_#tmp89 := construct_Row_UserTable(UserTable_ycsb_key[s11_#tmp88], UserTable_field1[s11_#tmp88], UserTable_field2[s11_#tmp88], UserTable_field3[s11_#tmp88], UserTable_field4[s11_#tmp88], UserTable_field5[s11_#tmp88], UserTable_field6[s11_#tmp88], UserTable_field7[s11_#tmp88], UserTable_field8[s11_#tmp88], UserTable_field9[s11_#tmp88], UserTable_field10[s11_#tmp88]);
+    s11_r := s11_#tmp89;
+    s11_#tmp101 := to_unit(s11_r);
     goto s11_hop_exit;
   s11_hop_exit:
   s12_block12:
+    s12_#tmp102 := s12_startKey + 7;
+    s12_#tmp103 := construct_Row_UserTable(UserTable_ycsb_key[s12_#tmp102], UserTable_field1[s12_#tmp102], UserTable_field2[s12_#tmp102], UserTable_field3[s12_#tmp102], UserTable_field4[s12_#tmp102], UserTable_field5[s12_#tmp102], UserTable_field6[s12_#tmp102], UserTable_field7[s12_#tmp102], UserTable_field8[s12_#tmp102], UserTable_field9[s12_#tmp102], UserTable_field10[s12_#tmp102]);
+    s12_r := s12_#tmp103;
+    s12_#tmp115 := to_unit(s12_r);
     goto s12_hop_exit;
   s12_hop_exit:
   s13_block13:
+    s13_#tmp116 := s13_startKey + 8;
+    s13_#tmp117 := construct_Row_UserTable(UserTable_ycsb_key[s13_#tmp116], UserTable_field1[s13_#tmp116], UserTable_field2[s13_#tmp116], UserTable_field3[s13_#tmp116], UserTable_field4[s13_#tmp116], UserTable_field5[s13_#tmp116], UserTable_field6[s13_#tmp116], UserTable_field7[s13_#tmp116], UserTable_field8[s13_#tmp116], UserTable_field9[s13_#tmp116], UserTable_field10[s13_#tmp116]);
+    s13_r := s13_#tmp117;
+    s13_#tmp129 := to_unit(s13_r);
     goto s13_hop_exit;
   s13_hop_exit:
   s14_block14:
+    s14_#tmp130 := s14_startKey + 9;
+    s14_#tmp131 := construct_Row_UserTable(UserTable_ycsb_key[s14_#tmp130], UserTable_field1[s14_#tmp130], UserTable_field2[s14_#tmp130], UserTable_field3[s14_#tmp130], UserTable_field4[s14_#tmp130], UserTable_field5[s14_#tmp130], UserTable_field6[s14_#tmp130], UserTable_field7[s14_#tmp130], UserTable_field8[s14_#tmp130], UserTable_field9[s14_#tmp130], UserTable_field10[s14_#tmp130]);
+    s14_r := s14_#tmp131;
+    s14_#tmp143 := to_unit(s14_r);
     goto s14_epilogue;
   s14_hop_exit:
   s5_epilogue:

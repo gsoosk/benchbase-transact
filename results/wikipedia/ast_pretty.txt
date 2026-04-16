@@ -390,7 +390,9 @@ transaction GetPageAnonymous[f47](pageId[p81]: int[t1], pr_type[p82]: string[t3]
   hop
   {
     let p[v1]: Row<page>[t6<tab<page>>] = page[t7<tab<page>>][itab2][tab2][page_id: pageId[t1][p81]][t6<tab<page>>];
+    to_unit[(infer1) -> t10][f43][f43](p[t6<tab<page>>][v1])[t10];
     let pr[v2]: Row<page_restrictions>[t6<tab<page_restrictions>>] = page_restrictions[t7<tab<page_restrictions>>][itab3][tab3][pr_page: pageId[t1][p81], pr_type: pr_type[t3][p82]][t6<tab<page_restrictions>>];
+    to_unit[(infer4) -> t10][f43][f43](pr[t6<tab<page_restrictions>>][v2])[t10];
     let r[v3]: Row<revision>[t6<tab<revision>>] = revision[t7<tab<revision>>][itab5][tab5][rev_page: pageId[t1][p81], rev_id: latest_rev_id[t1][p83]][t6<tab<revision>>];
     let textId[v4]: int[t1] = r[t6<tab<revision>>][v3].rev_text_id[field25][t1];
   }
@@ -398,6 +400,7 @@ transaction GetPageAnonymous[f47](pageId[p81]: int[t1], pr_type[p82]: string[t3]
   {
     let t[v5]: Row<text>[t6<tab<text>>] = text[t7<tab<text>>][itab6][tab6][old_id: textId[t1][v4]][t6<tab<text>>];
     let content[v6]: string[t3] = t[t6<tab<text>>][v5].old_text[field34][t3];
+    to_unit[(infer10) -> t10][f43][f43](content[t3][v6])[t10];
   }
 }
 
@@ -406,13 +409,18 @@ transaction GetPageAuthenticated[f48](userId[p85]: int[t1], pageId[p86]: int[t1]
   hop
   {
     let u[v7]: Row<user>[t6<tab<user>>] = user[t7<tab<user>>][itab0][tab0][user_id: userId[t1][p85]][t6<tab<user>>];
+    to_unit[(infer1) -> t10][f43][f43](u[t6<tab<user>>][v7])[t10];
     let ug[v8]: Row<user_groups>[t6<tab<user_groups>>] = user_groups[t7<tab<user_groups>>][itab7][tab7][ug_user: userId[t1][p85], ug_group: ug_group[t3][p87]][t6<tab<user_groups>>];
+    to_unit[(infer4) -> t10][f43][f43](ug[t6<tab<user_groups>>][v8])[t10];
     let ip[v9]: Row<ipblocks>[t6<tab<ipblocks>>] = ipblocks[t7<tab<ipblocks>>][itab4][tab4][ipb_user: userId[t1][p85], ipb_id: ipb_id[t1][p91]][t6<tab<ipblocks>>];
+    to_unit[(infer7) -> t10][f43][f43](ip[t6<tab<ipblocks>>][v9])[t10];
   }
   hop
   {
     let p[v10]: Row<page>[t6<tab<page>>] = page[t7<tab<page>>][itab2][tab2][page_id: pageId[t1][p86]][t6<tab<page>>];
+    to_unit[(infer10) -> t10][f43][f43](p[t6<tab<page>>][v10])[t10];
     let pr[v11]: Row<page_restrictions>[t6<tab<page_restrictions>>] = page_restrictions[t7<tab<page_restrictions>>][itab3][tab3][pr_page: pageId[t1][p86], pr_type: pr_type[t3][p88]][t6<tab<page_restrictions>>];
+    to_unit[(infer13) -> t10][f43][f43](pr[t6<tab<page_restrictions>>][v11])[t10];
     let r[v12]: Row<revision>[t6<tab<revision>>] = revision[t7<tab<revision>>][itab5][tab5][rev_page: pageId[t1][p86], rev_id: latest_rev_id[t1][p89]][t6<tab<revision>>];
     let textId[v13]: int[t1] = r[t6<tab<revision>>][v12].rev_text_id[field25][t1];
   }
@@ -420,6 +428,7 @@ transaction GetPageAuthenticated[f48](userId[p85]: int[t1], pageId[p86]: int[t1]
   {
     let t[v14]: Row<text>[t6<tab<text>>] = text[t7<tab<text>>][itab6][tab6][old_id: textId[t1][v13]][t6<tab<text>>];
     let content[v15]: string[t3] = t[t6<tab<text>>][v14].old_text[field34][t3];
+    to_unit[(infer19) -> t10][f43][f43](content[t3][v15])[t10];
   }
 }
 

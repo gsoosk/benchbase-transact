@@ -311,9 +311,11 @@ transaction Balance[f47](custId[p80]: int[t1]) : (t1) -> t0
   hop
   {
     let a[v4]: Row<Accounts>[t6<tab<Accounts>>] = Accounts[t7<tab<Accounts>>][itab0][tab0][custid: custId[t1][p80]][t6<tab<Accounts>>];
+    to_unit[(infer1) -> t10][f43][f43](a[t6<tab<Accounts>>][v4])[t10];
     let s[v5]: Row<Savings>[t6<tab<Savings>>] = Savings[t7<tab<Savings>>][itab1][tab1][custid: custId[t1][p80]][t6<tab<Savings>>];
     let c[v6]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: custId[t1][p80]][t6<tab<Checking>>];
     let total[v7]: float[t4] = s[t6<tab<Savings>>][v5].bal[field3][t4] + [f5]c[t6<tab<Checking>>][v6].bal[field5][t4][t4];
+    to_unit[(infer6) -> t10][f43][f43](total[t4][v7])[t10];
   }
 }
 
@@ -322,6 +324,7 @@ transaction DepositChecking[f48](custId[p81]: int[t1], amount[p82]: float[t4]) :
   hop
   {
     let a[v8]: Row<Accounts>[t6<tab<Accounts>>] = Accounts[t7<tab<Accounts>>][itab0][tab0][custid: custId[t1][p81]][t6<tab<Accounts>>];
+    to_unit[(infer1) -> t10][f43][f43](a[t6<tab<Accounts>>][v8])[t10];
     let c[v9]: Row<Checking>[t6<tab<Checking>>] = Checking[t7<tab<Checking>>][itab2][tab2][custid: custId[t1][p81]][t6<tab<Checking>>];
     c[t6<tab<Checking>>][v9].bal[field5][t4] = c[t6<tab<Checking>>][v9].bal[field5][t4] + [f5]amount[t4][p82][t4][t0];
     Checking[t7<tab<Checking>>][itab2][tab2][custid: custId[t1][p81]][t6<tab<Checking>>] = c[t6<tab<Checking>>][v9][t0];
@@ -349,6 +352,7 @@ transaction TransactSavings[f50](custId[p86]: int[t1], amount[p87]: float[t4]) :
   hop
   {
     let a[v12]: Row<Accounts>[t6<tab<Accounts>>] = Accounts[t7<tab<Accounts>>][itab0][tab0][custid: custId[t1][p86]][t6<tab<Accounts>>];
+    to_unit[(infer1) -> t10][f43][f43](a[t6<tab<Accounts>>][v12])[t10];
     let s[v13]: Row<Savings>[t6<tab<Savings>>] = Savings[t7<tab<Savings>>][itab1][tab1][custid: custId[t1][p86]][t6<tab<Savings>>];
     s[t6<tab<Savings>>][v13].bal[field3][t4] = s[t6<tab<Savings>>][v13].bal[field3][t4] - [f6]amount[t4][p87][t4][t0];
     Savings[t7<tab<Savings>>][itab1][tab1][custid: custId[t1][p86]][t6<tab<Savings>>] = s[t6<tab<Savings>>][v13][t0];

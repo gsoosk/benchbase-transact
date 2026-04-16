@@ -19,9 +19,27 @@ func GettweetsfromfollowingHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, e
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var uid uint64
+	var followed_uid uint64
+	var f Follows
+	var _tmp6 Follows
+	var _tmp7 Unit
+
+	var keyBytes1 []byte
+	var row1 Follows
+
+	uid = toUint64(params["uid"])
+	followed_uid = toUint64(params["followed_uid"])
+
 	goto BB4
 
 BB4:
+	// TableGet: Follows
+	keyBytes1, row1 = getFollows(tx, FollowsKey{f1: uid, f2: followed_uid})
+	rwSet = AddRWSet(rwSet, "Follows", keyBytes1)
+	_tmp6 = row1
+	f = _tmp6
+	_ = f
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +52,27 @@ func GettweetsfromfollowingHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, e
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var followed_uid uint64
+	var tweet_id uint64
+	var t_text string
+	var txt string
+	var _tmp9 Unit
+
+	var keyBytes1 []byte
+	var row1 Tweets
+
+	followed_uid = toUint64(params["followed_uid"])
+	tweet_id = toUint64(params["tweet_id"])
+
 	goto BB5
 
 BB5:
+	// TableGet: Tweets
+	keyBytes1, row1 = getTweets(tx, TweetsKey{uid: followed_uid, id: tweet_id})
+	rwSet = AddRWSet(rwSet, "Tweets", keyBytes1)
+	t_text = row1.text
+	txt = t_text
+	_ = txt
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +83,18 @@ BB5:
 
 // GettweetsfromfollowingHop0Par calculates the partition for hop 0 without database access.
 func GettweetsfromfollowingHop0Par(params map[string]string) uint64 {
+	var uid uint64
+	var followed_uid uint64
+	var f Follows
+	var _tmp6 Follows
+	var _tmp7 Unit
+
+	var keyBytes1 []byte
+	var row1 Follows
+
+	uid = toUint64(params["uid"])
+	followed_uid = toUint64(params["followed_uid"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +103,31 @@ func GettweetsfromfollowingHop0Par(params map[string]string) uint64 {
 	goto BB4
 
 BB4:
+	// First table access - calculate partition: Follows
+	if true { return getFollowsPar(FollowsKey{f1: uid, f2: followed_uid}) }
+	// TableGet: Follows
+	keyBytes1, row1 = getFollows(tx, FollowsKey{f1: uid, f2: followed_uid})
+	rwSet = AddRWSet(rwSet, "Follows", keyBytes1)
+	_tmp6 = row1
+	f = _tmp6
+	_ = f
 	panic("unexpected hop exit in partition")
 }
 
 // GettweetsfromfollowingHop1Par calculates the partition for hop 1 without database access.
 func GettweetsfromfollowingHop1Par(params map[string]string) uint64 {
+	var followed_uid uint64
+	var tweet_id uint64
+	var t_text string
+	var txt string
+	var _tmp9 Unit
+
+	var keyBytes1 []byte
+	var row1 Tweets
+
+	followed_uid = toUint64(params["followed_uid"])
+	tweet_id = toUint64(params["tweet_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +136,14 @@ func GettweetsfromfollowingHop1Par(params map[string]string) uint64 {
 	goto BB5
 
 BB5:
+	// First table access - calculate partition: Tweets
+	if true { return getTweetsPar(TweetsKey{uid: followed_uid, id: tweet_id}) }
+	// TableGet: Tweets
+	keyBytes1, row1 = getTweets(tx, TweetsKey{uid: followed_uid, id: tweet_id})
+	rwSet = AddRWSet(rwSet, "Tweets", keyBytes1)
+	t_text = row1.text
+	txt = t_text
+	_ = txt
 	return 0
 }
 

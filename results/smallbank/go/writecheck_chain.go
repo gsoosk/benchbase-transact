@@ -25,11 +25,11 @@ func WritecheckHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var c_custid uint64
 	var c_bal float32
 	var total float32
-	var _tmp21 float32
-	var _tmp22 bool
-	var _tmp23 float32
-	var _tmp24 float32
 	var _tmp25 float32
+	var _tmp26 bool
+	var _tmp27 float32
+	var _tmp28 float32
+	var _tmp29 float32
 
 	var keyBytes1 []byte
 	var row1 Savings
@@ -53,18 +53,18 @@ BB8:
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes2)
 	c_bal = row2.bal
 	c_custid = row2.Key.custid
-	_tmp21 = s_bal + c_bal
-	total = _tmp21
-	_tmp22 = total < amount
-	if _tmp22 {
+	_tmp25 = s_bal + c_bal
+	total = _tmp25
+	_tmp26 = total < amount
+	if _tmp26 {
 		goto BB9
 	} else {
 		goto BB11
 	}
 BB9:
-	_tmp23 = c_bal - amount
-	_tmp24 = _tmp23 - 1
-	c_bal = _tmp24
+	_tmp27 = c_bal - amount
+	_tmp28 = _tmp27 - 1
+	c_bal = _tmp28
 	goto BB10
 BB10:
 	// Combined table access: Checking (2 operations)
@@ -82,8 +82,8 @@ BB10:
 		RWSets: rwSet,
 	}, nil
 BB11:
-	_tmp25 = c_bal - amount
-	c_bal = _tmp25
+	_tmp29 = c_bal - amount
+	c_bal = _tmp29
 	goto BB10
 }
 
@@ -95,11 +95,11 @@ func WritecheckHop0Par(params map[string]string) uint64 {
 	var c_custid uint64
 	var c_bal float32
 	var total float32
-	var _tmp21 float32
-	var _tmp22 bool
-	var _tmp23 float32
-	var _tmp24 float32
 	var _tmp25 float32
+	var _tmp26 bool
+	var _tmp27 float32
+	var _tmp28 float32
+	var _tmp29 float32
 
 	var keyBytes1 []byte
 	var row1 Savings
@@ -132,18 +132,18 @@ BB8:
 	rwSet = AddRWSet(rwSet, "Checking", keyBytes2)
 	c_bal = row2.bal
 	c_custid = row2.Key.custid
-	_tmp21 = s_bal + c_bal
-	total = _tmp21
-	_tmp22 = total < amount
-	if _tmp22 {
+	_tmp25 = s_bal + c_bal
+	total = _tmp25
+	_tmp26 = total < amount
+	if _tmp26 {
 		goto BB9
 	} else {
 		goto BB11
 	}
 BB9:
-	_tmp23 = c_bal - amount
-	_tmp24 = _tmp23 - 1
-	c_bal = _tmp24
+	_tmp27 = c_bal - amount
+	_tmp28 = _tmp27 - 1
+	c_bal = _tmp28
 	goto BB10
 BB10:
 	// First table access (optimized group) - calculate partition: Checking
@@ -156,8 +156,8 @@ BB10:
 	putChecking(tx, CheckingKey{custid: custId}, row3)
 	return 0
 BB11:
-	_tmp25 = c_bal - amount
-	c_bal = _tmp25
+	_tmp29 = c_bal - amount
+	c_bal = _tmp29
 	goto BB10
 }
 

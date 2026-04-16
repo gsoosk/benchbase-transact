@@ -282,6 +282,7 @@ transaction GetSessionRange[f46](source_id[p78]: int[t1], session_low[p79]: int[
   {
     let obs[v0]: Row<observations>[t6<tab<observations>>] = observations[t7<tab<observations>>][itab0][tab0][source_id: source_id[t1][p78], session_id: session_low[t1][p79], created_time: created_time[t1][p82]][t6<tab<observations>>];
     let tid[v1]: int[t1] = obs[t6<tab<observations>>][v0].type_id[field3][t1];
+    to_unit[(infer2) -> t10][f43][f43](tid[t1][v1])[t10];
   }
 }
 

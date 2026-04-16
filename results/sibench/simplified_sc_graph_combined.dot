@@ -3,7 +3,7 @@ digraph CombinedSCGraph {
   node  [shape=record, fontsize=10, fontname=Helvetica];
   edge  [fontname=Helvetica];
   cv0 [label="MinRecord#0\nHop 1\n"];
-  cv1 [label="UpdateRecord#1\nHop 2\n"];
-  cv2 [label="UpdateRecord#0\nHop 2\n"];
+  cv1 [label="UpdateRecord#0\nHop 2\n"];
+  cv2 [label="UpdateRecord#1\nHop 2\n"];
   cv3 [label="MinRecord#1\nHop 1\n"];
 }

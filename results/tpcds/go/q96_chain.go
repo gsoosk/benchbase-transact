@@ -19,9 +19,27 @@ func Q96Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var item_sk uint64
+	var order_num uint64
+	var ws_ws_quantity uint64
+	var qty uint64
+	var _tmp50 Unit
+
+	var keyBytes1 []byte
+	var row1 WebSales
+
+	item_sk = toUint64(params["item_sk"])
+	order_num = toUint64(params["order_num"])
+
 	goto BB25
 
 BB25:
+	// TableGet: WebSales
+	keyBytes1, row1 = getWebSales(tx, WebSalesKey{ws_item_sk: item_sk, ws_order_number: order_num})
+	rwSet = AddRWSet(rwSet, "WebSales", keyBytes1)
+	ws_ws_quantity = row1.ws_quantity
+	qty = ws_ws_quantity
+	_ = qty
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +52,25 @@ func Q96Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var warehouse_sk uint64
+	var w_w_warehouse_name string
+	var wname string
+	var _tmp52 Unit
+
+	var keyBytes1 []byte
+	var row1 Warehouse
+
+	warehouse_sk = toUint64(params["warehouse_sk"])
+
 	goto BB26
 
 BB26:
+	// TableGet: Warehouse
+	keyBytes1, row1 = getWarehouse(tx, WarehouseKey{w_warehouse_sk: warehouse_sk})
+	rwSet = AddRWSet(rwSet, "Warehouse", keyBytes1)
+	w_w_warehouse_name = row1.w_warehouse_name
+	wname = w_w_warehouse_name
+	_ = wname
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +83,25 @@ func Q96Hop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var time_sk uint64
+	var t_t_hour uint64
+	var hr uint64
+	var _tmp54 Unit
+
+	var keyBytes1 []byte
+	var row1 TimeDim
+
+	time_sk = toUint64(params["time_sk"])
+
 	goto BB27
 
 BB27:
+	// TableGet: TimeDim
+	keyBytes1, row1 = getTimeDim(tx, TimeDimKey{t_time_sk: time_sk})
+	rwSet = AddRWSet(rwSet, "TimeDim", keyBytes1)
+	t_t_hour = row1.t_hour
+	hr = t_t_hour
+	_ = hr
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -64,9 +114,25 @@ func Q96Hop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var date_sk uint64
+	var d_d_year uint64
+	var yr uint64
+	var _tmp56 Unit
+
+	var keyBytes1 []byte
+	var row1 DateDim
+
+	date_sk = toUint64(params["date_sk"])
+
 	goto BB28
 
 BB28:
+	// TableGet: DateDim
+	keyBytes1, row1 = getDateDim(tx, DateDimKey{d_date_sk: date_sk})
+	rwSet = AddRWSet(rwSet, "DateDim", keyBytes1)
+	d_d_year = row1.d_year
+	yr = d_d_year
+	_ = yr
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -77,6 +143,18 @@ BB28:
 
 // Q96Hop0Par calculates the partition for hop 0 without database access.
 func Q96Hop0Par(params map[string]string) uint64 {
+	var item_sk uint64
+	var order_num uint64
+	var ws_ws_quantity uint64
+	var qty uint64
+	var _tmp50 Unit
+
+	var keyBytes1 []byte
+	var row1 WebSales
+
+	item_sk = toUint64(params["item_sk"])
+	order_num = toUint64(params["order_num"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -85,11 +163,29 @@ func Q96Hop0Par(params map[string]string) uint64 {
 	goto BB25
 
 BB25:
+	// First table access - calculate partition: WebSales
+	if true { return getWebSalesPar(WebSalesKey{ws_item_sk: item_sk, ws_order_number: order_num}) }
+	// TableGet: WebSales
+	keyBytes1, row1 = getWebSales(tx, WebSalesKey{ws_item_sk: item_sk, ws_order_number: order_num})
+	rwSet = AddRWSet(rwSet, "WebSales", keyBytes1)
+	ws_ws_quantity = row1.ws_quantity
+	qty = ws_ws_quantity
+	_ = qty
 	panic("unexpected hop exit in partition")
 }
 
 // Q96Hop1Par calculates the partition for hop 1 without database access.
 func Q96Hop1Par(params map[string]string) uint64 {
+	var warehouse_sk uint64
+	var w_w_warehouse_name string
+	var wname string
+	var _tmp52 Unit
+
+	var keyBytes1 []byte
+	var row1 Warehouse
+
+	warehouse_sk = toUint64(params["warehouse_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -98,11 +194,29 @@ func Q96Hop1Par(params map[string]string) uint64 {
 	goto BB26
 
 BB26:
+	// First table access - calculate partition: Warehouse
+	if true { return getWarehousePar(WarehouseKey{w_warehouse_sk: warehouse_sk}) }
+	// TableGet: Warehouse
+	keyBytes1, row1 = getWarehouse(tx, WarehouseKey{w_warehouse_sk: warehouse_sk})
+	rwSet = AddRWSet(rwSet, "Warehouse", keyBytes1)
+	w_w_warehouse_name = row1.w_warehouse_name
+	wname = w_w_warehouse_name
+	_ = wname
 	panic("unexpected hop exit in partition")
 }
 
 // Q96Hop2Par calculates the partition for hop 2 without database access.
 func Q96Hop2Par(params map[string]string) uint64 {
+	var time_sk uint64
+	var t_t_hour uint64
+	var hr uint64
+	var _tmp54 Unit
+
+	var keyBytes1 []byte
+	var row1 TimeDim
+
+	time_sk = toUint64(params["time_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -111,11 +225,29 @@ func Q96Hop2Par(params map[string]string) uint64 {
 	goto BB27
 
 BB27:
+	// First table access - calculate partition: TimeDim
+	if true { return getTimeDimPar(TimeDimKey{t_time_sk: time_sk}) }
+	// TableGet: TimeDim
+	keyBytes1, row1 = getTimeDim(tx, TimeDimKey{t_time_sk: time_sk})
+	rwSet = AddRWSet(rwSet, "TimeDim", keyBytes1)
+	t_t_hour = row1.t_hour
+	hr = t_t_hour
+	_ = hr
 	panic("unexpected hop exit in partition")
 }
 
 // Q96Hop3Par calculates the partition for hop 3 without database access.
 func Q96Hop3Par(params map[string]string) uint64 {
+	var date_sk uint64
+	var d_d_year uint64
+	var yr uint64
+	var _tmp56 Unit
+
+	var keyBytes1 []byte
+	var row1 DateDim
+
+	date_sk = toUint64(params["date_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -124,6 +256,14 @@ func Q96Hop3Par(params map[string]string) uint64 {
 	goto BB28
 
 BB28:
+	// First table access - calculate partition: DateDim
+	if true { return getDateDimPar(DateDimKey{d_date_sk: date_sk}) }
+	// TableGet: DateDim
+	keyBytes1, row1 = getDateDim(tx, DateDimKey{d_date_sk: date_sk})
+	rwSet = AddRWSet(rwSet, "DateDim", keyBytes1)
+	d_d_year = row1.d_year
+	yr = d_d_year
+	_ = yr
 	return 0
 }
 

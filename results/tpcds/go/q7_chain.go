@@ -19,9 +19,44 @@ func Q7Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var item_sk uint64
+	var ticket_num uint64
+	var ss_ss_quantity uint64
+	var ss_ss_list_price float32
+	var i Item
+	var _tmp7 Item
+	var _tmp8 Unit
+	var qty uint64
+	var _tmp9 Unit
+	var price float32
+	var _tmp10 Unit
+
+	var keyBytes1 []byte
+	var row1 StoreSales
+	var keyBytes2 []byte
+	var row2 Item
+
+	item_sk = toUint64(params["item_sk"])
+	ticket_num = toUint64(params["ticket_num"])
+
 	goto BB7
 
 BB7:
+	// Combined table access: StoreSales (2 operations)
+	keyBytes1, row1 = getStoreSales(tx, StoreSalesKey{ss_item_sk: item_sk, ss_ticket_number: ticket_num})
+	rwSet = AddRWSet(rwSet, "StoreSales", keyBytes1)
+	ss_ss_list_price = row1.ss_list_price
+	ss_ss_quantity = row1.ss_quantity
+	// TableGet: Item
+	keyBytes2, row2 = getItem(tx, ItemKey{i_item_sk: item_sk})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes2)
+	_tmp7 = row2
+	i = _tmp7
+	_ = i
+	qty = ss_ss_quantity
+	_ = qty
+	price = ss_ss_list_price
+	_ = price
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +69,25 @@ func Q7Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var cd_demo_sk uint64
+	var cd_cd_gender string
+	var gender string
+	var _tmp12 Unit
+
+	var keyBytes1 []byte
+	var row1 CustomerDemographics
+
+	cd_demo_sk = toUint64(params["cd_demo_sk"])
+
 	goto BB8
 
 BB8:
+	// TableGet: CustomerDemographics
+	keyBytes1, row1 = getCustomerDemographics(tx, CustomerDemographicsKey{cd_demo_sk: cd_demo_sk})
+	rwSet = AddRWSet(rwSet, "CustomerDemographics", keyBytes1)
+	cd_cd_gender = row1.cd_gender
+	gender = cd_cd_gender
+	_ = gender
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +100,25 @@ func Q7Hop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var promo_sk uint64
+	var promo_p_promo_name string
+	var pname string
+	var _tmp14 Unit
+
+	var keyBytes1 []byte
+	var row1 Promotion
+
+	promo_sk = toUint64(params["promo_sk"])
+
 	goto BB9
 
 BB9:
+	// TableGet: Promotion
+	keyBytes1, row1 = getPromotion(tx, PromotionKey{p_promo_sk: promo_sk})
+	rwSet = AddRWSet(rwSet, "Promotion", keyBytes1)
+	promo_p_promo_name = row1.p_promo_name
+	pname = promo_p_promo_name
+	_ = pname
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -62,6 +129,26 @@ BB9:
 
 // Q7Hop0Par calculates the partition for hop 0 without database access.
 func Q7Hop0Par(params map[string]string) uint64 {
+	var item_sk uint64
+	var ticket_num uint64
+	var ss_ss_quantity uint64
+	var ss_ss_list_price float32
+	var i Item
+	var _tmp7 Item
+	var _tmp8 Unit
+	var qty uint64
+	var _tmp9 Unit
+	var price float32
+	var _tmp10 Unit
+
+	var keyBytes1 []byte
+	var row1 StoreSales
+	var keyBytes2 []byte
+	var row2 Item
+
+	item_sk = toUint64(params["item_sk"])
+	ticket_num = toUint64(params["ticket_num"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -70,11 +157,40 @@ func Q7Hop0Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	// First table access (optimized group) - calculate partition: StoreSales
+	if true { return getStoreSalesPar(StoreSalesKey{ss_item_sk: item_sk, ss_ticket_number: ticket_num}) }
+	// Combined table access: StoreSales (2 operations)
+	keyBytes1, row1 = getStoreSales(tx, StoreSalesKey{ss_item_sk: item_sk, ss_ticket_number: ticket_num})
+	rwSet = AddRWSet(rwSet, "StoreSales", keyBytes1)
+	ss_ss_list_price = row1.ss_list_price
+	ss_ss_quantity = row1.ss_quantity
+	// First table access - calculate partition: Item
+	if true { return getItemPar(ItemKey{i_item_sk: item_sk}) }
+	// TableGet: Item
+	keyBytes2, row2 = getItem(tx, ItemKey{i_item_sk: item_sk})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes2)
+	_tmp7 = row2
+	i = _tmp7
+	_ = i
+	qty = ss_ss_quantity
+	_ = qty
+	price = ss_ss_list_price
+	_ = price
 	panic("unexpected hop exit in partition")
 }
 
 // Q7Hop1Par calculates the partition for hop 1 without database access.
 func Q7Hop1Par(params map[string]string) uint64 {
+	var cd_demo_sk uint64
+	var cd_cd_gender string
+	var gender string
+	var _tmp12 Unit
+
+	var keyBytes1 []byte
+	var row1 CustomerDemographics
+
+	cd_demo_sk = toUint64(params["cd_demo_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -83,11 +199,29 @@ func Q7Hop1Par(params map[string]string) uint64 {
 	goto BB8
 
 BB8:
+	// First table access - calculate partition: CustomerDemographics
+	if true { return getCustomerDemographicsPar(CustomerDemographicsKey{cd_demo_sk: cd_demo_sk}) }
+	// TableGet: CustomerDemographics
+	keyBytes1, row1 = getCustomerDemographics(tx, CustomerDemographicsKey{cd_demo_sk: cd_demo_sk})
+	rwSet = AddRWSet(rwSet, "CustomerDemographics", keyBytes1)
+	cd_cd_gender = row1.cd_gender
+	gender = cd_cd_gender
+	_ = gender
 	panic("unexpected hop exit in partition")
 }
 
 // Q7Hop2Par calculates the partition for hop 2 without database access.
 func Q7Hop2Par(params map[string]string) uint64 {
+	var promo_sk uint64
+	var promo_p_promo_name string
+	var pname string
+	var _tmp14 Unit
+
+	var keyBytes1 []byte
+	var row1 Promotion
+
+	promo_sk = toUint64(params["promo_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -96,6 +230,14 @@ func Q7Hop2Par(params map[string]string) uint64 {
 	goto BB9
 
 BB9:
+	// First table access - calculate partition: Promotion
+	if true { return getPromotionPar(PromotionKey{p_promo_sk: promo_sk}) }
+	// TableGet: Promotion
+	keyBytes1, row1 = getPromotion(tx, PromotionKey{p_promo_sk: promo_sk})
+	rwSet = AddRWSet(rwSet, "Promotion", keyBytes1)
+	promo_p_promo_name = row1.p_promo_name
+	pname = promo_p_promo_name
+	_ = pname
 	return 0
 }
 

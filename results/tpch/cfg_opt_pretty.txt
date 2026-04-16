@@ -205,7 +205,25 @@ transaction Q1[fn17](orderkey[v22]: int, linenumber[v23]: int)
   hop2 {
     entry_block: bb2
     bb2:
-      livein: {}
+      livein: {orderkey[v22], linenumber[v23]}
+        [stmt_in] livein: {orderkey[v22], linenumber[v23]}
+      l#l_discount[v95] = Lineitem[orderkey[v22], linenumber[v23]].l_discount;
+        [stmt_out] liveout: {linenumber[v23], l#l_discount[v95], orderkey[v22]}
+        [stmt_in] livein: {linenumber[v23], l#l_discount[v95], orderkey[v22]}
+      l#l_extendedprice[v94] = Lineitem[orderkey[v22], linenumber[v23]].l_extendedprice;
+        [stmt_out] liveout: {l#l_discount[v95], l#l_extendedprice[v94]}
+        [stmt_in] livein: {l#l_discount[v95], l#l_extendedprice[v94]}
+      #tmp1[v107] = 1 - l#l_discount[v95];
+        [stmt_out] liveout: {l#l_extendedprice[v94], #tmp1[v107]}
+        [stmt_in] livein: {l#l_extendedprice[v94], #tmp1[v107]}
+      #tmp2[v108] = l#l_extendedprice[v94] * #tmp1[v107];
+        [stmt_out] liveout: {#tmp2[v108]}
+        [stmt_in] livein: {#tmp2[v108]}
+      revenue[v106] = #tmp2[v108];
+        [stmt_out] liveout: {revenue[v106]}
+        [stmt_in] livein: {revenue[v106]}
+      #tmp3[v109] = to_unit[fn13](revenue[v106]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -219,23 +237,68 @@ transaction Q2[fn18](partkey[v24]: int, suppkey[v25]: int, nationkey[v26]: int, 
   hop3 {
     entry_block: bb3
     bb3:
-      livein: {}
+      livein: {partkey[v24], regionkey[v27], suppkey[v25], nationkey[v26]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27], partkey[v24], suppkey[v25]}
+      ps#ps_supplycost[v114] = Partsupp[partkey[v24], suppkey[v25]].ps_supplycost;
+        [stmt_out] liveout: {ps#ps_supplycost[v114], regionkey[v27], partkey[v24], suppkey[v25], nationkey[v26]}
+        [stmt_in] livein: {ps#ps_supplycost[v114], regionkey[v27], partkey[v24], suppkey[v25], nationkey[v26]}
+      #tmp5[v127] = Part[partkey[v24]];
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26], suppkey[v25], #tmp5[v127], ps#ps_supplycost[v114]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26], suppkey[v25], #tmp5[v127], ps#ps_supplycost[v114]}
+      p[v117] = #tmp5[v127];
+        [stmt_out] liveout: {regionkey[v27], ps#ps_supplycost[v114], p[v117], nationkey[v26], suppkey[v25]}
+        [stmt_in] livein: {regionkey[v27], ps#ps_supplycost[v114], p[v117], nationkey[v26], suppkey[v25]}
+      #tmp6[v128] = to_unit[fn13](p[v117]);
+        [stmt_out] liveout: {suppkey[v25], nationkey[v26], ps#ps_supplycost[v114], regionkey[v27]}
+        [stmt_in] livein: {suppkey[v25], nationkey[v26], ps#ps_supplycost[v114], regionkey[v27]}
+      cost[v129] = ps#ps_supplycost[v114];
+        [stmt_out] liveout: {cost[v129], suppkey[v25], regionkey[v27], nationkey[v26]}
+        [stmt_in] livein: {cost[v129], suppkey[v25], regionkey[v27], nationkey[v26]}
+      #tmp7[v130] = to_unit[fn13](cost[v129]);
+        [stmt_out] liveout: {suppkey[v25], nationkey[v26], regionkey[v27]}
       hop_exit hop4;
-      liveout: {}
+      liveout: {suppkey[v25], regionkey[v27], nationkey[v26]}
   }
 
   hop4 {
     entry_block: bb4
     bb4 (preds: bb3):
-      livein: {}
+      livein: {nationkey[v26], suppkey[v25], regionkey[v27]}
+        [stmt_in] livein: {suppkey[v25], nationkey[v26], regionkey[v27]}
+      s#s_name[v133] = Supplier[suppkey[v25]].s_name;
+        [stmt_out] liveout: {regionkey[v27], s#s_name[v133], nationkey[v26]}
+        [stmt_in] livein: {regionkey[v27], s#s_name[v133], nationkey[v26]}
+      sname[v140] = s#s_name[v133];
+        [stmt_out] liveout: {nationkey[v26], regionkey[v27], sname[v140]}
+        [stmt_in] livein: {nationkey[v26], regionkey[v27], sname[v140]}
+      #tmp9[v141] = to_unit[fn13](sname[v140]);
+        [stmt_out] liveout: {regionkey[v27], nationkey[v26]}
       hop_exit hop5;
-      liveout: {}
+      liveout: {regionkey[v27], nationkey[v26]}
   }
 
   hop5 {
     entry_block: bb5
     bb5 (preds: bb4):
-      livein: {}
+      livein: {nationkey[v26], regionkey[v27]}
+        [stmt_in] livein: {regionkey[v27], nationkey[v26]}
+      #tmp10[v147] = Nation[nationkey[v26]];
+        [stmt_out] liveout: {regionkey[v27], #tmp10[v147]}
+        [stmt_in] livein: {regionkey[v27], #tmp10[v147]}
+      n[v142] = #tmp10[v147];
+        [stmt_out] liveout: {n[v142], regionkey[v27]}
+        [stmt_in] livein: {n[v142], regionkey[v27]}
+      #tmp11[v148] = to_unit[fn13](n[v142]);
+        [stmt_out] liveout: {regionkey[v27]}
+        [stmt_in] livein: {regionkey[v27]}
+      #tmp12[v153] = Region[regionkey[v27]];
+        [stmt_out] liveout: {#tmp12[v153]}
+        [stmt_in] livein: {#tmp12[v153]}
+      r[v149] = #tmp12[v153];
+        [stmt_out] liveout: {r[v149]}
+        [stmt_in] livein: {r[v149]}
+      #tmp13[v154] = to_unit[fn13](r[v149]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -249,15 +312,51 @@ transaction Q3[fn19](custkey[v28]: int, orderkey[v29]: int, linenumber[v30]: int
   hop6 {
     entry_block: bb6
     bb6:
-      livein: {}
+      livein: {orderkey[v29], linenumber[v30], custkey[v28]}
+        [stmt_in] livein: {linenumber[v30], custkey[v28], orderkey[v29]}
+      c#c_mktsegment[v162] = Customer[custkey[v28]].c_mktsegment;
+        [stmt_out] liveout: {c#c_mktsegment[v162], linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {c#c_mktsegment[v162], linenumber[v30], orderkey[v29]}
+      seg[v165] = c#c_mktsegment[v162];
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30], seg[v165]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30], seg[v165]}
+      #tmp15[v166] = to_unit[fn13](seg[v165]);
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29]}
       hop_exit hop7;
-      liveout: {}
+      liveout: {orderkey[v29], linenumber[v30]}
   }
 
   hop7 {
     entry_block: bb7
     bb7 (preds: bb6):
-      livein: {}
+      livein: {linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30]}
+      #tmp16[v177] = Orders[orderkey[v29]];
+        [stmt_out] liveout: {linenumber[v30], orderkey[v29], #tmp16[v177]}
+        [stmt_in] livein: {linenumber[v30], orderkey[v29], #tmp16[v177]}
+      o[v167] = #tmp16[v177];
+        [stmt_out] liveout: {o[v167], linenumber[v30], orderkey[v29]}
+        [stmt_in] livein: {o[v167], linenumber[v30], orderkey[v29]}
+      #tmp17[v178] = to_unit[fn13](o[v167]);
+        [stmt_out] liveout: {orderkey[v29], linenumber[v30]}
+        [stmt_in] livein: {orderkey[v29], linenumber[v30]}
+      l#l_discount[v186] = Lineitem[orderkey[v29], linenumber[v30]].l_discount;
+        [stmt_out] liveout: {linenumber[v30], l#l_discount[v186], orderkey[v29]}
+        [stmt_in] livein: {linenumber[v30], l#l_discount[v186], orderkey[v29]}
+      l#l_extendedprice[v185] = Lineitem[orderkey[v29], linenumber[v30]].l_extendedprice;
+        [stmt_out] liveout: {l#l_extendedprice[v185], l#l_discount[v186]}
+        [stmt_in] livein: {l#l_extendedprice[v185], l#l_discount[v186]}
+      #tmp19[v198] = 1 - l#l_discount[v186];
+        [stmt_out] liveout: {#tmp19[v198], l#l_extendedprice[v185]}
+        [stmt_in] livein: {#tmp19[v198], l#l_extendedprice[v185]}
+      #tmp20[v199] = l#l_extendedprice[v185] * #tmp19[v198];
+        [stmt_out] liveout: {#tmp20[v199]}
+        [stmt_in] livein: {#tmp20[v199]}
+      revenue[v197] = #tmp20[v199];
+        [stmt_out] liveout: {revenue[v197]}
+        [stmt_in] livein: {revenue[v197]}
+      #tmp21[v200] = to_unit[fn13](revenue[v197]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -271,7 +370,25 @@ transaction Q4[fn20](orderkey[v31]: int, linenumber[v32]: int)
   hop8 {
     entry_block: bb8
     bb8:
-      livein: {}
+      livein: {linenumber[v32], orderkey[v31]}
+        [stmt_in] livein: {linenumber[v32], orderkey[v31]}
+      o#o_orderpriority[v207] = Orders[orderkey[v31]].o_orderpriority;
+        [stmt_out] liveout: {linenumber[v32], o#o_orderpriority[v207], orderkey[v31]}
+        [stmt_in] livein: {linenumber[v32], o#o_orderpriority[v207], orderkey[v31]}
+      #tmp23[v229] = Lineitem[orderkey[v31], linenumber[v32]];
+        [stmt_out] liveout: {#tmp23[v229], o#o_orderpriority[v207]}
+        [stmt_in] livein: {#tmp23[v229], o#o_orderpriority[v207]}
+      l[v212] = #tmp23[v229];
+        [stmt_out] liveout: {o#o_orderpriority[v207], l[v212]}
+        [stmt_in] livein: {o#o_orderpriority[v207], l[v212]}
+      #tmp24[v230] = to_unit[fn13](l[v212]);
+        [stmt_out] liveout: {o#o_orderpriority[v207]}
+        [stmt_in] livein: {o#o_orderpriority[v207]}
+      priority[v231] = o#o_orderpriority[v207];
+        [stmt_out] liveout: {priority[v231]}
+        [stmt_in] livein: {priority[v231]}
+      #tmp25[v232] = to_unit[fn13](priority[v231]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -285,31 +402,94 @@ transaction Q5[fn21](custkey[v33]: int, orderkey[v34]: int, linenumber[v35]: int
   hop9 {
     entry_block: bb9
     bb9:
-      livein: {}
+      livein: {nationkey[v37], suppkey[v36], orderkey[v34], custkey[v33], regionkey[v38], linenumber[v35]}
+        [stmt_in] livein: {regionkey[v38], orderkey[v34], custkey[v33], suppkey[v36], linenumber[v35], nationkey[v37]}
+      #tmp26[v242] = Customer[custkey[v33]];
+        [stmt_out] liveout: {orderkey[v34], suppkey[v36], #tmp26[v242], linenumber[v35], regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {orderkey[v34], suppkey[v36], #tmp26[v242], linenumber[v35], regionkey[v38], nationkey[v37]}
+      c[v233] = #tmp26[v242];
+        [stmt_out] liveout: {c[v233], orderkey[v34], regionkey[v38], linenumber[v35], suppkey[v36], nationkey[v37]}
+        [stmt_in] livein: {c[v233], orderkey[v34], regionkey[v38], linenumber[v35], suppkey[v36], nationkey[v37]}
+      #tmp27[v243] = to_unit[fn13](c[v233]);
+        [stmt_out] liveout: {linenumber[v35], nationkey[v37], orderkey[v34], suppkey[v36], regionkey[v38]}
       hop_exit hop10;
-      liveout: {}
+      liveout: {linenumber[v35], orderkey[v34], regionkey[v38], suppkey[v36], nationkey[v37]}
   }
 
   hop10 {
     entry_block: bb10
     bb10 (preds: bb9):
-      livein: {}
+      livein: {suppkey[v36], nationkey[v37], linenumber[v35], orderkey[v34], regionkey[v38]}
+        [stmt_in] livein: {orderkey[v34], regionkey[v38], suppkey[v36], linenumber[v35], nationkey[v37]}
+      #tmp28[v254] = Orders[orderkey[v34]];
+        [stmt_out] liveout: {#tmp28[v254], regionkey[v38], suppkey[v36], linenumber[v35], nationkey[v37], orderkey[v34]}
+        [stmt_in] livein: {#tmp28[v254], regionkey[v38], suppkey[v36], linenumber[v35], nationkey[v37], orderkey[v34]}
+      o[v244] = #tmp28[v254];
+        [stmt_out] liveout: {o[v244], linenumber[v35], orderkey[v34], nationkey[v37], regionkey[v38], suppkey[v36]}
+        [stmt_in] livein: {o[v244], linenumber[v35], orderkey[v34], nationkey[v37], regionkey[v38], suppkey[v36]}
+      #tmp29[v255] = to_unit[fn13](o[v244]);
+        [stmt_out] liveout: {linenumber[v35], orderkey[v34], regionkey[v38], suppkey[v36], nationkey[v37]}
+        [stmt_in] livein: {linenumber[v35], orderkey[v34], regionkey[v38], suppkey[v36], nationkey[v37]}
+      l#l_discount[v263] = Lineitem[orderkey[v34], linenumber[v35]].l_discount;
+        [stmt_out] liveout: {nationkey[v37], orderkey[v34], linenumber[v35], l#l_discount[v263], suppkey[v36], regionkey[v38]}
+        [stmt_in] livein: {nationkey[v37], orderkey[v34], linenumber[v35], l#l_discount[v263], suppkey[v36], regionkey[v38]}
+      l#l_extendedprice[v262] = Lineitem[orderkey[v34], linenumber[v35]].l_extendedprice;
+        [stmt_out] liveout: {regionkey[v38], l#l_discount[v263], l#l_extendedprice[v262], suppkey[v36], nationkey[v37]}
+        [stmt_in] livein: {regionkey[v38], l#l_discount[v263], l#l_extendedprice[v262], suppkey[v36], nationkey[v37]}
+      #tmp31[v275] = 1 - l#l_discount[v263];
+        [stmt_out] liveout: {#tmp31[v275], regionkey[v38], l#l_extendedprice[v262], nationkey[v37], suppkey[v36]}
+        [stmt_in] livein: {#tmp31[v275], regionkey[v38], l#l_extendedprice[v262], nationkey[v37], suppkey[v36]}
+      #tmp32[v276] = l#l_extendedprice[v262] * #tmp31[v275];
+        [stmt_out] liveout: {#tmp32[v276], nationkey[v37], regionkey[v38], suppkey[v36]}
+        [stmt_in] livein: {#tmp32[v276], nationkey[v37], regionkey[v38], suppkey[v36]}
+      revenue[v274] = #tmp32[v276];
+        [stmt_out] liveout: {revenue[v274], nationkey[v37], regionkey[v38], suppkey[v36]}
+        [stmt_in] livein: {revenue[v274], nationkey[v37], regionkey[v38], suppkey[v36]}
+      #tmp33[v277] = to_unit[fn13](revenue[v274]);
+        [stmt_out] liveout: {suppkey[v36], regionkey[v38], nationkey[v37]}
       hop_exit hop11;
-      liveout: {}
+      liveout: {suppkey[v36], regionkey[v38], nationkey[v37]}
   }
 
   hop11 {
     entry_block: bb11
     bb11 (preds: bb10):
-      livein: {}
+      livein: {nationkey[v37], suppkey[v36], regionkey[v38]}
+        [stmt_in] livein: {nationkey[v37], suppkey[v36], regionkey[v38]}
+      #tmp34[v286] = Supplier[suppkey[v36]];
+        [stmt_out] liveout: {regionkey[v38], nationkey[v37], #tmp34[v286]}
+        [stmt_in] livein: {regionkey[v38], nationkey[v37], #tmp34[v286]}
+      s[v278] = #tmp34[v286];
+        [stmt_out] liveout: {s[v278], nationkey[v37], regionkey[v38]}
+        [stmt_in] livein: {s[v278], nationkey[v37], regionkey[v38]}
+      #tmp35[v287] = to_unit[fn13](s[v278]);
+        [stmt_out] liveout: {nationkey[v37], regionkey[v38]}
       hop_exit hop12;
-      liveout: {}
+      liveout: {regionkey[v38], nationkey[v37]}
   }
 
   hop12 {
     entry_block: bb12
     bb12 (preds: bb11):
-      livein: {}
+      livein: {regionkey[v38], nationkey[v37]}
+        [stmt_in] livein: {nationkey[v37], regionkey[v38]}
+      #tmp36[v293] = Nation[nationkey[v37]];
+        [stmt_out] liveout: {regionkey[v38], #tmp36[v293]}
+        [stmt_in] livein: {regionkey[v38], #tmp36[v293]}
+      n[v288] = #tmp36[v293];
+        [stmt_out] liveout: {regionkey[v38], n[v288]}
+        [stmt_in] livein: {regionkey[v38], n[v288]}
+      #tmp37[v294] = to_unit[fn13](n[v288]);
+        [stmt_out] liveout: {regionkey[v38]}
+        [stmt_in] livein: {regionkey[v38]}
+      #tmp38[v299] = Region[regionkey[v38]];
+        [stmt_out] liveout: {#tmp38[v299]}
+        [stmt_in] livein: {#tmp38[v299]}
+      r[v295] = #tmp38[v299];
+        [stmt_out] liveout: {r[v295]}
+        [stmt_in] livein: {r[v295]}
+      #tmp39[v300] = to_unit[fn13](r[v295]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -323,23 +503,68 @@ transaction Q10[fn22](custkey[v39]: int, orderkey[v40]: int, linenumber[v41]: in
   hop13 {
     entry_block: bb13
     bb13:
-      livein: {}
+      livein: {linenumber[v41], custkey[v39], nationkey[v42], orderkey[v40]}
+        [stmt_in] livein: {linenumber[v41], orderkey[v40], custkey[v39], nationkey[v42]}
+      #tmp40[v310] = Customer[custkey[v39]];
+        [stmt_out] liveout: {linenumber[v41], nationkey[v42], orderkey[v40], #tmp40[v310]}
+        [stmt_in] livein: {linenumber[v41], nationkey[v42], orderkey[v40], #tmp40[v310]}
+      c[v301] = #tmp40[v310];
+        [stmt_out] liveout: {orderkey[v40], linenumber[v41], nationkey[v42], c[v301]}
+        [stmt_in] livein: {orderkey[v40], linenumber[v41], nationkey[v42], c[v301]}
+      #tmp41[v311] = to_unit[fn13](c[v301]);
+        [stmt_out] liveout: {linenumber[v41], nationkey[v42], orderkey[v40]}
       hop_exit hop14;
-      liveout: {}
+      liveout: {nationkey[v42], orderkey[v40], linenumber[v41]}
   }
 
   hop14 {
     entry_block: bb14
     bb14 (preds: bb13):
-      livein: {}
+      livein: {linenumber[v41], nationkey[v42], orderkey[v40]}
+        [stmt_in] livein: {nationkey[v42], linenumber[v41], orderkey[v40]}
+      #tmp42[v323] = Orders[orderkey[v40]];
+        [stmt_out] liveout: {nationkey[v42], linenumber[v41], #tmp42[v323], orderkey[v40]}
+        [stmt_in] livein: {nationkey[v42], linenumber[v41], #tmp42[v323], orderkey[v40]}
+      o[v313] = #tmp42[v323];
+        [stmt_out] liveout: {nationkey[v42], o[v313], orderkey[v40], linenumber[v41]}
+        [stmt_in] livein: {nationkey[v42], o[v313], orderkey[v40], linenumber[v41]}
+      #tmp43[v324] = to_unit[fn13](o[v313]);
+        [stmt_out] liveout: {nationkey[v42], linenumber[v41], orderkey[v40]}
+        [stmt_in] livein: {nationkey[v42], linenumber[v41], orderkey[v40]}
+      l#l_discount[v332] = Lineitem[orderkey[v40], linenumber[v41]].l_discount;
+        [stmt_out] liveout: {nationkey[v42], l#l_discount[v332], linenumber[v41], orderkey[v40]}
+        [stmt_in] livein: {nationkey[v42], l#l_discount[v332], linenumber[v41], orderkey[v40]}
+      l#l_extendedprice[v331] = Lineitem[orderkey[v40], linenumber[v41]].l_extendedprice;
+        [stmt_out] liveout: {l#l_extendedprice[v331], l#l_discount[v332], nationkey[v42]}
+        [stmt_in] livein: {l#l_extendedprice[v331], l#l_discount[v332], nationkey[v42]}
+      #tmp45[v343] = 1 - l#l_discount[v332];
+        [stmt_out] liveout: {nationkey[v42], l#l_extendedprice[v331], #tmp45[v343]}
+        [stmt_in] livein: {nationkey[v42], l#l_extendedprice[v331], #tmp45[v343]}
+      #tmp46[v344] = l#l_extendedprice[v331] * #tmp45[v343];
+        [stmt_out] liveout: {nationkey[v42], #tmp46[v344]}
+        [stmt_in] livein: {nationkey[v42], #tmp46[v344]}
+      revenue[v312] = #tmp46[v344];
+        [stmt_out] liveout: {revenue[v312], nationkey[v42]}
+        [stmt_in] livein: {revenue[v312], nationkey[v42]}
+      #tmp47[v345] = to_unit[fn13](revenue[v312]);
+        [stmt_out] liveout: {nationkey[v42]}
       hop_exit hop15;
-      liveout: {}
+      liveout: {nationkey[v42]}
   }
 
   hop15 {
     entry_block: bb15
     bb15 (preds: bb14):
-      livein: {}
+      livein: {nationkey[v42]}
+        [stmt_in] livein: {nationkey[v42]}
+      #tmp48[v351] = Nation[nationkey[v42]];
+        [stmt_out] liveout: {#tmp48[v351]}
+        [stmt_in] livein: {#tmp48[v351]}
+      n[v346] = #tmp48[v351];
+        [stmt_out] liveout: {n[v346]}
+        [stmt_in] livein: {n[v346]}
+      #tmp49[v352] = to_unit[fn13](n[v346]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -353,29 +578,59 @@ transaction Q11[fn23](partkey[v43]: int, suppkey[v44]: int, nationkey[v45]: int)
   hop16 {
     entry_block: bb16
     bb16:
-      livein: {suppkey[v44], partkey[v43]}
-        [stmt_in] livein: {suppkey[v44], partkey[v43]}
-      ps#ps_availqty[v335] = Partsupp[partkey[v43], suppkey[v44]].ps_availqty;
-        [stmt_out] liveout: {ps#ps_availqty[v335]}
-        [stmt_in] livein: {ps#ps_availqty[v335]}
-      #tmp30[v340] = float[fn5](ps#ps_availqty[v335]);
-        [stmt_out] liveout: {}
+      livein: {nationkey[v45], suppkey[v44], partkey[v43]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44], partkey[v43]}
+      ps#ps_availqty[v356] = Partsupp[partkey[v43], suppkey[v44]].ps_availqty;
+        [stmt_out] liveout: {suppkey[v44], partkey[v43], nationkey[v45], ps#ps_availqty[v356]}
+        [stmt_in] livein: {suppkey[v44], partkey[v43], nationkey[v45], ps#ps_availqty[v356]}
+      ps#ps_supplycost[v357] = Partsupp[partkey[v43], suppkey[v44]].ps_supplycost;
+        [stmt_out] liveout: {suppkey[v44], ps#ps_availqty[v356], nationkey[v45], ps#ps_supplycost[v357]}
+        [stmt_in] livein: {suppkey[v44], ps#ps_availqty[v356], nationkey[v45], ps#ps_supplycost[v357]}
+      #tmp51[v361] = float[fn5](ps#ps_availqty[v356]);
+        [stmt_out] liveout: {ps#ps_supplycost[v357], #tmp51[v361], nationkey[v45], suppkey[v44]}
+        [stmt_in] livein: {ps#ps_supplycost[v357], #tmp51[v361], nationkey[v45], suppkey[v44]}
+      #tmp52[v362] = #tmp51[v361] * ps#ps_supplycost[v357];
+        [stmt_out] liveout: {#tmp52[v362], suppkey[v44], nationkey[v45]}
+        [stmt_in] livein: {#tmp52[v362], suppkey[v44], nationkey[v45]}
+      value[v360] = #tmp52[v362];
+        [stmt_out] liveout: {suppkey[v44], value[v360], nationkey[v45]}
+        [stmt_in] livein: {suppkey[v44], value[v360], nationkey[v45]}
+      #tmp53[v363] = to_unit[fn13](value[v360]);
+        [stmt_out] liveout: {suppkey[v44], nationkey[v45]}
       hop_exit hop17;
-      liveout: {}
+      liveout: {nationkey[v45], suppkey[v44]}
   }
 
   hop17 {
     entry_block: bb17
     bb17 (preds: bb16):
-      livein: {}
+      livein: {nationkey[v45], suppkey[v44]}
+        [stmt_in] livein: {nationkey[v45], suppkey[v44]}
+      #tmp54[v372] = Supplier[suppkey[v44]];
+        [stmt_out] liveout: {nationkey[v45], #tmp54[v372]}
+        [stmt_in] livein: {nationkey[v45], #tmp54[v372]}
+      s[v364] = #tmp54[v372];
+        [stmt_out] liveout: {nationkey[v45], s[v364]}
+        [stmt_in] livein: {nationkey[v45], s[v364]}
+      #tmp55[v373] = to_unit[fn13](s[v364]);
+        [stmt_out] liveout: {nationkey[v45]}
       hop_exit hop18;
-      liveout: {}
+      liveout: {nationkey[v45]}
   }
 
   hop18 {
     entry_block: bb18
     bb18 (preds: bb17):
-      livein: {}
+      livein: {nationkey[v45]}
+        [stmt_in] livein: {nationkey[v45]}
+      #tmp56[v379] = Nation[nationkey[v45]];
+        [stmt_out] liveout: {#tmp56[v379]}
+        [stmt_in] livein: {#tmp56[v379]}
+      n[v374] = #tmp56[v379];
+        [stmt_out] liveout: {n[v374]}
+        [stmt_in] livein: {n[v374]}
+      #tmp57[v380] = to_unit[fn13](n[v374]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -389,7 +644,25 @@ transaction Q12[fn24](orderkey[v46]: int, linenumber[v47]: int)
   hop19 {
     entry_block: bb19
     bb19:
-      livein: {}
+      livein: {linenumber[v47], orderkey[v46]}
+        [stmt_in] livein: {linenumber[v47], orderkey[v46]}
+      o#o_orderpriority[v387] = Orders[orderkey[v46]].o_orderpriority;
+        [stmt_out] liveout: {linenumber[v47], o#o_orderpriority[v387], orderkey[v46]}
+        [stmt_in] livein: {linenumber[v47], o#o_orderpriority[v387], orderkey[v46]}
+      l#l_shipmode[v407] = Lineitem[orderkey[v46], linenumber[v47]].l_shipmode;
+        [stmt_out] liveout: {o#o_orderpriority[v387], l#l_shipmode[v407]}
+        [stmt_in] livein: {o#o_orderpriority[v387], l#l_shipmode[v407]}
+      mode[v410] = l#l_shipmode[v407];
+        [stmt_out] liveout: {o#o_orderpriority[v387], mode[v410]}
+        [stmt_in] livein: {o#o_orderpriority[v387], mode[v410]}
+      #tmp60[v411] = to_unit[fn13](mode[v410]);
+        [stmt_out] liveout: {o#o_orderpriority[v387]}
+        [stmt_in] livein: {o#o_orderpriority[v387]}
+      priority[v412] = o#o_orderpriority[v387];
+        [stmt_out] liveout: {priority[v412]}
+        [stmt_in] livein: {priority[v412]}
+      #tmp61[v413] = to_unit[fn13](priority[v412]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -403,15 +676,33 @@ transaction Q13[fn25](custkey[v48]: int, orderkey[v49]: int)
   hop20 {
     entry_block: bb20
     bb20:
-      livein: {}
+      livein: {orderkey[v49], custkey[v48]}
+        [stmt_in] livein: {custkey[v48], orderkey[v49]}
+      #tmp62[v423] = Customer[custkey[v48]];
+        [stmt_out] liveout: {orderkey[v49], #tmp62[v423]}
+        [stmt_in] livein: {orderkey[v49], #tmp62[v423]}
+      c[v414] = #tmp62[v423];
+        [stmt_out] liveout: {orderkey[v49], c[v414]}
+        [stmt_in] livein: {orderkey[v49], c[v414]}
+      #tmp63[v424] = to_unit[fn13](c[v414]);
+        [stmt_out] liveout: {orderkey[v49]}
       hop_exit hop21;
-      liveout: {}
+      liveout: {orderkey[v49]}
   }
 
   hop21 {
     entry_block: bb21
     bb21 (preds: bb20):
-      livein: {}
+      livein: {orderkey[v49]}
+        [stmt_in] livein: {orderkey[v49]}
+      #tmp64[v435] = Orders[orderkey[v49]];
+        [stmt_out] liveout: {#tmp64[v435]}
+        [stmt_in] livein: {#tmp64[v435]}
+      o[v425] = #tmp64[v435];
+        [stmt_out] liveout: {o[v425]}
+        [stmt_in] livein: {o[v425]}
+      #tmp65[v436] = to_unit[fn13](o[v425]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -425,15 +716,33 @@ transaction Q14[fn26](orderkey[v50]: int, linenumber[v51]: int, partkey[v52]: in
   hop22 {
     entry_block: bb22
     bb22:
-      livein: {}
+      livein: {orderkey[v50], linenumber[v51], partkey[v52]}
+        [stmt_in] livein: {linenumber[v51], partkey[v52], orderkey[v50]}
+      l#l_extendedprice[v443] = Lineitem[orderkey[v50], linenumber[v51]].l_extendedprice;
+        [stmt_out] liveout: {partkey[v52], l#l_extendedprice[v443]}
+        [stmt_in] livein: {partkey[v52], l#l_extendedprice[v443]}
+      ep[v455] = l#l_extendedprice[v443];
+        [stmt_out] liveout: {partkey[v52], ep[v455]}
+        [stmt_in] livein: {partkey[v52], ep[v455]}
+      #tmp67[v456] = to_unit[fn13](ep[v455]);
+        [stmt_out] liveout: {partkey[v52]}
       hop_exit hop23;
-      liveout: {}
+      liveout: {partkey[v52]}
   }
 
   hop23 {
     entry_block: bb23
     bb23 (preds: bb22):
-      livein: {}
+      livein: {partkey[v52]}
+        [stmt_in] livein: {partkey[v52]}
+      p#p_type[v462] = Part[partkey[v52]].p_type;
+        [stmt_out] liveout: {p#p_type[v462]}
+        [stmt_in] livein: {p#p_type[v462]}
+      ptype[v468] = p#p_type[v462];
+        [stmt_out] liveout: {ptype[v468]}
+        [stmt_in] livein: {ptype[v468]}
+      #tmp69[v469] = to_unit[fn13](ptype[v468]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -447,15 +756,42 @@ transaction Q15[fn27](orderkey[v53]: int, linenumber[v54]: int, suppkey[v55]: in
   hop24 {
     entry_block: bb24
     bb24:
-      livein: {}
+      livein: {suppkey[v55], linenumber[v54], orderkey[v53]}
+        [stmt_in] livein: {suppkey[v55], orderkey[v53], linenumber[v54]}
+      l#l_discount[v477] = Lineitem[orderkey[v53], linenumber[v54]].l_discount;
+        [stmt_out] liveout: {linenumber[v54], l#l_discount[v477], orderkey[v53], suppkey[v55]}
+        [stmt_in] livein: {linenumber[v54], l#l_discount[v477], orderkey[v53], suppkey[v55]}
+      l#l_extendedprice[v476] = Lineitem[orderkey[v53], linenumber[v54]].l_extendedprice;
+        [stmt_out] liveout: {l#l_discount[v477], suppkey[v55], l#l_extendedprice[v476]}
+        [stmt_in] livein: {l#l_discount[v477], suppkey[v55], l#l_extendedprice[v476]}
+      #tmp71[v489] = 1 - l#l_discount[v477];
+        [stmt_out] liveout: {suppkey[v55], l#l_extendedprice[v476], #tmp71[v489]}
+        [stmt_in] livein: {suppkey[v55], l#l_extendedprice[v476], #tmp71[v489]}
+      #tmp72[v490] = l#l_extendedprice[v476] * #tmp71[v489];
+        [stmt_out] liveout: {#tmp72[v490], suppkey[v55]}
+        [stmt_in] livein: {#tmp72[v490], suppkey[v55]}
+      revenue[v488] = #tmp72[v490];
+        [stmt_out] liveout: {revenue[v488], suppkey[v55]}
+        [stmt_in] livein: {revenue[v488], suppkey[v55]}
+      #tmp73[v491] = to_unit[fn13](revenue[v488]);
+        [stmt_out] liveout: {suppkey[v55]}
       hop_exit hop25;
-      liveout: {}
+      liveout: {suppkey[v55]}
   }
 
   hop25 {
     entry_block: bb25
     bb25 (preds: bb24):
-      livein: {}
+      livein: {suppkey[v55]}
+        [stmt_in] livein: {suppkey[v55]}
+      s#s_name[v494] = Supplier[suppkey[v55]].s_name;
+        [stmt_out] liveout: {s#s_name[v494]}
+        [stmt_in] livein: {s#s_name[v494]}
+      sname[v501] = s#s_name[v494];
+        [stmt_out] liveout: {sname[v501]}
+        [stmt_in] livein: {sname[v501]}
+      #tmp75[v502] = to_unit[fn13](sname[v501]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -469,15 +805,42 @@ transaction Q16[fn28](partkey[v56]: int, suppkey[v57]: int)
   hop26 {
     entry_block: bb26
     bb26:
-      livein: {}
+      livein: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      #tmp76[v513] = Part[partkey[v56]];
+        [stmt_out] liveout: {suppkey[v57], partkey[v56], #tmp76[v513]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56], #tmp76[v513]}
+      p[v503] = #tmp76[v513];
+        [stmt_out] liveout: {suppkey[v57], partkey[v56], p[v503]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56], p[v503]}
+      #tmp77[v514] = to_unit[fn13](p[v503]);
+        [stmt_out] liveout: {suppkey[v57], partkey[v56]}
+        [stmt_in] livein: {suppkey[v57], partkey[v56]}
+      #tmp78[v521] = Partsupp[partkey[v56], suppkey[v57]];
+        [stmt_out] liveout: {#tmp78[v521], suppkey[v57]}
+        [stmt_in] livein: {#tmp78[v521], suppkey[v57]}
+      ps[v515] = #tmp78[v521];
+        [stmt_out] liveout: {ps[v515], suppkey[v57]}
+        [stmt_in] livein: {ps[v515], suppkey[v57]}
+      #tmp79[v522] = to_unit[fn13](ps[v515]);
+        [stmt_out] liveout: {suppkey[v57]}
       hop_exit hop27;
-      liveout: {}
+      liveout: {suppkey[v57]}
   }
 
   hop27 {
     entry_block: bb27
     bb27 (preds: bb26):
-      livein: {}
+      livein: {suppkey[v57]}
+        [stmt_in] livein: {suppkey[v57]}
+      #tmp80[v531] = Supplier[suppkey[v57]];
+        [stmt_out] liveout: {#tmp80[v531]}
+        [stmt_in] livein: {#tmp80[v531]}
+      s[v523] = #tmp80[v531];
+        [stmt_out] liveout: {s[v523]}
+        [stmt_in] livein: {s[v523]}
+      #tmp81[v532] = to_unit[fn13](s[v523]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -491,15 +854,33 @@ transaction Q17[fn29](partkey[v58]: int, orderkey[v59]: int, linenumber[v60]: in
   hop28 {
     entry_block: bb28
     bb28:
-      livein: {}
+      livein: {linenumber[v60], partkey[v58], orderkey[v59]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60], partkey[v58]}
+      p#p_brand[v537] = Part[partkey[v58]].p_brand;
+        [stmt_out] liveout: {orderkey[v59], linenumber[v60], p#p_brand[v537]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60], p#p_brand[v537]}
+      brand[v544] = p#p_brand[v537];
+        [stmt_out] liveout: {brand[v544], orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {brand[v544], orderkey[v59], linenumber[v60]}
+      #tmp83[v545] = to_unit[fn13](brand[v544]);
+        [stmt_out] liveout: {orderkey[v59], linenumber[v60]}
       hop_exit hop29;
-      liveout: {}
+      liveout: {orderkey[v59], linenumber[v60]}
   }
 
   hop29 {
     entry_block: bb29
     bb29 (preds: bb28):
-      livein: {}
+      livein: {orderkey[v59], linenumber[v60]}
+        [stmt_in] livein: {orderkey[v59], linenumber[v60]}
+      l#l_quantity[v551] = Lineitem[orderkey[v59], linenumber[v60]].l_quantity;
+        [stmt_out] liveout: {l#l_quantity[v551]}
+        [stmt_in] livein: {l#l_quantity[v551]}
+      qty[v564] = l#l_quantity[v551];
+        [stmt_out] liveout: {qty[v564]}
+        [stmt_in] livein: {qty[v564]}
+      #tmp85[v565] = to_unit[fn13](qty[v564]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -513,15 +894,42 @@ transaction Q18[fn30](custkey[v61]: int, orderkey[v62]: int, linenumber[v63]: in
   hop30 {
     entry_block: bb30
     bb30:
-      livein: {}
+      livein: {orderkey[v62], custkey[v61], linenumber[v63]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62], custkey[v61]}
+      #tmp86[v575] = Customer[custkey[v61]];
+        [stmt_out] liveout: {linenumber[v63], orderkey[v62], #tmp86[v575]}
+        [stmt_in] livein: {linenumber[v63], orderkey[v62], #tmp86[v575]}
+      c[v566] = #tmp86[v575];
+        [stmt_out] liveout: {orderkey[v62], c[v566], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], c[v566], linenumber[v63]}
+      #tmp87[v576] = to_unit[fn13](c[v566]);
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
       hop_exit hop31;
-      liveout: {}
+      liveout: {orderkey[v62], linenumber[v63]}
   }
 
   hop31 {
     entry_block: bb31
     bb31 (preds: bb30):
-      livein: {}
+      livein: {linenumber[v63], orderkey[v62]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      #tmp88[v587] = Orders[orderkey[v62]];
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63], #tmp88[v587]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63], #tmp88[v587]}
+      o[v577] = #tmp88[v587];
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63], o[v577]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63], o[v577]}
+      #tmp89[v588] = to_unit[fn13](o[v577]);
+        [stmt_out] liveout: {orderkey[v62], linenumber[v63]}
+        [stmt_in] livein: {orderkey[v62], linenumber[v63]}
+      l#l_quantity[v594] = Lineitem[orderkey[v62], linenumber[v63]].l_quantity;
+        [stmt_out] liveout: {l#l_quantity[v594]}
+        [stmt_in] livein: {l#l_quantity[v594]}
+      qty[v607] = l#l_quantity[v594];
+        [stmt_out] liveout: {qty[v607]}
+        [stmt_in] livein: {qty[v607]}
+      #tmp91[v608] = to_unit[fn13](qty[v607]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -535,15 +943,42 @@ transaction Q19[fn31](orderkey[v64]: int, linenumber[v65]: int, partkey[v66]: in
   hop32 {
     entry_block: bb32
     bb32:
-      livein: {}
+      livein: {orderkey[v64], partkey[v66], linenumber[v65]}
+        [stmt_in] livein: {linenumber[v65], partkey[v66], orderkey[v64]}
+      l#l_discount[v616] = Lineitem[orderkey[v64], linenumber[v65]].l_discount;
+        [stmt_out] liveout: {linenumber[v65], orderkey[v64], partkey[v66], l#l_discount[v616]}
+        [stmt_in] livein: {linenumber[v65], orderkey[v64], partkey[v66], l#l_discount[v616]}
+      l#l_extendedprice[v615] = Lineitem[orderkey[v64], linenumber[v65]].l_extendedprice;
+        [stmt_out] liveout: {l#l_discount[v616], partkey[v66], l#l_extendedprice[v615]}
+        [stmt_in] livein: {l#l_discount[v616], partkey[v66], l#l_extendedprice[v615]}
+      #tmp93[v628] = 1 - l#l_discount[v616];
+        [stmt_out] liveout: {l#l_extendedprice[v615], #tmp93[v628], partkey[v66]}
+        [stmt_in] livein: {l#l_extendedprice[v615], #tmp93[v628], partkey[v66]}
+      #tmp94[v629] = l#l_extendedprice[v615] * #tmp93[v628];
+        [stmt_out] liveout: {partkey[v66], #tmp94[v629]}
+        [stmt_in] livein: {partkey[v66], #tmp94[v629]}
+      revenue[v627] = #tmp94[v629];
+        [stmt_out] liveout: {partkey[v66], revenue[v627]}
+        [stmt_in] livein: {partkey[v66], revenue[v627]}
+      #tmp95[v630] = to_unit[fn13](revenue[v627]);
+        [stmt_out] liveout: {partkey[v66]}
       hop_exit hop33;
-      liveout: {}
+      liveout: {partkey[v66]}
   }
 
   hop33 {
     entry_block: bb33
     bb33 (preds: bb32):
-      livein: {}
+      livein: {partkey[v66]}
+        [stmt_in] livein: {partkey[v66]}
+      #tmp96[v641] = Part[partkey[v66]];
+        [stmt_out] liveout: {#tmp96[v641]}
+        [stmt_in] livein: {#tmp96[v641]}
+      p[v631] = #tmp96[v641];
+        [stmt_out] liveout: {p[v631]}
+        [stmt_in] livein: {p[v631]}
+      #tmp97[v642] = to_unit[fn13](p[v631]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -557,31 +992,76 @@ transaction Q20[fn32](partkey[v67]: int, suppkey[v68]: int, nationkey[v69]: int,
   hop34 {
     entry_block: bb34
     bb34:
-      livein: {}
+      livein: {orderkey[v70], suppkey[v68], linenumber[v71], partkey[v67], nationkey[v69]}
+        [stmt_in] livein: {orderkey[v70], linenumber[v71], partkey[v67], nationkey[v69], suppkey[v68]}
+      #tmp98[v653] = Part[partkey[v67]];
+        [stmt_out] liveout: {nationkey[v69], orderkey[v70], partkey[v67], linenumber[v71], suppkey[v68], #tmp98[v653]}
+        [stmt_in] livein: {nationkey[v69], orderkey[v70], partkey[v67], linenumber[v71], suppkey[v68], #tmp98[v653]}
+      p[v643] = #tmp98[v653];
+        [stmt_out] liveout: {linenumber[v71], suppkey[v68], nationkey[v69], p[v643], partkey[v67], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], suppkey[v68], nationkey[v69], p[v643], partkey[v67], orderkey[v70]}
+      #tmp99[v654] = to_unit[fn13](p[v643]);
+        [stmt_out] liveout: {partkey[v67], linenumber[v71], orderkey[v70], nationkey[v69], suppkey[v68]}
+        [stmt_in] livein: {partkey[v67], linenumber[v71], orderkey[v70], nationkey[v69], suppkey[v68]}
+      #tmp100[v661] = Partsupp[partkey[v67], suppkey[v68]];
+        [stmt_out] liveout: {suppkey[v68], nationkey[v69], #tmp100[v661], linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {suppkey[v68], nationkey[v69], #tmp100[v661], linenumber[v71], orderkey[v70]}
+      ps[v655] = #tmp100[v661];
+        [stmt_out] liveout: {nationkey[v69], orderkey[v70], suppkey[v68], linenumber[v71], ps[v655]}
+        [stmt_in] livein: {nationkey[v69], orderkey[v70], suppkey[v68], linenumber[v71], ps[v655]}
+      #tmp101[v662] = to_unit[fn13](ps[v655]);
+        [stmt_out] liveout: {linenumber[v71], nationkey[v69], suppkey[v68], orderkey[v70]}
       hop_exit hop35;
-      liveout: {}
+      liveout: {orderkey[v70], nationkey[v69], linenumber[v71], suppkey[v68]}
   }
 
   hop35 {
     entry_block: bb35
     bb35 (preds: bb34):
-      livein: {}
+      livein: {orderkey[v70], linenumber[v71], suppkey[v68], nationkey[v69]}
+        [stmt_in] livein: {nationkey[v69], linenumber[v71], orderkey[v70], suppkey[v68]}
+      #tmp102[v671] = Supplier[suppkey[v68]];
+        [stmt_out] liveout: {orderkey[v70], #tmp102[v671], linenumber[v71], nationkey[v69]}
+        [stmt_in] livein: {orderkey[v70], #tmp102[v671], linenumber[v71], nationkey[v69]}
+      s[v663] = #tmp102[v671];
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70], nationkey[v69], s[v663]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70], nationkey[v69], s[v663]}
+      #tmp103[v672] = to_unit[fn13](s[v663]);
+        [stmt_out] liveout: {linenumber[v71], nationkey[v69], orderkey[v70]}
       hop_exit hop36;
-      liveout: {}
+      liveout: {orderkey[v70], nationkey[v69], linenumber[v71]}
   }
 
   hop36 {
     entry_block: bb36
     bb36 (preds: bb35):
-      livein: {}
+      livein: {nationkey[v69], linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {nationkey[v69], linenumber[v71], orderkey[v70]}
+      #tmp104[v678] = Nation[nationkey[v69]];
+        [stmt_out] liveout: {linenumber[v71], orderkey[v70], #tmp104[v678]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70], #tmp104[v678]}
+      n[v673] = #tmp104[v678];
+        [stmt_out] liveout: {n[v673], linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {n[v673], linenumber[v71], orderkey[v70]}
+      #tmp105[v679] = to_unit[fn13](n[v673]);
+        [stmt_out] liveout: {orderkey[v70], linenumber[v71]}
       hop_exit hop37;
-      liveout: {}
+      liveout: {linenumber[v71], orderkey[v70]}
   }
 
   hop37 {
     entry_block: bb37
     bb37 (preds: bb36):
-      livein: {}
+      livein: {linenumber[v71], orderkey[v70]}
+        [stmt_in] livein: {linenumber[v71], orderkey[v70]}
+      l#l_quantity[v685] = Lineitem[orderkey[v70], linenumber[v71]].l_quantity;
+        [stmt_out] liveout: {l#l_quantity[v685]}
+        [stmt_in] livein: {l#l_quantity[v685]}
+      qty[v698] = l#l_quantity[v685];
+        [stmt_out] liveout: {qty[v698]}
+        [stmt_in] livein: {qty[v698]}
+      #tmp107[v699] = to_unit[fn13](qty[v698]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -595,23 +1075,59 @@ transaction Q21[fn33](suppkey[v72]: int, orderkey[v73]: int, linenumber[v74]: in
   hop38 {
     entry_block: bb38
     bb38:
-      livein: {}
+      livein: {linenumber[v74], nationkey[v75], orderkey[v73], suppkey[v72]}
+        [stmt_in] livein: {orderkey[v73], linenumber[v74], nationkey[v75], suppkey[v72]}
+      #tmp108[v708] = Supplier[suppkey[v72]];
+        [stmt_out] liveout: {linenumber[v74], orderkey[v73], nationkey[v75], #tmp108[v708]}
+        [stmt_in] livein: {linenumber[v74], orderkey[v73], nationkey[v75], #tmp108[v708]}
+      s[v700] = #tmp108[v708];
+        [stmt_out] liveout: {linenumber[v74], orderkey[v73], nationkey[v75], s[v700]}
+        [stmt_in] livein: {linenumber[v74], orderkey[v73], nationkey[v75], s[v700]}
+      #tmp109[v709] = to_unit[fn13](s[v700]);
+        [stmt_out] liveout: {nationkey[v75], linenumber[v74], orderkey[v73]}
       hop_exit hop39;
-      liveout: {}
+      liveout: {nationkey[v75], orderkey[v73], linenumber[v74]}
   }
 
   hop39 {
     entry_block: bb39
     bb39 (preds: bb38):
-      livein: {}
+      livein: {nationkey[v75], orderkey[v73], linenumber[v74]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75], linenumber[v74]}
+      #tmp110[v727] = Lineitem[orderkey[v73], linenumber[v74]];
+        [stmt_out] liveout: {#tmp110[v727], orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {#tmp110[v727], orderkey[v73], nationkey[v75]}
+      l[v710] = #tmp110[v727];
+        [stmt_out] liveout: {l[v710], nationkey[v75], orderkey[v73]}
+        [stmt_in] livein: {l[v710], nationkey[v75], orderkey[v73]}
+      #tmp111[v728] = to_unit[fn13](l[v710]);
+        [stmt_out] liveout: {orderkey[v73], nationkey[v75]}
+        [stmt_in] livein: {orderkey[v73], nationkey[v75]}
+      #tmp112[v739] = Orders[orderkey[v73]];
+        [stmt_out] liveout: {#tmp112[v739], nationkey[v75]}
+        [stmt_in] livein: {#tmp112[v739], nationkey[v75]}
+      o[v729] = #tmp112[v739];
+        [stmt_out] liveout: {nationkey[v75], o[v729]}
+        [stmt_in] livein: {nationkey[v75], o[v729]}
+      #tmp113[v740] = to_unit[fn13](o[v729]);
+        [stmt_out] liveout: {nationkey[v75]}
       hop_exit hop40;
-      liveout: {}
+      liveout: {nationkey[v75]}
   }
 
   hop40 {
     entry_block: bb40
     bb40 (preds: bb39):
-      livein: {}
+      livein: {nationkey[v75]}
+        [stmt_in] livein: {nationkey[v75]}
+      #tmp114[v746] = Nation[nationkey[v75]];
+        [stmt_out] liveout: {#tmp114[v746]}
+        [stmt_in] livein: {#tmp114[v746]}
+      n[v741] = #tmp114[v746];
+        [stmt_out] liveout: {n[v741]}
+        [stmt_in] livein: {n[v741]}
+      #tmp115[v747] = to_unit[fn13](n[v741]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }
@@ -625,15 +1141,42 @@ transaction Q22[fn34](custkey[v76]: int, orderkey[v77]: int)
   hop41 {
     entry_block: bb41
     bb41:
-      livein: {}
+      livein: {custkey[v76], orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77], custkey[v76]}
+      c#c_acctbal[v754] = Customer[custkey[v76]].c_acctbal;
+        [stmt_out] liveout: {custkey[v76], orderkey[v77], c#c_acctbal[v754]}
+        [stmt_in] livein: {custkey[v76], orderkey[v77], c#c_acctbal[v754]}
+      c#c_phone[v753] = Customer[custkey[v76]].c_phone;
+        [stmt_out] liveout: {orderkey[v77], c#c_phone[v753], c#c_acctbal[v754]}
+        [stmt_in] livein: {orderkey[v77], c#c_phone[v753], c#c_acctbal[v754]}
+      acctbal[v758] = c#c_acctbal[v754];
+        [stmt_out] liveout: {orderkey[v77], c#c_phone[v753], acctbal[v758]}
+        [stmt_in] livein: {orderkey[v77], c#c_phone[v753], acctbal[v758]}
+      #tmp117[v759] = to_unit[fn13](acctbal[v758]);
+        [stmt_out] liveout: {orderkey[v77], c#c_phone[v753]}
+        [stmt_in] livein: {orderkey[v77], c#c_phone[v753]}
+      phone[v760] = c#c_phone[v753];
+        [stmt_out] liveout: {phone[v760], orderkey[v77]}
+        [stmt_in] livein: {phone[v760], orderkey[v77]}
+      #tmp118[v761] = to_unit[fn13](phone[v760]);
+        [stmt_out] liveout: {orderkey[v77]}
       hop_exit hop42;
-      liveout: {}
+      liveout: {orderkey[v77]}
   }
 
   hop42 {
     entry_block: bb42
     bb42 (preds: bb41):
-      livein: {}
+      livein: {orderkey[v77]}
+        [stmt_in] livein: {orderkey[v77]}
+      #tmp119[v772] = Orders[orderkey[v77]];
+        [stmt_out] liveout: {#tmp119[v772]}
+        [stmt_in] livein: {#tmp119[v772]}
+      o[v762] = #tmp119[v772];
+        [stmt_out] liveout: {o[v762]}
+        [stmt_in] livein: {o[v762]}
+      #tmp120[v773] = to_unit[fn13](o[v762]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }

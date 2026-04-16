@@ -107,23 +107,23 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
-const TBL_review : Table (review);
+const TBL_trust : Table (trust);
+var trust_trust : [int][int]int;
+var item_title : [int]String;
+var review_rating : [int][int]int;
 const __shards__ : int;
+var useracct_u_id : [int]int;
+var trust_target_u_id : [int][int]int;
+var review_i_id : [int][int]int;
 var item_i_id : [int]int;
 var review_creation_date : [int][int]int;
-var review_i_id : [int][int]int;
-var review_u_id : [int][int]int;
-const TBL_trust : Table (trust);
-var item_title : [int]String;
-const TBL_useracct : Table (useracct);
 const __slice__ : int;
-var trust_target_u_id : [int][int]int;
-var trust_trust : [int][int]int;
+const TBL_useracct : Table (useracct);
+const TBL_review : Table (review);
 const TBL_item : Table (item);
-var review_rating : [int][int]int;
-var trust_source_u_id : [int][int]int;
 var useracct_name : [int]String;
-var useracct_u_id : [int]int;
+var review_u_id : [int][int]int;
+var trust_source_u_id : [int][int]int;
 procedure verify_hop_partitions_UpdateTrustRating(source_uid: int, target_uid: int, trust_val: int)
 modifies trust_source_u_id, trust_target_u_id, trust_trust;
 {
@@ -138,18 +138,18 @@ modifies trust_source_u_id, trust_target_u_id, trust_trust;
   s12_block12:
     s12_t#source_u_id := trust_source_u_id[s12_source_uid][s12_target_uid];
     s12_t#target_u_id := trust_target_u_id[s12_source_uid][s12_target_uid];
-  // Partition check hop 12 func 'f_user' tables 'trust'=>'trust' keys [k0=source_uid] first_span Span { start: 4863, end: 4918, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 4863, end: 4918, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 24) (hop_id . 12) (table_id . 3) (span ((start . 4863) (end . 4918) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s12_source_uid == s12_source_uid);
+  // Partition check hop 12 func 'f_user' tables 'trust'=>'trust' keys [k0=source_uid] first_span Span { start: 5063, end: 5118, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 5063, end: 5118, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 24) (hop_id . 12) (table_id . 3) (span ((start . 5063) (end . 5118) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s12_source_uid == s12_source_uid);
     s12_t#trust := s12_trust_val;
     trust_source_u_id := trust_source_u_id[s12_source_uid := trust_source_u_id[s12_source_uid][s12_target_uid := s12_t#source_u_id]];
-  // Partition check hop 12 func 'f_user' tables 'trust'=>'trust' keys [k0=source_uid] first_span Span { start: 4863, end: 4918, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 4957, end: 5016, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 24) (hop_id . 12) (table_id . 3) (span ((start . 4957) (end . 5016) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s12_source_uid == s12_source_uid);
+  // Partition check hop 12 func 'f_user' tables 'trust'=>'trust' keys [k0=source_uid] first_span Span { start: 5063, end: 5118, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 5157, end: 5216, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 24) (hop_id . 12) (table_id . 3) (span ((start . 5157) (end . 5216) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s12_source_uid == s12_source_uid);
     trust_target_u_id := trust_target_u_id[s12_source_uid := trust_target_u_id[s12_source_uid][s12_target_uid := s12_t#target_u_id]];
-  // Partition check hop 12 func 'f_user' tables 'trust'=>'trust' keys [k0=source_uid] first_span Span { start: 4863, end: 4918, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 4957, end: 5016, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 24) (hop_id . 12) (table_id . 3) (span ((start . 4957) (end . 5016) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s12_source_uid == s12_source_uid);
+  // Partition check hop 12 func 'f_user' tables 'trust'=>'trust' keys [k0=source_uid] first_span Span { start: 5063, end: 5118, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 5157, end: 5216, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 24) (hop_id . 12) (table_id . 3) (span ((start . 5157) (end . 5216) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s12_source_uid == s12_source_uid);
     trust_trust := trust_trust[s12_source_uid := trust_trust[s12_source_uid][s12_target_uid := s12_t#trust]];
-  // Partition check hop 12 func 'f_user' tables 'trust'=>'trust' keys [k0=source_uid] first_span Span { start: 4863, end: 4918, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 4957, end: 5016, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 24) (hop_id . 12) (table_id . 3) (span ((start . 4957) (end . 5016) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s12_source_uid == s12_source_uid);
+  // Partition check hop 12 func 'f_user' tables 'trust'=>'trust' keys [k0=source_uid] first_span Span { start: 5063, end: 5118, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 5157, end: 5216, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 24) (hop_id . 12) (table_id . 3) (span ((start . 5157) (end . 5216) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s12_source_uid == s12_source_uid);
     goto s12_epilogue;
   s12_hop_exit:
   s12_epilogue:

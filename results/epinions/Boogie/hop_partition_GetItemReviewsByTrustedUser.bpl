@@ -107,30 +107,47 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
-var trust_target_u_id : [int][int]int;
-const TBL_useracct : Table (useracct);
-var useracct_u_id : [int]int;
-var review_creation_date : [int][int]int;
-var review_rating : [int][int]int;
-const __shards__ : int;
 var item_i_id : [int]int;
+var review_rating : [int][int]int;
+const __slice__ : int;
+var useracct_name : [int]String;
+var trust_target_u_id : [int][int]int;
+const TBL_item : Table (item);
+var item_title : [int]String;
+var trust_source_u_id : [int][int]int;
+var review_i_id : [int][int]int;
 const TBL_review : Table (review);
 var trust_trust : [int][int]int;
+var review_creation_date : [int][int]int;
+const __shards__ : int;
+const TBL_useracct : Table (useracct);
 var review_u_id : [int][int]int;
 const TBL_trust : Table (trust);
-const __slice__ : int;
-const TBL_item : Table (item);
-var trust_source_u_id : [int][int]int;
-var item_title : [int]String;
-var useracct_name : [int]String;
-var review_i_id : [int][int]int;
+var useracct_u_id : [int]int;
 procedure verify_hop_partitions_GetItemReviewsByTrustedUser(iid: int, uid: int, reviewer_uid: int)
 {
+  var s5_#tmp6 : Row (Table (review));
+  var s5_reviewer_uid : int;
+  var s5_iid : int;
+  var s5_r : Row (Table (review));
+  var s5_#tmp7 : unit;
+  var s6_#tmp8 : Row (Table (trust));
+  var s6_uid : int;
+  var s6_reviewer_uid : int;
+  var s6_t : Row (Table (trust));
+  var s6_#tmp9 : unit;
+
   // Hop partition verification for function 'GetItemReviewsByTrustedUser'
   s5_block5:
+    s5_#tmp6 := construct_Row_review(review_u_id[s5_reviewer_uid][s5_iid], review_i_id[s5_reviewer_uid][s5_iid], review_rating[s5_reviewer_uid][s5_iid], review_creation_date[s5_reviewer_uid][s5_iid]);
+    s5_r := s5_#tmp6;
+    s5_#tmp7 := to_unit(s5_r);
     goto s5_hop_exit;
   s5_hop_exit:
   s6_block6:
+    s6_#tmp8 := construct_Row_trust(trust_source_u_id[s6_uid][s6_reviewer_uid], trust_target_u_id[s6_uid][s6_reviewer_uid], trust_trust[s6_uid][s6_reviewer_uid]);
+    s6_t := s6_#tmp8;
+    s6_#tmp9 := to_unit(s6_t);
     goto s6_epilogue;
   s6_hop_exit:
   s5_epilogue:

@@ -113,63 +113,63 @@ axiom (forall
     <==>
     (s_id_1 == s_id_2 && sf_type_1 == sf_type_2 && start_time_1 == start_time_2 && end_time_1 == end_time_2 && numberx_1 == numberx_2)
 );
-var SpecialFacility_error_cntrl : [int][int]int;
-var Subscriber_hex_1 : [int]int;
-var Subscriber_bit_1 : [int]int;
-var AccessInfo_data3 : [int][int]String;
-var Subscriber_bit_10 : [int]int;
-var AccessInfo_data4 : [int][int]String;
 var Subscriber_vlr_location : [int]int;
-var Subscriber_byte2_5 : [int]int;
-var Subscriber_byte2_8 : [int]int;
-var SpecialFacility_is_active : [int][int]int;
-var Subscriber_hex_6 : [int]int;
-var SpecialFacility_s_id : [int][int]int;
-var CallForwarding_start_time : [int][int][int]int;
-const TBL_Subscriber : Table (Subscriber);
-var Subscriber_hex_4 : [int]int;
-var Subscriber_hex_7 : [int]int;
-var AccessInfo_data1 : [int][int]int;
-var CallForwarding_end_time : [int][int][int]int;
-var Subscriber_bit_2 : [int]int;
-const TBL_AccessInfo : Table (AccessInfo);
-var Subscriber_bit_3 : [int]int;
-var Subscriber_bit_6 : [int]int;
-var Subscriber_bit_4 : [int]int;
-var Subscriber_bit_9 : [int]int;
-var Subscriber_byte2_4 : [int]int;
-var Subscriber_hex_3 : [int]int;
-var Subscriber_bit_8 : [int]int;
-var Subscriber_byte2_10 : [int]int;
-const __shards__ : int;
-var Subscriber_byte2_2 : [int]int;
-const TBL_SpecialFacility : Table (SpecialFacility);
-var AccessInfo_ai_type : [int][int]int;
-var Subscriber_hex_8 : [int]int;
-var Subscriber_byte2_6 : [int]int;
-var SpecialFacility_data_a : [int][int]int;
-var SpecialFacility_data_b : [int][int]String;
-const TBL_CallForwarding : Table (CallForwarding);
-var Subscriber_byte2_3 : [int]int;
-var Subscriber_bit_5 : [int]int;
-var Subscriber_sub_nbr : [int]String;
 var Subscriber_hex_10 : [int]int;
-var Subscriber_byte2_7 : [int]int;
-var AccessInfo_data2 : [int][int]int;
-var AccessInfo_s_id : [int][int]int;
-var Subscriber_bit_7 : [int]int;
-var SpecialFacility_sf_type : [int][int]int;
-var CallForwarding_s_id : [int][int][int]int;
-var CallForwarding_sf_type : [int][int][int]int;
-var Subscriber_hex_5 : [int]int;
-var Subscriber_byte2_1 : [int]int;
-var Subscriber_byte2_9 : [int]int;
-var Subscriber_msc_location : [int]int;
-var CallForwarding_numberx : [int][int][int]String;
 const __slice__ : int;
-var Subscriber_hex_9 : [int]int;
-var Subscriber_hex_2 : [int]int;
+var Subscriber_hex_1 : [int]int;
+var Subscriber_bit_10 : [int]int;
+var Subscriber_hex_3 : [int]int;
+const TBL_Subscriber : Table (Subscriber);
+var SpecialFacility_s_id : [int][int]int;
+var SpecialFacility_data_a : [int][int]int;
+var Subscriber_byte2_5 : [int]int;
+var AccessInfo_data2 : [int][int]int;
+var Subscriber_hex_7 : [int]int;
+var Subscriber_byte2_7 : [int]int;
 var Subscriber_s_id : [int]int;
+var Subscriber_bit_2 : [int]int;
+var AccessInfo_ai_type : [int][int]int;
+var CallForwarding_end_time : [int][int][int]int;
+var SpecialFacility_error_cntrl : [int][int]int;
+var Subscriber_byte2_10 : [int]int;
+var Subscriber_bit_3 : [int]int;
+var AccessInfo_data4 : [int][int]String;
+var Subscriber_hex_5 : [int]int;
+var Subscriber_byte2_2 : [int]int;
+var Subscriber_byte2_1 : [int]int;
+var CallForwarding_numberx : [int][int][int]String;
+var Subscriber_hex_9 : [int]int;
+var CallForwarding_s_id : [int][int][int]int;
+var Subscriber_bit_5 : [int]int;
+var Subscriber_hex_6 : [int]int;
+var Subscriber_bit_4 : [int]int;
+var Subscriber_hex_2 : [int]int;
+var Subscriber_byte2_3 : [int]int;
+var SpecialFacility_data_b : [int][int]String;
+const __shards__ : int;
+var Subscriber_byte2_9 : [int]int;
+var SpecialFacility_is_active : [int][int]int;
+var Subscriber_bit_8 : [int]int;
+const TBL_CallForwarding : Table (CallForwarding);
+var Subscriber_hex_4 : [int]int;
+var Subscriber_bit_1 : [int]int;
+var Subscriber_msc_location : [int]int;
+var AccessInfo_s_id : [int][int]int;
+var AccessInfo_data3 : [int][int]String;
+var CallForwarding_start_time : [int][int][int]int;
+const TBL_AccessInfo : Table (AccessInfo);
+var CallForwarding_sf_type : [int][int][int]int;
+var Subscriber_byte2_4 : [int]int;
+const TBL_SpecialFacility : Table (SpecialFacility);
+var Subscriber_bit_7 : [int]int;
+var Subscriber_sub_nbr : [int]String;
+var Subscriber_byte2_6 : [int]int;
+var Subscriber_bit_9 : [int]int;
+var AccessInfo_data1 : [int][int]int;
+var Subscriber_hex_8 : [int]int;
+var Subscriber_byte2_8 : [int]int;
+var SpecialFacility_sf_type : [int][int]int;
+var Subscriber_bit_6 : [int]int;
 procedure verify_hop_partitions_UpdateLocation(s_id: int, vlr_location: int)
 modifies Subscriber_bit_1, Subscriber_bit_10, Subscriber_bit_2, Subscriber_bit_3, Subscriber_bit_4, Subscriber_bit_5, Subscriber_bit_6, Subscriber_bit_7, Subscriber_bit_8, Subscriber_bit_9, Subscriber_byte2_1, Subscriber_byte2_10, Subscriber_byte2_2, Subscriber_byte2_3, Subscriber_byte2_4, Subscriber_byte2_5, Subscriber_byte2_6, Subscriber_byte2_7, Subscriber_byte2_8, Subscriber_byte2_9, Subscriber_hex_1, Subscriber_hex_10, Subscriber_hex_2, Subscriber_hex_3, Subscriber_hex_4, Subscriber_hex_5, Subscriber_hex_6, Subscriber_hex_7, Subscriber_hex_8, Subscriber_hex_9, Subscriber_msc_location, Subscriber_s_id, Subscriber_sub_nbr, Subscriber_vlr_location;
 {
@@ -214,204 +214,204 @@ modifies Subscriber_bit_1, Subscriber_bit_10, Subscriber_bit_2, Subscriber_bit_3
   s6_block8:
     s6_sub#bit_1 := Subscriber_bit_1[s6_s_id];
     s6_sub#bit_10 := Subscriber_bit_10[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#bit_2 := Subscriber_bit_2[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#bit_3 := Subscriber_bit_3[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#bit_4 := Subscriber_bit_4[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#bit_5 := Subscriber_bit_5[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#bit_6 := Subscriber_bit_6[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#bit_7 := Subscriber_bit_7[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#bit_8 := Subscriber_bit_8[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#bit_9 := Subscriber_bit_9[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_1 := Subscriber_byte2_1[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_10 := Subscriber_byte2_10[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_2 := Subscriber_byte2_2[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_3 := Subscriber_byte2_3[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_4 := Subscriber_byte2_4[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_5 := Subscriber_byte2_5[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_6 := Subscriber_byte2_6[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_7 := Subscriber_byte2_7[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_8 := Subscriber_byte2_8[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#byte2_9 := Subscriber_byte2_9[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_1 := Subscriber_hex_1[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_10 := Subscriber_hex_10[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_2 := Subscriber_hex_2[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_3 := Subscriber_hex_3[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_4 := Subscriber_hex_4[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_5 := Subscriber_hex_5[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_6 := Subscriber_hex_6[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_7 := Subscriber_hex_7[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_8 := Subscriber_hex_8[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#hex_9 := Subscriber_hex_9[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#msc_location := Subscriber_msc_location[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#s_id := Subscriber_s_id[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#sub_nbr := Subscriber_sub_nbr[s6_s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3285) (end . 3307) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3410) (end . 3432) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     s6_sub#vlr_location := s6_vlr_location;
     Subscriber_bit_1 := Subscriber_bit_1[s6_s_id := s6_sub#bit_1];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_10 := Subscriber_bit_10[s6_s_id := s6_sub#bit_10];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_2 := Subscriber_bit_2[s6_s_id := s6_sub#bit_2];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_3 := Subscriber_bit_3[s6_s_id := s6_sub#bit_3];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_4 := Subscriber_bit_4[s6_s_id := s6_sub#bit_4];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_5 := Subscriber_bit_5[s6_s_id := s6_sub#bit_5];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_6 := Subscriber_bit_6[s6_s_id := s6_sub#bit_6];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_7 := Subscriber_bit_7[s6_s_id := s6_sub#bit_7];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_8 := Subscriber_bit_8[s6_s_id := s6_sub#bit_8];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_bit_9 := Subscriber_bit_9[s6_s_id := s6_sub#bit_9];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_1 := Subscriber_byte2_1[s6_s_id := s6_sub#byte2_1];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_10 := Subscriber_byte2_10[s6_s_id := s6_sub#byte2_10];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_2 := Subscriber_byte2_2[s6_s_id := s6_sub#byte2_2];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_3 := Subscriber_byte2_3[s6_s_id := s6_sub#byte2_3];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_4 := Subscriber_byte2_4[s6_s_id := s6_sub#byte2_4];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_5 := Subscriber_byte2_5[s6_s_id := s6_sub#byte2_5];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_6 := Subscriber_byte2_6[s6_s_id := s6_sub#byte2_6];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_7 := Subscriber_byte2_7[s6_s_id := s6_sub#byte2_7];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_8 := Subscriber_byte2_8[s6_s_id := s6_sub#byte2_8];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_byte2_9 := Subscriber_byte2_9[s6_s_id := s6_sub#byte2_9];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_1 := Subscriber_hex_1[s6_s_id := s6_sub#hex_1];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_10 := Subscriber_hex_10[s6_s_id := s6_sub#hex_10];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_2 := Subscriber_hex_2[s6_s_id := s6_sub#hex_2];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_3 := Subscriber_hex_3[s6_s_id := s6_sub#hex_3];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_4 := Subscriber_hex_4[s6_s_id := s6_sub#hex_4];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_5 := Subscriber_hex_5[s6_s_id := s6_sub#hex_5];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_6 := Subscriber_hex_6[s6_s_id := s6_sub#hex_6];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_7 := Subscriber_hex_7[s6_s_id := s6_sub#hex_7];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_8 := Subscriber_hex_8[s6_s_id := s6_sub#hex_8];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_hex_9 := Subscriber_hex_9[s6_s_id := s6_sub#hex_9];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_msc_location := Subscriber_msc_location[s6_s_id := s6_sub#msc_location];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_s_id := Subscriber_s_id[s6_s_id := s6_sub#s_id];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_sub_nbr := Subscriber_sub_nbr[s6_s_id := s6_sub#sub_nbr];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     Subscriber_vlr_location := Subscriber_vlr_location[s6_s_id := s6_sub#vlr_location];
-  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3285, end: 3307, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3358, end: 3386, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3358) (end . 3386) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
+  // Partition check hop 6 func 'subPartition' tables 'Subscriber'=>'Subscriber' keys [k0=s_id] first_span Span { start: 3410, end: 3432, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3483, end: 3511, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 6) (table_id . 0) (span ((start . 3483) (end . 3511) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s6_s_id == s6_s_id);
     goto s6_epilogue;
   s6_hop_exit:
   s6_epilogue:

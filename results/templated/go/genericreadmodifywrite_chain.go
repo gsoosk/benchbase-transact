@@ -25,7 +25,7 @@ func GenericreadmodifywriteHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, e
 	var r1_T_INT_VAL uint64
 	var r1_T_FLOAT_VAL float32
 	var r1_T_STRING_VAL string
-	var _tmp4 float32
+	var _tmp5 float32
 
 	var keyBytes1 []byte
 	var row1 TemplatedTable
@@ -45,8 +45,8 @@ BB4:
 	r1_T_ID = row1.Key.T_ID
 	r1_T_INT_VAL = row1.T_INT_VAL
 	r1_T_STRING_VAL = row1.T_STRING_VAL
-	_tmp4 = r1_T_FLOAT_VAL - amount
-	r1_T_FLOAT_VAL = _tmp4
+	_tmp5 = r1_T_FLOAT_VAL - amount
+	r1_T_FLOAT_VAL = _tmp5
 	// Combined table access: TemplatedTable (4 operations)
 	keyBytes2, row2 = getTemplatedTable(tx, TemplatedTableKey{T_ID: key1})
 	rwSet = AddRWSet(rwSet, "TemplatedTable", keyBytes2)
@@ -75,7 +75,7 @@ func GenericreadmodifywriteHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, e
 	var r2_T_INT_VAL uint64
 	var r2_T_FLOAT_VAL float32
 	var r2_T_STRING_VAL string
-	var _tmp6 float32
+	var _tmp7 float32
 
 	var keyBytes1 []byte
 	var row1 TemplatedTable
@@ -95,8 +95,8 @@ BB5:
 	r2_T_ID = row1.Key.T_ID
 	r2_T_INT_VAL = row1.T_INT_VAL
 	r2_T_STRING_VAL = row1.T_STRING_VAL
-	_tmp6 = r2_T_FLOAT_VAL + amount
-	r2_T_FLOAT_VAL = _tmp6
+	_tmp7 = r2_T_FLOAT_VAL + amount
+	r2_T_FLOAT_VAL = _tmp7
 	// Combined table access: TemplatedTable (4 operations)
 	keyBytes2, row2 = getTemplatedTable(tx, TemplatedTableKey{T_ID: key2})
 	rwSet = AddRWSet(rwSet, "TemplatedTable", keyBytes2)
@@ -123,7 +123,7 @@ func GenericreadmodifywriteHop0Par(params map[string]string) uint64 {
 	var r1_T_INT_VAL uint64
 	var r1_T_FLOAT_VAL float32
 	var r1_T_STRING_VAL string
-	var _tmp4 float32
+	var _tmp5 float32
 
 	var keyBytes1 []byte
 	var row1 TemplatedTable
@@ -150,8 +150,8 @@ BB4:
 	r1_T_ID = row1.Key.T_ID
 	r1_T_INT_VAL = row1.T_INT_VAL
 	r1_T_STRING_VAL = row1.T_STRING_VAL
-	_tmp4 = r1_T_FLOAT_VAL - amount
-	r1_T_FLOAT_VAL = _tmp4
+	_tmp5 = r1_T_FLOAT_VAL - amount
+	r1_T_FLOAT_VAL = _tmp5
 	// First table access (optimized group) - calculate partition: TemplatedTable
 	if true { return putTemplatedTablePar(TemplatedTableKey{T_ID: key1}) }
 	// Combined table access: TemplatedTable (4 operations)
@@ -173,7 +173,7 @@ func GenericreadmodifywriteHop1Par(params map[string]string) uint64 {
 	var r2_T_INT_VAL uint64
 	var r2_T_FLOAT_VAL float32
 	var r2_T_STRING_VAL string
-	var _tmp6 float32
+	var _tmp7 float32
 
 	var keyBytes1 []byte
 	var row1 TemplatedTable
@@ -200,8 +200,8 @@ BB5:
 	r2_T_ID = row1.Key.T_ID
 	r2_T_INT_VAL = row1.T_INT_VAL
 	r2_T_STRING_VAL = row1.T_STRING_VAL
-	_tmp6 = r2_T_FLOAT_VAL + amount
-	r2_T_FLOAT_VAL = _tmp6
+	_tmp7 = r2_T_FLOAT_VAL + amount
+	r2_T_FLOAT_VAL = _tmp7
 	// First table access (optimized group) - calculate partition: TemplatedTable
 	if true { return putTemplatedTablePar(TemplatedTableKey{T_ID: key2}) }
 	// Combined table access: TemplatedTable (4 operations)

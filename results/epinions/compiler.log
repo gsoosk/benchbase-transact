@@ -60,19 +60,49 @@ Fatal Error: ProverException: Unable to start the process z3: An error occurred 
 
 stderr:
 
-===== Boogie run for commutative_f24_i0_h12_vs_f24_i1_h12.bpl =====
+===== Boogie run for commutative_f17_i1_h3_vs_f24_i1_h12.bpl =====
 stdout:
 Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
 
 stderr:
 
-===== Boogie run for commutative_f22_i0_h10_vs_f22_i1_h10.bpl =====
+===== Boogie run for commutative_f20_i1_h7_vs_f22_i0_h10.bpl =====
 stdout:
 Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
 
 stderr:
 
-===== Boogie run for commutative_f25_i0_h13_vs_f25_i1_h13.bpl =====
+===== Boogie run for commutative_f19_i1_h6_vs_f24_i0_h12.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f21_i0_h8_vs_f25_i1_h13.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f21_i0_h9_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f19_i0_h6_vs_f24_i1_h12.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f17_i0_h2_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f17_i0_h3_vs_f24_i0_h12.bpl =====
 stdout:
 Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
 
@@ -84,16 +114,202 @@ Fatal Error: ProverException: Unable to start the process z3: An error occurred 
 
 stderr:
 
+===== Boogie run for commutative_f19_i0_h5_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f19_i0_h5_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f17_i1_h3_vs_f24_i0_h12.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f19_i1_h5_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f21_i1_h8_vs_f25_i0_h13.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f19_i1_h6_vs_f24_i1_h12.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f17_i0_h2_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f21_i0_h9_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f17_i0_h3_vs_f24_i1_h12.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f21_i1_h9_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f18_i1_h4_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f20_i1_h7_vs_f22_i1_h10.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f21_i1_h9_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f20_i0_h7_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f17_i1_h2_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f22_i0_h10_vs_f22_i1_h10.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f20_i0_h7_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f20_i0_h7_vs_f22_i1_h10.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f20_i0_h7_vs_f22_i0_h10.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f18_i0_h4_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f24_i0_h12_vs_f24_i1_h12.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f18_i1_h4_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f17_i1_h2_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f25_i0_h13_vs_f25_i1_h13.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f19_i0_h6_vs_f24_i0_h12.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f21_i1_h8_vs_f25_i1_h13.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f19_i1_h5_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f21_i0_h8_vs_f25_i0_h13.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f18_i0_h4_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f20_i1_h7_vs_f23_i0_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
+===== Boogie run for commutative_f20_i1_h7_vs_f23_i1_h11.bpl =====
+stdout:
+Fatal Error: ProverException: Unable to start the process z3: An error occurred trying to start process 'z3' with working directory '/Users/farzad/Desktop/Research/benchbase-transact/FMitF_rs'. No such file or directory
+
+stderr:
+
 📄 SC Graph DOT files written: /Users/farzad/Desktop/Research/benchbase-transact/results/epinions/simplified_sc_graph.dot, /Users/farzad/Desktop/Research/benchbase-transact/results/epinions/simplified_sc_graph_combined.dot
 📄 Go code written to: /Users/farzad/Desktop/Research/benchbase-transact/results/epinions/go
 Summary:
   Functions: 32  Hops: 14  Instances: 2
-  C-edges (original): 4  C-edges (simplified): 0
+  C-edges (original): 40  C-edges (simplified): 0
   Boogie loopUnroll: 12  Boogie timeLimit: 60s
-  Verifications: 4  Pass: 4  Errors: 0  Timeouts: 0  Boogie failures: 0
-  Cache hits: 0  Cache misses: 4  Cache stores: 4  Cache evictions: 0  Cache invalidations: 0  Root units: 13
-  Split total units: 13  Split root timeouts: 0  Split performed: 0  Split skipped depth: 0  Split skipped no cutpoint: 0  Split budget exhausted: 0
-  Split depth histogram: depth 0: 4  Max depth used: 0
+  Verifications: 40  Pass: 40  Errors: 0  Timeouts: 0  Boogie failures: 0
+  Cache hits: 0  Cache misses: 40  Cache stores: 40  Cache evictions: 0  Cache invalidations: 0  Root units: 49
+  Split total units: 49  Split root timeouts: 0  Split performed: 0  Split skipped depth: 0  Split skipped no cutpoint: 0  Split budget exhausted: 0
+  Split depth histogram: depth 0: 40  Max depth used: 0
 📄 Benchmark data written: /Users/farzad/Desktop/Research/benchbase-transact/results/epinions/data.json
 📄 Verification time histogram written: /Users/farzad/Desktop/Research/benchbase-transact/results/epinions/verification_time_histogram.png
 📄 Plotted SC-graph DOT file written: /Users/farzad/Desktop/Research/benchbase-transact/results/epinions/sc_graph_plotted.dot

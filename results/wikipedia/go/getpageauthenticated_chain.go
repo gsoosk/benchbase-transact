@@ -19,9 +19,51 @@ func GetpageauthenticatedHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, err
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var userId uint64
+	var ug_group string
+	var ipb_id uint64
+	var u User
+	var _tmp9 User
+	var _tmp10 Unit
+	var ug UserGroups
+	var _tmp11 UserGroups
+	var _tmp12 Unit
+	var ip Ipblocks
+	var _tmp13 Ipblocks
+	var _tmp14 Unit
+
+	var keyBytes1 []byte
+	var row1 User
+	var keyBytes2 []byte
+	var row2 UserGroups
+	var keyBytes3 []byte
+	var row3 Ipblocks
+
+	userId = toUint64(params["userId"])
+	ug_group = params["ug_group"]
+	ipb_id = toUint64(params["ipb_id"])
+
 	goto BB6
 
 BB6:
+	// TableGet: User
+	keyBytes1, row1 = getUser(tx, UserKey{user_id: userId})
+	rwSet = AddRWSet(rwSet, "User", keyBytes1)
+	_tmp9 = row1
+	u = _tmp9
+	_ = u
+	// TableGet: UserGroups
+	keyBytes2, row2 = getUserGroups(tx, UserGroupsKey{ug_user: userId, ug_group: ug_group})
+	rwSet = AddRWSet(rwSet, "UserGroups", keyBytes2)
+	_tmp11 = row2
+	ug = _tmp11
+	_ = ug
+	// TableGet: Ipblocks
+	keyBytes3, row3 = getIpblocks(tx, IpblocksKey{ipb_user: userId, ipb_id: ipb_id})
+	rwSet = AddRWSet(rwSet, "Ipblocks", keyBytes3)
+	_tmp13 = row3
+	ip = _tmp13
+	_ = ip
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,12 +76,54 @@ func GetpageauthenticatedHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, err
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var pageId uint64
+	var pr_type string
+	var latest_rev_id uint64
+	var p Page
+	var _tmp15 Page
+	var _tmp16 Unit
+	var pr PageRestrictions
+	var _tmp17 PageRestrictions
+	var _tmp18 Unit
+	var r_rev_text_id uint64
+	var textId uint64
+
+	var keyBytes1 []byte
+	var row1 Page
+	var keyBytes2 []byte
+	var row2 PageRestrictions
+	var keyBytes3 []byte
+	var row3 Revision
+
+	pageId = toUint64(params["pageId"])
+	pr_type = params["pr_type"]
+	latest_rev_id = toUint64(params["latest_rev_id"])
+
 	goto BB7
 
 BB7:
+	// TableGet: Page
+	keyBytes1, row1 = getPage(tx, PageKey{page_id: pageId})
+	rwSet = AddRWSet(rwSet, "Page", keyBytes1)
+	_tmp15 = row1
+	p = _tmp15
+	_ = p
+	// TableGet: PageRestrictions
+	keyBytes2, row2 = getPageRestrictions(tx, PageRestrictionsKey{pr_page: pageId, pr_type: pr_type})
+	rwSet = AddRWSet(rwSet, "PageRestrictions", keyBytes2)
+	_tmp17 = row2
+	pr = _tmp17
+	_ = pr
+	// TableGet: Revision
+	keyBytes3, row3 = getRevision(tx, RevisionKey{rev_page: pageId, rev_id: latest_rev_id})
+	rwSet = AddRWSet(rwSet, "Revision", keyBytes3)
+	r_rev_text_id = row3.rev_text_id
+	textId = r_rev_text_id
+	// Write back variables to results
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
+		Results: []string{string(mustJSON(textId))},
 		RWSets: rwSet,
 	}, nil
 }
@@ -49,9 +133,25 @@ func GetpageauthenticatedHop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, err
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var textId uint64
+	var t_old_text string
+	var content string
+	var _tmp21 Unit
+
+	var keyBytes1 []byte
+	var row1 Text
+
+	textId = toUint64(params["textId"])
+
 	goto BB8
 
 BB8:
+	// TableGet: Text
+	keyBytes1, row1 = getText(tx, TextKey{old_id: textId})
+	rwSet = AddRWSet(rwSet, "Text", keyBytes1)
+	t_old_text = row1.old_text
+	content = t_old_text
+	_ = content
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -62,6 +162,30 @@ BB8:
 
 // GetpageauthenticatedHop0Par calculates the partition for hop 0 without database access.
 func GetpageauthenticatedHop0Par(params map[string]string) uint64 {
+	var userId uint64
+	var ug_group string
+	var ipb_id uint64
+	var u User
+	var _tmp9 User
+	var _tmp10 Unit
+	var ug UserGroups
+	var _tmp11 UserGroups
+	var _tmp12 Unit
+	var ip Ipblocks
+	var _tmp13 Ipblocks
+	var _tmp14 Unit
+
+	var keyBytes1 []byte
+	var row1 User
+	var keyBytes2 []byte
+	var row2 UserGroups
+	var keyBytes3 []byte
+	var row3 Ipblocks
+
+	userId = toUint64(params["userId"])
+	ug_group = params["ug_group"]
+	ipb_id = toUint64(params["ipb_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -70,11 +194,58 @@ func GetpageauthenticatedHop0Par(params map[string]string) uint64 {
 	goto BB6
 
 BB6:
+	// First table access - calculate partition: User
+	if true { return getUserPar(UserKey{user_id: userId}) }
+	// TableGet: User
+	keyBytes1, row1 = getUser(tx, UserKey{user_id: userId})
+	rwSet = AddRWSet(rwSet, "User", keyBytes1)
+	_tmp9 = row1
+	u = _tmp9
+	_ = u
+	// First table access - calculate partition: UserGroups
+	if true { return getUserGroupsPar(UserGroupsKey{ug_user: userId, ug_group: ug_group}) }
+	// TableGet: UserGroups
+	keyBytes2, row2 = getUserGroups(tx, UserGroupsKey{ug_user: userId, ug_group: ug_group})
+	rwSet = AddRWSet(rwSet, "UserGroups", keyBytes2)
+	_tmp11 = row2
+	ug = _tmp11
+	_ = ug
+	// First table access - calculate partition: Ipblocks
+	if true { return getIpblocksPar(IpblocksKey{ipb_user: userId, ipb_id: ipb_id}) }
+	// TableGet: Ipblocks
+	keyBytes3, row3 = getIpblocks(tx, IpblocksKey{ipb_user: userId, ipb_id: ipb_id})
+	rwSet = AddRWSet(rwSet, "Ipblocks", keyBytes3)
+	_tmp13 = row3
+	ip = _tmp13
+	_ = ip
 	panic("unexpected hop exit in partition")
 }
 
 // GetpageauthenticatedHop1Par calculates the partition for hop 1 without database access.
 func GetpageauthenticatedHop1Par(params map[string]string) uint64 {
+	var pageId uint64
+	var pr_type string
+	var latest_rev_id uint64
+	var p Page
+	var _tmp15 Page
+	var _tmp16 Unit
+	var pr PageRestrictions
+	var _tmp17 PageRestrictions
+	var _tmp18 Unit
+	var r_rev_text_id uint64
+	var textId uint64
+
+	var keyBytes1 []byte
+	var row1 Page
+	var keyBytes2 []byte
+	var row2 PageRestrictions
+	var keyBytes3 []byte
+	var row3 Revision
+
+	pageId = toUint64(params["pageId"])
+	pr_type = params["pr_type"]
+	latest_rev_id = toUint64(params["latest_rev_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -83,11 +254,46 @@ func GetpageauthenticatedHop1Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	// First table access - calculate partition: Page
+	if true { return getPagePar(PageKey{page_id: pageId}) }
+	// TableGet: Page
+	keyBytes1, row1 = getPage(tx, PageKey{page_id: pageId})
+	rwSet = AddRWSet(rwSet, "Page", keyBytes1)
+	_tmp15 = row1
+	p = _tmp15
+	_ = p
+	// First table access - calculate partition: PageRestrictions
+	if true { return getPageRestrictionsPar(PageRestrictionsKey{pr_page: pageId, pr_type: pr_type}) }
+	// TableGet: PageRestrictions
+	keyBytes2, row2 = getPageRestrictions(tx, PageRestrictionsKey{pr_page: pageId, pr_type: pr_type})
+	rwSet = AddRWSet(rwSet, "PageRestrictions", keyBytes2)
+	_tmp17 = row2
+	pr = _tmp17
+	_ = pr
+	// First table access - calculate partition: Revision
+	if true { return getRevisionPar(RevisionKey{rev_page: pageId, rev_id: latest_rev_id}) }
+	// TableGet: Revision
+	keyBytes3, row3 = getRevision(tx, RevisionKey{rev_page: pageId, rev_id: latest_rev_id})
+	rwSet = AddRWSet(rwSet, "Revision", keyBytes3)
+	r_rev_text_id = row3.rev_text_id
+	textId = r_rev_text_id
+	// Unreachable: use variables in results
+	_ = []string{string(mustJSON(textId))}
 	panic("unexpected hop exit in partition")
 }
 
 // GetpageauthenticatedHop2Par calculates the partition for hop 2 without database access.
 func GetpageauthenticatedHop2Par(params map[string]string) uint64 {
+	var textId uint64
+	var t_old_text string
+	var content string
+	var _tmp21 Unit
+
+	var keyBytes1 []byte
+	var row1 Text
+
+	textId = toUint64(params["textId"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -96,6 +302,14 @@ func GetpageauthenticatedHop2Par(params map[string]string) uint64 {
 	goto BB8
 
 BB8:
+	// First table access - calculate partition: Text
+	if true { return getTextPar(TextKey{old_id: textId}) }
+	// TableGet: Text
+	keyBytes1, row1 = getText(tx, TextKey{old_id: textId})
+	rwSet = AddRWSet(rwSet, "Text", keyBytes1)
+	t_old_text = row1.old_text
+	content = t_old_text
+	_ = content
 	return 0
 }
 
@@ -122,6 +336,8 @@ func GetpageauthenticatedNextReq(in *proto.TrxRes, params map[string]string, sha
 		// Calculate partition for next hop using partition function
 		nextShard = int(GetpageauthenticatedHop1Par(paramsCopy))
 	case 2:
+		// Extract variables from previous hop results
+		params["textId"] = in.Results[0]
 		// Deep copy params to avoid modification
 		paramsCopy := make(map[string]string)
 		for k, v := range params {

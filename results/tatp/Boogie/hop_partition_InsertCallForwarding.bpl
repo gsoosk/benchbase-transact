@@ -113,78 +113,94 @@ axiom (forall
     <==>
     (s_id_1 == s_id_2 && sf_type_1 == sf_type_2 && start_time_1 == start_time_2 && end_time_1 == end_time_2 && numberx_1 == numberx_2)
 );
-var SpecialFacility_sf_type : [int][int]int;
-var Subscriber_hex_6 : [int]int;
-var Subscriber_bit_9 : [int]int;
-var Subscriber_hex_2 : [int]int;
-var AccessInfo_data4 : [int][int]String;
-var Subscriber_bit_4 : [int]int;
-const TBL_SpecialFacility : Table (SpecialFacility);
-var CallForwarding_end_time : [int][int][int]int;
-var Subscriber_hex_7 : [int]int;
-var AccessInfo_ai_type : [int][int]int;
-var CallForwarding_numberx : [int][int][int]String;
-var Subscriber_bit_2 : [int]int;
-var AccessInfo_s_id : [int][int]int;
-var Subscriber_bit_10 : [int]int;
-var Subscriber_vlr_location : [int]int;
-var CallForwarding_start_time : [int][int][int]int;
-var Subscriber_bit_3 : [int]int;
-var Subscriber_hex_1 : [int]int;
-var Subscriber_byte2_3 : [int]int;
-const TBL_Subscriber : Table (Subscriber);
-var Subscriber_byte2_1 : [int]int;
-var Subscriber_byte2_5 : [int]int;
-var Subscriber_byte2_8 : [int]int;
-var Subscriber_msc_location : [int]int;
-var Subscriber_hex_10 : [int]int;
-var AccessInfo_data1 : [int][int]int;
-var Subscriber_sub_nbr : [int]String;
-var Subscriber_byte2_6 : [int]int;
-var CallForwarding_s_id : [int][int][int]int;
-var Subscriber_bit_1 : [int]int;
-var SpecialFacility_is_active : [int][int]int;
-var CallForwarding_sf_type : [int][int][int]int;
-var Subscriber_bit_8 : [int]int;
-var Subscriber_bit_7 : [int]int;
-var SpecialFacility_data_a : [int][int]int;
-var Subscriber_hex_3 : [int]int;
-var Subscriber_hex_9 : [int]int;
 var Subscriber_s_id : [int]int;
-var Subscriber_byte2_4 : [int]int;
-var Subscriber_byte2_10 : [int]int;
-const TBL_AccessInfo : Table (AccessInfo);
-var AccessInfo_data3 : [int][int]String;
-var SpecialFacility_error_cntrl : [int][int]int;
-const __shards__ : int;
-var Subscriber_bit_5 : [int]int;
-var Subscriber_bit_6 : [int]int;
-var Subscriber_byte2_9 : [int]int;
+var Subscriber_vlr_location : [int]int;
+var SpecialFacility_is_active : [int][int]int;
+var Subscriber_hex_10 : [int]int;
+var Subscriber_hex_9 : [int]int;
+var Subscriber_byte2_1 : [int]int;
+var Subscriber_hex_7 : [int]int;
+const TBL_Subscriber : Table (Subscriber);
 var Subscriber_hex_5 : [int]int;
-var Subscriber_hex_8 : [int]int;
-var AccessInfo_data2 : [int][int]int;
-var Subscriber_byte2_7 : [int]int;
-var Subscriber_byte2_2 : [int]int;
-var SpecialFacility_s_id : [int][int]int;
+var Subscriber_byte2_4 : [int]int;
+var CallForwarding_sf_type : [int][int][int]int;
+var Subscriber_bit_4 : [int]int;
 var SpecialFacility_data_b : [int][int]String;
-const TBL_CallForwarding : Table (CallForwarding);
+var Subscriber_bit_7 : [int]int;
+var AccessInfo_data1 : [int][int]int;
+var Subscriber_hex_1 : [int]int;
+var AccessInfo_ai_type : [int][int]int;
+var Subscriber_bit_9 : [int]int;
+var Subscriber_byte2_5 : [int]int;
+var CallForwarding_end_time : [int][int][int]int;
+var Subscriber_bit_1 : [int]int;
+var Subscriber_byte2_7 : [int]int;
+var CallForwarding_numberx : [int][int][int]String;
+var Subscriber_byte2_8 : [int]int;
+var AccessInfo_s_id : [int][int]int;
+var AccessInfo_data3 : [int][int]String;
+var Subscriber_hex_2 : [int]int;
+var CallForwarding_s_id : [int][int][int]int;
 var Subscriber_hex_4 : [int]int;
+var Subscriber_byte2_3 : [int]int;
+var Subscriber_byte2_6 : [int]int;
+const TBL_AccessInfo : Table (AccessInfo);
+const TBL_CallForwarding : Table (CallForwarding);
+var Subscriber_bit_3 : [int]int;
+var AccessInfo_data4 : [int][int]String;
+var SpecialFacility_error_cntrl : [int][int]int;
+var Subscriber_byte2_9 : [int]int;
+var Subscriber_bit_2 : [int]int;
+var Subscriber_sub_nbr : [int]String;
+var SpecialFacility_s_id : [int][int]int;
+var SpecialFacility_sf_type : [int][int]int;
+var Subscriber_bit_5 : [int]int;
 const __slice__ : int;
+var Subscriber_hex_3 : [int]int;
+var Subscriber_hex_8 : [int]int;
+var Subscriber_byte2_10 : [int]int;
+var Subscriber_bit_6 : [int]int;
+const TBL_SpecialFacility : Table (SpecialFacility);
+var Subscriber_bit_10 : [int]int;
+var Subscriber_byte2_2 : [int]int;
+var Subscriber_msc_location : [int]int;
+var Subscriber_bit_8 : [int]int;
+var AccessInfo_data2 : [int][int]int;
+var SpecialFacility_data_a : [int][int]int;
+const __shards__ : int;
+var CallForwarding_start_time : [int][int][int]int;
+var Subscriber_hex_6 : [int]int;
 procedure verify_hop_partitions_InsertCallForwarding(s_id: int, sf_type: int, start_time: int, end_time: int, numberx: String)
 modifies CallForwarding_end_time, CallForwarding_numberx;
 {
+  var s5_#tmp10 : Row (Table (Subscriber));
   var s5_s_id : int;
+  var s5_sub : Row (Table (Subscriber));
+  var s5_#tmp11 : unit;
+  var s5_#tmp12 : Row (Table (SpecialFacility));
   var s5_sf_type : int;
+  var s5_sf : Row (Table (SpecialFacility));
+  var s5_#tmp13 : unit;
   var s5_start_time : int;
   var s5_end_time : int;
   var s5_numberx : String;
 
   // Hop partition verification for function 'InsertCallForwarding'
   s5_block7:
+    s5_#tmp10 := construct_Row_Subscriber(Subscriber_s_id[s5_s_id], Subscriber_sub_nbr[s5_s_id], Subscriber_bit_1[s5_s_id], Subscriber_bit_2[s5_s_id], Subscriber_bit_3[s5_s_id], Subscriber_bit_4[s5_s_id], Subscriber_bit_5[s5_s_id], Subscriber_bit_6[s5_s_id], Subscriber_bit_7[s5_s_id], Subscriber_bit_8[s5_s_id], Subscriber_bit_9[s5_s_id], Subscriber_bit_10[s5_s_id], Subscriber_hex_1[s5_s_id], Subscriber_hex_2[s5_s_id], Subscriber_hex_3[s5_s_id], Subscriber_hex_4[s5_s_id], Subscriber_hex_5[s5_s_id], Subscriber_hex_6[s5_s_id], Subscriber_hex_7[s5_s_id], Subscriber_hex_8[s5_s_id], Subscriber_hex_9[s5_s_id], Subscriber_hex_10[s5_s_id], Subscriber_byte2_1[s5_s_id], Subscriber_byte2_2[s5_s_id], Subscriber_byte2_3[s5_s_id], Subscriber_byte2_4[s5_s_id], Subscriber_byte2_5[s5_s_id], Subscriber_byte2_6[s5_s_id], Subscriber_byte2_7[s5_s_id], Subscriber_byte2_8[s5_s_id], Subscriber_byte2_9[s5_s_id], Subscriber_byte2_10[s5_s_id], Subscriber_msc_location[s5_s_id], Subscriber_vlr_location[s5_s_id]);
+    s5_sub := s5_#tmp10;
+    s5_#tmp11 := to_unit(s5_sub);
+    s5_#tmp12 := construct_Row_SpecialFacility(SpecialFacility_s_id[s5_s_id][s5_sf_type], SpecialFacility_sf_type[s5_s_id][s5_sf_type], SpecialFacility_is_active[s5_s_id][s5_sf_type], SpecialFacility_error_cntrl[s5_s_id][s5_sf_type], SpecialFacility_data_a[s5_s_id][s5_sf_type], SpecialFacility_data_b[s5_s_id][s5_sf_type]);
+  // Partition check hop 5 func 'subPartition' tables 'Subscriber'=>'SpecialFacility' keys [k0=s_id] first_span Span { start: 2991, end: 3013, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3076, end: 3121, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 5) (table_id . 2) (span ((start . 3076) (end . 3121) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s5_s_id == s5_s_id);
+    s5_sf := s5_#tmp12;
+    s5_#tmp13 := to_unit(s5_sf);
     CallForwarding_end_time := CallForwarding_end_time[s5_s_id := CallForwarding_end_time[s5_s_id][s5_sf_type := CallForwarding_end_time[s5_s_id][s5_sf_type][s5_start_time := s5_end_time]]];
+  // Partition check hop 5 func 'subPartition' tables 'Subscriber'=>'CallForwarding' keys [k0=s_id] first_span Span { start: 2991, end: 3013, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3152, end: 3295, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 5) (table_id . 3) (span ((start . 3152) (end . 3295) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s5_s_id == s5_s_id);
     CallForwarding_numberx := CallForwarding_numberx[s5_s_id := CallForwarding_numberx[s5_s_id][s5_sf_type := CallForwarding_numberx[s5_s_id][s5_sf_type][s5_start_time := s5_numberx]]];
-  // Partition check hop 5 func 'subPartition' tables 'CallForwarding'=>'CallForwarding' keys [k0=s_id] first_span Span { start: 3027, end: 3170, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3027, end: 3170, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 5) (table_id . 3) (span ((start . 3027) (end . 3170) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s5_s_id == s5_s_id);
+  // Partition check hop 5 func 'subPartition' tables 'Subscriber'=>'CallForwarding' keys [k0=s_id] first_span Span { start: 2991, end: 3013, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" } current_span Span { start: 3152, end: 3295, filename: "/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 5) (table_id . 3) (span ((start . 3152) (end . 3295) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/tatp.transact\"))))"} (s5_s_id == s5_s_id);
     goto s5_epilogue;
   s5_hop_exit:
   s5_epilogue:

@@ -19,9 +19,45 @@ func GetitemHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var item_id uint64
+	var seller_id uint64
+	var item Item
+	var _tmp4 Item
+	var _tmp5 Unit
+	var seller_u_r_id uint64
+	var region Region
+	var _tmp7 Region
+	var _tmp8 Unit
+
+	var keyBytes1 []byte
+	var row1 Item
+	var keyBytes2 []byte
+	var row2 Useracct
+	var keyBytes3 []byte
+	var row3 Region
+
+	item_id = toUint64(params["item_id"])
+	seller_id = toUint64(params["seller_id"])
+
 	goto BB5
 
 BB5:
+	// TableGet: Item
+	keyBytes1, row1 = getItem(tx, ItemKey{i_id: item_id, i_u_id: seller_id})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes1)
+	_tmp4 = row1
+	item = _tmp4
+	_ = item
+	// TableGet: Useracct
+	keyBytes2, row2 = getUseracct(tx, UseracctKey{u_id: seller_id})
+	rwSet = AddRWSet(rwSet, "Useracct", keyBytes2)
+	seller_u_r_id = row2.u_r_id
+	// TableGet: Region
+	keyBytes3, row3 = getRegion(tx, RegionKey{r_id: seller_u_r_id})
+	rwSet = AddRWSet(rwSet, "Region", keyBytes3)
+	_tmp7 = row3
+	region = _tmp7
+	_ = region
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +68,26 @@ BB5:
 
 // GetitemHop0Par calculates the partition for hop 0 without database access.
 func GetitemHop0Par(params map[string]string) uint64 {
+	var item_id uint64
+	var seller_id uint64
+	var item Item
+	var _tmp4 Item
+	var _tmp5 Unit
+	var seller_u_r_id uint64
+	var region Region
+	var _tmp7 Region
+	var _tmp8 Unit
+
+	var keyBytes1 []byte
+	var row1 Item
+	var keyBytes2 []byte
+	var row2 Useracct
+	var keyBytes3 []byte
+	var row3 Region
+
+	item_id = toUint64(params["item_id"])
+	seller_id = toUint64(params["seller_id"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +96,28 @@ func GetitemHop0Par(params map[string]string) uint64 {
 	goto BB5
 
 BB5:
+	// First table access - calculate partition: Item
+	if true { return getItemPar(ItemKey{i_id: item_id, i_u_id: seller_id}) }
+	// TableGet: Item
+	keyBytes1, row1 = getItem(tx, ItemKey{i_id: item_id, i_u_id: seller_id})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes1)
+	_tmp4 = row1
+	item = _tmp4
+	_ = item
+	// First table access - calculate partition: Useracct
+	if true { return getUseracctPar(UseracctKey{u_id: seller_id}) }
+	// TableGet: Useracct
+	keyBytes2, row2 = getUseracct(tx, UseracctKey{u_id: seller_id})
+	rwSet = AddRWSet(rwSet, "Useracct", keyBytes2)
+	seller_u_r_id = row2.u_r_id
+	// First table access - calculate partition: Region
+	if true { return getRegionPar(RegionKey{r_id: seller_u_r_id}) }
+	// TableGet: Region
+	keyBytes3, row3 = getRegion(tx, RegionKey{r_id: seller_u_r_id})
+	rwSet = AddRWSet(rwSet, "Region", keyBytes3)
+	_tmp7 = row3
+	region = _tmp7
+	_ = region
 	return 0
 }
 

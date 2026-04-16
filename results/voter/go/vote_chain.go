@@ -19,9 +19,25 @@ func VoteHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var contestantNumber uint64
+	var c_contestant_name string
+	var cname string
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Contestants
+
+	contestantNumber = toUint64(params["contestantNumber"])
+
 	goto BB3
 
 BB3:
+	// TableGet: Contestants
+	keyBytes1, row1 = getContestants(tx, ContestantsKey{contestant_number: contestantNumber})
+	rwSet = AddRWSet(rwSet, "Contestants", keyBytes1)
+	c_contestant_name = row1.contestant_name
+	cname = c_contestant_name
+	_ = cname
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -36,7 +52,7 @@ func VoteHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 
 	var phoneNumber uint64
 	var area_code uint64
-	var _tmp1 uint64
+	var _tmp2 uint64
 	var loc_state string
 	var state string
 
@@ -48,8 +64,8 @@ func VoteHop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	goto BB4
 
 BB4:
-	_tmp1 = phoneNumber / 10000000
-	area_code = _tmp1
+	_tmp2 = phoneNumber / 10000000
+	area_code = _tmp2
 	// TableGet: Locations
 	keyBytes1, row1 = getLocations(tx, LocationsKey{area_code: area_code})
 	rwSet = AddRWSet(rwSet, "Locations", keyBytes1)
@@ -103,6 +119,16 @@ BB5:
 
 // VoteHop0Par calculates the partition for hop 0 without database access.
 func VoteHop0Par(params map[string]string) uint64 {
+	var contestantNumber uint64
+	var c_contestant_name string
+	var cname string
+	var _tmp1 Unit
+
+	var keyBytes1 []byte
+	var row1 Contestants
+
+	contestantNumber = toUint64(params["contestantNumber"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -111,6 +137,14 @@ func VoteHop0Par(params map[string]string) uint64 {
 	goto BB3
 
 BB3:
+	// First table access - calculate partition: Contestants
+	if true { return getContestantsPar(ContestantsKey{contestant_number: contestantNumber}) }
+	// TableGet: Contestants
+	keyBytes1, row1 = getContestants(tx, ContestantsKey{contestant_number: contestantNumber})
+	rwSet = AddRWSet(rwSet, "Contestants", keyBytes1)
+	c_contestant_name = row1.contestant_name
+	cname = c_contestant_name
+	_ = cname
 	panic("unexpected hop exit in partition")
 }
 
@@ -118,7 +152,7 @@ BB3:
 func VoteHop1Par(params map[string]string) uint64 {
 	var phoneNumber uint64
 	var area_code uint64
-	var _tmp1 uint64
+	var _tmp2 uint64
 	var loc_state string
 	var state string
 
@@ -135,8 +169,8 @@ func VoteHop1Par(params map[string]string) uint64 {
 	goto BB4
 
 BB4:
-	_tmp1 = phoneNumber / 10000000
-	area_code = _tmp1
+	_tmp2 = phoneNumber / 10000000
+	area_code = _tmp2
 	// First table access - calculate partition: Locations
 	if true { return getLocationsPar(LocationsKey{area_code: area_code}) }
 	// TableGet: Locations

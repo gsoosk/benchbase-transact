@@ -126,27 +126,27 @@ axiom (forall
     <==>
     (uid_1 == uid_2 && id_1 == id_2 && text_1 == text_2 && createdate_1 == createdate_2)
 );
-const __slice__ : int;
-const TBL_FOLLOWERS : Table (FOLLOWERS);
-var TWEETS_createdate : [int][int]int;
 var ADDED_TWEETS_id : [int][int]int;
-const TBL_FOLLOWS : Table (FOLLOWS);
-const TBL_TWEETS : Table (TWEETS);
-const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
-var FOLLOWS_f2 : [int][int]int;
-var ADDED_TWEETS_createdate : [int][int]int;
-const __shards__ : int;
-var USER_name : [int]String;
-var FOLLOWERS_f1 : [int][int]int;
-var ADDED_TWEETS_uid : [int][int]int;
-const TBL_USER : Table (USER);
-var TWEETS_uid : [int][int]int;
-var TWEETS_id : [int][int]int;
-var ADDED_TWEETS_text : [int][int]String;
-var TWEETS_text : [int][int]String;
-var FOLLOWS_f1 : [int][int]int;
 var USER_uid : [int]int;
+var TWEETS_id : [int][int]int;
+const TBL_FOLLOWERS : Table (FOLLOWERS);
+const __slice__ : int;
+var FOLLOWS_f2 : [int][int]int;
+var FOLLOWERS_f1 : [int][int]int;
+const __shards__ : int;
+var ADDED_TWEETS_uid : [int][int]int;
+var TWEETS_createdate : [int][int]int;
+var FOLLOWS_f1 : [int][int]int;
+const TBL_USER : Table (USER);
 var FOLLOWERS_f2 : [int][int]int;
+var TWEETS_uid : [int][int]int;
+var ADDED_TWEETS_text : [int][int]String;
+var ADDED_TWEETS_createdate : [int][int]int;
+const TBL_TWEETS : Table (TWEETS);
+var TWEETS_text : [int][int]String;
+const TBL_FOLLOWS : Table (FOLLOWS);
+var USER_name : [int]String;
+const TBL_ADDED_TWEETS : Table (ADDED_TWEETS);
 procedure verify_hop_partitions_InsertTweet(uid: int, tweet_id: int, text: String, createdate: int)
 modifies ADDED_TWEETS_createdate, ADDED_TWEETS_text;
 {
@@ -159,8 +159,8 @@ modifies ADDED_TWEETS_createdate, ADDED_TWEETS_text;
   s7_block7:
     ADDED_TWEETS_text := ADDED_TWEETS_text[s7_uid := ADDED_TWEETS_text[s7_uid][s7_tweet_id := s7_text]];
     ADDED_TWEETS_createdate := ADDED_TWEETS_createdate[s7_uid := ADDED_TWEETS_createdate[s7_uid][s7_tweet_id := s7_createdate]];
-  // Partition check hop 7 func 'p' tables 'ADDED_TWEETS'=>'ADDED_TWEETS' keys [k0=uid] first_span Span { start: 4301, end: 4410, filename: "/Users/farzad/Desktop/Research/benchbase-transact/twitter.transact" } current_span Span { start: 4301, end: 4410, filename: "/Users/farzad/Desktop/Research/benchbase-transact/twitter.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 7) (table_id . 4) (span ((start . 4301) (end . 4410) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/twitter.transact\"))))"} (s7_uid == s7_uid);
+  // Partition check hop 7 func 'p' tables 'ADDED_TWEETS'=>'ADDED_TWEETS' keys [k0=uid] first_span Span { start: 4431, end: 4540, filename: "/Users/farzad/Desktop/Research/benchbase-transact/twitter.transact" } current_span Span { start: 4431, end: 4540, filename: "/Users/farzad/Desktop/Research/benchbase-transact/twitter.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 7) (table_id . 4) (span ((start . 4431) (end . 4540) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/twitter.transact\"))))"} (s7_uid == s7_uid);
     goto s7_epilogue;
   s7_hop_exit:
   s7_epilogue:

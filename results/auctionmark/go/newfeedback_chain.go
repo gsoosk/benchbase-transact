@@ -34,7 +34,7 @@ func NewfeedbackHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var u_u_sattr2 string
 	var u_u_sattr3 string
 	var u_u_sattr4 string
-	var _tmp25 uint64
+	var _tmp33 uint64
 
 	var keyBytes1 []byte
 	var row1 UseracctFeedback
@@ -70,8 +70,8 @@ BB15:
 	u_u_sattr2 = row2.u_sattr2
 	u_u_sattr3 = row2.u_sattr3
 	u_u_sattr4 = row2.u_sattr4
-	_tmp25 = u_u_rating + rating
-	u_u_rating = _tmp25
+	_tmp33 = u_u_rating + rating
+	u_u_rating = _tmp33
 	// Combined table access: Useracct (10 operations)
 	keyBytes3, row3 = getUseracct(tx, UseracctKey{u_id: to_id})
 	rwSet = AddRWSet(rwSet, "Useracct", keyBytes3)
@@ -114,7 +114,7 @@ func NewfeedbackHop0Par(params map[string]string) uint64 {
 	var u_u_sattr2 string
 	var u_u_sattr3 string
 	var u_u_sattr4 string
-	var _tmp25 uint64
+	var _tmp33 uint64
 
 	var keyBytes1 []byte
 	var row1 UseracctFeedback
@@ -159,8 +159,8 @@ BB15:
 	u_u_sattr2 = row2.u_sattr2
 	u_u_sattr3 = row2.u_sattr3
 	u_u_sattr4 = row2.u_sattr4
-	_tmp25 = u_u_rating + rating
-	u_u_rating = _tmp25
+	_tmp33 = u_u_rating + rating
+	u_u_rating = _tmp33
 	// First table access (optimized group) - calculate partition: Useracct
 	if true { return putUseracctPar(UseracctKey{u_id: to_id}) }
 	// Combined table access: Useracct (10 operations)

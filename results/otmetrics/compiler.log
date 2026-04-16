@@ -1,5 +1,5 @@
 ===== Compiler run started =====
-Boogie configuration: loopUnroll = 12, timeLimit = 60s
+Boogie configuration: loopUnroll = 12, timeLimit = 120s
 Verification features: cache=true, split=true, split_max_depth=5, split_strategy=balanced, split_debug=false
 [Stage 1/6] Frontend - start
 📄 AST file written to: /Users/farzad/Desktop/Research/benchbase-transact/results/otmetrics/ast_pretty.txt
@@ -17,7 +17,7 @@ stderr:
 Summary:
   Functions: 20  Hops: 2  Instances: 2
   C-edges (original): 0  C-edges (simplified): 0
-  Boogie loopUnroll: 12  Boogie timeLimit: 60s
+  Boogie loopUnroll: 12  Boogie timeLimit: 120s
   Verifications: 0  Pass: 0  Errors: 0  Timeouts: 0  Boogie failures: 0
   Cache hits: 0  Cache misses: 0  Cache stores: 0  Cache evictions: 0  Cache invalidations: 0  Root units: 1
   Split total units: 1  Split root timeouts: 0  Split performed: 0  Split skipped depth: 0  Split skipped no cutpoint: 0  Split budget exhausted: 0

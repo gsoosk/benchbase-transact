@@ -200,80 +200,80 @@ axiom (forall
     <==>
     (log_user_1 == log_user_2 && log_id_1 == log_id_2 && log_type_1 == log_type_2 && log_action_1 == log_action_2 && log_timestamp_1 == log_timestamp_2 && log_user_text_1 == log_user_text_2 && log_namespace_1 == log_namespace_2 && log_title_1 == log_title_2 && log_page_1 == log_page_2 && log_comment_1 == log_comment_2 && log_params_1 == log_params_2)
 );
-var recentchanges_rc_namespace : [int]int;
-var text_old_flags : [int]String;
-var revision_rev_text_id : [int][int]int;
-var recentchanges_rc_cur_id : [int]int;
-var page_page_namespace : [int]int;
-var page_restrictions_pr_page : [int][String]int;
-var watchlist_wl_user : [int][int][String]int;
-var revision_rev_page : [int][int]int;
-const __shards__ : int;
-var page_page_id : [int]int;
-var revision_rev_comment : [int][int]String;
-var revision_rev_id : [int][int]int;
-var logging_log_id : [int][int]int;
-const TBL_text : Table (text);
-var recentchanges_rc_ip : [int]String;
-const TBL_user_groups : Table (user_groups);
-var text_old_text : [int]String;
-var text_old_id : [int]int;
-var logging_log_user_text : [int][int]String;
-const TBL_user : Table (user);
-var recentchanges_rc_user : [int]int;
-const TBL_page_restrictions : Table (page_restrictions);
-var logging_log_type : [int][int]String;
-var logging_log_title : [int][int]String;
-const TBL_watchlist : Table (watchlist);
-var page_restrictions_pr_type : [int][String]String;
-var ipblocks_ipb_address : [int][int]String;
-var recentchanges_rc_this_oldid : [int]int;
-var logging_log_namespace : [int][int]int;
-var recentchanges_rc_id : [int]int;
-var ipblocks_ipb_user : [int][int]int;
-var watchlist_wl_title : [int][int][String]String;
-var user_user_id : [int]int;
-var user_user_editcount : [int]int;
-var revision_rev_parent_id : [int][int]int;
-var user_groups_ug_user : [int][String]int;
-var recentchanges_rc_comment : [int]String;
-var logging_log_comment : [int][int]String;
-var watchlist_wl_namespace : [int][int][String]int;
-var recentchanges_rc_old_len : [int]int;
-var logging_log_user : [int][int]int;
-var revision_rev_len : [int][int]int;
-const TBL_page : Table (page);
-var logging_log_timestamp : [int][int]int;
-var page_page_latest : [int]int;
-var page_page_title : [int]String;
-var ipblocks_ipb_expiry : [int][int]int;
-var user_user_touched : [int]int;
-const TBL_ipblocks : Table (ipblocks);
-var page_page_touched : [int]int;
-const TBL_recentchanges : Table (recentchanges);
-var page_page_is_redirect : [int]int;
-var page_restrictions_pr_level : [int][String]String;
-var text_old_page : [int]int;
 var recentchanges_rc_timestamp : [int]int;
-const TBL_logging : Table (logging);
+var text_old_id : [int]int;
+var watchlist_wl_notificationtimestamp : [int][int][String]int;
+var logging_log_type : [int][int]String;
+var recentchanges_rc_comment : [int]String;
+var recentchanges_rc_old_len : [int]int;
+var recentchanges_rc_user_text : [int]String;
+var logging_log_action : [int][int]String;
+var recentchanges_rc_cur_id : [int]int;
+var recentchanges_rc_ip : [int]String;
+var page_restrictions_pr_page : [int][String]int;
+var revision_rev_len : [int][int]int;
+const TBL_page_restrictions : Table (page_restrictions);
+const __slice__ : int;
+const __shards__ : int;
+var watchlist_wl_user : [int][int][String]int;
+var page_page_is_new : [int]int;
+var text_old_page : [int]int;
+var recentchanges_rc_namespace : [int]int;
+var logging_log_comment : [int][int]String;
+var page_restrictions_pr_type : [int][String]String;
+var user_user_touched : [int]int;
+const TBL_user_groups : Table (user_groups);
+const TBL_revision : Table (revision);
+var logging_log_id : [int][int]int;
+var logging_log_user_text : [int][int]String;
 var logging_log_params : [int][int]String;
 var page_page_len : [int]int;
-var recentchanges_rc_new_len : [int]int;
-const TBL_revision : Table (revision);
-const __slice__ : int;
-var ipblocks_ipb_id : [int][int]int;
 var revision_rev_user_text : [int][int]String;
-var recentchanges_rc_user_text : [int]String;
+var page_page_latest : [int]int;
+const TBL_user : Table (user);
+const TBL_ipblocks : Table (ipblocks);
+var revision_rev_text_id : [int][int]int;
+var watchlist_wl_title : [int][int][String]String;
+var recentchanges_rc_user : [int]int;
 var recentchanges_rc_last_oldid : [int]int;
-var page_page_is_new : [int]int;
-var revision_rev_timestamp : [int][int]int;
-var watchlist_wl_notificationtimestamp : [int][int][String]int;
-var logging_log_page : [int][int]int;
-var recentchanges_rc_title : [int]String;
-var user_groups_ug_group : [int][String]String;
 var user_user_name : [int]String;
+var revision_rev_id : [int][int]int;
+var ipblocks_ipb_expiry : [int][int]int;
+var user_user_editcount : [int]int;
+var revision_rev_timestamp : [int][int]int;
+var page_restrictions_pr_level : [int][String]String;
+var revision_rev_parent_id : [int][int]int;
+const TBL_page : Table (page);
+var page_page_title : [int]String;
+var page_page_namespace : [int]int;
+var page_page_touched : [int]int;
 var revision_rev_user : [int][int]int;
-var logging_log_action : [int][int]String;
+var text_old_text : [int]String;
+var ipblocks_ipb_user : [int][int]int;
+var text_old_flags : [int]String;
+var user_groups_ug_user : [int][String]int;
+var user_user_id : [int]int;
+var recentchanges_rc_title : [int]String;
+var page_page_id : [int]int;
+var ipblocks_ipb_address : [int][int]String;
+const TBL_logging : Table (logging);
+var logging_log_user : [int][int]int;
+var logging_log_timestamp : [int][int]int;
+var user_groups_ug_group : [int][String]String;
+var watchlist_wl_namespace : [int][int][String]int;
+const TBL_recentchanges : Table (recentchanges);
+var logging_log_page : [int][int]int;
+var logging_log_namespace : [int][int]int;
+var logging_log_title : [int][int]String;
+var page_page_is_redirect : [int]int;
+var recentchanges_rc_new_len : [int]int;
+var ipblocks_ipb_id : [int][int]int;
+var revision_rev_comment : [int][int]String;
+const TBL_text : Table (text);
+var recentchanges_rc_id : [int]int;
+var recentchanges_rc_this_oldid : [int]int;
+var revision_rev_page : [int][int]int;
+const TBL_watchlist : Table (watchlist);
 procedure verify_hop_partitions_RemoveWatchList(userId: int, nameSpace: int, pageTitle: String)
 modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, watchlist_wl_namespace, watchlist_wl_notificationtimestamp, watchlist_wl_title, watchlist_wl_user;
 {
@@ -284,7 +284,7 @@ modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, w
   var s7_wl#wl_notificationtimestamp : int;
   var s7_wl#wl_title : String;
   var s7_wl#wl_user : int;
-  var s7_#tmp14 : bool;
+  var s7_#tmp23 : bool;
   var s7_wl2#wl_namespace : int;
   var s7_wl2#wl_notificationtimestamp : int;
   var s7_wl2#wl_title : String;
@@ -297,80 +297,80 @@ modifies user_user_editcount, user_user_id, user_user_name, user_user_touched, w
   s7_block9:
     s7_wl#wl_namespace := watchlist_wl_namespace[s7_userId][s7_nameSpace][s7_pageTitle];
     s7_wl#wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s7_userId][s7_nameSpace][s7_pageTitle];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8263) (end . 8335) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8459) (end . 8531) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     s7_wl#wl_title := watchlist_wl_title[s7_userId][s7_nameSpace][s7_pageTitle];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8263) (end . 8335) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8459) (end . 8531) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     s7_wl#wl_user := watchlist_wl_user[s7_userId][s7_nameSpace][s7_pageTitle];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8263) (end . 8335) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8459) (end . 8531) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     watchlist_wl_namespace := watchlist_wl_namespace[s7_userId := watchlist_wl_namespace[s7_userId][s7_nameSpace := watchlist_wl_namespace[s7_userId][s7_nameSpace][s7_pageTitle := s7_wl#wl_namespace]]];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8345, end: 8422, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8345) (end . 8422) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8541, end: 8618, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8541) (end . 8618) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     watchlist_wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s7_userId := watchlist_wl_notificationtimestamp[s7_userId][s7_nameSpace := watchlist_wl_notificationtimestamp[s7_userId][s7_nameSpace][s7_pageTitle := s7_wl#wl_notificationtimestamp]]];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8345, end: 8422, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8345) (end . 8422) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8541, end: 8618, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8541) (end . 8618) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     watchlist_wl_title := watchlist_wl_title[s7_userId := watchlist_wl_title[s7_userId][s7_nameSpace := watchlist_wl_title[s7_userId][s7_nameSpace][s7_pageTitle := s7_wl#wl_title]]];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8345, end: 8422, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8345) (end . 8422) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8541, end: 8618, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8541) (end . 8618) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     watchlist_wl_user := watchlist_wl_user[s7_userId := watchlist_wl_user[s7_userId][s7_nameSpace := watchlist_wl_user[s7_userId][s7_nameSpace][s7_pageTitle := s7_wl#wl_user]]];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8345, end: 8422, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8345) (end . 8422) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
-    s7_#tmp14 := s7_nameSpace == 0;
-    if (s7_#tmp14) {
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8541, end: 8618, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8541) (end . 8618) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+    s7_#tmp23 := s7_nameSpace == 0;
+    if (s7_#tmp23) {
       goto s7_block10;
     } else {
       goto s7_block11;
     }
   s7_block10:
     s7_wl2#wl_namespace := watchlist_wl_namespace[s7_userId][1][s7_pageTitle];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8492, end: 8556, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8492) (end . 8556) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8688, end: 8752, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8688) (end . 8752) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     s7_wl2#wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s7_userId][1][s7_pageTitle];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8492, end: 8556, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8492) (end . 8556) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8688, end: 8752, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8688) (end . 8752) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     s7_wl2#wl_title := watchlist_wl_title[s7_userId][1][s7_pageTitle];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8492, end: 8556, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8492) (end . 8556) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8688, end: 8752, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8688) (end . 8752) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     s7_wl2#wl_user := watchlist_wl_user[s7_userId][1][s7_pageTitle];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8492, end: 8556, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8492) (end . 8556) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8688, end: 8752, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8688) (end . 8752) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     watchlist_wl_namespace := watchlist_wl_namespace[s7_userId := watchlist_wl_namespace[s7_userId][1 := watchlist_wl_namespace[s7_userId][1][s7_pageTitle := s7_wl2#wl_namespace]]];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8570, end: 8640, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8570) (end . 8640) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8766, end: 8836, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8766) (end . 8836) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     watchlist_wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s7_userId := watchlist_wl_notificationtimestamp[s7_userId][1 := watchlist_wl_notificationtimestamp[s7_userId][1][s7_pageTitle := s7_wl2#wl_notificationtimestamp]]];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8570, end: 8640, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8570) (end . 8640) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8766, end: 8836, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8766) (end . 8836) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     watchlist_wl_title := watchlist_wl_title[s7_userId := watchlist_wl_title[s7_userId][1 := watchlist_wl_title[s7_userId][1][s7_pageTitle := s7_wl2#wl_title]]];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8570, end: 8640, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8570) (end . 8640) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8766, end: 8836, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8766) (end . 8836) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     watchlist_wl_user := watchlist_wl_user[s7_userId := watchlist_wl_user[s7_userId][1 := watchlist_wl_user[s7_userId][1][s7_pageTitle := s7_wl2#wl_user]]];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8570, end: 8640, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8570) (end . 8640) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'watchlist' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8766, end: 8836, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 1) (span ((start . 8766) (end . 8836) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     goto s7_block11;
   s7_block11:
     s7_u#user_editcount := user_user_editcount[s7_userId];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8713, end: 8734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8713) (end . 8734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8909, end: 8930, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8909) (end . 8930) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     s7_u#user_id := user_user_id[s7_userId];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8713, end: 8734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8713) (end . 8734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8909, end: 8930, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8909) (end . 8930) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     s7_u#user_name := user_user_name[s7_userId];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8713, end: 8734, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8713) (end . 8734) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8909, end: 8930, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8909) (end . 8930) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     user_user_editcount := user_user_editcount[s7_userId := s7_u#user_editcount];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8772, end: 8797, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8772) (end . 8797) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8968, end: 8993, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8968) (end . 8993) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     user_user_id := user_user_id[s7_userId := s7_u#user_id];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8772, end: 8797, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8772) (end . 8797) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8968, end: 8993, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8968) (end . 8993) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     user_user_name := user_user_name[s7_userId := s7_u#user_name];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8772, end: 8797, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8772) (end . 8797) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8968, end: 8993, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8968) (end . 8993) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     user_user_touched := user_user_touched[s7_userId := 0];
-  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8263, end: 8335, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8772, end: 8797, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8772) (end . 8797) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
+  // Partition check hop 7 func 'f' tables 'watchlist'=>'user' keys [k0=userId] first_span Span { start: 8459, end: 8531, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 8968, end: 8993, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 19) (hop_id . 7) (table_id . 0) (span ((start . 8968) (end . 8993) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s7_userId == s7_userId);
     goto s7_epilogue;
   s7_hop_exit:
   s7_epilogue:

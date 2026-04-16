@@ -200,82 +200,82 @@ axiom (forall
     <==>
     (log_user_1 == log_user_2 && log_id_1 == log_id_2 && log_type_1 == log_type_2 && log_action_1 == log_action_2 && log_timestamp_1 == log_timestamp_2 && log_user_text_1 == log_user_text_2 && log_namespace_1 == log_namespace_2 && log_title_1 == log_title_2 && log_page_1 == log_page_2 && log_comment_1 == log_comment_2 && log_params_1 == log_params_2)
 );
-var revision_rev_timestamp : [int][int]int;
-var revision_rev_len : [int][int]int;
 const TBL_user_groups : Table (user_groups);
-var logging_log_namespace : [int][int]int;
-var page_page_is_new : [int]int;
-var logging_log_timestamp : [int][int]int;
-var recentchanges_rc_ip : [int]String;
-var logging_log_user_text : [int][int]String;
-var user_user_editcount : [int]int;
-const TBL_revision : Table (revision);
-const TBL_page : Table (page);
-var page_page_id : [int]int;
-var ipblocks_ipb_address : [int][int]String;
-var recentchanges_rc_namespace : [int]int;
-const TBL_logging : Table (logging);
-var logging_log_page : [int][int]int;
-var ipblocks_ipb_expiry : [int][int]int;
-var page_page_len : [int]int;
-const __shards__ : int;
-var logging_log_user : [int][int]int;
-var page_restrictions_pr_type : [int][String]String;
+var revision_rev_timestamp : [int][int]int;
 var text_old_id : [int]int;
-const TBL_page_restrictions : Table (page_restrictions);
-var user_groups_ug_group : [int][String]String;
-var recentchanges_rc_user : [int]int;
-var logging_log_action : [int][int]String;
-var page_restrictions_pr_level : [int][String]String;
-var text_old_page : [int]int;
-var page_page_title : [int]String;
-const __slice__ : int;
-const TBL_user : Table (user);
-var page_page_is_redirect : [int]int;
-var ipblocks_ipb_user : [int][int]int;
-var page_page_touched : [int]int;
-var page_page_namespace : [int]int;
-var ipblocks_ipb_id : [int][int]int;
-var revision_rev_comment : [int][int]String;
-const TBL_text : Table (text);
-const TBL_recentchanges : Table (recentchanges);
-var recentchanges_rc_user_text : [int]String;
-var watchlist_wl_notificationtimestamp : [int][int][String]int;
-var revision_rev_id : [int][int]int;
-var recentchanges_rc_this_oldid : [int]int;
-var logging_log_type : [int][int]String;
-var logging_log_title : [int][int]String;
-var watchlist_wl_title : [int][int][String]String;
-var recentchanges_rc_comment : [int]String;
-var revision_rev_user : [int][int]int;
-var watchlist_wl_user : [int][int][String]int;
-var recentchanges_rc_timestamp : [int]int;
-var logging_log_comment : [int][int]String;
-var text_old_flags : [int]String;
-var logging_log_params : [int][int]String;
 var recentchanges_rc_new_len : [int]int;
-var recentchanges_rc_title : [int]String;
-var recentchanges_rc_id : [int]int;
-var text_old_text : [int]String;
-var revision_rev_page : [int][int]int;
 var recentchanges_rc_cur_id : [int]int;
-const TBL_watchlist : Table (watchlist);
-var user_user_id : [int]int;
-var page_restrictions_pr_page : [int][String]int;
-var user_user_name : [int]String;
-var page_page_latest : [int]int;
 var revision_rev_text_id : [int][int]int;
-var watchlist_wl_namespace : [int][int][String]int;
-var revision_rev_parent_id : [int][int]int;
-var user_user_touched : [int]int;
-var revision_rev_user_text : [int][int]String;
-var user_groups_ug_user : [int][String]int;
-var recentchanges_rc_old_len : [int]int;
-var logging_log_id : [int][int]int;
+const TBL_page : Table (page);
+var recentchanges_rc_timestamp : [int]int;
+const __shards__ : int;
+var page_page_latest : [int]int;
+const TBL_page_restrictions : Table (page_restrictions);
+var page_page_len : [int]int;
+var recentchanges_rc_title : [int]String;
+var user_groups_ug_group : [int][String]String;
+var recentchanges_rc_this_oldid : [int]int;
+var ipblocks_ipb_expiry : [int][int]int;
+var recentchanges_rc_namespace : [int]int;
+var logging_log_comment : [int][int]String;
 const TBL_ipblocks : Table (ipblocks);
+var page_restrictions_pr_page : [int][String]int;
+var logging_log_namespace : [int][int]int;
+var user_user_id : [int]int;
+var recentchanges_rc_user : [int]int;
+var text_old_page : [int]int;
+const TBL_watchlist : Table (watchlist);
+var watchlist_wl_title : [int][int][String]String;
+var logging_log_type : [int][int]String;
+var recentchanges_rc_ip : [int]String;
+var page_page_title : [int]String;
+var page_page_is_redirect : [int]int;
+var recentchanges_rc_old_len : [int]int;
+var ipblocks_ipb_id : [int][int]int;
+var logging_log_params : [int][int]String;
+var logging_log_action : [int][int]String;
+const __slice__ : int;
+var revision_rev_comment : [int][int]String;
+var revision_rev_id : [int][int]int;
+var page_page_namespace : [int]int;
+var page_page_touched : [int]int;
+const TBL_revision : Table (revision);
+var user_groups_ug_user : [int][String]int;
+var logging_log_title : [int][int]String;
+var revision_rev_parent_id : [int][int]int;
+var recentchanges_rc_comment : [int]String;
+var watchlist_wl_user : [int][int][String]int;
+var watchlist_wl_notificationtimestamp : [int][int][String]int;
+var text_old_text : [int]String;
+const TBL_user : Table (user);
+var recentchanges_rc_user_text : [int]String;
+var page_restrictions_pr_level : [int][String]String;
 var recentchanges_rc_last_oldid : [int]int;
-const L_patrol : String;
+var logging_log_timestamp : [int][int]int;
+var user_user_touched : [int]int;
+var revision_rev_user : [int][int]int;
+var page_page_is_new : [int]int;
+var ipblocks_ipb_address : [int][int]String;
+var logging_log_user : [int][int]int;
+var logging_log_page : [int][int]int;
+var watchlist_wl_namespace : [int][int][String]int;
+const TBL_text : Table (text);
+var page_page_id : [int]int;
+var page_restrictions_pr_type : [int][String]String;
+var revision_rev_page : [int][int]int;
+var revision_rev_len : [int][int]int;
+var logging_log_user_text : [int][int]String;
+var ipblocks_ipb_user : [int][int]int;
+var revision_rev_user_text : [int][int]String;
+var user_user_editcount : [int]int;
+var logging_log_id : [int][int]int;
+var text_old_flags : [int]String;
+var recentchanges_rc_id : [int]int;
+var user_user_name : [int]String;
+const TBL_logging : Table (logging);
+const TBL_recentchanges : Table (recentchanges);
 const L_utf$u002D8 : String;
+const L_patrol : String;
 procedure verify_hop_partitions_UpdatePage(nextTextId: int, nextRevId: int, rcId: int, pageId: int, pageTitle: String, pageText: String, pageNamespace: int, pageLen: int, userId: int, userText: String, revisionId: int, revComment: String, otherUserId: int)
 modifies logging_log_action, logging_log_comment, logging_log_namespace, logging_log_page, logging_log_params, logging_log_timestamp, logging_log_title, logging_log_type, logging_log_user_text, page_page_id, page_page_is_new, page_page_is_redirect, page_page_latest, page_page_len, page_page_namespace, page_page_title, page_page_touched, recentchanges_rc_comment, recentchanges_rc_cur_id, recentchanges_rc_ip, recentchanges_rc_last_oldid, recentchanges_rc_namespace, recentchanges_rc_new_len, recentchanges_rc_old_len, recentchanges_rc_this_oldid, recentchanges_rc_timestamp, recentchanges_rc_title, recentchanges_rc_user, recentchanges_rc_user_text, revision_rev_comment, revision_rev_len, revision_rev_parent_id, revision_rev_text_id, revision_rev_timestamp, revision_rev_user, revision_rev_user_text, text_old_flags, text_old_page, text_old_text, user_user_editcount, user_user_id, user_user_name, user_user_touched, watchlist_wl_namespace, watchlist_wl_notificationtimestamp, watchlist_wl_title, watchlist_wl_user;
 {
@@ -313,188 +313,188 @@ modifies logging_log_action, logging_log_comment, logging_log_namespace, logging
   var s10_u#user_editcount : int;
   var s10_u#user_id : int;
   var s10_u#user_name : String;
-  var s10_#tmp20 : int;
+  var s10_#tmp29 : int;
 
   // Hop partition verification for function 'UpdatePage'
   s8_block12:
     text_old_page := text_old_page[s8_nextTextId := s8_pageId];
     text_old_text := text_old_text[s8_nextTextId := s8_pageText];
-  // Partition check hop 8 func 'f' tables 'text'=>'text' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 6) (span ((start . 10075) (end . 10206) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_nextTextId);
+  // Partition check hop 8 func 'f' tables 'text'=>'text' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 6) (span ((start . 10271) (end . 10402) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_nextTextId);
     text_old_flags := text_old_flags[s8_nextTextId := L_utf$u002D8];
-  // Partition check hop 8 func 'f' tables 'text'=>'text' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 6) (span ((start . 10075) (end . 10206) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_nextTextId);
+  // Partition check hop 8 func 'f' tables 'text'=>'text' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 6) (span ((start . 10271) (end . 10402) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_nextTextId);
     revision_rev_text_id := revision_rev_text_id[s8_pageId := revision_rev_text_id[s8_pageId][s8_nextRevId := s8_nextTextId]];
-  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10292, end: 10590, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10292) (end . 10590) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10488, end: 10786, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10488) (end . 10786) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     revision_rev_comment := revision_rev_comment[s8_pageId := revision_rev_comment[s8_pageId][s8_nextRevId := s8_revComment]];
-  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10292, end: 10590, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10292) (end . 10590) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10488, end: 10786, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10488) (end . 10786) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     revision_rev_user := revision_rev_user[s8_pageId := revision_rev_user[s8_pageId][s8_nextRevId := s8_userId]];
-  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10292, end: 10590, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10292) (end . 10590) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10488, end: 10786, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10488) (end . 10786) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     revision_rev_user_text := revision_rev_user_text[s8_pageId := revision_rev_user_text[s8_pageId][s8_nextRevId := s8_userText]];
-  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10292, end: 10590, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10292) (end . 10590) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10488, end: 10786, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10488) (end . 10786) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     revision_rev_timestamp := revision_rev_timestamp[s8_pageId := revision_rev_timestamp[s8_pageId][s8_nextRevId := 1]];
-  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10292, end: 10590, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10292) (end . 10590) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10488, end: 10786, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10488) (end . 10786) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     revision_rev_len := revision_rev_len[s8_pageId := revision_rev_len[s8_pageId][s8_nextRevId := s8_pageLen]];
-  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10292, end: 10590, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10292) (end . 10590) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10488, end: 10786, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10488) (end . 10786) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     revision_rev_parent_id := revision_rev_parent_id[s8_pageId := revision_rev_parent_id[s8_pageId][s8_nextRevId := s8_revisionId]];
-  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10292, end: 10590, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10292) (end . 10590) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'revision' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10488, end: 10786, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 5) (span ((start . 10488) (end . 10786) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     s8_p#page_id := page_page_id[s8_pageId];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10673, end: 10694, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10673) (end . 10694) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10869, end: 10890, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10869) (end . 10890) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     s8_p#page_is_new := page_page_is_new[s8_pageId];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10673, end: 10694, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10673) (end . 10694) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10869, end: 10890, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10869) (end . 10890) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     s8_p#page_is_redirect := page_page_is_redirect[s8_pageId];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10673, end: 10694, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10673) (end . 10694) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10869, end: 10890, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10869) (end . 10890) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     s8_p#page_namespace := page_page_namespace[s8_pageId];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10673, end: 10694, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10673) (end . 10694) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10869, end: 10890, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10869) (end . 10890) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     s8_p#page_title := page_page_title[s8_pageId];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10673, end: 10694, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10673) (end . 10694) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10869, end: 10890, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10869) (end . 10890) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     s8_p#page_latest := s8_nextRevId;
     s8_p#page_len := s8_pageLen;
     page_page_id := page_page_id[s8_pageId := s8_p#page_id];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10797, end: 10822, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10797) (end . 10822) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10993, end: 11018, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10993) (end . 11018) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     page_page_is_new := page_page_is_new[s8_pageId := s8_p#page_is_new];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10797, end: 10822, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10797) (end . 10822) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10993, end: 11018, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10993) (end . 11018) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     page_page_is_redirect := page_page_is_redirect[s8_pageId := s8_p#page_is_redirect];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10797, end: 10822, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10797) (end . 10822) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10993, end: 11018, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10993) (end . 11018) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     page_page_latest := page_page_latest[s8_pageId := s8_p#page_latest];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10797, end: 10822, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10797) (end . 10822) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10993, end: 11018, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10993) (end . 11018) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     page_page_len := page_page_len[s8_pageId := s8_p#page_len];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10797, end: 10822, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10797) (end . 10822) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10993, end: 11018, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10993) (end . 11018) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     page_page_namespace := page_page_namespace[s8_pageId := s8_p#page_namespace];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10797, end: 10822, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10797) (end . 10822) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10993, end: 11018, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10993) (end . 11018) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     page_page_title := page_page_title[s8_pageId := s8_p#page_title];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10797, end: 10822, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10797) (end . 10822) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10993, end: 11018, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10993) (end . 11018) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     page_page_touched := page_page_touched[s8_pageId := 1];
-  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10797, end: 10822, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10797) (end . 10822) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
+  // Partition check hop 8 func 'f' tables 'text'=>'page' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10993, end: 11018, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 2) (span ((start . 10993) (end . 11018) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_pageId);
     recentchanges_rc_timestamp := recentchanges_rc_timestamp[s8_rcId := 1];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_namespace := recentchanges_rc_namespace[s8_rcId := s8_pageNamespace];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_title := recentchanges_rc_title[s8_rcId := s8_pageTitle];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_cur_id := recentchanges_rc_cur_id[s8_rcId := s8_pageId];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_user := recentchanges_rc_user[s8_rcId := s8_userId];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_user_text := recentchanges_rc_user_text[s8_rcId := s8_userText];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_comment := recentchanges_rc_comment[s8_rcId := s8_revComment];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_this_oldid := recentchanges_rc_this_oldid[s8_rcId := s8_nextTextId];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_last_oldid := recentchanges_rc_last_oldid[s8_rcId := s8_revisionId];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_ip := recentchanges_rc_ip[s8_rcId := empty];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_old_len := recentchanges_rc_old_len[s8_rcId := 0];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     recentchanges_rc_new_len := recentchanges_rc_new_len[s8_rcId := s8_p#page_len];
-  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10075, end: 10206, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 10906, end: 11341, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 10906) (end . 11341) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
+  // Partition check hop 8 func 'f' tables 'text'=>'recentchanges' keys [k0=nextTextId] first_span Span { start: 10271, end: 10402, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11102, end: 11537, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 8) (table_id . 8) (span ((start . 11102) (end . 11537) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s8_nextTextId == s8_rcId);
     goto s8_hop_exit;
   s8_hop_exit:
   s9_block13:
     s9_wl#wl_namespace := watchlist_wl_namespace[s9_otherUserId][s9_pageNamespace][s9_pageTitle];
     s9_wl#wl_title := watchlist_wl_title[s9_otherUserId][s9_pageNamespace][s9_pageTitle];
-  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11547, end: 11714, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11547, end: 11714, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11547) (end . 11714) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
+  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11743, end: 11910, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11743, end: 11910, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11743) (end . 11910) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
     s9_wl#wl_user := watchlist_wl_user[s9_otherUserId][s9_pageNamespace][s9_pageTitle];
-  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11547, end: 11714, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11547, end: 11714, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11547) (end . 11714) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
+  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11743, end: 11910, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11743, end: 11910, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11743) (end . 11910) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
     watchlist_wl_namespace := watchlist_wl_namespace[s9_otherUserId := watchlist_wl_namespace[s9_otherUserId][s9_pageNamespace := watchlist_wl_namespace[s9_otherUserId][s9_pageNamespace][s9_pageTitle := s9_wl#wl_namespace]]];
-  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11547, end: 11714, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11765, end: 11851, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11765) (end . 11851) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
+  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11743, end: 11910, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11961, end: 12047, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11961) (end . 12047) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
     watchlist_wl_notificationtimestamp := watchlist_wl_notificationtimestamp[s9_otherUserId := watchlist_wl_notificationtimestamp[s9_otherUserId][s9_pageNamespace := watchlist_wl_notificationtimestamp[s9_otherUserId][s9_pageNamespace][s9_pageTitle := 1]]];
-  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11547, end: 11714, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11765, end: 11851, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11765) (end . 11851) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
+  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11743, end: 11910, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11961, end: 12047, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11961) (end . 12047) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
     watchlist_wl_title := watchlist_wl_title[s9_otherUserId := watchlist_wl_title[s9_otherUserId][s9_pageNamespace := watchlist_wl_title[s9_otherUserId][s9_pageNamespace][s9_pageTitle := s9_wl#wl_title]]];
-  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11547, end: 11714, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11765, end: 11851, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11765) (end . 11851) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
+  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11743, end: 11910, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11961, end: 12047, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11961) (end . 12047) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
     watchlist_wl_user := watchlist_wl_user[s9_otherUserId := watchlist_wl_user[s9_otherUserId][s9_pageNamespace := watchlist_wl_user[s9_otherUserId][s9_pageNamespace][s9_pageTitle := s9_wl#wl_user]]];
-  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11547, end: 11714, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11765, end: 11851, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11765) (end . 11851) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
+  // Partition check hop 9 func 'f' tables 'watchlist'=>'watchlist' keys [k0=otherUserId] first_span Span { start: 11743, end: 11910, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11961, end: 12047, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 9) (table_id . 1) (span ((start . 11961) (end . 12047) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s9_otherUserId == s9_otherUserId);
     goto s9_hop_exit;
   s9_hop_exit:
   s10_block14:
     logging_log_type := logging_log_type[s10_userId := logging_log_type[s10_userId][s10_nextRevId := L_patrol]];
     logging_log_action := logging_log_action[s10_userId := logging_log_action[s10_userId][s10_nextRevId := L_patrol]];
-  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 11966) (end . 12319) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 12162) (end . 12515) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     logging_log_timestamp := logging_log_timestamp[s10_userId := logging_log_timestamp[s10_userId][s10_nextRevId := 1]];
-  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 11966) (end . 12319) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 12162) (end . 12515) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     logging_log_user_text := logging_log_user_text[s10_userId := logging_log_user_text[s10_userId][s10_nextRevId := s10_userText]];
-  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 11966) (end . 12319) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 12162) (end . 12515) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     logging_log_namespace := logging_log_namespace[s10_userId := logging_log_namespace[s10_userId][s10_nextRevId := s10_pageNamespace]];
-  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 11966) (end . 12319) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 12162) (end . 12515) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     logging_log_title := logging_log_title[s10_userId := logging_log_title[s10_userId][s10_nextRevId := s10_pageTitle]];
-  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 11966) (end . 12319) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 12162) (end . 12515) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     logging_log_page := logging_log_page[s10_userId := logging_log_page[s10_userId][s10_nextRevId := s10_pageId]];
-  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 11966) (end . 12319) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 12162) (end . 12515) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     logging_log_comment := logging_log_comment[s10_userId := logging_log_comment[s10_userId][s10_nextRevId := empty]];
-  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 11966) (end . 12319) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 12162) (end . 12515) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     logging_log_params := logging_log_params[s10_userId := logging_log_params[s10_userId][s10_nextRevId := empty]];
-  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 11966) (end . 12319) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'logging' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 9) (span ((start . 12162) (end . 12515) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     s10_u#user_editcount := user_user_editcount[s10_userId];
-  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12349, end: 12370, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12349) (end . 12370) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12545, end: 12566, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12545) (end . 12566) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     s10_u#user_id := user_user_id[s10_userId];
-  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12349, end: 12370, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12349) (end . 12370) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12545, end: 12566, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12545) (end . 12566) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     s10_u#user_name := user_user_name[s10_userId];
-  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12349, end: 12370, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12349) (end . 12370) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
-    s10_#tmp20 := s10_u#user_editcount + 1;
-    s10_u#user_editcount := s10_#tmp20;
+  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12545, end: 12566, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12545) (end . 12566) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+    s10_#tmp29 := s10_u#user_editcount + 1;
+    s10_u#user_editcount := s10_#tmp29;
     user_user_editcount := user_user_editcount[s10_userId := s10_u#user_editcount];
-  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12457, end: 12482, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12457) (end . 12482) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12653, end: 12678, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12653) (end . 12678) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     user_user_id := user_user_id[s10_userId := s10_u#user_id];
-  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12457, end: 12482, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12457) (end . 12482) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12653, end: 12678, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12653) (end . 12678) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     user_user_name := user_user_name[s10_userId := s10_u#user_name];
-  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12457, end: 12482, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12457) (end . 12482) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12653, end: 12678, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12653) (end . 12678) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     user_user_touched := user_user_touched[s10_userId := 1];
-  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 11966, end: 12319, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12457, end: 12482, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12457) (end . 12482) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
+  // Partition check hop 10 func 'f' tables 'logging'=>'user' keys [k0=userId] first_span Span { start: 12162, end: 12515, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" } current_span Span { start: 12653, end: 12678, filename: "/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 20) (hop_id . 10) (table_id . 0) (span ((start . 12653) (end . 12678) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/wikipedia.transact\"))))"} (s10_userId == s10_userId);
     goto s10_epilogue;
   s10_hop_exit:
   s8_epilogue:

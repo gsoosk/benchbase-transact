@@ -119,7 +119,16 @@ transaction GetSessionRange[fn16](source_id[v21]: int, session_low[v22]: int, se
   hop1 {
     entry_block: bb1
     bb1:
-      livein: {}
+      livein: {source_id[v21], created_time[v25], session_low[v22]}
+        [stmt_in] livein: {source_id[v21], session_low[v22], created_time[v25]}
+      obs#type_id[v33] = observations[source_id[v21], session_low[v22], created_time[v25]].type_id;
+        [stmt_out] liveout: {obs#type_id[v33]}
+        [stmt_in] livein: {obs#type_id[v33]}
+      tid[v35] = obs#type_id[v33];
+        [stmt_out] liveout: {tid[v35]}
+        [stmt_in] livein: {tid[v35]}
+      #tmp1[v36] = to_unit[fn13](tid[v35]);
+        [stmt_out] liveout: {}
       return;
       liveout: {}
   }

@@ -113,74 +113,76 @@ axiom (forall
     <==>
     (s_id_1 == s_id_2 && sf_type_1 == sf_type_2 && start_time_1 == start_time_2 && end_time_1 == end_time_2 && numberx_1 == numberx_2)
 );
-var Subscriber_hex_5 : [int]int;
-var Subscriber_hex_8 : [int]int;
-var Subscriber_msc_location : [int]int;
-const __shards__ : int;
-var Subscriber_hex_3 : [int]int;
-var Subscriber_byte2_3 : [int]int;
-const __slice__ : int;
-var Subscriber_hex_4 : [int]int;
-var Subscriber_hex_6 : [int]int;
-var Subscriber_hex_10 : [int]int;
-var AccessInfo_s_id : [int][int]int;
-var Subscriber_byte2_2 : [int]int;
-var Subscriber_bit_5 : [int]int;
 var Subscriber_hex_9 : [int]int;
-var Subscriber_sub_nbr : [int]String;
-var SpecialFacility_data_a : [int][int]int;
-var SpecialFacility_sf_type : [int][int]int;
-var Subscriber_byte2_1 : [int]int;
-var Subscriber_vlr_location : [int]int;
-var Subscriber_byte2_7 : [int]int;
-var Subscriber_bit_2 : [int]int;
-var Subscriber_bit_6 : [int]int;
-var Subscriber_bit_7 : [int]int;
-var Subscriber_byte2_8 : [int]int;
-var CallForwarding_s_id : [int][int][int]int;
-var Subscriber_bit_1 : [int]int;
-var Subscriber_hex_7 : [int]int;
-var Subscriber_byte2_9 : [int]int;
-var SpecialFacility_error_cntrl : [int][int]int;
-var Subscriber_byte2_5 : [int]int;
-var Subscriber_bit_8 : [int]int;
-var AccessInfo_data1 : [int][int]int;
-var SpecialFacility_data_b : [int][int]String;
-var SpecialFacility_is_active : [int][int]int;
-var Subscriber_byte2_10 : [int]int;
-var AccessInfo_ai_type : [int][int]int;
-var AccessInfo_data3 : [int][int]String;
-const TBL_Subscriber : Table (Subscriber);
-var CallForwarding_sf_type : [int][int][int]int;
-var AccessInfo_data4 : [int][int]String;
-const TBL_CallForwarding : Table (CallForwarding);
-var Subscriber_hex_2 : [int]int;
-var Subscriber_bit_9 : [int]int;
-var SpecialFacility_s_id : [int][int]int;
-var Subscriber_hex_1 : [int]int;
 var Subscriber_byte2_6 : [int]int;
-var Subscriber_s_id : [int]int;
-const TBL_SpecialFacility : Table (SpecialFacility);
+var Subscriber_bit_1 : [int]int;
+var Subscriber_hex_4 : [int]int;
+var SpecialFacility_data_a : [int][int]int;
+var Subscriber_byte2_9 : [int]int;
+var Subscriber_bit_8 : [int]int;
+var Subscriber_hex_8 : [int]int;
+var AccessInfo_s_id : [int][int]int;
+var AccessInfo_data4 : [int][int]String;
+var Subscriber_sub_nbr : [int]String;
 var Subscriber_bit_4 : [int]int;
-var CallForwarding_end_time : [int][int][int]int;
-var Subscriber_byte2_4 : [int]int;
-var CallForwarding_start_time : [int][int][int]int;
-var CallForwarding_numberx : [int][int][int]String;
-var Subscriber_bit_3 : [int]int;
-var Subscriber_bit_10 : [int]int;
+var SpecialFacility_s_id : [int][int]int;
+var Subscriber_byte2_1 : [int]int;
+var Subscriber_hex_7 : [int]int;
+var Subscriber_msc_location : [int]int;
+var AccessInfo_ai_type : [int][int]int;
+var CallForwarding_s_id : [int][int][int]int;
+var CallForwarding_sf_type : [int][int][int]int;
+var Subscriber_bit_5 : [int]int;
 const TBL_AccessInfo : Table (AccessInfo);
+var CallForwarding_end_time : [int][int][int]int;
+var Subscriber_bit_10 : [int]int;
+var Subscriber_vlr_location : [int]int;
 var AccessInfo_data2 : [int][int]int;
+var Subscriber_bit_9 : [int]int;
+var CallForwarding_start_time : [int][int][int]int;
+var Subscriber_bit_7 : [int]int;
+var AccessInfo_data3 : [int][int]String;
+var Subscriber_hex_5 : [int]int;
+const TBL_CallForwarding : Table (CallForwarding);
+var SpecialFacility_sf_type : [int][int]int;
+var SpecialFacility_is_active : [int][int]int;
+var Subscriber_hex_1 : [int]int;
+var Subscriber_byte2_8 : [int]int;
+var Subscriber_hex_2 : [int]int;
+var Subscriber_hex_6 : [int]int;
+var Subscriber_byte2_5 : [int]int;
+var Subscriber_byte2_10 : [int]int;
+var Subscriber_s_id : [int]int;
+var Subscriber_byte2_4 : [int]int;
+const __slice__ : int;
+var Subscriber_byte2_3 : [int]int;
+var Subscriber_hex_3 : [int]int;
+var AccessInfo_data1 : [int][int]int;
+var SpecialFacility_error_cntrl : [int][int]int;
+var Subscriber_bit_2 : [int]int;
+const __shards__ : int;
+var Subscriber_bit_6 : [int]int;
+var Subscriber_byte2_2 : [int]int;
+var Subscriber_byte2_7 : [int]int;
+var SpecialFacility_data_b : [int][int]String;
+var Subscriber_hex_10 : [int]int;
+const TBL_Subscriber : Table (Subscriber);
+var CallForwarding_numberx : [int][int][int]String;
+const TBL_SpecialFacility : Table (SpecialFacility);
+var Subscriber_bit_3 : [int]int;
 procedure Check_SliceCommut_Hop3_vs_Hop7()
-modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_cntrl, SpecialFacility_is_active, SpecialFacility_s_id, SpecialFacility_sf_type, Subscriber_bit_1, Subscriber_bit_10, Subscriber_bit_2, Subscriber_bit_3, Subscriber_bit_4, Subscriber_bit_5, Subscriber_bit_6, Subscriber_bit_7, Subscriber_bit_8, Subscriber_bit_9, Subscriber_byte2_1, Subscriber_byte2_10, Subscriber_byte2_2, Subscriber_byte2_3, Subscriber_byte2_4, Subscriber_byte2_5, Subscriber_byte2_6, Subscriber_byte2_7, Subscriber_byte2_8, Subscriber_byte2_9, Subscriber_hex_1, Subscriber_hex_10, Subscriber_hex_2, Subscriber_hex_3, Subscriber_hex_4, Subscriber_hex_5, Subscriber_hex_6, Subscriber_hex_7, Subscriber_hex_8, Subscriber_hex_9, Subscriber_msc_location, Subscriber_s_id, Subscriber_sub_nbr, Subscriber_vlr_location;
+modifies CallForwarding_numberx, SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_cntrl, SpecialFacility_is_active, SpecialFacility_s_id, SpecialFacility_sf_type, Subscriber_bit_1, Subscriber_bit_10, Subscriber_bit_2, Subscriber_bit_3, Subscriber_bit_4, Subscriber_bit_5, Subscriber_bit_6, Subscriber_bit_7, Subscriber_bit_8, Subscriber_bit_9, Subscriber_byte2_1, Subscriber_byte2_10, Subscriber_byte2_2, Subscriber_byte2_3, Subscriber_byte2_4, Subscriber_byte2_5, Subscriber_byte2_6, Subscriber_byte2_7, Subscriber_byte2_8, Subscriber_byte2_9, Subscriber_hex_1, Subscriber_hex_10, Subscriber_hex_2, Subscriber_hex_3, Subscriber_hex_4, Subscriber_hex_5, Subscriber_hex_6, Subscriber_hex_7, Subscriber_hex_8, Subscriber_hex_9, Subscriber_msc_location, Subscriber_s_id, Subscriber_sub_nbr, Subscriber_vlr_location;
 {
   var s0_s_id : int;
   var s0_sf_type : int;
+  var s0_start_time : int;
   var s1_s_id : int;
   var s1_bit_1 : int;
   var s1_data_a : int;
   var s1_sf_type : int;
   var s0_active : bool;
   var s1_active : bool;
+  var CallForwarding_numberx_init : [int][int][int]String;
   var SpecialFacility_data_a_init : [int][int]int;
   var SpecialFacility_data_b_init : [int][int]String;
   var SpecialFacility_error_cntrl_init : [int][int]int;
@@ -223,13 +225,17 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
   var Subscriber_vlr_location_init : [int]int;
   var s0_s_id_init : int;
   var s0_sf_type_init : int;
+  var s0_start_time_init : int;
   var s1_s_id_init : int;
   var s1_bit_1_init : int;
   var s1_data_a_init : int;
   var s1_sf_type_init : int;
   var s0_sf#is_active : int;
   var s0_sf_active : int;
-  var s0_#tmp3 : bool;
+  var s0_#tmp5 : bool;
+  var s0_cf#numberx : String;
+  var s0_num : String;
+  var s0_#tmp7 : unit;
   var s1_sub#bit_10 : int;
   var s1_sub#bit_2 : int;
   var s1_sub#bit_3 : int;
@@ -353,6 +359,7 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
 
   // Slice commutativity verification: hop 3 vs hop 7
   // --- Step 1: Havoc initial state ---
+    havoc CallForwarding_numberx;
     havoc SpecialFacility_data_a;
     havoc SpecialFacility_data_b;
     havoc SpecialFacility_error_cntrl;
@@ -395,6 +402,7 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
     havoc Subscriber_vlr_location;
     havoc s0_s_id;
     havoc s0_sf_type;
+    havoc s0_start_time;
     havoc s1_s_id;
     havoc s1_bit_1;
     havoc s1_data_a;
@@ -402,6 +410,7 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
     s0_active := true;
     s1_active := true;
   // --- Step 2: Save initial state ---
+    CallForwarding_numberx_init := CallForwarding_numberx;
     SpecialFacility_data_a_init := SpecialFacility_data_a;
     SpecialFacility_data_b_init := SpecialFacility_data_b;
     SpecialFacility_error_cntrl_init := SpecialFacility_error_cntrl;
@@ -444,6 +453,7 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
     Subscriber_vlr_location_init := Subscriber_vlr_location;
     s0_s_id_init := s0_s_id;
     s0_sf_type_init := s0_sf_type;
+    s0_start_time_init := s0_start_time;
     s1_s_id_init := s1_s_id;
     s1_bit_1_init := s1_bit_1;
     s1_data_a_init := s1_data_a;
@@ -454,13 +464,16 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
     s0_block3__ab:
       s0_sf#is_active := SpecialFacility_is_active[s0_s_id][s0_sf_type];
       s0_sf_active := s0_sf#is_active;
-      s0_#tmp3 := s0_sf_active == 1;
-      if (s0_#tmp3) {
+      s0_#tmp5 := s0_sf_active == 1;
+      if (s0_#tmp5) {
       goto s0_block4__ab;
     } else {
       goto s0_block5__ab;
     }
     s0_block4__ab:
+      s0_cf#numberx := CallForwarding_numberx[s0_s_id][s0_sf_type][s0_start_time];
+      s0_num := s0_cf#numberx;
+      s0_#tmp7 := to_unit(s0_num);
       goto s0_block5__ab;
     s0_block5__ab:
       s0_active := false;
@@ -595,6 +608,7 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
     Subscriber_sub_nbr_a_then_b := Subscriber_sub_nbr;
     Subscriber_vlr_location_a_then_b := Subscriber_vlr_location;
   // Restoring initial state:
+    CallForwarding_numberx := CallForwarding_numberx_init;
     SpecialFacility_data_a := SpecialFacility_data_a_init;
     SpecialFacility_data_b := SpecialFacility_data_b_init;
     SpecialFacility_error_cntrl := SpecialFacility_error_cntrl_init;
@@ -637,6 +651,7 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
     Subscriber_vlr_location := Subscriber_vlr_location_init;
     s0_s_id := s0_s_id_init;
     s0_sf_type := s0_sf_type_init;
+    s0_start_time := s0_start_time_init;
     s1_s_id := s1_s_id_init;
     s1_bit_1 := s1_bit_1_init;
     s1_data_a := s1_data_a_init;
@@ -734,13 +749,16 @@ modifies SpecialFacility_data_a, SpecialFacility_data_b, SpecialFacility_error_c
     s0_block3__ba:
       s0_sf#is_active := SpecialFacility_is_active[s0_s_id][s0_sf_type];
       s0_sf_active := s0_sf#is_active;
-      s0_#tmp3 := s0_sf_active == 1;
-      if (s0_#tmp3) {
+      s0_#tmp5 := s0_sf_active == 1;
+      if (s0_#tmp5) {
       goto s0_block4__ba;
     } else {
       goto s0_block5__ba;
     }
     s0_block4__ba:
+      s0_cf#numberx := CallForwarding_numberx[s0_s_id][s0_sf_type][s0_start_time];
+      s0_num := s0_cf#numberx;
+      s0_#tmp7 := to_unit(s0_num);
       goto s0_block5__ba;
     s0_block5__ba:
       s0_active := false;

@@ -19,9 +19,38 @@ func Q16Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var partkey uint64
+	var suppkey uint64
+	var p Part
+	var _tmp76 Part
+	var _tmp77 Unit
+	var ps Partsupp
+	var _tmp78 Partsupp
+	var _tmp79 Unit
+
+	var keyBytes1 []byte
+	var row1 Part
+	var keyBytes2 []byte
+	var row2 Partsupp
+
+	partkey = toUint64(params["partkey"])
+	suppkey = toUint64(params["suppkey"])
+
 	goto BB26
 
 BB26:
+	// TableGet: Part
+	keyBytes1, row1 = getPart(tx, PartKey{p_partkey: partkey})
+	rwSet = AddRWSet(rwSet, "Part", keyBytes1)
+	_tmp76 = row1
+	p = _tmp76
+	_ = p
+	// TableGet: Partsupp
+	keyBytes2, row2 = getPartsupp(tx, PartsuppKey{ps_partkey: partkey, ps_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Partsupp", keyBytes2)
+	_tmp78 = row2
+	ps = _tmp78
+	_ = ps
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +63,25 @@ func Q16Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var suppkey uint64
+	var s Supplier
+	var _tmp80 Supplier
+	var _tmp81 Unit
+
+	var keyBytes1 []byte
+	var row1 Supplier
+
+	suppkey = toUint64(params["suppkey"])
+
 	goto BB27
 
 BB27:
+	// TableGet: Supplier
+	keyBytes1, row1 = getSupplier(tx, SupplierKey{s_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Supplier", keyBytes1)
+	_tmp80 = row1
+	s = _tmp80
+	_ = s
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +92,23 @@ BB27:
 
 // Q16Hop0Par calculates the partition for hop 0 without database access.
 func Q16Hop0Par(params map[string]string) uint64 {
+	var partkey uint64
+	var suppkey uint64
+	var p Part
+	var _tmp76 Part
+	var _tmp77 Unit
+	var ps Partsupp
+	var _tmp78 Partsupp
+	var _tmp79 Unit
+
+	var keyBytes1 []byte
+	var row1 Part
+	var keyBytes2 []byte
+	var row2 Partsupp
+
+	partkey = toUint64(params["partkey"])
+	suppkey = toUint64(params["suppkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +117,37 @@ func Q16Hop0Par(params map[string]string) uint64 {
 	goto BB26
 
 BB26:
+	// First table access - calculate partition: Part
+	if true { return getPartPar(PartKey{p_partkey: partkey}) }
+	// TableGet: Part
+	keyBytes1, row1 = getPart(tx, PartKey{p_partkey: partkey})
+	rwSet = AddRWSet(rwSet, "Part", keyBytes1)
+	_tmp76 = row1
+	p = _tmp76
+	_ = p
+	// First table access - calculate partition: Partsupp
+	if true { return getPartsuppPar(PartsuppKey{ps_partkey: partkey, ps_suppkey: suppkey}) }
+	// TableGet: Partsupp
+	keyBytes2, row2 = getPartsupp(tx, PartsuppKey{ps_partkey: partkey, ps_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Partsupp", keyBytes2)
+	_tmp78 = row2
+	ps = _tmp78
+	_ = ps
 	panic("unexpected hop exit in partition")
 }
 
 // Q16Hop1Par calculates the partition for hop 1 without database access.
 func Q16Hop1Par(params map[string]string) uint64 {
+	var suppkey uint64
+	var s Supplier
+	var _tmp80 Supplier
+	var _tmp81 Unit
+
+	var keyBytes1 []byte
+	var row1 Supplier
+
+	suppkey = toUint64(params["suppkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +156,14 @@ func Q16Hop1Par(params map[string]string) uint64 {
 	goto BB27
 
 BB27:
+	// First table access - calculate partition: Supplier
+	if true { return getSupplierPar(SupplierKey{s_suppkey: suppkey}) }
+	// TableGet: Supplier
+	keyBytes1, row1 = getSupplier(tx, SupplierKey{s_suppkey: suppkey})
+	rwSet = AddRWSet(rwSet, "Supplier", keyBytes1)
+	_tmp80 = row1
+	s = _tmp80
+	_ = s
 	return 0
 }
 

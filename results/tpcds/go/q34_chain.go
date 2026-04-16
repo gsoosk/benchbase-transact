@@ -19,9 +19,27 @@ func Q34Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var item_sk uint64
+	var ticket_num uint64
+	var ss_ss_quantity uint64
+	var qty uint64
+	var _tmp32 Unit
+
+	var keyBytes1 []byte
+	var row1 StoreSales
+
+	item_sk = toUint64(params["item_sk"])
+	ticket_num = toUint64(params["ticket_num"])
+
 	goto BB17
 
 BB17:
+	// TableGet: StoreSales
+	keyBytes1, row1 = getStoreSales(tx, StoreSalesKey{ss_item_sk: item_sk, ss_ticket_number: ticket_num})
+	rwSet = AddRWSet(rwSet, "StoreSales", keyBytes1)
+	ss_ss_quantity = row1.ss_quantity
+	qty = ss_ss_quantity
+	_ = qty
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +52,25 @@ func Q34Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var cust_sk uint64
+	var c Customer
+	var _tmp33 Customer
+	var _tmp34 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+
+	cust_sk = toUint64(params["cust_sk"])
+
 	goto BB18
 
 BB18:
+	// TableGet: Customer
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{c_customer_sk: cust_sk})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	_tmp33 = row1
+	c = _tmp33
+	_ = c
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -49,9 +83,25 @@ func Q34Hop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var cd_sk uint64
+	var cd_cd_marital_status string
+	var marital string
+	var _tmp36 Unit
+
+	var keyBytes1 []byte
+	var row1 CustomerDemographics
+
+	cd_sk = toUint64(params["cd_sk"])
+
 	goto BB19
 
 BB19:
+	// TableGet: CustomerDemographics
+	keyBytes1, row1 = getCustomerDemographics(tx, CustomerDemographicsKey{cd_demo_sk: cd_sk})
+	rwSet = AddRWSet(rwSet, "CustomerDemographics", keyBytes1)
+	cd_cd_marital_status = row1.cd_marital_status
+	marital = cd_cd_marital_status
+	_ = marital
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -64,9 +114,25 @@ func Q34Hop3(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var store_sk uint64
+	var s Store
+	var _tmp37 Store
+	var _tmp38 Unit
+
+	var keyBytes1 []byte
+	var row1 Store
+
+	store_sk = toUint64(params["store_sk"])
+
 	goto BB20
 
 BB20:
+	// TableGet: Store
+	keyBytes1, row1 = getStore(tx, StoreKey{s_store_sk: store_sk})
+	rwSet = AddRWSet(rwSet, "Store", keyBytes1)
+	_tmp37 = row1
+	s = _tmp37
+	_ = s
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -79,9 +145,25 @@ func Q34Hop4(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var date_sk uint64
+	var d_d_year uint64
+	var yr uint64
+	var _tmp40 Unit
+
+	var keyBytes1 []byte
+	var row1 DateDim
+
+	date_sk = toUint64(params["date_sk"])
+
 	goto BB21
 
 BB21:
+	// TableGet: DateDim
+	keyBytes1, row1 = getDateDim(tx, DateDimKey{d_date_sk: date_sk})
+	rwSet = AddRWSet(rwSet, "DateDim", keyBytes1)
+	d_d_year = row1.d_year
+	yr = d_d_year
+	_ = yr
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -92,6 +174,18 @@ BB21:
 
 // Q34Hop0Par calculates the partition for hop 0 without database access.
 func Q34Hop0Par(params map[string]string) uint64 {
+	var item_sk uint64
+	var ticket_num uint64
+	var ss_ss_quantity uint64
+	var qty uint64
+	var _tmp32 Unit
+
+	var keyBytes1 []byte
+	var row1 StoreSales
+
+	item_sk = toUint64(params["item_sk"])
+	ticket_num = toUint64(params["ticket_num"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -100,11 +194,29 @@ func Q34Hop0Par(params map[string]string) uint64 {
 	goto BB17
 
 BB17:
+	// First table access - calculate partition: StoreSales
+	if true { return getStoreSalesPar(StoreSalesKey{ss_item_sk: item_sk, ss_ticket_number: ticket_num}) }
+	// TableGet: StoreSales
+	keyBytes1, row1 = getStoreSales(tx, StoreSalesKey{ss_item_sk: item_sk, ss_ticket_number: ticket_num})
+	rwSet = AddRWSet(rwSet, "StoreSales", keyBytes1)
+	ss_ss_quantity = row1.ss_quantity
+	qty = ss_ss_quantity
+	_ = qty
 	panic("unexpected hop exit in partition")
 }
 
 // Q34Hop1Par calculates the partition for hop 1 without database access.
 func Q34Hop1Par(params map[string]string) uint64 {
+	var cust_sk uint64
+	var c Customer
+	var _tmp33 Customer
+	var _tmp34 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+
+	cust_sk = toUint64(params["cust_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -113,11 +225,29 @@ func Q34Hop1Par(params map[string]string) uint64 {
 	goto BB18
 
 BB18:
+	// First table access - calculate partition: Customer
+	if true { return getCustomerPar(CustomerKey{c_customer_sk: cust_sk}) }
+	// TableGet: Customer
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{c_customer_sk: cust_sk})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	_tmp33 = row1
+	c = _tmp33
+	_ = c
 	panic("unexpected hop exit in partition")
 }
 
 // Q34Hop2Par calculates the partition for hop 2 without database access.
 func Q34Hop2Par(params map[string]string) uint64 {
+	var cd_sk uint64
+	var cd_cd_marital_status string
+	var marital string
+	var _tmp36 Unit
+
+	var keyBytes1 []byte
+	var row1 CustomerDemographics
+
+	cd_sk = toUint64(params["cd_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -126,11 +256,29 @@ func Q34Hop2Par(params map[string]string) uint64 {
 	goto BB19
 
 BB19:
+	// First table access - calculate partition: CustomerDemographics
+	if true { return getCustomerDemographicsPar(CustomerDemographicsKey{cd_demo_sk: cd_sk}) }
+	// TableGet: CustomerDemographics
+	keyBytes1, row1 = getCustomerDemographics(tx, CustomerDemographicsKey{cd_demo_sk: cd_sk})
+	rwSet = AddRWSet(rwSet, "CustomerDemographics", keyBytes1)
+	cd_cd_marital_status = row1.cd_marital_status
+	marital = cd_cd_marital_status
+	_ = marital
 	panic("unexpected hop exit in partition")
 }
 
 // Q34Hop3Par calculates the partition for hop 3 without database access.
 func Q34Hop3Par(params map[string]string) uint64 {
+	var store_sk uint64
+	var s Store
+	var _tmp37 Store
+	var _tmp38 Unit
+
+	var keyBytes1 []byte
+	var row1 Store
+
+	store_sk = toUint64(params["store_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -139,11 +287,29 @@ func Q34Hop3Par(params map[string]string) uint64 {
 	goto BB20
 
 BB20:
+	// First table access - calculate partition: Store
+	if true { return getStorePar(StoreKey{s_store_sk: store_sk}) }
+	// TableGet: Store
+	keyBytes1, row1 = getStore(tx, StoreKey{s_store_sk: store_sk})
+	rwSet = AddRWSet(rwSet, "Store", keyBytes1)
+	_tmp37 = row1
+	s = _tmp37
+	_ = s
 	panic("unexpected hop exit in partition")
 }
 
 // Q34Hop4Par calculates the partition for hop 4 without database access.
 func Q34Hop4Par(params map[string]string) uint64 {
+	var date_sk uint64
+	var d_d_year uint64
+	var yr uint64
+	var _tmp40 Unit
+
+	var keyBytes1 []byte
+	var row1 DateDim
+
+	date_sk = toUint64(params["date_sk"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -152,6 +318,14 @@ func Q34Hop4Par(params map[string]string) uint64 {
 	goto BB21
 
 BB21:
+	// First table access - calculate partition: DateDim
+	if true { return getDateDimPar(DateDimKey{d_date_sk: date_sk}) }
+	// TableGet: DateDim
+	keyBytes1, row1 = getDateDim(tx, DateDimKey{d_date_sk: date_sk})
+	rwSet = AddRWSet(rwSet, "DateDim", keyBytes1)
+	d_d_year = row1.d_year
+	yr = d_d_year
+	_ = yr
 	return 0
 }
 

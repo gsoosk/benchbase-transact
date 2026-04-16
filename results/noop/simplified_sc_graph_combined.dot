@@ -2,6 +2,6 @@ digraph CombinedSCGraph {
   graph [rankdir=LR];
   node  [shape=record, fontsize=10, fontname=Helvetica];
   edge  [fontname=Helvetica];
-  cv0 [label="NoOp#0\nHop 0\n"];
-  cv1 [label="NoOp#1\nHop 0\n"];
+  cv0 [label="NoOp#1\nHop 0\n"];
+  cv1 [label="NoOp#0\nHop 0\n"];
 }

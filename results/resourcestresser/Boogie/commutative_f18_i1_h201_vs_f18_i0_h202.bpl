@@ -101,22 +101,22 @@ axiom (forall
     <==>
     (empid_1 == empid_2 && flag1_1 == flag1_2)
 );
-var cputable_empid : [int]int;
-const __shards__ : int;
-var locktable_salary : [int]int;
-const TBL_iotablesmallrow : Table (iotablesmallrow);
-const __slice__ : int;
-var locktable_empid : [int]int;
-var iotable_data2 : [int]String;
-const TBL_iotable : Table (iotable);
 const TBL_cputable : Table (cputable);
-const TBL_locktable : Table (locktable);
-var iotablesmallrow_empid : [int]int;
-var iotable_data1 : [int]String;
-var iotable_empid : [int]int;
-var iotablesmallrow_flag1 : [int]int;
-var cputable_passwd : [int]String;
+const TBL_iotablesmallrow : Table (iotablesmallrow);
 const CPU_RANGE : int;
+const TBL_iotable : Table (iotable);
+const __slice__ : int;
+var iotable_data2 : [int]String;
+var iotable_empid : [int]int;
+const TBL_locktable : Table (locktable);
+var cputable_empid : [int]int;
+var locktable_empid : [int]int;
+const __shards__ : int;
+var iotablesmallrow_flag1 : [int]int;
+var locktable_salary : [int]int;
+var cputable_passwd : [int]String;
+var iotable_data1 : [int]String;
+var iotablesmallrow_empid : [int]int;
 procedure Check_SliceCommut_Hop201_vs_Hop202()
 modifies locktable_empid, locktable_salary;
 {

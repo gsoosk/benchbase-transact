@@ -22,7 +22,7 @@ func UpdaterecordHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var id uint64
 	var row_id uint64
 	var row_value uint64
-	var _tmp2 uint64
+	var _tmp3 uint64
 
 	var keyBytes1 []byte
 	var row1 Sitable
@@ -39,8 +39,8 @@ BB2:
 	rwSet = AddRWSet(rwSet, "Sitable", keyBytes1)
 	row_id = row1.Key.id
 	row_value = row1.value
-	_tmp2 = row_value + 1
-	row_value = _tmp2
+	_tmp3 = row_value + 1
+	row_value = _tmp3
 	// Combined table access: Sitable (2 operations)
 	keyBytes2, row2 = getSitable(tx, SitableKey{id: id})
 	rwSet = AddRWSet(rwSet, "Sitable", keyBytes2)
@@ -62,7 +62,7 @@ func UpdaterecordHop0Par(params map[string]string) uint64 {
 	var id uint64
 	var row_id uint64
 	var row_value uint64
-	var _tmp2 uint64
+	var _tmp3 uint64
 
 	var keyBytes1 []byte
 	var row1 Sitable
@@ -86,8 +86,8 @@ BB2:
 	rwSet = AddRWSet(rwSet, "Sitable", keyBytes1)
 	row_id = row1.Key.id
 	row_value = row1.value
-	_tmp2 = row_value + 1
-	row_value = _tmp2
+	_tmp3 = row_value + 1
+	row_value = _tmp3
 	// First table access (optimized group) - calculate partition: Sitable
 	if true { return putSitablePar(SitableKey{id: id}) }
 	// Combined table access: Sitable (2 operations)

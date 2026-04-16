@@ -1403,8 +1403,8 @@ BB13:
 }
 
 func g(x uint64, y uint64) uint64 {
-	var _tmp58 uint64
 	var _tmp57 uint64
+	var _tmp58 uint64
 	goto BB14
 
 BB14:
@@ -1414,9 +1414,9 @@ BB14:
 }
 
 func h(x uint64, y uint64) uint64 {
-	var _tmp60 uint64
-	var _tmp59 uint64
 	var _tmp61 uint64
+	var _tmp59 uint64
+	var _tmp60 uint64
 	goto BB15
 
 BB15:

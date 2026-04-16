@@ -101,21 +101,21 @@ axiom (forall
     <==>
     (empid_1 == empid_2 && flag1_1 == flag1_2)
 );
-var cputable_empid : [int]int;
-var iotable_data2 : [int]String;
-const TBL_cputable : Table (cputable);
-var cputable_passwd : [int]String;
-var iotablesmallrow_flag1 : [int]int;
-const __shards__ : int;
-const TBL_locktable : Table (locktable);
-var locktable_salary : [int]int;
-const TBL_iotable : Table (iotable);
-const __slice__ : int;
-var iotablesmallrow_empid : [int]int;
-var iotable_data1 : [int]String;
-var iotable_empid : [int]int;
 const CPU_RANGE : int;
+var cputable_passwd : [int]String;
+var iotablesmallrow_empid : [int]int;
+var locktable_salary : [int]int;
+var iotable_empid : [int]int;
+const __shards__ : int;
 var locktable_empid : [int]int;
+var iotable_data1 : [int]String;
+var iotablesmallrow_flag1 : [int]int;
+const __slice__ : int;
+const TBL_cputable : Table (cputable);
+var cputable_empid : [int]int;
+const TBL_iotable : Table (iotable);
+const TBL_locktable : Table (locktable);
+var iotable_data2 : [int]String;
 const TBL_iotablesmallrow : Table (iotablesmallrow);
 procedure verify_hop_partitions_Contention1(key1: int, key2: int, newSalary: int)
 modifies locktable_empid, locktable_salary;
@@ -134,22 +134,22 @@ modifies locktable_empid, locktable_salary;
     s201_r1#empid := locktable_empid[s201_key1];
     s201_r1#salary := s201_newSalary;
     locktable_empid := locktable_empid[s201_key1 := s201_r1#empid];
-  // Partition check hop 201 func 'f' tables 'locktable'=>'locktable' keys [k0=key1] first_span Span { start: 2661, end: 2683, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 2724, end: 2751, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 201) (table_id . 1) (span ((start . 2724) (end . 2751) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s201_key1 == s201_key1);
+  // Partition check hop 201 func 'f' tables 'locktable'=>'locktable' keys [k0=key1] first_span Span { start: 2701, end: 2723, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 2764, end: 2791, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 201) (table_id . 1) (span ((start . 2764) (end . 2791) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s201_key1 == s201_key1);
     locktable_salary := locktable_salary[s201_key1 := s201_r1#salary];
-  // Partition check hop 201 func 'f' tables 'locktable'=>'locktable' keys [k0=key1] first_span Span { start: 2661, end: 2683, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 2724, end: 2751, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 201) (table_id . 1) (span ((start . 2724) (end . 2751) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s201_key1 == s201_key1);
+  // Partition check hop 201 func 'f' tables 'locktable'=>'locktable' keys [k0=key1] first_span Span { start: 2701, end: 2723, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 2764, end: 2791, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 201) (table_id . 1) (span ((start . 2764) (end . 2791) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s201_key1 == s201_key1);
     goto s201_hop_exit;
   s201_hop_exit:
   s202_block202:
     s202_r2#empid := locktable_empid[s202_key2];
     s202_r2#salary := s202_newSalary;
     locktable_empid := locktable_empid[s202_key2 := s202_r2#empid];
-  // Partition check hop 202 func 'f' tables 'locktable'=>'locktable' keys [k0=key2] first_span Span { start: 2802, end: 2824, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 2865, end: 2892, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 202) (table_id . 1) (span ((start . 2865) (end . 2892) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s202_key2 == s202_key2);
+  // Partition check hop 202 func 'f' tables 'locktable'=>'locktable' keys [k0=key2] first_span Span { start: 2842, end: 2864, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 2905, end: 2932, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 202) (table_id . 1) (span ((start . 2905) (end . 2932) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s202_key2 == s202_key2);
     locktable_salary := locktable_salary[s202_key2 := s202_r2#salary];
-  // Partition check hop 202 func 'f' tables 'locktable'=>'locktable' keys [k0=key2] first_span Span { start: 2802, end: 2824, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 2865, end: 2892, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 202) (table_id . 1) (span ((start . 2865) (end . 2892) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s202_key2 == s202_key2);
+  // Partition check hop 202 func 'f' tables 'locktable'=>'locktable' keys [k0=key2] first_span Span { start: 2842, end: 2864, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 2905, end: 2932, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 18) (hop_id . 202) (table_id . 1) (span ((start . 2905) (end . 2932) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s202_key2 == s202_key2);
     goto s202_epilogue;
   s202_hop_exit:
   s201_epilogue:

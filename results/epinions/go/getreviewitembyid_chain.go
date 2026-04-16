@@ -19,9 +19,38 @@ func GetreviewitembyidHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error)
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var iid uint64
+	var reviewer_uid uint64
+	var r Review
+	var _tmp10 Review
+	var _tmp11 Unit
+	var i Item
+	var _tmp12 Item
+	var _tmp13 Unit
+
+	var keyBytes1 []byte
+	var row1 Review
+	var keyBytes2 []byte
+	var row2 Item
+
+	iid = toUint64(params["iid"])
+	reviewer_uid = toUint64(params["reviewer_uid"])
+
 	goto BB7
 
 BB7:
+	// TableGet: Review
+	keyBytes1, row1 = getReview(tx, ReviewKey{u_id: reviewer_uid, i_id: iid})
+	rwSet = AddRWSet(rwSet, "Review", keyBytes1)
+	_tmp10 = row1
+	r = _tmp10
+	_ = r
+	// TableGet: Item
+	keyBytes2, row2 = getItem(tx, ItemKey{i_id: iid})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes2)
+	_tmp12 = row2
+	i = _tmp12
+	_ = i
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -32,6 +61,23 @@ BB7:
 
 // GetreviewitembyidHop0Par calculates the partition for hop 0 without database access.
 func GetreviewitembyidHop0Par(params map[string]string) uint64 {
+	var iid uint64
+	var reviewer_uid uint64
+	var r Review
+	var _tmp10 Review
+	var _tmp11 Unit
+	var i Item
+	var _tmp12 Item
+	var _tmp13 Unit
+
+	var keyBytes1 []byte
+	var row1 Review
+	var keyBytes2 []byte
+	var row2 Item
+
+	iid = toUint64(params["iid"])
+	reviewer_uid = toUint64(params["reviewer_uid"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -40,6 +86,22 @@ func GetreviewitembyidHop0Par(params map[string]string) uint64 {
 	goto BB7
 
 BB7:
+	// First table access - calculate partition: Review
+	if true { return getReviewPar(ReviewKey{u_id: reviewer_uid, i_id: iid}) }
+	// TableGet: Review
+	keyBytes1, row1 = getReview(tx, ReviewKey{u_id: reviewer_uid, i_id: iid})
+	rwSet = AddRWSet(rwSet, "Review", keyBytes1)
+	_tmp10 = row1
+	r = _tmp10
+	_ = r
+	// First table access - calculate partition: Item
+	if true { return getItemPar(ItemKey{i_id: iid}) }
+	// TableGet: Item
+	keyBytes2, row2 = getItem(tx, ItemKey{i_id: iid})
+	rwSet = AddRWSet(rwSet, "Item", keyBytes2)
+	_tmp12 = row2
+	i = _tmp12
+	_ = i
 	return 0
 }
 

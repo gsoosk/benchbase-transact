@@ -107,23 +107,23 @@ axiom (forall
     <==>
     (source_u_id_1 == source_u_id_2 && target_u_id_1 == target_u_id_2 && trust_1 == trust_2)
 );
-var item_title : [int]String;
-var review_rating : [int][int]int;
-const TBL_trust : Table (trust);
-var trust_target_u_id : [int][int]int;
-const TBL_item : Table (item);
-var trust_trust : [int][int]int;
 var trust_source_u_id : [int][int]int;
-var review_i_id : [int][int]int;
 var useracct_u_id : [int]int;
-var item_i_id : [int]int;
 const __slice__ : int;
-var useracct_name : [int]String;
-var review_creation_date : [int][int]int;
+const TBL_item : Table (item);
+var item_title : [int]String;
+var item_i_id : [int]int;
 const TBL_useracct : Table (useracct);
+var trust_target_u_id : [int][int]int;
 const __shards__ : int;
+var useracct_name : [int]String;
 var review_u_id : [int][int]int;
+var review_i_id : [int][int]int;
 const TBL_review : Table (review);
+var review_rating : [int][int]int;
+var trust_trust : [int][int]int;
+const TBL_trust : Table (trust);
+var review_creation_date : [int][int]int;
 procedure verify_hop_partitions_UpdateUserName(uid: int, name: String)
 modifies useracct_name, useracct_u_id;
 {
@@ -137,11 +137,11 @@ modifies useracct_name, useracct_u_id;
     s13_u#u_id := useracct_u_id[s13_uid];
     s13_u#name := s13_name;
     useracct_name := useracct_name[s13_uid := s13_u#name];
-  // Partition check hop 13 func 'f_user' tables 'useracct'=>'useracct' keys [k0=uid] first_span Span { start: 5184, end: 5203, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 5236, end: 5259, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 25) (hop_id . 13) (table_id . 1) (span ((start . 5236) (end . 5259) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s13_uid == s13_uid);
+  // Partition check hop 13 func 'f_user' tables 'useracct'=>'useracct' keys [k0=uid] first_span Span { start: 5384, end: 5403, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 5436, end: 5459, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 25) (hop_id . 13) (table_id . 1) (span ((start . 5436) (end . 5459) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s13_uid == s13_uid);
     useracct_u_id := useracct_u_id[s13_uid := s13_u#u_id];
-  // Partition check hop 13 func 'f_user' tables 'useracct'=>'useracct' keys [k0=uid] first_span Span { start: 5184, end: 5203, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 5236, end: 5259, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 25) (hop_id . 13) (table_id . 1) (span ((start . 5236) (end . 5259) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s13_uid == s13_uid);
+  // Partition check hop 13 func 'f_user' tables 'useracct'=>'useracct' keys [k0=uid] first_span Span { start: 5384, end: 5403, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" } current_span Span { start: 5436, end: 5459, filename: "/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 16) (function_id . 25) (hop_id . 13) (table_id . 1) (span ((start . 5436) (end . 5459) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/epinions.transact\"))))"} (s13_uid == s13_uid);
     goto s13_epilogue;
   s13_hop_exit:
   s13_epilogue:

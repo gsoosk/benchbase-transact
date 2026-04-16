@@ -19,9 +19,25 @@ func Q13Hop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var custkey uint64
+	var c Customer
+	var _tmp62 Customer
+	var _tmp63 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+
+	custkey = toUint64(params["custkey"])
+
 	goto BB20
 
 BB20:
+	// TableGet: Customer
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{c_custkey: custkey})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	_tmp62 = row1
+	c = _tmp62
+	_ = c
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -34,9 +50,25 @@ func Q13Hop1(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var rwSet []*proto.RWSet
 	params := in.Params
 
+	var orderkey uint64
+	var o Orders
+	var _tmp64 Orders
+	var _tmp65 Unit
+
+	var keyBytes1 []byte
+	var row1 Orders
+
+	orderkey = toUint64(params["orderkey"])
+
 	goto BB21
 
 BB21:
+	// TableGet: Orders
+	keyBytes1, row1 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes1)
+	_tmp64 = row1
+	o = _tmp64
+	_ = o
 	// return - no action
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
@@ -47,6 +79,16 @@ BB21:
 
 // Q13Hop0Par calculates the partition for hop 0 without database access.
 func Q13Hop0Par(params map[string]string) uint64 {
+	var custkey uint64
+	var c Customer
+	var _tmp62 Customer
+	var _tmp63 Unit
+
+	var keyBytes1 []byte
+	var row1 Customer
+
+	custkey = toUint64(params["custkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -55,11 +97,29 @@ func Q13Hop0Par(params map[string]string) uint64 {
 	goto BB20
 
 BB20:
+	// First table access - calculate partition: Customer
+	if true { return getCustomerPar(CustomerKey{c_custkey: custkey}) }
+	// TableGet: Customer
+	keyBytes1, row1 = getCustomer(tx, CustomerKey{c_custkey: custkey})
+	rwSet = AddRWSet(rwSet, "Customer", keyBytes1)
+	_tmp62 = row1
+	c = _tmp62
+	_ = c
 	panic("unexpected hop exit in partition")
 }
 
 // Q13Hop1Par calculates the partition for hop 1 without database access.
 func Q13Hop1Par(params map[string]string) uint64 {
+	var orderkey uint64
+	var o Orders
+	var _tmp64 Orders
+	var _tmp65 Unit
+
+	var keyBytes1 []byte
+	var row1 Orders
+
+	orderkey = toUint64(params["orderkey"])
+
 	var tx *bolt.Tx = nil // Fake tx for unreachable code
 	var rwSet []*proto.RWSet // Fake rwSet for unreachable code
 	_ = tx // Suppress unused variable warning
@@ -68,6 +128,14 @@ func Q13Hop1Par(params map[string]string) uint64 {
 	goto BB21
 
 BB21:
+	// First table access - calculate partition: Orders
+	if true { return getOrdersPar(OrdersKey{o_orderkey: orderkey}) }
+	// TableGet: Orders
+	keyBytes1, row1 = getOrders(tx, OrdersKey{o_orderkey: orderkey})
+	rwSet = AddRWSet(rwSet, "Orders", keyBytes1)
+	_tmp64 = row1
+	o = _tmp64
+	_ = o
 	return 0
 }
 

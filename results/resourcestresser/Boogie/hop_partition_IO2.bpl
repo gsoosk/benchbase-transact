@@ -101,22 +101,22 @@ axiom (forall
     <==>
     (empid_1 == empid_2 && flag1_1 == flag1_2)
 );
-const __slice__ : int;
-const TBL_locktable : Table (locktable);
-const TBL_cputable : Table (cputable);
-const TBL_iotablesmallrow : Table (iotablesmallrow);
-var cputable_empid : [int]int;
-var cputable_passwd : [int]String;
-const __shards__ : int;
-const TBL_iotable : Table (iotable);
-const CPU_RANGE : int;
-var locktable_salary : [int]int;
 var iotable_data1 : [int]String;
+var cputable_empid : [int]int;
+const __shards__ : int;
+var cputable_passwd : [int]String;
+var iotable_data2 : [int]String;
+const TBL_locktable : Table (locktable);
 var locktable_empid : [int]int;
+const CPU_RANGE : int;
+const TBL_iotablesmallrow : Table (iotablesmallrow);
+const TBL_cputable : Table (cputable);
+const __slice__ : int;
 var iotable_empid : [int]int;
 var iotablesmallrow_empid : [int]int;
 var iotablesmallrow_flag1 : [int]int;
-var iotable_data2 : [int]String;
+var locktable_salary : [int]int;
+const TBL_iotable : Table (iotable);
 procedure verify_hop_partitions_IO2(key: int, value: int)
 modifies iotablesmallrow_empid, iotablesmallrow_flag1;
 {
@@ -130,11 +130,11 @@ modifies iotablesmallrow_empid, iotablesmallrow_flag1;
     s207_r#empid := iotablesmallrow_empid[s207_key];
     s207_r#flag1 := s207_value;
     iotablesmallrow_empid := iotablesmallrow_empid[s207_key := s207_r#empid];
-  // Partition check hop 207 func 'f' tables 'iotablesmallrow'=>'iotablesmallrow' keys [k0=key] first_span Span { start: 4120, end: 4147, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 4182, end: 4213, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 207) (table_id . 3) (span ((start . 4182) (end . 4213) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s207_key == s207_key);
+  // Partition check hop 207 func 'f' tables 'iotablesmallrow'=>'iotablesmallrow' keys [k0=key] first_span Span { start: 4160, end: 4187, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 4222, end: 4253, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 207) (table_id . 3) (span ((start . 4222) (end . 4253) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s207_key == s207_key);
     iotablesmallrow_flag1 := iotablesmallrow_flag1[s207_key := s207_r#flag1];
-  // Partition check hop 207 func 'f' tables 'iotablesmallrow'=>'iotablesmallrow' keys [k0=key] first_span Span { start: 4120, end: 4147, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 4182, end: 4213, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
-    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 207) (table_id . 3) (span ((start . 4182) (end . 4213) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s207_key == s207_key);
+  // Partition check hop 207 func 'f' tables 'iotablesmallrow'=>'iotablesmallrow' keys [k0=key] first_span Span { start: 4160, end: 4187, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" } current_span Span { start: 4222, end: 4253, filename: "/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact" }
+    assert {:msg "(PartitionFunctionInconsistency (partition_function_id . 15) (function_id . 21) (hop_id . 207) (table_id . 3) (span ((start . 4222) (end . 4253) (filename . \"/Users/farzad/Desktop/Research/benchbase-transact/resourcestresser.transact\"))))"} (s207_key == s207_key);
     goto s207_epilogue;
   s207_hop_exit:
   s207_epilogue:

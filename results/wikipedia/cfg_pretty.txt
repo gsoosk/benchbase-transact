@@ -204,18 +204,18 @@ transaction AddWatchList[fn16](userId[v21]: int, nameSpace[v22]: int, pageTitle[
   hop1 {
     entry_block: bb1
     bb1:
-      livein: {pageTitle[v23], userId[v21], nameSpace[v22]}
-        [stmt_in] livein: {pageTitle[v23], nameSpace[v22], userId[v21]}
+      livein: {userId[v21], nameSpace[v22], pageTitle[v23]}
+        [stmt_in] livein: {nameSpace[v22], pageTitle[v23], userId[v21]}
       watchlist[userId[v21], nameSpace[v22], pageTitle[v23]].wl_notificationtimestamp = 0;
-        [stmt_out] liveout: {userId[v21], pageTitle[v23], nameSpace[v22]}
-        [stmt_in] livein: {userId[v21], pageTitle[v23], nameSpace[v22]}
+        [stmt_out] liveout: {userId[v21], nameSpace[v22], pageTitle[v23]}
+        [stmt_in] livein: {userId[v21], nameSpace[v22], pageTitle[v23]}
       #tmp0[v68] = nameSpace[v22] == 0;
-        [stmt_out] liveout: {userId[v21], pageTitle[v23], #tmp0[v68]}
+        [stmt_out] liveout: {#tmp0[v68], pageTitle[v23], userId[v21]}
       branch #tmp0[v68] ? bb2 : bb3;
-      liveout: {userId[v21], pageTitle[v23]}
+      liveout: {pageTitle[v23], userId[v21]}
     bb2 (preds: bb1):
       livein: {userId[v21], pageTitle[v23]}
-        [stmt_in] livein: {pageTitle[v23], userId[v21]}
+        [stmt_in] livein: {userId[v21], pageTitle[v23]}
       watchlist[userId[v21], 1, pageTitle[v23]].wl_notificationtimestamp = 0;
         [stmt_out] liveout: {userId[v21]}
       jump bb3;
@@ -233,23 +233,23 @@ transaction AddWatchList[fn16](userId[v21]: int, nameSpace[v22]: int, pageTitle[
         [stmt_out] liveout: {userId[v21], u#user_editcount[v73]}
         [stmt_in] livein: {userId[v21], u#user_editcount[v73]}
       u#user_id[v70] = user[userId[v21]].user_id;
-        [stmt_out] liveout: {u#user_editcount[v73], u#user_id[v70], userId[v21]}
-        [stmt_in] livein: {u#user_editcount[v73], u#user_id[v70], userId[v21]}
+        [stmt_out] liveout: {u#user_id[v70], u#user_editcount[v73], userId[v21]}
+        [stmt_in] livein: {u#user_id[v70], u#user_editcount[v73], userId[v21]}
       u#user_name[v71] = user[userId[v21]].user_name;
-        [stmt_out] liveout: {u#user_editcount[v73], u#user_id[v70], userId[v21], u#user_name[v71]}
-        [stmt_in] livein: {u#user_editcount[v73], u#user_id[v70], userId[v21], u#user_name[v71]}
+        [stmt_out] liveout: {u#user_id[v70], userId[v21], u#user_editcount[v73], u#user_name[v71]}
+        [stmt_in] livein: {u#user_id[v70], userId[v21], u#user_editcount[v73], u#user_name[v71]}
       u#user_touched[v72] = user[userId[v21]].user_touched;
-        [stmt_out] liveout: {u#user_editcount[v73], u#user_id[v70], userId[v21], u#user_name[v71]}
-        [stmt_in] livein: {u#user_editcount[v73], u#user_id[v70], userId[v21], u#user_name[v71]}
+        [stmt_out] liveout: {userId[v21], u#user_id[v70], u#user_name[v71], u#user_editcount[v73]}
+        [stmt_in] livein: {userId[v21], u#user_id[v70], u#user_name[v71], u#user_editcount[v73]}
       u#user_touched[v72] = 1;
-        [stmt_out] liveout: {u#user_editcount[v73], u#user_touched[v72], u#user_name[v71], userId[v21], u#user_id[v70]}
-        [stmt_in] livein: {u#user_editcount[v73], u#user_touched[v72], u#user_name[v71], userId[v21], u#user_id[v70]}
+        [stmt_out] liveout: {u#user_name[v71], u#user_touched[v72], u#user_id[v70], u#user_editcount[v73], userId[v21]}
+        [stmt_in] livein: {u#user_name[v71], u#user_touched[v72], u#user_id[v70], u#user_editcount[v73], userId[v21]}
       user[userId[v21]].user_editcount = u#user_editcount[v73];
-        [stmt_out] liveout: {userId[v21], u#user_id[v70], u#user_touched[v72], u#user_name[v71]}
-        [stmt_in] livein: {userId[v21], u#user_id[v70], u#user_touched[v72], u#user_name[v71]}
+        [stmt_out] liveout: {u#user_name[v71], u#user_touched[v72], u#user_id[v70], userId[v21]}
+        [stmt_in] livein: {u#user_name[v71], u#user_touched[v72], u#user_id[v70], userId[v21]}
       user[userId[v21]].user_id = u#user_id[v70];
-        [stmt_out] liveout: {u#user_touched[v72], u#user_name[v71], userId[v21]}
-        [stmt_in] livein: {u#user_touched[v72], u#user_name[v71], userId[v21]}
+        [stmt_out] liveout: {u#user_touched[v72], userId[v21], u#user_name[v71]}
+        [stmt_in] livein: {u#user_touched[v72], userId[v21], u#user_name[v71]}
       user[userId[v21]].user_name = u#user_name[v71];
         [stmt_out] liveout: {userId[v21], u#user_touched[v72]}
         [stmt_in] livein: {userId[v21], u#user_touched[v72]}
@@ -268,116 +268,125 @@ transaction GetPageAnonymous[fn17](pageId[v24]: int, pr_type[v25]: string, lates
   hop2 {
     entry_block: bb4
     bb4:
-      livein: {latest_rev_id[v26], pr_type[v25], pageId[v24]}
-        [stmt_in] livein: {pr_type[v25], latest_rev_id[v26], pageId[v24]}
+      livein: {pr_type[v25], latest_rev_id[v26], pageId[v24]}
+        [stmt_in] livein: {latest_rev_id[v26], pageId[v24], pr_type[v25]}
       #tmp2[v84] = page[pageId[v24]];
-        [stmt_out] liveout: {#tmp2[v84], pageId[v24], pr_type[v25], latest_rev_id[v26]}
-        [stmt_in] livein: {#tmp2[v84], pageId[v24], pr_type[v25], latest_rev_id[v26]}
+        [stmt_out] liveout: {#tmp2[v84], latest_rev_id[v26], pr_type[v25], pageId[v24]}
+        [stmt_in] livein: {#tmp2[v84], latest_rev_id[v26], pr_type[v25], pageId[v24]}
       p[v75] = #tmp2[v84];
-        [stmt_out] liveout: {pageId[v24], latest_rev_id[v26], pr_type[v25]}
-        [stmt_in] livein: {pageId[v24], latest_rev_id[v26], pr_type[v25]}
+        [stmt_out] liveout: {latest_rev_id[v26], p[v75], pr_type[v25], pageId[v24]}
+        [stmt_in] livein: {latest_rev_id[v26], p[v75], pr_type[v25], pageId[v24]}
       p#page_id[v76] = page[pageId[v24]].page_id;
-        [stmt_out] liveout: {pageId[v24], latest_rev_id[v26], pr_type[v25]}
-        [stmt_in] livein: {pageId[v24], latest_rev_id[v26], pr_type[v25]}
+        [stmt_out] liveout: {p[v75], pr_type[v25], pageId[v24], latest_rev_id[v26]}
+        [stmt_in] livein: {p[v75], pr_type[v25], pageId[v24], latest_rev_id[v26]}
       p#page_is_new[v81] = page[pageId[v24]].page_is_new;
-        [stmt_out] liveout: {pageId[v24], pr_type[v25], latest_rev_id[v26]}
-        [stmt_in] livein: {pageId[v24], pr_type[v25], latest_rev_id[v26]}
+        [stmt_out] liveout: {pr_type[v25], pageId[v24], latest_rev_id[v26], p[v75]}
+        [stmt_in] livein: {pr_type[v25], pageId[v24], latest_rev_id[v26], p[v75]}
       p#page_is_redirect[v82] = page[pageId[v24]].page_is_redirect;
-        [stmt_out] liveout: {latest_rev_id[v26], pageId[v24], pr_type[v25]}
-        [stmt_in] livein: {latest_rev_id[v26], pageId[v24], pr_type[v25]}
+        [stmt_out] liveout: {latest_rev_id[v26], pr_type[v25], pageId[v24], p[v75]}
+        [stmt_in] livein: {latest_rev_id[v26], pr_type[v25], pageId[v24], p[v75]}
       p#page_latest[v79] = page[pageId[v24]].page_latest;
-        [stmt_out] liveout: {pageId[v24], latest_rev_id[v26], pr_type[v25]}
-        [stmt_in] livein: {pageId[v24], latest_rev_id[v26], pr_type[v25]}
+        [stmt_out] liveout: {pr_type[v25], pageId[v24], latest_rev_id[v26], p[v75]}
+        [stmt_in] livein: {pr_type[v25], pageId[v24], latest_rev_id[v26], p[v75]}
       p#page_len[v83] = page[pageId[v24]].page_len;
-        [stmt_out] liveout: {pr_type[v25], pageId[v24], latest_rev_id[v26]}
-        [stmt_in] livein: {pr_type[v25], pageId[v24], latest_rev_id[v26]}
+        [stmt_out] liveout: {latest_rev_id[v26], p[v75], pr_type[v25], pageId[v24]}
+        [stmt_in] livein: {latest_rev_id[v26], p[v75], pr_type[v25], pageId[v24]}
       p#page_namespace[v77] = page[pageId[v24]].page_namespace;
-        [stmt_out] liveout: {pageId[v24], pr_type[v25], latest_rev_id[v26]}
-        [stmt_in] livein: {pageId[v24], pr_type[v25], latest_rev_id[v26]}
+        [stmt_out] liveout: {pr_type[v25], p[v75], latest_rev_id[v26], pageId[v24]}
+        [stmt_in] livein: {pr_type[v25], p[v75], latest_rev_id[v26], pageId[v24]}
       p#page_title[v78] = page[pageId[v24]].page_title;
-        [stmt_out] liveout: {latest_rev_id[v26], pr_type[v25], pageId[v24]}
-        [stmt_in] livein: {latest_rev_id[v26], pr_type[v25], pageId[v24]}
+        [stmt_out] liveout: {latest_rev_id[v26], pr_type[v25], p[v75], pageId[v24]}
+        [stmt_in] livein: {latest_rev_id[v26], pr_type[v25], p[v75], pageId[v24]}
       p#page_touched[v80] = page[pageId[v24]].page_touched;
-        [stmt_out] liveout: {latest_rev_id[v26], pageId[v24], pr_type[v25]}
-        [stmt_in] livein: {latest_rev_id[v26], pageId[v24], pr_type[v25]}
-      #tmp3[v89] = page_restrictions[pageId[v24], pr_type[v25]];
-        [stmt_out] liveout: {latest_rev_id[v26], #tmp3[v89], pr_type[v25], pageId[v24]}
-        [stmt_in] livein: {latest_rev_id[v26], #tmp3[v89], pr_type[v25], pageId[v24]}
-      pr[v85] = #tmp3[v89];
+        [stmt_out] liveout: {pr_type[v25], latest_rev_id[v26], p[v75], pageId[v24]}
+        [stmt_in] livein: {pr_type[v25], latest_rev_id[v26], p[v75], pageId[v24]}
+      #tmp3[v85] = to_unit[fn13](p[v75]);
         [stmt_out] liveout: {pageId[v24], pr_type[v25], latest_rev_id[v26]}
         [stmt_in] livein: {pageId[v24], pr_type[v25], latest_rev_id[v26]}
-      pr#pr_level[v88] = page_restrictions[pageId[v24], pr_type[v25]].pr_level;
-        [stmt_out] liveout: {pageId[v24], pr_type[v25], latest_rev_id[v26]}
-        [stmt_in] livein: {pageId[v24], pr_type[v25], latest_rev_id[v26]}
-      pr#pr_page[v86] = page_restrictions[pageId[v24], pr_type[v25]].pr_page;
-        [stmt_out] liveout: {pr_type[v25], pageId[v24], latest_rev_id[v26]}
-        [stmt_in] livein: {pr_type[v25], pageId[v24], latest_rev_id[v26]}
-      pr#pr_type[v87] = page_restrictions[pageId[v24], pr_type[v25]].pr_type;
-        [stmt_out] liveout: {latest_rev_id[v26], pageId[v24]}
-        [stmt_in] livein: {latest_rev_id[v26], pageId[v24]}
-      #tmp4[v100] = revision[pageId[v24], latest_rev_id[v26]];
-        [stmt_out] liveout: {#tmp4[v100], latest_rev_id[v26], pageId[v24]}
-        [stmt_in] livein: {#tmp4[v100], latest_rev_id[v26], pageId[v24]}
-      r[v90] = #tmp4[v100];
+      #tmp4[v90] = page_restrictions[pageId[v24], pr_type[v25]];
+        [stmt_out] liveout: {latest_rev_id[v26], pageId[v24], #tmp4[v90], pr_type[v25]}
+        [stmt_in] livein: {latest_rev_id[v26], pageId[v24], #tmp4[v90], pr_type[v25]}
+      pr[v86] = #tmp4[v90];
+        [stmt_out] liveout: {pr_type[v25], latest_rev_id[v26], pr[v86], pageId[v24]}
+        [stmt_in] livein: {pr_type[v25], latest_rev_id[v26], pr[v86], pageId[v24]}
+      pr#pr_level[v89] = page_restrictions[pageId[v24], pr_type[v25]].pr_level;
+        [stmt_out] liveout: {pr[v86], pr_type[v25], latest_rev_id[v26], pageId[v24]}
+        [stmt_in] livein: {pr[v86], pr_type[v25], latest_rev_id[v26], pageId[v24]}
+      pr#pr_page[v87] = page_restrictions[pageId[v24], pr_type[v25]].pr_page;
+        [stmt_out] liveout: {pr[v86], pr_type[v25], latest_rev_id[v26], pageId[v24]}
+        [stmt_in] livein: {pr[v86], pr_type[v25], latest_rev_id[v26], pageId[v24]}
+      pr#pr_type[v88] = page_restrictions[pageId[v24], pr_type[v25]].pr_type;
+        [stmt_out] liveout: {pageId[v24], latest_rev_id[v26], pr[v86]}
+        [stmt_in] livein: {pageId[v24], latest_rev_id[v26], pr[v86]}
+      #tmp5[v91] = to_unit[fn13](pr[v86]);
         [stmt_out] liveout: {pageId[v24], latest_rev_id[v26]}
         [stmt_in] livein: {pageId[v24], latest_rev_id[v26]}
-      r#rev_comment[v94] = revision[pageId[v24], latest_rev_id[v26]].rev_comment;
+      #tmp6[v102] = revision[pageId[v24], latest_rev_id[v26]];
+        [stmt_out] liveout: {#tmp6[v102], latest_rev_id[v26], pageId[v24]}
+        [stmt_in] livein: {#tmp6[v102], latest_rev_id[v26], pageId[v24]}
+      r[v92] = #tmp6[v102];
         [stmt_out] liveout: {latest_rev_id[v26], pageId[v24]}
         [stmt_in] livein: {latest_rev_id[v26], pageId[v24]}
-      r#rev_id[v92] = revision[pageId[v24], latest_rev_id[v26]].rev_id;
-        [stmt_out] liveout: {latest_rev_id[v26], pageId[v24]}
-        [stmt_in] livein: {latest_rev_id[v26], pageId[v24]}
-      r#rev_len[v98] = revision[pageId[v24], latest_rev_id[v26]].rev_len;
+      r#rev_comment[v96] = revision[pageId[v24], latest_rev_id[v26]].rev_comment;
         [stmt_out] liveout: {pageId[v24], latest_rev_id[v26]}
         [stmt_in] livein: {pageId[v24], latest_rev_id[v26]}
-      r#rev_page[v91] = revision[pageId[v24], latest_rev_id[v26]].rev_page;
+      r#rev_id[v94] = revision[pageId[v24], latest_rev_id[v26]].rev_id;
+        [stmt_out] liveout: {pageId[v24], latest_rev_id[v26]}
+        [stmt_in] livein: {pageId[v24], latest_rev_id[v26]}
+      r#rev_len[v100] = revision[pageId[v24], latest_rev_id[v26]].rev_len;
+        [stmt_out] liveout: {pageId[v24], latest_rev_id[v26]}
+        [stmt_in] livein: {pageId[v24], latest_rev_id[v26]}
+      r#rev_page[v93] = revision[pageId[v24], latest_rev_id[v26]].rev_page;
         [stmt_out] liveout: {latest_rev_id[v26], pageId[v24]}
         [stmt_in] livein: {latest_rev_id[v26], pageId[v24]}
-      r#rev_parent_id[v99] = revision[pageId[v24], latest_rev_id[v26]].rev_parent_id;
+      r#rev_parent_id[v101] = revision[pageId[v24], latest_rev_id[v26]].rev_parent_id;
         [stmt_out] liveout: {latest_rev_id[v26], pageId[v24]}
         [stmt_in] livein: {latest_rev_id[v26], pageId[v24]}
-      r#rev_text_id[v93] = revision[pageId[v24], latest_rev_id[v26]].rev_text_id;
-        [stmt_out] liveout: {r#rev_text_id[v93], pageId[v24], latest_rev_id[v26]}
-        [stmt_in] livein: {r#rev_text_id[v93], pageId[v24], latest_rev_id[v26]}
-      r#rev_timestamp[v97] = revision[pageId[v24], latest_rev_id[v26]].rev_timestamp;
-        [stmt_out] liveout: {pageId[v24], r#rev_text_id[v93], latest_rev_id[v26]}
-        [stmt_in] livein: {pageId[v24], r#rev_text_id[v93], latest_rev_id[v26]}
-      r#rev_user[v95] = revision[pageId[v24], latest_rev_id[v26]].rev_user;
-        [stmt_out] liveout: {r#rev_text_id[v93], pageId[v24], latest_rev_id[v26]}
-        [stmt_in] livein: {r#rev_text_id[v93], pageId[v24], latest_rev_id[v26]}
-      r#rev_user_text[v96] = revision[pageId[v24], latest_rev_id[v26]].rev_user_text;
-        [stmt_out] liveout: {r#rev_text_id[v93]}
-        [stmt_in] livein: {r#rev_text_id[v93]}
-      textId[v101] = r#rev_text_id[v93];
-        [stmt_out] liveout: {textId[v101]}
+      r#rev_text_id[v95] = revision[pageId[v24], latest_rev_id[v26]].rev_text_id;
+        [stmt_out] liveout: {latest_rev_id[v26], r#rev_text_id[v95], pageId[v24]}
+        [stmt_in] livein: {latest_rev_id[v26], r#rev_text_id[v95], pageId[v24]}
+      r#rev_timestamp[v99] = revision[pageId[v24], latest_rev_id[v26]].rev_timestamp;
+        [stmt_out] liveout: {pageId[v24], r#rev_text_id[v95], latest_rev_id[v26]}
+        [stmt_in] livein: {pageId[v24], r#rev_text_id[v95], latest_rev_id[v26]}
+      r#rev_user[v97] = revision[pageId[v24], latest_rev_id[v26]].rev_user;
+        [stmt_out] liveout: {r#rev_text_id[v95], pageId[v24], latest_rev_id[v26]}
+        [stmt_in] livein: {r#rev_text_id[v95], pageId[v24], latest_rev_id[v26]}
+      r#rev_user_text[v98] = revision[pageId[v24], latest_rev_id[v26]].rev_user_text;
+        [stmt_out] liveout: {r#rev_text_id[v95]}
+        [stmt_in] livein: {r#rev_text_id[v95]}
+      textId[v103] = r#rev_text_id[v95];
+        [stmt_out] liveout: {textId[v103]}
       hop_exit hop3;
-      liveout: {textId[v101]}
+      liveout: {textId[v103]}
   }
 
   hop3 {
     entry_block: bb5
     bb5 (preds: bb4):
-      livein: {textId[v101]}
-        [stmt_in] livein: {textId[v101]}
-      #tmp5[v107] = text[textId[v101]];
-        [stmt_out] liveout: {#tmp5[v107], textId[v101]}
-        [stmt_in] livein: {#tmp5[v107], textId[v101]}
-      t[v102] = #tmp5[v107];
-        [stmt_out] liveout: {textId[v101]}
-        [stmt_in] livein: {textId[v101]}
-      t#old_flags[v106] = text[textId[v101]].old_flags;
-        [stmt_out] liveout: {textId[v101]}
-        [stmt_in] livein: {textId[v101]}
-      t#old_id[v103] = text[textId[v101]].old_id;
-        [stmt_out] liveout: {textId[v101]}
-        [stmt_in] livein: {textId[v101]}
-      t#old_page[v104] = text[textId[v101]].old_page;
-        [stmt_out] liveout: {textId[v101]}
-        [stmt_in] livein: {textId[v101]}
-      t#old_text[v105] = text[textId[v101]].old_text;
-        [stmt_out] liveout: {t#old_text[v105]}
-        [stmt_in] livein: {t#old_text[v105]}
-      content[v108] = t#old_text[v105];
+      livein: {textId[v103]}
+        [stmt_in] livein: {textId[v103]}
+      #tmp7[v109] = text[textId[v103]];
+        [stmt_out] liveout: {#tmp7[v109], textId[v103]}
+        [stmt_in] livein: {#tmp7[v109], textId[v103]}
+      t[v104] = #tmp7[v109];
+        [stmt_out] liveout: {textId[v103]}
+        [stmt_in] livein: {textId[v103]}
+      t#old_flags[v108] = text[textId[v103]].old_flags;
+        [stmt_out] liveout: {textId[v103]}
+        [stmt_in] livein: {textId[v103]}
+      t#old_id[v105] = text[textId[v103]].old_id;
+        [stmt_out] liveout: {textId[v103]}
+        [stmt_in] livein: {textId[v103]}
+      t#old_page[v106] = text[textId[v103]].old_page;
+        [stmt_out] liveout: {textId[v103]}
+        [stmt_in] livein: {textId[v103]}
+      t#old_text[v107] = text[textId[v103]].old_text;
+        [stmt_out] liveout: {t#old_text[v107]}
+        [stmt_in] livein: {t#old_text[v107]}
+      content[v110] = t#old_text[v107];
+        [stmt_out] liveout: {content[v110]}
+        [stmt_in] livein: {content[v110]}
+      #tmp8[v111] = to_unit[fn13](content[v110]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -392,172 +401,190 @@ transaction GetPageAuthenticated[fn18](userId[v28]: int, pageId[v29]: int, ug_gr
   hop4 {
     entry_block: bb6
     bb6:
-      livein: {pageId[v29], latest_rev_id[v32], ug_group[v30], pr_type[v31], userId[v28], ipb_id[v34]}
-        [stmt_in] livein: {latest_rev_id[v32], userId[v28], ipb_id[v34], pr_type[v31], pageId[v29], ug_group[v30]}
-      #tmp6[v114] = user[userId[v28]];
-        [stmt_out] liveout: {userId[v28], pr_type[v31], ug_group[v30], pageId[v29], ipb_id[v34], #tmp6[v114], latest_rev_id[v32]}
-        [stmt_in] livein: {userId[v28], pr_type[v31], ug_group[v30], pageId[v29], ipb_id[v34], #tmp6[v114], latest_rev_id[v32]}
-      u[v109] = #tmp6[v114];
-        [stmt_out] liveout: {pr_type[v31], userId[v28], ug_group[v30], latest_rev_id[v32], pageId[v29], ipb_id[v34]}
-        [stmt_in] livein: {pr_type[v31], userId[v28], ug_group[v30], latest_rev_id[v32], pageId[v29], ipb_id[v34]}
-      u#user_editcount[v113] = user[userId[v28]].user_editcount;
-        [stmt_out] liveout: {pr_type[v31], ug_group[v30], latest_rev_id[v32], ipb_id[v34], pageId[v29], userId[v28]}
-        [stmt_in] livein: {pr_type[v31], ug_group[v30], latest_rev_id[v32], ipb_id[v34], pageId[v29], userId[v28]}
-      u#user_id[v110] = user[userId[v28]].user_id;
-        [stmt_out] liveout: {ug_group[v30], latest_rev_id[v32], ipb_id[v34], userId[v28], pr_type[v31], pageId[v29]}
-        [stmt_in] livein: {ug_group[v30], latest_rev_id[v32], ipb_id[v34], userId[v28], pr_type[v31], pageId[v29]}
-      u#user_name[v111] = user[userId[v28]].user_name;
-        [stmt_out] liveout: {pr_type[v31], pageId[v29], ipb_id[v34], ug_group[v30], userId[v28], latest_rev_id[v32]}
-        [stmt_in] livein: {pr_type[v31], pageId[v29], ipb_id[v34], ug_group[v30], userId[v28], latest_rev_id[v32]}
-      u#user_touched[v112] = user[userId[v28]].user_touched;
-        [stmt_out] liveout: {userId[v28], ug_group[v30], latest_rev_id[v32], pr_type[v31], pageId[v29], ipb_id[v34]}
-        [stmt_in] livein: {userId[v28], ug_group[v30], latest_rev_id[v32], pr_type[v31], pageId[v29], ipb_id[v34]}
-      #tmp7[v118] = user_groups[userId[v28], ug_group[v30]];
-        [stmt_out] liveout: {#tmp7[v118], ug_group[v30], pr_type[v31], latest_rev_id[v32], pageId[v29], ipb_id[v34], userId[v28]}
-        [stmt_in] livein: {#tmp7[v118], ug_group[v30], pr_type[v31], latest_rev_id[v32], pageId[v29], ipb_id[v34], userId[v28]}
-      ug[v115] = #tmp7[v118];
-        [stmt_out] liveout: {ug_group[v30], latest_rev_id[v32], pr_type[v31], userId[v28], pageId[v29], ipb_id[v34]}
-        [stmt_in] livein: {ug_group[v30], latest_rev_id[v32], pr_type[v31], userId[v28], pageId[v29], ipb_id[v34]}
-      ug#ug_group[v117] = user_groups[userId[v28], ug_group[v30]].ug_group;
-        [stmt_out] liveout: {userId[v28], ipb_id[v34], pr_type[v31], ug_group[v30], pageId[v29], latest_rev_id[v32]}
-        [stmt_in] livein: {userId[v28], ipb_id[v34], pr_type[v31], ug_group[v30], pageId[v29], latest_rev_id[v32]}
-      ug#ug_user[v116] = user_groups[userId[v28], ug_group[v30]].ug_user;
-        [stmt_out] liveout: {ipb_id[v34], userId[v28], pr_type[v31], latest_rev_id[v32], pageId[v29]}
-        [stmt_in] livein: {ipb_id[v34], userId[v28], pr_type[v31], latest_rev_id[v32], pageId[v29]}
-      #tmp8[v124] = ipblocks[userId[v28], ipb_id[v34]];
-        [stmt_out] liveout: {ipb_id[v34], latest_rev_id[v32], #tmp8[v124], pageId[v29], userId[v28], pr_type[v31]}
-        [stmt_in] livein: {ipb_id[v34], latest_rev_id[v32], #tmp8[v124], pageId[v29], userId[v28], pr_type[v31]}
-      ip[v119] = #tmp8[v124];
-        [stmt_out] liveout: {pageId[v29], latest_rev_id[v32], userId[v28], ipb_id[v34], pr_type[v31]}
-        [stmt_in] livein: {pageId[v29], latest_rev_id[v32], userId[v28], ipb_id[v34], pr_type[v31]}
-      ip#ipb_address[v122] = ipblocks[userId[v28], ipb_id[v34]].ipb_address;
-        [stmt_out] liveout: {userId[v28], pageId[v29], ipb_id[v34], pr_type[v31], latest_rev_id[v32]}
-        [stmt_in] livein: {userId[v28], pageId[v29], ipb_id[v34], pr_type[v31], latest_rev_id[v32]}
-      ip#ipb_expiry[v123] = ipblocks[userId[v28], ipb_id[v34]].ipb_expiry;
-        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], userId[v28], pr_type[v31], ipb_id[v34]}
-        [stmt_in] livein: {latest_rev_id[v32], pageId[v29], userId[v28], pr_type[v31], ipb_id[v34]}
-      ip#ipb_id[v121] = ipblocks[userId[v28], ipb_id[v34]].ipb_id;
-        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], ipb_id[v34], userId[v28], pr_type[v31]}
-        [stmt_in] livein: {latest_rev_id[v32], pageId[v29], ipb_id[v34], userId[v28], pr_type[v31]}
-      ip#ipb_user[v120] = ipblocks[userId[v28], ipb_id[v34]].ipb_user;
-        [stmt_out] liveout: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
+      livein: {ug_group[v30], pr_type[v31], latest_rev_id[v32], userId[v28], ipb_id[v34], pageId[v29]}
+        [stmt_in] livein: {pr_type[v31], pageId[v29], ug_group[v30], ipb_id[v34], latest_rev_id[v32], userId[v28]}
+      #tmp9[v117] = user[userId[v28]];
+        [stmt_out] liveout: {#tmp9[v117], ipb_id[v34], pr_type[v31], pageId[v29], ug_group[v30], userId[v28], latest_rev_id[v32]}
+        [stmt_in] livein: {#tmp9[v117], ipb_id[v34], pr_type[v31], pageId[v29], ug_group[v30], userId[v28], latest_rev_id[v32]}
+      u[v112] = #tmp9[v117];
+        [stmt_out] liveout: {u[v112], pr_type[v31], ipb_id[v34], pageId[v29], ug_group[v30], userId[v28], latest_rev_id[v32]}
+        [stmt_in] livein: {u[v112], pr_type[v31], ipb_id[v34], pageId[v29], ug_group[v30], userId[v28], latest_rev_id[v32]}
+      u#user_editcount[v116] = user[userId[v28]].user_editcount;
+        [stmt_out] liveout: {userId[v28], ug_group[v30], u[v112], latest_rev_id[v32], pr_type[v31], pageId[v29], ipb_id[v34]}
+        [stmt_in] livein: {userId[v28], ug_group[v30], u[v112], latest_rev_id[v32], pr_type[v31], pageId[v29], ipb_id[v34]}
+      u#user_id[v113] = user[userId[v28]].user_id;
+        [stmt_out] liveout: {ug_group[v30], pageId[v29], userId[v28], latest_rev_id[v32], pr_type[v31], ipb_id[v34], u[v112]}
+        [stmt_in] livein: {ug_group[v30], pageId[v29], userId[v28], latest_rev_id[v32], pr_type[v31], ipb_id[v34], u[v112]}
+      u#user_name[v114] = user[userId[v28]].user_name;
+        [stmt_out] liveout: {ug_group[v30], pageId[v29], userId[v28], ipb_id[v34], u[v112], pr_type[v31], latest_rev_id[v32]}
+        [stmt_in] livein: {ug_group[v30], pageId[v29], userId[v28], ipb_id[v34], u[v112], pr_type[v31], latest_rev_id[v32]}
+      u#user_touched[v115] = user[userId[v28]].user_touched;
+        [stmt_out] liveout: {userId[v28], u[v112], ipb_id[v34], pr_type[v31], ug_group[v30], latest_rev_id[v32], pageId[v29]}
+        [stmt_in] livein: {userId[v28], u[v112], ipb_id[v34], pr_type[v31], ug_group[v30], latest_rev_id[v32], pageId[v29]}
+      #tmp10[v118] = to_unit[fn13](u[v112]);
+        [stmt_out] liveout: {userId[v28], ipb_id[v34], latest_rev_id[v32], ug_group[v30], pageId[v29], pr_type[v31]}
+        [stmt_in] livein: {userId[v28], ipb_id[v34], latest_rev_id[v32], ug_group[v30], pageId[v29], pr_type[v31]}
+      #tmp11[v122] = user_groups[userId[v28], ug_group[v30]];
+        [stmt_out] liveout: {#tmp11[v122], ipb_id[v34], latest_rev_id[v32], userId[v28], ug_group[v30], pr_type[v31], pageId[v29]}
+        [stmt_in] livein: {#tmp11[v122], ipb_id[v34], latest_rev_id[v32], userId[v28], ug_group[v30], pr_type[v31], pageId[v29]}
+      ug[v119] = #tmp11[v122];
+        [stmt_out] liveout: {ug_group[v30], pr_type[v31], pageId[v29], ug[v119], ipb_id[v34], latest_rev_id[v32], userId[v28]}
+        [stmt_in] livein: {ug_group[v30], pr_type[v31], pageId[v29], ug[v119], ipb_id[v34], latest_rev_id[v32], userId[v28]}
+      ug#ug_group[v121] = user_groups[userId[v28], ug_group[v30]].ug_group;
+        [stmt_out] liveout: {latest_rev_id[v32], pr_type[v31], ipb_id[v34], pageId[v29], ug[v119], ug_group[v30], userId[v28]}
+        [stmt_in] livein: {latest_rev_id[v32], pr_type[v31], ipb_id[v34], pageId[v29], ug[v119], ug_group[v30], userId[v28]}
+      ug#ug_user[v120] = user_groups[userId[v28], ug_group[v30]].ug_user;
+        [stmt_out] liveout: {pr_type[v31], ipb_id[v34], latest_rev_id[v32], pageId[v29], userId[v28], ug[v119]}
+        [stmt_in] livein: {pr_type[v31], ipb_id[v34], latest_rev_id[v32], pageId[v29], userId[v28], ug[v119]}
+      #tmp12[v123] = to_unit[fn13](ug[v119]);
+        [stmt_out] liveout: {userId[v28], ipb_id[v34], pr_type[v31], pageId[v29], latest_rev_id[v32]}
+        [stmt_in] livein: {userId[v28], ipb_id[v34], pr_type[v31], pageId[v29], latest_rev_id[v32]}
+      #tmp13[v129] = ipblocks[userId[v28], ipb_id[v34]];
+        [stmt_out] liveout: {userId[v28], ipb_id[v34], pr_type[v31], latest_rev_id[v32], pageId[v29], #tmp13[v129]}
+        [stmt_in] livein: {userId[v28], ipb_id[v34], pr_type[v31], latest_rev_id[v32], pageId[v29], #tmp13[v129]}
+      ip[v124] = #tmp13[v129];
+        [stmt_out] liveout: {ip[v124], pr_type[v31], userId[v28], latest_rev_id[v32], ipb_id[v34], pageId[v29]}
+        [stmt_in] livein: {ip[v124], pr_type[v31], userId[v28], latest_rev_id[v32], ipb_id[v34], pageId[v29]}
+      ip#ipb_address[v127] = ipblocks[userId[v28], ipb_id[v34]].ipb_address;
+        [stmt_out] liveout: {pr_type[v31], ip[v124], pageId[v29], userId[v28], latest_rev_id[v32], ipb_id[v34]}
+        [stmt_in] livein: {pr_type[v31], ip[v124], pageId[v29], userId[v28], latest_rev_id[v32], ipb_id[v34]}
+      ip#ipb_expiry[v128] = ipblocks[userId[v28], ipb_id[v34]].ipb_expiry;
+        [stmt_out] liveout: {ipb_id[v34], ip[v124], pageId[v29], userId[v28], latest_rev_id[v32], pr_type[v31]}
+        [stmt_in] livein: {ipb_id[v34], ip[v124], pageId[v29], userId[v28], latest_rev_id[v32], pr_type[v31]}
+      ip#ipb_id[v126] = ipblocks[userId[v28], ipb_id[v34]].ipb_id;
+        [stmt_out] liveout: {pr_type[v31], pageId[v29], ip[v124], latest_rev_id[v32], userId[v28], ipb_id[v34]}
+        [stmt_in] livein: {pr_type[v31], pageId[v29], ip[v124], latest_rev_id[v32], userId[v28], ipb_id[v34]}
+      ip#ipb_user[v125] = ipblocks[userId[v28], ipb_id[v34]].ipb_user;
+        [stmt_out] liveout: {pageId[v29], ip[v124], latest_rev_id[v32], pr_type[v31]}
+        [stmt_in] livein: {pageId[v29], ip[v124], latest_rev_id[v32], pr_type[v31]}
+      #tmp14[v130] = to_unit[fn13](ip[v124]);
+        [stmt_out] liveout: {pageId[v29], pr_type[v31], latest_rev_id[v32]}
       hop_exit hop5;
-      liveout: {pageId[v29], latest_rev_id[v32], pr_type[v31]}
+      liveout: {latest_rev_id[v32], pr_type[v31], pageId[v29]}
   }
 
   hop5 {
     entry_block: bb7
     bb7 (preds: bb6):
-      livein: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
-        [stmt_in] livein: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
-      #tmp9[v134] = page[pageId[v29]];
-        [stmt_out] liveout: {pageId[v29], pr_type[v31], latest_rev_id[v32], #tmp9[v134]}
-        [stmt_in] livein: {pageId[v29], pr_type[v31], latest_rev_id[v32], #tmp9[v134]}
-      p[v125] = #tmp9[v134];
-        [stmt_out] liveout: {pageId[v29], pr_type[v31], latest_rev_id[v32]}
+      livein: {pr_type[v31], pageId[v29], latest_rev_id[v32]}
         [stmt_in] livein: {pageId[v29], pr_type[v31], latest_rev_id[v32]}
-      p#page_id[v126] = page[pageId[v29]].page_id;
-        [stmt_out] liveout: {pageId[v29], latest_rev_id[v32], pr_type[v31]}
-        [stmt_in] livein: {pageId[v29], latest_rev_id[v32], pr_type[v31]}
-      p#page_is_new[v131] = page[pageId[v29]].page_is_new;
+      #tmp15[v140] = page[pageId[v29]];
+        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], #tmp15[v140], pr_type[v31]}
+        [stmt_in] livein: {latest_rev_id[v32], pageId[v29], #tmp15[v140], pr_type[v31]}
+      p[v131] = #tmp15[v140];
+        [stmt_out] liveout: {pr_type[v31], latest_rev_id[v32], pageId[v29], p[v131]}
+        [stmt_in] livein: {pr_type[v31], latest_rev_id[v32], pageId[v29], p[v131]}
+      p#page_id[v132] = page[pageId[v29]].page_id;
+        [stmt_out] liveout: {pr_type[v31], pageId[v29], p[v131], latest_rev_id[v32]}
+        [stmt_in] livein: {pr_type[v31], pageId[v29], p[v131], latest_rev_id[v32]}
+      p#page_is_new[v137] = page[pageId[v29]].page_is_new;
+        [stmt_out] liveout: {p[v131], latest_rev_id[v32], pageId[v29], pr_type[v31]}
+        [stmt_in] livein: {p[v131], latest_rev_id[v32], pageId[v29], pr_type[v31]}
+      p#page_is_redirect[v138] = page[pageId[v29]].page_is_redirect;
+        [stmt_out] liveout: {pr_type[v31], p[v131], latest_rev_id[v32], pageId[v29]}
+        [stmt_in] livein: {pr_type[v31], p[v131], latest_rev_id[v32], pageId[v29]}
+      p#page_latest[v135] = page[pageId[v29]].page_latest;
+        [stmt_out] liveout: {latest_rev_id[v32], pr_type[v31], pageId[v29], p[v131]}
+        [stmt_in] livein: {latest_rev_id[v32], pr_type[v31], pageId[v29], p[v131]}
+      p#page_len[v139] = page[pageId[v29]].page_len;
+        [stmt_out] liveout: {p[v131], latest_rev_id[v32], pr_type[v31], pageId[v29]}
+        [stmt_in] livein: {p[v131], latest_rev_id[v32], pr_type[v31], pageId[v29]}
+      p#page_namespace[v133] = page[pageId[v29]].page_namespace;
+        [stmt_out] liveout: {p[v131], pageId[v29], latest_rev_id[v32], pr_type[v31]}
+        [stmt_in] livein: {p[v131], pageId[v29], latest_rev_id[v32], pr_type[v31]}
+      p#page_title[v134] = page[pageId[v29]].page_title;
+        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], pr_type[v31], p[v131]}
+        [stmt_in] livein: {latest_rev_id[v32], pageId[v29], pr_type[v31], p[v131]}
+      p#page_touched[v136] = page[pageId[v29]].page_touched;
+        [stmt_out] liveout: {pr_type[v31], latest_rev_id[v32], p[v131], pageId[v29]}
+        [stmt_in] livein: {pr_type[v31], latest_rev_id[v32], p[v131], pageId[v29]}
+      #tmp16[v141] = to_unit[fn13](p[v131]);
         [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], pr_type[v31]}
         [stmt_in] livein: {latest_rev_id[v32], pageId[v29], pr_type[v31]}
-      p#page_is_redirect[v132] = page[pageId[v29]].page_is_redirect;
-        [stmt_out] liveout: {latest_rev_id[v32], pr_type[v31], pageId[v29]}
-        [stmt_in] livein: {latest_rev_id[v32], pr_type[v31], pageId[v29]}
-      p#page_latest[v129] = page[pageId[v29]].page_latest;
-        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], pr_type[v31]}
-        [stmt_in] livein: {latest_rev_id[v32], pageId[v29], pr_type[v31]}
-      p#page_len[v133] = page[pageId[v29]].page_len;
-        [stmt_out] liveout: {pageId[v29], latest_rev_id[v32], pr_type[v31]}
-        [stmt_in] livein: {pageId[v29], latest_rev_id[v32], pr_type[v31]}
-      p#page_namespace[v127] = page[pageId[v29]].page_namespace;
-        [stmt_out] liveout: {pr_type[v31], pageId[v29], latest_rev_id[v32]}
-        [stmt_in] livein: {pr_type[v31], pageId[v29], latest_rev_id[v32]}
-      p#page_title[v128] = page[pageId[v29]].page_title;
-        [stmt_out] liveout: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
-        [stmt_in] livein: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
-      p#page_touched[v130] = page[pageId[v29]].page_touched;
-        [stmt_out] liveout: {pr_type[v31], pageId[v29], latest_rev_id[v32]}
-        [stmt_in] livein: {pr_type[v31], pageId[v29], latest_rev_id[v32]}
-      #tmp10[v139] = page_restrictions[pageId[v29], pr_type[v31]];
-        [stmt_out] liveout: {pageId[v29], pr_type[v31], latest_rev_id[v32], #tmp10[v139]}
-        [stmt_in] livein: {pageId[v29], pr_type[v31], latest_rev_id[v32], #tmp10[v139]}
-      pr[v135] = #tmp10[v139];
-        [stmt_out] liveout: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
-        [stmt_in] livein: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
-      pr#pr_level[v138] = page_restrictions[pageId[v29], pr_type[v31]].pr_level;
-        [stmt_out] liveout: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
-        [stmt_in] livein: {pr_type[v31], latest_rev_id[v32], pageId[v29]}
-      pr#pr_page[v136] = page_restrictions[pageId[v29], pr_type[v31]].pr_page;
-        [stmt_out] liveout: {pageId[v29], pr_type[v31], latest_rev_id[v32]}
-        [stmt_in] livein: {pageId[v29], pr_type[v31], latest_rev_id[v32]}
-      pr#pr_type[v137] = page_restrictions[pageId[v29], pr_type[v31]].pr_type;
-        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29]}
-        [stmt_in] livein: {latest_rev_id[v32], pageId[v29]}
-      #tmp11[v150] = revision[pageId[v29], latest_rev_id[v32]];
-        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], #tmp11[v150]}
-        [stmt_in] livein: {latest_rev_id[v32], pageId[v29], #tmp11[v150]}
-      r[v140] = #tmp11[v150];
-        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29]}
-        [stmt_in] livein: {latest_rev_id[v32], pageId[v29]}
-      r#rev_comment[v144] = revision[pageId[v29], latest_rev_id[v32]].rev_comment;
+      #tmp17[v146] = page_restrictions[pageId[v29], pr_type[v31]];
+        [stmt_out] liveout: {#tmp17[v146], pr_type[v31], pageId[v29], latest_rev_id[v32]}
+        [stmt_in] livein: {#tmp17[v146], pr_type[v31], pageId[v29], latest_rev_id[v32]}
+      pr[v142] = #tmp17[v146];
+        [stmt_out] liveout: {pr_type[v31], latest_rev_id[v32], pageId[v29], pr[v142]}
+        [stmt_in] livein: {pr_type[v31], latest_rev_id[v32], pageId[v29], pr[v142]}
+      pr#pr_level[v145] = page_restrictions[pageId[v29], pr_type[v31]].pr_level;
+        [stmt_out] liveout: {latest_rev_id[v32], pr_type[v31], pr[v142], pageId[v29]}
+        [stmt_in] livein: {latest_rev_id[v32], pr_type[v31], pr[v142], pageId[v29]}
+      pr#pr_page[v143] = page_restrictions[pageId[v29], pr_type[v31]].pr_page;
+        [stmt_out] liveout: {pr_type[v31], latest_rev_id[v32], pageId[v29], pr[v142]}
+        [stmt_in] livein: {pr_type[v31], latest_rev_id[v32], pageId[v29], pr[v142]}
+      pr#pr_type[v144] = page_restrictions[pageId[v29], pr_type[v31]].pr_type;
+        [stmt_out] liveout: {pageId[v29], latest_rev_id[v32], pr[v142]}
+        [stmt_in] livein: {pageId[v29], latest_rev_id[v32], pr[v142]}
+      #tmp18[v147] = to_unit[fn13](pr[v142]);
         [stmt_out] liveout: {pageId[v29], latest_rev_id[v32]}
         [stmt_in] livein: {pageId[v29], latest_rev_id[v32]}
-      r#rev_id[v142] = revision[pageId[v29], latest_rev_id[v32]].rev_id;
+      #tmp19[v158] = revision[pageId[v29], latest_rev_id[v32]];
+        [stmt_out] liveout: {pageId[v29], #tmp19[v158], latest_rev_id[v32]}
+        [stmt_in] livein: {pageId[v29], #tmp19[v158], latest_rev_id[v32]}
+      r[v148] = #tmp19[v158];
         [stmt_out] liveout: {pageId[v29], latest_rev_id[v32]}
         [stmt_in] livein: {pageId[v29], latest_rev_id[v32]}
-      r#rev_len[v148] = revision[pageId[v29], latest_rev_id[v32]].rev_len;
+      r#rev_comment[v152] = revision[pageId[v29], latest_rev_id[v32]].rev_comment;
         [stmt_out] liveout: {pageId[v29], latest_rev_id[v32]}
         [stmt_in] livein: {pageId[v29], latest_rev_id[v32]}
-      r#rev_page[v141] = revision[pageId[v29], latest_rev_id[v32]].rev_page;
+      r#rev_id[v150] = revision[pageId[v29], latest_rev_id[v32]].rev_id;
         [stmt_out] liveout: {latest_rev_id[v32], pageId[v29]}
         [stmt_in] livein: {latest_rev_id[v32], pageId[v29]}
-      r#rev_parent_id[v149] = revision[pageId[v29], latest_rev_id[v32]].rev_parent_id;
+      r#rev_len[v156] = revision[pageId[v29], latest_rev_id[v32]].rev_len;
         [stmt_out] liveout: {latest_rev_id[v32], pageId[v29]}
         [stmt_in] livein: {latest_rev_id[v32], pageId[v29]}
-      r#rev_text_id[v143] = revision[pageId[v29], latest_rev_id[v32]].rev_text_id;
-        [stmt_out] liveout: {r#rev_text_id[v143], latest_rev_id[v32], pageId[v29]}
-        [stmt_in] livein: {r#rev_text_id[v143], latest_rev_id[v32], pageId[v29]}
-      r#rev_timestamp[v147] = revision[pageId[v29], latest_rev_id[v32]].rev_timestamp;
-        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], r#rev_text_id[v143]}
-        [stmt_in] livein: {latest_rev_id[v32], pageId[v29], r#rev_text_id[v143]}
-      r#rev_user[v145] = revision[pageId[v29], latest_rev_id[v32]].rev_user;
-        [stmt_out] liveout: {r#rev_text_id[v143], pageId[v29], latest_rev_id[v32]}
-        [stmt_in] livein: {r#rev_text_id[v143], pageId[v29], latest_rev_id[v32]}
-      r#rev_user_text[v146] = revision[pageId[v29], latest_rev_id[v32]].rev_user_text;
-        [stmt_out] liveout: {r#rev_text_id[v143]}
-        [stmt_in] livein: {r#rev_text_id[v143]}
-      textId[v151] = r#rev_text_id[v143];
-        [stmt_out] liveout: {textId[v151]}
+      r#rev_page[v149] = revision[pageId[v29], latest_rev_id[v32]].rev_page;
+        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29]}
+        [stmt_in] livein: {latest_rev_id[v32], pageId[v29]}
+      r#rev_parent_id[v157] = revision[pageId[v29], latest_rev_id[v32]].rev_parent_id;
+        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29]}
+        [stmt_in] livein: {latest_rev_id[v32], pageId[v29]}
+      r#rev_text_id[v151] = revision[pageId[v29], latest_rev_id[v32]].rev_text_id;
+        [stmt_out] liveout: {pageId[v29], latest_rev_id[v32], r#rev_text_id[v151]}
+        [stmt_in] livein: {pageId[v29], latest_rev_id[v32], r#rev_text_id[v151]}
+      r#rev_timestamp[v155] = revision[pageId[v29], latest_rev_id[v32]].rev_timestamp;
+        [stmt_out] liveout: {latest_rev_id[v32], pageId[v29], r#rev_text_id[v151]}
+        [stmt_in] livein: {latest_rev_id[v32], pageId[v29], r#rev_text_id[v151]}
+      r#rev_user[v153] = revision[pageId[v29], latest_rev_id[v32]].rev_user;
+        [stmt_out] liveout: {pageId[v29], r#rev_text_id[v151], latest_rev_id[v32]}
+        [stmt_in] livein: {pageId[v29], r#rev_text_id[v151], latest_rev_id[v32]}
+      r#rev_user_text[v154] = revision[pageId[v29], latest_rev_id[v32]].rev_user_text;
+        [stmt_out] liveout: {r#rev_text_id[v151]}
+        [stmt_in] livein: {r#rev_text_id[v151]}
+      textId[v159] = r#rev_text_id[v151];
+        [stmt_out] liveout: {textId[v159]}
       hop_exit hop6;
-      liveout: {textId[v151]}
+      liveout: {textId[v159]}
   }
 
   hop6 {
     entry_block: bb8
     bb8 (preds: bb7):
-      livein: {textId[v151]}
-        [stmt_in] livein: {textId[v151]}
-      #tmp12[v157] = text[textId[v151]];
-        [stmt_out] liveout: {textId[v151], #tmp12[v157]}
-        [stmt_in] livein: {textId[v151], #tmp12[v157]}
-      t[v152] = #tmp12[v157];
-        [stmt_out] liveout: {textId[v151]}
-        [stmt_in] livein: {textId[v151]}
-      t#old_flags[v156] = text[textId[v151]].old_flags;
-        [stmt_out] liveout: {textId[v151]}
-        [stmt_in] livein: {textId[v151]}
-      t#old_id[v153] = text[textId[v151]].old_id;
-        [stmt_out] liveout: {textId[v151]}
-        [stmt_in] livein: {textId[v151]}
-      t#old_page[v154] = text[textId[v151]].old_page;
-        [stmt_out] liveout: {textId[v151]}
-        [stmt_in] livein: {textId[v151]}
-      t#old_text[v155] = text[textId[v151]].old_text;
-        [stmt_out] liveout: {t#old_text[v155]}
-        [stmt_in] livein: {t#old_text[v155]}
-      content[v158] = t#old_text[v155];
+      livein: {textId[v159]}
+        [stmt_in] livein: {textId[v159]}
+      #tmp20[v165] = text[textId[v159]];
+        [stmt_out] liveout: {#tmp20[v165], textId[v159]}
+        [stmt_in] livein: {#tmp20[v165], textId[v159]}
+      t[v160] = #tmp20[v165];
+        [stmt_out] liveout: {textId[v159]}
+        [stmt_in] livein: {textId[v159]}
+      t#old_flags[v164] = text[textId[v159]].old_flags;
+        [stmt_out] liveout: {textId[v159]}
+        [stmt_in] livein: {textId[v159]}
+      t#old_id[v161] = text[textId[v159]].old_id;
+        [stmt_out] liveout: {textId[v159]}
+        [stmt_in] livein: {textId[v159]}
+      t#old_page[v162] = text[textId[v159]].old_page;
+        [stmt_out] liveout: {textId[v159]}
+        [stmt_in] livein: {textId[v159]}
+      t#old_text[v163] = text[textId[v159]].old_text;
+        [stmt_out] liveout: {t#old_text[v163]}
+        [stmt_in] livein: {t#old_text[v163]}
+      content[v166] = t#old_text[v163];
+        [stmt_out] liveout: {content[v166]}
+        [stmt_in] livein: {content[v166]}
+      #tmp21[v167] = to_unit[fn13](content[v166]);
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -572,110 +599,110 @@ transaction RemoveWatchList[fn19](userId[v35]: int, nameSpace[v36]: int, pageTit
   hop7 {
     entry_block: bb9
     bb9:
-      livein: {pageTitle[v37], userId[v35], nameSpace[v36]}
-        [stmt_in] livein: {pageTitle[v37], nameSpace[v36], userId[v35]}
-      #tmp13[v164] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]];
-        [stmt_out] liveout: {nameSpace[v36], pageTitle[v37], #tmp13[v164], userId[v35]}
-        [stmt_in] livein: {nameSpace[v36], pageTitle[v37], #tmp13[v164], userId[v35]}
-      wl[v159] = #tmp13[v164];
-        [stmt_out] liveout: {nameSpace[v36], userId[v35], pageTitle[v37]}
-        [stmt_in] livein: {nameSpace[v36], userId[v35], pageTitle[v37]}
-      wl#wl_namespace[v161] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_namespace;
-        [stmt_out] liveout: {userId[v35], nameSpace[v36], pageTitle[v37], wl#wl_namespace[v161]}
-        [stmt_in] livein: {userId[v35], nameSpace[v36], pageTitle[v37], wl#wl_namespace[v161]}
-      wl#wl_notificationtimestamp[v163] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_notificationtimestamp;
-        [stmt_out] liveout: {userId[v35], wl#wl_notificationtimestamp[v163], pageTitle[v37], wl#wl_namespace[v161], nameSpace[v36]}
-        [stmt_in] livein: {userId[v35], wl#wl_notificationtimestamp[v163], pageTitle[v37], wl#wl_namespace[v161], nameSpace[v36]}
-      wl#wl_title[v162] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_title;
-        [stmt_out] liveout: {nameSpace[v36], pageTitle[v37], userId[v35], wl#wl_notificationtimestamp[v163], wl#wl_title[v162], wl#wl_namespace[v161]}
-        [stmt_in] livein: {nameSpace[v36], pageTitle[v37], userId[v35], wl#wl_notificationtimestamp[v163], wl#wl_title[v162], wl#wl_namespace[v161]}
-      wl#wl_user[v160] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_user;
-        [stmt_out] liveout: {wl#wl_namespace[v161], wl#wl_notificationtimestamp[v163], userId[v35], wl#wl_user[v160], wl#wl_title[v162], pageTitle[v37], nameSpace[v36]}
-        [stmt_in] livein: {wl#wl_namespace[v161], wl#wl_notificationtimestamp[v163], userId[v35], wl#wl_user[v160], wl#wl_title[v162], pageTitle[v37], nameSpace[v36]}
-      watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_namespace = wl#wl_namespace[v161];
-        [stmt_out] liveout: {pageTitle[v37], userId[v35], wl#wl_user[v160], wl#wl_title[v162], wl#wl_notificationtimestamp[v163], nameSpace[v36]}
-        [stmt_in] livein: {pageTitle[v37], userId[v35], wl#wl_user[v160], wl#wl_title[v162], wl#wl_notificationtimestamp[v163], nameSpace[v36]}
-      watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_notificationtimestamp = wl#wl_notificationtimestamp[v163];
-        [stmt_out] liveout: {userId[v35], nameSpace[v36], wl#wl_user[v160], wl#wl_title[v162], pageTitle[v37]}
-        [stmt_in] livein: {userId[v35], nameSpace[v36], wl#wl_user[v160], wl#wl_title[v162], pageTitle[v37]}
-      watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_title = wl#wl_title[v162];
-        [stmt_out] liveout: {userId[v35], nameSpace[v36], wl#wl_user[v160], pageTitle[v37]}
-        [stmt_in] livein: {userId[v35], nameSpace[v36], wl#wl_user[v160], pageTitle[v37]}
-      watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_user = wl#wl_user[v160];
-        [stmt_out] liveout: {nameSpace[v36], pageTitle[v37], userId[v35]}
+      livein: {nameSpace[v36], pageTitle[v37], userId[v35]}
         [stmt_in] livein: {nameSpace[v36], pageTitle[v37], userId[v35]}
-      #tmp14[v165] = nameSpace[v36] == 0;
-        [stmt_out] liveout: {userId[v35], #tmp14[v165], pageTitle[v37]}
-      branch #tmp14[v165] ? bb10 : bb11;
-      liveout: {pageTitle[v37], userId[v35]}
+      #tmp22[v173] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]];
+        [stmt_out] liveout: {userId[v35], nameSpace[v36], #tmp22[v173], pageTitle[v37]}
+        [stmt_in] livein: {userId[v35], nameSpace[v36], #tmp22[v173], pageTitle[v37]}
+      wl[v168] = #tmp22[v173];
+        [stmt_out] liveout: {userId[v35], nameSpace[v36], pageTitle[v37]}
+        [stmt_in] livein: {userId[v35], nameSpace[v36], pageTitle[v37]}
+      wl#wl_namespace[v170] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_namespace;
+        [stmt_out] liveout: {pageTitle[v37], wl#wl_namespace[v170], userId[v35], nameSpace[v36]}
+        [stmt_in] livein: {pageTitle[v37], wl#wl_namespace[v170], userId[v35], nameSpace[v36]}
+      wl#wl_notificationtimestamp[v172] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_notificationtimestamp;
+        [stmt_out] liveout: {nameSpace[v36], userId[v35], wl#wl_notificationtimestamp[v172], pageTitle[v37], wl#wl_namespace[v170]}
+        [stmt_in] livein: {nameSpace[v36], userId[v35], wl#wl_notificationtimestamp[v172], pageTitle[v37], wl#wl_namespace[v170]}
+      wl#wl_title[v171] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_title;
+        [stmt_out] liveout: {wl#wl_namespace[v170], nameSpace[v36], userId[v35], wl#wl_title[v171], wl#wl_notificationtimestamp[v172], pageTitle[v37]}
+        [stmt_in] livein: {wl#wl_namespace[v170], nameSpace[v36], userId[v35], wl#wl_title[v171], wl#wl_notificationtimestamp[v172], pageTitle[v37]}
+      wl#wl_user[v169] = watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_user;
+        [stmt_out] liveout: {pageTitle[v37], wl#wl_namespace[v170], wl#wl_user[v169], nameSpace[v36], wl#wl_notificationtimestamp[v172], userId[v35], wl#wl_title[v171]}
+        [stmt_in] livein: {pageTitle[v37], wl#wl_namespace[v170], wl#wl_user[v169], nameSpace[v36], wl#wl_notificationtimestamp[v172], userId[v35], wl#wl_title[v171]}
+      watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_namespace = wl#wl_namespace[v170];
+        [stmt_out] liveout: {pageTitle[v37], wl#wl_notificationtimestamp[v172], userId[v35], nameSpace[v36], wl#wl_title[v171], wl#wl_user[v169]}
+        [stmt_in] livein: {pageTitle[v37], wl#wl_notificationtimestamp[v172], userId[v35], nameSpace[v36], wl#wl_title[v171], wl#wl_user[v169]}
+      watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_notificationtimestamp = wl#wl_notificationtimestamp[v172];
+        [stmt_out] liveout: {userId[v35], wl#wl_user[v169], nameSpace[v36], pageTitle[v37], wl#wl_title[v171]}
+        [stmt_in] livein: {userId[v35], wl#wl_user[v169], nameSpace[v36], pageTitle[v37], wl#wl_title[v171]}
+      watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_title = wl#wl_title[v171];
+        [stmt_out] liveout: {userId[v35], wl#wl_user[v169], pageTitle[v37], nameSpace[v36]}
+        [stmt_in] livein: {userId[v35], wl#wl_user[v169], pageTitle[v37], nameSpace[v36]}
+      watchlist[userId[v35], nameSpace[v36], pageTitle[v37]].wl_user = wl#wl_user[v169];
+        [stmt_out] liveout: {userId[v35], nameSpace[v36], pageTitle[v37]}
+        [stmt_in] livein: {userId[v35], nameSpace[v36], pageTitle[v37]}
+      #tmp23[v174] = nameSpace[v36] == 0;
+        [stmt_out] liveout: {userId[v35], #tmp23[v174], pageTitle[v37]}
+      branch #tmp23[v174] ? bb10 : bb11;
+      liveout: {userId[v35], pageTitle[v37]}
     bb10 (preds: bb9):
       livein: {pageTitle[v37], userId[v35]}
-        [stmt_in] livein: {pageTitle[v37], userId[v35]}
-      #tmp15[v171] = watchlist[userId[v35], 1, pageTitle[v37]];
-        [stmt_out] liveout: {#tmp15[v171], pageTitle[v37], userId[v35]}
-        [stmt_in] livein: {#tmp15[v171], pageTitle[v37], userId[v35]}
-      wl2[v166] = #tmp15[v171];
+        [stmt_in] livein: {userId[v35], pageTitle[v37]}
+      #tmp24[v180] = watchlist[userId[v35], 1, pageTitle[v37]];
+        [stmt_out] liveout: {pageTitle[v37], userId[v35], #tmp24[v180]}
+        [stmt_in] livein: {pageTitle[v37], userId[v35], #tmp24[v180]}
+      wl2[v175] = #tmp24[v180];
         [stmt_out] liveout: {pageTitle[v37], userId[v35]}
         [stmt_in] livein: {pageTitle[v37], userId[v35]}
-      wl2#wl_namespace[v168] = watchlist[userId[v35], 1, pageTitle[v37]].wl_namespace;
-        [stmt_out] liveout: {userId[v35], pageTitle[v37], wl2#wl_namespace[v168]}
-        [stmt_in] livein: {userId[v35], pageTitle[v37], wl2#wl_namespace[v168]}
-      wl2#wl_notificationtimestamp[v170] = watchlist[userId[v35], 1, pageTitle[v37]].wl_notificationtimestamp;
-        [stmt_out] liveout: {wl2#wl_namespace[v168], wl2#wl_notificationtimestamp[v170], userId[v35], pageTitle[v37]}
-        [stmt_in] livein: {wl2#wl_namespace[v168], wl2#wl_notificationtimestamp[v170], userId[v35], pageTitle[v37]}
-      wl2#wl_title[v169] = watchlist[userId[v35], 1, pageTitle[v37]].wl_title;
-        [stmt_out] liveout: {wl2#wl_title[v169], pageTitle[v37], wl2#wl_namespace[v168], wl2#wl_notificationtimestamp[v170], userId[v35]}
-        [stmt_in] livein: {wl2#wl_title[v169], pageTitle[v37], wl2#wl_namespace[v168], wl2#wl_notificationtimestamp[v170], userId[v35]}
-      wl2#wl_user[v167] = watchlist[userId[v35], 1, pageTitle[v37]].wl_user;
-        [stmt_out] liveout: {wl2#wl_title[v169], pageTitle[v37], wl2#wl_notificationtimestamp[v170], wl2#wl_user[v167], userId[v35], wl2#wl_namespace[v168]}
-        [stmt_in] livein: {wl2#wl_title[v169], pageTitle[v37], wl2#wl_notificationtimestamp[v170], wl2#wl_user[v167], userId[v35], wl2#wl_namespace[v168]}
-      watchlist[userId[v35], 1, pageTitle[v37]].wl_namespace = wl2#wl_namespace[v168];
-        [stmt_out] liveout: {userId[v35], pageTitle[v37], wl2#wl_notificationtimestamp[v170], wl2#wl_title[v169], wl2#wl_user[v167]}
-        [stmt_in] livein: {userId[v35], pageTitle[v37], wl2#wl_notificationtimestamp[v170], wl2#wl_title[v169], wl2#wl_user[v167]}
-      watchlist[userId[v35], 1, pageTitle[v37]].wl_notificationtimestamp = wl2#wl_notificationtimestamp[v170];
-        [stmt_out] liveout: {wl2#wl_title[v169], wl2#wl_user[v167], pageTitle[v37], userId[v35]}
-        [stmt_in] livein: {wl2#wl_title[v169], wl2#wl_user[v167], pageTitle[v37], userId[v35]}
-      watchlist[userId[v35], 1, pageTitle[v37]].wl_title = wl2#wl_title[v169];
-        [stmt_out] liveout: {pageTitle[v37], userId[v35], wl2#wl_user[v167]}
-        [stmt_in] livein: {pageTitle[v37], userId[v35], wl2#wl_user[v167]}
-      watchlist[userId[v35], 1, pageTitle[v37]].wl_user = wl2#wl_user[v167];
+      wl2#wl_namespace[v177] = watchlist[userId[v35], 1, pageTitle[v37]].wl_namespace;
+        [stmt_out] liveout: {wl2#wl_namespace[v177], userId[v35], pageTitle[v37]}
+        [stmt_in] livein: {wl2#wl_namespace[v177], userId[v35], pageTitle[v37]}
+      wl2#wl_notificationtimestamp[v179] = watchlist[userId[v35], 1, pageTitle[v37]].wl_notificationtimestamp;
+        [stmt_out] liveout: {userId[v35], wl2#wl_notificationtimestamp[v179], pageTitle[v37], wl2#wl_namespace[v177]}
+        [stmt_in] livein: {userId[v35], wl2#wl_notificationtimestamp[v179], pageTitle[v37], wl2#wl_namespace[v177]}
+      wl2#wl_title[v178] = watchlist[userId[v35], 1, pageTitle[v37]].wl_title;
+        [stmt_out] liveout: {pageTitle[v37], wl2#wl_title[v178], wl2#wl_notificationtimestamp[v179], userId[v35], wl2#wl_namespace[v177]}
+        [stmt_in] livein: {pageTitle[v37], wl2#wl_title[v178], wl2#wl_notificationtimestamp[v179], userId[v35], wl2#wl_namespace[v177]}
+      wl2#wl_user[v176] = watchlist[userId[v35], 1, pageTitle[v37]].wl_user;
+        [stmt_out] liveout: {wl2#wl_user[v176], pageTitle[v37], wl2#wl_notificationtimestamp[v179], wl2#wl_namespace[v177], wl2#wl_title[v178], userId[v35]}
+        [stmt_in] livein: {wl2#wl_user[v176], pageTitle[v37], wl2#wl_notificationtimestamp[v179], wl2#wl_namespace[v177], wl2#wl_title[v178], userId[v35]}
+      watchlist[userId[v35], 1, pageTitle[v37]].wl_namespace = wl2#wl_namespace[v177];
+        [stmt_out] liveout: {wl2#wl_notificationtimestamp[v179], userId[v35], wl2#wl_user[v176], pageTitle[v37], wl2#wl_title[v178]}
+        [stmt_in] livein: {wl2#wl_notificationtimestamp[v179], userId[v35], wl2#wl_user[v176], pageTitle[v37], wl2#wl_title[v178]}
+      watchlist[userId[v35], 1, pageTitle[v37]].wl_notificationtimestamp = wl2#wl_notificationtimestamp[v179];
+        [stmt_out] liveout: {wl2#wl_user[v176], pageTitle[v37], wl2#wl_title[v178], userId[v35]}
+        [stmt_in] livein: {wl2#wl_user[v176], pageTitle[v37], wl2#wl_title[v178], userId[v35]}
+      watchlist[userId[v35], 1, pageTitle[v37]].wl_title = wl2#wl_title[v178];
+        [stmt_out] liveout: {userId[v35], pageTitle[v37], wl2#wl_user[v176]}
+        [stmt_in] livein: {userId[v35], pageTitle[v37], wl2#wl_user[v176]}
+      watchlist[userId[v35], 1, pageTitle[v37]].wl_user = wl2#wl_user[v176];
         [stmt_out] liveout: {userId[v35]}
       jump bb11;
       liveout: {userId[v35]}
     bb11 (preds: bb9, bb10):
       livein: {userId[v35]}
         [stmt_in] livein: {userId[v35]}
-      #tmp16[v177] = user[userId[v35]];
-        [stmt_out] liveout: {userId[v35], #tmp16[v177]}
-        [stmt_in] livein: {userId[v35], #tmp16[v177]}
-      u[v172] = #tmp16[v177];
+      #tmp25[v186] = user[userId[v35]];
+        [stmt_out] liveout: {userId[v35], #tmp25[v186]}
+        [stmt_in] livein: {userId[v35], #tmp25[v186]}
+      u[v181] = #tmp25[v186];
         [stmt_out] liveout: {userId[v35]}
         [stmt_in] livein: {userId[v35]}
-      u#user_editcount[v176] = user[userId[v35]].user_editcount;
-        [stmt_out] liveout: {userId[v35], u#user_editcount[v176]}
-        [stmt_in] livein: {userId[v35], u#user_editcount[v176]}
-      u#user_id[v173] = user[userId[v35]].user_id;
-        [stmt_out] liveout: {u#user_id[v173], u#user_editcount[v176], userId[v35]}
-        [stmt_in] livein: {u#user_id[v173], u#user_editcount[v176], userId[v35]}
-      u#user_name[v174] = user[userId[v35]].user_name;
-        [stmt_out] liveout: {u#user_id[v173], u#user_editcount[v176], userId[v35], u#user_name[v174]}
-        [stmt_in] livein: {u#user_id[v173], u#user_editcount[v176], userId[v35], u#user_name[v174]}
-      u#user_touched[v175] = user[userId[v35]].user_touched;
-        [stmt_out] liveout: {userId[v35], u#user_id[v173], u#user_name[v174], u#user_editcount[v176]}
-        [stmt_in] livein: {userId[v35], u#user_id[v173], u#user_name[v174], u#user_editcount[v176]}
-      u#user_touched[v175] = 0;
-        [stmt_out] liveout: {userId[v35], u#user_editcount[v176], u#user_touched[v175], u#user_id[v173], u#user_name[v174]}
-        [stmt_in] livein: {userId[v35], u#user_editcount[v176], u#user_touched[v175], u#user_id[v173], u#user_name[v174]}
-      user[userId[v35]].user_editcount = u#user_editcount[v176];
-        [stmt_out] liveout: {u#user_name[v174], userId[v35], u#user_id[v173], u#user_touched[v175]}
-        [stmt_in] livein: {u#user_name[v174], userId[v35], u#user_id[v173], u#user_touched[v175]}
-      user[userId[v35]].user_id = u#user_id[v173];
-        [stmt_out] liveout: {userId[v35], u#user_touched[v175], u#user_name[v174]}
-        [stmt_in] livein: {userId[v35], u#user_touched[v175], u#user_name[v174]}
-      user[userId[v35]].user_name = u#user_name[v174];
-        [stmt_out] liveout: {u#user_touched[v175], userId[v35]}
-        [stmt_in] livein: {u#user_touched[v175], userId[v35]}
-      user[userId[v35]].user_touched = u#user_touched[v175];
+      u#user_editcount[v185] = user[userId[v35]].user_editcount;
+        [stmt_out] liveout: {userId[v35], u#user_editcount[v185]}
+        [stmt_in] livein: {userId[v35], u#user_editcount[v185]}
+      u#user_id[v182] = user[userId[v35]].user_id;
+        [stmt_out] liveout: {u#user_editcount[v185], u#user_id[v182], userId[v35]}
+        [stmt_in] livein: {u#user_editcount[v185], u#user_id[v182], userId[v35]}
+      u#user_name[v183] = user[userId[v35]].user_name;
+        [stmt_out] liveout: {u#user_editcount[v185], u#user_id[v182], u#user_name[v183], userId[v35]}
+        [stmt_in] livein: {u#user_editcount[v185], u#user_id[v182], u#user_name[v183], userId[v35]}
+      u#user_touched[v184] = user[userId[v35]].user_touched;
+        [stmt_out] liveout: {u#user_id[v182], u#user_editcount[v185], u#user_name[v183], userId[v35]}
+        [stmt_in] livein: {u#user_id[v182], u#user_editcount[v185], u#user_name[v183], userId[v35]}
+      u#user_touched[v184] = 0;
+        [stmt_out] liveout: {u#user_name[v183], u#user_id[v182], u#user_editcount[v185], userId[v35], u#user_touched[v184]}
+        [stmt_in] livein: {u#user_name[v183], u#user_id[v182], u#user_editcount[v185], userId[v35], u#user_touched[v184]}
+      user[userId[v35]].user_editcount = u#user_editcount[v185];
+        [stmt_out] liveout: {userId[v35], u#user_name[v183], u#user_id[v182], u#user_touched[v184]}
+        [stmt_in] livein: {userId[v35], u#user_name[v183], u#user_id[v182], u#user_touched[v184]}
+      user[userId[v35]].user_id = u#user_id[v182];
+        [stmt_out] liveout: {u#user_touched[v184], userId[v35], u#user_name[v183]}
+        [stmt_in] livein: {u#user_touched[v184], userId[v35], u#user_name[v183]}
+      user[userId[v35]].user_name = u#user_name[v183];
+        [stmt_out] liveout: {u#user_touched[v184], userId[v35]}
+        [stmt_in] livein: {u#user_touched[v184], userId[v35]}
+      user[userId[v35]].user_touched = u#user_touched[v184];
         [stmt_out] liveout: {}
       return;
       liveout: {}
@@ -690,250 +717,250 @@ transaction UpdatePage[fn20](nextTextId[v38]: int, nextRevId[v39]: int, rcId[v40
   hop8 {
     entry_block: bb12
     bb12:
-      livein: {revisionId[v48], nextTextId[v38], userText[v47], userId[v46], pageNamespace[v44], pageText[v43], pageLen[v45], rcId[v40], pageTitle[v42], nextRevId[v39], pageId[v41], otherUserId[v50], revComment[v49]}
-        [stmt_in] livein: {pageTitle[v42], userId[v46], revisionId[v48], pageId[v41], rcId[v40], nextRevId[v39], pageLen[v45], otherUserId[v50], pageNamespace[v44], revComment[v49], pageText[v43], userText[v47], nextTextId[v38]}
+      livein: {userText[v47], nextTextId[v38], pageId[v41], pageText[v43], otherUserId[v50], rcId[v40], userId[v46], pageTitle[v42], nextRevId[v39], revComment[v49], revisionId[v48], pageLen[v45], pageNamespace[v44]}
+        [stmt_in] livein: {revisionId[v48], userId[v46], userText[v47], pageNamespace[v44], pageText[v43], rcId[v40], pageTitle[v42], pageLen[v45], revComment[v49], pageId[v41], nextTextId[v38], otherUserId[v50], nextRevId[v39]}
       text[nextTextId[v38]].old_page = pageId[v41];
-        [stmt_out] liveout: {pageTitle[v42], revisionId[v48], userText[v47], pageLen[v45], rcId[v40], otherUserId[v50], nextRevId[v39], userId[v46], pageId[v41], pageText[v43], pageNamespace[v44], revComment[v49], nextTextId[v38]}
-        [stmt_in] livein: {pageTitle[v42], revisionId[v48], userText[v47], pageLen[v45], rcId[v40], otherUserId[v50], nextRevId[v39], userId[v46], pageId[v41], pageText[v43], pageNamespace[v44], revComment[v49], nextTextId[v38]}
+        [stmt_out] liveout: {revComment[v49], otherUserId[v50], revisionId[v48], userId[v46], userText[v47], pageNamespace[v44], pageText[v43], pageId[v41], nextRevId[v39], rcId[v40], nextTextId[v38], pageTitle[v42], pageLen[v45]}
+        [stmt_in] livein: {revComment[v49], otherUserId[v50], revisionId[v48], userId[v46], userText[v47], pageNamespace[v44], pageText[v43], pageId[v41], nextRevId[v39], rcId[v40], nextTextId[v38], pageTitle[v42], pageLen[v45]}
       text[nextTextId[v38]].old_text = pageText[v43];
-        [stmt_out] liveout: {revComment[v49], pageNamespace[v44], nextTextId[v38], otherUserId[v50], pageTitle[v42], revisionId[v48], userText[v47], nextRevId[v39], pageLen[v45], pageId[v41], rcId[v40], userId[v46]}
-        [stmt_in] livein: {revComment[v49], pageNamespace[v44], nextTextId[v38], otherUserId[v50], pageTitle[v42], revisionId[v48], userText[v47], nextRevId[v39], pageLen[v45], pageId[v41], rcId[v40], userId[v46]}
+        [stmt_out] liveout: {revisionId[v48], otherUserId[v50], revComment[v49], rcId[v40], pageLen[v45], userId[v46], nextTextId[v38], userText[v47], pageTitle[v42], pageNamespace[v44], pageId[v41], nextRevId[v39]}
+        [stmt_in] livein: {revisionId[v48], otherUserId[v50], revComment[v49], rcId[v40], pageLen[v45], userId[v46], nextTextId[v38], userText[v47], pageTitle[v42], pageNamespace[v44], pageId[v41], nextRevId[v39]}
       text[nextTextId[v38]].old_flags = "utf-8";
-        [stmt_out] liveout: {userId[v46], pageLen[v45], userText[v47], revisionId[v48], nextRevId[v39], otherUserId[v50], pageTitle[v42], revComment[v49], pageId[v41], nextTextId[v38], rcId[v40], pageNamespace[v44]}
-        [stmt_in] livein: {userId[v46], pageLen[v45], userText[v47], revisionId[v48], nextRevId[v39], otherUserId[v50], pageTitle[v42], revComment[v49], pageId[v41], nextTextId[v38], rcId[v40], pageNamespace[v44]}
+        [stmt_out] liveout: {userText[v47], pageNamespace[v44], otherUserId[v50], pageLen[v45], pageId[v41], rcId[v40], nextRevId[v39], pageTitle[v42], revisionId[v48], nextTextId[v38], revComment[v49], userId[v46]}
+        [stmt_in] livein: {userText[v47], pageNamespace[v44], otherUserId[v50], pageLen[v45], pageId[v41], rcId[v40], nextRevId[v39], pageTitle[v42], revisionId[v48], nextTextId[v38], revComment[v49], userId[v46]}
       revision[pageId[v41], nextRevId[v39]].rev_text_id = nextTextId[v38];
-        [stmt_out] liveout: {pageLen[v45], userId[v46], revisionId[v48], revComment[v49], pageId[v41], pageNamespace[v44], nextTextId[v38], otherUserId[v50], pageTitle[v42], nextRevId[v39], userText[v47], rcId[v40]}
-        [stmt_in] livein: {pageLen[v45], userId[v46], revisionId[v48], revComment[v49], pageId[v41], pageNamespace[v44], nextTextId[v38], otherUserId[v50], pageTitle[v42], nextRevId[v39], userText[v47], rcId[v40]}
+        [stmt_out] liveout: {nextRevId[v39], userText[v47], userId[v46], pageTitle[v42], revisionId[v48], otherUserId[v50], pageLen[v45], pageId[v41], rcId[v40], pageNamespace[v44], nextTextId[v38], revComment[v49]}
+        [stmt_in] livein: {nextRevId[v39], userText[v47], userId[v46], pageTitle[v42], revisionId[v48], otherUserId[v50], pageLen[v45], pageId[v41], rcId[v40], pageNamespace[v44], nextTextId[v38], revComment[v49]}
       revision[pageId[v41], nextRevId[v39]].rev_comment = revComment[v49];
-        [stmt_out] liveout: {rcId[v40], pageId[v41], userText[v47], nextRevId[v39], nextTextId[v38], pageNamespace[v44], userId[v46], pageLen[v45], revComment[v49], otherUserId[v50], pageTitle[v42], revisionId[v48]}
-        [stmt_in] livein: {rcId[v40], pageId[v41], userText[v47], nextRevId[v39], nextTextId[v38], pageNamespace[v44], userId[v46], pageLen[v45], revComment[v49], otherUserId[v50], pageTitle[v42], revisionId[v48]}
+        [stmt_out] liveout: {userText[v47], otherUserId[v50], pageLen[v45], userId[v46], pageTitle[v42], pageId[v41], revComment[v49], nextRevId[v39], revisionId[v48], pageNamespace[v44], rcId[v40], nextTextId[v38]}
+        [stmt_in] livein: {userText[v47], otherUserId[v50], pageLen[v45], userId[v46], pageTitle[v42], pageId[v41], revComment[v49], nextRevId[v39], revisionId[v48], pageNamespace[v44], rcId[v40], nextTextId[v38]}
       revision[pageId[v41], nextRevId[v39]].rev_user = userId[v46];
-        [stmt_out] liveout: {pageLen[v45], userText[v47], nextRevId[v39], pageTitle[v42], rcId[v40], pageId[v41], revComment[v49], nextTextId[v38], userId[v46], otherUserId[v50], revisionId[v48], pageNamespace[v44]}
-        [stmt_in] livein: {pageLen[v45], userText[v47], nextRevId[v39], pageTitle[v42], rcId[v40], pageId[v41], revComment[v49], nextTextId[v38], userId[v46], otherUserId[v50], revisionId[v48], pageNamespace[v44]}
+        [stmt_out] liveout: {userText[v47], otherUserId[v50], userId[v46], pageTitle[v42], revisionId[v48], revComment[v49], pageLen[v45], pageId[v41], pageNamespace[v44], nextRevId[v39], nextTextId[v38], rcId[v40]}
+        [stmt_in] livein: {userText[v47], otherUserId[v50], userId[v46], pageTitle[v42], revisionId[v48], revComment[v49], pageLen[v45], pageId[v41], pageNamespace[v44], nextRevId[v39], nextTextId[v38], rcId[v40]}
       revision[pageId[v41], nextRevId[v39]].rev_user_text = userText[v47];
-        [stmt_out] liveout: {otherUserId[v50], rcId[v40], revisionId[v48], pageId[v41], revComment[v49], nextRevId[v39], pageNamespace[v44], nextTextId[v38], pageLen[v45], userText[v47], pageTitle[v42], userId[v46]}
-        [stmt_in] livein: {otherUserId[v50], rcId[v40], revisionId[v48], pageId[v41], revComment[v49], nextRevId[v39], pageNamespace[v44], nextTextId[v38], pageLen[v45], userText[v47], pageTitle[v42], userId[v46]}
+        [stmt_out] liveout: {revComment[v49], rcId[v40], userText[v47], pageLen[v45], nextRevId[v39], pageId[v41], userId[v46], pageNamespace[v44], nextTextId[v38], otherUserId[v50], pageTitle[v42], revisionId[v48]}
+        [stmt_in] livein: {revComment[v49], rcId[v40], userText[v47], pageLen[v45], nextRevId[v39], pageId[v41], userId[v46], pageNamespace[v44], nextTextId[v38], otherUserId[v50], pageTitle[v42], revisionId[v48]}
       revision[pageId[v41], nextRevId[v39]].rev_timestamp = 1;
-        [stmt_out] liveout: {revComment[v49], userId[v46], revisionId[v48], nextTextId[v38], pageTitle[v42], pageLen[v45], pageId[v41], otherUserId[v50], nextRevId[v39], pageNamespace[v44], userText[v47], rcId[v40]}
-        [stmt_in] livein: {revComment[v49], userId[v46], revisionId[v48], nextTextId[v38], pageTitle[v42], pageLen[v45], pageId[v41], otherUserId[v50], nextRevId[v39], pageNamespace[v44], userText[v47], rcId[v40]}
+        [stmt_out] liveout: {pageTitle[v42], nextTextId[v38], revComment[v49], revisionId[v48], userText[v47], pageId[v41], rcId[v40], nextRevId[v39], otherUserId[v50], pageNamespace[v44], pageLen[v45], userId[v46]}
+        [stmt_in] livein: {pageTitle[v42], nextTextId[v38], revComment[v49], revisionId[v48], userText[v47], pageId[v41], rcId[v40], nextRevId[v39], otherUserId[v50], pageNamespace[v44], pageLen[v45], userId[v46]}
       revision[pageId[v41], nextRevId[v39]].rev_len = pageLen[v45];
-        [stmt_out] liveout: {revComment[v49], otherUserId[v50], userId[v46], nextTextId[v38], pageTitle[v42], nextRevId[v39], userText[v47], pageId[v41], revisionId[v48], pageLen[v45], pageNamespace[v44], rcId[v40]}
-        [stmt_in] livein: {revComment[v49], otherUserId[v50], userId[v46], nextTextId[v38], pageTitle[v42], nextRevId[v39], userText[v47], pageId[v41], revisionId[v48], pageLen[v45], pageNamespace[v44], rcId[v40]}
+        [stmt_out] liveout: {revComment[v49], pageTitle[v42], otherUserId[v50], nextTextId[v38], userText[v47], pageLen[v45], nextRevId[v39], userId[v46], pageNamespace[v44], revisionId[v48], pageId[v41], rcId[v40]}
+        [stmt_in] livein: {revComment[v49], pageTitle[v42], otherUserId[v50], nextTextId[v38], userText[v47], pageLen[v45], nextRevId[v39], userId[v46], pageNamespace[v44], revisionId[v48], pageId[v41], rcId[v40]}
       revision[pageId[v41], nextRevId[v39]].rev_parent_id = revisionId[v48];
-        [stmt_out] liveout: {pageNamespace[v44], nextRevId[v39], pageTitle[v42], revisionId[v48], userId[v46], otherUserId[v50], pageLen[v45], userText[v47], rcId[v40], revComment[v49], pageId[v41], nextTextId[v38]}
-        [stmt_in] livein: {pageNamespace[v44], nextRevId[v39], pageTitle[v42], revisionId[v48], userId[v46], otherUserId[v50], pageLen[v45], userText[v47], rcId[v40], revComment[v49], pageId[v41], nextTextId[v38]}
-      #tmp17[v187] = page[pageId[v41]];
-        [stmt_out] liveout: {otherUserId[v50], rcId[v40], userText[v47], nextRevId[v39], pageId[v41], pageNamespace[v44], pageLen[v45], pageTitle[v42], revisionId[v48], userId[v46], revComment[v49], #tmp17[v187], nextTextId[v38]}
-        [stmt_in] livein: {otherUserId[v50], rcId[v40], userText[v47], nextRevId[v39], pageId[v41], pageNamespace[v44], pageLen[v45], pageTitle[v42], revisionId[v48], userId[v46], revComment[v49], #tmp17[v187], nextTextId[v38]}
-      p[v178] = #tmp17[v187];
-        [stmt_out] liveout: {nextRevId[v39], rcId[v40], userText[v47], userId[v46], pageId[v41], pageNamespace[v44], otherUserId[v50], nextTextId[v38], pageLen[v45], pageTitle[v42], revComment[v49], revisionId[v48]}
-        [stmt_in] livein: {nextRevId[v39], rcId[v40], userText[v47], userId[v46], pageId[v41], pageNamespace[v44], otherUserId[v50], nextTextId[v38], pageLen[v45], pageTitle[v42], revComment[v49], revisionId[v48]}
-      p#page_id[v179] = page[pageId[v41]].page_id;
-        [stmt_out] liveout: {p#page_id[v179], pageTitle[v42], rcId[v40], revisionId[v48], userId[v46], nextTextId[v38], pageLen[v45], nextRevId[v39], userText[v47], revComment[v49], pageId[v41], pageNamespace[v44], otherUserId[v50]}
-        [stmt_in] livein: {p#page_id[v179], pageTitle[v42], rcId[v40], revisionId[v48], userId[v46], nextTextId[v38], pageLen[v45], nextRevId[v39], userText[v47], revComment[v49], pageId[v41], pageNamespace[v44], otherUserId[v50]}
-      p#page_is_new[v184] = page[pageId[v41]].page_is_new;
-        [stmt_out] liveout: {pageLen[v45], rcId[v40], revComment[v49], userId[v46], userText[v47], p#page_is_new[v184], revisionId[v48], pageId[v41], p#page_id[v179], pageTitle[v42], nextRevId[v39], nextTextId[v38], otherUserId[v50], pageNamespace[v44]}
-        [stmt_in] livein: {pageLen[v45], rcId[v40], revComment[v49], userId[v46], userText[v47], p#page_is_new[v184], revisionId[v48], pageId[v41], p#page_id[v179], pageTitle[v42], nextRevId[v39], nextTextId[v38], otherUserId[v50], pageNamespace[v44]}
-      p#page_is_redirect[v185] = page[pageId[v41]].page_is_redirect;
-        [stmt_out] liveout: {nextRevId[v39], userId[v46], nextTextId[v38], rcId[v40], pageTitle[v42], revComment[v49], revisionId[v48], pageId[v41], otherUserId[v50], p#page_is_new[v184], p#page_is_redirect[v185], pageNamespace[v44], p#page_id[v179], pageLen[v45], userText[v47]}
-        [stmt_in] livein: {nextRevId[v39], userId[v46], nextTextId[v38], rcId[v40], pageTitle[v42], revComment[v49], revisionId[v48], pageId[v41], otherUserId[v50], p#page_is_new[v184], p#page_is_redirect[v185], pageNamespace[v44], p#page_id[v179], pageLen[v45], userText[v47]}
-      p#page_latest[v182] = page[pageId[v41]].page_latest;
-        [stmt_out] liveout: {pageLen[v45], pageNamespace[v44], revisionId[v48], pageId[v41], p#page_id[v179], revComment[v49], userId[v46], otherUserId[v50], p#page_is_new[v184], userText[v47], pageTitle[v42], nextRevId[v39], p#page_is_redirect[v185], nextTextId[v38], rcId[v40]}
-        [stmt_in] livein: {pageLen[v45], pageNamespace[v44], revisionId[v48], pageId[v41], p#page_id[v179], revComment[v49], userId[v46], otherUserId[v50], p#page_is_new[v184], userText[v47], pageTitle[v42], nextRevId[v39], p#page_is_redirect[v185], nextTextId[v38], rcId[v40]}
-      p#page_len[v186] = page[pageId[v41]].page_len;
-        [stmt_out] liveout: {p#page_is_redirect[v185], nextRevId[v39], pageLen[v45], pageNamespace[v44], rcId[v40], revComment[v49], revisionId[v48], pageId[v41], userId[v46], pageTitle[v42], p#page_id[v179], p#page_is_new[v184], userText[v47], otherUserId[v50], nextTextId[v38]}
-        [stmt_in] livein: {p#page_is_redirect[v185], nextRevId[v39], pageLen[v45], pageNamespace[v44], rcId[v40], revComment[v49], revisionId[v48], pageId[v41], userId[v46], pageTitle[v42], p#page_id[v179], p#page_is_new[v184], userText[v47], otherUserId[v50], nextTextId[v38]}
-      p#page_namespace[v180] = page[pageId[v41]].page_namespace;
-        [stmt_out] liveout: {revisionId[v48], p#page_is_new[v184], rcId[v40], revComment[v49], userId[v46], pageNamespace[v44], nextRevId[v39], pageId[v41], pageLen[v45], otherUserId[v50], pageTitle[v42], nextTextId[v38], p#page_is_redirect[v185], p#page_id[v179], p#page_namespace[v180], userText[v47]}
-        [stmt_in] livein: {revisionId[v48], p#page_is_new[v184], rcId[v40], revComment[v49], userId[v46], pageNamespace[v44], nextRevId[v39], pageId[v41], pageLen[v45], otherUserId[v50], pageTitle[v42], nextTextId[v38], p#page_is_redirect[v185], p#page_id[v179], p#page_namespace[v180], userText[v47]}
-      p#page_title[v181] = page[pageId[v41]].page_title;
-        [stmt_out] liveout: {p#page_title[v181], p#page_id[v179], pageId[v41], pageLen[v45], pageNamespace[v44], userText[v47], p#page_namespace[v180], revComment[v49], otherUserId[v50], revisionId[v48], pageTitle[v42], p#page_is_new[v184], nextTextId[v38], rcId[v40], userId[v46], nextRevId[v39], p#page_is_redirect[v185]}
-        [stmt_in] livein: {p#page_title[v181], p#page_id[v179], pageId[v41], pageLen[v45], pageNamespace[v44], userText[v47], p#page_namespace[v180], revComment[v49], otherUserId[v50], revisionId[v48], pageTitle[v42], p#page_is_new[v184], nextTextId[v38], rcId[v40], userId[v46], nextRevId[v39], p#page_is_redirect[v185]}
-      p#page_touched[v183] = page[pageId[v41]].page_touched;
-        [stmt_out] liveout: {nextRevId[v39], p#page_title[v181], p#page_is_new[v184], nextTextId[v38], otherUserId[v50], revComment[v49], rcId[v40], revisionId[v48], p#page_id[v179], p#page_is_redirect[v185], pageNamespace[v44], pageLen[v45], userText[v47], p#page_namespace[v180], userId[v46], pageId[v41], pageTitle[v42]}
-        [stmt_in] livein: {nextRevId[v39], p#page_title[v181], p#page_is_new[v184], nextTextId[v38], otherUserId[v50], revComment[v49], rcId[v40], revisionId[v48], p#page_id[v179], p#page_is_redirect[v185], pageNamespace[v44], pageLen[v45], userText[v47], p#page_namespace[v180], userId[v46], pageId[v41], pageTitle[v42]}
-      p#page_latest[v182] = nextRevId[v39];
-        [stmt_out] liveout: {pageNamespace[v44], pageId[v41], nextRevId[v39], nextTextId[v38], rcId[v40], p#page_id[v179], p#page_title[v181], p#page_latest[v182], pageLen[v45], otherUserId[v50], revComment[v49], p#page_is_redirect[v185], revisionId[v48], pageTitle[v42], userText[v47], p#page_is_new[v184], userId[v46], p#page_namespace[v180]}
-        [stmt_in] livein: {pageNamespace[v44], pageId[v41], nextRevId[v39], nextTextId[v38], rcId[v40], p#page_id[v179], p#page_title[v181], p#page_latest[v182], pageLen[v45], otherUserId[v50], revComment[v49], p#page_is_redirect[v185], revisionId[v48], pageTitle[v42], userText[v47], p#page_is_new[v184], userId[v46], p#page_namespace[v180]}
-      p#page_touched[v183] = 1;
-        [stmt_out] liveout: {p#page_is_redirect[v185], otherUserId[v50], revisionId[v48], nextTextId[v38], pageNamespace[v44], nextRevId[v39], p#page_title[v181], p#page_latest[v182], revComment[v49], p#page_namespace[v180], userId[v46], p#page_touched[v183], pageLen[v45], rcId[v40], pageTitle[v42], userText[v47], p#page_is_new[v184], pageId[v41], p#page_id[v179]}
-        [stmt_in] livein: {p#page_is_redirect[v185], otherUserId[v50], revisionId[v48], nextTextId[v38], pageNamespace[v44], nextRevId[v39], p#page_title[v181], p#page_latest[v182], revComment[v49], p#page_namespace[v180], userId[v46], p#page_touched[v183], pageLen[v45], rcId[v40], pageTitle[v42], userText[v47], p#page_is_new[v184], pageId[v41], p#page_id[v179]}
-      p#page_len[v186] = pageLen[v45];
-        [stmt_out] liveout: {p#page_title[v181], userText[v47], otherUserId[v50], pageTitle[v42], p#page_is_new[v184], userId[v46], p#page_touched[v183], rcId[v40], nextTextId[v38], p#page_latest[v182], pageNamespace[v44], p#page_is_redirect[v185], revComment[v49], pageId[v41], p#page_len[v186], p#page_id[v179], revisionId[v48], p#page_namespace[v180], pageLen[v45], nextRevId[v39]}
-        [stmt_in] livein: {p#page_title[v181], userText[v47], otherUserId[v50], pageTitle[v42], p#page_is_new[v184], userId[v46], p#page_touched[v183], rcId[v40], nextTextId[v38], p#page_latest[v182], pageNamespace[v44], p#page_is_redirect[v185], revComment[v49], pageId[v41], p#page_len[v186], p#page_id[v179], revisionId[v48], p#page_namespace[v180], pageLen[v45], nextRevId[v39]}
-      page[pageId[v41]].page_id = p#page_id[v179];
-        [stmt_out] liveout: {nextTextId[v38], pageId[v41], p#page_len[v186], pageNamespace[v44], p#page_title[v181], userText[v47], p#page_touched[v183], p#page_is_redirect[v185], userId[v46], p#page_latest[v182], rcId[v40], revisionId[v48], p#page_namespace[v180], otherUserId[v50], pageLen[v45], revComment[v49], nextRevId[v39], pageTitle[v42], p#page_is_new[v184]}
-        [stmt_in] livein: {nextTextId[v38], pageId[v41], p#page_len[v186], pageNamespace[v44], p#page_title[v181], userText[v47], p#page_touched[v183], p#page_is_redirect[v185], userId[v46], p#page_latest[v182], rcId[v40], revisionId[v48], p#page_namespace[v180], otherUserId[v50], pageLen[v45], revComment[v49], nextRevId[v39], pageTitle[v42], p#page_is_new[v184]}
-      page[pageId[v41]].page_is_new = p#page_is_new[v184];
-        [stmt_out] liveout: {p#page_touched[v183], userText[v47], p#page_namespace[v180], revComment[v49], p#page_is_redirect[v185], pageLen[v45], rcId[v40], nextRevId[v39], p#page_len[v186], pageTitle[v42], otherUserId[v50], p#page_title[v181], p#page_latest[v182], nextTextId[v38], pageNamespace[v44], pageId[v41], userId[v46], revisionId[v48]}
-        [stmt_in] livein: {p#page_touched[v183], userText[v47], p#page_namespace[v180], revComment[v49], p#page_is_redirect[v185], pageLen[v45], rcId[v40], nextRevId[v39], p#page_len[v186], pageTitle[v42], otherUserId[v50], p#page_title[v181], p#page_latest[v182], nextTextId[v38], pageNamespace[v44], pageId[v41], userId[v46], revisionId[v48]}
-      page[pageId[v41]].page_is_redirect = p#page_is_redirect[v185];
-        [stmt_out] liveout: {pageTitle[v42], revComment[v49], pageLen[v45], rcId[v40], nextRevId[v39], otherUserId[v50], p#page_len[v186], userText[v47], nextTextId[v38], pageId[v41], p#page_title[v181], userId[v46], pageNamespace[v44], p#page_namespace[v180], p#page_latest[v182], revisionId[v48], p#page_touched[v183]}
-        [stmt_in] livein: {pageTitle[v42], revComment[v49], pageLen[v45], rcId[v40], nextRevId[v39], otherUserId[v50], p#page_len[v186], userText[v47], nextTextId[v38], pageId[v41], p#page_title[v181], userId[v46], pageNamespace[v44], p#page_namespace[v180], p#page_latest[v182], revisionId[v48], p#page_touched[v183]}
-      page[pageId[v41]].page_latest = p#page_latest[v182];
-        [stmt_out] liveout: {nextRevId[v39], p#page_title[v181], p#page_len[v186], userId[v46], userText[v47], revisionId[v48], pageLen[v45], p#page_touched[v183], pageTitle[v42], nextTextId[v38], pageNamespace[v44], pageId[v41], p#page_namespace[v180], revComment[v49], otherUserId[v50], rcId[v40]}
-        [stmt_in] livein: {nextRevId[v39], p#page_title[v181], p#page_len[v186], userId[v46], userText[v47], revisionId[v48], pageLen[v45], p#page_touched[v183], pageTitle[v42], nextTextId[v38], pageNamespace[v44], pageId[v41], p#page_namespace[v180], revComment[v49], otherUserId[v50], rcId[v40]}
-      page[pageId[v41]].page_len = p#page_len[v186];
-        [stmt_out] liveout: {rcId[v40], pageId[v41], pageTitle[v42], pageLen[v45], nextRevId[v39], nextTextId[v38], pageNamespace[v44], userText[v47], p#page_touched[v183], p#page_title[v181], p#page_namespace[v180], revisionId[v48], otherUserId[v50], revComment[v49], userId[v46]}
-        [stmt_in] livein: {rcId[v40], pageId[v41], pageTitle[v42], pageLen[v45], nextRevId[v39], nextTextId[v38], pageNamespace[v44], userText[v47], p#page_touched[v183], p#page_title[v181], p#page_namespace[v180], revisionId[v48], otherUserId[v50], revComment[v49], userId[v46]}
-      page[pageId[v41]].page_namespace = p#page_namespace[v180];
-        [stmt_out] liveout: {p#page_title[v181], revisionId[v48], userText[v47], revComment[v49], rcId[v40], pageLen[v45], pageId[v41], userId[v46], nextRevId[v39], pageTitle[v42], pageNamespace[v44], nextTextId[v38], p#page_touched[v183], otherUserId[v50]}
-        [stmt_in] livein: {p#page_title[v181], revisionId[v48], userText[v47], revComment[v49], rcId[v40], pageLen[v45], pageId[v41], userId[v46], nextRevId[v39], pageTitle[v42], pageNamespace[v44], nextTextId[v38], p#page_touched[v183], otherUserId[v50]}
-      page[pageId[v41]].page_title = p#page_title[v181];
-        [stmt_out] liveout: {pageTitle[v42], pageLen[v45], pageNamespace[v44], userText[v47], pageId[v41], nextRevId[v39], p#page_touched[v183], userId[v46], revComment[v49], revisionId[v48], rcId[v40], nextTextId[v38], otherUserId[v50]}
-        [stmt_in] livein: {pageTitle[v42], pageLen[v45], pageNamespace[v44], userText[v47], pageId[v41], nextRevId[v39], p#page_touched[v183], userId[v46], revComment[v49], revisionId[v48], rcId[v40], nextTextId[v38], otherUserId[v50]}
-      page[pageId[v41]].page_touched = p#page_touched[v183];
-        [stmt_out] liveout: {pageTitle[v42], userText[v47], pageLen[v45], otherUserId[v50], revisionId[v48], userId[v46], revComment[v49], pageNamespace[v44], nextRevId[v39], pageId[v41], rcId[v40], nextTextId[v38]}
-        [stmt_in] livein: {pageTitle[v42], userText[v47], pageLen[v45], otherUserId[v50], revisionId[v48], userId[v46], revComment[v49], pageNamespace[v44], nextRevId[v39], pageId[v41], rcId[v40], nextTextId[v38]}
+        [stmt_out] liveout: {otherUserId[v50], revComment[v49], pageLen[v45], userId[v46], pageId[v41], pageTitle[v42], pageNamespace[v44], nextRevId[v39], rcId[v40], userText[v47], nextTextId[v38], revisionId[v48]}
+        [stmt_in] livein: {otherUserId[v50], revComment[v49], pageLen[v45], userId[v46], pageId[v41], pageTitle[v42], pageNamespace[v44], nextRevId[v39], rcId[v40], userText[v47], nextTextId[v38], revisionId[v48]}
+      #tmp26[v196] = page[pageId[v41]];
+        [stmt_out] liveout: {pageId[v41], nextTextId[v38], pageTitle[v42], revComment[v49], revisionId[v48], userId[v46], otherUserId[v50], pageNamespace[v44], nextRevId[v39], #tmp26[v196], rcId[v40], userText[v47], pageLen[v45]}
+        [stmt_in] livein: {pageId[v41], nextTextId[v38], pageTitle[v42], revComment[v49], revisionId[v48], userId[v46], otherUserId[v50], pageNamespace[v44], nextRevId[v39], #tmp26[v196], rcId[v40], userText[v47], pageLen[v45]}
+      p[v187] = #tmp26[v196];
+        [stmt_out] liveout: {revisionId[v48], nextRevId[v39], pageId[v41], nextTextId[v38], pageTitle[v42], pageLen[v45], revComment[v49], rcId[v40], userText[v47], userId[v46], otherUserId[v50], pageNamespace[v44]}
+        [stmt_in] livein: {revisionId[v48], nextRevId[v39], pageId[v41], nextTextId[v38], pageTitle[v42], pageLen[v45], revComment[v49], rcId[v40], userText[v47], userId[v46], otherUserId[v50], pageNamespace[v44]}
+      p#page_id[v188] = page[pageId[v41]].page_id;
+        [stmt_out] liveout: {revisionId[v48], nextRevId[v39], pageId[v41], otherUserId[v50], p#page_id[v188], pageTitle[v42], userId[v46], rcId[v40], nextTextId[v38], pageNamespace[v44], pageLen[v45], userText[v47], revComment[v49]}
+        [stmt_in] livein: {revisionId[v48], nextRevId[v39], pageId[v41], otherUserId[v50], p#page_id[v188], pageTitle[v42], userId[v46], rcId[v40], nextTextId[v38], pageNamespace[v44], pageLen[v45], userText[v47], revComment[v49]}
+      p#page_is_new[v193] = page[pageId[v41]].page_is_new;
+        [stmt_out] liveout: {p#page_is_new[v193], otherUserId[v50], userText[v47], pageTitle[v42], pageId[v41], userId[v46], revComment[v49], revisionId[v48], p#page_id[v188], pageNamespace[v44], pageLen[v45], rcId[v40], nextRevId[v39], nextTextId[v38]}
+        [stmt_in] livein: {p#page_is_new[v193], otherUserId[v50], userText[v47], pageTitle[v42], pageId[v41], userId[v46], revComment[v49], revisionId[v48], p#page_id[v188], pageNamespace[v44], pageLen[v45], rcId[v40], nextRevId[v39], nextTextId[v38]}
+      p#page_is_redirect[v194] = page[pageId[v41]].page_is_redirect;
+        [stmt_out] liveout: {rcId[v40], nextRevId[v39], p#page_is_redirect[v194], userId[v46], pageLen[v45], p#page_is_new[v193], nextTextId[v38], pageId[v41], revisionId[v48], pageNamespace[v44], revComment[v49], p#page_id[v188], otherUserId[v50], userText[v47], pageTitle[v42]}
+        [stmt_in] livein: {rcId[v40], nextRevId[v39], p#page_is_redirect[v194], userId[v46], pageLen[v45], p#page_is_new[v193], nextTextId[v38], pageId[v41], revisionId[v48], pageNamespace[v44], revComment[v49], p#page_id[v188], otherUserId[v50], userText[v47], pageTitle[v42]}
+      p#page_latest[v191] = page[pageId[v41]].page_latest;
+        [stmt_out] liveout: {revisionId[v48], pageId[v41], p#page_id[v188], userText[v47], pageNamespace[v44], nextTextId[v38], nextRevId[v39], p#page_is_new[v193], userId[v46], pageLen[v45], revComment[v49], pageTitle[v42], rcId[v40], otherUserId[v50], p#page_is_redirect[v194]}
+        [stmt_in] livein: {revisionId[v48], pageId[v41], p#page_id[v188], userText[v47], pageNamespace[v44], nextTextId[v38], nextRevId[v39], p#page_is_new[v193], userId[v46], pageLen[v45], revComment[v49], pageTitle[v42], rcId[v40], otherUserId[v50], p#page_is_redirect[v194]}
+      p#page_len[v195] = page[pageId[v41]].page_len;
+        [stmt_out] liveout: {pageLen[v45], p#page_is_redirect[v194], nextRevId[v39], userId[v46], otherUserId[v50], p#page_id[v188], revComment[v49], nextTextId[v38], userText[v47], p#page_is_new[v193], pageTitle[v42], pageNamespace[v44], rcId[v40], revisionId[v48], pageId[v41]}
+        [stmt_in] livein: {pageLen[v45], p#page_is_redirect[v194], nextRevId[v39], userId[v46], otherUserId[v50], p#page_id[v188], revComment[v49], nextTextId[v38], userText[v47], p#page_is_new[v193], pageTitle[v42], pageNamespace[v44], rcId[v40], revisionId[v48], pageId[v41]}
+      p#page_namespace[v189] = page[pageId[v41]].page_namespace;
+        [stmt_out] liveout: {pageLen[v45], nextTextId[v38], userText[v47], p#page_namespace[v189], p#page_is_redirect[v194], p#page_id[v188], revComment[v49], pageTitle[v42], nextRevId[v39], p#page_is_new[v193], otherUserId[v50], revisionId[v48], pageNamespace[v44], pageId[v41], rcId[v40], userId[v46]}
+        [stmt_in] livein: {pageLen[v45], nextTextId[v38], userText[v47], p#page_namespace[v189], p#page_is_redirect[v194], p#page_id[v188], revComment[v49], pageTitle[v42], nextRevId[v39], p#page_is_new[v193], otherUserId[v50], revisionId[v48], pageNamespace[v44], pageId[v41], rcId[v40], userId[v46]}
+      p#page_title[v190] = page[pageId[v41]].page_title;
+        [stmt_out] liveout: {pageId[v41], pageTitle[v42], p#page_title[v190], p#page_id[v188], pageNamespace[v44], revisionId[v48], nextRevId[v39], rcId[v40], userId[v46], pageLen[v45], p#page_is_redirect[v194], otherUserId[v50], nextTextId[v38], userText[v47], revComment[v49], p#page_namespace[v189], p#page_is_new[v193]}
+        [stmt_in] livein: {pageId[v41], pageTitle[v42], p#page_title[v190], p#page_id[v188], pageNamespace[v44], revisionId[v48], nextRevId[v39], rcId[v40], userId[v46], pageLen[v45], p#page_is_redirect[v194], otherUserId[v50], nextTextId[v38], userText[v47], revComment[v49], p#page_namespace[v189], p#page_is_new[v193]}
+      p#page_touched[v192] = page[pageId[v41]].page_touched;
+        [stmt_out] liveout: {userText[v47], p#page_id[v188], p#page_title[v190], pageLen[v45], pageNamespace[v44], p#page_namespace[v189], userId[v46], pageId[v41], p#page_is_redirect[v194], rcId[v40], otherUserId[v50], pageTitle[v42], revComment[v49], nextTextId[v38], p#page_is_new[v193], revisionId[v48], nextRevId[v39]}
+        [stmt_in] livein: {userText[v47], p#page_id[v188], p#page_title[v190], pageLen[v45], pageNamespace[v44], p#page_namespace[v189], userId[v46], pageId[v41], p#page_is_redirect[v194], rcId[v40], otherUserId[v50], pageTitle[v42], revComment[v49], nextTextId[v38], p#page_is_new[v193], revisionId[v48], nextRevId[v39]}
+      p#page_latest[v191] = nextRevId[v39];
+        [stmt_out] liveout: {pageTitle[v42], userText[v47], revisionId[v48], nextRevId[v39], pageNamespace[v44], revComment[v49], pageLen[v45], otherUserId[v50], nextTextId[v38], userId[v46], pageId[v41], p#page_latest[v191], p#page_is_new[v193], p#page_is_redirect[v194], rcId[v40], p#page_id[v188], p#page_namespace[v189], p#page_title[v190]}
+        [stmt_in] livein: {pageTitle[v42], userText[v47], revisionId[v48], nextRevId[v39], pageNamespace[v44], revComment[v49], pageLen[v45], otherUserId[v50], nextTextId[v38], userId[v46], pageId[v41], p#page_latest[v191], p#page_is_new[v193], p#page_is_redirect[v194], rcId[v40], p#page_id[v188], p#page_namespace[v189], p#page_title[v190]}
+      p#page_touched[v192] = 1;
+        [stmt_out] liveout: {p#page_is_new[v193], userText[v47], rcId[v40], otherUserId[v50], p#page_title[v190], p#page_latest[v191], nextTextId[v38], revisionId[v48], p#page_is_redirect[v194], nextRevId[v39], pageId[v41], revComment[v49], pageTitle[v42], userId[v46], pageLen[v45], p#page_touched[v192], p#page_id[v188], pageNamespace[v44], p#page_namespace[v189]}
+        [stmt_in] livein: {p#page_is_new[v193], userText[v47], rcId[v40], otherUserId[v50], p#page_title[v190], p#page_latest[v191], nextTextId[v38], revisionId[v48], p#page_is_redirect[v194], nextRevId[v39], pageId[v41], revComment[v49], pageTitle[v42], userId[v46], pageLen[v45], p#page_touched[v192], p#page_id[v188], pageNamespace[v44], p#page_namespace[v189]}
+      p#page_len[v195] = pageLen[v45];
+        [stmt_out] liveout: {userText[v47], p#page_latest[v191], pageNamespace[v44], rcId[v40], p#page_touched[v192], pageId[v41], nextTextId[v38], p#page_id[v188], otherUserId[v50], pageLen[v45], p#page_is_new[v193], nextRevId[v39], revComment[v49], p#page_namespace[v189], userId[v46], revisionId[v48], p#page_title[v190], p#page_len[v195], p#page_is_redirect[v194], pageTitle[v42]}
+        [stmt_in] livein: {userText[v47], p#page_latest[v191], pageNamespace[v44], rcId[v40], p#page_touched[v192], pageId[v41], nextTextId[v38], p#page_id[v188], otherUserId[v50], pageLen[v45], p#page_is_new[v193], nextRevId[v39], revComment[v49], p#page_namespace[v189], userId[v46], revisionId[v48], p#page_title[v190], p#page_len[v195], p#page_is_redirect[v194], pageTitle[v42]}
+      page[pageId[v41]].page_id = p#page_id[v188];
+        [stmt_out] liveout: {p#page_latest[v191], userText[v47], p#page_is_redirect[v194], p#page_len[v195], p#page_namespace[v189], otherUserId[v50], userId[v46], pageTitle[v42], pageId[v41], p#page_title[v190], pageNamespace[v44], rcId[v40], pageLen[v45], revisionId[v48], p#page_is_new[v193], p#page_touched[v192], nextRevId[v39], nextTextId[v38], revComment[v49]}
+        [stmt_in] livein: {p#page_latest[v191], userText[v47], p#page_is_redirect[v194], p#page_len[v195], p#page_namespace[v189], otherUserId[v50], userId[v46], pageTitle[v42], pageId[v41], p#page_title[v190], pageNamespace[v44], rcId[v40], pageLen[v45], revisionId[v48], p#page_is_new[v193], p#page_touched[v192], nextRevId[v39], nextTextId[v38], revComment[v49]}
+      page[pageId[v41]].page_is_new = p#page_is_new[v193];
+        [stmt_out] liveout: {p#page_latest[v191], pageNamespace[v44], p#page_namespace[v189], p#page_touched[v192], revComment[v49], userText[v47], otherUserId[v50], nextTextId[v38], rcId[v40], pageLen[v45], nextRevId[v39], revisionId[v48], pageTitle[v42], p#page_len[v195], userId[v46], pageId[v41], p#page_title[v190], p#page_is_redirect[v194]}
+        [stmt_in] livein: {p#page_latest[v191], pageNamespace[v44], p#page_namespace[v189], p#page_touched[v192], revComment[v49], userText[v47], otherUserId[v50], nextTextId[v38], rcId[v40], pageLen[v45], nextRevId[v39], revisionId[v48], pageTitle[v42], p#page_len[v195], userId[v46], pageId[v41], p#page_title[v190], p#page_is_redirect[v194]}
+      page[pageId[v41]].page_is_redirect = p#page_is_redirect[v194];
+        [stmt_out] liveout: {p#page_namespace[v189], p#page_title[v190], pageLen[v45], p#page_len[v195], otherUserId[v50], userId[v46], nextRevId[v39], userText[v47], pageNamespace[v44], p#page_touched[v192], revisionId[v48], rcId[v40], pageTitle[v42], pageId[v41], p#page_latest[v191], nextTextId[v38], revComment[v49]}
+        [stmt_in] livein: {p#page_namespace[v189], p#page_title[v190], pageLen[v45], p#page_len[v195], otherUserId[v50], userId[v46], nextRevId[v39], userText[v47], pageNamespace[v44], p#page_touched[v192], revisionId[v48], rcId[v40], pageTitle[v42], pageId[v41], p#page_latest[v191], nextTextId[v38], revComment[v49]}
+      page[pageId[v41]].page_latest = p#page_latest[v191];
+        [stmt_out] liveout: {p#page_touched[v192], nextTextId[v38], revisionId[v48], rcId[v40], revComment[v49], userText[v47], otherUserId[v50], p#page_namespace[v189], nextRevId[v39], pageTitle[v42], pageId[v41], userId[v46], p#page_title[v190], pageLen[v45], p#page_len[v195], pageNamespace[v44]}
+        [stmt_in] livein: {p#page_touched[v192], nextTextId[v38], revisionId[v48], rcId[v40], revComment[v49], userText[v47], otherUserId[v50], p#page_namespace[v189], nextRevId[v39], pageTitle[v42], pageId[v41], userId[v46], p#page_title[v190], pageLen[v45], p#page_len[v195], pageNamespace[v44]}
+      page[pageId[v41]].page_len = p#page_len[v195];
+        [stmt_out] liveout: {revisionId[v48], nextRevId[v39], pageNamespace[v44], pageLen[v45], pageId[v41], otherUserId[v50], userText[v47], pageTitle[v42], userId[v46], p#page_title[v190], p#page_touched[v192], rcId[v40], revComment[v49], nextTextId[v38], p#page_namespace[v189]}
+        [stmt_in] livein: {revisionId[v48], nextRevId[v39], pageNamespace[v44], pageLen[v45], pageId[v41], otherUserId[v50], userText[v47], pageTitle[v42], userId[v46], p#page_title[v190], p#page_touched[v192], rcId[v40], revComment[v49], nextTextId[v38], p#page_namespace[v189]}
+      page[pageId[v41]].page_namespace = p#page_namespace[v189];
+        [stmt_out] liveout: {otherUserId[v50], p#page_touched[v192], pageId[v41], nextTextId[v38], rcId[v40], userId[v46], revComment[v49], revisionId[v48], userText[v47], pageTitle[v42], pageLen[v45], p#page_title[v190], pageNamespace[v44], nextRevId[v39]}
+        [stmt_in] livein: {otherUserId[v50], p#page_touched[v192], pageId[v41], nextTextId[v38], rcId[v40], userId[v46], revComment[v49], revisionId[v48], userText[v47], pageTitle[v42], pageLen[v45], p#page_title[v190], pageNamespace[v44], nextRevId[v39]}
+      page[pageId[v41]].page_title = p#page_title[v190];
+        [stmt_out] liveout: {pageNamespace[v44], pageLen[v45], nextRevId[v39], rcId[v40], otherUserId[v50], p#page_touched[v192], pageId[v41], userId[v46], revComment[v49], revisionId[v48], nextTextId[v38], userText[v47], pageTitle[v42]}
+        [stmt_in] livein: {pageNamespace[v44], pageLen[v45], nextRevId[v39], rcId[v40], otherUserId[v50], p#page_touched[v192], pageId[v41], userId[v46], revComment[v49], revisionId[v48], nextTextId[v38], userText[v47], pageTitle[v42]}
+      page[pageId[v41]].page_touched = p#page_touched[v192];
+        [stmt_out] liveout: {userId[v46], nextRevId[v39], userText[v47], revComment[v49], rcId[v40], otherUserId[v50], pageNamespace[v44], pageId[v41], revisionId[v48], pageLen[v45], nextTextId[v38], pageTitle[v42]}
+        [stmt_in] livein: {userId[v46], nextRevId[v39], userText[v47], revComment[v49], rcId[v40], otherUserId[v50], pageNamespace[v44], pageId[v41], revisionId[v48], pageLen[v45], nextTextId[v38], pageTitle[v42]}
       recentchanges[rcId[v40]].rc_timestamp = 1;
-        [stmt_out] liveout: {pageNamespace[v44], pageTitle[v42], userText[v47], userId[v46], nextRevId[v39], pageId[v41], pageLen[v45], revComment[v49], otherUserId[v50], revisionId[v48], nextTextId[v38], rcId[v40]}
-        [stmt_in] livein: {pageNamespace[v44], pageTitle[v42], userText[v47], userId[v46], nextRevId[v39], pageId[v41], pageLen[v45], revComment[v49], otherUserId[v50], revisionId[v48], nextTextId[v38], rcId[v40]}
+        [stmt_out] liveout: {userText[v47], pageLen[v45], pageId[v41], userId[v46], pageNamespace[v44], revComment[v49], nextTextId[v38], revisionId[v48], rcId[v40], otherUserId[v50], pageTitle[v42], nextRevId[v39]}
+        [stmt_in] livein: {userText[v47], pageLen[v45], pageId[v41], userId[v46], pageNamespace[v44], revComment[v49], nextTextId[v38], revisionId[v48], rcId[v40], otherUserId[v50], pageTitle[v42], nextRevId[v39]}
       recentchanges[rcId[v40]].rc_namespace = pageNamespace[v44];
-        [stmt_out] liveout: {userText[v47], otherUserId[v50], pageLen[v45], nextTextId[v38], pageNamespace[v44], revComment[v49], pageTitle[v42], rcId[v40], userId[v46], pageId[v41], nextRevId[v39], revisionId[v48]}
-        [stmt_in] livein: {userText[v47], otherUserId[v50], pageLen[v45], nextTextId[v38], pageNamespace[v44], revComment[v49], pageTitle[v42], rcId[v40], userId[v46], pageId[v41], nextRevId[v39], revisionId[v48]}
+        [stmt_out] liveout: {pageTitle[v42], nextTextId[v38], revisionId[v48], rcId[v40], otherUserId[v50], userText[v47], pageId[v41], nextRevId[v39], userId[v46], pageNamespace[v44], revComment[v49], pageLen[v45]}
+        [stmt_in] livein: {pageTitle[v42], nextTextId[v38], revisionId[v48], rcId[v40], otherUserId[v50], userText[v47], pageId[v41], nextRevId[v39], userId[v46], pageNamespace[v44], revComment[v49], pageLen[v45]}
       recentchanges[rcId[v40]].rc_title = pageTitle[v42];
-        [stmt_out] liveout: {pageLen[v45], userId[v46], revComment[v49], pageTitle[v42], pageId[v41], nextTextId[v38], revisionId[v48], nextRevId[v39], userText[v47], otherUserId[v50], pageNamespace[v44], rcId[v40]}
-        [stmt_in] livein: {pageLen[v45], userId[v46], revComment[v49], pageTitle[v42], pageId[v41], nextTextId[v38], revisionId[v48], nextRevId[v39], userText[v47], otherUserId[v50], pageNamespace[v44], rcId[v40]}
+        [stmt_out] liveout: {revisionId[v48], pageTitle[v42], otherUserId[v50], nextRevId[v39], userText[v47], nextTextId[v38], pageNamespace[v44], rcId[v40], pageId[v41], userId[v46], revComment[v49], pageLen[v45]}
+        [stmt_in] livein: {revisionId[v48], pageTitle[v42], otherUserId[v50], nextRevId[v39], userText[v47], nextTextId[v38], pageNamespace[v44], rcId[v40], pageId[v41], userId[v46], revComment[v49], pageLen[v45]}
       recentchanges[rcId[v40]].rc_cur_id = pageId[v41];
-        [stmt_out] liveout: {pageId[v41], revComment[v49], pageTitle[v42], pageNamespace[v44], userText[v47], nextTextId[v38], pageLen[v45], userId[v46], revisionId[v48], otherUserId[v50], nextRevId[v39], rcId[v40]}
-        [stmt_in] livein: {pageId[v41], revComment[v49], pageTitle[v42], pageNamespace[v44], userText[v47], nextTextId[v38], pageLen[v45], userId[v46], revisionId[v48], otherUserId[v50], nextRevId[v39], rcId[v40]}
+        [stmt_out] liveout: {rcId[v40], userId[v46], otherUserId[v50], revComment[v49], pageTitle[v42], nextTextId[v38], pageLen[v45], revisionId[v48], nextRevId[v39], pageNamespace[v44], pageId[v41], userText[v47]}
+        [stmt_in] livein: {rcId[v40], userId[v46], otherUserId[v50], revComment[v49], pageTitle[v42], nextTextId[v38], pageLen[v45], revisionId[v48], nextRevId[v39], pageNamespace[v44], pageId[v41], userText[v47]}
       recentchanges[rcId[v40]].rc_user = userId[v46];
-        [stmt_out] liveout: {otherUserId[v50], nextTextId[v38], pageTitle[v42], revComment[v49], pageNamespace[v44], userId[v46], rcId[v40], userText[v47], pageLen[v45], revisionId[v48], pageId[v41], nextRevId[v39]}
-        [stmt_in] livein: {otherUserId[v50], nextTextId[v38], pageTitle[v42], revComment[v49], pageNamespace[v44], userId[v46], rcId[v40], userText[v47], pageLen[v45], revisionId[v48], pageId[v41], nextRevId[v39]}
+        [stmt_out] liveout: {revisionId[v48], pageNamespace[v44], userText[v47], userId[v46], revComment[v49], pageId[v41], rcId[v40], otherUserId[v50], nextTextId[v38], pageTitle[v42], nextRevId[v39], pageLen[v45]}
+        [stmt_in] livein: {revisionId[v48], pageNamespace[v44], userText[v47], userId[v46], revComment[v49], pageId[v41], rcId[v40], otherUserId[v50], nextTextId[v38], pageTitle[v42], nextRevId[v39], pageLen[v45]}
       recentchanges[rcId[v40]].rc_user_text = userText[v47];
-        [stmt_out] liveout: {otherUserId[v50], nextTextId[v38], revComment[v49], pageId[v41], pageNamespace[v44], userId[v46], rcId[v40], userText[v47], pageTitle[v42], nextRevId[v39], pageLen[v45], revisionId[v48]}
-        [stmt_in] livein: {otherUserId[v50], nextTextId[v38], revComment[v49], pageId[v41], pageNamespace[v44], userId[v46], rcId[v40], userText[v47], pageTitle[v42], nextRevId[v39], pageLen[v45], revisionId[v48]}
+        [stmt_out] liveout: {pageNamespace[v44], rcId[v40], userId[v46], revComment[v49], pageId[v41], nextTextId[v38], nextRevId[v39], userText[v47], otherUserId[v50], pageTitle[v42], revisionId[v48], pageLen[v45]}
+        [stmt_in] livein: {pageNamespace[v44], rcId[v40], userId[v46], revComment[v49], pageId[v41], nextTextId[v38], nextRevId[v39], userText[v47], otherUserId[v50], pageTitle[v42], revisionId[v48], pageLen[v45]}
       recentchanges[rcId[v40]].rc_comment = revComment[v49];
-        [stmt_out] liveout: {userId[v46], pageNamespace[v44], pageLen[v45], nextTextId[v38], revisionId[v48], rcId[v40], nextRevId[v39], userText[v47], pageTitle[v42], otherUserId[v50], pageId[v41]}
-        [stmt_in] livein: {userId[v46], pageNamespace[v44], pageLen[v45], nextTextId[v38], revisionId[v48], rcId[v40], nextRevId[v39], userText[v47], pageTitle[v42], otherUserId[v50], pageId[v41]}
+        [stmt_out] liveout: {userId[v46], pageId[v41], otherUserId[v50], nextTextId[v38], revisionId[v48], pageLen[v45], pageNamespace[v44], nextRevId[v39], userText[v47], rcId[v40], pageTitle[v42]}
+        [stmt_in] livein: {userId[v46], pageId[v41], otherUserId[v50], nextTextId[v38], revisionId[v48], pageLen[v45], pageNamespace[v44], nextRevId[v39], userText[v47], rcId[v40], pageTitle[v42]}
       recentchanges[rcId[v40]].rc_this_oldid = nextTextId[v38];
-        [stmt_out] liveout: {pageLen[v45], userId[v46], pageId[v41], pageTitle[v42], pageNamespace[v44], rcId[v40], userText[v47], otherUserId[v50], revisionId[v48], nextRevId[v39]}
-        [stmt_in] livein: {pageLen[v45], userId[v46], pageId[v41], pageTitle[v42], pageNamespace[v44], rcId[v40], userText[v47], otherUserId[v50], revisionId[v48], nextRevId[v39]}
+        [stmt_out] liveout: {pageLen[v45], pageId[v41], pageNamespace[v44], rcId[v40], otherUserId[v50], nextRevId[v39], pageTitle[v42], userId[v46], userText[v47], revisionId[v48]}
+        [stmt_in] livein: {pageLen[v45], pageId[v41], pageNamespace[v44], rcId[v40], otherUserId[v50], nextRevId[v39], pageTitle[v42], userId[v46], userText[v47], revisionId[v48]}
       recentchanges[rcId[v40]].rc_last_oldid = revisionId[v48];
-        [stmt_out] liveout: {pageTitle[v42], rcId[v40], otherUserId[v50], userId[v46], pageNamespace[v44], nextRevId[v39], pageId[v41], userText[v47], pageLen[v45]}
-        [stmt_in] livein: {pageTitle[v42], rcId[v40], otherUserId[v50], userId[v46], pageNamespace[v44], nextRevId[v39], pageId[v41], userText[v47], pageLen[v45]}
+        [stmt_out] liveout: {userText[v47], userId[v46], nextRevId[v39], pageTitle[v42], rcId[v40], otherUserId[v50], pageId[v41], pageLen[v45], pageNamespace[v44]}
+        [stmt_in] livein: {userText[v47], userId[v46], nextRevId[v39], pageTitle[v42], rcId[v40], otherUserId[v50], pageId[v41], pageLen[v45], pageNamespace[v44]}
       recentchanges[rcId[v40]].rc_ip = "";
-        [stmt_out] liveout: {pageNamespace[v44], userId[v46], pageTitle[v42], nextRevId[v39], rcId[v40], otherUserId[v50], userText[v47], pageId[v41], pageLen[v45]}
-        [stmt_in] livein: {pageNamespace[v44], userId[v46], pageTitle[v42], nextRevId[v39], rcId[v40], otherUserId[v50], userText[v47], pageId[v41], pageLen[v45]}
+        [stmt_out] liveout: {userId[v46], pageLen[v45], pageId[v41], userText[v47], otherUserId[v50], nextRevId[v39], pageNamespace[v44], pageTitle[v42], rcId[v40]}
+        [stmt_in] livein: {userId[v46], pageLen[v45], pageId[v41], userText[v47], otherUserId[v50], nextRevId[v39], pageNamespace[v44], pageTitle[v42], rcId[v40]}
       recentchanges[rcId[v40]].rc_old_len = 0;
-        [stmt_out] liveout: {pageLen[v45], pageNamespace[v44], pageTitle[v42], rcId[v40], userText[v47], userId[v46], nextRevId[v39], pageId[v41], otherUserId[v50]}
-        [stmt_in] livein: {pageLen[v45], pageNamespace[v44], pageTitle[v42], rcId[v40], userText[v47], userId[v46], nextRevId[v39], pageId[v41], otherUserId[v50]}
+        [stmt_out] liveout: {pageId[v41], nextRevId[v39], userText[v47], rcId[v40], userId[v46], otherUserId[v50], pageNamespace[v44], pageTitle[v42], pageLen[v45]}
+        [stmt_in] livein: {pageId[v41], nextRevId[v39], userText[v47], rcId[v40], userId[v46], otherUserId[v50], pageNamespace[v44], pageTitle[v42], pageLen[v45]}
       recentchanges[rcId[v40]].rc_new_len = pageLen[v45];
-        [stmt_out] liveout: {userText[v47], nextRevId[v39], pageId[v41], pageTitle[v42], pageNamespace[v44], userId[v46], otherUserId[v50]}
+        [stmt_out] liveout: {pageNamespace[v44], pageTitle[v42], otherUserId[v50], userId[v46], pageId[v41], userText[v47], nextRevId[v39]}
       hop_exit hop9;
-      liveout: {userText[v47], pageTitle[v42], pageId[v41], nextRevId[v39], userId[v46], otherUserId[v50], pageNamespace[v44]}
+      liveout: {userId[v46], pageId[v41], pageTitle[v42], otherUserId[v50], userText[v47], pageNamespace[v44], nextRevId[v39]}
   }
 
   hop9 {
     entry_block: bb13
     bb13 (preds: bb12):
-      livein: {userId[v46], nextRevId[v39], otherUserId[v50], pageNamespace[v44], userText[v47], pageTitle[v42], pageId[v41]}
-        [stmt_in] livein: {nextRevId[v39], userId[v46], pageNamespace[v44], pageTitle[v42], otherUserId[v50], pageId[v41], userText[v47]}
-      #tmp18[v193] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]];
-        [stmt_out] liveout: {otherUserId[v50], nextRevId[v39], #tmp18[v193], pageId[v41], pageTitle[v42], userId[v46], userText[v47], pageNamespace[v44]}
-        [stmt_in] livein: {otherUserId[v50], nextRevId[v39], #tmp18[v193], pageId[v41], pageTitle[v42], userId[v46], userText[v47], pageNamespace[v44]}
-      wl[v188] = #tmp18[v193];
-        [stmt_out] liveout: {pageId[v41], nextRevId[v39], userId[v46], otherUserId[v50], pageNamespace[v44], userText[v47], pageTitle[v42]}
-        [stmt_in] livein: {pageId[v41], nextRevId[v39], userId[v46], otherUserId[v50], pageNamespace[v44], userText[v47], pageTitle[v42]}
-      wl#wl_namespace[v190] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_namespace;
-        [stmt_out] liveout: {userId[v46], pageId[v41], wl#wl_namespace[v190], pageNamespace[v44], pageTitle[v42], nextRevId[v39], otherUserId[v50], userText[v47]}
-        [stmt_in] livein: {userId[v46], pageId[v41], wl#wl_namespace[v190], pageNamespace[v44], pageTitle[v42], nextRevId[v39], otherUserId[v50], userText[v47]}
-      wl#wl_notificationtimestamp[v192] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_notificationtimestamp;
-        [stmt_out] liveout: {nextRevId[v39], pageNamespace[v44], otherUserId[v50], wl#wl_namespace[v190], pageTitle[v42], userText[v47], userId[v46], pageId[v41]}
-        [stmt_in] livein: {nextRevId[v39], pageNamespace[v44], otherUserId[v50], wl#wl_namespace[v190], pageTitle[v42], userText[v47], userId[v46], pageId[v41]}
-      wl#wl_title[v191] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_title;
-        [stmt_out] liveout: {wl#wl_namespace[v190], otherUserId[v50], pageTitle[v42], wl#wl_title[v191], nextRevId[v39], userId[v46], pageNamespace[v44], userText[v47], pageId[v41]}
-        [stmt_in] livein: {wl#wl_namespace[v190], otherUserId[v50], pageTitle[v42], wl#wl_title[v191], nextRevId[v39], userId[v46], pageNamespace[v44], userText[v47], pageId[v41]}
-      wl#wl_user[v189] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_user;
-        [stmt_out] liveout: {wl#wl_namespace[v190], userText[v47], wl#wl_user[v189], otherUserId[v50], pageId[v41], pageTitle[v42], userId[v46], wl#wl_title[v191], nextRevId[v39], pageNamespace[v44]}
-        [stmt_in] livein: {wl#wl_namespace[v190], userText[v47], wl#wl_user[v189], otherUserId[v50], pageId[v41], pageTitle[v42], userId[v46], wl#wl_title[v191], nextRevId[v39], pageNamespace[v44]}
-      wl#wl_notificationtimestamp[v192] = 1;
-        [stmt_out] liveout: {wl#wl_notificationtimestamp[v192], pageTitle[v42], wl#wl_title[v191], nextRevId[v39], userId[v46], userText[v47], otherUserId[v50], pageNamespace[v44], pageId[v41], wl#wl_namespace[v190], wl#wl_user[v189]}
-        [stmt_in] livein: {wl#wl_notificationtimestamp[v192], pageTitle[v42], wl#wl_title[v191], nextRevId[v39], userId[v46], userText[v47], otherUserId[v50], pageNamespace[v44], pageId[v41], wl#wl_namespace[v190], wl#wl_user[v189]}
-      watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_namespace = wl#wl_namespace[v190];
-        [stmt_out] liveout: {wl#wl_notificationtimestamp[v192], userText[v47], pageTitle[v42], pageId[v41], wl#wl_title[v191], nextRevId[v39], pageNamespace[v44], userId[v46], wl#wl_user[v189], otherUserId[v50]}
-        [stmt_in] livein: {wl#wl_notificationtimestamp[v192], userText[v47], pageTitle[v42], pageId[v41], wl#wl_title[v191], nextRevId[v39], pageNamespace[v44], userId[v46], wl#wl_user[v189], otherUserId[v50]}
-      watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_notificationtimestamp = wl#wl_notificationtimestamp[v192];
-        [stmt_out] liveout: {userText[v47], pageTitle[v42], pageId[v41], userId[v46], wl#wl_title[v191], pageNamespace[v44], wl#wl_user[v189], otherUserId[v50], nextRevId[v39]}
-        [stmt_in] livein: {userText[v47], pageTitle[v42], pageId[v41], userId[v46], wl#wl_title[v191], pageNamespace[v44], wl#wl_user[v189], otherUserId[v50], nextRevId[v39]}
-      watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_title = wl#wl_title[v191];
-        [stmt_out] liveout: {pageId[v41], pageTitle[v42], nextRevId[v39], userText[v47], userId[v46], pageNamespace[v44], wl#wl_user[v189], otherUserId[v50]}
-        [stmt_in] livein: {pageId[v41], pageTitle[v42], nextRevId[v39], userText[v47], userId[v46], pageNamespace[v44], wl#wl_user[v189], otherUserId[v50]}
-      watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_user = wl#wl_user[v189];
-        [stmt_out] liveout: {pageId[v41], userId[v46], pageNamespace[v44], pageTitle[v42], userText[v47], nextRevId[v39]}
+      livein: {pageNamespace[v44], otherUserId[v50], userId[v46], userText[v47], pageId[v41], nextRevId[v39], pageTitle[v42]}
+        [stmt_in] livein: {pageNamespace[v44], userId[v46], pageId[v41], nextRevId[v39], pageTitle[v42], otherUserId[v50], userText[v47]}
+      #tmp27[v202] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]];
+        [stmt_out] liveout: {userText[v47], #tmp27[v202], pageNamespace[v44], pageTitle[v42], nextRevId[v39], userId[v46], pageId[v41], otherUserId[v50]}
+        [stmt_in] livein: {userText[v47], #tmp27[v202], pageNamespace[v44], pageTitle[v42], nextRevId[v39], userId[v46], pageId[v41], otherUserId[v50]}
+      wl[v197] = #tmp27[v202];
+        [stmt_out] liveout: {userId[v46], userText[v47], pageNamespace[v44], pageTitle[v42], nextRevId[v39], pageId[v41], otherUserId[v50]}
+        [stmt_in] livein: {userId[v46], userText[v47], pageNamespace[v44], pageTitle[v42], nextRevId[v39], pageId[v41], otherUserId[v50]}
+      wl#wl_namespace[v199] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_namespace;
+        [stmt_out] liveout: {userText[v47], nextRevId[v39], pageNamespace[v44], otherUserId[v50], userId[v46], pageId[v41], pageTitle[v42], wl#wl_namespace[v199]}
+        [stmt_in] livein: {userText[v47], nextRevId[v39], pageNamespace[v44], otherUserId[v50], userId[v46], pageId[v41], pageTitle[v42], wl#wl_namespace[v199]}
+      wl#wl_notificationtimestamp[v201] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_notificationtimestamp;
+        [stmt_out] liveout: {userId[v46], pageId[v41], pageTitle[v42], wl#wl_namespace[v199], otherUserId[v50], nextRevId[v39], pageNamespace[v44], userText[v47]}
+        [stmt_in] livein: {userId[v46], pageId[v41], pageTitle[v42], wl#wl_namespace[v199], otherUserId[v50], nextRevId[v39], pageNamespace[v44], userText[v47]}
+      wl#wl_title[v200] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_title;
+        [stmt_out] liveout: {wl#wl_namespace[v199], nextRevId[v39], pageTitle[v42], pageNamespace[v44], otherUserId[v50], pageId[v41], userText[v47], wl#wl_title[v200], userId[v46]}
+        [stmt_in] livein: {wl#wl_namespace[v199], nextRevId[v39], pageTitle[v42], pageNamespace[v44], otherUserId[v50], pageId[v41], userText[v47], wl#wl_title[v200], userId[v46]}
+      wl#wl_user[v198] = watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_user;
+        [stmt_out] liveout: {userText[v47], nextRevId[v39], wl#wl_namespace[v199], pageNamespace[v44], userId[v46], pageId[v41], otherUserId[v50], pageTitle[v42], wl#wl_user[v198], wl#wl_title[v200]}
+        [stmt_in] livein: {userText[v47], nextRevId[v39], wl#wl_namespace[v199], pageNamespace[v44], userId[v46], pageId[v41], otherUserId[v50], pageTitle[v42], wl#wl_user[v198], wl#wl_title[v200]}
+      wl#wl_notificationtimestamp[v201] = 1;
+        [stmt_out] liveout: {wl#wl_namespace[v199], pageNamespace[v44], userId[v46], pageId[v41], nextRevId[v39], wl#wl_title[v200], otherUserId[v50], wl#wl_user[v198], wl#wl_notificationtimestamp[v201], pageTitle[v42], userText[v47]}
+        [stmt_in] livein: {wl#wl_namespace[v199], pageNamespace[v44], userId[v46], pageId[v41], nextRevId[v39], wl#wl_title[v200], otherUserId[v50], wl#wl_user[v198], wl#wl_notificationtimestamp[v201], pageTitle[v42], userText[v47]}
+      watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_namespace = wl#wl_namespace[v199];
+        [stmt_out] liveout: {userId[v46], pageNamespace[v44], otherUserId[v50], wl#wl_notificationtimestamp[v201], pageId[v41], wl#wl_title[v200], nextRevId[v39], wl#wl_user[v198], pageTitle[v42], userText[v47]}
+        [stmt_in] livein: {userId[v46], pageNamespace[v44], otherUserId[v50], wl#wl_notificationtimestamp[v201], pageId[v41], wl#wl_title[v200], nextRevId[v39], wl#wl_user[v198], pageTitle[v42], userText[v47]}
+      watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_notificationtimestamp = wl#wl_notificationtimestamp[v201];
+        [stmt_out] liveout: {pageTitle[v42], otherUserId[v50], userText[v47], wl#wl_title[v200], userId[v46], wl#wl_user[v198], nextRevId[v39], pageId[v41], pageNamespace[v44]}
+        [stmt_in] livein: {pageTitle[v42], otherUserId[v50], userText[v47], wl#wl_title[v200], userId[v46], wl#wl_user[v198], nextRevId[v39], pageId[v41], pageNamespace[v44]}
+      watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_title = wl#wl_title[v200];
+        [stmt_out] liveout: {userText[v47], pageId[v41], wl#wl_user[v198], userId[v46], otherUserId[v50], pageTitle[v42], nextRevId[v39], pageNamespace[v44]}
+        [stmt_in] livein: {userText[v47], pageId[v41], wl#wl_user[v198], userId[v46], otherUserId[v50], pageTitle[v42], nextRevId[v39], pageNamespace[v44]}
+      watchlist[otherUserId[v50], pageNamespace[v44], pageTitle[v42]].wl_user = wl#wl_user[v198];
+        [stmt_out] liveout: {userId[v46], nextRevId[v39], userText[v47], pageTitle[v42], pageNamespace[v44], pageId[v41]}
       hop_exit hop10;
-      liveout: {userId[v46], pageNamespace[v44], pageId[v41], nextRevId[v39], userText[v47], pageTitle[v42]}
+      liveout: {nextRevId[v39], userText[v47], pageId[v41], pageTitle[v42], pageNamespace[v44], userId[v46]}
   }
 
   hop10 {
     entry_block: bb14
     bb14 (preds: bb13):
-      livein: {pageId[v41], nextRevId[v39], pageTitle[v42], pageNamespace[v44], userId[v46], userText[v47]}
-        [stmt_in] livein: {pageId[v41], nextRevId[v39], userText[v47], userId[v46], pageNamespace[v44], pageTitle[v42]}
+      livein: {pageId[v41], userText[v47], pageTitle[v42], nextRevId[v39], pageNamespace[v44], userId[v46]}
+        [stmt_in] livein: {pageId[v41], pageNamespace[v44], nextRevId[v39], userText[v47], userId[v46], pageTitle[v42]}
       logging[userId[v46], nextRevId[v39]].log_type = "patrol";
-        [stmt_out] liveout: {pageId[v41], nextRevId[v39], userText[v47], pageTitle[v42], pageNamespace[v44], userId[v46]}
-        [stmt_in] livein: {pageId[v41], nextRevId[v39], userText[v47], pageTitle[v42], pageNamespace[v44], userId[v46]}
+        [stmt_out] liveout: {userText[v47], pageId[v41], nextRevId[v39], pageNamespace[v44], userId[v46], pageTitle[v42]}
+        [stmt_in] livein: {userText[v47], pageId[v41], nextRevId[v39], pageNamespace[v44], userId[v46], pageTitle[v42]}
       logging[userId[v46], nextRevId[v39]].log_action = "patrol";
-        [stmt_out] liveout: {pageId[v41], pageNamespace[v44], userText[v47], nextRevId[v39], userId[v46], pageTitle[v42]}
-        [stmt_in] livein: {pageId[v41], pageNamespace[v44], userText[v47], nextRevId[v39], userId[v46], pageTitle[v42]}
+        [stmt_out] liveout: {userText[v47], nextRevId[v39], userId[v46], pageId[v41], pageTitle[v42], pageNamespace[v44]}
+        [stmt_in] livein: {userText[v47], nextRevId[v39], userId[v46], pageId[v41], pageTitle[v42], pageNamespace[v44]}
       logging[userId[v46], nextRevId[v39]].log_timestamp = 1;
-        [stmt_out] liveout: {userText[v47], nextRevId[v39], userId[v46], pageTitle[v42], pageId[v41], pageNamespace[v44]}
-        [stmt_in] livein: {userText[v47], nextRevId[v39], userId[v46], pageTitle[v42], pageId[v41], pageNamespace[v44]}
+        [stmt_out] liveout: {pageId[v41], userText[v47], nextRevId[v39], pageTitle[v42], userId[v46], pageNamespace[v44]}
+        [stmt_in] livein: {pageId[v41], userText[v47], nextRevId[v39], pageTitle[v42], userId[v46], pageNamespace[v44]}
       logging[userId[v46], nextRevId[v39]].log_user_text = userText[v47];
-        [stmt_out] liveout: {userId[v46], pageTitle[v42], nextRevId[v39], pageNamespace[v44], pageId[v41]}
-        [stmt_in] livein: {userId[v46], pageTitle[v42], nextRevId[v39], pageNamespace[v44], pageId[v41]}
+        [stmt_out] liveout: {nextRevId[v39], pageTitle[v42], userId[v46], pageNamespace[v44], pageId[v41]}
+        [stmt_in] livein: {nextRevId[v39], pageTitle[v42], userId[v46], pageNamespace[v44], pageId[v41]}
       logging[userId[v46], nextRevId[v39]].log_namespace = pageNamespace[v44];
-        [stmt_out] liveout: {userId[v46], nextRevId[v39], pageTitle[v42], pageId[v41]}
-        [stmt_in] livein: {userId[v46], nextRevId[v39], pageTitle[v42], pageId[v41]}
+        [stmt_out] liveout: {pageTitle[v42], pageId[v41], userId[v46], nextRevId[v39]}
+        [stmt_in] livein: {pageTitle[v42], pageId[v41], userId[v46], nextRevId[v39]}
       logging[userId[v46], nextRevId[v39]].log_title = pageTitle[v42];
-        [stmt_out] liveout: {userId[v46], nextRevId[v39], pageId[v41]}
-        [stmt_in] livein: {userId[v46], nextRevId[v39], pageId[v41]}
+        [stmt_out] liveout: {nextRevId[v39], userId[v46], pageId[v41]}
+        [stmt_in] livein: {nextRevId[v39], userId[v46], pageId[v41]}
       logging[userId[v46], nextRevId[v39]].log_page = pageId[v41];
-        [stmt_out] liveout: {nextRevId[v39], userId[v46]}
-        [stmt_in] livein: {nextRevId[v39], userId[v46]}
+        [stmt_out] liveout: {userId[v46], nextRevId[v39]}
+        [stmt_in] livein: {userId[v46], nextRevId[v39]}
       logging[userId[v46], nextRevId[v39]].log_comment = "";
         [stmt_out] liveout: {userId[v46], nextRevId[v39]}
         [stmt_in] livein: {userId[v46], nextRevId[v39]}
       logging[userId[v46], nextRevId[v39]].log_params = "";
         [stmt_out] liveout: {userId[v46]}
         [stmt_in] livein: {userId[v46]}
-      #tmp19[v199] = user[userId[v46]];
-        [stmt_out] liveout: {userId[v46], #tmp19[v199]}
-        [stmt_in] livein: {userId[v46], #tmp19[v199]}
-      u[v194] = #tmp19[v199];
+      #tmp28[v208] = user[userId[v46]];
+        [stmt_out] liveout: {userId[v46], #tmp28[v208]}
+        [stmt_in] livein: {userId[v46], #tmp28[v208]}
+      u[v203] = #tmp28[v208];
         [stmt_out] liveout: {userId[v46]}
         [stmt_in] livein: {userId[v46]}
-      u#user_editcount[v198] = user[userId[v46]].user_editcount;
-        [stmt_out] liveout: {userId[v46], u#user_editcount[v198]}
-        [stmt_in] livein: {userId[v46], u#user_editcount[v198]}
-      u#user_id[v195] = user[userId[v46]].user_id;
-        [stmt_out] liveout: {u#user_id[v195], userId[v46], u#user_editcount[v198]}
-        [stmt_in] livein: {u#user_id[v195], userId[v46], u#user_editcount[v198]}
-      u#user_name[v196] = user[userId[v46]].user_name;
-        [stmt_out] liveout: {u#user_id[v195], userId[v46], u#user_name[v196], u#user_editcount[v198]}
-        [stmt_in] livein: {u#user_id[v195], userId[v46], u#user_name[v196], u#user_editcount[v198]}
-      u#user_touched[v197] = user[userId[v46]].user_touched;
-        [stmt_out] liveout: {u#user_editcount[v198], u#user_id[v195], userId[v46], u#user_name[v196]}
-        [stmt_in] livein: {u#user_editcount[v198], u#user_id[v195], userId[v46], u#user_name[v196]}
-      #tmp20[v200] = u#user_editcount[v198] + 1;
-        [stmt_out] liveout: {#tmp20[v200], u#user_name[v196], userId[v46], u#user_id[v195]}
-        [stmt_in] livein: {#tmp20[v200], u#user_name[v196], userId[v46], u#user_id[v195]}
-      u#user_editcount[v198] = #tmp20[v200];
-        [stmt_out] liveout: {u#user_name[v196], userId[v46], u#user_id[v195], u#user_editcount[v198]}
-        [stmt_in] livein: {u#user_name[v196], userId[v46], u#user_id[v195], u#user_editcount[v198]}
-      u#user_touched[v197] = 1;
-        [stmt_out] liveout: {u#user_name[v196], userId[v46], u#user_id[v195], u#user_editcount[v198], u#user_touched[v197]}
-        [stmt_in] livein: {u#user_name[v196], userId[v46], u#user_id[v195], u#user_editcount[v198], u#user_touched[v197]}
-      user[userId[v46]].user_editcount = u#user_editcount[v198];
-        [stmt_out] liveout: {u#user_touched[v197], u#user_name[v196], u#user_id[v195], userId[v46]}
-        [stmt_in] livein: {u#user_touched[v197], u#user_name[v196], u#user_id[v195], userId[v46]}
-      user[userId[v46]].user_id = u#user_id[v195];
-        [stmt_out] liveout: {u#user_name[v196], u#user_touched[v197], userId[v46]}
-        [stmt_in] livein: {u#user_name[v196], u#user_touched[v197], userId[v46]}
-      user[userId[v46]].user_name = u#user_name[v196];
-        [stmt_out] liveout: {u#user_touched[v197], userId[v46]}
-        [stmt_in] livein: {u#user_touched[v197], userId[v46]}
-      user[userId[v46]].user_touched = u#user_touched[v197];
+      u#user_editcount[v207] = user[userId[v46]].user_editcount;
+        [stmt_out] liveout: {userId[v46], u#user_editcount[v207]}
+        [stmt_in] livein: {userId[v46], u#user_editcount[v207]}
+      u#user_id[v204] = user[userId[v46]].user_id;
+        [stmt_out] liveout: {userId[v46], u#user_editcount[v207], u#user_id[v204]}
+        [stmt_in] livein: {userId[v46], u#user_editcount[v207], u#user_id[v204]}
+      u#user_name[v205] = user[userId[v46]].user_name;
+        [stmt_out] liveout: {u#user_editcount[v207], u#user_id[v204], userId[v46], u#user_name[v205]}
+        [stmt_in] livein: {u#user_editcount[v207], u#user_id[v204], userId[v46], u#user_name[v205]}
+      u#user_touched[v206] = user[userId[v46]].user_touched;
+        [stmt_out] liveout: {userId[v46], u#user_id[v204], u#user_editcount[v207], u#user_name[v205]}
+        [stmt_in] livein: {userId[v46], u#user_id[v204], u#user_editcount[v207], u#user_name[v205]}
+      #tmp29[v209] = u#user_editcount[v207] + 1;
+        [stmt_out] liveout: {u#user_id[v204], userId[v46], #tmp29[v209], u#user_name[v205]}
+        [stmt_in] livein: {u#user_id[v204], userId[v46], #tmp29[v209], u#user_name[v205]}
+      u#user_editcount[v207] = #tmp29[v209];
+        [stmt_out] liveout: {u#user_id[v204], u#user_editcount[v207], userId[v46], u#user_name[v205]}
+        [stmt_in] livein: {u#user_id[v204], u#user_editcount[v207], userId[v46], u#user_name[v205]}
+      u#user_touched[v206] = 1;
+        [stmt_out] liveout: {u#user_touched[v206], u#user_name[v205], u#user_id[v204], userId[v46], u#user_editcount[v207]}
+        [stmt_in] livein: {u#user_touched[v206], u#user_name[v205], u#user_id[v204], userId[v46], u#user_editcount[v207]}
+      user[userId[v46]].user_editcount = u#user_editcount[v207];
+        [stmt_out] liveout: {u#user_name[v205], u#user_id[v204], userId[v46], u#user_touched[v206]}
+        [stmt_in] livein: {u#user_name[v205], u#user_id[v204], userId[v46], u#user_touched[v206]}
+      user[userId[v46]].user_id = u#user_id[v204];
+        [stmt_out] liveout: {u#user_name[v205], u#user_touched[v206], userId[v46]}
+        [stmt_in] livein: {u#user_name[v205], u#user_touched[v206], userId[v46]}
+      user[userId[v46]].user_name = u#user_name[v205];
+        [stmt_out] liveout: {userId[v46], u#user_touched[v206]}
+        [stmt_in] livein: {userId[v46], u#user_touched[v206]}
+      user[userId[v46]].user_touched = u#user_touched[v206];
         [stmt_out] liveout: {}
       return;
       liveout: {}

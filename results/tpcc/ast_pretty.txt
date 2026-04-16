@@ -460,6 +460,7 @@ transaction Delivery[f49](w_id[p90]: int[t1], o_carrier_id[p91]: int[t1], date[p
     District[t7<tab<District>>][itab1][tab1][D_W_ID: w_id[t1][p90], D_ID: d_id[t1][v20]][t6<tab<District>>].D_NEXT_NO_ID[field20][t1] = no_o_id[t1][v15] + [f0]1[t1][t1][t0];
     let c_id[v16]: int[t1] = Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p90], O_D_ID: d_id[t1][v20], O_ID: no_o_id[t1][v15]][t6<tab<Order>>].O_C_ID[field48][t1];
     let ol_cnt[v17]: int[t1] = Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p90], O_D_ID: d_id[t1][v20], O_ID: no_o_id[t1][v15]][t6<tab<Order>>].O_OL_CNT[field51][t1];
+    to_unit[(infer4) -> t10][f43][f43](ol_cnt[t1][v17])[t10];
     Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p90], O_D_ID: d_id[t1][v20], O_ID: no_o_id[t1][v15]][t6<tab<Order>>].O_CARRIER_ID[field50][t1] = o_carrier_id[t1][p91][t0];
     let ol_total[v18]: float[t4] = 0.0[t4];
     for (let ol_number[v19]: int[t1] = 0[t1]; ol_number[t1][v19] < [f13]O_OL_CNT[t1][c2][t2]; ol_number[t1][v19] = ol_number[t1][v19] + [f0]1[t1][t1][t0])
@@ -477,10 +478,13 @@ transaction OrderStatus[f50](w_id[p93]: int[t1], d_id[p94]: int[t1], c_id[p95]: 
   hop
   {
     let c[v21]: Row<Customer>[t6<tab<Customer>>] = Customer[t7<tab<Customer>>][itab2][tab2][C_W_ID: w_id[t1][p93], C_D_ID: d_id[t1][p94], C_ID: c_id[t1][p95]][t6<tab<Customer>>];
+    to_unit[(infer1) -> t10][f43][f43](c[t6<tab<Customer>>][v21])[t10];
     let o[v22]: Row<Order>[t6<tab<Order>>] = Order[t7<tab<Order>>][itab4][tab4][O_W_ID: w_id[t1][p93], O_D_ID: d_id[t1][p94], O_ID: o_id[t1][p96]][t6<tab<Order>>];
+    to_unit[(infer4) -> t10][f43][f43](o[t6<tab<Order>>][v22])[t10];
     for (let ol_number[v23]: int[t1] = 0[t1]; ol_number[t1][v23] < [f13]O_OL_CNT[t1][c2][t2]; ol_number[t1][v23] = ol_number[t1][v23] + [f0]1[t1][t1][t0])
     {
       let ol[v24]: Row<Order_Line>[t6<tab<Order_Line>>] = Order_Line[t7<tab<Order_Line>>][itab5][tab5][OL_W_ID: w_id[t1][p93], OL_D_ID: d_id[t1][p94], OL_O_ID: o_id[t1][p96], OL_NUMBER: ol_number[t1][v23]][t6<tab<Order_Line>>];
+      to_unit[(infer9) -> t10][f43][f43](ol[t6<tab<Order_Line>>][v24])[t10];
     }
   }
 }
@@ -493,12 +497,14 @@ transaction StockLevel[f51](w_id[p97]: int[t1], d_id[p98]: int[t1], threshold[p9
     for (let ol_number[v26]: int[t1] = 0[t1]; ol_number[t1][v26] < [f13]O_OL_CNT[t1][c2][t2]; ol_number[t1][v26] = ol_number[t1][v26] + [f0]1[t1][t1][t0])
     {
       let ol[v27]: Row<Order_Line>[t6<tab<Order_Line>>] = Order_Line[t7<tab<Order_Line>>][itab5][tab5][OL_W_ID: w_id[t1][p97], OL_D_ID: d_id[t1][p98], OL_O_ID: next_o_id[t1][v25], OL_NUMBER: ol_number[t1][v26]][t6<tab<Order_Line>>];
+      to_unit[(infer4) -> t10][f43][f43](ol[t6<tab<Order_Line>>][v27])[t10];
     }
   }
   hop
   {
     let s[v28]: Row<Stock>[t6<tab<Stock>>] = Stock[t7<tab<Stock>>][itab7][tab7][S_W_ID: w_id[t1][p97], S_I_ID: rep_i_id[t1][p100]][t6<tab<Stock>>];
     let low_stock[v29]: bool[t2] = s[t6<tab<Stock>>][v28].S_QUANTITY[field71][t1] < [f13]threshold[t1][p99][t2];
+    to_unit[(infer8) -> t10][f43][f43](low_stock[t2][v29])[t10];
   }
 }
 

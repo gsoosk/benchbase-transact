@@ -35,7 +35,7 @@ func NewcommentHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var item_i_status uint64
 	var item_i_num_comments uint64
 	var item_i_c_id uint64
-	var _tmp18 uint64
+	var _tmp26 uint64
 	var seller_u_id uint64
 	var seller_u_rating uint64
 	var seller_u_balance float32
@@ -46,7 +46,7 @@ func NewcommentHop0(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var seller_u_sattr2 string
 	var seller_u_sattr3 string
 	var seller_u_sattr4 string
-	var _tmp20 uint64
+	var _tmp28 uint64
 
 	var keyBytes1 []byte
 	var row1 Item
@@ -82,8 +82,8 @@ BB13:
 	item_i_start_date = row1.i_start_date
 	item_i_status = row1.i_status
 	item_i_u_id = row1.Key.i_u_id
-	_tmp18 = item_i_num_comments + 1
-	item_i_num_comments = _tmp18
+	_tmp26 = item_i_num_comments + 1
+	item_i_num_comments = _tmp26
 	// Combined table access: Item (11 operations)
 	keyBytes2, row2 = getItem(tx, ItemKey{i_id: item_id, i_u_id: seller_id})
 	rwSet = AddRWSet(rwSet, "Item", keyBytes2)
@@ -119,8 +119,8 @@ BB13:
 	seller_u_sattr2 = row4.u_sattr2
 	seller_u_sattr3 = row4.u_sattr3
 	seller_u_sattr4 = row4.u_sattr4
-	_tmp20 = seller_u_comments + 1
-	seller_u_comments = _tmp20
+	_tmp28 = seller_u_comments + 1
+	seller_u_comments = _tmp28
 	// Combined table access: Useracct (10 operations)
 	keyBytes5, row5 = getUseracct(tx, UseracctKey{u_id: seller_id})
 	rwSet = AddRWSet(rwSet, "Useracct", keyBytes5)
@@ -137,9 +137,9 @@ BB13:
 	putUseracct(tx, UseracctKey{u_id: seller_id}, row5)
 	// return - no action
 	// Flush caches for tables written in this hop
+	flushItemCache(tx)
 	flushUseracctCache(tx)
 	flushItemCommentCache(tx)
-	flushItemCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -165,7 +165,7 @@ func NewcommentHop0Par(params map[string]string) uint64 {
 	var item_i_status uint64
 	var item_i_num_comments uint64
 	var item_i_c_id uint64
-	var _tmp18 uint64
+	var _tmp26 uint64
 	var seller_u_id uint64
 	var seller_u_rating uint64
 	var seller_u_balance float32
@@ -176,7 +176,7 @@ func NewcommentHop0Par(params map[string]string) uint64 {
 	var seller_u_sattr2 string
 	var seller_u_sattr3 string
 	var seller_u_sattr4 string
-	var _tmp20 uint64
+	var _tmp28 uint64
 
 	var keyBytes1 []byte
 	var row1 Item
@@ -219,8 +219,8 @@ BB13:
 	item_i_start_date = row1.i_start_date
 	item_i_status = row1.i_status
 	item_i_u_id = row1.Key.i_u_id
-	_tmp18 = item_i_num_comments + 1
-	item_i_num_comments = _tmp18
+	_tmp26 = item_i_num_comments + 1
+	item_i_num_comments = _tmp26
 	// First table access (optimized group) - calculate partition: Item
 	if true { return putItemPar(ItemKey{i_id: item_id, i_u_id: seller_id}) }
 	// Combined table access: Item (11 operations)
@@ -262,8 +262,8 @@ BB13:
 	seller_u_sattr2 = row4.u_sattr2
 	seller_u_sattr3 = row4.u_sattr3
 	seller_u_sattr4 = row4.u_sattr4
-	_tmp20 = seller_u_comments + 1
-	seller_u_comments = _tmp20
+	_tmp28 = seller_u_comments + 1
+	seller_u_comments = _tmp28
 	// First table access (optimized group) - calculate partition: Useracct
 	if true { return putUseracctPar(UseracctKey{u_id: seller_id}) }
 	// Combined table access: Useracct (10 operations)

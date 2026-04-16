@@ -123,10 +123,10 @@ BB12:
 	row5.rc_new_len = p_page_len
 	putRecentchanges(tx, RecentchangesKey{rc_id: rcId}, row5)
 	// Flush caches for tables written in this hop
-	flushTextCache(tx)
-	flushPageCache(tx)
 	flushRecentchangesCache(tx)
+	flushTextCache(tx)
 	flushRevisionCache(tx)
+	flushPageCache(tx)
 	return &proto.TrxRes{
 		Status: proto.Status_Success,
 		Info:   in.Info,
@@ -190,7 +190,7 @@ func UpdatepageHop2(tx *bolt.Tx, in *proto.TrxReq) (*proto.TrxRes, error) {
 	var u_user_id uint64
 	var u_user_name string
 	var u_user_editcount uint64
-	var _tmp20 uint64
+	var _tmp29 uint64
 
 	var keyBytes1 []byte
 	var row1 Logging
@@ -228,8 +228,8 @@ BB14:
 	u_user_editcount = row2.user_editcount
 	u_user_id = row2.Key.user_id
 	u_user_name = row2.user_name
-	_tmp20 = u_user_editcount + 1
-	u_user_editcount = _tmp20
+	_tmp29 = u_user_editcount + 1
+	u_user_editcount = _tmp29
 	// Combined table access: User (4 operations)
 	keyBytes3, row3 = getUser(tx, UserKey{user_id: userId})
 	rwSet = AddRWSet(rwSet, "User", keyBytes3)
@@ -423,7 +423,7 @@ func UpdatepageHop2Par(params map[string]string) uint64 {
 	var u_user_id uint64
 	var u_user_name string
 	var u_user_editcount uint64
-	var _tmp20 uint64
+	var _tmp29 uint64
 
 	var keyBytes1 []byte
 	var row1 Logging
@@ -470,8 +470,8 @@ BB14:
 	u_user_editcount = row2.user_editcount
 	u_user_id = row2.Key.user_id
 	u_user_name = row2.user_name
-	_tmp20 = u_user_editcount + 1
-	u_user_editcount = _tmp20
+	_tmp29 = u_user_editcount + 1
+	u_user_editcount = _tmp29
 	// First table access (optimized group) - calculate partition: User
 	if true { return putUserPar(UserKey{user_id: userId}) }
 	// Combined table access: User (4 operations)
