@@ -24,6 +24,7 @@ table UserTable {
     field8: string;
     field9: string;
     field10: string;
+    is_deleted: int;
 }
 
 // ============================================================================
@@ -66,17 +67,18 @@ transaction InsertRecord(keyname: int, f1: string, f2: string, f3: string, f4: s
             field7: f7,
             field8: f8,
             field9: f9,
-            field10: f10
+            field10: f10,
+            is_deleted: 0
         };
     }
 }
 
+// DELETE is not supported in TransAct; modeled as a tombstone write.
 transaction DeleteRecord(keyname: int) {
     hop {
-        // Assume logical or physical delete.
-        // TransAct typically omits deletes for SC graph analysis or marks them logically.
         var r: Row<UserTable> = UserTable[ycsb_key: keyname];
-        UserTable[ycsb_key: keyname] = r; // Proxy for touch/delete
+        r.is_deleted = 1;
+        UserTable[ycsb_key: keyname] = r;
     }
 }
 

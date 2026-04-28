@@ -20,8 +20,8 @@
 //   UpdatePage: page/text partition → watcher partition → editor-user partition (3 hops)
 //
 // Notes:
-//   - DELETE is not supported in TransAct; RemoveWatchList models deletion as a
-//     read-touch (the SC-graph edge suffices for commutativity analysis).
+//   - DELETE is not supported in TransAct; RemoveWatchList models deletion via
+//     a tombstone field (wl_is_deleted) on the watchlist table.
 //   - INSERT is modeled via row-literal assignment: Table[keys] = {fields}.
 //   - nextTextId / nextRevId are passed as parameters (generated before the
 //     transaction begins, e.g., by a sequence table or application counter).
@@ -48,6 +48,7 @@ table watchlist {
     primary wl_title: string;
     node f(wl_user);
     wl_notificationtimestamp: int;
+    wl_is_deleted: int;
 }
 
 table page {
@@ -155,12 +156,14 @@ transaction AddWatchList(userId: int, nameSpace: int, pageTitle: string) {
     hop {
         // Add the requested page to the watchlist.
         watchlist[wl_user: userId, wl_namespace: nameSpace, wl_title: pageTitle] = {
-            wl_notificationtimestamp: 0
+            wl_notificationtimestamp: 0,
+            wl_is_deleted: 0
         };
         // If main namespace (0), also watch the corresponding talk page (namespace 1).
         if (nameSpace == 0) {
             watchlist[wl_user: userId, wl_namespace: 1, wl_title: pageTitle] = {
-                wl_notificationtimestamp: 0
+                wl_notificationtimestamp: 0,
+                wl_is_deleted: 0
             };
         }
         // Touch the user record.
@@ -233,15 +236,15 @@ transaction GetPageAuthenticated(userId: int, pageId: int, ug_group: string,
 // RemoveWatchList:
 //   DELETE FROM watchlist WHERE wl_user = ? AND wl_namespace = ? AND wl_title = ?
 //   UPDATE user SET user_touched = NOW()
-// DELETE is not supported in TransAct; modeled as a read-touch so the
-// SC-graph captures the write dependency.
+// DELETE is not supported in TransAct; modeled as a tombstone write on wl_is_deleted.
 transaction RemoveWatchList(userId: int, nameSpace: int, pageTitle: string) {
     hop {
-        // Read-touch the watchlist entry (models deletion for SC-graph analysis).
         var wl: Row<watchlist> = watchlist[wl_user: userId, wl_namespace: nameSpace, wl_title: pageTitle];
+        wl.wl_is_deleted = 1;
         watchlist[wl_user: userId, wl_namespace: nameSpace, wl_title: pageTitle] = wl;
         if (nameSpace == 0) {
             var wl2: Row<watchlist> = watchlist[wl_user: userId, wl_namespace: 1, wl_title: pageTitle];
+            wl2.wl_is_deleted = 1;
             watchlist[wl_user: userId, wl_namespace: 1, wl_title: pageTitle] = wl2;
         }
         // Touch the user record.
