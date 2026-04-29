@@ -1,0 +1,97 @@
+// ============================================================================
+// Canvas LMS — NavMenuLink
+//
+// Source: app/models/nav_menu_link.rb
+// Methods modeled:
+//   sync_with_link_objects — atomically create new links and remove stale ones
+//
+// Partition: contextPartition — nav menu links belong to a context (account).
+//   context_id is the leading PK component.
+//
+// The Ruby method loops over new_links and destroy_all on removed IDs.
+// TransAct models these as single-row operations (one call per link).
+// Tombstone: is_deleted=1 replaces destroy_all (TransAct has no delete).
+// ============================================================================
+
+partition contextPartition(context_id: int) -> int {
+    return context_id;
+}
+
+// ============================================================================
+// Tables
+// ============================================================================
+
+// context_id is leading PK for partition routing.
+table nav_menu_links {
+    primary context_id: int;
+    primary id: int;
+    node contextPartition(context_id);
+
+    url: string;
+    label: string;
+    context_type: string;
+    course_nav: int;
+    account_nav: int;
+    user_nav: int;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// Create a new navigation menu link for a context.
+// Models the NavMenuLink.create! inside sync_with_link_objects new_links loop.
+transaction CreateNavMenuLink(context_id: int, link_id: int,
+                              url: string, label: string, context_type: string,
+                              course_nav: int, account_nav: int, user_nav: int) {
+    hop {
+        nav_menu_links[context_id: context_id, id: link_id] = {
+            url: url,
+            label: label,
+            context_type: context_type,
+            course_nav: course_nav,
+            account_nav: account_nav,
+            user_nav: user_nav,
+            workflow_state: "active",
+            is_deleted: 0
+        };
+    }
+}
+
+// Soft-delete a navigation menu link (tombstone instead of destroy_all row).
+// Models the where(context:, id: link_ids_to_remove).destroy_all per row.
+transaction DeleteNavMenuLink(context_id: int, link_id: int) {
+    hop {
+        var link: Row<nav_menu_links> = nav_menu_links[context_id: context_id, id: link_id];
+        link.workflow_state = "deleted";
+        link.is_deleted = 1;
+        nav_menu_links[context_id: context_id, id: link_id] = link;
+    }
+}
+
+// Sync one link: create new and tombstone a removed link atomically.
+// Models the full sync_with_link_objects transaction for a single pair.
+transaction SyncNavMenuLink(context_id: int,
+                            new_link_id: int, url: string, label: string,
+                            context_type: string, course_nav: int,
+                            account_nav: int, user_nav: int,
+                            old_link_id: int) {
+    hop {
+        nav_menu_links[context_id: context_id, id: new_link_id] = {
+            url: url,
+            label: label,
+            context_type: context_type,
+            course_nav: course_nav,
+            account_nav: account_nav,
+            user_nav: user_nav,
+            workflow_state: "active",
+            is_deleted: 0
+        };
+        var old_link: Row<nav_menu_links> = nav_menu_links[context_id: context_id, id: old_link_id];
+        old_link.workflow_state = "deleted";
+        old_link.is_deleted = 1;
+        nav_menu_links[context_id: context_id, id: old_link_id] = old_link;
+    }
+}

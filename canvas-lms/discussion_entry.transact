@@ -1,0 +1,129 @@
+// ============================================================================
+// Canvas LMS — DiscussionEntry
+//
+// Source: app/models/discussion_entry.rb
+// Methods modeled:
+//   decrement_unread_counts_for_this_entry — decrement unread count per user
+//   increment_unread_counts_after_restore  — increment unread count per user
+//   change_rating                          — lock entry, update rating + aggregate
+//
+// Partitions:
+//   topicPartition — discussion_topic_participants and discussion_entries are
+//                    both scoped to a discussion_topic_id; entries are co-located
+//                    with their topic's participant rows.
+//   entryPartition — discussion_entry_participants are scoped to an entry_id,
+//                    which is the natural partition key for that table.
+//
+// The unread-count transactions use topicPartition so the participant update
+// is 1-hop. change_rating touches both discussion_entries (topicPartition)
+// and discussion_entry_participants (entryPartition) → 2-hop.
+// ============================================================================
+
+partition topicPartition(topic_id: int) -> int {
+    return topic_id;
+}
+
+partition entryPartition(entry_id: int) -> int {
+    return entry_id;
+}
+
+// ============================================================================
+// Tables
+// ============================================================================
+
+// discussion_topic_id is leading PK for topicPartition routing.
+table discussion_topic_participants {
+    primary discussion_topic_id: int;
+    primary user_id: int;
+    node topicPartition(discussion_topic_id);
+
+    workflow_state: string;
+    unread_entry_count: int;
+    subscribed: int;
+}
+
+// discussion_entry_id is leading PK for entryPartition routing.
+table discussion_entry_participants {
+    primary discussion_entry_id: int;
+    primary user_id: int;
+    node entryPartition(discussion_entry_id);
+
+    workflow_state: string;
+    rating: int;
+    report_type: string;
+}
+
+// discussion_topic_id is leading PK for topicPartition routing.
+table discussion_entries {
+    primary discussion_topic_id: int;
+    primary id: int;
+    node topicPartition(discussion_topic_id);
+
+    user_id: int;
+    message: string;
+    workflow_state: string;
+    rating_count: int;
+    rating_sum: int;
+    is_deleted: int;
+}
+
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// Decrement unread_entry_count for one topic participant.
+// Models decrement_unread_counts_for_this_entry (one user per call;
+// Ruby iterates over all participants who haven't read the entry).
+transaction DecrementUnreadCount(topic_id: int, user_id: int) {
+    hop {
+        var p: Row<discussion_topic_participants> = discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id];
+        if p.unread_entry_count > 0 {
+            p.unread_entry_count = p.unread_entry_count - 1;
+        }
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id] = p;
+    }
+}
+
+// Increment unread_entry_count for one topic participant.
+// Models increment_unread_counts_after_restore (one user per call).
+transaction IncrementUnreadCount(topic_id: int, user_id: int) {
+    hop {
+        var p: Row<discussion_topic_participants> = discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id];
+        p.unread_entry_count = p.unread_entry_count + 1;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id] = p;
+    }
+}
+
+// Update or create an entry participant rating and update the entry's aggregate.
+// Models change_rating — 2-hop because entry (topicPartition) and participant
+// (entryPartition) are on different partitions keyed by different IDs.
+transaction ChangeEntryRating(topic_id: int, entry_id: int, user_id: int,
+                              new_rating: int, old_rating: int) {
+    hop {
+        var entry: Row<discussion_entries> = discussion_entries[discussion_topic_id: topic_id, id: entry_id];
+        entry.rating_sum = entry.rating_sum - old_rating + new_rating;
+        if new_rating > 0 {
+            entry.rating_count = entry.rating_count + 1;
+        }
+        if old_rating > 0 {
+            entry.rating_count = entry.rating_count - 1;
+        }
+        discussion_entries[discussion_topic_id: topic_id, id: entry_id] = entry;
+    }
+    hop {
+        var ep: Row<discussion_entry_participants> = discussion_entry_participants[discussion_entry_id: entry_id, user_id: user_id];
+        ep.rating = new_rating;
+        discussion_entry_participants[discussion_entry_id: entry_id, user_id: user_id] = ep;
+    }
+}
+
+// Soft-delete a discussion entry.
+// Models DiscussionEntry#destroy (workflow_state tombstone).
+transaction DeleteDiscussionEntry(topic_id: int, entry_id: int) {
+    hop {
+        var e: Row<discussion_entries> = discussion_entries[discussion_topic_id: topic_id, id: entry_id];
+        e.workflow_state = "deleted";
+        e.is_deleted = 1;
+        discussion_entries[discussion_topic_id: topic_id, id: entry_id] = e;
+    }
+}
