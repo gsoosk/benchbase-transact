@@ -381,27 +381,21 @@ table discussion_entry_participants {
 // Models setup_for (notification branch) and find_or_update_for.
 transaction SetupNotificationPolicy(channel_id: int, notification_id: int, frequency: string) {
     hop {
-        var np: Row<notification_policies> = notification_policies[communication_channel_id: channel_id, notification_id: notification_id];
-        np.frequency = frequency;
-        notification_policies[communication_channel_id: channel_id, notification_id: notification_id] = np;
+        notification_policies[communication_channel_id: channel_id, notification_id: notification_id].frequency = frequency;
     }
 }
 
 // Retire a communication channel so it stops receiving notifications.
 transaction RetireCommunicationChannel(channel_id: int) {
     hop {
-        var cc: Row<communication_channels> = communication_channels[id: channel_id];
-        cc.workflow_state = "retired";
-        communication_channels[id: channel_id] = cc;
+        communication_channels[id: channel_id].workflow_state = "retired";
     }
 }
 
 // Confirm an unconfirmed communication channel.
 transaction ConfirmCommunicationChannel(channel_id: int) {
     hop {
-        var cc: Row<communication_channels> = communication_channels[id: channel_id];
-        cc.workflow_state = "active";
-        communication_channels[id: channel_id] = cc;
+        communication_channels[id: channel_id].workflow_state = "active";
     }
 }
 
@@ -414,11 +408,9 @@ transaction ConfirmCommunicationChannel(channel_id: int) {
 // Models OutcomeProficiency.find_or_create_default!
 transaction CreateDefaultProficiency(context_id: int, context_type: string) {
     hop {
-        var prof: Row<outcome_proficiencies> = outcome_proficiencies[context_id: context_id];
-        prof.context_type = context_type;
-        prof.workflow_state = "active";
-        prof.is_deleted = 0;
-        outcome_proficiencies[context_id: context_id] = prof;
+        outcome_proficiencies[context_id: context_id].context_type = context_type;
+        outcome_proficiencies[context_id: context_id].workflow_state = "active";
+        outcome_proficiencies[context_id: context_id].is_deleted = 0;
     }
 }
 
@@ -428,23 +420,19 @@ transaction UpsertProficiencyRating(context_id: int, rating_id: int,
                                     description: string, points: float,
                                     mastery: int, color: string) {
     hop {
-        var r: Row<outcome_proficiency_ratings> = outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id];
-        r.description = description;
-        r.points = points;
-        r.mastery = mastery;
-        r.color = color;
-        r.workflow_state = "active";
-        r.is_deleted = 0;
-        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id] = r;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].description = description;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].points = points;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].mastery = mastery;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].color = color;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].workflow_state = "active";
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].is_deleted = 0;
     }
 }
 
 // Tombstone a rating that is no longer part of the proficiency scale.
 transaction DeleteProficiencyRating(context_id: int, rating_id: int) {
     hop {
-        var r: Row<outcome_proficiency_ratings> = outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id];
-        r.is_deleted = 1;
-        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id] = r;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].is_deleted = 1;
     }
 }
 
@@ -452,20 +440,16 @@ transaction DeleteProficiencyRating(context_id: int, rating_id: int) {
 // Models OutcomeProficiency#undestroy.
 transaction UndoDestroyProficiency(context_id: int) {
     hop {
-        var prof: Row<outcome_proficiencies> = outcome_proficiencies[context_id: context_id];
-        prof.workflow_state = "active";
-        prof.is_deleted = 0;
-        outcome_proficiencies[context_id: context_id] = prof;
+        outcome_proficiencies[context_id: context_id].workflow_state = "active";
+        outcome_proficiencies[context_id: context_id].is_deleted = 0;
     }
 }
 
 // Restore a single soft-deleted rating (caller loops over all ratings).
 transaction UndoDestroyRating(context_id: int, rating_id: int) {
     hop {
-        var r: Row<outcome_proficiency_ratings> = outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id];
-        r.workflow_state = "active";
-        r.is_deleted = 0;
-        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id] = r;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].workflow_state = "active";
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id].is_deleted = 0;
     }
 }
 
@@ -478,16 +462,14 @@ transaction UndoDestroyRating(context_id: int, rating_id: int) {
 // Models Wiki.wiki_for_context (create branch).
 transaction GetOrCreateWikiForCourse(course_id: int, wiki_title: string, root_account_id: int) {
     hop {
-        var c: Row<courses> = courses[id: course_id];
-        if c.wiki_id == 0 {
+        if courses[id: course_id].wiki_id == 0 {
             wikis[course_id: course_id] = {
                 title: wiki_title,
                 root_account_id: root_account_id,
                 front_page_url: "front-page",
                 has_no_front_page: 1
             };
-            c.wiki_id = course_id;
-            courses[id: course_id] = c;
+            courses[id: course_id].wiki_id = course_id;
         }
     }
 }
@@ -496,10 +478,8 @@ transaction GetOrCreateWikiForCourse(course_id: int, wiki_title: string, root_ac
 // Models Wiki#set_front_page_url!
 transaction SetFrontPageUrl(course_id: int, front_page_url: string) {
     hop {
-        var w: Row<wikis> = wikis[course_id: course_id];
-        w.front_page_url = front_page_url;
-        w.has_no_front_page = 0;
-        wikis[course_id: course_id] = w;
+        wikis[course_id: course_id].front_page_url = front_page_url;
+        wikis[course_id: course_id].has_no_front_page = 0;
     }
 }
 
@@ -507,13 +487,9 @@ transaction SetFrontPageUrl(course_id: int, front_page_url: string) {
 // Models Wiki#unset_front_page!
 transaction UnsetFrontPage(course_id: int) {
     hop {
-        var c: Row<courses> = courses[id: course_id];
-        c.default_view = "feed";
-        courses[id: course_id] = c;
-        var w: Row<wikis> = wikis[course_id: course_id];
-        w.front_page_url = "";
-        w.has_no_front_page = 1;
-        wikis[course_id: course_id] = w;
+        courses[id: course_id].default_view = "feed";
+        wikis[course_id: course_id].front_page_url = "";
+        wikis[course_id: course_id].has_no_front_page = 1;
     }
 }
 
@@ -566,28 +542,22 @@ transaction CreateCommunicationChannel(user_id: int, cc_id: int,
 // Update user name/sortable_name from federated SSO attributes.
 transaction UpdateFederatedUserAttributes(user_id: int, name: string, sortable_name: string) {
     hop {
-        var u: Row<users> = users[id: user_id];
-        u.name = name;
-        u.sortable_name = sortable_name;
-        users[id: user_id] = u;
+        users[id: user_id].name = name;
+        users[id: user_id].sortable_name = sortable_name;
     }
 }
 
 // Update the unique_id on an existing pseudonym (e.g., email change via SSO).
 transaction UpdatePseudonymUniqueId(user_id: int, pseudonym_id: int, unique_id: string) {
     hop {
-        var p: Row<pseudonyms> = pseudonyms[user_id: user_id, id: pseudonym_id];
-        p.unique_id = unique_id;
-        pseudonyms[user_id: user_id, id: pseudonym_id] = p;
+        pseudonyms[user_id: user_id, id: pseudonym_id].unique_id = unique_id;
     }
 }
 
 // Soft-delete a pseudonym when a user is removed from an account.
 transaction DeletePseudonym(user_id: int, pseudonym_id: int) {
     hop {
-        var p: Row<pseudonyms> = pseudonyms[user_id: user_id, id: pseudonym_id];
-        p.workflow_state = "deleted";
-        pseudonyms[user_id: user_id, id: pseudonym_id] = p;
+        pseudonyms[user_id: user_id, id: pseudonym_id].workflow_state = "deleted";
     }
 }
 
@@ -600,19 +570,15 @@ transaction DeletePseudonym(user_id: int, pseudonym_id: int) {
 // Models Account#destroy (account record; membership cascade is a separate tx).
 transaction DestroyAccount(account_id: int) {
     hop {
-        var acc: Row<accounts> = accounts[id: account_id];
-        acc.workflow_state = "deleted";
-        acc.is_deleted = 1;
-        accounts[id: account_id] = acc;
+        accounts[id: account_id].workflow_state = "deleted";
+        accounts[id: account_id].is_deleted = 1;
     }
 }
 
 // Soft-delete a single account membership during account destroy cascade.
 transaction DestroyAccountUser(account_id: int, user_id: int) {
     hop {
-        var au: Row<account_users> = account_users[account_id: account_id, user_id: user_id];
-        au.workflow_state = "deleted";
-        account_users[account_id: account_id, user_id: user_id] = au;
+        account_users[account_id: account_id, user_id: user_id].workflow_state = "deleted";
     }
 }
 
@@ -635,9 +601,7 @@ transaction CreateSubAccount(sub_account_id: int, parent_id: int,
 // Models Account#manually_created_courses_account (read/lock branch).
 transaction ReadSubAccount(account_id: int) {
     hop {
-        var acc: Row<accounts> = accounts[id: account_id];
-        var state: string = acc.workflow_state;
-        to_unit(state);
+        to_unit(accounts[id: account_id].workflow_state);
     }
 }
 
@@ -660,20 +624,16 @@ transaction AddAccountUser(account_id: int, user_id: int, role_id: int) {
 // Models SisBatch.abort_all_pending_for_account (one row per call).
 transaction AbortSisBatch(account_id: int, batch_id: int) {
     hop {
-        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
-        b.workflow_state = "aborted";
-        sis_batches[account_id: account_id, id: batch_id] = b;
+        sis_batches[account_id: account_id, id: batch_id].workflow_state = "aborted";
     }
 }
 
 // Mark a SIS batch as completed.
 transaction CompleteSisBatch(account_id: int, batch_id: int, ended_at: int) {
     hop {
-        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
-        b.workflow_state = "imported";
-        b.ended_at = ended_at;
-        b.progress = 100;
-        sis_batches[account_id: account_id, id: batch_id] = b;
+        sis_batches[account_id: account_id, id: batch_id].workflow_state = "imported";
+        sis_batches[account_id: account_id, id: batch_id].ended_at = ended_at;
+        sis_batches[account_id: account_id, id: batch_id].progress = 100;
     }
 }
 
@@ -692,9 +652,7 @@ transaction CreateSisBatch(account_id: int, batch_id: int) {
 // Update the progress percentage of a running SIS batch.
 transaction UpdateSisBatchProgress(account_id: int, batch_id: int, progress: int) {
     hop {
-        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
-        b.progress = progress;
-        sis_batches[account_id: account_id, id: batch_id] = b;
+        sis_batches[account_id: account_id, id: batch_id].progress = progress;
     }
 }
 
@@ -710,13 +668,11 @@ transaction UpsertExternalTool(context_id: int, tool_id: int,
                                name: string, url: string,
                                consumer_key: string, context_type: string) {
     hop {
-        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
-        t.name = name;
-        t.url = url;
-        t.consumer_key = consumer_key;
-        t.context_type = context_type;
-        t.workflow_state = "active";
-        context_external_tools[context_id: context_id, id: tool_id] = t;
+        context_external_tools[context_id: context_id, id: tool_id].name = name;
+        context_external_tools[context_id: context_id, id: tool_id].url = url;
+        context_external_tools[context_id: context_id, id: tool_id].consumer_key = consumer_key;
+        context_external_tools[context_id: context_id, id: tool_id].context_type = context_type;
+        context_external_tools[context_id: context_id, id: tool_id].workflow_state = "active";
     }
 }
 
@@ -726,28 +682,22 @@ transaction DeployLtiTool(context_id: int, tool_id: int, registration_id: int,
                           name: string, url: string, consumer_key: string,
                           context_type: string, available: int) {
     hop {
-        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
-        t.name = name;
-        t.url = url;
-        t.consumer_key = consumer_key;
-        t.context_type = context_type;
-        t.workflow_state = "active";
-        context_external_tools[context_id: context_id, id: tool_id] = t;
-        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
-        ctrl.deployment_id = tool_id;
-        ctrl.available = available;
-        ctrl.context_type = context_type;
-        ctrl.workflow_state = "active";
-        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+        context_external_tools[context_id: context_id, id: tool_id].name = name;
+        context_external_tools[context_id: context_id, id: tool_id].url = url;
+        context_external_tools[context_id: context_id, id: tool_id].consumer_key = consumer_key;
+        context_external_tools[context_id: context_id, id: tool_id].context_type = context_type;
+        context_external_tools[context_id: context_id, id: tool_id].workflow_state = "active";
+        lti_context_controls[context_id: context_id, registration_id: registration_id].deployment_id = tool_id;
+        lti_context_controls[context_id: context_id, registration_id: registration_id].available = available;
+        lti_context_controls[context_id: context_id, registration_id: registration_id].context_type = context_type;
+        lti_context_controls[context_id: context_id, registration_id: registration_id].workflow_state = "active";
     }
 }
 
 // Toggle availability of an LTI tool in a context.
 transaction SetLtiToolAvailability(context_id: int, registration_id: int, available: int) {
     hop {
-        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
-        ctrl.available = available;
-        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+        lti_context_controls[context_id: context_id, registration_id: registration_id].available = available;
     }
 }
 
@@ -755,9 +705,7 @@ transaction SetLtiToolAvailability(context_id: int, registration_id: int, availa
 // Models Lti::ContextControl.where(deployment_id:).update_all (one row per call).
 transaction DeleteContextControl(context_id: int, registration_id: int) {
     hop {
-        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
-        ctrl.workflow_state = "deleted";
-        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+        lti_context_controls[context_id: context_id, registration_id: registration_id].workflow_state = "deleted";
     }
 }
 
@@ -765,21 +713,15 @@ transaction DeleteContextControl(context_id: int, registration_id: int) {
 // Models ContextExternalTool#destroy — tool + single control per call.
 transaction DestroyExternalTool(context_id: int, tool_id: int, registration_id: int) {
     hop {
-        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
-        t.workflow_state = "deleted";
-        context_external_tools[context_id: context_id, id: tool_id] = t;
-        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
-        ctrl.workflow_state = "deleted";
-        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+        context_external_tools[context_id: context_id, id: tool_id].workflow_state = "deleted";
+        lti_context_controls[context_id: context_id, registration_id: registration_id].workflow_state = "deleted";
     }
 }
 
 // Restore a soft-deleted LTI external tool.
 transaction RestoreExternalTool(context_id: int, tool_id: int) {
     hop {
-        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
-        t.workflow_state = "active";
-        context_external_tools[context_id: context_id, id: tool_id] = t;
+        context_external_tools[context_id: context_id, id: tool_id].workflow_state = "active";
     }
 }
 
@@ -793,9 +735,7 @@ transaction RestoreExternalTool(context_id: int, tool_id: int) {
 // Locks the template, sets active_migration_id, and creates the migration record.
 transaction StartNewMigration(template_id: int, migration_id: int, comment: string) {
     hop {
-        var tmpl: Row<master_templates> = master_templates[id: template_id];
-        tmpl.active_migration_id = migration_id;
-        master_templates[id: template_id] = tmpl;
+        master_templates[id: template_id].active_migration_id = migration_id;
         master_migrations[master_template_id: template_id, id: migration_id] = {
             workflow_state: "created",
             imports_completed_at: 0,
@@ -808,10 +748,8 @@ transaction StartNewMigration(template_id: int, migration_id: int, comment: stri
 transaction UpdateMigrationState(template_id: int, migration_id: int,
                                  new_state: string, completed_at: int) {
     hop {
-        var m: Row<master_migrations> = master_migrations[master_template_id: template_id, id: migration_id];
-        m.workflow_state = new_state;
-        m.imports_completed_at = completed_at;
-        master_migrations[master_template_id: template_id, id: migration_id] = m;
+        master_migrations[master_template_id: template_id, id: migration_id].workflow_state = new_state;
+        master_migrations[master_template_id: template_id, id: migration_id].imports_completed_at = completed_at;
     }
 }
 
@@ -820,9 +758,7 @@ transaction UpdateMigrationState(template_id: int, migration_id: int,
 transaction MarkDownstreamChange(content_id: int, subscription_id: int,
                                  changed_field: string) {
     hop {
-        var tag: Row<master_courses_child_content_tags> = master_courses_child_content_tags[content_id: content_id, child_subscription_id: subscription_id];
-        tag.downstream_changes = changed_field;
-        master_courses_child_content_tags[content_id: content_id, child_subscription_id: subscription_id] = tag;
+        master_courses_child_content_tags[content_id: content_id, child_subscription_id: subscription_id].downstream_changes = changed_field;
     }
 }
 
@@ -835,11 +771,9 @@ transaction MarkDownstreamChange(content_id: int, subscription_id: int,
 transaction UpdateAssignmentDates(course_id: int, assignment_id: int,
                                   due_at: int, unlock_at: int, lock_at: int) {
     hop {
-        var a: Row<assignments> = assignments[context_id: course_id, id: assignment_id];
-        a.due_at = due_at;
-        a.unlock_at = unlock_at;
-        a.lock_at = lock_at;
-        assignments[context_id: course_id, id: assignment_id] = a;
+        assignments[context_id: course_id, id: assignment_id].due_at = due_at;
+        assignments[context_id: course_id, id: assignment_id].unlock_at = unlock_at;
+        assignments[context_id: course_id, id: assignment_id].lock_at = lock_at;
     }
 }
 
@@ -848,11 +782,9 @@ transaction UpdateAssignmentOverride(course_id: int, assignment_id: int,
                                      override_id: int, due_at: int,
                                      unlock_at: int, lock_at: int) {
     hop {
-        var ov: Row<assignment_overrides> = assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id];
-        ov.due_at = due_at;
-        ov.unlock_at = unlock_at;
-        ov.lock_at = lock_at;
-        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id] = ov;
+        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id].due_at = due_at;
+        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id].unlock_at = unlock_at;
+        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id].lock_at = lock_at;
     }
 }
 
@@ -863,16 +795,12 @@ transaction UpdateAssignmentWithOverride(course_id: int, assignment_id: int,
                                          override_due_at: int, override_unlock_at: int,
                                          override_lock_at: int) {
     hop {
-        var a: Row<assignments> = assignments[context_id: course_id, id: assignment_id];
-        a.due_at = due_at;
-        a.unlock_at = unlock_at;
-        a.lock_at = lock_at;
-        assignments[context_id: course_id, id: assignment_id] = a;
-        var ov: Row<assignment_overrides> = assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id];
-        ov.due_at = override_due_at;
-        ov.unlock_at = override_unlock_at;
-        ov.lock_at = override_lock_at;
-        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id] = ov;
+        assignments[context_id: course_id, id: assignment_id].due_at = due_at;
+        assignments[context_id: course_id, id: assignment_id].unlock_at = unlock_at;
+        assignments[context_id: course_id, id: assignment_id].lock_at = lock_at;
+        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id].due_at = override_due_at;
+        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id].unlock_at = override_unlock_at;
+        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id].lock_at = override_lock_at;
     }
 }
 
@@ -894,20 +822,16 @@ transaction CreateScan(course_id: int, scan_id: int) {
 // Mark a scan as completed.
 transaction CompleteScan(course_id: int, scan_id: int, completed_at: int) {
     hop {
-        var s: Row<accessibility_resource_scans> = accessibility_resource_scans[course_id: course_id, id: scan_id];
-        s.workflow_state = "completed";
-        s.completed_at = completed_at;
-        accessibility_resource_scans[course_id: course_id, id: scan_id] = s;
+        accessibility_resource_scans[course_id: course_id, id: scan_id].workflow_state = "completed";
+        accessibility_resource_scans[course_id: course_id, id: scan_id].completed_at = completed_at;
     }
 }
 
 // Close a single accessibility issue (tombstone pattern).
 transaction CloseAccessibilityIssue(course_id: int, issue_id: int) {
     hop {
-        var iss: Row<accessibility_issues> = accessibility_issues[course_id: course_id, id: issue_id];
-        iss.workflow_state = "closed";
-        iss.is_deleted = 1;
-        accessibility_issues[course_id: course_id, id: issue_id] = iss;
+        accessibility_issues[course_id: course_id, id: issue_id].workflow_state = "closed";
+        accessibility_issues[course_id: course_id, id: issue_id].is_deleted = 1;
     }
 }
 
@@ -915,14 +839,10 @@ transaction CloseAccessibilityIssue(course_id: int, issue_id: int) {
 transaction CloseLastIssueAndCompleteScan(course_id: int, scan_id: int,
                                           issue_id: int, completed_at: int) {
     hop {
-        var s: Row<accessibility_resource_scans> = accessibility_resource_scans[course_id: course_id, id: scan_id];
-        s.workflow_state = "completed";
-        s.completed_at = completed_at;
-        accessibility_resource_scans[course_id: course_id, id: scan_id] = s;
-        var iss: Row<accessibility_issues> = accessibility_issues[course_id: course_id, id: issue_id];
-        iss.workflow_state = "closed";
-        iss.is_deleted = 1;
-        accessibility_issues[course_id: course_id, id: issue_id] = iss;
+        accessibility_resource_scans[course_id: course_id, id: scan_id].workflow_state = "completed";
+        accessibility_resource_scans[course_id: course_id, id: scan_id].completed_at = completed_at;
+        accessibility_issues[course_id: course_id, id: issue_id].workflow_state = "closed";
+        accessibility_issues[course_id: course_id, id: issue_id].is_deleted = 1;
     }
 }
 
@@ -934,9 +854,7 @@ transaction CloseLastIssueAndCompleteScan(course_id: int, scan_id: int,
 // Update the data_json blob for a custom_data record (lock-and-save pattern).
 transaction UpdateCustomData(user_id: int, namespace: string, data_json: string) {
     hop {
-        var cd: Row<custom_data> = custom_data[user_id: user_id, namespace: namespace];
-        cd.data_json = data_json;
-        custom_data[user_id: user_id, namespace: namespace] = cd;
+        custom_data[user_id: user_id, namespace: namespace].data_json = data_json;
     }
 }
 
@@ -953,9 +871,7 @@ transaction CreateCustomData(user_id: int, namespace: string, data_json: string)
 // Soft-delete a custom_data record.
 transaction DeleteCustomData(user_id: int, namespace: string) {
     hop {
-        var cd: Row<custom_data> = custom_data[user_id: user_id, namespace: namespace];
-        cd.is_deleted = 1;
-        custom_data[user_id: user_id, namespace: namespace] = cd;
+        custom_data[user_id: user_id, namespace: namespace].is_deleted = 1;
     }
 }
 
@@ -968,11 +884,9 @@ transaction DeleteCustomData(user_id: int, namespace: string) {
 // Models decrement_unread_counts_for_this_entry (one user per call).
 transaction DecrementUnreadCount(topic_id: int, user_id: int) {
     hop {
-        var p: Row<discussion_topic_participants> = discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id];
-        if p.unread_entry_count > 0 {
-            p.unread_entry_count = p.unread_entry_count - 1;
+        if discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].unread_entry_count > 0 {
+            discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].unread_entry_count = discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].unread_entry_count - 1;
         }
-        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id] = p;
     }
 }
 
@@ -980,9 +894,7 @@ transaction DecrementUnreadCount(topic_id: int, user_id: int) {
 // Models increment_unread_counts_after_restore (one user per call).
 transaction IncrementUnreadCount(topic_id: int, user_id: int) {
     hop {
-        var p: Row<discussion_topic_participants> = discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id];
-        p.unread_entry_count = p.unread_entry_count + 1;
-        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id] = p;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].unread_entry_count = discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].unread_entry_count + 1;
     }
 }
 
@@ -992,30 +904,24 @@ transaction IncrementUnreadCount(topic_id: int, user_id: int) {
 transaction ChangeEntryRating(topic_id: int, entry_id: int, user_id: int,
                               new_rating: int, old_rating: int) {
     hop {
-        var entry: Row<discussion_entries> = discussion_entries[discussion_topic_id: topic_id, id: entry_id];
-        entry.rating_sum = entry.rating_sum - old_rating + new_rating;
+        discussion_entries[discussion_topic_id: topic_id, id: entry_id].rating_sum = discussion_entries[discussion_topic_id: topic_id, id: entry_id].rating_sum - old_rating + new_rating;
         if new_rating > 0 {
-            entry.rating_count = entry.rating_count + 1;
+            discussion_entries[discussion_topic_id: topic_id, id: entry_id].rating_count = discussion_entries[discussion_topic_id: topic_id, id: entry_id].rating_count + 1;
         }
         if old_rating > 0 {
-            entry.rating_count = entry.rating_count - 1;
+            discussion_entries[discussion_topic_id: topic_id, id: entry_id].rating_count = discussion_entries[discussion_topic_id: topic_id, id: entry_id].rating_count - 1;
         }
-        discussion_entries[discussion_topic_id: topic_id, id: entry_id] = entry;
     }
     hop {
-        var ep: Row<discussion_entry_participants> = discussion_entry_participants[discussion_entry_id: entry_id, user_id: user_id];
-        ep.rating = new_rating;
-        discussion_entry_participants[discussion_entry_id: entry_id, user_id: user_id] = ep;
+        discussion_entry_participants[discussion_entry_id: entry_id, user_id: user_id].rating = new_rating;
     }
 }
 
 // Soft-delete a discussion entry.
 transaction DeleteDiscussionEntry(topic_id: int, entry_id: int) {
     hop {
-        var e: Row<discussion_entries> = discussion_entries[discussion_topic_id: topic_id, id: entry_id];
-        e.workflow_state = "deleted";
-        e.is_deleted = 1;
-        discussion_entries[discussion_topic_id: topic_id, id: entry_id] = e;
+        discussion_entries[discussion_topic_id: topic_id, id: entry_id].workflow_state = "deleted";
+        discussion_entries[discussion_topic_id: topic_id, id: entry_id].is_deleted = 1;
     }
 }
 
@@ -1047,10 +953,8 @@ transaction CreateNavMenuLink(context_id: int, link_id: int,
 // Models the destroy_all per row in sync_with_link_objects.
 transaction DeleteNavMenuLink(context_id: int, link_id: int) {
     hop {
-        var link: Row<nav_menu_links> = nav_menu_links[context_id: context_id, id: link_id];
-        link.workflow_state = "deleted";
-        link.is_deleted = 1;
-        nav_menu_links[context_id: context_id, id: link_id] = link;
+        nav_menu_links[context_id: context_id, id: link_id].workflow_state = "deleted";
+        nav_menu_links[context_id: context_id, id: link_id].is_deleted = 1;
     }
 }
 
@@ -1072,10 +976,8 @@ transaction SyncNavMenuLink(context_id: int,
             workflow_state: "active",
             is_deleted: 0
         };
-        var old_link: Row<nav_menu_links> = nav_menu_links[context_id: context_id, id: old_link_id];
-        old_link.workflow_state = "deleted";
-        old_link.is_deleted = 1;
-        nav_menu_links[context_id: context_id, id: old_link_id] = old_link;
+        nav_menu_links[context_id: context_id, id: old_link_id].workflow_state = "deleted";
+        nav_menu_links[context_id: context_id, id: old_link_id].is_deleted = 1;
     }
 }
 
@@ -1088,9 +990,7 @@ transaction SyncNavMenuLink(context_id: int,
 // Models the delete_all step in set_lmgb_outcome_ordering (one row per call).
 transaction DeleteOutcomeOrdering(user_id: int, course_id: int, outcome_id: int) {
     hop {
-        var ord: Row<user_lmgb_outcome_orderings> = user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: outcome_id];
-        ord.is_deleted = 1;
-        user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: outcome_id] = ord;
+        user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: outcome_id].is_deleted = 1;
     }
 }
 
@@ -1115,9 +1015,7 @@ transaction ReplaceOutcomeOrdering(user_id: int, course_id: int,
                                    new_outcome_id: int, root_account_id: int,
                                    position: int) {
     hop {
-        var old_ord: Row<user_lmgb_outcome_orderings> = user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: old_outcome_id];
-        old_ord.is_deleted = 1;
-        user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: old_outcome_id] = old_ord;
+        user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: old_outcome_id].is_deleted = 1;
         user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: new_outcome_id] = {
             root_account_id: root_account_id,
             position: position,
