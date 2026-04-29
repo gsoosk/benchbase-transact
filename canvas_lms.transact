@@ -388,6 +388,10 @@ table discussion_topic_participants {
     workflow_state: string;
     unread_entry_count: int;
     subscribed: int;
+    sort_order: string;
+    summary_enabled: int;
+    show_pinned_entries: int;
+    has_unread_pinned_entry: int;
 }
 
 table discussion_entry_participants {
@@ -1903,5 +1907,249 @@ transaction EnsureSubmissionsFolder(context_id: int, context_type: string,
             unique_type: "",
             submission_context_code: submission_context_code
         };
+    }
+}
+
+// ============================================================================
+// Tables — LTI line items, resource links, moderation graders
+// ============================================================================
+
+// AGS line item bound to an assignment (one "primary" line item per assignment
+// plus optional "uncoupled" items added via the AGS API).
+table lti_line_items {
+    primary assignment_id: int;
+    primary id: int;
+    node assignmentPartition(assignment_id);
+
+    label: string;
+    score_maximum: float;
+    resource_id: string;
+    tag: string;
+    coupled: int;
+    client_id: int;
+    start_date_time: int;
+    end_date_time: int;
+    workflow_state: string;
+    resource_link_id: int;
+}
+
+// LTI 1.3 resource link that binds a deployment to a content item (e.g. assignment).
+// Keyed by the assignment context so it co-locates with lti_line_items.
+table lti_resource_links {
+    primary context_id: int;
+    primary id: int;
+    node assignmentPartition(context_id);
+
+    context_external_tool_id: int;
+    resource_link_uuid: string;
+    lookup_uuid: string;
+    url: string;
+    title: string;
+    custom: string;
+    lti_1_1_id: string;
+    workflow_state: string;
+}
+
+// Tracks which graders have been assigned a provisional grading slot in a
+// moderated grading assignment.
+table moderation_graders {
+    primary assignment_id: int;
+    primary id: int;
+    node assignmentPartition(assignment_id);
+
+    user_id: int;
+    anonymous_id: string;
+    slot_taken: int;
+}
+
+// ============================================================================
+// Transactions — LTI line items & resource links
+// Source: app/models/lti/line_item.rb, app/models/abstract_assignment.rb
+// ============================================================================
+
+// Create a new standalone LTI assignment and its initial line item atomically.
+// Models Lti::LineItem.create_line_item! (create-new-assignment branch).
+// 2-hop: hop 1 inserts the assignment (coursePartition), hop 2 inserts the
+// line item (assignmentPartition — the partition key is now known).
+transaction CreateLtiLineItemForNewAssignment(course_id: int, assignment_id: int,
+                                              line_item_id: int,
+                                              label: string, score_maximum: float,
+                                              client_id: int, coupled: int) {
+    hop {
+        assignments[context_id: course_id, id: assignment_id] = {
+            due_at: 0,
+            unlock_at: 0,
+            lock_at: 0,
+            workflow_state: "published"
+        };
+    }
+    hop {
+        lti_line_items[assignment_id: assignment_id, id: line_item_id] = {
+            label: label,
+            score_maximum: score_maximum,
+            resource_id: "",
+            tag: "",
+            coupled: coupled,
+            client_id: client_id,
+            start_date_time: 0,
+            end_date_time: 0,
+            workflow_state: "active",
+            resource_link_id: 0
+        };
+    }
+}
+
+// Update the primary LTI line item when the assignment title/points/dates change.
+// Models abstract_assignment.rb#update_line_items (update-existing branch).
+// Both lti_line_items and lti_resource_links are keyed by assignment_id →
+// same assignmentPartition node → 1-hop.
+transaction UpdateAssignmentLineItem(assignment_id: int, line_item_id: int,
+                                     label: string, score_maximum: float,
+                                     start_date_time: int, end_date_time: int,
+                                     resource_link_id: int,
+                                     rl_url: string, rl_title: string) {
+    hop {
+        lti_line_items[assignment_id: assignment_id, id: line_item_id].label = label;
+        lti_line_items[assignment_id: assignment_id, id: line_item_id].score_maximum = score_maximum;
+        lti_line_items[assignment_id: assignment_id, id: line_item_id].start_date_time = start_date_time;
+        lti_line_items[assignment_id: assignment_id, id: line_item_id].end_date_time = end_date_time;
+        lti_resource_links[context_id: assignment_id, id: resource_link_id].url = rl_url;
+        lti_resource_links[context_id: assignment_id, id: resource_link_id].title = rl_title;
+    }
+}
+
+// Create both an LTI resource link and its initial coupled line item for an assignment.
+// Models abstract_assignment.rb#update_line_items (create-initial-line-item branch).
+// Both tables are on assignmentPartition → 1-hop.
+transaction CreateResourceLinkAndLineItem(assignment_id: int,
+                                          resource_link_id: int,
+                                          resource_link_uuid: string,
+                                          line_item_id: int,
+                                          label: string, score_maximum: float,
+                                          client_id: int,
+                                          start_date_time: int, end_date_time: int) {
+    hop {
+        lti_resource_links[context_id: assignment_id, id: resource_link_id] = {
+            context_external_tool_id: 0,
+            resource_link_uuid: resource_link_uuid,
+            lookup_uuid: "",
+            url: "",
+            title: label,
+            custom: "",
+            lti_1_1_id: "",
+            workflow_state: "active"
+        };
+        lti_line_items[assignment_id: assignment_id, id: line_item_id] = {
+            label: label,
+            score_maximum: score_maximum,
+            resource_id: "",
+            tag: "",
+            coupled: 1,
+            client_id: client_id,
+            start_date_time: start_date_time,
+            end_date_time: end_date_time,
+            workflow_state: "active",
+            resource_link_id: resource_link_id
+        };
+    }
+}
+
+// ============================================================================
+// Transactions — Moderation grader slot management
+// Source: app/models/abstract_assignment.rb#ensure_grader_can_adjudicate
+// ============================================================================
+
+// Reserve a provisional grading slot for a new grader.
+// Models Assignment#create_moderation_grader (called from ensure_grader_can_adjudicate).
+transaction ClaimModerationGraderSlot(assignment_id: int, grader_id: int,
+                                      user_id: int, anonymous_id: string) {
+    hop {
+        moderation_graders[assignment_id: assignment_id, id: grader_id] = {
+            user_id: user_id,
+            anonymous_id: anonymous_id,
+            slot_taken: 1
+        };
+    }
+}
+
+// Update the slot_taken flag for an existing moderation grader record.
+// Models moderation_grader.update!(slot_taken:) in ensure_grader_can_adjudicate.
+transaction UpdateModerationGraderSlot(assignment_id: int, grader_id: int,
+                                       slot_taken: int) {
+    hop {
+        moderation_graders[assignment_id: assignment_id, id: grader_id].slot_taken = slot_taken;
+    }
+}
+
+// ============================================================================
+// Transactions — Enrollment + enrollment state (2-hop)
+// Source: app/models/enrollment.rb
+// ============================================================================
+
+// Accept an enrollment invitation and atomically mark its computed state as stale.
+// 2-hop: hop 1 updates enrollments (coursePartition), hop 2 updates
+// enrollment_states (enrollmentPartition).  The Rails callback
+// recalculate_enrollment_state sets state_is_current=false after every
+// workflow_state change; this models that as a single atomic unit.
+transaction AcceptEnrollmentAndInvalidateState(course_id: int, enrollment_id: int) {
+    hop {
+        enrollments[course_id: course_id, id: enrollment_id].workflow_state = "active";
+    }
+    hop {
+        enrollment_states[enrollment_id: enrollment_id].state_is_current = 0;
+    }
+}
+
+// Delete an enrollment and atomically mark its state row as stale.
+// 2-hop for the same reason as AcceptEnrollmentAndInvalidateState.
+transaction DeleteEnrollmentAndInvalidateState(course_id: int, enrollment_id: int) {
+    hop {
+        enrollments[course_id: course_id, id: enrollment_id].workflow_state = "deleted";
+    }
+    hop {
+        enrollment_states[enrollment_id: enrollment_id].state_is_current = 0;
+    }
+}
+
+// ============================================================================
+// Transactions — Discussion topic participant (rich multi-field upsert)
+// Source: app/models/discussion_topic.rb#update_or_create_participant
+// ============================================================================
+
+// Create or update the per-(topic,user) participant record with full field set.
+// Models DiscussionTopic.unique_constraint_retry inside update_or_create_participant.
+// All fields are on discussion_topic_participants (topicPartition) → 1-hop,
+// but the combined field update is far richer than the individual DecrementUnreadCount
+// / IncrementUnreadCount transactions already modeled.
+transaction UpsertTopicParticipant(topic_id: int, user_id: int,
+                                   workflow_state: string, subscribed: int,
+                                   unread_entry_count: int, sort_order: string,
+                                   summary_enabled: int, show_pinned_entries: int,
+                                   has_unread_pinned_entry: int) {
+    hop {
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].workflow_state = workflow_state;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].subscribed = subscribed;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].unread_entry_count = unread_entry_count;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].sort_order = sort_order;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].summary_enabled = summary_enabled;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].show_pinned_entries = show_pinned_entries;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].has_unread_pinned_entry = has_unread_pinned_entry;
+    }
+}
+
+// Subscribe or unsubscribe a user from a discussion topic.
+// Models DiscussionTopic#subscribe / #unsubscribe via update_or_create_participant.
+transaction SetTopicSubscription(topic_id: int, user_id: int, subscribed: int) {
+    hop {
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].subscribed = subscribed;
+    }
+}
+
+// Mark a full topic as read and reset unread count to zero.
+// Models DiscussionTopic#change_read_state (update_or_create_participant with new_state="read").
+transaction MarkTopicRead(topic_id: int, user_id: int) {
+    hop {
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].workflow_state = "read";
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id].unread_entry_count = 0;
     }
 }
