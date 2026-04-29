@@ -1,0 +1,132 @@
+// ============================================================================
+// Canvas LMS — User Provisioning (AuthenticationProvider)
+//
+// Source: app/models/authentication_provider.rb
+// Methods modeled:
+//   provision_user            — create user + pseudonym + communication channel
+//   apply_federated_attributes — update user attributes from SSO provider
+//
+// Partition: userPartition — users, pseudonyms, and communication channels are
+//   all owned by a user_id and co-located on the same partition.
+//   account_users (membership records) use the same user_id partition for
+//   cross-table atomic writes during provisioning.
+//
+// Tombstone: is_deleted=1 replaces DELETE (TransAct has no delete operation).
+// ============================================================================
+
+partition userPartition(user_id: int) -> int {
+    return user_id;
+}
+
+// ============================================================================
+// Tables
+// ============================================================================
+
+table users {
+    primary id: int;
+    node userPartition(id);
+
+    name: string;
+    sortable_name: string;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+// user_id is leading PK component for co-location.
+table pseudonyms {
+    primary user_id: int;
+    primary id: int;
+    node userPartition(user_id);
+
+    account_id: int;
+    unique_id: string;
+    workflow_state: string;
+    sis_user_id: string;
+}
+
+// user_id is leading PK component for co-location.
+table communication_channels {
+    primary user_id: int;
+    primary id: int;
+    node userPartition(user_id);
+
+    address: string;
+    path_type: string;
+    workflow_state: string;
+    position: int;
+}
+
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// Create a new user record during SSO provisioning.
+// Models AuthenticationProvider#provision_user (user creation step).
+transaction ProvisionUser(user_id: int, name: string, sortable_name: string) {
+    hop {
+        users[id: user_id] = {
+            name: name,
+            sortable_name: sortable_name,
+            workflow_state: "pre_registered",
+            is_deleted: 0
+        };
+    }
+}
+
+// Create a pseudonym (login credential) for a newly provisioned user.
+// Models AuthenticationProvider#provision_user (pseudonym creation step).
+transaction CreatePseudonym(user_id: int, pseudonym_id: int, account_id: int,
+                            unique_id: string, sis_user_id: string) {
+    hop {
+        pseudonyms[user_id: user_id, id: pseudonym_id] = {
+            account_id: account_id,
+            unique_id: unique_id,
+            workflow_state: "active",
+            sis_user_id: sis_user_id
+        };
+    }
+}
+
+// Create a communication channel (email/sms) for a newly provisioned user.
+// Models AuthenticationProvider#provision_user (communication channel step).
+transaction CreateCommunicationChannel(user_id: int, cc_id: int,
+                                       address: string, path_type: string) {
+    hop {
+        communication_channels[user_id: user_id, id: cc_id] = {
+            address: address,
+            path_type: path_type,
+            workflow_state: "unconfirmed",
+            position: 1
+        };
+    }
+}
+
+// Update user name/sortable_name from federated SSO attributes.
+// Models AuthenticationProvider#apply_federated_attributes (name fields).
+transaction UpdateFederatedUserAttributes(user_id: int, name: string, sortable_name: string) {
+    hop {
+        var u: Row<users> = users[id: user_id];
+        u.name = name;
+        u.sortable_name = sortable_name;
+        users[id: user_id] = u;
+    }
+}
+
+// Update the unique_id on an existing pseudonym (e.g., email change via SSO).
+// Models AuthenticationProvider#apply_federated_attributes (pseudonym field).
+transaction UpdatePseudonymUniqueId(user_id: int, pseudonym_id: int, unique_id: string) {
+    hop {
+        var p: Row<pseudonyms> = pseudonyms[user_id: user_id, id: pseudonym_id];
+        p.unique_id = unique_id;
+        pseudonyms[user_id: user_id, id: pseudonym_id] = p;
+    }
+}
+
+// Soft-delete a pseudonym when a user is removed from an account.
+transaction DeletePseudonym(user_id: int, pseudonym_id: int) {
+    hop {
+        var p: Row<pseudonyms> = pseudonyms[user_id: user_id, id: pseudonym_id];
+        p.workflow_state = "deleted";
+        pseudonyms[user_id: user_id, id: pseudonym_id] = p;
+    }
+}

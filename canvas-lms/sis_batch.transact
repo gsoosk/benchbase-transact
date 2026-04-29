@@ -1,0 +1,80 @@
+// ============================================================================
+// Canvas LMS — SisBatch
+//
+// Source: app/models/sis_batch.rb
+// Methods modeled:
+//   abort_all_pending_for_account — lock pending batches and mark them aborted
+//
+// Partition: accountPartition — SIS batches belong to an account. account_id
+//   is part of the composite primary key so the partition function routes
+//   each batch to its owning account's shard.
+//
+// The Ruby method uses update_all over multiple rows; TransAct models it as
+// a single-row operation (one call per batch_id).
+// ============================================================================
+
+partition accountPartition(account_id: int) -> int {
+    return account_id;
+}
+
+// ============================================================================
+// Tables
+// ============================================================================
+
+// account_id is leading PK for partition routing.
+table sis_batches {
+    primary account_id: int;
+    primary id: int;
+    node accountPartition(account_id);
+
+    workflow_state: string;
+    started_at: int;
+    ended_at: int;
+    progress: int;
+}
+
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// Abort a single pending SIS batch.
+// Models SisBatch.abort_all_pending_for_account for one batch record.
+transaction AbortSisBatch(account_id: int, batch_id: int) {
+    hop {
+        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
+        b.workflow_state = "aborted";
+        sis_batches[account_id: account_id, id: batch_id] = b;
+    }
+}
+
+// Mark a SIS batch as completed with a progress of 100.
+transaction CompleteSisBatch(account_id: int, batch_id: int, ended_at: int) {
+    hop {
+        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
+        b.workflow_state = "imported";
+        b.ended_at = ended_at;
+        b.progress = 100;
+        sis_batches[account_id: account_id, id: batch_id] = b;
+    }
+}
+
+// Create a new SIS batch record for an account.
+transaction CreateSisBatch(account_id: int, batch_id: int) {
+    hop {
+        sis_batches[account_id: account_id, id: batch_id] = {
+            workflow_state: "created",
+            started_at: 0,
+            ended_at: 0,
+            progress: 0
+        };
+    }
+}
+
+// Update the progress percentage of a running SIS batch.
+transaction UpdateSisBatchProgress(account_id: int, batch_id: int, progress: int) {
+    hop {
+        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
+        b.progress = progress;
+        sis_batches[account_id: account_id, id: batch_id] = b;
+    }
+}

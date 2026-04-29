@@ -1,0 +1,109 @@
+// ============================================================================
+// Canvas LMS — LTI Tool Deployment
+//
+// Sources:
+//   app/models/lti/registration.rb
+//   app/models/importers/context_external_tool_importer.rb
+// Methods modeled:
+//   Lti::Registration#new_external_tool         — create/update tool + control
+//   Importers::ContextExternalToolImporter#persist_tool — import tool + control
+//
+// Partition: contextPartition — both context_external_tools and
+//   lti_context_controls are scoped to a context (course or account).
+//   context_id is the leading PK component in both tables for co-location.
+//
+// Both source methods wrap the two-table write in a single Rails transaction;
+// DeployLtiTool models that atomic 2-write operation as a 1-hop TransAct tx.
+// ============================================================================
+
+partition contextPartition(context_id: int) -> int {
+    return context_id;
+}
+
+// ============================================================================
+// Tables
+// ============================================================================
+
+// (context_id, id) composite PK; context_id routes to partition.
+table context_external_tools {
+    primary context_id: int;
+    primary id: int;
+    node contextPartition(context_id);
+
+    name: string;
+    domain: string;
+    url: string;
+    consumer_key: string;
+    context_type: string;
+    workflow_state: string;
+}
+
+// (context_id, registration_id) is the natural unique key.
+table lti_context_controls {
+    primary context_id: int;
+    primary registration_id: int;
+    node contextPartition(context_id);
+
+    available: int;
+    context_type: string;
+    workflow_state: string;
+}
+
+// ============================================================================
+// Transactions
+// ============================================================================
+
+// Create or update an LTI external tool for a context.
+// Models the tool-save step of Lti::Registration#new_external_tool.
+transaction UpsertExternalTool(context_id: int, tool_id: int,
+                               name: string, url: string,
+                               consumer_key: string, context_type: string) {
+    hop {
+        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
+        t.name = name;
+        t.url = url;
+        t.consumer_key = consumer_key;
+        t.context_type = context_type;
+        t.workflow_state = "active";
+        context_external_tools[context_id: context_id, id: tool_id] = t;
+    }
+}
+
+// Deploy an LTI tool: atomically create/update the tool and its context control.
+// Models Lti::Registration#new_external_tool and persist_tool full transactions.
+transaction DeployLtiTool(context_id: int, tool_id: int, registration_id: int,
+                          name: string, url: string, consumer_key: string,
+                          context_type: string, available: int) {
+    hop {
+        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
+        t.name = name;
+        t.url = url;
+        t.consumer_key = consumer_key;
+        t.context_type = context_type;
+        t.workflow_state = "active";
+        context_external_tools[context_id: context_id, id: tool_id] = t;
+        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
+        ctrl.available = available;
+        ctrl.context_type = context_type;
+        ctrl.workflow_state = "active";
+        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+    }
+}
+
+// Toggle availability of an LTI tool in a context.
+transaction SetLtiToolAvailability(context_id: int, registration_id: int, available: int) {
+    hop {
+        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
+        ctrl.available = available;
+        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+    }
+}
+
+// Soft-delete an LTI external tool.
+transaction DeleteExternalTool(context_id: int, tool_id: int) {
+    hop {
+        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
+        t.workflow_state = "deleted";
+        context_external_tools[context_id: context_id, id: tool_id] = t;
+    }
+}
