@@ -28,8 +28,20 @@ partition accountPartition(account_id: int) -> int {
     return account_id;
 }
 
+partition assignmentPartition(assignment_id: int) -> int {
+    return assignment_id;
+}
+
 partition channelPartition(channel_id: int) -> int {
     return channel_id;
+}
+
+partition columnPartition(column_id: int) -> int {
+    return column_id;
+}
+
+partition commentPartition(comment_id: int) -> int {
+    return comment_id;
 }
 
 partition contentPartition(content_id: int) -> int {
@@ -44,8 +56,24 @@ partition coursePartition(course_id: int) -> int {
     return course_id;
 }
 
+partition enrollmentPartition(enrollment_id: int) -> int {
+    return enrollment_id;
+}
+
 partition entryPartition(entry_id: int) -> int {
     return entry_id;
+}
+
+partition groupPartition(group_id: int) -> int {
+    return group_id;
+}
+
+partition quizPartition(quiz_id: int) -> int {
+    return quiz_id;
+}
+
+partition submissionPartition(submission_id: int) -> int {
+    return submission_id;
 }
 
 partition templatePartition(template_id: int) -> int {
@@ -1020,6 +1048,860 @@ transaction ReplaceOutcomeOrdering(user_id: int, course_id: int,
             root_account_id: root_account_id,
             position: position,
             is_deleted: 0
+        };
+    }
+}
+
+// ============================================================================
+// Tables — Enrollment / course section / score domain
+// ============================================================================
+
+table enrollments {
+    primary course_id: int;
+    primary id: int;
+    node coursePartition(course_id);
+
+    user_id: int;
+    course_section_id: int;
+    type: string;
+    role_id: int;
+    workflow_state: string;
+    associated_user_id: int;
+}
+
+// Computed access / state record for every enrollment row.
+// One-to-one with enrollments; partitioned by enrollment_id for lock-free updates.
+table enrollment_states {
+    primary enrollment_id: int;
+    node enrollmentPartition(enrollment_id);
+
+    state: string;
+    state_is_current: int;
+    access_is_current: int;
+    restricted_access: int;
+}
+
+// Per-enrollment score records (one per assignment group + one course-level row).
+table scores {
+    primary enrollment_id: int;
+    primary id: int;
+    node enrollmentPartition(enrollment_id);
+
+    assignment_group_id: int;
+    workflow_state: string;
+    current_score: float;
+    final_score: float;
+    unposted_current_score: float;
+    unposted_final_score: float;
+}
+
+table course_sections {
+    primary course_id: int;
+    primary id: int;
+    node coursePartition(course_id);
+
+    name: string;
+    default_section: int;
+    workflow_state: string;
+    root_account_id: int;
+    sis_source_id: string;
+}
+
+// ============================================================================
+// Tables — Submission / grading domain
+// ============================================================================
+
+// Core submission record — one per (assignment, user) pair.
+table submissions {
+    primary assignment_id: int;
+    primary user_id: int;
+    node assignmentPartition(assignment_id);
+
+    grade: string;
+    score: float;
+    workflow_state: string;
+    submission_type: string;
+    attempt: int;
+    body: string;
+    grader_id: int;
+}
+
+// Provisional grade written by one scorer during moderated grading.
+table provisional_grades {
+    primary submission_id: int;
+    primary id: int;
+    node submissionPartition(submission_id);
+
+    scorer_id: int;
+    grade: string;
+    score: float;
+    final: int;
+    workflow_state: string;
+}
+
+// ============================================================================
+// Tables — Quiz submission domain
+// ============================================================================
+
+table quiz_submissions {
+    primary quiz_id: int;
+    primary id: int;
+    node quizPartition(quiz_id);
+
+    user_id: int;
+    temporary_user_code: string;
+    workflow_state: string;
+    score: float;
+    attempt: int;
+    started_at: int;
+    finished_at: int;
+}
+
+// ============================================================================
+// Tables — Content participation / read-state domain
+// ============================================================================
+
+// Per-(submission, user, content_item) read/unread participation record.
+table content_participations {
+    primary content_id: int;
+    primary user_id: int;
+    primary content_item: string;
+    node submissionPartition(content_id);
+
+    workflow_state: string;
+}
+
+// Aggregate unread count for a user within a course, broken down by content_type.
+table content_participation_counts {
+    primary context_id: int;
+    primary user_id: int;
+    primary content_type: string;
+    node coursePartition(context_id);
+
+    unread_count: int;
+}
+
+// Tracks which submission comments a user has already seen.
+table viewed_submission_comments {
+    primary submission_comment_id: int;
+    primary user_id: int;
+    node commentPartition(submission_comment_id);
+
+    viewed: int;
+}
+
+// ============================================================================
+// Tables — Group collaboration domain
+// ============================================================================
+
+table group_memberships {
+    primary group_id: int;
+    primary user_id: int;
+    node groupPartition(group_id);
+
+    workflow_state: string;
+    moderator: int;
+}
+
+// ============================================================================
+// Tables — Wiki page / slug lookup domain
+// ============================================================================
+
+// wiki_pages and wiki_page_lookups are both keyed by wiki_id so they land on
+// the same coursePartition node, enabling 1-hop atomic lookup+update.
+table wiki_pages {
+    primary wiki_id: int;
+    primary id: int;
+    node coursePartition(wiki_id);
+
+    title: string;
+    body: string;
+    url: string;
+    workflow_state: string;
+    current_lookup_id: int;
+}
+
+table wiki_page_lookups {
+    primary wiki_id: int;
+    primary id: int;
+    node coursePartition(wiki_id);
+
+    slug: string;
+    wiki_page_id: int;
+    context_id: int;
+    context_type: string;
+}
+
+// ============================================================================
+// Tables — Discussion materialized view domain
+// ============================================================================
+
+// Cached JSON rendering of a discussion topic tree — rebuilt on demand.
+table discussion_topic_materialized_views {
+    primary discussion_topic_id: int;
+    node topicPartition(discussion_topic_id);
+
+    json_structure: string;
+    participants_array: string;
+    entry_ids_array: string;
+    workflow_state: string;
+}
+
+// ============================================================================
+// Tables — User observation (parent/guardian) domain
+// ============================================================================
+
+table user_observation_links {
+    primary user_id: int;
+    primary observer_id: int;
+    primary root_account_id: int;
+    node userPartition(user_id);
+
+    workflow_state: string;
+    sis_batch_id: int;
+}
+
+// ============================================================================
+// Tables — Gradebook custom columns domain
+// ============================================================================
+
+table custom_gradebook_column_data {
+    primary custom_gradebook_column_id: int;
+    primary user_id: int;
+    node columnPartition(custom_gradebook_column_id);
+
+    content: string;
+    root_account_id: int;
+}
+
+// ============================================================================
+// Tables — CSP allowed domains domain
+// ============================================================================
+
+table csp_domains {
+    primary account_id: int;
+    primary id: int;
+    node accountPartition(account_id);
+
+    domain: string;
+    workflow_state: string;
+}
+
+// ============================================================================
+// Tables — Scheduled smart alerts domain
+// ============================================================================
+
+table scheduled_smart_alerts {
+    primary context_id: int;
+    primary alert_type: string;
+    node contextPartition(context_id);
+
+    context_type: string;
+    due_at: int;
+    root_account_id: int;
+}
+
+// ============================================================================
+// Tables — Blueprint master content tags (template-side)
+// ============================================================================
+
+// Template-side tag associating master content with a blueprint template.
+// Distinct from master_courses_child_content_tags (child-subscription side).
+table master_course_content_tags {
+    primary master_template_id: int;
+    primary content_id: int;
+    node templatePartition(master_template_id);
+
+    content_type: string;
+    restrictions: string;
+    use_default_restrictions: int;
+    workflow_state: string;
+}
+
+// ============================================================================
+// Tables — Outcome calculation method domain
+// ============================================================================
+
+table outcome_calculation_methods {
+    primary context_id: int;
+    node contextPartition(context_id);
+
+    context_type: string;
+    calculation_method: string;
+    calculation_int: int;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+// ============================================================================
+// Tables — Folder / file system domain
+// ============================================================================
+
+table folders {
+    primary context_id: int;
+    primary id: int;
+    node contextPartition(context_id);
+
+    name: string;
+    full_name: string;
+    parent_folder_id: int;
+    context_type: string;
+    workflow_state: string;
+    unique_type: string;
+    submission_context_code: string;
+}
+
+// ============================================================================
+// Transactions — Enrollment
+// Source: app/models/enrollment.rb, app/models/enrollment/batch_state_updater.rb
+// ============================================================================
+
+// Create a new enrollment for a user in a course section.
+transaction CreateEnrollment(course_id: int, enrollment_id: int, user_id: int,
+                             course_section_id: int, enrollment_type: string,
+                             role_id: int, workflow_state: string) {
+    hop {
+        enrollments[course_id: course_id, id: enrollment_id] = {
+            user_id: user_id,
+            course_section_id: course_section_id,
+            type: enrollment_type,
+            role_id: role_id,
+            workflow_state: workflow_state,
+            associated_user_id: 0
+        };
+    }
+}
+
+// Update the workflow_state of a single enrollment (accept, conclude, delete).
+transaction UpdateEnrollmentWorkflowState(course_id: int, enrollment_id: int,
+                                          workflow_state: string) {
+    hop {
+        enrollments[course_id: course_id, id: enrollment_id].workflow_state = workflow_state;
+    }
+}
+
+// Accept a pending invitation — change state to active.
+// Models Enrollment#accept.
+transaction AcceptEnrollment(course_id: int, enrollment_id: int) {
+    hop {
+        enrollments[course_id: course_id, id: enrollment_id].workflow_state = "active";
+    }
+}
+
+// Soft-delete an enrollment.
+transaction DeleteEnrollment(course_id: int, enrollment_id: int) {
+    hop {
+        enrollments[course_id: course_id, id: enrollment_id].workflow_state = "deleted";
+    }
+}
+
+// Create the enrollment_state record for a newly created enrollment.
+// Models Enrollment#create_enrollment_state (first_or_create pattern).
+transaction EnsureEnrollmentState(enrollment_id: int) {
+    hop {
+        enrollment_states[enrollment_id: enrollment_id] = {
+            state: "pending_invited",
+            state_is_current: 0,
+            access_is_current: 0,
+            restricted_access: 0
+        };
+    }
+}
+
+// Soft-delete all score rows for one enrollment.
+// Models one row from BatchStateUpdater Score.where(enrollment_id:).update_all.
+transaction DeleteScore(enrollment_id: int, score_id: int) {
+    hop {
+        scores[enrollment_id: enrollment_id, id: score_id].workflow_state = "deleted";
+    }
+}
+
+// ============================================================================
+// Transactions — Course section
+// Source: app/models/course_section.rb
+// ============================================================================
+
+// Create a new section within a course.
+transaction CreateCourseSection(course_id: int, section_id: int, name: string,
+                                root_account_id: int) {
+    hop {
+        course_sections[course_id: course_id, id: section_id] = {
+            name: name,
+            default_section: 0,
+            workflow_state: "active",
+            root_account_id: root_account_id,
+            sis_source_id: ""
+        };
+    }
+}
+
+// Mark a section as the default for its course.
+// Models CourseSection.unique_constraint_retry { default_section = ...; save! }
+transaction MarkSectionAsDefault(course_id: int, section_id: int) {
+    hop {
+        course_sections[course_id: course_id, id: section_id].default_section = 1;
+    }
+}
+
+// ============================================================================
+// Transactions — Submission / grading
+// Source: app/models/submission.rb, app/models/abstract_assignment.rb
+// ============================================================================
+
+// Create a new submission record for a student on an assignment.
+transaction CreateSubmission(assignment_id: int, user_id: int,
+                             submission_type: string, workflow_state: string) {
+    hop {
+        submissions[assignment_id: assignment_id, user_id: user_id] = {
+            grade: "",
+            score: 0.0,
+            workflow_state: workflow_state,
+            submission_type: submission_type,
+            attempt: 1,
+            body: "",
+            grader_id: 0
+        };
+    }
+}
+
+// Record a grade on an existing submission.
+// Models Submission#save! inside find_or_create_provisional_grade (non-moderated path).
+transaction GradeSubmission(assignment_id: int, user_id: int,
+                            grade: string, score: float, grader_id: int) {
+    hop {
+        submissions[assignment_id: assignment_id, user_id: user_id].grade = grade;
+        submissions[assignment_id: assignment_id, user_id: user_id].score = score;
+        submissions[assignment_id: assignment_id, user_id: user_id].grader_id = grader_id;
+        submissions[assignment_id: assignment_id, user_id: user_id].workflow_state = "graded";
+    }
+}
+
+// Mark a submission as submitted (group broadcast path).
+// Models Submission.unique_constraint_retry { save! } in broadcast_group_submission.
+transaction MarkSubmissionSubmitted(assignment_id: int, user_id: int) {
+    hop {
+        submissions[assignment_id: assignment_id, user_id: user_id].workflow_state = "submitted";
+    }
+}
+
+// Create or update a provisional grade for one scorer.
+// Models find_or_create_provisional_grade! (ModeratedGrading::ProvisionalGrade).
+transaction UpsertProvisionalGrade(submission_id: int, grade_id: int,
+                                   scorer_id: int, grade: string, score: float,
+                                   final: int) {
+    hop {
+        provisional_grades[submission_id: submission_id, id: grade_id].scorer_id = scorer_id;
+        provisional_grades[submission_id: submission_id, id: grade_id].grade = grade;
+        provisional_grades[submission_id: submission_id, id: grade_id].score = score;
+        provisional_grades[submission_id: submission_id, id: grade_id].final = final;
+        provisional_grades[submission_id: submission_id, id: grade_id].workflow_state = "active";
+    }
+}
+
+// ============================================================================
+// Transactions — Quiz submission
+// Source: app/models/quizzes/submission_manager.rb
+// ============================================================================
+
+// Get or create the quiz_submission record for a user (or temp code).
+// Models Quizzes::QuizSubmission.unique_constraint_retry in SubmissionManager#find_or_create_submission.
+transaction EnsureQuizSubmission(quiz_id: int, submission_id: int, user_id: int,
+                                 workflow_state: string) {
+    hop {
+        quiz_submissions[quiz_id: quiz_id, id: submission_id] = {
+            user_id: user_id,
+            temporary_user_code: "",
+            workflow_state: workflow_state,
+            score: 0.0,
+            attempt: 1,
+            started_at: 0,
+            finished_at: 0
+        };
+    }
+}
+
+// Transition a quiz submission to a new state (complete, preview, etc.).
+transaction UpdateQuizSubmissionState(quiz_id: int, submission_id: int,
+                                      workflow_state: string, score: float,
+                                      finished_at: int) {
+    hop {
+        quiz_submissions[quiz_id: quiz_id, id: submission_id].workflow_state = workflow_state;
+        quiz_submissions[quiz_id: quiz_id, id: submission_id].score = score;
+        quiz_submissions[quiz_id: quiz_id, id: submission_id].finished_at = finished_at;
+    }
+}
+
+// ============================================================================
+// Transactions — Content participation / read state
+// Source: app/models/content_participation.rb,
+//         app/models/content_participation_count.rb
+// ============================================================================
+
+// Set the read/unread state for one (submission, user, content_item) triple.
+// Models ContentParticipation.participate.
+transaction UpsertContentParticipation(content_id: int, user_id: int,
+                                       content_item: string, workflow_state: string) {
+    hop {
+        content_participations[content_id: content_id, user_id: user_id, content_item: content_item].workflow_state = workflow_state;
+    }
+}
+
+// Adjust the aggregate unread count by a signed offset (+1 or -1).
+// Models ContentParticipationCount.create_or_update with an offset argument.
+transaction AdjustParticipationCount(context_id: int, user_id: int,
+                                     content_type: string, offset: int) {
+    hop {
+        content_participation_counts[context_id: context_id, user_id: user_id, content_type: content_type].unread_count = content_participation_counts[context_id: context_id, user_id: user_id, content_type: content_type].unread_count + offset;
+    }
+}
+
+// Directly set the aggregate unread count to a computed value.
+// Models ContentParticipationCount.create_or_update when unread_count is provided.
+transaction SetParticipationCount(context_id: int, user_id: int,
+                                  content_type: string, unread_count: int) {
+    hop {
+        content_participation_counts[context_id: context_id, user_id: user_id, content_type: content_type].unread_count = unread_count;
+    }
+}
+
+// Mark a submission comment as viewed by a user.
+// Models SubmissionComment#mark_read! (ViewedSubmissionComment.first_or_create!).
+transaction MarkCommentViewed(comment_id: int, user_id: int) {
+    hop {
+        viewed_submission_comments[submission_comment_id: comment_id, user_id: user_id] = {
+            viewed: 1
+        };
+    }
+}
+
+// ============================================================================
+// Transactions — Group membership
+// Source: app/models/group.rb
+// ============================================================================
+
+// Add a user to a group or restore a deleted membership.
+// Models Group#add_user → GroupMembership.unique_constraint_retry (create branch).
+transaction CreateGroupMembership(group_id: int, user_id: int,
+                                  workflow_state: string, moderator: int) {
+    hop {
+        group_memberships[group_id: group_id, user_id: user_id] = {
+            workflow_state: workflow_state,
+            moderator: moderator
+        };
+    }
+}
+
+// Update an existing group membership (e.g., re-activate or change moderator flag).
+// Models Group#add_user → GroupMembership.unique_constraint_retry (update branch).
+transaction UpdateGroupMembership(group_id: int, user_id: int,
+                                  workflow_state: string, moderator: int) {
+    hop {
+        group_memberships[group_id: group_id, user_id: user_id].workflow_state = workflow_state;
+        group_memberships[group_id: group_id, user_id: user_id].moderator = moderator;
+    }
+}
+
+// Remove a user from a group (soft-delete).
+transaction DeleteGroupMembership(group_id: int, user_id: int) {
+    hop {
+        group_memberships[group_id: group_id, user_id: user_id].workflow_state = "deleted";
+    }
+}
+
+// ============================================================================
+// Transactions — Wiki page & slug lookup
+// Source: app/models/wiki_page.rb
+// ============================================================================
+
+// Create a slug lookup and update current_lookup_id atomically.
+// Both tables are on coursePartition(wiki_id) — 1-hop.
+// Models WikiPage#create_lookup (WikiPageLookup.unique_constraint_retry).
+transaction CreateWikiPageLookup(wiki_id: int, page_id: int, lookup_id: int,
+                                  slug: string, context_id: int, context_type: string) {
+    hop {
+        wiki_page_lookups[wiki_id: wiki_id, id: lookup_id] = {
+            slug: slug,
+            wiki_page_id: page_id,
+            context_id: context_id,
+            context_type: context_type
+        };
+        wiki_pages[wiki_id: wiki_id, id: page_id].current_lookup_id = lookup_id;
+    }
+}
+
+// Publish a wiki page.
+transaction PublishWikiPage(wiki_id: int, page_id: int) {
+    hop {
+        wiki_pages[wiki_id: wiki_id, id: page_id].workflow_state = "active";
+    }
+}
+
+// Unpublish a wiki page back to draft.
+transaction UnpublishWikiPage(wiki_id: int, page_id: int) {
+    hop {
+        wiki_pages[wiki_id: wiki_id, id: page_id].workflow_state = "unpublished";
+    }
+}
+
+// Soft-delete a wiki page and clear its lookup pointer.
+transaction DeleteWikiPage(wiki_id: int, page_id: int) {
+    hop {
+        wiki_pages[wiki_id: wiki_id, id: page_id].workflow_state = "deleted";
+        wiki_pages[wiki_id: wiki_id, id: page_id].current_lookup_id = 0;
+    }
+}
+
+// ============================================================================
+// Transactions — Discussion topic materialized view
+// Source: app/models/discussion_topic/materialized_view.rb
+// ============================================================================
+
+// Get or create a materialized view record for a discussion topic.
+// Models DiscussionTopic::MaterializedView.unique_constraint_retry (first_or_create!).
+transaction EnsureMaterializedView(topic_id: int) {
+    hop {
+        discussion_topic_materialized_views[discussion_topic_id: topic_id] = {
+            json_structure: "",
+            participants_array: "",
+            entry_ids_array: "",
+            workflow_state: "needs_update"
+        };
+    }
+}
+
+// Mark the materialized view as stale so it gets rebuilt on next request.
+transaction InvalidateMaterializedView(topic_id: int) {
+    hop {
+        discussion_topic_materialized_views[discussion_topic_id: topic_id].workflow_state = "needs_update";
+    }
+}
+
+// Write a freshly built JSON structure into the materialized view.
+transaction UpdateMaterializedView(topic_id: int, json_structure: string,
+                                   participants_array: string, entry_ids_array: string) {
+    hop {
+        discussion_topic_materialized_views[discussion_topic_id: topic_id].json_structure = json_structure;
+        discussion_topic_materialized_views[discussion_topic_id: topic_id].participants_array = participants_array;
+        discussion_topic_materialized_views[discussion_topic_id: topic_id].entry_ids_array = entry_ids_array;
+        discussion_topic_materialized_views[discussion_topic_id: topic_id].workflow_state = "current";
+    }
+}
+
+// ============================================================================
+// Transactions — User observation links (parent/guardian)
+// Source: app/models/user_observation_link.rb
+// ============================================================================
+
+// Create a new observer link between a guardian and a student.
+// Models UserObservationLink.create_or_restore (create branch).
+transaction CreateObservationLink(student_id: int, observer_id: int, root_account_id: int) {
+    hop {
+        user_observation_links[user_id: student_id, observer_id: observer_id, root_account_id: root_account_id] = {
+            workflow_state: "active",
+            sis_batch_id: 0
+        };
+    }
+}
+
+// Restore a previously deleted observer link.
+// Models UserObservationLink.create_or_restore (restore branch).
+transaction RestoreObservationLink(student_id: int, observer_id: int, root_account_id: int) {
+    hop {
+        user_observation_links[user_id: student_id, observer_id: observer_id, root_account_id: root_account_id].workflow_state = "active";
+        user_observation_links[user_id: student_id, observer_id: observer_id, root_account_id: root_account_id].sis_batch_id = 0;
+    }
+}
+
+// Soft-delete an observer link.
+// Models UserObservationLink#destroy.
+transaction DeleteObservationLink(student_id: int, observer_id: int, root_account_id: int) {
+    hop {
+        user_observation_links[user_id: student_id, observer_id: observer_id, root_account_id: root_account_id].workflow_state = "deleted";
+    }
+}
+
+// ============================================================================
+// Transactions — Custom gradebook column data
+// Source: app/models/custom_gradebook_column_datum.rb
+// ============================================================================
+
+// Upsert a custom column cell value for one student.
+// Models CustomGradebookColumnDatum.unique_constraint_retry { find_or_initialize_by → save! }.
+transaction UpsertGradebookColumnDatum(column_id: int, user_id: int,
+                                       content: string, root_account_id: int) {
+    hop {
+        custom_gradebook_column_data[custom_gradebook_column_id: column_id, user_id: user_id].content = content;
+        custom_gradebook_column_data[custom_gradebook_column_id: column_id, user_id: user_id].root_account_id = root_account_id;
+    }
+}
+
+// ============================================================================
+// Transactions — CSP allowed domains
+// Source: app/models/csp/account_helper.rb
+// ============================================================================
+
+// Add a new CSP domain to an account's allowlist.
+// Models Csp::AccountHelper#add_domain! (Csp::Domain.unique_constraint_retry).
+transaction AddCspDomain(account_id: int, domain_id: int, domain: string) {
+    hop {
+        csp_domains[account_id: account_id, id: domain_id] = {
+            domain: domain,
+            workflow_state: "active"
+        };
+    }
+}
+
+// Restore a previously deleted CSP domain (retry branch of add_domain!).
+transaction RestoreCspDomain(account_id: int, domain_id: int) {
+    hop {
+        csp_domains[account_id: account_id, id: domain_id].workflow_state = "active";
+    }
+}
+
+// Soft-delete a CSP domain from an account's allowlist.
+// Models Csp::AccountHelper#remove_domain!.
+transaction RemoveCspDomain(account_id: int, domain_id: int) {
+    hop {
+        csp_domains[account_id: account_id, id: domain_id].workflow_state = "deleted";
+    }
+}
+
+// ============================================================================
+// Transactions — Scheduled smart alerts
+// Source: app/models/scheduled_smart_alert.rb
+// ============================================================================
+
+// Upsert a scheduled alert job for a context + alert type.
+// Models ScheduledSmartAlert.upsert (unique_constraint_retry pattern).
+transaction UpsertScheduledAlert(context_id: int, context_type: string,
+                                 alert_type: string, due_at: int,
+                                 root_account_id: int) {
+    hop {
+        scheduled_smart_alerts[context_id: context_id, alert_type: alert_type].due_at = due_at;
+        scheduled_smart_alerts[context_id: context_id, alert_type: alert_type].context_type = context_type;
+        scheduled_smart_alerts[context_id: context_id, alert_type: alert_type].root_account_id = root_account_id;
+    }
+}
+
+// ============================================================================
+// Transactions — Blueprint master content tags (template-side)
+// Source: app/models/master_courses/tag_helper.rb,
+//         app/models/master_courses/master_template.rb
+// ============================================================================
+
+// Create a content tag associating a content item with a blueprint template.
+// Models MasterCourses::TagHelper#create_content_tag_for!.
+transaction CreateMasterContentTag(template_id: int, content_id: int,
+                                   content_type: string) {
+    hop {
+        master_course_content_tags[master_template_id: template_id, content_id: content_id] = {
+            content_type: content_type,
+            restrictions: "",
+            use_default_restrictions: 1,
+            workflow_state: "active"
+        };
+    }
+}
+
+// Activate a master template for a course (set_as_master_course).
+// Models MasterCourses::MasterTemplate.set_as_master_course.
+transaction ActivateMasterTemplate(template_id: int, course_id: int) {
+    hop {
+        master_templates[id: template_id].course_id = course_id;
+        master_templates[id: template_id].workflow_state = "active";
+    }
+}
+
+// Deactivate (soft-delete) a master template (remove_as_master_course).
+// Models MasterCourses::MasterTemplate.remove_as_master_course.
+transaction DeactivateMasterTemplate(template_id: int) {
+    hop {
+        master_templates[id: template_id].workflow_state = "deleted";
+    }
+}
+
+// ============================================================================
+// Transactions — Outcome calculation method
+// Source: app/models/outcome_calculation_method.rb
+// ============================================================================
+
+// Create or update the outcome calculation method for a context.
+// Models OutcomeCalculationMethod#find_or_create_default! / #save!.
+transaction UpsertOutcomeCalculationMethod(context_id: int, context_type: string,
+                                           calculation_method: string,
+                                           calculation_int: int) {
+    hop {
+        outcome_calculation_methods[context_id: context_id].calculation_method = calculation_method;
+        outcome_calculation_methods[context_id: context_id].calculation_int = calculation_int;
+        outcome_calculation_methods[context_id: context_id].context_type = context_type;
+        outcome_calculation_methods[context_id: context_id].workflow_state = "active";
+        outcome_calculation_methods[context_id: context_id].is_deleted = 0;
+    }
+}
+
+// Soft-delete the outcome calculation method for a context.
+transaction DeleteOutcomeCalculationMethod(context_id: int) {
+    hop {
+        outcome_calculation_methods[context_id: context_id].workflow_state = "deleted";
+        outcome_calculation_methods[context_id: context_id].is_deleted = 1;
+    }
+}
+
+// ============================================================================
+// Transactions — Folder / file system
+// Source: app/models/folder.rb, app/models/group.rb, app/models/user.rb
+// ============================================================================
+
+// Create or find the root folder for a context (course, group, user).
+// Models Folder.get_or_create_root_folder_for (GuardRail insert-with-conflict).
+transaction EnsureRootFolder(context_id: int, context_type: string,
+                             folder_id: int, name: string) {
+    hop {
+        folders[context_id: context_id, id: folder_id] = {
+            name: name,
+            full_name: name,
+            parent_folder_id: 0,
+            context_type: context_type,
+            workflow_state: "visible",
+            unique_type: "",
+            submission_context_code: ""
+        };
+    }
+}
+
+// Create a uniquely typed folder (e.g., icon_maker, submissions root).
+// Models Folder.unique_folder (unique_constraint_retry + first_or_create!).
+transaction EnsureUniqueFolder(context_id: int, context_type: string,
+                               folder_id: int, name: string, unique_type: string,
+                               parent_folder_id: int) {
+    hop {
+        folders[context_id: context_id, id: folder_id] = {
+            name: name,
+            full_name: name,
+            parent_folder_id: parent_folder_id,
+            context_type: context_type,
+            workflow_state: "hidden",
+            unique_type: unique_type,
+            submission_context_code: ""
+        };
+    }
+}
+
+// Create a submissions folder for a specific course inside a user's folder tree.
+// Models User#submissions_folder (Folder.unique_constraint_retry → first_or_create!).
+transaction EnsureSubmissionsFolder(context_id: int, context_type: string,
+                                    folder_id: int, name: string,
+                                    parent_folder_id: int,
+                                    submission_context_code: string) {
+    hop {
+        folders[context_id: context_id, id: folder_id] = {
+            name: name,
+            full_name: name,
+            parent_folder_id: parent_folder_id,
+            context_type: context_type,
+            workflow_state: "hidden",
+            unique_type: "",
+            submission_context_code: submission_context_code
         };
     }
 }
