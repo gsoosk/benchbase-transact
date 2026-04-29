@@ -1,0 +1,1127 @@
+// ============================================================================
+// Canvas LMS — Combined TransAct DSL
+//
+// Merged from 15 source files covering:
+//   notification_policy, outcome_proficiency, wiki, user_provisioning,
+//   account, sis_batch, lti_registration, master_migration, assignment_update,
+//   accessibility_scan, context_external_tool, custom_data, discussion_entry,
+//   nav_menu_link, outcome_ordering
+//
+// Schema conflicts resolved:
+//   communication_channels — unified under channelPartition(id); user_id is a
+//     regular field so notification_policy and user_provisioning transactions
+//     can both access channels by their own id without cross-partition joins.
+//   lti_context_controls   — unified under (context_id, registration_id) PK;
+//     deployment_id stored as a regular field; context_external_tool destroy
+//     transactions updated to accept registration_id instead of deployment_id.
+//   userCoursePartition    — merged into userPartition (same return x body).
+//
+// Tombstone convention: is_deleted=1 replaces DELETE everywhere; some tables
+//   also use workflow_state="deleted" for compatibility with Canvas soft-delete.
+// ============================================================================
+
+// ============================================================================
+// Partitions
+// ============================================================================
+
+partition accountPartition(account_id: int) -> int {
+    return account_id;
+}
+
+partition channelPartition(channel_id: int) -> int {
+    return channel_id;
+}
+
+partition contentPartition(content_id: int) -> int {
+    return content_id;
+}
+
+partition contextPartition(context_id: int) -> int {
+    return context_id;
+}
+
+partition coursePartition(course_id: int) -> int {
+    return course_id;
+}
+
+partition entryPartition(entry_id: int) -> int {
+    return entry_id;
+}
+
+partition templatePartition(template_id: int) -> int {
+    return template_id;
+}
+
+partition topicPartition(topic_id: int) -> int {
+    return topic_id;
+}
+
+partition userPartition(user_id: int) -> int {
+    return user_id;
+}
+
+// ============================================================================
+// Tables — Account domain
+// ============================================================================
+
+table accounts {
+    primary id: int;
+    node accountPartition(id);
+
+    parent_account_id: int;
+    root_account_id: int;
+    name: string;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+table account_users {
+    primary account_id: int;
+    primary user_id: int;
+    node accountPartition(account_id);
+
+    role_id: int;
+    workflow_state: string;
+}
+
+table sis_batches {
+    primary account_id: int;
+    primary id: int;
+    node accountPartition(account_id);
+
+    workflow_state: string;
+    started_at: int;
+    ended_at: int;
+    progress: int;
+}
+
+// ============================================================================
+// Tables — User / identity domain
+// ============================================================================
+
+table users {
+    primary id: int;
+    node userPartition(id);
+
+    name: string;
+    sortable_name: string;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+table pseudonyms {
+    primary user_id: int;
+    primary id: int;
+    node userPartition(user_id);
+
+    account_id: int;
+    unique_id: string;
+    workflow_state: string;
+    sis_user_id: string;
+}
+
+// Unified schema: partitioned by channel id so notification_policy
+// transactions (which only know the channel id) need no extra lookup.
+// user_id is stored as a regular field for provisioning reads.
+table communication_channels {
+    primary id: int;
+    node channelPartition(id);
+
+    user_id: int;
+    address: string;
+    path_type: string;
+    workflow_state: string;
+    position: int;
+}
+
+table notification_policies {
+    primary communication_channel_id: int;
+    primary notification_id: int;
+    node channelPartition(communication_channel_id);
+
+    frequency: string;
+}
+
+table custom_data {
+    primary user_id: int;
+    primary namespace: string;
+    node userPartition(user_id);
+
+    data_json: string;
+    is_deleted: int;
+}
+
+// ============================================================================
+// Tables — Course / wiki domain
+// ============================================================================
+
+table courses {
+    primary id: int;
+    node coursePartition(id);
+
+    wiki_id: int;
+    name: string;
+    default_view: string;
+    root_account_id: int;
+    workflow_state: string;
+}
+
+table wikis {
+    primary course_id: int;
+    node coursePartition(course_id);
+
+    title: string;
+    root_account_id: int;
+    front_page_url: string;
+    has_no_front_page: int;
+}
+
+table assignments {
+    primary context_id: int;
+    primary id: int;
+    node coursePartition(context_id);
+
+    due_at: int;
+    unlock_at: int;
+    lock_at: int;
+    workflow_state: string;
+}
+
+table assignment_overrides {
+    primary course_id: int;
+    primary assignment_id: int;
+    primary id: int;
+    node coursePartition(course_id);
+
+    due_at: int;
+    unlock_at: int;
+    lock_at: int;
+    all_day: int;
+    workflow_state: string;
+}
+
+table accessibility_resource_scans {
+    primary course_id: int;
+    primary id: int;
+    node coursePartition(course_id);
+
+    workflow_state: string;
+    completed_at: int;
+}
+
+table accessibility_issues {
+    primary course_id: int;
+    primary id: int;
+    node coursePartition(course_id);
+
+    scan_id: int;
+    rule_id: string;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+// ============================================================================
+// Tables — LTI / context domain
+// ============================================================================
+
+table context_external_tools {
+    primary context_id: int;
+    primary id: int;
+    node contextPartition(context_id);
+
+    name: string;
+    domain: string;
+    url: string;
+    consumer_key: string;
+    context_type: string;
+    workflow_state: string;
+}
+
+// Unified schema: (context_id, registration_id) is the primary key.
+// deployment_id (= the context_external_tool.id) is stored as a regular
+// field to support ContextExternalTool#destroy cascade lookups.
+table lti_context_controls {
+    primary context_id: int;
+    primary registration_id: int;
+    node contextPartition(context_id);
+
+    deployment_id: int;
+    available: int;
+    context_type: string;
+    workflow_state: string;
+}
+
+table nav_menu_links {
+    primary context_id: int;
+    primary id: int;
+    node contextPartition(context_id);
+
+    url: string;
+    label: string;
+    context_type: string;
+    course_nav: int;
+    account_nav: int;
+    user_nav: int;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+// ============================================================================
+// Tables — Outcomes domain
+// ============================================================================
+
+table outcome_proficiencies {
+    primary context_id: int;
+    node contextPartition(context_id);
+
+    context_type: string;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+table outcome_proficiency_ratings {
+    primary context_id: int;
+    primary rating_id: int;
+    node contextPartition(context_id);
+
+    description: string;
+    points: float;
+    mastery: int;
+    color: string;
+    workflow_state: string;
+    is_deleted: int;
+}
+
+table user_lmgb_outcome_orderings {
+    primary user_id: int;
+    primary course_id: int;
+    primary learning_outcome_id: int;
+    node userPartition(user_id);
+
+    root_account_id: int;
+    position: int;
+    is_deleted: int;
+}
+
+// ============================================================================
+// Tables — Blueprint course migration domain
+// ============================================================================
+
+table master_templates {
+    primary id: int;
+    node templatePartition(id);
+
+    course_id: int;
+    active_migration_id: int;
+    workflow_state: string;
+}
+
+table master_migrations {
+    primary master_template_id: int;
+    primary id: int;
+    node templatePartition(master_template_id);
+
+    workflow_state: string;
+    imports_completed_at: int;
+    comment: string;
+}
+
+table master_courses_child_content_tags {
+    primary content_id: int;
+    primary child_subscription_id: int;
+    node contentPartition(content_id);
+
+    downstream_changes: string;
+    workflow_state: string;
+}
+
+// ============================================================================
+// Tables — Discussion domain
+// ============================================================================
+
+table discussion_entries {
+    primary discussion_topic_id: int;
+    primary id: int;
+    node topicPartition(discussion_topic_id);
+
+    user_id: int;
+    message: string;
+    workflow_state: string;
+    rating_count: int;
+    rating_sum: int;
+    is_deleted: int;
+}
+
+table discussion_topic_participants {
+    primary discussion_topic_id: int;
+    primary user_id: int;
+    node topicPartition(discussion_topic_id);
+
+    workflow_state: string;
+    unread_entry_count: int;
+    subscribed: int;
+}
+
+table discussion_entry_participants {
+    primary discussion_entry_id: int;
+    primary user_id: int;
+    node entryPartition(discussion_entry_id);
+
+    workflow_state: string;
+    rating: int;
+    report_type: string;
+}
+
+// ============================================================================
+// Transactions — Notification policy
+// Source: app/models/notification_policy.rb
+// ============================================================================
+
+// Set or create a notification policy for one channel-notification pair.
+// Models setup_for (notification branch) and find_or_update_for.
+transaction SetupNotificationPolicy(channel_id: int, notification_id: int, frequency: string) {
+    hop {
+        var np: Row<notification_policies> = notification_policies[communication_channel_id: channel_id, notification_id: notification_id];
+        np.frequency = frequency;
+        notification_policies[communication_channel_id: channel_id, notification_id: notification_id] = np;
+    }
+}
+
+// Retire a communication channel so it stops receiving notifications.
+transaction RetireCommunicationChannel(channel_id: int) {
+    hop {
+        var cc: Row<communication_channels> = communication_channels[id: channel_id];
+        cc.workflow_state = "retired";
+        communication_channels[id: channel_id] = cc;
+    }
+}
+
+// Confirm an unconfirmed communication channel.
+transaction ConfirmCommunicationChannel(channel_id: int) {
+    hop {
+        var cc: Row<communication_channels> = communication_channels[id: channel_id];
+        cc.workflow_state = "active";
+        communication_channels[id: channel_id] = cc;
+    }
+}
+
+// ============================================================================
+// Transactions — Outcome proficiency
+// Source: app/models/outcome_proficiency.rb
+// ============================================================================
+
+// Create or activate the default proficiency scale for a context.
+// Models OutcomeProficiency.find_or_create_default!
+transaction CreateDefaultProficiency(context_id: int, context_type: string) {
+    hop {
+        var prof: Row<outcome_proficiencies> = outcome_proficiencies[context_id: context_id];
+        prof.context_type = context_type;
+        prof.workflow_state = "active";
+        prof.is_deleted = 0;
+        outcome_proficiencies[context_id: context_id] = prof;
+    }
+}
+
+// Add or update a single rating within a proficiency scale.
+// Models replace_ratings for one rating slot (caller loops over rating list).
+transaction UpsertProficiencyRating(context_id: int, rating_id: int,
+                                    description: string, points: float,
+                                    mastery: int, color: string) {
+    hop {
+        var r: Row<outcome_proficiency_ratings> = outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id];
+        r.description = description;
+        r.points = points;
+        r.mastery = mastery;
+        r.color = color;
+        r.workflow_state = "active";
+        r.is_deleted = 0;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id] = r;
+    }
+}
+
+// Tombstone a rating that is no longer part of the proficiency scale.
+transaction DeleteProficiencyRating(context_id: int, rating_id: int) {
+    hop {
+        var r: Row<outcome_proficiency_ratings> = outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id];
+        r.is_deleted = 1;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id] = r;
+    }
+}
+
+// Restore a soft-deleted proficiency.
+// Models OutcomeProficiency#undestroy.
+transaction UndoDestroyProficiency(context_id: int) {
+    hop {
+        var prof: Row<outcome_proficiencies> = outcome_proficiencies[context_id: context_id];
+        prof.workflow_state = "active";
+        prof.is_deleted = 0;
+        outcome_proficiencies[context_id: context_id] = prof;
+    }
+}
+
+// Restore a single soft-deleted rating (caller loops over all ratings).
+transaction UndoDestroyRating(context_id: int, rating_id: int) {
+    hop {
+        var r: Row<outcome_proficiency_ratings> = outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id];
+        r.workflow_state = "active";
+        r.is_deleted = 0;
+        outcome_proficiency_ratings[context_id: context_id, rating_id: rating_id] = r;
+    }
+}
+
+// ============================================================================
+// Transactions — Wiki
+// Source: app/models/wiki.rb
+// ============================================================================
+
+// Get or create a wiki for a course; updates course.wiki_id atomically.
+// Models Wiki.wiki_for_context (create branch).
+transaction GetOrCreateWikiForCourse(course_id: int, wiki_title: string, root_account_id: int) {
+    hop {
+        var c: Row<courses> = courses[id: course_id];
+        if c.wiki_id == 0 {
+            wikis[course_id: course_id] = {
+                title: wiki_title,
+                root_account_id: root_account_id,
+                front_page_url: "front-page",
+                has_no_front_page: 1
+            };
+            c.wiki_id = course_id;
+            courses[id: course_id] = c;
+        }
+    }
+}
+
+// Set the front page URL for a wiki.
+// Models Wiki#set_front_page_url!
+transaction SetFrontPageUrl(course_id: int, front_page_url: string) {
+    hop {
+        var w: Row<wikis> = wikis[course_id: course_id];
+        w.front_page_url = front_page_url;
+        w.has_no_front_page = 0;
+        wikis[course_id: course_id] = w;
+    }
+}
+
+// Clear the front page and reset the course default_view.
+// Models Wiki#unset_front_page!
+transaction UnsetFrontPage(course_id: int) {
+    hop {
+        var c: Row<courses> = courses[id: course_id];
+        c.default_view = "feed";
+        courses[id: course_id] = c;
+        var w: Row<wikis> = wikis[course_id: course_id];
+        w.front_page_url = "";
+        w.has_no_front_page = 1;
+        wikis[course_id: course_id] = w;
+    }
+}
+
+// ============================================================================
+// Transactions — User provisioning
+// Source: app/models/authentication_provider.rb
+// ============================================================================
+
+// Create a new user record during SSO provisioning.
+transaction ProvisionUser(user_id: int, name: string, sortable_name: string) {
+    hop {
+        users[id: user_id] = {
+            name: name,
+            sortable_name: sortable_name,
+            workflow_state: "pre_registered",
+            is_deleted: 0
+        };
+    }
+}
+
+// Create a pseudonym (login credential) for a newly provisioned user.
+transaction CreatePseudonym(user_id: int, pseudonym_id: int, account_id: int,
+                            unique_id: string, sis_user_id: string) {
+    hop {
+        pseudonyms[user_id: user_id, id: pseudonym_id] = {
+            account_id: account_id,
+            unique_id: unique_id,
+            workflow_state: "active",
+            sis_user_id: sis_user_id
+        };
+    }
+}
+
+// Create a communication channel for a provisioned user.
+// communication_channels is partitioned by id (channelPartition); user_id
+// stored as a regular field.
+transaction CreateCommunicationChannel(user_id: int, cc_id: int,
+                                       address: string, path_type: string) {
+    hop {
+        communication_channels[id: cc_id] = {
+            user_id: user_id,
+            address: address,
+            path_type: path_type,
+            workflow_state: "unconfirmed",
+            position: 1
+        };
+    }
+}
+
+// Update user name/sortable_name from federated SSO attributes.
+transaction UpdateFederatedUserAttributes(user_id: int, name: string, sortable_name: string) {
+    hop {
+        var u: Row<users> = users[id: user_id];
+        u.name = name;
+        u.sortable_name = sortable_name;
+        users[id: user_id] = u;
+    }
+}
+
+// Update the unique_id on an existing pseudonym (e.g., email change via SSO).
+transaction UpdatePseudonymUniqueId(user_id: int, pseudonym_id: int, unique_id: string) {
+    hop {
+        var p: Row<pseudonyms> = pseudonyms[user_id: user_id, id: pseudonym_id];
+        p.unique_id = unique_id;
+        pseudonyms[user_id: user_id, id: pseudonym_id] = p;
+    }
+}
+
+// Soft-delete a pseudonym when a user is removed from an account.
+transaction DeletePseudonym(user_id: int, pseudonym_id: int) {
+    hop {
+        var p: Row<pseudonyms> = pseudonyms[user_id: user_id, id: pseudonym_id];
+        p.workflow_state = "deleted";
+        pseudonyms[user_id: user_id, id: pseudonym_id] = p;
+    }
+}
+
+// ============================================================================
+// Transactions — Account management
+// Source: app/models/account.rb
+// ============================================================================
+
+// Soft-delete an account.
+// Models Account#destroy (account record; membership cascade is a separate tx).
+transaction DestroyAccount(account_id: int) {
+    hop {
+        var acc: Row<accounts> = accounts[id: account_id];
+        acc.workflow_state = "deleted";
+        acc.is_deleted = 1;
+        accounts[id: account_id] = acc;
+    }
+}
+
+// Soft-delete a single account membership during account destroy cascade.
+transaction DestroyAccountUser(account_id: int, user_id: int) {
+    hop {
+        var au: Row<account_users> = account_users[account_id: account_id, user_id: user_id];
+        au.workflow_state = "deleted";
+        account_users[account_id: account_id, user_id: user_id] = au;
+    }
+}
+
+// Create a new sub-account under a parent.
+// Models Account#manually_created_courses_account (create branch).
+transaction CreateSubAccount(sub_account_id: int, parent_id: int,
+                             root_account_id: int, name: string) {
+    hop {
+        accounts[id: sub_account_id] = {
+            parent_account_id: parent_id,
+            root_account_id: root_account_id,
+            name: name,
+            workflow_state: "active",
+            is_deleted: 0
+        };
+    }
+}
+
+// Read-lock a sub-account (no-op if already present).
+// Models Account#manually_created_courses_account (read/lock branch).
+transaction ReadSubAccount(account_id: int) {
+    hop {
+        var acc: Row<accounts> = accounts[id: account_id];
+        var state: string = acc.workflow_state;
+        to_unit(state);
+    }
+}
+
+// Add a user to an account with a given role.
+transaction AddAccountUser(account_id: int, user_id: int, role_id: int) {
+    hop {
+        account_users[account_id: account_id, user_id: user_id] = {
+            role_id: role_id,
+            workflow_state: "active"
+        };
+    }
+}
+
+// ============================================================================
+// Transactions — SIS batch
+// Source: app/models/sis_batch.rb
+// ============================================================================
+
+// Abort a single pending SIS batch.
+// Models SisBatch.abort_all_pending_for_account (one row per call).
+transaction AbortSisBatch(account_id: int, batch_id: int) {
+    hop {
+        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
+        b.workflow_state = "aborted";
+        sis_batches[account_id: account_id, id: batch_id] = b;
+    }
+}
+
+// Mark a SIS batch as completed.
+transaction CompleteSisBatch(account_id: int, batch_id: int, ended_at: int) {
+    hop {
+        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
+        b.workflow_state = "imported";
+        b.ended_at = ended_at;
+        b.progress = 100;
+        sis_batches[account_id: account_id, id: batch_id] = b;
+    }
+}
+
+// Create a new SIS batch record for an account.
+transaction CreateSisBatch(account_id: int, batch_id: int) {
+    hop {
+        sis_batches[account_id: account_id, id: batch_id] = {
+            workflow_state: "created",
+            started_at: 0,
+            ended_at: 0,
+            progress: 0
+        };
+    }
+}
+
+// Update the progress percentage of a running SIS batch.
+transaction UpdateSisBatchProgress(account_id: int, batch_id: int, progress: int) {
+    hop {
+        var b: Row<sis_batches> = sis_batches[account_id: account_id, id: batch_id];
+        b.progress = progress;
+        sis_batches[account_id: account_id, id: batch_id] = b;
+    }
+}
+
+// ============================================================================
+// Transactions — LTI tool deployment
+// Sources: app/models/lti/registration.rb,
+//          app/models/importers/context_external_tool_importer.rb
+// ============================================================================
+
+// Create or update an LTI external tool for a context.
+// Models the tool-save step of Lti::Registration#new_external_tool.
+transaction UpsertExternalTool(context_id: int, tool_id: int,
+                               name: string, url: string,
+                               consumer_key: string, context_type: string) {
+    hop {
+        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
+        t.name = name;
+        t.url = url;
+        t.consumer_key = consumer_key;
+        t.context_type = context_type;
+        t.workflow_state = "active";
+        context_external_tools[context_id: context_id, id: tool_id] = t;
+    }
+}
+
+// Deploy an LTI tool: atomically create/update the tool and its context control.
+// Models Lti::Registration#new_external_tool and persist_tool full transactions.
+transaction DeployLtiTool(context_id: int, tool_id: int, registration_id: int,
+                          name: string, url: string, consumer_key: string,
+                          context_type: string, available: int) {
+    hop {
+        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
+        t.name = name;
+        t.url = url;
+        t.consumer_key = consumer_key;
+        t.context_type = context_type;
+        t.workflow_state = "active";
+        context_external_tools[context_id: context_id, id: tool_id] = t;
+        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
+        ctrl.deployment_id = tool_id;
+        ctrl.available = available;
+        ctrl.context_type = context_type;
+        ctrl.workflow_state = "active";
+        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+    }
+}
+
+// Toggle availability of an LTI tool in a context.
+transaction SetLtiToolAvailability(context_id: int, registration_id: int, available: int) {
+    hop {
+        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
+        ctrl.available = available;
+        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+    }
+}
+
+// Soft-delete an LTI context control.
+// Models Lti::ContextControl.where(deployment_id:).update_all (one row per call).
+transaction DeleteContextControl(context_id: int, registration_id: int) {
+    hop {
+        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
+        ctrl.workflow_state = "deleted";
+        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+    }
+}
+
+// Soft-delete a tool and its associated context control atomically.
+// Models ContextExternalTool#destroy — tool + single control per call.
+transaction DestroyExternalTool(context_id: int, tool_id: int, registration_id: int) {
+    hop {
+        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
+        t.workflow_state = "deleted";
+        context_external_tools[context_id: context_id, id: tool_id] = t;
+        var ctrl: Row<lti_context_controls> = lti_context_controls[context_id: context_id, registration_id: registration_id];
+        ctrl.workflow_state = "deleted";
+        lti_context_controls[context_id: context_id, registration_id: registration_id] = ctrl;
+    }
+}
+
+// Restore a soft-deleted LTI external tool.
+transaction RestoreExternalTool(context_id: int, tool_id: int) {
+    hop {
+        var t: Row<context_external_tools> = context_external_tools[context_id: context_id, id: tool_id];
+        t.workflow_state = "active";
+        context_external_tools[context_id: context_id, id: tool_id] = t;
+    }
+}
+
+// ============================================================================
+// Transactions — Blueprint course migration
+// Sources: app/models/master_courses/master_migration.rb,
+//          app/models/master_courses/restrictor.rb
+// ============================================================================
+
+// Start a new blueprint sync migration.
+// Locks the template, sets active_migration_id, and creates the migration record.
+transaction StartNewMigration(template_id: int, migration_id: int, comment: string) {
+    hop {
+        var tmpl: Row<master_templates> = master_templates[id: template_id];
+        tmpl.active_migration_id = migration_id;
+        master_templates[id: template_id] = tmpl;
+        master_migrations[master_template_id: template_id, id: migration_id] = {
+            workflow_state: "created",
+            imports_completed_at: 0,
+            comment: comment
+        };
+    }
+}
+
+// Mark a migration as completed or failed after all child imports finish.
+transaction UpdateMigrationState(template_id: int, migration_id: int,
+                                 new_state: string, completed_at: int) {
+    hop {
+        var m: Row<master_migrations> = master_migrations[master_template_id: template_id, id: migration_id];
+        m.workflow_state = new_state;
+        m.imports_completed_at = completed_at;
+        master_migrations[master_template_id: template_id, id: migration_id] = m;
+    }
+}
+
+// Record that a specific field was edited in a child course.
+// Models MasterCourses::Restrictor#mark_downstream_changes.
+transaction MarkDownstreamChange(content_id: int, subscription_id: int,
+                                 changed_field: string) {
+    hop {
+        var tag: Row<master_courses_child_content_tags> = master_courses_child_content_tags[content_id: content_id, child_subscription_id: subscription_id];
+        tag.downstream_changes = changed_field;
+        master_courses_child_content_tags[content_id: content_id, child_subscription_id: subscription_id] = tag;
+    }
+}
+
+// ============================================================================
+// Transactions — Assignment bulk update
+// Source: app/models/assignment/bulk_update.rb
+// ============================================================================
+
+// Update date fields on a single assignment.
+transaction UpdateAssignmentDates(course_id: int, assignment_id: int,
+                                  due_at: int, unlock_at: int, lock_at: int) {
+    hop {
+        var a: Row<assignments> = assignments[context_id: course_id, id: assignment_id];
+        a.due_at = due_at;
+        a.unlock_at = unlock_at;
+        a.lock_at = lock_at;
+        assignments[context_id: course_id, id: assignment_id] = a;
+    }
+}
+
+// Update date fields on a single assignment override.
+transaction UpdateAssignmentOverride(course_id: int, assignment_id: int,
+                                     override_id: int, due_at: int,
+                                     unlock_at: int, lock_at: int) {
+    hop {
+        var ov: Row<assignment_overrides> = assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id];
+        ov.due_at = due_at;
+        ov.unlock_at = unlock_at;
+        ov.lock_at = lock_at;
+        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id] = ov;
+    }
+}
+
+// Update an assignment and one override atomically (both on coursePartition).
+transaction UpdateAssignmentWithOverride(course_id: int, assignment_id: int,
+                                         due_at: int, unlock_at: int, lock_at: int,
+                                         override_id: int,
+                                         override_due_at: int, override_unlock_at: int,
+                                         override_lock_at: int) {
+    hop {
+        var a: Row<assignments> = assignments[context_id: course_id, id: assignment_id];
+        a.due_at = due_at;
+        a.unlock_at = unlock_at;
+        a.lock_at = lock_at;
+        assignments[context_id: course_id, id: assignment_id] = a;
+        var ov: Row<assignment_overrides> = assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id];
+        ov.due_at = override_due_at;
+        ov.unlock_at = override_unlock_at;
+        ov.lock_at = override_lock_at;
+        assignment_overrides[course_id: course_id, assignment_id: assignment_id, id: override_id] = ov;
+    }
+}
+
+// ============================================================================
+// Transactions — Accessibility scan
+// Source: app/models/accessibility_resource_scan.rb
+// ============================================================================
+
+// Create a new scan record for a course.
+transaction CreateScan(course_id: int, scan_id: int) {
+    hop {
+        accessibility_resource_scans[course_id: course_id, id: scan_id] = {
+            workflow_state: "created",
+            completed_at: 0
+        };
+    }
+}
+
+// Mark a scan as completed.
+transaction CompleteScan(course_id: int, scan_id: int, completed_at: int) {
+    hop {
+        var s: Row<accessibility_resource_scans> = accessibility_resource_scans[course_id: course_id, id: scan_id];
+        s.workflow_state = "completed";
+        s.completed_at = completed_at;
+        accessibility_resource_scans[course_id: course_id, id: scan_id] = s;
+    }
+}
+
+// Close a single accessibility issue (tombstone pattern).
+transaction CloseAccessibilityIssue(course_id: int, issue_id: int) {
+    hop {
+        var iss: Row<accessibility_issues> = accessibility_issues[course_id: course_id, id: issue_id];
+        iss.workflow_state = "closed";
+        iss.is_deleted = 1;
+        accessibility_issues[course_id: course_id, id: issue_id] = iss;
+    }
+}
+
+// Close one issue and mark the scan complete atomically (both on coursePartition).
+transaction CloseLastIssueAndCompleteScan(course_id: int, scan_id: int,
+                                          issue_id: int, completed_at: int) {
+    hop {
+        var s: Row<accessibility_resource_scans> = accessibility_resource_scans[course_id: course_id, id: scan_id];
+        s.workflow_state = "completed";
+        s.completed_at = completed_at;
+        accessibility_resource_scans[course_id: course_id, id: scan_id] = s;
+        var iss: Row<accessibility_issues> = accessibility_issues[course_id: course_id, id: issue_id];
+        iss.workflow_state = "closed";
+        iss.is_deleted = 1;
+        accessibility_issues[course_id: course_id, id: issue_id] = iss;
+    }
+}
+
+// ============================================================================
+// Transactions — Custom data
+// Source: app/models/custom_data.rb
+// ============================================================================
+
+// Update the data_json blob for a custom_data record (lock-and-save pattern).
+transaction UpdateCustomData(user_id: int, namespace: string, data_json: string) {
+    hop {
+        var cd: Row<custom_data> = custom_data[user_id: user_id, namespace: namespace];
+        cd.data_json = data_json;
+        custom_data[user_id: user_id, namespace: namespace] = cd;
+    }
+}
+
+// Create a new custom_data record for a user+namespace scope.
+transaction CreateCustomData(user_id: int, namespace: string, data_json: string) {
+    hop {
+        custom_data[user_id: user_id, namespace: namespace] = {
+            data_json: data_json,
+            is_deleted: 0
+        };
+    }
+}
+
+// Soft-delete a custom_data record.
+transaction DeleteCustomData(user_id: int, namespace: string) {
+    hop {
+        var cd: Row<custom_data> = custom_data[user_id: user_id, namespace: namespace];
+        cd.is_deleted = 1;
+        custom_data[user_id: user_id, namespace: namespace] = cd;
+    }
+}
+
+// ============================================================================
+// Transactions — Discussion entry
+// Source: app/models/discussion_entry.rb
+// ============================================================================
+
+// Decrement unread_entry_count for one topic participant.
+// Models decrement_unread_counts_for_this_entry (one user per call).
+transaction DecrementUnreadCount(topic_id: int, user_id: int) {
+    hop {
+        var p: Row<discussion_topic_participants> = discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id];
+        if p.unread_entry_count > 0 {
+            p.unread_entry_count = p.unread_entry_count - 1;
+        }
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id] = p;
+    }
+}
+
+// Increment unread_entry_count for one topic participant.
+// Models increment_unread_counts_after_restore (one user per call).
+transaction IncrementUnreadCount(topic_id: int, user_id: int) {
+    hop {
+        var p: Row<discussion_topic_participants> = discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id];
+        p.unread_entry_count = p.unread_entry_count + 1;
+        discussion_topic_participants[discussion_topic_id: topic_id, user_id: user_id] = p;
+    }
+}
+
+// Update entry rating aggregate and participant rating.
+// 2-hop: hop 1 on topicPartition (discussion_entries),
+//        hop 2 on entryPartition (discussion_entry_participants).
+transaction ChangeEntryRating(topic_id: int, entry_id: int, user_id: int,
+                              new_rating: int, old_rating: int) {
+    hop {
+        var entry: Row<discussion_entries> = discussion_entries[discussion_topic_id: topic_id, id: entry_id];
+        entry.rating_sum = entry.rating_sum - old_rating + new_rating;
+        if new_rating > 0 {
+            entry.rating_count = entry.rating_count + 1;
+        }
+        if old_rating > 0 {
+            entry.rating_count = entry.rating_count - 1;
+        }
+        discussion_entries[discussion_topic_id: topic_id, id: entry_id] = entry;
+    }
+    hop {
+        var ep: Row<discussion_entry_participants> = discussion_entry_participants[discussion_entry_id: entry_id, user_id: user_id];
+        ep.rating = new_rating;
+        discussion_entry_participants[discussion_entry_id: entry_id, user_id: user_id] = ep;
+    }
+}
+
+// Soft-delete a discussion entry.
+transaction DeleteDiscussionEntry(topic_id: int, entry_id: int) {
+    hop {
+        var e: Row<discussion_entries> = discussion_entries[discussion_topic_id: topic_id, id: entry_id];
+        e.workflow_state = "deleted";
+        e.is_deleted = 1;
+        discussion_entries[discussion_topic_id: topic_id, id: entry_id] = e;
+    }
+}
+
+// ============================================================================
+// Transactions — Nav menu link
+// Source: app/models/nav_menu_link.rb
+// ============================================================================
+
+// Create a new navigation menu link for a context.
+// Models the NavMenuLink.create! inside sync_with_link_objects new_links loop.
+transaction CreateNavMenuLink(context_id: int, link_id: int,
+                              url: string, label: string, context_type: string,
+                              course_nav: int, account_nav: int, user_nav: int) {
+    hop {
+        nav_menu_links[context_id: context_id, id: link_id] = {
+            url: url,
+            label: label,
+            context_type: context_type,
+            course_nav: course_nav,
+            account_nav: account_nav,
+            user_nav: user_nav,
+            workflow_state: "active",
+            is_deleted: 0
+        };
+    }
+}
+
+// Soft-delete a navigation menu link.
+// Models the destroy_all per row in sync_with_link_objects.
+transaction DeleteNavMenuLink(context_id: int, link_id: int) {
+    hop {
+        var link: Row<nav_menu_links> = nav_menu_links[context_id: context_id, id: link_id];
+        link.workflow_state = "deleted";
+        link.is_deleted = 1;
+        nav_menu_links[context_id: context_id, id: link_id] = link;
+    }
+}
+
+// Atomically create one new link and tombstone one removed link.
+// Models the full sync_with_link_objects transaction for a single pair.
+transaction SyncNavMenuLink(context_id: int,
+                            new_link_id: int, url: string, label: string,
+                            context_type: string, course_nav: int,
+                            account_nav: int, user_nav: int,
+                            old_link_id: int) {
+    hop {
+        nav_menu_links[context_id: context_id, id: new_link_id] = {
+            url: url,
+            label: label,
+            context_type: context_type,
+            course_nav: course_nav,
+            account_nav: account_nav,
+            user_nav: user_nav,
+            workflow_state: "active",
+            is_deleted: 0
+        };
+        var old_link: Row<nav_menu_links> = nav_menu_links[context_id: context_id, id: old_link_id];
+        old_link.workflow_state = "deleted";
+        old_link.is_deleted = 1;
+        nav_menu_links[context_id: context_id, id: old_link_id] = old_link;
+    }
+}
+
+// ============================================================================
+// Transactions — Outcome ordering
+// Source: app/models/user_lmgb_outcome_orderings.rb
+// ============================================================================
+
+// Tombstone one outcome ordering entry for a user+course pair.
+// Models the delete_all step in set_lmgb_outcome_ordering (one row per call).
+transaction DeleteOutcomeOrdering(user_id: int, course_id: int, outcome_id: int) {
+    hop {
+        var ord: Row<user_lmgb_outcome_orderings> = user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: outcome_id];
+        ord.is_deleted = 1;
+        user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: outcome_id] = ord;
+    }
+}
+
+// Insert or update one outcome ordering position.
+// Models the insert_all step in set_lmgb_outcome_ordering (one row per call).
+transaction SetOutcomePosition(user_id: int, course_id: int,
+                               outcome_id: int, root_account_id: int,
+                               position: int) {
+    hop {
+        user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: outcome_id] = {
+            root_account_id: root_account_id,
+            position: position,
+            is_deleted: 0
+        };
+    }
+}
+
+// Replace one outcome position: tombstone old, insert new atomically.
+// Models one iteration of the full set_lmgb_outcome_ordering replace cycle.
+transaction ReplaceOutcomeOrdering(user_id: int, course_id: int,
+                                   old_outcome_id: int,
+                                   new_outcome_id: int, root_account_id: int,
+                                   position: int) {
+    hop {
+        var old_ord: Row<user_lmgb_outcome_orderings> = user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: old_outcome_id];
+        old_ord.is_deleted = 1;
+        user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: old_outcome_id] = old_ord;
+        user_lmgb_outcome_orderings[user_id: user_id, course_id: course_id, learning_outcome_id: new_outcome_id] = {
+            root_account_id: root_account_id,
+            position: position,
+            is_deleted: 0
+        };
+    }
+}
