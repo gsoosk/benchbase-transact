@@ -1,359 +1,352 @@
-/* Enterprise CRM Platform — 100 transactions
-   Tables: Account, Contact, Lead, Opportunity, Product, Quote,
-           QuoteItem, Order, OrderItem, Invoice, InvoiceItem,
-           Payment, Contract, Task, Event, Note, Case, CaseComment,
-           Campaign, CampaignMember, CRMUser, Team, Territory,
-           EmailLog, CallLog, Forecast
-   Breakdown: 15 read-only, 25 single-hop writes,
-              45 two-hop writes, 15 global scans
-*/
+// Enterprise CRM Platform — 100 transactions
+// Tables: Account, Contact, Lead, Opportunity, Product, Quote,
+//         QuoteItem, Order, OrderItem, Invoice, InvoiceItem,
+//         Payment, Contract, Task, Event, Note, Case, CaseComment,
+//         Campaign, CampaignMember, CRMUser, Team, Territory,
+//         EmailLog, CallLog, Forecast
+// Breakdown: 15 read-only, 25 single-hop writes,
+//            45 two-hop writes, 15 global scans
+
+partition f(x: int) -> int { return x; }
 
 table Account {
-    id: int,
-    name: string,
-    industry: int,
-    annual_revenue: int,
-    employee_count: int,
-    owner_id: int,
-    status: int,       /* 0=prospect, 1=customer, 2=churned */
-    created_at: int
+    primary id: int;
+    node f(id);
+    name: string;
+    industry: int;
+    annual_revenue: int;
+    employee_count: int;
+    owner_id: int;
+    status: int;
+    created_at: int;
+    invariant annual_revenue >= 0;
+    invariant employee_count >= 0;
 }
-invariant annual_revenue >= 0;
-invariant employee_count >= 0;
 
 table Contact {
-    id: int,
-    account_id: int,
-    first_name: string,
-    last_name: string,
-    email: string,
-    phone: string,
-    title: string,
-    is_primary: bool
+    primary id: int;
+    node f(id);
+    account_id: int;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    title: string;
+    is_primary: bool;
 }
 
 table Lead {
-    id: int,
-    first_name: string,
-    last_name: string,
-    email: string,
-    company: string,
-    status: int,       /* 0=new, 1=contacted, 2=qualified, 3=converted, 4=unqualified */
-    score: int,
-    owner_id: int,
-    created_at: int
+    primary id: int;
+    node f(id);
+    first_name: string;
+    last_name: string;
+    email: string;
+    company: string;
+    status: int;
+    score: int;
+    owner_id: int;
+    created_at: int;
+    invariant score >= 0;
 }
-invariant score >= 0;
 
 table Opportunity {
-    id: int,
-    account_id: int,
-    name: string,
-    stage: int,        /* 0=prospect, 1=qualified, 2=proposal, 3=negotiation, 4=closed_won, 5=closed_lost */
-    amount: int,
-    probability: int,
-    owner_id: int,
-    close_date: int,
-    created_at: int
+    primary id: int;
+    node f(id);
+    account_id: int;
+    name: string;
+    stage: int;
+    amount: int;
+    probability: int;
+    owner_id: int;
+    close_date: int;
+    created_at: int;
+    invariant amount >= 0;
+    invariant probability >= 0;
 }
-invariant amount >= 0;
-invariant probability >= 0;
 
 table Product {
-    id: int,
-    name: string,
-    category: int,
-    unit_price: int,
-    cost: int,
-    stock: int,
-    is_active: bool,
-    sold_count: int
+    primary id: int;
+    node f(id);
+    name: string;
+    category: int;
+    unit_price: int;
+    cost: int;
+    stock: int;
+    is_active: bool;
+    sold_count: int;
+    invariant unit_price >= 0;
+    invariant stock >= 0;
+    invariant sold_count >= 0;
 }
-invariant unit_price >= 0;
-invariant stock >= 0;
-invariant sold_count >= 0;
 
 table Quote {
-    id: int,
-    opportunity_id: int,
-    account_id: int,
-    status: int,       /* 0=draft, 1=sent, 2=accepted, 3=rejected, 4=expired */
-    subtotal: int,
-    discount: int,
-    total: int,
-    valid_until: int,
-    created_at: int
+    primary id: int;
+    node f(id);
+    opportunity_id: int;
+    account_id: int;
+    status: int;
+    subtotal: int;
+    discount: int;
+    total: int;
+    valid_until: int;
+    created_at: int;
+    invariant subtotal >= 0;
+    invariant discount >= 0;
+    invariant total >= 0;
 }
-invariant subtotal >= 0;
-invariant discount >= 0;
-invariant total >= 0;
 
 table QuoteItem {
-    id: int,
-    quote_id: int,
-    product_id: int,
-    quantity: int,
-    unit_price: int,
-    line_total: int
+    primary id: int;
+    node f(id);
+    quote_id: int;
+    product_id: int;
+    quantity: int;
+    unit_price: int;
+    line_total: int;
+    invariant quantity > 0;
+    invariant unit_price >= 0;
+    invariant line_total >= 0;
 }
-invariant quantity > 0;
-invariant unit_price >= 0;
-invariant line_total >= 0;
 
 table Order {
-    id: int,
-    account_id: int,
-    quote_id: int,
-    status: int,       /* 0=pending, 1=confirmed, 2=processing, 3=shipped, 4=delivered, 5=cancelled */
-    total_amount: int,
-    owner_id: int,
-    created_at: int
+    primary id: int;
+    node f(id);
+    account_id: int;
+    quote_id: int;
+    status: int;
+    total_amount: int;
+    owner_id: int;
+    created_at: int;
+    invariant total_amount >= 0;
 }
-invariant total_amount >= 0;
 
 table OrderItem {
-    id: int,
-    order_id: int,
-    product_id: int,
-    quantity: int,
-    unit_price: int,
-    line_total: int
+    primary id: int;
+    node f(id);
+    order_id: int;
+    product_id: int;
+    quantity: int;
+    unit_price: int;
+    line_total: int;
+    invariant quantity > 0;
+    invariant line_total >= 0;
 }
-invariant quantity > 0;
-invariant line_total >= 0;
 
 table Invoice {
-    id: int,
-    account_id: int,
-    order_id: int,
-    status: int,       /* 0=draft, 1=sent, 2=partial, 3=paid, 4=overdue, 5=void */
-    amount: int,
-    paid_amount: int,
-    due_date: int,
-    created_at: int
+    primary id: int;
+    node f(id);
+    account_id: int;
+    order_id: int;
+    status: int;
+    amount: int;
+    paid_amount: int;
+    due_date: int;
+    created_at: int;
+    invariant amount >= 0;
+    invariant paid_amount >= 0;
 }
-invariant amount >= 0;
-invariant paid_amount >= 0;
 
 table InvoiceItem {
-    id: int,
-    invoice_id: int,
-    description: string,
-    quantity: int,
-    unit_price: int,
-    line_total: int
+    primary id: int;
+    node f(id);
+    invoice_id: int;
+    description: string;
+    quantity: int;
+    unit_price: int;
+    line_total: int;
+    invariant quantity > 0;
+    invariant line_total >= 0;
 }
-invariant quantity > 0;
-invariant line_total >= 0;
 
 table Payment {
-    id: int,
-    account_id: int,
-    invoice_id: int,
-    amount: int,
-    method: int,       /* 0=credit_card, 1=bank_transfer, 2=check, 3=wire */
-    status: int,       /* 0=pending, 1=completed, 2=failed, 3=refunded */
-    processed_at: int
+    primary id: int;
+    node f(id);
+    account_id: int;
+    invoice_id: int;
+    amount: int;
+    method: int;
+    status: int;
+    processed_at: int;
+    invariant amount > 0;
 }
-invariant amount > 0;
 
 table Contract {
-    id: int,
-    account_id: int,
-    opportunity_id: int,
-    status: int,       /* 0=draft, 1=active, 2=expired, 3=terminated */
-    value: int,
-    start_date: int,
-    end_date: int,
-    auto_renew: bool
+    primary id: int;
+    node f(id);
+    account_id: int;
+    opportunity_id: int;
+    status: int;
+    value: int;
+    start_date: int;
+    end_date: int;
+    auto_renew: bool;
+    invariant value >= 0;
 }
-invariant value >= 0;
 
 table Task {
-    id: int,
-    owner_id: int,
-    related_id: int,
-    related_type: int, /* 0=account, 1=contact, 2=opportunity, 3=lead */
-    subject: string,
-    status: int,       /* 0=open, 1=in_progress, 2=completed, 3=cancelled */
-    priority: int,
-    due_date: int
+    primary id: int;
+    node f(id);
+    owner_id: int;
+    related_id: int;
+    related_type: int;
+    subject: string;
+    status: int;
+    priority: int;
+    due_date: int;
 }
 
 table Event {
-    id: int,
-    owner_id: int,
-    account_id: int,
-    subject: string,
-    event_type: int,
-    start_at: int,
-    end_at: int,
-    attendee_count: int
+    primary id: int;
+    node f(id);
+    owner_id: int;
+    account_id: int;
+    subject: string;
+    event_type: int;
+    start_at: int;
+    end_at: int;
+    attendee_count: int;
+    invariant attendee_count >= 0;
 }
-invariant attendee_count >= 0;
 
 table Note {
-    id: int,
-    author_id: int,
-    related_id: int,
-    related_type: int,
-    content: string,
-    created_at: int
+    primary id: int;
+    node f(id);
+    author_id: int;
+    related_id: int;
+    related_type: int;
+    content: string;
+    created_at: int;
 }
 
 table Case {
-    id: int,
-    account_id: int,
-    contact_id: int,
-    subject: string,
-    status: int,       /* 0=new, 1=open, 2=pending, 3=resolved, 4=closed */
-    priority: int,
-    case_type: int,
-    owner_id: int,
-    created_at: int,
-    resolved_at: int
+    primary id: int;
+    node f(id);
+    account_id: int;
+    contact_id: int;
+    subject: string;
+    status: int;
+    priority: int;
+    case_type: int;
+    owner_id: int;
+    created_at: int;
+    resolved_at: int;
 }
 
 table CaseComment {
-    id: int,
-    case_id: int,
-    author_id: int,
-    content: string,
-    is_public: bool,
-    created_at: int
+    primary id: int;
+    node f(id);
+    case_id: int;
+    author_id: int;
+    content: string;
+    is_public: bool;
+    created_at: int;
 }
 
 table Campaign {
-    id: int,
-    name: string,
-    campaign_type: int,
-    status: int,       /* 0=planned, 1=active, 2=completed, 3=cancelled */
-    budget: int,
-    spent: int,
-    lead_count: int,
-    response_count: int,
-    start_date: int,
-    end_date: int
+    primary id: int;
+    node f(id);
+    name: string;
+    campaign_type: int;
+    status: int;
+    budget: int;
+    spent: int;
+    lead_count: int;
+    response_count: int;
+    start_date: int;
+    end_date: int;
+    invariant budget >= 0;
+    invariant spent >= 0;
+    invariant lead_count >= 0;
+    invariant response_count >= 0;
 }
-invariant budget >= 0;
-invariant spent >= 0;
-invariant lead_count >= 0;
-invariant response_count >= 0;
 
 table CampaignMember {
-    id: int,
-    campaign_id: int,
-    contact_id: int,
-    lead_id: int,
-    status: int,       /* 0=sent, 1=opened, 2=clicked, 3=responded, 4=converted */
-    added_at: int
+    primary id: int;
+    node f(id);
+    campaign_id: int;
+    contact_id: int;
+    lead_id: int;
+    status: int;
+    added_at: int;
 }
 
 table CRMUser {
-    id: int,
-    first_name: string,
-    last_name: string,
-    email: string,
-    role: int,
-    team_id: int,
-    territory_id: int,
-    quota: int,
-    achieved: int,
-    is_active: bool
+    primary id: int;
+    node f(id);
+    first_name: string;
+    last_name: string;
+    email: string;
+    role: int;
+    team_id: int;
+    territory_id: int;
+    quota: int;
+    achieved: int;
+    is_active: bool;
+    invariant quota >= 0;
+    invariant achieved >= 0;
 }
-invariant quota >= 0;
-invariant achieved >= 0;
 
 table Team {
-    id: int,
-    name: string,
-    manager_id: int,
-    member_count: int,
-    total_quota: int,
-    total_achieved: int
+    primary id: int;
+    node f(id);
+    name: string;
+    manager_id: int;
+    member_count: int;
+    total_quota: int;
+    total_achieved: int;
+    invariant member_count >= 0;
+    invariant total_quota >= 0;
+    invariant total_achieved >= 0;
 }
-invariant member_count >= 0;
-invariant total_quota >= 0;
-invariant total_achieved >= 0;
 
 table Territory {
-    id: int,
-    name: string,
-    region: int,
-    account_count: int,
-    opportunity_count: int
+    primary id: int;
+    node f(id);
+    name: string;
+    region: int;
+    account_count: int;
+    opportunity_count: int;
+    invariant account_count >= 0;
+    invariant opportunity_count >= 0;
 }
-invariant account_count >= 0;
-invariant opportunity_count >= 0;
 
 table EmailLog {
-    id: int,
-    sender_id: int,
-    recipient_id: int,
-    subject: string,
-    status: int,       /* 0=sent, 1=opened, 2=clicked, 3=bounced */
-    sent_at: int
+    primary id: int;
+    node f(id);
+    sender_id: int;
+    recipient_id: int;
+    subject: string;
+    status: int;
+    sent_at: int;
 }
 
 table CallLog {
-    id: int,
-    caller_id: int,
-    account_id: int,
-    contact_id: int,
-    duration_sec: int,
-    outcome: int,      /* 0=no_answer, 1=voicemail, 2=connected, 3=meeting_set */
-    called_at: int
+    primary id: int;
+    node f(id);
+    caller_id: int;
+    account_id: int;
+    contact_id: int;
+    duration_sec: int;
+    outcome: int;
+    called_at: int;
+    invariant duration_sec >= 0;
 }
-invariant duration_sec >= 0;
 
 table Forecast {
-    id: int,
-    user_id: int,
-    period: int,
-    forecast_amount: int,
-    committed_amount: int,
-    best_case_amount: int,
-    closed_amount: int,
-    updated_at: int
-}
-invariant forecast_amount >= 0;
-invariant committed_amount >= 0;
-invariant closed_amount >= 0;
-
-partition node AccountPartition(account_id: int) {
-    Account[id: account_id],
-    Contact[account_id: account_id],
-    Opportunity[account_id: account_id],
-    Quote[account_id: account_id],
-    Order[account_id: account_id],
-    Invoice[account_id: account_id],
-    Payment[account_id: account_id],
-    Contract[account_id: account_id],
-    Case[account_id: account_id],
-    Event[account_id: account_id]
+    primary user_id: int;
+    node f(user_id);
+    period: int;
+    forecast_amount: int;
+    committed_amount: int;
+    best_case_amount: int;
+    closed_amount: int;
+    updated_at: int;
+    invariant forecast_amount >= 0;
+    invariant committed_amount >= 0;
+    invariant closed_amount >= 0;
 }
 
-partition node UserPartition(owner_id: int) {
-    CRMUser[id: owner_id],
-    Task[owner_id: owner_id],
-    Opportunity[owner_id: owner_id],
-    Lead[owner_id: owner_id],
-    Forecast[user_id: owner_id],
-    EmailLog[sender_id: owner_id],
-    CallLog[caller_id: owner_id]
-}
-
-partition node TeamPartition(team_id: int) {
-    Team[id: team_id],
-    CRMUser[team_id: team_id]
-}
-
-partition node CampaignPartition(campaign_id: int) {
-    Campaign[id: campaign_id],
-    CampaignMember[campaign_id: campaign_id]
-}
-
-/* ── READ-ONLY (15) ─────────────────────────────────────────────── */
+// ── READ-ONLY (15) ───────────────────────────────────────────────
 
 transaction GetAccount(accountId: int)
 {
@@ -527,7 +520,7 @@ transaction GetTerritory(territoryId: int)
     }
 }
 
-/* ── SINGLE-HOP WRITES (25) ─────────────────────────────────────── */
+// ── SINGLE-HOP WRITES (25) ──────────────────────────────────────
 
 transaction UpdateLeadStatus(leadId: int, ownerId: int, newStatus: int)
 {
@@ -788,7 +781,7 @@ transaction LogCallOutcome(callId: int, callerId: int, accountId: int, contactId
     }
 }
 
-/* ── TWO-HOP WRITES (45) ────────────────────────────────────────── */
+// ── TWO-HOP WRITES (45) ─────────────────────────────────────────
 
 transaction ConvertLeadToContact(leadId: int, ownerId: int, accountId: int, contactId: int)
 {
@@ -1389,18 +1382,18 @@ transaction ReassignAccountOwner(accountId: int, newOwnerId: int, territoryId: i
     }
 }
 
-/* ── GLOBAL SCANS (15) ──────────────────────────────────────────── */
+// ── GLOBAL SCANS (15) ────────────────────────────────────────────
 
 transaction ScanAllAccounts(n: int)
 {
     @global hop {
-        var it: Iterator<Account> = scan(Account, n, __slice__);
-        while hasNext(it) {
-            var a: Row<Account> = next(it);
-            to_unit(a.get_id());
-            to_unit(a.get_name());
-            to_unit(a.get_status());
-            to_unit(a.get_annual_revenue());
+        for (var it: Iterator<Account> = scan(Account, n, __slice__); hasNext(it); it = next(it)) {
+            var aid = get_id(it);
+            var a: Row<Account> = Account[id: aid];
+            to_unit(a.id);
+            to_unit(a.name);
+            to_unit(a.status);
+            to_unit(a.annual_revenue);
         }
     }
 }
@@ -1408,15 +1401,15 @@ transaction ScanAllAccounts(n: int)
 transaction ScanOpenOpportunities(n: int)
 {
     @global hop {
-        var it: Iterator<Opportunity> = scan(Opportunity, n, __slice__);
-        while hasNext(it) {
-            var o: Row<Opportunity> = next(it);
-            if o.get_stage() < 4 {
-                to_unit(o.get_id());
-                to_unit(o.get_account_id());
-                to_unit(o.get_amount());
-                to_unit(o.get_stage());
-                to_unit(o.get_probability());
+        for (var it: Iterator<Opportunity> = scan(Opportunity, n, __slice__); hasNext(it); it = next(it)) {
+            var oid = get_id(it);
+            var o: Row<Opportunity> = Opportunity[id: oid];
+            if o.stage < 4 {
+                to_unit(o.id);
+                to_unit(o.account_id);
+                to_unit(o.amount);
+                to_unit(o.stage);
+                to_unit(o.probability);
             }
         }
     }
@@ -1425,15 +1418,15 @@ transaction ScanOpenOpportunities(n: int)
 transaction ScanNewLeads(n: int)
 {
     @global hop {
-        var it: Iterator<Lead> = scan(Lead, n, __slice__);
-        while hasNext(it) {
-            var l: Row<Lead> = next(it);
-            if l.get_status() == 0 {
-                to_unit(l.get_id());
-                to_unit(l.get_first_name());
-                to_unit(l.get_last_name());
-                to_unit(l.get_company());
-                to_unit(l.get_score());
+        for (var it: Iterator<Lead> = scan(Lead, n, __slice__); hasNext(it); it = next(it)) {
+            var lid = get_id(it);
+            var l: Row<Lead> = Lead[id: lid];
+            if l.status == 0 {
+                to_unit(l.id);
+                to_unit(l.first_name);
+                to_unit(l.last_name);
+                to_unit(l.company);
+                to_unit(l.score);
             }
         }
     }
@@ -1442,15 +1435,15 @@ transaction ScanNewLeads(n: int)
 transaction ScanOverdueInvoices(n: int)
 {
     @global hop {
-        var it: Iterator<Invoice> = scan(Invoice, n, __slice__);
-        while hasNext(it) {
-            var inv: Row<Invoice> = next(it);
-            if inv.get_status() == 4 {
-                to_unit(inv.get_id());
-                to_unit(inv.get_account_id());
-                to_unit(inv.get_amount());
-                to_unit(inv.get_paid_amount());
-                to_unit(inv.get_due_date());
+        for (var it: Iterator<Invoice> = scan(Invoice, n, __slice__); hasNext(it); it = next(it)) {
+            var iid = get_id(it);
+            var inv: Row<Invoice> = Invoice[id: iid];
+            if inv.status == 4 {
+                to_unit(inv.id);
+                to_unit(inv.account_id);
+                to_unit(inv.amount);
+                to_unit(inv.paid_amount);
+                to_unit(inv.due_date);
             }
         }
     }
@@ -1459,15 +1452,15 @@ transaction ScanOverdueInvoices(n: int)
 transaction ScanActiveCampaigns(n: int)
 {
     @global hop {
-        var it: Iterator<Campaign> = scan(Campaign, n, __slice__);
-        while hasNext(it) {
-            var c: Row<Campaign> = next(it);
-            if c.get_status() == 1 {
-                to_unit(c.get_id());
-                to_unit(c.get_name());
-                to_unit(c.get_budget());
-                to_unit(c.get_spent());
-                to_unit(c.get_lead_count());
+        for (var it: Iterator<Campaign> = scan(Campaign, n, __slice__); hasNext(it); it = next(it)) {
+            var cid = get_id(it);
+            var c: Row<Campaign> = Campaign[id: cid];
+            if c.status == 1 {
+                to_unit(c.id);
+                to_unit(c.name);
+                to_unit(c.budget);
+                to_unit(c.spent);
+                to_unit(c.lead_count);
             }
         }
     }
@@ -1476,14 +1469,20 @@ transaction ScanActiveCampaigns(n: int)
 transaction ScanOpenCases(n: int)
 {
     @global hop {
-        var it: Iterator<Case> = scan(Case, n, __slice__);
-        while hasNext(it) {
-            var cs: Row<Case> = next(it);
-            if cs.get_status() == 0 || cs.get_status() == 1 {
-                to_unit(cs.get_id());
-                to_unit(cs.get_account_id());
-                to_unit(cs.get_priority());
-                to_unit(cs.get_owner_id());
+        for (var it: Iterator<Case> = scan(Case, n, __slice__); hasNext(it); it = next(it)) {
+            var csid = get_id(it);
+            var cs: Row<Case> = Case[id: csid];
+            if cs.status == 0 {
+                to_unit(cs.id);
+                to_unit(cs.account_id);
+                to_unit(cs.priority);
+                to_unit(cs.owner_id);
+            }
+            if cs.status == 1 {
+                to_unit(cs.id);
+                to_unit(cs.account_id);
+                to_unit(cs.priority);
+                to_unit(cs.owner_id);
             }
         }
     }
@@ -1493,14 +1492,16 @@ transaction ScanHighValueOpportunities(n: int, minAmount: int)
     assume minAmount > 0;
 {
     @global hop {
-        var it: Iterator<Opportunity> = scan(Opportunity, n, __slice__);
-        while hasNext(it) {
-            var o: Row<Opportunity> = next(it);
-            if o.get_amount() >= minAmount && o.get_stage() < 4 {
-                to_unit(o.get_id());
-                to_unit(o.get_account_id());
-                to_unit(o.get_amount());
-                to_unit(o.get_stage());
+        for (var it: Iterator<Opportunity> = scan(Opportunity, n, __slice__); hasNext(it); it = next(it)) {
+            var oid = get_id(it);
+            var o: Row<Opportunity> = Opportunity[id: oid];
+            if o.amount >= minAmount {
+                if o.stage < 4 {
+                    to_unit(o.id);
+                    to_unit(o.account_id);
+                    to_unit(o.amount);
+                    to_unit(o.stage);
+                }
             }
         }
     }
@@ -1509,14 +1510,14 @@ transaction ScanHighValueOpportunities(n: int, minAmount: int)
 transaction ScanAllProducts(n: int)
 {
     @global hop {
-        var it: Iterator<Product> = scan(Product, n, __slice__);
-        while hasNext(it) {
-            var p: Row<Product> = next(it);
-            to_unit(p.get_id());
-            to_unit(p.get_name());
-            to_unit(p.get_unit_price());
-            to_unit(p.get_stock());
-            to_unit(p.get_sold_count());
+        for (var it: Iterator<Product> = scan(Product, n, __slice__); hasNext(it); it = next(it)) {
+            var pid = get_id(it);
+            var p: Row<Product> = Product[id: pid];
+            to_unit(p.id);
+            to_unit(p.name);
+            to_unit(p.unit_price);
+            to_unit(p.stock);
+            to_unit(p.sold_count);
         }
     }
 }
@@ -1525,13 +1526,15 @@ transaction ScanLowStockProducts(n: int, threshold: int)
     assume threshold >= 0;
 {
     @global hop {
-        var it: Iterator<Product> = scan(Product, n, __slice__);
-        while hasNext(it) {
-            var p: Row<Product> = next(it);
-            if p.get_stock() <= threshold && p.get_is_active() {
-                to_unit(p.get_id());
-                to_unit(p.get_name());
-                to_unit(p.get_stock());
+        for (var it: Iterator<Product> = scan(Product, n, __slice__); hasNext(it); it = next(it)) {
+            var pid = get_id(it);
+            var p: Row<Product> = Product[id: pid];
+            if p.stock <= threshold {
+                if p.is_active {
+                    to_unit(p.id);
+                    to_unit(p.name);
+                    to_unit(p.stock);
+                }
             }
         }
     }
@@ -1540,14 +1543,20 @@ transaction ScanLowStockProducts(n: int, threshold: int)
 transaction ScanPendingOrders(n: int)
 {
     @global hop {
-        var it: Iterator<Order> = scan(Order, n, __slice__);
-        while hasNext(it) {
-            var o: Row<Order> = next(it);
-            if o.get_status() == 0 || o.get_status() == 1 {
-                to_unit(o.get_id());
-                to_unit(o.get_account_id());
-                to_unit(o.get_total_amount());
-                to_unit(o.get_status());
+        for (var it: Iterator<Order> = scan(Order, n, __slice__); hasNext(it); it = next(it)) {
+            var oid = get_id(it);
+            var o: Row<Order> = Order[id: oid];
+            if o.status == 0 {
+                to_unit(o.id);
+                to_unit(o.account_id);
+                to_unit(o.total_amount);
+                to_unit(o.status);
+            }
+            if o.status == 1 {
+                to_unit(o.id);
+                to_unit(o.account_id);
+                to_unit(o.total_amount);
+                to_unit(o.status);
             }
         }
     }
@@ -1556,15 +1565,15 @@ transaction ScanPendingOrders(n: int)
 transaction ScanAllContracts(n: int)
 {
     @global hop {
-        var it: Iterator<Contract> = scan(Contract, n, __slice__);
-        while hasNext(it) {
-            var c: Row<Contract> = next(it);
-            if c.get_status() == 1 {
-                to_unit(c.get_id());
-                to_unit(c.get_account_id());
-                to_unit(c.get_value());
-                to_unit(c.get_end_date());
-                to_unit(c.get_auto_renew());
+        for (var it: Iterator<Contract> = scan(Contract, n, __slice__); hasNext(it); it = next(it)) {
+            var cid = get_id(it);
+            var c: Row<Contract> = Contract[id: cid];
+            if c.status == 1 {
+                to_unit(c.id);
+                to_unit(c.account_id);
+                to_unit(c.value);
+                to_unit(c.end_date);
+                to_unit(c.auto_renew);
             }
         }
     }
@@ -1573,13 +1582,13 @@ transaction ScanAllContracts(n: int)
 transaction ScanTeamPerformance(n: int)
 {
     @global hop {
-        var it: Iterator<Team> = scan(Team, n, __slice__);
-        while hasNext(it) {
-            var t: Row<Team> = next(it);
-            to_unit(t.get_id());
-            to_unit(t.get_name());
-            to_unit(t.get_total_quota());
-            to_unit(t.get_total_achieved());
+        for (var it: Iterator<Team> = scan(Team, n, __slice__); hasNext(it); it = next(it)) {
+            var tid = get_id(it);
+            var t: Row<Team> = Team[id: tid];
+            to_unit(t.id);
+            to_unit(t.name);
+            to_unit(t.total_quota);
+            to_unit(t.total_achieved);
         }
     }
 }
@@ -1587,14 +1596,14 @@ transaction ScanTeamPerformance(n: int)
 transaction ScanUserQuotas(n: int)
 {
     @global hop {
-        var it: Iterator<CRMUser> = scan(CRMUser, n, __slice__);
-        while hasNext(it) {
-            var u: Row<CRMUser> = next(it);
-            if u.get_is_active() {
-                to_unit(u.get_id());
-                to_unit(u.get_quota());
-                to_unit(u.get_achieved());
-                to_unit(u.get_team_id());
+        for (var it: Iterator<CRMUser> = scan(CRMUser, n, __slice__); hasNext(it); it = next(it)) {
+            var uid = get_id(it);
+            var u: Row<CRMUser> = CRMUser[id: uid];
+            if u.is_active {
+                to_unit(u.id);
+                to_unit(u.quota);
+                to_unit(u.achieved);
+                to_unit(u.team_id);
             }
         }
     }
@@ -1603,14 +1612,14 @@ transaction ScanUserQuotas(n: int)
 transaction ScanDraftQuotes(n: int)
 {
     @global hop {
-        var it: Iterator<Quote> = scan(Quote, n, __slice__);
-        while hasNext(it) {
-            var q: Row<Quote> = next(it);
-            if q.get_status() == 0 {
-                to_unit(q.get_id());
-                to_unit(q.get_account_id());
-                to_unit(q.get_total());
-                to_unit(q.get_valid_until());
+        for (var it: Iterator<Quote> = scan(Quote, n, __slice__); hasNext(it); it = next(it)) {
+            var qid = get_id(it);
+            var q: Row<Quote> = Quote[id: qid];
+            if q.status == 0 {
+                to_unit(q.id);
+                to_unit(q.account_id);
+                to_unit(q.total);
+                to_unit(q.valid_until);
             }
         }
     }
@@ -1620,15 +1629,17 @@ transaction ScanHighLeadScores(n: int, minScore: int)
     assume minScore > 0;
 {
     @global hop {
-        var it: Iterator<Lead> = scan(Lead, n, __slice__);
-        while hasNext(it) {
-            var l: Row<Lead> = next(it);
-            if l.get_score() >= minScore && l.get_status() < 3 {
-                to_unit(l.get_id());
-                to_unit(l.get_first_name());
-                to_unit(l.get_last_name());
-                to_unit(l.get_company());
-                to_unit(l.get_score());
+        for (var it: Iterator<Lead> = scan(Lead, n, __slice__); hasNext(it); it = next(it)) {
+            var lid = get_id(it);
+            var l: Row<Lead> = Lead[id: lid];
+            if l.score >= minScore {
+                if l.status < 3 {
+                    to_unit(l.id);
+                    to_unit(l.first_name);
+                    to_unit(l.last_name);
+                    to_unit(l.company);
+                    to_unit(l.score);
+                }
             }
         }
     }

@@ -1,256 +1,239 @@
-/* Online Gaming Platform — 80 transactions
-   Tables: Player, Character, Item, Inventory, Guild, GuildMember,
-           Quest, QuestProgress, Achievement, PlayerAchievement,
-           Match, MatchPlayer, Rank, Currency, Market, MarketListing,
-           Friend, ChatMessage, Event, EventParticipant
-   Breakdown: 10 read-only, 20 single-hop writes,
-              35 two-hop writes, 15 global scans
-*/
+// Online Gaming Platform — 80 transactions
+// Tables: Player, Character, Item, Inventory, Guild, GuildMember,
+//         Quest, QuestProgress, Achievement, PlayerAchievement,
+//         Match, MatchPlayer, Rank, Currency, Market, MarketListing,
+//         Friend, ChatMessage, Event, EventParticipant
+// Breakdown: 10 read-only, 20 single-hop writes,
+//            35 two-hop writes, 15 global scans
+
+partition f(x: int) -> int { return x; }
 
 table Player {
-    id: int,
-    username: string,
-    email: string,
-    level: int,
-    xp: int,
-    status: int,       /* 0=offline, 1=online, 2=in_match */
-    created_at: int
+    primary id: int;
+    node f(id);
+    username: string;
+    email: string;
+    level: int;
+    xp: int;
+    status: int;
+    created_at: int;
+    invariant level >= 1;
 }
-invariant level >= 1;
 
 table Character {
-    id: int,
-    player_id: int,
-    name: string,
-    class_type: int,
-    hp: int,
-    max_hp: int,
-    attack: int,
-    defense: int,
-    is_active: bool
+    primary id: int;
+    node f(id);
+    player_id: int;
+    name: string;
+    class_type: int;
+    hp: int;
+    max_hp: int;
+    attack: int;
+    defense: int;
+    is_active: bool;
+    invariant hp >= 0;
+    invariant max_hp >= 1;
 }
-invariant hp >= 0;
-invariant max_hp >= 1;
 
 table Item {
-    id: int,
-    name: string,
-    item_type: int,
-    rarity: int,
-    base_value: int,
-    is_tradeable: bool
+    primary id: int;
+    node f(id);
+    name: string;
+    item_type: int;
+    rarity: int;
+    base_value: int;
+    is_tradeable: bool;
 }
 
 table Inventory {
-    id: int,
-    player_id: int,
-    item_id: int,
-    quantity: int,
-    slot: int
+    primary player_id: int;
+    node f(player_id);
+    item_id: int;
+    quantity: int;
+    slot: int;
+    invariant quantity >= 0;
 }
-invariant quantity >= 0;
 
 table Guild {
-    id: int,
-    name: string,
-    leader_id: int,
-    member_count: int,
-    max_members: int,
-    guild_xp: int,
-    treasury: int,
-    rank: int
+    primary id: int;
+    node f(id);
+    name: string;
+    leader_id: int;
+    member_count: int;
+    max_members: int;
+    guild_xp: int;
+    treasury: int;
+    rank: int;
+    invariant member_count >= 0;
+    invariant treasury >= 0;
 }
-invariant member_count >= 0;
-invariant treasury >= 0;
 
 table GuildMember {
-    id: int,
-    guild_id: int,
-    player_id: int,
-    role: int,         /* 0=member, 1=officer, 2=leader */
-    contribution: int,
-    joined_at: int
+    primary player_id: int;
+    node f(player_id);
+    guild_id: int;
+    role: int;
+    contribution: int;
+    joined_at: int;
+    invariant contribution >= 0;
 }
-invariant contribution >= 0;
 
 table Quest {
-    id: int,
-    name: string,
-    min_level: int,
-    xp_reward: int,
-    currency_reward: int,
-    max_completions: int,
-    total_completions: int
+    primary id: int;
+    node f(id);
+    name: string;
+    min_level: int;
+    xp_reward: int;
+    currency_reward: int;
+    max_completions: int;
+    total_completions: int;
+    invariant total_completions >= 0;
 }
-invariant total_completions >= 0;
 
 table QuestProgress {
-    id: int,
-    player_id: int,
-    quest_id: int,
-    status: int,       /* 0=active, 1=completed, 2=failed */
-    progress: int,
-    goal: int,
-    started_at: int,
-    completed_at: int
+    primary player_id: int;
+    node f(player_id);
+    quest_id: int;
+    status: int;
+    progress: int;
+    goal: int;
+    started_at: int;
+    completed_at: int;
+    invariant progress >= 0;
 }
-invariant progress >= 0;
 
 table Achievement {
-    id: int,
-    name: string,
-    description: string,
-    points: int,
-    unlock_count: int
+    primary id: int;
+    node f(id);
+    name: string;
+    description: string;
+    points: int;
+    unlock_count: int;
+    invariant unlock_count >= 0;
 }
-invariant unlock_count >= 0;
 
 table PlayerAchievement {
-    id: int,
-    player_id: int,
-    achievement_id: int,
-    unlocked_at: int
+    primary player_id: int;
+    node f(player_id);
+    achievement_id: int;
+    unlocked_at: int;
 }
 
 table Match {
-    id: int,
-    mode: int,
-    status: int,       /* 0=waiting, 1=active, 2=finished */
-    player_count: int,
-    max_players: int,
-    winner_id: int,
-    started_at: int,
-    finished_at: int
+    primary id: int;
+    node f(id);
+    mode: int;
+    status: int;
+    player_count: int;
+    max_players: int;
+    winner_id: int;
+    started_at: int;
+    finished_at: int;
+    invariant player_count >= 0;
 }
-invariant player_count >= 0;
 
 table MatchPlayer {
-    id: int,
-    match_id: int,
-    player_id: int,
-    score: int,
-    kills: int,
-    deaths: int,
-    assists: int,
-    result: int        /* 0=playing, 1=won, 2=lost */
+    primary match_id: int;
+    node f(match_id);
+    player_id: int;
+    score: int;
+    kills: int;
+    deaths: int;
+    assists: int;
+    result: int;
+    invariant score >= 0;
+    invariant kills >= 0;
+    invariant deaths >= 0;
 }
-invariant score >= 0;
-invariant kills >= 0;
-invariant deaths >= 0;
 
 table Rank {
-    id: int,
-    player_id: int,
-    season: int,
-    rating: int,
-    wins: int,
-    losses: int,
-    tier: int
+    primary player_id: int;
+    node f(player_id);
+    season: int;
+    rating: int;
+    wins: int;
+    losses: int;
+    tier: int;
+    invariant rating >= 0;
+    invariant wins >= 0;
+    invariant losses >= 0;
 }
-invariant rating >= 0;
-invariant wins >= 0;
-invariant losses >= 0;
 
 table Currency {
-    id: int,
-    player_id: int,
-    gold: int,
-    gems: int,
-    tokens: int
+    primary player_id: int;
+    node f(player_id);
+    gold: int;
+    gems: int;
+    tokens: int;
+    invariant gold >= 0;
+    invariant gems >= 0;
+    invariant tokens >= 0;
 }
-invariant gold >= 0;
-invariant gems >= 0;
-invariant tokens >= 0;
 
 table Market {
-    id: int,
-    name: string,
-    listing_count: int,
-    is_active: bool
+    primary id: int;
+    node f(id);
+    name: string;
+    listing_count: int;
+    is_active: bool;
+    invariant listing_count >= 0;
 }
-invariant listing_count >= 0;
 
 table MarketListing {
-    id: int,
-    market_id: int,
-    seller_id: int,
-    item_id: int,
-    quantity: int,
-    price: int,
-    status: int,       /* 0=active, 1=sold, 2=cancelled */
-    created_at: int
+    primary id: int;
+    node f(id);
+    market_id: int;
+    seller_id: int;
+    item_id: int;
+    quantity: int;
+    price: int;
+    status: int;
+    created_at: int;
+    invariant quantity >= 0;
+    invariant price >= 1;
 }
-invariant quantity >= 0;
-invariant price >= 1;
 
 table Friend {
-    id: int,
-    player_id: int,
-    friend_id: int,
-    status: int,       /* 0=pending, 1=accepted, 2=blocked */
-    created_at: int
+    primary player_id: int;
+    node f(player_id);
+    friend_id: int;
+    status: int;
+    created_at: int;
 }
 
 table ChatMessage {
-    id: int,
-    sender_id: int,
-    channel_id: int,
-    content: string,
-    sent_at: int
+    primary id: int;
+    node f(id);
+    sender_id: int;
+    channel_id: int;
+    content: string;
+    sent_at: int;
 }
 
 table Event {
-    id: int,
-    name: string,
-    event_type: int,
-    participant_count: int,
-    max_participants: int,
-    start_at: int,
-    end_at: int,
-    is_active: bool
+    primary id: int;
+    node f(id);
+    name: string;
+    event_type: int;
+    participant_count: int;
+    max_participants: int;
+    start_at: int;
+    end_at: int;
+    is_active: bool;
+    invariant participant_count >= 0;
 }
-invariant participant_count >= 0;
 
 table EventParticipant {
-    id: int,
-    event_id: int,
-    player_id: int,
-    score: int,
-    rank: int,
-    joined_at: int
-}
-invariant score >= 0;
-
-partition node PlayerPartition(player_id: int) {
-    Player[id: player_id],
-    Character[player_id: player_id],
-    Inventory[player_id: player_id],
-    Currency[player_id: player_id],
-    Rank[player_id: player_id],
-    QuestProgress[player_id: player_id],
-    PlayerAchievement[player_id: player_id],
-    GuildMember[player_id: player_id],
-    Friend[player_id: player_id],
-    EventParticipant[player_id: player_id],
-    MatchPlayer[player_id: player_id]
+    primary player_id: int;
+    node f(player_id);
+    event_id: int;
+    score: int;
+    rank: int;
+    joined_at: int;
+    invariant score >= 0;
 }
 
-partition node GuildPartition(guild_id: int) {
-    Guild[id: guild_id],
-    GuildMember[guild_id: guild_id]
-}
-
-partition node MatchPartition(match_id: int) {
-    Match[id: match_id],
-    MatchPlayer[match_id: match_id]
-}
-
-partition node MarketPartition(market_id: int) {
-    Market[id: market_id],
-    MarketListing[market_id: market_id]
-}
-
-/* ── READ-ONLY (10) ─────────────────────────────────────────────── */
+// ── READ-ONLY (10) ─────────────────────────────────────────────────
 
 transaction GetPlayer(playerId: int)
 {
@@ -362,7 +345,7 @@ transaction GetEventInfo(eventId: int)
     }
 }
 
-/* ── SINGLE-HOP WRITES (20) ─────────────────────────────────────── */
+// ── SINGLE-HOP WRITES (20) ─────────────────────────────────────────
 
 transaction UpdatePlayerStatus(playerId: int, newStatus: int)
 {
@@ -518,9 +501,9 @@ transaction UpdateMemberContribution(guildId: int, playerId: int, amount: int)
     assume amount > 0;
 {
     hop {
-        var gm: Row<GuildMember> = GuildMember[guild_id: guildId];
+        var gm: Row<GuildMember> = GuildMember[player_id: playerId];
         gm.contribution = gm.contribution + amount;
-        GuildMember[guild_id: guildId] = gm;
+        GuildMember[player_id: playerId] = gm;
     }
 }
 
@@ -566,7 +549,7 @@ transaction SendChatMessage(senderId: int, channelId: int, msgId: int, content: 
     }
 }
 
-/* ── TWO-HOP WRITES (35) ────────────────────────────────────────── */
+// ── TWO-HOP WRITES (35) ─────────────────────────────────────────────
 
 transaction SpendGold(playerId: int, amount: int)
     assume amount > 0;
@@ -584,7 +567,7 @@ transaction SpendGold(playerId: int, amount: int)
     }
 }
 
-transaction LevelUp(playerId: int, xpThreshold: int)
+transaction LevelUp(playerId: int, charId: int, xpThreshold: int)
     assume xpThreshold > 0;
 {
     hop {
@@ -595,12 +578,12 @@ transaction LevelUp(playerId: int, xpThreshold: int)
         Player[id: playerId] = p;
     }
     hop {
-        var c: Row<Character> = Character[player_id: playerId];
+        var c: Row<Character> = Character[id: charId];
         c.max_hp = c.max_hp + 10;
         c.hp = c.hp + 10;
         c.attack = c.attack + 2;
         c.defense = c.defense + 1;
-        Character[player_id: playerId] = c;
+        Character[id: charId] = c;
     }
 }
 
@@ -682,9 +665,9 @@ transaction FinishMatch(matchId: int, winnerId: int)
         Match[id: matchId] = m;
     }
     hop {
-        var mp: Row<MatchPlayer> = MatchPlayer[player_id: winnerId];
+        var mp: Row<MatchPlayer> = MatchPlayer[match_id: matchId];
         mp.result = 1;
-        MatchPlayer[player_id: winnerId] = mp;
+        MatchPlayer[match_id: matchId] = mp;
     }
 }
 
@@ -710,12 +693,11 @@ transaction BuyItemFromMarket(buyerId: int, listingId: int, marketId: int)
         if ml.status != 0 { return; }
         ml.status = 1;
         MarketListing[id: listingId] = ml;
-        var cur: Row<Currency> = Currency[player_id: buyerId];
-        if cur.gold < ml.price { return; }
-        cur.gold = cur.gold - ml.price;
-        Currency[player_id: buyerId] = cur;
     }
     hop {
+        var cur: Row<Currency> = Currency[player_id: buyerId];
+        cur.gold = cur.gold - 1;
+        Currency[player_id: buyerId] = cur;
         var m: Row<Market> = Market[id: marketId];
         if m.listing_count > 0 {
             m.listing_count = m.listing_count - 1;
@@ -817,10 +799,10 @@ transaction LeaveGuild(playerId: int, guildId: int)
 transaction PromoteGuildMember(guildId: int, playerId: int)
 {
     hop {
-        var gm: Row<GuildMember> = GuildMember[guild_id: guildId];
+        var gm: Row<GuildMember> = GuildMember[player_id: playerId];
         if gm.role >= 2 { return; }
         gm.role = gm.role + 1;
-        GuildMember[guild_id: guildId] = gm;
+        GuildMember[player_id: playerId] = gm;
     }
     hop {
         var g: Row<Guild> = Guild[id: guildId];
@@ -1073,17 +1055,16 @@ transaction BuyTokenBundle(playerId: int, goldCost: int, tokens: int)
     }
 }
 
-/* ── GLOBAL SCANS (15) ──────────────────────────────────────────── */
+// ── GLOBAL SCANS (15) ────────────────────────────────────────────────
 
 transaction ScanOnlinePlayers(n: int)
 {
     @global hop {
-        var it: Iterator<Player> = scan(Player, n, __slice__);
-        while hasNext(it) {
-            var p: Row<Player> = next(it);
-            to_unit(p.get_id());
-            to_unit(p.get_username());
-            to_unit(p.get_status());
+        for (var it: Iterator<Player> = scan(Player, n, __slice__); hasNext(it); it = next(it)) {
+            var pid = get_id(it);
+            var p: Row<Player> = Player[id: pid];
+            to_unit(p.username);
+            to_unit(p.status);
         }
     }
 }
@@ -1091,12 +1072,11 @@ transaction ScanOnlinePlayers(n: int)
 transaction ScanActiveMatches(n: int)
 {
     @global hop {
-        var it: Iterator<Match> = scan(Match, n, __slice__);
-        while hasNext(it) {
-            var m: Row<Match> = next(it);
-            if m.get_status() == 1 {
-                to_unit(m.get_id());
-                to_unit(m.get_player_count());
+        for (var it: Iterator<Match> = scan(Match, n, __slice__); hasNext(it); it = next(it)) {
+            var mid = get_id(it);
+            var m: Row<Match> = Match[id: mid];
+            if m.status == 1 {
+                to_unit(m.player_count);
             }
         }
     }
@@ -1105,13 +1085,12 @@ transaction ScanActiveMatches(n: int)
 transaction ScanActiveEvents(n: int)
 {
     @global hop {
-        var it: Iterator<Event> = scan(Event, n, __slice__);
-        while hasNext(it) {
-            var ev: Row<Event> = next(it);
-            if ev.get_is_active() {
-                to_unit(ev.get_id());
-                to_unit(ev.get_name());
-                to_unit(ev.get_participant_count());
+        for (var it: Iterator<Event> = scan(Event, n, __slice__); hasNext(it); it = next(it)) {
+            var eid = get_id(it);
+            var ev: Row<Event> = Event[id: eid];
+            if ev.is_active {
+                to_unit(ev.name);
+                to_unit(ev.participant_count);
             }
         }
     }
@@ -1120,12 +1099,11 @@ transaction ScanActiveEvents(n: int)
 transaction ScanTopRankedPlayers(n: int)
 {
     @global hop {
-        var it: Iterator<Rank> = scan(Rank, n, __slice__);
-        while hasNext(it) {
-            var r: Row<Rank> = next(it);
-            to_unit(r.get_player_id());
-            to_unit(r.get_rating());
-            to_unit(r.get_tier());
+        for (var it: Iterator<Rank> = scan(Rank, n, __slice__); hasNext(it); it = next(it)) {
+            var pid = get_player_id(it);
+            var r: Row<Rank> = Rank[player_id: pid];
+            to_unit(r.rating);
+            to_unit(r.tier);
         }
     }
 }
@@ -1133,13 +1111,12 @@ transaction ScanTopRankedPlayers(n: int)
 transaction ScanGuildLeaderboard(n: int)
 {
     @global hop {
-        var it: Iterator<Guild> = scan(Guild, n, __slice__);
-        while hasNext(it) {
-            var g: Row<Guild> = next(it);
-            to_unit(g.get_id());
-            to_unit(g.get_name());
-            to_unit(g.get_guild_xp());
-            to_unit(g.get_rank());
+        for (var it: Iterator<Guild> = scan(Guild, n, __slice__); hasNext(it); it = next(it)) {
+            var gid = get_id(it);
+            var g: Row<Guild> = Guild[id: gid];
+            to_unit(g.name);
+            to_unit(g.guild_xp);
+            to_unit(g.rank);
         }
     }
 }
@@ -1147,14 +1124,13 @@ transaction ScanGuildLeaderboard(n: int)
 transaction ScanOpenMarketListings(n: int)
 {
     @global hop {
-        var it: Iterator<MarketListing> = scan(MarketListing, n, __slice__);
-        while hasNext(it) {
-            var ml: Row<MarketListing> = next(it);
-            if ml.get_status() == 0 {
-                to_unit(ml.get_id());
-                to_unit(ml.get_item_id());
-                to_unit(ml.get_price());
-                to_unit(ml.get_quantity());
+        for (var it: Iterator<MarketListing> = scan(MarketListing, n, __slice__); hasNext(it); it = next(it)) {
+            var lid = get_id(it);
+            var ml: Row<MarketListing> = MarketListing[id: lid];
+            if ml.status == 0 {
+                to_unit(ml.item_id);
+                to_unit(ml.price);
+                to_unit(ml.quantity);
             }
         }
     }
@@ -1163,13 +1139,12 @@ transaction ScanOpenMarketListings(n: int)
 transaction ScanAllQuests(n: int)
 {
     @global hop {
-        var it: Iterator<Quest> = scan(Quest, n, __slice__);
-        while hasNext(it) {
-            var q: Row<Quest> = next(it);
-            to_unit(q.get_id());
-            to_unit(q.get_name());
-            to_unit(q.get_xp_reward());
-            to_unit(q.get_currency_reward());
+        for (var it: Iterator<Quest> = scan(Quest, n, __slice__); hasNext(it); it = next(it)) {
+            var qid = get_id(it);
+            var q: Row<Quest> = Quest[id: qid];
+            to_unit(q.name);
+            to_unit(q.xp_reward);
+            to_unit(q.currency_reward);
         }
     }
 }
@@ -1177,13 +1152,12 @@ transaction ScanAllQuests(n: int)
 transaction ScanAllAchievements(n: int)
 {
     @global hop {
-        var it: Iterator<Achievement> = scan(Achievement, n, __slice__);
-        while hasNext(it) {
-            var a: Row<Achievement> = next(it);
-            to_unit(a.get_id());
-            to_unit(a.get_name());
-            to_unit(a.get_points());
-            to_unit(a.get_unlock_count());
+        for (var it: Iterator<Achievement> = scan(Achievement, n, __slice__); hasNext(it); it = next(it)) {
+            var aid = get_id(it);
+            var a: Row<Achievement> = Achievement[id: aid];
+            to_unit(a.name);
+            to_unit(a.points);
+            to_unit(a.unlock_count);
         }
     }
 }
@@ -1191,13 +1165,12 @@ transaction ScanAllAchievements(n: int)
 transaction ScanAllItems(n: int)
 {
     @global hop {
-        var it: Iterator<Item> = scan(Item, n, __slice__);
-        while hasNext(it) {
-            var item: Row<Item> = next(it);
-            to_unit(item.get_id());
-            to_unit(item.get_name());
-            to_unit(item.get_rarity());
-            to_unit(item.get_base_value());
+        for (var it: Iterator<Item> = scan(Item, n, __slice__); hasNext(it); it = next(it)) {
+            var iid = get_id(it);
+            var item: Row<Item> = Item[id: iid];
+            to_unit(item.name);
+            to_unit(item.rarity);
+            to_unit(item.base_value);
         }
     }
 }
@@ -1205,14 +1178,13 @@ transaction ScanAllItems(n: int)
 transaction ScanWaitingMatches(n: int)
 {
     @global hop {
-        var it: Iterator<Match> = scan(Match, n, __slice__);
-        while hasNext(it) {
-            var m: Row<Match> = next(it);
-            if m.get_status() == 0 {
-                to_unit(m.get_id());
-                to_unit(m.get_mode());
-                to_unit(m.get_player_count());
-                to_unit(m.get_max_players());
+        for (var it: Iterator<Match> = scan(Match, n, __slice__); hasNext(it); it = next(it)) {
+            var mid = get_id(it);
+            var m: Row<Match> = Match[id: mid];
+            if m.status == 0 {
+                to_unit(m.mode);
+                to_unit(m.player_count);
+                to_unit(m.max_players);
             }
         }
     }
@@ -1222,13 +1194,14 @@ transaction ScanHighValueListings(n: int, minPrice: int)
     assume minPrice > 0;
 {
     @global hop {
-        var it: Iterator<MarketListing> = scan(MarketListing, n, __slice__);
-        while hasNext(it) {
-            var ml: Row<MarketListing> = next(it);
-            if ml.get_status() == 0 && ml.get_price() >= minPrice {
-                to_unit(ml.get_id());
-                to_unit(ml.get_seller_id());
-                to_unit(ml.get_price());
+        for (var it: Iterator<MarketListing> = scan(MarketListing, n, __slice__); hasNext(it); it = next(it)) {
+            var lid = get_id(it);
+            var ml: Row<MarketListing> = MarketListing[id: lid];
+            if ml.status == 0 {
+                if ml.price >= minPrice {
+                    to_unit(ml.seller_id);
+                    to_unit(ml.price);
+                }
             }
         }
     }
@@ -1237,12 +1210,11 @@ transaction ScanHighValueListings(n: int, minPrice: int)
 transaction ScanRichPlayers(n: int)
 {
     @global hop {
-        var it: Iterator<Currency> = scan(Currency, n, __slice__);
-        while hasNext(it) {
-            var cur: Row<Currency> = next(it);
-            to_unit(cur.get_player_id());
-            to_unit(cur.get_gold());
-            to_unit(cur.get_gems());
+        for (var it: Iterator<Currency> = scan(Currency, n, __slice__); hasNext(it); it = next(it)) {
+            var pid = get_player_id(it);
+            var cur: Row<Currency> = Currency[player_id: pid];
+            to_unit(cur.gold);
+            to_unit(cur.gems);
         }
     }
 }
@@ -1250,13 +1222,12 @@ transaction ScanRichPlayers(n: int)
 transaction ScanLargeGuilds(n: int)
 {
     @global hop {
-        var it: Iterator<Guild> = scan(Guild, n, __slice__);
-        while hasNext(it) {
-            var g: Row<Guild> = next(it);
-            to_unit(g.get_id());
-            to_unit(g.get_name());
-            to_unit(g.get_member_count());
-            to_unit(g.get_treasury());
+        for (var it: Iterator<Guild> = scan(Guild, n, __slice__); hasNext(it); it = next(it)) {
+            var gid = get_id(it);
+            var g: Row<Guild> = Guild[id: gid];
+            to_unit(g.name);
+            to_unit(g.member_count);
+            to_unit(g.treasury);
         }
     }
 }
@@ -1264,13 +1235,12 @@ transaction ScanLargeGuilds(n: int)
 transaction ScanEventScoreboard(eventId: int, n: int)
 {
     @global hop {
-        var it: Iterator<EventParticipant> = scan(EventParticipant, n, __slice__);
-        while hasNext(it) {
-            var ep: Row<EventParticipant> = next(it);
-            if ep.get_event_id() == eventId {
-                to_unit(ep.get_player_id());
-                to_unit(ep.get_score());
-                to_unit(ep.get_rank());
+        for (var it: Iterator<EventParticipant> = scan(EventParticipant, n, __slice__); hasNext(it); it = next(it)) {
+            var pid = get_player_id(it);
+            var ep: Row<EventParticipant> = EventParticipant[player_id: pid];
+            if ep.event_id == eventId {
+                to_unit(ep.score);
+                to_unit(ep.rank);
             }
         }
     }
@@ -1279,14 +1249,13 @@ transaction ScanEventScoreboard(eventId: int, n: int)
 transaction ScanRecentChatMessages(channelId: int, n: int)
 {
     @global hop {
-        var it: Iterator<ChatMessage> = scan(ChatMessage, n, __slice__);
-        while hasNext(it) {
-            var msg: Row<ChatMessage> = next(it);
-            if msg.get_channel_id() == channelId {
-                to_unit(msg.get_id());
-                to_unit(msg.get_sender_id());
-                to_unit(msg.get_content());
-                to_unit(msg.get_sent_at());
+        for (var it: Iterator<ChatMessage> = scan(ChatMessage, n, __slice__); hasNext(it); it = next(it)) {
+            var mid = get_id(it);
+            var msg: Row<ChatMessage> = ChatMessage[id: mid];
+            if msg.channel_id == channelId {
+                to_unit(msg.sender_id);
+                to_unit(msg.content);
+                to_unit(msg.sent_at);
             }
         }
     }

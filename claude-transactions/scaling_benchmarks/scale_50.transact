@@ -89,7 +89,7 @@ table Appointment {
     patient_id: int;
     doctor_id: int;
     scheduled_at: int;
-    type: string;
+    appt_type: string;
     status: int;        // 0=cancelled, 1=scheduled, 2=completed
 }
 
@@ -469,7 +469,7 @@ transaction BookAppointment(appt_id: int, patient_id: int, doctor_id: int,
             patient_id: patient_id,
             doctor_id: doctor_id,
             scheduled_at: scheduled_at,
-            type: appt_type,
+            appt_type: appt_type,
             status: 1
         };
     }
@@ -865,7 +865,6 @@ transaction LabOrderFulfillment(lab_id: int, result_id: int, patient_id: int,
         LabOrder[lab_id: lab_id] = l;
     }
     hop {
-        var l: Row<LabOrder> = LabOrder[lab_id: lab_id];
         l.status = 2;
         LabOrder[lab_id: lab_id] = l;
     }
@@ -950,8 +949,10 @@ transaction GetAvailableBeds(dept_id: int) -> List<int> {
         for (var it: Iterator<Bed> = scan(Bed, 0, __slice__); hasNext(it); it = next(it)) {
             var bid = get_bed_id(it);
             var b: Row<Bed> = Bed[bed_id: bid];
-            if b.dept_id == dept_id && b.status == 0 {
-                result = append(result, bid);
+            if b.dept_id == dept_id {
+                if b.status == 0 {
+                    result = append(result, bid);
+                }
             }
         }
         return result;
@@ -995,8 +996,10 @@ transaction GetPatientsByDepartment(dept_id: int) -> List<int> {
         for (var it: Iterator<Admission> = scan(Admission, 3, __slice__); hasNext(it); it = next(it)) {
             var aid = get_adm_id(it);
             var a: Row<Admission> = Admission[adm_id: aid];
-            if a.dept_id == dept_id && a.status == 1 {
-                result = append(result, a.patient_id);
+            if a.dept_id == dept_id {
+                if a.status == 1 {
+                    result = append(result, a.patient_id);
+                }
             }
         }
         return result;

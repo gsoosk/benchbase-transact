@@ -736,8 +736,10 @@ transaction SearchProductsByCategory(category: string) -> List<int> {
         for (var it: Iterator<Product> = scan(Product, 0, __slice__); hasNext(it); it = next(it)) {
             var pid = get_product_id(it);
             var p: Row<Product> = Product[product_id: pid];
-            if p.category == category && p.active == 1 {
-                result = append(result, pid);
+            if p.category === category {
+                if p.active == 1 {
+                    result = append(result, pid);
+                }
             }
         }
         return result;

@@ -1008,8 +1008,10 @@ transaction GetFlightsByRoute(route_id: int) -> List<int> {
         for (var it: Iterator<Flight> = scan(Flight, 0, __slice__); hasNext(it); it = next(it)) {
             var fid = get_flight_id(it);
             var f: Row<Flight> = Flight[flight_id: fid];
-            if f.route_id == route_id && f.status == 1 {
-                result = append(result, fid);
+            if f.route_id == route_id {
+                if f.status == 1 {
+                    result = append(result, fid);
+                }
             }
         }
         return result;
@@ -1056,8 +1058,10 @@ transaction GetFlightManifest(flight_id: int) -> List<int> {
         for (var it: Iterator<Booking> = scan(Booking, 3, __slice__); hasNext(it); it = next(it)) {
             var bid = get_booking_id(it);
             var b: Row<Booking> = Booking[booking_id: bid];
-            if b.flight_id == flight_id && b.status >= 2 {
-                result = append(result, b.passenger_id);
+            if b.flight_id == flight_id {
+                if b.status >= 2 {
+                    result = append(result, b.passenger_id);
+                }
             }
         }
         return result;
@@ -1101,8 +1105,10 @@ transaction GetAvailableCrewByRole(role: string) -> List<int> {
         for (var it: Iterator<Crew> = scan(Crew, 6, __slice__); hasNext(it); it = next(it)) {
             var cid = get_crew_id(it);
             var c: Row<Crew> = Crew[crew_id: cid];
-            if c.role == role && c.status == 1 {
-                result = append(result, cid);
+            if c.role === role {
+                if c.status == 1 {
+                    result = append(result, cid);
+                }
             }
         }
         return result;
@@ -1131,8 +1137,10 @@ transaction GetDelayedFlights(threshold_departure: int) -> List<int> {
         for (var it: Iterator<Flight> = scan(Flight, 8, __slice__); hasNext(it); it = next(it)) {
             var fid = get_flight_id(it);
             var f: Row<Flight> = Flight[flight_id: fid];
-            if f.status == 1 && f.departure_time > threshold_departure {
-                result = append(result, fid);
+            if f.status == 1 {
+                if f.departure_time > threshold_departure {
+                    result = append(result, fid);
+                }
             }
         }
         return result;
@@ -1146,8 +1154,10 @@ transaction GetConnectionBookingsForPassenger(passenger_id: int) -> List<int> {
         for (var it: Iterator<ConnectionBooking> = scan(ConnectionBooking, 9, __slice__); hasNext(it); it = next(it)) {
             var cid = get_conn_id(it);
             var c: Row<ConnectionBooking> = ConnectionBooking[conn_id: cid];
-            if c.passenger_id == passenger_id && c.status == 1 {
-                result = append(result, cid);
+            if c.passenger_id == passenger_id {
+                if c.status == 1 {
+                    result = append(result, cid);
+                }
             }
         }
         return result;
@@ -1176,8 +1186,10 @@ transaction GetUnboardedPassengers(flight_id: int) -> List<int> {
         for (var it: Iterator<Booking> = scan(Booking, 11, __slice__); hasNext(it); it = next(it)) {
             var bid = get_booking_id(it);
             var b: Row<Booking> = Booking[booking_id: bid];
-            if b.flight_id == flight_id && b.status == 2 {
-                result = append(result, b.passenger_id);
+            if b.flight_id == flight_id {
+                if b.status == 2 {
+                    result = append(result, b.passenger_id);
+                }
             }
         }
         return result;
@@ -1206,7 +1218,7 @@ transaction GetFrequentFlyersByTier(tier: string) -> List<int> {
         for (var it: Iterator<FrequentFlyer> = scan(FrequentFlyer, 13, __slice__); hasNext(it); it = next(it)) {
             var pid = get_passenger_id(it);
             var ff: Row<FrequentFlyer> = FrequentFlyer[passenger_id: pid];
-            if ff.tier == tier {
+            if ff.tier === tier {
                 result = append(result, pid);
             }
         }

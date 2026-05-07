@@ -340,8 +340,10 @@ transaction UpdateLastPrice(stock_id: int, price: float, volume_delta: int) {
 transaction CancelOrder(order_id: int) {
     hop {
         var o: Row<TradeOrder> = TradeOrder[order_id: order_id];
-        if o.status != 1 && o.status != 2 {
-            return;
+        if o.status != 1 {
+            if o.status != 2 {
+                return;
+            }
         }
         o.status = 0;
         TradeOrder[order_id: order_id] = o;
@@ -872,8 +874,13 @@ transaction GetOpenOrders(trader_id: int) -> List<int> {
         for (var it: Iterator<TradeOrder> = scan(TradeOrder, 0, __slice__); hasNext(it); it = next(it)) {
             var oid = get_order_id(it);
             var o: Row<TradeOrder> = TradeOrder[order_id: oid];
-            if o.trader_id == trader_id && (o.status == 1 || o.status == 2) {
-                result = append(result, oid);
+            if o.trader_id == trader_id {
+                if o.status == 1 {
+                    result = append(result, oid);
+                }
+                if o.status == 2 {
+                    result = append(result, oid);
+                }
             }
         }
         return result;
@@ -977,7 +984,7 @@ transaction GetCompanyBySector(sector: string) -> List<int> {
         for (var it: Iterator<Company> = scan(Company, 7, __slice__); hasNext(it); it = next(it)) {
             var cid = get_company_id(it);
             var c: Row<Company> = Company[company_id: cid];
-            if c.sector == sector {
+            if c.sector === sector {
                 result = append(result, cid);
             }
         }
