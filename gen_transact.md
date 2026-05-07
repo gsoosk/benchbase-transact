@@ -45,85 +45,40 @@ Notes:
 
 ## Default parameters
 
-### Schema
-
-| Parameter           | CLI flag                | Default        | Notes |
-|---------------------|-------------------------|----------------|-------|
-| `num_tables`        | `--num-tables`          | *auto-derived* | `max(tables_min, ceil(sqrt(num_transactions)))` when omitted; pass an int to override. |
-| `tables_min`        | `--tables-min`          | `2`            | Floor used by the auto-derivation. |
-| `fields_per_table`  | `--fields-per-table`    | `10`           | Constant int per table (PK columns are separate from this count). |
-| `pk_arity_min`      | `--pk-arity-min`        | `1`            | Per-table PK count is uniform in `[min, max]`. |
-| `pk_arity_max`      | `--pk-arity-max`        | `2`            | |
-
-### Workload sizing — **MAIN KNOB**
-
-| Parameter          | CLI flag             | Default | Notes |
-|--------------------|----------------------|---------|-------|
-| `num_transactions` | `--num-transactions` | `20`    | Number of `transaction TxN(...) { ... }` blocks emitted. |
-
-### Hops per transaction
-
-| Parameter           | CLI flag              | Default | Notes |
-|---------------------|-----------------------|---------|-------|
-| `hops_min`          | `--hops-min`          | `1`     | Hop count is sampled in `[min, max]`. |
-| `hops_max`          | `--hops-max`          | `10`    | |
-| `hops_dist`         | `--hops-dist`         | `zipf`  | One of `zipf`, `reverse_zipf`, `uniform`, `poisson`. |
-| `hops_zipf_s`       | `--hops-zipf-s`       | `2.0`   | Tail-weight for the (reverse-)Zipf variants. |
-| `hops_poisson_mean` | `--hops-poisson-mean` | `7.0`   | Only used when `hops_dist == "poisson"`. |
-
-### Operations per hop
-
-| Parameter     | CLI flag        | Default | Notes |
-|---------------|-----------------|---------|-------|
-| `ops_min`     | `--ops-min`     | `1`     | Per-hop op count, Zipf-distributed (head-heavy). |
-| `ops_max`     | `--ops-max`     | `5`     | |
-| `ops_zipf_s`  | `--ops-zipf-s`  | `1.5`   | Higher → more concentration on small counts. |
-
-### Operation mix (auto-normalized)
-
-| Parameter        | CLI flag           | Default | Op kind |
-|------------------|--------------------|---------|---------|
-| `op_read_p`      | `--op-read-p`      | `0.50`  | `var v: int = T[k: ...].field;` |
-| `op_write_p`     | `--op-write-p`     | `0.20`  | Row-literal insert OR `T[k: ...].field = expr;` |
-| `op_inc_dec_p`   | `--op-inc-dec-p`   | `0.10`  | `T[k: ...].field = T[k: ...].field +/- N;` |
-| `op_logical_p`   | `--op-logical-p`   | `0.20`  | `var v: int = <expr>;` (no DB touch) |
-
-The four are auto-normalized in `__post_init__`; they don't have to sum to
-exactly `1.0` on the command line.
-
-### For-loop within a hop
-
-| Parameter             | CLI flag                | Default | Notes |
-|-----------------------|-------------------------|---------|-------|
-| `for_loop_prob`       | `--for-loop-prob`       | `0.05`  | Per-hop chance of wrapping the op sequence in `for (...) { ... }`. |
-| `for_loop_iters_min`  | `--for-loop-iters-min`  | `5`     | Iteration bound is uniform in `[min, max]`. |
-| `for_loop_iters_max`  | `--for-loop-iters-max`  | `10`    | |
-
-### If-statement within a hop
-
-| Parameter           | CLI flag              | Default | Notes |
-|---------------------|-----------------------|---------|-------|
-| `if_prob`           | `--if-prob`           | `0.25`  | Per-hop chance of splicing in `if cond { ... }`. |
-| `if_else_prob`      | `--if-else-prob`      | `0.5`   | Conditional probability of an `else` branch given the `if` exists. |
-| `if_body_min_ops`   | `--if-body-min-ops`   | `1`     | Op count per branch is uniform in `[min, max]`. |
-| `if_body_max_ops`   | `--if-body-max-ops`   | `2`     | |
+| Group         | Parameter             | CLI flag                | Default        | Notes |
+|---------------|-----------------------|-------------------------|----------------|-------|
+| Schema        | `num_tables`          | `--num-tables`          | *auto-derived* | `max(tables_min, ceil(sqrt(num_transactions)))` when omitted; pass an int to override. |
+| Schema        | `tables_min`          | `--tables-min`          | `2`            | Floor used by the auto-derivation. |
+| Schema        | `fields_per_table`    | `--fields-per-table`    | `10`           | Constant int per table (PK columns are separate from this count). |
+| Schema        | `pk_arity_min`        | `--pk-arity-min`        | `1`            | Per-table PK count is uniform in `[min, max]`. |
+| Schema        | `pk_arity_max`        | `--pk-arity-max`        | `2`            | |
+| Workload      | `num_transactions`    | `--num-transactions`    | `20`           | **MAIN KNOB.** Number of `transaction TxN(...) { ... }` blocks emitted. |
+| Hops/txn      | `hops_min`            | `--hops-min`            | `1`            | Hop count is sampled in `[min, max]`. |
+| Hops/txn      | `hops_max`            | `--hops-max`            | `10`           | |
+| Hops/txn      | `hops_dist`           | `--hops-dist`           | `zipf`         | One of `zipf`, `reverse_zipf`, `uniform`, `poisson`. |
+| Hops/txn      | `hops_zipf_s`         | `--hops-zipf-s`         | `2.0`          | Tail-weight for the (reverse-)Zipf variants. |
+| Hops/txn      | `hops_poisson_mean`   | `--hops-poisson-mean`   | `7.0`          | Only used when `hops_dist == "poisson"`. |
+| Ops/hop       | `ops_min`             | `--ops-min`             | `1`            | Per-hop op count, Zipf-distributed (head-heavy). |
+| Ops/hop       | `ops_max`             | `--ops-max`             | `5`            | |
+| Ops/hop       | `ops_zipf_s`          | `--ops-zipf-s`          | `1.5`          | Higher → more concentration on small counts. |
+| Op mix        | `op_read_p`           | `--op-read-p`           | `0.50`         | `var v: int = T[k: ...].field;` |
+| Op mix        | `op_write_p`          | `--op-write-p`          | `0.20`         | Row-literal insert OR `T[k: ...].field = expr;` |
+| Op mix        | `op_inc_dec_p`        | `--op-inc-dec-p`        | `0.10`         | `T[k: ...].field = T[k: ...].field +/- N;` |
+| Op mix        | `op_logical_p`        | `--op-logical-p`        | `0.20`         | `var v: int = <expr>;` (no DB touch). The four mix probabilities are auto-normalized — they don't have to sum to 1.0 on the command line. |
+| For-loop      | `for_loop_prob`       | `--for-loop-prob`       | `0.05`         | Per-hop chance of wrapping the op sequence in `for (...) { ... }`. |
+| For-loop      | `for_loop_iters_min`  | `--for-loop-iters-min`  | `5`            | Iteration bound is uniform in `[min, max]`. |
+| For-loop      | `for_loop_iters_max`  | `--for-loop-iters-max`  | `10`           | |
+| If-stmt       | `if_prob`             | `--if-prob`             | `0.25`         | Per-hop chance of splicing in `if cond { ... }`. |
+| If-stmt       | `if_else_prob`        | `--if-else-prob`        | `0.5`          | Conditional probability of an `else` branch given the `if` exists. |
+| If-stmt       | `if_body_min_ops`     | `--if-body-min-ops`     | `1`            | Op count per branch is uniform in `[min, max]`. |
+| If-stmt       | `if_body_max_ops`     | `--if-body-max-ops`     | `2`            | |
+| Continuation  | `continuation_prob`   | `--continuation-prob`   | `0.30`         | Per-hop-boundary chance of promoting one hop-level var into the cross-hop reference pool (à la auctionmark's `buyer_id` flowing from hop 1 to hop 2). |
+| I/O           | `seed`                | `--seed`                | `42`           | Single source of randomness; runs are deterministic given the seed. |
+| I/O           | —                     | `--out`                 | *stdout*       | Output path. Stdout if omitted. |
 
 Each branch (`if` body, `else` body, `for` body) opens its own block scope:
 vars declared inside die at the end of the block and never become eligible
 for cross-hop continuation.
-
-### Cross-hop continuation
-
-| Parameter            | CLI flag              | Default | Notes |
-|----------------------|-----------------------|---------|-------|
-| `continuation_prob`  | `--continuation-prob` | `0.30`  | Per-hop-boundary chance of promoting one hop-level var into the cross-hop reference pool (à la auctionmark's `buyer_id` flowing from hop 1 to hop 2). |
-
-### Reproducibility / I/O
-
-| Parameter | CLI flag  | Default | Notes |
-|-----------|-----------|---------|-------|
-| `seed`    | `--seed`  | `42`    | Single source of randomness. |
-| —         | `--out`   | *stdout*| Output path. Stdout if omitted. |
 
 ---
 

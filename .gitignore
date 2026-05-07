@@ -3,3 +3,4 @@ tmp/
 results/*/.verification_cache/
 FMitF_rs/
 external/
+claude-transactions/materials/*
